@@ -144,3 +144,5 @@ audio_processor/tempo_test_notes.txt
 audio_processor/tempogram.png
 visuals/tempogram.png
 visuals/**
+notation_generator/drum_notation_tester__notes.md
+

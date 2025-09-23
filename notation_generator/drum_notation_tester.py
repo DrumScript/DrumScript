@@ -5,6 +5,7 @@ import json
 import subprocess
 import music21
 from music21 import stream, note, chord, meter, clef, instrument, beam
+from . import constants # Import the constants from the same module
 
 def generate_drum_score(events, tempo=120, output_filename="drum_test_score"):
     """
@@ -42,11 +43,22 @@ def generate_drum_score(events, tempo=120, output_filename="drum_test_score"):
         else:
             duration_qn = 0.5
 
-        if len(group) == 1:
-            n = note.Note(group[0]['midi_pitch'])
+        # --- MODIFIED SECTION ---
+        # Look up the MIDI pitch for each drum type from our constants map
+        midi_pitches = [constants.DRUM_NOTATION_MAP[event['drum_type']]['midi_pitch'] for event in group]
+
+        if len(midi_pitches) == 1:
+            n = note.Note(midi_pitches[0])
         else:
-            midi_pitches = [event['midi_pitch'] for event in group]
             n = chord.Chord(midi_pitches)
+
+
+        #if len(group) == 1:
+         #   n = note.Note(group[0]['midi_pitch'])
+        #else:
+         #   midi_pitches = [event['midi_pitch'] for event in group]
+          #  n = chord.Chord(midi_pitches)
+        # --- END MODIFIED SECTION ---
         
 
   
@@ -69,7 +81,8 @@ def generate_drum_score(events, tempo=120, output_filename="drum_test_score"):
     score.makeMeasures(inPlace=True)
     print("Score created successfully. Generating output files...")
 
-    xml_path = f"{output_filename}.musicxml"
+    #xml_path = f"{output_filename}.musicxml"
+    xml_path = f"{output_filename}.xml" # Note: Changed to .xml for clarity
     score.write('musicxml', fp=xml_path)
     print(f"MusicXML file saved to: {xml_path}")
 
@@ -87,12 +100,19 @@ def generate_drum_score(events, tempo=120, output_filename="drum_test_score"):
         print(f"   Error Output: {e.stderr}")
 
 if __name__ == '__main__':
+    # --- UPDATED MOCK DATA using human-readable drum types ---
     mock_drum_hits = [
-        {'onset_time_seconds': 0.0, 'midi_pitch': 36}, {'onset_time_seconds': 0.0, 'midi_pitch': 49},
-        {'onset_time_seconds': 0.5, 'midi_pitch': 42}, {'onset_time_seconds': 1.0, 'midi_pitch': 38},
-        {'onset_time_seconds': 1.0, 'midi_pitch': 42}, {'onset_time_seconds': 1.5, 'midi_pitch': 42},
-        {'onset_time_seconds': 2.0, 'midi_pitch': 36}, {'onset_time_seconds': 2.0, 'midi_pitch': 42},
-        {'onset_time_seconds': 2.5, 'midi_pitch': 42}, {'onset_time_seconds': 3.0, 'midi_pitch': 38},
-        {'onset_time_seconds': 3.0, 'midi_pitch': 42}, {'onset_time_seconds': 3.5, 'midi_pitch': 42},
+        {'onset_time_seconds': 0.0, 'drum_type': 'kick'},
+        {'onset_time_seconds': 0.0, 'drum_type': 'crash_cymbal'},
+        {'onset_time_seconds': 0.5, 'drum_type': 'hi-hat_closed'},
+        {'onset_time_seconds': 1.0, 'drum_type': 'snare'},
+        {'onset_time_seconds': 1.0, 'drum_type': 'hi-hat_closed'},
+        {'onset_time_seconds': 1.5, 'drum_type': 'hi-hat_closed'},
+        {'onset_time_seconds': 2.0, 'drum_type': 'kick'},
+        {'onset_time_seconds': 2.0, 'drum_type': 'hi-hat_closed'},
+        {'onset_time_seconds': 2.5, 'drum_type': 'hi-hat_closed'},
+        {'onset_time_seconds': 3.0, 'drum_type': 'snare'},
+        {'onset_time_seconds': 3.0, 'drum_type': 'hi-hat_closed'},
+        {'onset_time_seconds': 3.5, 'drum_type': 'hi-hat_closed'},
     ]
     generate_drum_score(mock_drum_hits, tempo=120)

@@ -5,7 +5,7 @@ import json
 import subprocess
 import music21
 from music21 import stream, note, chord, meter, clef, instrument, beam
-from . import constants # Import the constants from the same module
+import constants # Import the constants from the same module
 
 def generate_drum_score(events, tempo=120, output_filename="drum_test_score"):
     """

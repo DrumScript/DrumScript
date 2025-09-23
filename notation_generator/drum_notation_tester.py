@@ -44,7 +44,7 @@ def generate_drum_score(events, tempo=120, output_filename="drum_test_score"):
             duration_qn = 0.5
 
         # --- MODIFIED SECTION ---
-        # Look up the MIDI pitch for each drum type from our constants map
+        # Look up the MIDI pitch for each drum type from constants map
         midi_pitches = [constants.DRUM_NOTATION_MAP[event['drum_type']]['midi_pitch'] for event in group]
 
         if len(midi_pitches) == 1:

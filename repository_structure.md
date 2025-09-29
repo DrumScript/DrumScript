@@ -1,17 +1,19 @@
 ## `DrumScript`  Python Package Structure
 
 
-<!--date_created: sun-15-june-2025-->
-<!--date_updated: weds-10-sept-2025-->
+##  **Repository Structure**
 
----
-### **Modular Structure**
+This document outlines the directory and file structure of the `DrumScript` project.
 
+> **PLEASE NOTE (Aug-25 update):** This **repository structure/tree diagram etc** needs to be updated. 
 
 ```markdown
 # Repository Structure
 
+
+
 This document outlines the directory and file structure of the `DrumScript` project.
+
 
 **DrumScript/                        # The main Python package, a package that takes drum audio and converts it into drum sheet music**
 ├── __init__.py                    # Makes 'DrumScript' a Python package
@@ -33,26 +35,26 @@ This document outlines the directory and file structure of the `DrumScript` proj
 ├── audio_processor/               # PYTHON MODULE: Handles audio loading, normalisation, onset detection, and feature extraction
 │   │   ├── __init__.py
 │   │   ├── audio_loader.py        # Loads and normalises audio files
+│   │   ├── feature_extractor.py   # Extracts features for classification
 │   │   ├── onset_detector.py      # Detects drum hit onsets
-│   │   ├── tempo_detector.py      # Estimates the tempo (BPM) of an audio file
-│   │   ├── tempogram.py           # Generates a visual representation of the audio's tempo
-│   │   └── feature_extractor.py   # Extracts features for classification
-├── data_labeller/                 # PYTHON MODULE: For building custom drum training data and datasets for ML-purposes
+│   │   ├── tempo_detector.py      # Automatic tempo detection from audio data.
+│   │   └── tempogram.py           # Visualising tempo using librosa's `tempogram` function
+├── data_labeller/                 # [LEGACY] PYTHON MODULE: For building custom drum training data and datasets for ML-purposes
 │   │   ├── __init__.py
 │   │   ├── data_labeller.py        # Loads and normalises audio files
 │   │   ├── data_labeler.md         # Detects drum hit onsets
 │   │   ├── docs/                   # Associated documentation for `data_labeller/` module
-├── drum_classifier/                # PYTHON MODULE: Machine learning module for drum sound/audio classification (uses Deep Learning)
+├── drum_classifier/                # [SEPT-25 UPDATE: CLASSIFICATION APPROACH WITHOUT ML TO BE TRIED FIRST] PYTHON MODULE: Machine learning module for drum sound/audio classification (uses Deep Learning)
 │   │   ├── __init__.py
-│   │   ├── data_preparer.py       # Prepares audio features into a dataset for training
-│   │   ├── drum_model.py          # Defines the drum classification model architecture (e.g., Convolutional Neural Network (CNN) using Tensorflow)
-│   │   ├── generate_score.py      # TESTING [CURRENT]: Script for interpreting outputs (`prediction_output.json`) to see what resultant `.PDF` or `.XML` looks like, such as when the model is changed/updated/improved
-│   │   └── model_trainer.py       # Script for training, evaluating, and saving the drum classification model
-│   │   └── predict.py             # TESTING [CURRENT]: Script for testing the model outputs on single existing audio file
-│   │   └── prediction_output.json # TESTING [CURRENT]: Output of the `predict.py` script, `.json` file that **lists all events detected** and specifies, for each event:   `drum_type`, `onset_time_seconds`,`midi_pitch`,`note_head_type`: `x`,`staff_position`, `display_name`
+│   │   ├── data_preparer.py       # [SEPT-25 UPDATE: CLASSIFICATION APPROACH WITHOUT ML TO BE TRIED FIRST] Prepares audio features into a dataset for training
+│   │   ├── drum_model.py          # [SEPT-25 UPDATE: CLASSIFICATION APPROACH WITHOUT ML TO BE TRIED FIRST] Defines the drum classification model architecture (e.g., Convolutional Neural Network (CNN) using Tensorflow)
+│   │   ├── generate_score.py      # Script for interpreting outputs (`prediction_output.json`) to see what resultant `.PDF` or `.XML` looks like, such as when the model is changed/updated/improved
+│   │   └── model_trainer.py       # [SEPT-25 UPDATE: CLASSIFICATION APPROACH WITHOUT ML TO BE TRIED FIRST] Script for training, evaluating, and saving the drum classification model
+│   │   └── predict.py             # [SEPT-25 UPDATE: CLASSIFICATION APPROACH WITHOUT ML TO BE TRIED FIRST] Script for testing the model outputs on single existing audio file
+│   │   └── prediction_output.json # [SEPT-25 UPDATE: CLASSIFICATION APPROACH WITHOUT ML TO BE TRIED FIRST] Output of the `predict.py` script, `.json` file that **lists all events detected** and specifies, for each event:   `drum_type`, `onset_time_seconds`,`midi_pitch`,`note_head_type`: `x`,`staff_position`, `display_name`
 │   │   ├── docs/                  # Associated documentation for `drum_classifier/` module
-├── midi_percussion_map.csv        # TESTING (CURRENT): A 'master' map that provides `midi_note`, `key/note`, `instrument_name`, `articulation`,`notation_style`,`staff_position`, `instrument_family`,`common_genre`
-├── models/                        # Outputs from CNN model learning used to generate/predict events in new audio
+├── midi_percussion_map.csv        # A 'master' map that provides `midi_note`, `key/note`, `instrument_name`, `articulation`,`notation_style`,`staff_position`, `instrument_family`,`common_genre`
+├── models/                        # [SEPT-25 UPDATE: CLASSIFICATION APPROACH WITHOUT ML TO BE TRIED FIRST] Outputs from CNN model learning used to generate/predict events in new audio
 │   │   ├── multi_label_drum_classifier_model.h5     
 │   │   ├── multi_label_label_map.json           
 │   │   └── multi_label_scaler.joblib
@@ -64,12 +66,12 @@ This document outlines the directory and file structure of the `DrumScript` proj
 │   │   └── pdf_exporter.py        # Script for converting drum mappings to pdf output
 │   │   ├── score_builder.py       # Builds a score based on extracted features and predictive power of CNN machine learning model in `drum_classifier/`
 ├── outputs/                       # XML, Midi and PDF outputs, stored relative to the module origin
-│   │   ├──drum_classifier/       # The subdirectories of `.outputs/drum_classifier/` are generated when the code is run.
+│   │   ├──drum_classifier/        # The subdirectories of `.outputs/drum_classifier/` are generated when the code is run.
 │   │   ├──notation_generator/
 ├── training_data/                 # Folder for training data sets
 │   │   ├──ENST/                   # The primary dataset used to train the model
 │   │   ├──ENST_processed/         # A processed version of the ENST dataset. 
-│   │   ├──ENST_processed/         # A processed version of the ENST dataset        
+│   │   ├──process_ENST_dataset.py # A script that takes ENST/ data and processes it ready for use in ML
 ├── utils/                         # Utility functions (e.g., for file handling, configuration)
 │   │   ├──__init__.py
 │   │   ├──config.py               # Defines things like `QUANTIZATION_SUBDIVISION` and `PDF_PAGE_SIZE`
@@ -81,11 +83,10 @@ This document outlines the directory and file structure of the `DrumScript` proj
 > **NOTE:** 
 > 1. Some elements of the script `.utils/config.py` could be moved to the `notation_generator/constants.py` file.
 > 2. The `.training_data/ENST` and `.training_data/ENST_processed` folders can tend to get very large and so, these are **not** published on the repo. 
-> 3. I have **marked** in **[Repository Structure](#repository-structure)** where the project is currently, using the tag `# TESTING [CURRENT]`
 
 
 ---
-### **Modular Descriptions**
+### **Modular Descriptions** (Requires update per Sept-25)
 
 #### `audio_processor/`
 

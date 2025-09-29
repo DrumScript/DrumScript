@@ -1,170 +1,167 @@
 ## **DrumScript**
 
 <!--date_created: sun-15-june-2025-->
-<!--date_updated: weds-10-sept-2025-->
+<!--date_updated: weds-24-sept-2025-->
 
 > **Python 3.12.10**
 
-`DrumScript` is a `Python package` that converts **drum audio** into **sheet music (drum notation)** in PDF format. 
+`DrumScript` is a `Python` package that converts **drum audio** into **sheet music** (drum notation). [cite\_start]Born from a drummer's need for accessible sheet music, this project aims to be a free, open-source tool for the music community[cite: 2, 3].
 
-It leverages **advanced audio signal processing** and **machine learning** to detect individual drum hits (*kick*, *snare*, *hi-hat*, etc.) and translate them into a **musical score**, either as `.XML` or `.pdf`.
+[cite\_start]It leverages **audio signal processing** and a **Convolutional Neural Network (CNN)** to detect individual drum hits, transcribe them into a **musical score**, and export them as `.pdf` or `.xml` files, which you can use directly or import into software like Guitar Pro or Logic Pro[cite: 11, 12].
 
-***[hello.drumscript@gmail.com](hello.drumscript@gmail.com)***
+***[hello.drumscript@gmail.com](mailto: hello.drumscript@gmail.com)***
 
 ---
 
- - **[Features](#features-1)**
- - **[Installation](#installation)**
- - **[Usage](#usage)**
-   - **[Arguments](#arguments)**
-   - **[Options](#options)**
-   - **[Example](#example)**
- - **[Model Training](#model-training)**
- 
- <!--- **[License](#license)**-->
- - **[Contributing](#contributing)**
- - **[Contact](#contact)**
- - **[FAQs](#faqs)**
+  - **[Features](#features)**
+  - **[Roadmap](#roadmap)**
+  - **[Installation](#installation)**
+  - **[Usage](#usage)**
+      - **[Arguments](#arguments)**
+      - **[Options](#options)**
+      - **[Example](#example)**
+  - **[Model Training](#model-training)**
+  - **[Contributing](#contributing)**
+  - **[Contact](#contact)**
+  - **[FAQs](#faqs)**
 
-> **NOTE:** See **[how_it_works.md](how_it_works.md)** if you are interested in the link between **music theory** and `DrumScript` structure. 
+> **NOTE:** See **[`developer_docs/how_it_works.md`](#developer_docs/how_it_works.md)** if you are interested in the link between **music theory** and `DrumScript`'s structure.
 
-> **NOTE:**  For simplicity, `DrumScript` uses the generic spelling of the word ***quantize***, rather than British English spelling ***quantise***. 
+> **NOTE:** For simplicity, `DrumScript` uses the generic spelling of the word ***quantize***, rather than the British English spelling ***quantise***.
 
 ---
 
 ### Features
 
-* **Audio Input:** Supports common audio formats such as `.mp3`
-* **Drum Hit Detection:** Identifies the precise timing of drum strikes.
-* **Automatic Tempo Detection:** Estimates the tempo (BPM) of an audio file for accurate musical quantization.
-* **Tempo Visualisation:** Generates a visual representation of the audio's rhythmic pulse.
-* **Drum Classification:** Differentiates between various drum kit elements (e.g., kick, snare, hi-hat).
-* **Musical Quantization:** Aligns detected drum hits to a musical grid for accurate notation.
-* **PDF Sheet Music Output:** Generates clear and readable drum notation.
+  * **Audio Input:** Supports common audio formats like `.wav` and `.mp3`.
+  * **Drum Hit Detection:** Identifies the precise timing of drum strikes using onset detection algorithms.
+  * **Multi-Instrument Classification:** Differentiates between various drum kit elements (e.g., kick, snare, hi-hat) and can identify **concurrent hits** (e.g., a kick and crash cymbal played at the same time).
+  * **Musical Quantization:** Aligns detected drum hits to a musical grid for clean, accurate notation.
+  * **Sheet Music Output:** Generates clear and readable drum notation in both `.pdf` and MusicXML (`.xml`) formats.
 
+### Roadmap
+
+Here are some features planned for future releases:
+
+  * **Automatic Tempo Detection:** Estimate the tempo (BPM) of an audio file automatically.
+  * **Advanced Notation:** Add support for accents, ghost notes, and more complex rhythmic figures.
+  * **Expanded Instrument Range:** Increase the number of percussion instruments the model can detect, including those used in specific genres (e.g., double-bass for metal).
+  * [cite\_start]**UI Integration:** Connect the package to a free-to-use public web interface[cite: 17].
 
 ---
 
 ### Installation
 
-`DrumScript` uses `uv` for efficient dependency management and project setup.
+`DrumScript` uses `uv` for efficient dependency management.
 
 1.  **Clone the repository:**
-
     ```bash
-    git clone https://github.com/your-username/DrumScript.git
+    git clone https://github.com/victoria-mckinney/DrumScript.git
     cd DrumScript
     ```
-
-2.  **Create a virtual environment and install dependencies using `uv`:**
-
+2.  **Create a virtual environment and install dependencies:**
     ```bash
     uv venv
-    source .venv/bin/activate  # On Windows, use `.venv\Scripts\activate`
+    source .venv/bin/activate  # On Windows, use: .venv\Scripts\activate
     uv pip install -r requirements.txt
     ```
 
-> **NOTE:** 
-> Other `Python` package managers, ie `pip`, `conda`, `pyenv`, `hatch`, `poetry` may be used interchangeably with the commands above.
->
-**LilyPond Installation**
+> **NOTE:** Other `Python` package managers, like `pip` or `conda`, can be used interchangeably with the commands above.
 
-To generate high-quality PDF sheet music, DrumScript utilises `music21` which, in turn, relies on an external music engraving program called **LilyPond**. You'll need to install LilyPond separately on your system for PDF export functionality to work.
+#### LilyPond Installation
+
+To generate high-quality PDF sheet music, `DrumScript` uses `music21`, which relies on the music engraving program **LilyPond**. You must install LilyPond separately.
 
   * **Download & Install LilyPond:**
-
-      * Visit the official LilyPond website: [https://lilypond.org/](https://lilypond.org/) and download the appropriate version for your operating system.
-      * **macOS Users:** LilyPond can be easily installed via [Homebrew](https://brew.sh/) by running:
+      * Visit the official LilyPond website: [https://lilypond.org/](https://lilypond.org/) and download the version for your OS.
+      * **macOS Users:** You can install via [Homebrew](https://brew.sh/):
         ```bash
         brew install lilypond
         ```
-
   * **Verify Installation:**
-    You can verify LilyPond is correctly installed and accessible by opening your terminal/command prompt and typing:
-
+    Check that LilyPond is installed correctly by running:
     ```bash
     lilypond --version
     ```
 
-    This should display the installed LilyPond version information.
-
-`music21` will automatically try to locate your LilyPond installation. If you encounter errors during PDF generation, you might need to manually configure the LilyPond path within `music21` (refer to the `DrumScript/notation_generator/pdf_exporter.py` file for guidance on this).
+`music21` will attempt to find LilyPond automatically. If you encounter errors, you may need to configure the path manually (see `DrumScript/notation_generator/pdf_exporter.py`).
 
 ---
+
 ### Dependencies
-A list of dependencies can be found in **[`requirements.txt`](requirements.txt)** and in **[`pyproject.toml`](pyproject.toml)**
 
-
----
-> **Important  note for audio playback [`sounddevice`](https://python-sounddevice.readthedocs.io/en/0.5.1/):** 
-        >
-        > **`sounddevice`** relies on a system-level library called **[PortAudio](https://www.portaudio.com/). You might need to install this separately**:
-        >
-        > * **macOS:** `brew install portaudio` (if you have Homebrew)
-        > * **Ubuntu/Debian:** `sudo apt-get install libportaudio2`
-        > * **Windows:** `PortAudio` usually comes bundled with `sounddevice` wheels, but you might need to find specific installation instructions for your Python distribution.
-        > 
-        > **[`PortAudio` source code](https://github.com/PortAudio/portaudio)**
-
-
+A full list of dependencies can be found in **[`requirements.txt`](#requirements.txt)** and **[`pyproject.toml`](#pyproject.toml)**.
 
 ---
-> **Important note for `.mp3` users**
 
-**See also **[FAQs](#faqs)****
+> **Important note for audio playback (`sounddevice`):**
+>
+> The `sounddevice` library relies on **[PortAudio](https://www.portaudio.com/)**. You might need to install this system-level library separately:
+>
+>   * **macOS:** `brew install portaudio`
+>   * **Ubuntu/Debian:** `sudo apt-get install libportaudio2`
+>   * **Windows:** PortAudio is usually bundled with `sounddevice` wheels, but check official documentation if you have issues.
+>
+> **[`PortAudio` source code](#https://github.com/PortAudio/portaudio%5D\(https://github.com/PortAudio/portaudio\))**
 
-In order to use `.mp3` files, users must **first install** [`FFmpeg`](), a free command-line tool downloaded via [`Homebrew`](https://brew.sh/) designed for processing video and audio files. 
-
-##### Installing [`FFmpeg`](https://ffmpeg.org/download.html)
-
-**How to install [`FFmpeg`](https://ffmpeg.org/download.html) via `DrumScript`**
-
-```python
-
-# In your main.py, or any script where you want to ensure FFmpeg is present
-import drumscript
-
-# sudo on Linux/macOS: The automated installation attempts for Linux and macOS will prompt the user for their sudo password. This is necessary for system-wide package installations. The user must explicitly type 'y' to agree.
-
-# Call the utility function
-drumscript.install_ffmpeg()
-
-#  automating PATH modification on Windows is significantly more complex and error-prone from a Python script, especially persistently for all users or without administrator privileges. Therefore, for Windows, the function provides clear manual instructions only.
-
-# Now proceed with loading audio, etc.
-# audio_data, sr = drumscript.audio_processor.audio_loader.load_audio("your_drum_track.mp3")
-```
-**How to install `FFmpeg` manually**
-- **macOS (using [Homebrew](https://brew.sh/))**
-
-```Bash
-brew install ffmpeg
-```
- - **Linux (using apt for Debian/Ubuntu)**
-
-``` Bash
-sudo apt update
-sudo apt install ffmpeg
-```
- - **Windows:**
-  > This is a bit more involved. You typically download the `FFmpeg` binaries (as a `.zip` file) from the **[official website](ffmpeg.org/download.html)**, extract them, and then add the `bin` directory of the extracted `FFmmpeg` folder to your system's `PATH` environment variable. There are many tutorials online for this specific step on Windows.
 ---
+
+> **Important note for `.mp3` users:**
+>
+> **See also [FAQs](#faqs)**
+>
+> To process `.mp3` files, you must first install **`FFmpeg`**, a command-line tool for handling audio and video.
+>
+> ##### Installing `FFmpeg`
+>
+> **How to install `FFmpeg` via `DrumScript`**
+>
+> The package includes a helper script for easy installation.
+>
+> ```python
+> # In your main.py or another script
+> import utils.ffmpeg_installer as ffmpeg_installer
+> ```
+
+> # This will prompt for a password on Linux/macOS for system-wide installation.
+>
+> ffmpeg\_installer.install\_ffmpeg()
+>
+> ````
+> 
+> **How to install `FFmpeg` manually**
+
+>   * **macOS (using [Homebrew](https://brew.sh/))**:
+>     ```bash
+>     brew install ffmpeg
+>     ```
+>   * **Linux (using apt for Debian/Ubuntu)**:
+>     ```bash
+>     sudo apt update
+>     sudo apt install ffmpeg
+>     ```
+>   * **Windows**:
+>     Download the binaries from the **[official website](https://ffmpeg.org/download.html)**, extract the files, and add the `bin` directory to your system's `PATH` environment variable.
+> ````
+
+---
+
 ### Usage
 
-Once installed, you can run `DrumScript` from the command line.
+Run `DrumScript` from the command line using `main.py`.
 
 ```bash
-python main.py <input_audio_file.wav> <output_sheet_music.pdf> [OPTIONS]
+python main.py <input_audio_file> <output_sheet_music_path> [OPTIONS]
 ```
 
 #### Arguments
 
-* `<input_audio_file.wav>`: The path to your drum audio recording.
-* `<output_sheet_music.pdf>`: The desired path for the generated PDF sheet music.
+  * `<input_audio_file>`: Path to your drum audio recording (`.wav`, `.mp3`, etc.).
+  * `<output_sheet_music_path>`: Desired path for the generated file (e.g., `drum_score.pdf` or `drum_score.xml`).
 
 #### Options
 
-* `--tempo <BPM>`: (Optional) Specify the tempo of the drum performance in Beats Per Minute (BPM). If not provided, `DrumScript` will attempt to detect the tempo or use a default.
+  * `--tempo <BPM>`: (Optional) Manually specify the tempo in Beats Per Minute. If not provided, a default tempo will be used.
 
 #### Example
 
@@ -176,127 +173,54 @@ python main.py my_drum_track.wav drum_score.pdf --tempo 120
 
 ### Model Training
 
-`DrumScript` relies on a machine learning model to classify drum sounds. For optimal performance, you might need to train or fine-tune this model with your own data.
+`DrumScript` uses a **Convolutional Neural Network (CNN)**, built with TensorFlow, to classify drum sounds. The model is trained on Mel spectrograms generated from audio files.
 
-The initial model provided with this package was trained using the **ENST-Drums database**.
-
-#### Training Data: ENST-Drums Dataset
-
-The model was trained on the ENST-Drums dataset, a comprehensive audio-visual database of drum performances created for research purposes. This extensive collection features recordings from three professional drummers on their own kits, using various sticks (sticks, rods, brushes, and mallets) to capture a wide diversity of sounds.
-
-The dataset is fully annotated, providing precise timings for each drum event, which makes it an excellent resource for training machine learning models for drum transcription.
+The initial model was trained on the **ENST-Drums database**, a comprehensive, publicly available audio-visual dataset created for music information retrieval research. It features recordings from three professional drummers using various sticks and kits, making it an excellent resource for this task.
 
 **Link to the original paper**:
 
->**[***ENST-Drums: an extensive audio-visual database for drum signals processing***. Olivier Gillet and Gaël Richard. ***In Proc of the 7th International Society for Music Information Retrieval Conference (ISMIR'06), Victoria, Canada, 2006.***](https://archives.ismir.net/ismir2006/paper/000027.pdf)**
+> [***ENST-Drums: an extensive audio-visual database for drum signals processing***. Olivier Gillet and Gaël Richard. ***In Proc of the 7th International Society for Music Information Retrieval Conference (ISMIR'06), Victoria, Canada, 2006.***](https://archives.ismir.net/ismir2006/paper/000027.pdf)
 
-> You can find more information and download the dataset from the official webpage: ***[http://www.enst.fr/\~grichard/ENST-drums/](http://www.enst.fr/~grichard/ENST-drums/)***.
+> You can find more information and download the dataset here: ***[http://www.enst.fr/\~grichard/ENST-drums/](http://www.enst.fr/~grichard/ENST-drums/)***.
 
---
-
-Instructions for training the model with your own data will be provided in a dedicated section (e.g., `drum_classifier/README.md`) within the `drum_classifier/` directory. This typically involves:
-
-1.  Preparing a labeled dataset of drum sounds.
-2.  Running a training script (e.g., `python drum_classifier/train_model.py`).
+Instructions for training the model with your own data can be found in the `drum_classifier/` directory.
 
 ---
 
 ### Contributing
 
-We welcome contributions to `DrumScript`! 
-
-If you have ideas for improvements, bug fixes, or new features, please **[open an issue](https://github.com/victoria-mckinney/DrumScript/issues/new)** or submit a **[pull request](https://github.com/victoria-mckinney/DrumScript/pulls)**.
-
-####  Training the Model
-Instructions for training the model with your own data will be provided in a dedicated section (e.g., `drum_classifier/README.md`) within the `drum_classifier/` directory. This typically involves:
-
-1.  Preparing a labeled dataset of drum sounds.
-2.  Running a training script (e.g., `python drum_classifier/train_model.py`).
-
-
-
-<!--
----### License # Comment out again once license is chosen/added
-
-This project is licensed under the **MIT License**. See the **[`LICENSE` file]()** for details.-->
+We welcome contributions\! `DrumScript` is intended to be a community-owned project. If you have ideas, bug fixes, or new features, please **[open an issue](https://github.com/victoria-mckinney/DrumScript/issues/new)** or submit a **[pull request](https://github.com/victoria-mckinney/DrumScript/pulls)**.
 
 ---
 
 ### Contact
 
-For questions or support, please **[open an issue](https://github.com/victoria-mckinney/DrumScript/issues)** on the **[GitHub repository](https://github.com/victoria-mckinney/DrumScript)**, or email the code maintainers:
+For questions or support, please **[open an issue](https://github.com/victoria-mckinney/DrumScript/issues)** on the GitHub repository or email the maintainers:
 
-***[hello.drumscript@gmail.com](hello.drumscript@gmail.com)***
+***[hello.drumscript@gmail.com](#hello.drumscript@gmail.com)***
 
 ---
 
 ### FAQs
 
- - #### Why don't you just include `FFmpeg` as a dependency rather than a specific download requirement?
-    
-    We cannot directly bundle or automatically install [`FFmpeg`](https://ffmpeg.org/download.html) at the **Python project dependency level** (via `uv pip install` or or in `pyproject.toml`) for all operating systems.
-
- - #### Is it safe to install system-wide dependencies using `DrumScript`, ie. `drumscript.install_ffmpeg()`?
-
-    Utility functions like `drumscript.install_ffmpeg()` are wrappers that serve **as an aid**. They are helpers than **run on every OS**.  However, usage is **optional**.Users are welcome to follow **[manual instructions for installing `FFmpeg`](#how-to-install-ffmpeg-manually)** provided.
-    >
-    **Note for `Linux`/`macOS`**: For `sudo` commands, `shell=True` is often used. It's important to be cautious, ie with `shell=True` as it can introduce security risks if the command being executed includes untrusted input. In this case, the commands are **hardcoded** and **safe*
-
- - #### What normalisation is applied to loaded audio?
-
-    Audio is loaded into `DrumScript` using the `.audio_processor/audio_loader.py` script. The `audio_loader.py` script applies **peak normalisation** to the audio after loading it. The process is straightforward and happens in two main steps inside the `load_audio` function:
->  1.  First, the script loads the audio file and converts it to a mono signal.
-> 2.  It then immediately passes this audio data to the `normalise_audio` function, which uses the `librosa.util.normalise(y)` command to perform the normalisation.
-
-
- - #### **What is `peak normalisation`? 🔊**
-
-    **Peak normalisation** is a process that adjusts the volume of an audio file so that its loudest point—the "peak"—is set to a maximum level (in this case, 1.0) without clipping or distortion.
-    >
-    Think of it like adjusting the brightness of a group photo. The software finds the single brightest spot in the entire image and adjusts the overall brightness of the photo so that this one spot is pure white. Every other part of the image is brightened by the same amount, preserving all the relative differences in light and shadow.
-    >
-    Peak normalisation does the same for audio. It finds the loudest drum hit in the entire track and boosts the volume of the whole file so that this single hit is at maximum loudness. The relative volume between all other hits is perfectly preserved. 
-
- - #### Why is `peak_normalisation` used in `DrumScript`?
-
-    Applying peak normalisation is a crucial step for preparing data for a machine learning model. By ensuring that every audio file has a consistent peak volume, it prevents the model from being biased by how loud or quiet the original recording was.
-    >
-    This forces the model to learn the **timbre** and **texture** of a snare drum, for example, rather than just learning that "loud sounds are snare drums." It ensures the model makes classifications based on the sonic character of the instruments, n
- - ####  Why normalise imported audio at all? 
-
-    The reason we normalise is to make the machine learning model robust to differences in recording volume.
-    >
-    Without normalisation, our model might learn that a snare drum is a sound with a high RMS (loudness) value. But what happens when it analyses a track that was recorded very quietly? The snare's RMS value might be lower than a kick drum's from a different, louder recording. The model would get confused.
-    >
-    By normalising every audio file, we remove the variable of recording level. This forces the model to learn the true sonic fingerprint of each drum—its timbre, its frequency content, its attack—which remains consistent regardless of how loud it is.
-
- - ####  Don't you lose detail by normalising imported audio?
-
-    The peak normalsation used in our `audio_loader.py` script is a **linear process**. This means it multiplies **every single audio sample** by the **exact same constant value**. It's the digital equivalent of turning a volume knob.
-    >
-    **Analogy:** Think of it like changing the brightness of a photograph. You make every pixel brighter by the same amount, but you don't lose any detail. The shapes, textures, and relative differences between light and dark areas remain perfectly intact. The photo is just brighter. The same is true for your audio. The "shape" of the sound wave—which determines all the features like `MFCCs`, `spectral centroid`, and `rhythm`—is completely preserved. The audio is just made louder or quieter to fit a standard level.
-
- - #### What is is `hop_length`? 
-
-      **`hop_length`** is the **number of audio samples** between the **start of one analysis window** and the **start of the nex**t.
-
-      When `librosa` analyses audio, it doesn't look at the whole file at once; instead, it slides a small ***window* across the audio** and **analyses each chunk.** The `hop_length` is the distance that window ***hops*** forward for each step. 
-      >
-      * A **large** `hop_length` means fewer, bigger jumps, which is faster but less detailed.
-      >
-      * A **small** `hop_length` means more, smaller steps with more overlap, giving a much more detailed and precise analysis of time.
-      >
-      For example, if the `hop_length` has a value of **`256`**, this corresponds to **256 audio samples**. We can translate this into seconds with the designated `SAMPLE_RATE(sr)` in `DrumScript`: **`sample_rate=44100`**
-      >
-      $$\frac{256 \text{ samples}}{44100 \text{ samples per second}} \approx 0.0058 \text{ seconds (or 5.8 milliseconds)}$$
-      >
-      If, however, we were to change **`sample_rate=22050`**, this would become:
-      >
-      $$\frac{256 \text{ samples}}{22050 \text{ samples per second}} \approx 0.01160 \text{ seconds (or 11.6 milliseconds)}$$
-      >
-
-      
-
+  * #### Why don't you include `FFmpeg` as a dependency?
+    `FFmpeg` is a system-level program, not a Python library, so it cannot be bundled directly into the package's dependencies via `requirements.txt` or `pyproject.toml`. It must be installed on the operating system itself.
+  * #### Is it safe to use the `install_ffmpeg()` helper script?
+    Yes. The script is a simple wrapper that runs standard, trusted installation commands for each OS. However, you are always welcome to follow the manual installation instructions instead.
+  * #### What normalization is applied to loaded audio?
+    The `audio_loader.py` script applies **peak normalization** after loading an audio file. It first converts the audio to mono and then normalizes it using `librosa.util.normalize()`.
+  * #### What is `peak normalization`? 🔊
+    Peak normalization adjusts an audio file's volume so that its loudest point (the "peak") is set to a maximum level (1.0) without distortion. This standardizes the volume across different recordings, ensuring the machine learning model isn't biased by how loud or quiet the original audio was. It forces the model to learn the sonic **character** of each drum, not just its loudness.
+  * #### Does normalization remove audio detail?
+    No. Peak normalization is a **linear process**—it multiplies every audio sample by the same constant value, like turning a volume knob. The "shape" of the sound wave, which contains all the sonic details and rhythmic information, is perfectly preserved.
+  * #### What is `hop_length`?
+    When analyzing audio, `librosa` slides a small window across the audio file. The **`hop_length`** is the number of audio samples the window "hops" forward for each step. A smaller `hop_length` results in more analysis windows and a more detailed, time-accurate analysis, which is crucial for capturing fast musical passages. For example, with a sample rate of 44100 Hz and a `hop_length` of 256 samples, the analysis resolution is:
+    $$
+    $$$$\\frac{256 \\text{ samples}}{44100 \\text{ samples per second}} \\approx 0.0058 \\text{ seconds (or 5.8 milliseconds)}
+    $$
+    $$$$
+    $$
+    $$
 ---
 
 <!--END -->

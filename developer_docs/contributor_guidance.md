@@ -71,7 +71,7 @@ uv run python3 main.py test_audio/reference_audio/test.mp3 output.pdf
 
 This should generate `output.pdf` in your root directory.
 
------
+---
 
 ## Development Workflow
 
@@ -126,7 +126,7 @@ We follow a **feature branch workflow** with **Pull Requests** to ensure code qu
       * Make any necessary changes in your feature branch and push them. They will automatically appear in the PR.
       * Once approved, your PR can be merged into `main`.
 
------
+---
 > ## Editing the project in package-editing mode:
 >
 > For the purpose of amending package elements it is **recommended** that, once you have completed **[setup per the instructions in the `README.md`]((README.md))**, that you **edit the package in pip package-editing mode**, in order to streamline modules etc. To do this:
@@ -149,13 +149,13 @@ To maintain consistency and readability, please adhere to the following:
         uv run ruff check .
         ```
 
------
+---
 
 ## Testing
-m irectory. (If you use `pytest`, you can add instructions here like `uv run pytest local_tests/`).
+ (If you use `pytest`, you can add instructions here like `uv run pytest local_tests/`).
   * **New Contributions:** If you add new functionality, please consider adding corresponding tests.
 
------
+---
 
 ## Reporting Issues & Feature Requests
 
@@ -164,7 +164,7 @@ If you find a bug or have an idea for a new feature, please open an issue on the
   * **For Bugs:** Please provide a clear description of the problem, steps to reproduce it, expected behavior, and your environment details.
   * **For Features:** Describe the idea, why it would be useful, and any potential implementation details.
 
------
+---
 
 ## Questions & Support
 

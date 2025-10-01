@@ -1,13 +1,13 @@
 ## **DrumScript**
 
 <!--date_created: sun-15-june-2025-->
-<!--date_updated: weds-24-sept-2025-->
+<!--date_updated: weds-01-oct-2025-->
 
 > **Python 3.12.10**
 
-`DrumScript` is a `Python` package that converts **drum audio** into **sheet music** (drum notation). [cite\_start]Born from a drummer's need for accessible sheet music, this project aims to be a free, open-source tool for the music community[cite: 2, 3].
+`DrumScript` is a `Python` package that converts **drum audio** into **sheet music** (drum notation). Born from a drummer's need for accessible sheet music, this project aims to be a free, open-source tool for the music community.
 
-[cite\_start]It leverages **audio signal processing** and a **Convolutional Neural Network (CNN)** to detect individual drum hits, transcribe them into a **musical score**, and export them as `.pdf` or `.xml` files, which you can use directly or import into software like Guitar Pro or Logic Pro[cite: 11, 12].
+It leverages **audio signal processing** and a **rule-based classification engine** to detect individual drum hits, transcribe them into a **musical score**, and export them as `.pdf` or `.xml` files, which you can use directly or import into software like Guitar Pro or Logic Pro.
 
 ***[hello.drumscript@gmail.com](mailto: hello.drumscript@gmail.com)***
 
@@ -20,7 +20,6 @@
       - **[Arguments](#arguments)**
       - **[Options](#options)**
       - **[Example](#example)**
-  - **[Model Training](#model-training)**
   - **[Contributing](#contributing)**
   - **[Contact](#contact)**
   - **[FAQs](#faqs)**
@@ -34,6 +33,7 @@
 ### Features
 
   * **Audio Input:** Supports common audio formats like `.wav` and `.mp3`.
+  * **Automatic Tempo Detection:** Estimates the tempo (BPM) of an audio file automatically.
   * **Drum Hit Detection:** Identifies the precise timing of drum strikes using onset detection algorithms.
   * **Multi-Instrument Classification:** Differentiates between various drum kit elements (e.g., kick, snare, hi-hat) and can identify **concurrent hits** (e.g., a kick and crash cymbal played at the same time).
   * **Musical Quantization:** Aligns detected drum hits to a musical grid for clean, accurate notation.
@@ -43,10 +43,9 @@
 
 Here are some features planned for future releases:
 
-  * **Automatic Tempo Detection:** Estimate the tempo (BPM) of an audio file automatically.
   * **Advanced Notation:** Add support for accents, ghost notes, and more complex rhythmic figures.
-  * **Expanded Instrument Range:** Increase the number of percussion instruments the model can detect, including those used in specific genres (e.g., double-bass for metal).
-  * [cite\_start]**UI Integration:** Connect the package to a free-to-use public web interface[cite: 17].
+  * **Expanded Instrument Range:** Increase the number of percussion instruments the system can detect, including those used in specific genres (e.g., double-bass for metal).
+  * **UI Integration:** Connect the package to a free-to-use public web interface.
 
 ---
 
@@ -102,7 +101,7 @@ A full list of dependencies can be found in **[`requirements.txt`](#requirements
 >   * **Ubuntu/Debian:** `sudo apt-get install libportaudio2`
 >   * **Windows:** PortAudio is usually bundled with `sounddevice` wheels, but check official documentation if you have issues.
 >
-> **[`PortAudio` source code](#https://github.com/PortAudio/portaudio%5D\(https://github.com/PortAudio/portaudio\))**
+> **[`PortAudio` source code](https://github.com/PortAudio/portaudio%5D\(https://github.com/PortAudio/portaudio\))**
 
 ---
 
@@ -127,10 +126,11 @@ A full list of dependencies can be found in **[`requirements.txt`](#requirements
 >
 > ffmpeg\_installer.install\_ffmpeg()
 >
-> ````
+> ```
 > 
 > **How to install `FFmpeg` manually**
-
+> ```
+>
 >   * **macOS (using [Homebrew](https://brew.sh/))**:
 >     ```bash
 >     brew install ffmpeg
@@ -142,7 +142,11 @@ A full list of dependencies can be found in **[`requirements.txt`](#requirements
 >     ```
 >   * **Windows**:
 >     Download the binaries from the **[official website](https://ffmpeg.org/download.html)**, extract the files, and add the `bin` directory to your system's `PATH` environment variable.
-> ````
+>
+> <!-- end list -->
+
+> ```
+> ```
 
 ---
 
@@ -161,29 +165,13 @@ python main.py <input_audio_file> <output_sheet_music_path> [OPTIONS]
 
 #### Options
 
-  * `--tempo <BPM>`: (Optional) Manually specify the tempo in Beats Per Minute. If not provided, a default tempo will be used.
+  * `--tempo <BPM>`: (Optional) Manually specify the tempo in Beats Per Minute. If not provided, the script will attempt to detect the tempo automatically.
 
 #### Example
 
 ```bash
 python main.py my_drum_track.wav drum_score.pdf --tempo 120
 ```
-
----
-
-### Model Training
-
-`DrumScript` uses a **Convolutional Neural Network (CNN)**, built with TensorFlow, to classify drum sounds. The model is trained on Mel spectrograms generated from audio files.
-
-The initial model was trained on the **ENST-Drums database**, a comprehensive, publicly available audio-visual dataset created for music information retrieval research. It features recordings from three professional drummers using various sticks and kits, making it an excellent resource for this task.
-
-**Link to the original paper**:
-
-> [***ENST-Drums: an extensive audio-visual database for drum signals processing***. Olivier Gillet and Gaël Richard. ***In Proc of the 7th International Society for Music Information Retrieval Conference (ISMIR'06), Victoria, Canada, 2006.***](https://archives.ismir.net/ismir2006/paper/000027.pdf)
-
-> You can find more information and download the dataset here: ***[http://www.enst.fr/\~grichard/ENST-drums/](http://www.enst.fr/~grichard/ENST-drums/)***.
-
-Instructions for training the model with your own data can be found in the `drum_classifier/` directory.
 
 ---
 
@@ -197,7 +185,7 @@ We welcome contributions\! `DrumScript` is intended to be a community-owned proj
 
 For questions or support, please **[open an issue](https://github.com/victoria-mckinney/DrumScript/issues)** on the GitHub repository or email the maintainers:
 
-***[hello.drumscript@gmail.com](#hello.drumscript@gmail.com)***
+***[hello.drumscript@gmail.com](#hello.drumscript%40gmail.com)***
 
 ---
 
@@ -210,7 +198,7 @@ For questions or support, please **[open an issue](https://github.com/victoria-m
   * #### What normalization is applied to loaded audio?
     The `audio_loader.py` script applies **peak normalization** after loading an audio file. It first converts the audio to mono and then normalizes it using `librosa.util.normalize()`.
   * #### What is `peak normalization`? 🔊
-    Peak normalization adjusts an audio file's volume so that its loudest point (the "peak") is set to a maximum level (1.0) without distortion. This standardizes the volume across different recordings, ensuring the machine learning model isn't biased by how loud or quiet the original audio was. It forces the model to learn the sonic **character** of each drum, not just its loudness.
+    Peak normalization adjusts an audio file's volume so that its loudest point (the "peak") is set to a maximum level (1.0) without distortion. This standardizes the volume across different recordings, ensuring the classification engine receives a consistent signal. This allows the classification rules to work reliably across different recordings, focusing on the sonic **character** of each drum, not just its loudness.
   * #### Does normalization remove audio detail?
     No. Peak normalization is a **linear process**—it multiplies every audio sample by the same constant value, like turning a volume knob. The "shape" of the sound wave, which contains all the sonic details and rhythmic information, is perfectly preserved.
   * #### What is `hop_length`?
@@ -220,7 +208,7 @@ For questions or support, please **[open an issue](https://github.com/victoria-m
     $$
     $$$$
     $$
-    $$
+
 ---
 
 <!--END -->

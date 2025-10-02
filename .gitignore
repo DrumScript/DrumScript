@@ -145,3 +145,5 @@ audio_processor/tempogram.png
 visuals/tempogram.png
 visuals/**
 notation_generator/build:update_midi_mapping.md
+drum_classifier/predict__NEW1__GEMINI__WITH_NEW_CLASSIFICATION_ENGINE__KICK__thurs-02sept2025.py # remove later once  feature/build-classification-engine is moved to main)
+drum_classifier/prediction_output___LAST__BEFORE_CLASSIFICATION_SWITCH__thurs-02-sept-2025..json # remove later once  feature/build-classification-engine is moved to main)

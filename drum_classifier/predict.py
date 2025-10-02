@@ -1,12 +1,28 @@
-# DrumScript/drum_classifier/predict_drum_events.py
+# DrumScript/drum_classifier/predict.py
+# REFACTORED (OCT-25): This script has been completely overhauled to use a rule-based
+# classification system instead of a trained Machine Learning model.
 
 import os
-import numpy as np
-import joblib
 import json
 import librosa
-import tensorflow as tf # Required to load the Keras model
-from tqdm import tqdm # For progress bar
+import numpy as np
+from typing import List, Dict, Any
+
+# import joblib # KEEP FOR NOW
+# import tensorflow as tf # Required to load the Keras model # KEEP FOR NOW
+# from tqdm import tqdm # For progress bar # KEEP FOR NOW
+
+# --- Project-Specific Imports ---
+# These functions are now imported from the audio_processor module,
+# creating a clear workflow: 1. Process Audio -> 2. Classify Features.
+from audio_processor.audio_loader import load_audio
+from audio_processor.onset_detector import detect_onsets
+from audio_processor.feature_extractor import extract_features_for_onsets
+
+# --- Constants and Metadata ---
+
+# KEPT: This metadata is crucial for mapping classified labels to the
+# information needed for generating sheet music.
 
 # --- Configuration (must match model_trainer.py) ---
 SAMPLE_RATE = 22050
@@ -17,6 +33,7 @@ HOP_LENGTH_SECONDS = 0.1 # How much to move forward for the next segment (create
 ALL_DRUM_TYPES = sorted(['kick', 'snare', 'hi-hat', 'crash', 'ride', 'tom']) 
 
 # --- Drum Mapping Dictionary for Enhanced Output ---
+
 DRUM_METADATA = {
     'kick': {
         'midi_pitch': 36,
@@ -35,33 +52,163 @@ DRUM_METADATA = {
         'note_head_type': 'x',
         'staff_position': 'F#3',
         'display_name': 'Hi-Hat (Closed)'
-    },
-    'crash': {
-        'midi_pitch': 49,
-        'note_head_type': 'x',
-        'staff_position': 'C#4',
-        'display_name': 'Crash Cymbal'
-    },
-    'ride': {
-        'midi_pitch': 51,
-        'note_head_type': 'x',
-        'staff_position': 'D#4',
-        'display_name': 'Ride Cymbal'
-    },
-    'tom': {
-        'midi_pitch': 45,
-        'note_head_type': 'normal',
-        'staff_position': 'A3',
-        'display_name': 'Tom-Tom'
     }
+     # Add other drum types here as you create rules for them
+    #, # KEEP THESE FOR NOW
+    #'crash': {
+     #   'midi_pitch': 49,
+      #  'note_head_type': 'x',
+       # 'staff_position': 'C#4',
+        #'display_name': 'Crash Cymbal'
+    #},
+    #'ride': {
+     #   'midi_pitch': 51,
+      #  'note_head_type': 'x',
+       # 'staff_position': 'D#4',
+        #'display_name': 'Ride Cymbal'
+    #},
+    #'tom': {
+     #   'midi_pitch': 45,
+      #  'note_head_type': 'normal',
+       # 'staff_position': 'A3',
+        #'display_name': 'Tom-Tom'
+    #}
 }
 
+# NEW: Rule-based thresholds. These values are the core of the classifier
+# and can be tuned for better accuracy.
+KICK_SPECTRAL_CENTROID_THRESHOLD = 800  # Hz
+
+# --- Core Classification Logic ---
+
+def predict_drum_hits(onset_features: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+    """
+    Classifies drum hits based on their acoustic features using a rule-based system.
+    This function is the new heart of the classifier.
+
+    Args:
+        onset_features: A list of dictionaries, where each dictionary represents
+                        a single onset event and contains its extracted features.
+
+    Returns:
+        A list of dictionaries, where each dictionary represents a classified
+        and detailed drum hit event.
+    """
+    classified_events = []
+    for onset in onset_features:
+        # --- RULE 1: Kick Drum ---
+        # A kick drum has a very low spectral centroid (center of frequency).
+        if onset['spectral_centroid'] < KICK_SPECTRAL_CENTROID_THRESHOLD:
+            # We identified a kick. Let's create the detailed event object.
+            # We pass a list containing just 'kick' to the helper function.
+            kick_event = create_detailed_drum_events(['kick'], onset['onset_time'])
+            classified_events.extend(kick_event)
+            continue # Move to the next onset once classified
+
+        # --- RULE 2: Snare Drum (Placeholder Example) ---
+        # To be implemented. A snare might have a high zero-crossing rate
+        # and a spectral centroid in the mid-range.
+        # if 1000 < onset['spectral_centroid'] < 3000 and onset['zero_crossing_rate'] > 0.1:
+        #     snare_event = create_detailed_drum_events(['snare'], onset['onset_time'])
+        #     classified_events.extend(snare_event)
+        #     continue
+
+        # --- RULE 3: Hi-Hat (Placeholder Example) ---
+        # To be implemented. A hi-hat is noisy and has a high spectral centroid.
+        # if onset['spectral_centroid'] > 4000 and onset['zero_crossing_rate'] > 0.2:
+        #      hihat_event = create_detailed_drum_events(['hi-hat'], onset['onset_time'])
+        #      classified_events.extend(hihat_event)
+        #      continue
+
+    return classified_events
+
+# KEPT & MODIFIED: This helper function is still very useful. It now takes a
+# list of classified labels for a single onset (for now, just one label, but
+# this supports concurrent hits in the future) and creates the detailed output.
+def create_detailed_drum_events(predicted_drums: List[str], onset_time: float) -> List[Dict[str, Any]]:
+    """
+    Creates detailed drum event objects with metadata for a list of predicted drums.
+    """
+    detailed_events = []
+    for drum_type in predicted_drums:
+        if drum_type in DRUM_METADATA:
+            event = {
+                'drum_type': drum_type,
+                'onset_time_seconds': round(onset_time, 2),
+                'midi_pitch': DRUM_METADATA[drum_type]['midi_pitch'],
+                'note_head_type': DRUM_METADATA[drum_type]['note_head_type'],
+                'staff_position': DRUM_METADATA[drum_type]['staff_position'],
+                'display_name': DRUM_METADATA[drum_type]['display_name']
+            }
+            detailed_events.append(event)
+    return detailed_events
+
+# REMOVED: The `process_long_audio_and_predict` function was removed as its
+# role is now handled by the new `if __name__ == "__main__":` block, which
+# demonstrates the proper, modular workflow.
+
+# --- Main execution block for testing ---
+if __name__ == "__main__":
+    # This block now demonstrates the new, correct workflow:
+    # 1. Load audio and find onsets using audio_processor.
+    # 2. Extract features for those onsets using audio_processor.
+    # 3. Classify the features using the rule-based system in this script.
+
+    print("--- Running Rule-Based Drum Classifier Example ---")
+
+    # Define paths
+    project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir, os.pardir)) # Go up two levels
+    # IMPORTANT: Place a test audio file here to run the example.
+    test_audio_path = os.path.join(project_root, "test_audio", "test.wav")
+
+    if not os.path.exists(test_audio_path):
+        print(f"Error: Test audio file not found at {test_audio_path}")
+        print("Please place a .wav file named 'test.wav' in the 'test_audio' directory.")
+    else:
+        # --- 1. Audio Processing ---
+        print(f"Loading and processing audio file: {test_audio_path}")
+        y, sr = load_audio(test_audio_path)
+        onset_times = detect_onsets(y, sr)
+        print(f"Detected {len(onset_times)} onsets.")
+
+        # --- 2. Feature Extraction ---
+        print("Extracting features for each onset...")
+        all_onset_features = extract_features_for_onsets(y, sr, onset_times)
+        print("Feature extraction complete.")
+
+        # --- 3. Classification ---
+        print("Classifying onsets using rule-based system...")
+        classified_drum_events = predict_drum_hits(all_onset_features)
+        print(f"Classification complete. Found {len(classified_drum_events)} potential kick drum events.")
+
+        # --- 4. Output Results ---
+        if classified_drum_events:
+            output_dir = os.path.dirname(__file__)
+            output_filepath = os.path.join(output_dir, "prediction_output.json")
+
+            try:
+                with open(output_filepath, 'w') as f:
+                    json.dump(classified_drum_events, f, indent=4)
+                print(f"\nSuccessfully exported classified events to: {output_filepath}")
+            except Exception as e:
+                print(f"\nError exporting results to JSON file: {e}")
+
+            print("\n--- First 10 Classified Events ---")
+            for event in classified_drum_events[:10]:
+                print(f"Time: {event['onset_time_seconds']:.2f}s, Type: {event['drum_type']}")
+        else:
+            print("\nNo drum events were classified based on the current rules.")
+            print("-------------------------------------------------------------")
+            
+                        
+
+""" OLD CODE BLOCK (ML-BASED LOGIC) --- KEEP FOR NOW
 # --- Feature Extraction Helper (copy from model_trainer.py) ---
 def _extract_features(audio_segment, sr, segment_length_seconds):
-    """
-    Extracts MFCC features from an audio segment (numpy array).
-    Ensures the segment has the expected length, padding if necessary.
-    """
+    
+    # Extracts MFCC features from an audio segment (numpy array)."
+    # Ensures the segment has the expected length, padding if necessary."
+    
     try:
         # Pad with zeros if the segment is shorter than expected
         if len(audio_segment) < int(sr * segment_length_seconds):
@@ -80,9 +227,9 @@ def _extract_features(audio_segment, sr, segment_length_seconds):
 
 # --- Prediction Function (modified to take audio array) ---
 def predict_drum_type_from_array(audio_array: np.ndarray, model, scaler, label_map):
-    """
-    Predicts multi-label drum types for a single audio segment (numpy array).
-    """
+    
+    # Predicts multi-label drum types for a single audio segment (numpy array).
+    
     # 1. Extract features
     features = _extract_features(audio_array, SAMPLE_RATE, SEGMENT_LENGTH_SECONDS)
     
@@ -126,9 +273,7 @@ def predict_drum_type_from_array(audio_array: np.ndarray, model, scaler, label_m
 
 # --- Enhanced Function to Create Detailed Drum Events ---
 def create_detailed_drum_events(predicted_drums, onset_time):
-    """
-    Creates detailed drum event objects with metadata from a list of predicted drums.
-    """
+    # Creates detailed drum event objects with metadata from a list of predicted drums.
     detailed_events = []
     for drum_type in predicted_drums:
         if drum_type in DRUM_METADATA:
@@ -145,10 +290,9 @@ def create_detailed_drum_events(predicted_drums, onset_time):
 
 # --- Enhanced Function to Process Longer Audio Files ---
 def process_long_audio_and_predict(audio_filepath: str, model, scaler, label_map, detailed_output=True):
-    """
-    Loads a longer audio file, segments it, and predicts drum types for each segment.
-    Returns either detailed events (if detailed_output=True) or simple events.
-    """
+    # Loads a longer audio file, segments it, and predicts drum types for each segment.
+    # Returns either detailed events (if detailed_output=True) or simple events.
+
     print(f"\nProcessing long audio file: {audio_filepath}")
     
     y, sr = librosa.load(audio_filepath, sr=SAMPLE_RATE, mono=True)
@@ -271,5 +415,7 @@ if __name__ == "__main__":
 
         else:
             print("\nNo drum events detected in the longer audio file.")
+            print("-------------------------------------------------------------")
+"""
     
-    print("-------------------------------------------------------------")
+    

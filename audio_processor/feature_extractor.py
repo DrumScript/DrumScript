@@ -2,11 +2,13 @@
 
 """
 This module will extract relevant features from audio segments for drum classification.
+[UPDATE--SUN05OCT2025]: It has been updated slightly for new classification system
 """
 
+import os
+from typing import List, Dict, Any
 import numpy as np
 import librosa
-import os
 import soundfile
 import math # Added for math.floor to calculate EXPECTED_N_FRAMES
 import argparse # for command-line argument parsing
@@ -20,6 +22,8 @@ SEGMENT_LENGTH_SECONDS = 0.2 # SEGMENT_LENGTH_SECONDS is the duration of the aud
 N_FFT = 1024 # N_FFT is the 'size of the window for the fourier transform" N_FFT = 1024 (Frequency Resolution)
 # This is the size of the analysis window for the Fourier Transform, which breaks the sound down into its constituent frequencies. A larger N_FFT gives you a more detailed picture of which frequencies are present but a less precise idea of exactly when they happened. If you increase it (e.g., to 2048): You get a very precise frequency analysis, which could help distinguish two very similar-sounding cymbals. If you decrease it (e.g., to 512): You get better timing precision but a "blurrier" picture of the frequencies.
 HOP_LENGTH = 512
+# NEW: Define a fixed duration for the audio slice to analyze around each onset
+ONSET_SLICE_DURATION_MS = 200 # 200 milliseconds
 
 # Calculate the expected number of frames (timesteps) per segment
 # This calculation needs to be robust to ensure consistency with librosa's output.
@@ -40,106 +44,108 @@ TOTAL_FEATURES_PER_FRAME = N_MFCC + 3 # TOTAL_FEATURES_PER_FRAME = 44
 # THE SCRIP WILL ADD 3 FEATURES [1 (Centroid) + 1 (Rolloff) + 1 (RMS)] SO IN TOTAL WE HAVE 44 FEATURES
 
 
-# Drumscript/audio_processor/feature_extractor.py
+# --- Main Feature Extraction Functions ---
 
-def extract_features(audio_segment: np.ndarray, sr: int) -> np.ndarray:
+def extract_features(audio_segment: np.ndarray, sr: int) -> Dict[str, Any]:
     """
-    Extracts a combined feature vector from an audio segment.
+    Extracts a dictionary of features from a single audio segment.
 
-    Features:
-    - 40 MFCCs (mean over time)
-    - Spectral Centroid (mean)
-    - Spectral Rolloff (mean)
-    - RMS Energy (mean)
-
-    Returns a single, flattened numpy array.
+    Features are returned as mean values over the segment's duration.
     """
     if audio_segment.size == 0:
-        return None # Return None if segment is empty
+        return None
 
     try:
-        # 1. MFCCs
-        mfccs = librosa.feature.mfcc(y=audio_segment, sr=sr, n_mfcc=N_MFCC)
-        mfccs_mean = np.mean(mfccs, axis=1)
+        # 1. Spectral Centroid
+        spectral_centroid = np.mean(librosa.feature.spectral_centroid(y=audio_segment, sr=sr))
 
-        # 2. Spectral Centroid
-        spectral_centroid = librosa.feature.spectral_centroid(y=audio_segment, sr=sr)
-        spectral_centroid_mean = np.mean(spectral_centroid)
+        # 2. Spectral Rolloff
+        spectral_rolloff = np.mean(librosa.feature.spectral_rolloff(y=audio_segment, sr=sr))
 
-        # 3. Spectral Rolloff
-        spectral_rolloff = librosa.feature.spectral_rolloff(y=audio_segment, sr=sr)
-        spectral_rolloff_mean = np.mean(spectral_rolloff)
+        # 3. RMS Energy
+        rms = np.mean(librosa.feature.rms(y=audio_segment))
+        
+        # 4. Zero-Crossing Rate
+        zcr = np.mean(librosa.feature.zero_crossing_rate(y=audio_segment))
 
-        # 4. RMS Energy
-        rms = librosa.feature.rms(y=audio_segment)
-        rms_mean = np.mean(rms)
+        # 5. MFCCs
+        mfccs = np.mean(librosa.feature.mfcc(y=audio_segment, sr=sr, n_mfcc=N_MFCC), axis=1)
 
-        # 5. Combine all features into a single vector
-        combined_features = np.hstack([
-            mfccs_mean,
-            spectral_centroid_mean,
-            spectral_rolloff_mean,
-            rms_mean
-        ])
-
-        return combined_features
+        # Return a dictionary of features
+        return {
+            'spectral_centroid': spectral_centroid,
+            'spectral_rolloff': spectral_rolloff,
+            'rms': rms,
+            'zero_crossing_rate': zcr,
+            'mfccs': mfccs.tolist() # Convert numpy array to list for JSON serialization
+        }
 
     except Exception as e:
-        print(f"Error extracting features from segment: {e}")
+        print(f"Warning: Error extracting features from a segment: {e}")
         return None
+
+# NEW: Wrapper function to process all onsets from a single audio file.
+# This is the function that `predict.py` will import and use.
+def extract_features_for_onsets(y: np.ndarray, sr: int, onset_times: List[float]) -> List[Dict[str, Any]]:
+    """
+    Slices an audio array around each onset time and extracts features for each slice.
+    """
+    all_features = []
+    slice_samples = int((ONSET_SLICE_DURATION_MS / 1000.0) * sr)
+
+    for time_sec in onset_times:
+        start_sample = librosa.time_to_samples(time_sec, sr=sr)
+        end_sample = start_sample + slice_samples
+        
+        # Ensure the slice does not go out of bounds
+        audio_slice = y[start_sample:end_sample]
+
+        # Extract features for the slice
+        features = extract_features(audio_slice, sr)
+        
+        if features:
+            # Add the onset time to the dictionary of features
+            features['onset_time'] = time_sec
+            all_features.append(features)
+            
+    return all_features
 
 
 if __name__ == '__main__':
     # This block is for testing the feature_extractor.py script directly.
     import os
-    #from audio_loader import load_audio
-    from audio_loader import load_audio, normalise_audio
-    parser = argparse.ArgumentParser(description="Extract features from an audio file")
-    parser.add_argument("audio_file_path", type=str,
-                        help="Path to the audio file to be processed.")
-    args = parser.parse_args()
-    actual_drum_recording_path = args.audio_file_path
-    print(f'actual_drum_recording_path:{actual_drum_recording_path}')
+    from audio_loader import load_audio
+    
+    print("--- Running feature_extractor.py test ---")
+    
+    project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir))
+    test_audio_path = os.path.join(project_root, "test_audio", "test.wav")
+    # print(f'project_root: {project_root}') # comment out if need to check imports
+    # print(f'test_audio_path: {test_audio_path}') # comment out if need to check imports
 
-    print(f"--- Running feature_extractor.py example on `{actual_drum_recording_path}`---")
+    if not os.path.exists(test_audio_path):
+        print(f"Error: Test audio file not found at {test_audio_path}")
+    else:
+        y, sr = load_audio(test_audio_path)
+        
+        # Dummy onsets for testing
+        onset_times_test = [0.5, 1.0, 1.5] 
+        print(f"Testing with dummy onsets at times: {onset_times_test}")
 
-    try:
-        # Load and normalise the audio
-        print(f"Attempting to load: {actual_drum_recording_path}")
-        audio, sr = load_audio(actual_drum_recording_path, sr=44100)
-        normalised_audio = normalise_audio(audio)
+        # Test the new wrapper function
+        features_list = extract_features_for_onsets(y, sr, onset_times_test)
         
-        print(f"Attempting to load: {normalised_audio}")
-        audio_data, sample_rate = load_audio(normalised_audio, sr=SAMPLE_RATE)
-        
-        print(f"Loaded audio: Shape={audio_data.shape}, Sample Rate={sample_rate}")
-
-        # Create a single, short segment for testing (e.g., 200ms)
-        segment_duration_ms = 160
-        segment_samples = int(sample_rate * (segment_duration_ms / 1000.0))
-        test_segment = audio_data[sample_rate : sample_rate + segment_samples] # Take a slice 1s in
-
-        print(f"\n--- Testing extract_features function ---")
-        
-        # Call the new, correct function
-        features = extract_features(test_segment, sample_rate)
-        
-        if features is not None:
-            print(f"  ✅ Function executed successfully.")
-            print(f"  Combined features shape: {features.shape}")
-            print(f"  Expected features shape: ({TOTAL_FEATURES_PER_FRAME},)")
-            
-            # --- VERIFICATION ---
-            assert features.shape == (TOTAL_FEATURES_PER_FRAME,), "Output shape mismatch!"
-            print("  ✅ SUCCESS: The output shape is correct!")
-            
-            #print(f"\n  Sample of features (first 5): {features[:5]}")
-            print(f"\n  All features): {features}")
+        if features_list:
+            print(f"\nSuccessfully extracted features for {len(features_list)} onsets.")
+            print("\n--- Features for first detected onset ---")
+            first_onset = features_list[0]
+            for key, value in first_onset.items():
+                if isinstance(value, list):
+                    print(f"  {key}: list of {len(value)} values")
+                else:
+                    print(f"  {key}: {value:.2f}")
         else:
-            print("  ❌ FAILURE: Feature extraction returned None.")
+            print("\nFeature extraction failed or returned no features.")
 
-    except Exception as e:
-        print(f"\nAn unexpected error occurred during the example execution: {e}")
-
-    print("\n--- feature_extractor.py example finished ---")
+    print("\n--- feature_extractor.py test finished ---")
     print("\n-----------------------------------------------------")

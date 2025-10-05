@@ -158,9 +158,12 @@ if __name__ == "__main__":
     print("--- Running Rule-Based Drum Classifier Example ---")
 
     # Define paths
-    project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir, os.pardir)) # Go up two levels
+    project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir)) # Go up two levels
     # IMPORTANT: Place a test audio file here to run the example.
     test_audio_path = os.path.join(project_root, "test_audio", "test.wav")
+    print(f'project_root: {project_root}')
+    print(f'test_audio_path: {test_audio_path}')
+    
 
     if not os.path.exists(test_audio_path):
         print(f"Error: Test audio file not found at {test_audio_path}")

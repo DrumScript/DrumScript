@@ -97,14 +97,17 @@ def predict_drum_hits(onset_features: List[Dict[str, Any]]) -> List[Dict[str, An
     """
     classified_events = []
     for onset in onset_features:
-        # --- RULE 1: Kick Drum ---
-        # A kick drum has a very low spectral centroid (center of frequency).
-        if onset['spectral_centroid'] < KICK_SPECTRAL_CENTROID_THRESHOLD:
+
+        print(f"DEBUG: Onset at {onset['onset_time']:.2f}s has spectral_centroid: {onset['spectral_centroid']:.2f}")     # ADD THIS LINE FOR DEBUGGING
+
+    # --- RULE 1: Kick Drum ---
+    # A kick drum has a very low spectral centroid (center of frequency).
+    if onset['spectral_centroid'] < KICK_SPECTRAL_CENTROID_THRESHOLD:
             # We identified a kick. Let's create the detailed event object.
             # We pass a list containing just 'kick' to the helper function.
             kick_event = create_detailed_drum_events(['kick'], onset['onset_time'])
             classified_events.extend(kick_event)
-            continue # Move to the next onset once classified
+            #continue # Move to the next onset once classified
 
         # --- RULE 2: Snare Drum (Placeholder Example) ---
         # To be implemented. A snare might have a high zero-crossing rate

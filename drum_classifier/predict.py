@@ -89,39 +89,38 @@ def predict_drum_hits(onset_features: List[Dict[str, Any]]) -> List[Dict[str, An
     """
     Classifies drum hits based on their acoustic features using a rule-based system.
     This function is the new heart of the classifier.
-
-    Args:
-        onset_features: A list of dictionaries, where each dictionary represents
-                        a single onset event and contains its extracted features.
-
-    Returns:
-        A list of dictionaries, where each dictionary represents a classified
-        and detailed drum hit event.
     """
     classified_events = []
     for onset in onset_features:
-        # (Your debug print statement can stay here for now)
-        print(f"DEBUG: Onset at {onset['onset_time']:.2f}s has spectral_centroid: {onset['spectral_centroid']:.2f}, zcr: {onset['zero_crossing_rate']:.2f}")
+        # --- NEW DETAILED DEBUGGING BLOCK ---
+        print(f"\n--- Processing Onset at {onset['onset_time']:.2f}s ---")
+        print(f"  - Spectral Centroid: {onset['spectral_centroid']:.2f}")
+        print(f"  - Zero-Crossing Rate: {onset['zero_crossing_rate']:.4f}") # Using more precision
 
         # --- RULE 1: Kick Drum ---
         if onset['spectral_centroid'] < KICK_SPECTRAL_CENTROID_THRESHOLD:
+            print("  - RESULT: Classified as KICK.")
             kick_event = create_detailed_drum_events(['kick'], onset['onset_time'])
             classified_events.extend(kick_event)
             continue
 
-        # --- RULE 2: Snare Drum ---
-        elif SNARE_CENTROID_MIN < onset['spectral_centroid'] < SNARE_CENTROID_MAX and \
-             onset['zero_crossing_rate'] >= SNARE_ZCR_MIN:
+        # --- RULE 2: Snare Drum (with detailed checks) ---
+        # Break the rule into individual boolean checks to see which one fails.
+        is_centroid_in_range = SNARE_CENTROID_MIN < onset['spectral_centroid'] < SNARE_CENTROID_MAX
+        is_zcr_high_enough = onset['zero_crossing_rate'] >= SNARE_ZCR_MIN
+
+        print(f"  - Checking Snare Rule:")
+        print(f"    - Is Centroid in range ({SNARE_CENTROID_MIN}-{SNARE_CENTROID_MAX})? -> {is_centroid_in_range}")
+        print(f"    - Is ZCR >= {SNARE_ZCR_MIN}? -> {is_zcr_high_enough}")
+
+        if is_centroid_in_range and is_zcr_high_enough:
+            print("  - RESULT: Classified as SNARE.")
             snare_event = create_detailed_drum_events(['snare'], onset['onset_time'])
             classified_events.extend(snare_event)
             continue
 
-        # --- RULE 3: Hi-Hat (Placeholder Example) ---
-        # To be implemented. A hi-hat is noisy and has a high spectral centroid.
-        # if onset['spectral_centroid'] > 4000 and onset['zero_crossing_rate'] > 0.2:
-        #      hihat_event = create_detailed_drum_events(['hi-hat'], onset['onset_time'])
-        #      classified_events.extend(hihat_event)
-        #      continue
+        # If no rules have matched by this point
+        print("  - RESULT: No rule matched.")
 
     return classified_events
 

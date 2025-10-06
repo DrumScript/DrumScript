@@ -1,0 +1,10 @@
+[
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 0.09,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2",
+        "display_name": "Bass Drum"
+    }
+]

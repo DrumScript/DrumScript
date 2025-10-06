@@ -78,7 +78,7 @@ DRUM_METADATA = {
 
 # NEW: Rule-based thresholds. These values are the core of the classifier
 # and can be tuned for better accuracy.
-KICK_SPECTRAL_CENTROID_THRESHOLD = 800  # Hz
+KICK_SPECTRAL_CENTROID_THRESHOLD = 1500  # Hz
 
 # --- Core Classification Logic ---
 

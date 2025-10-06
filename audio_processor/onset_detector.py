@@ -17,15 +17,14 @@ def detect_onsets(audio_data: np.ndarray, sr: int) -> list[float]:
     if audio_data.size == 0:
         return []
 
-    # Added the `wait` parameter to increase sensitivity.
-    # `wait=1` tells the algorithm to only wait 1 analysis frame before looking
-    # for a new peak, allowing it to detect very close consecutive notes.
-    # `units='time'` directly returns timestamps in seconds.
+    # MODIFIED: Added the `delta` parameter to increase sensitivity to smaller peaks.
+    # A smaller delta makes the peak-picking algorithm more sensitive.
     onset_times = librosa.onset.onset_detect(
         y=audio_data, 
         sr=sr, 
         units='time', 
-        wait=1
+        wait=1,
+        delta=0.08
     )
     
     return onset_times.tolist()

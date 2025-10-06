@@ -104,9 +104,8 @@ def predict_drum_hits(onset_features: List[Dict[str, Any]]) -> List[Dict[str, An
         # --- NEW DETAILED DEBUGGING BLOCK ---
         print(f"\n--- Processing Onset at {onset['onset_time']:.2f}s ---")
         print(f"  - Spectral Centroid: {onset['spectral_centroid']:.2f}")
-        print(f"  - Zero-Crossing Rate: {onset['zero_crossing_rate']:.4f}") # Using more precision
-        print(f"  - Sustain Level: {onset['sustain_level']:.2f}") # Use 2f for now
-
+        print(f"  - Zero-Crossing Rate: {onset['zero_crossing_rate']:.4f}")
+        print(f"  - Sustain Level: {onset['sustain_level']:.2f}")
 
         # --- RULE 1: Kick Drum ---
         if onset['spectral_centroid'] < KICK_SPECTRAL_CENTROID_THRESHOLD:
@@ -115,33 +114,38 @@ def predict_drum_hits(onset_features: List[Dict[str, Any]]) -> List[Dict[str, An
             classified_events.extend(kick_event)
             continue
 
-        # --- RULE 2: Snare Drum (with detailed checks) ---
-        # Break the rule into individual boolean checks to see which one fails.
-        is_centroid_in_range = SNARE_CENTROID_MIN < onset['spectral_centroid'] < SNARE_CENTROID_MAX
-        is_zcr_high_enough = onset['zero_crossing_rate'] >= SNARE_ZCR_MIN
-
-        print(f"  - Checking Snare Rule:")
-        print(f"    - Is Centroid in range ({SNARE_CENTROID_MIN}-{SNARE_CENTROID_MAX})? -> {is_centroid_in_range}")
-        print(f"    - Is ZCR >= {SNARE_ZCR_MIN}? -> {is_zcr_high_enough}")
-
-        if is_centroid_in_range and is_zcr_high_enough:
+        # --- RULE 2: Snare Drum ---
+        # The boolean checks are now part of the elif condition itself.
+        elif SNARE_CENTROID_MIN < onset['spectral_centroid'] < SNARE_CENTROID_MAX and \
+             onset['zero_crossing_rate'] >= SNARE_ZCR_MIN:
+            
+            # The debug prints now happen *inside* the block, after we know it's likely a snare.
+            print(f"  - Checking Snare Rule:")
+            print(f"    - Is Centroid in range ({SNARE_CENTROID_MIN}-{SNARE_CENTROID_MAX})? -> True")
+            print(f"    - Is ZCR >= {SNARE_ZCR_MIN}? -> True")
             print("  - RESULT: Classified as SNARE.")
+            
             snare_event = create_detailed_drum_events(['snare'], onset['onset_time'])
             classified_events.extend(snare_event)
             continue
 
-        # --- RULE 3: Hi-Hat  ---
+        # --- RULE 3: Hi-Hat ---
         elif onset['spectral_centroid'] > HIHAT_CENTROID_MIN and \
              onset['zero_crossing_rate'] >= HIHAT_ZCR_MIN:
             
-            # This is a hi-hat. Now check if it's open or closed.
+            print("  - RESULT: Potentially a Hi-Hat. Checking sustain...")
             if onset['sustain_level'] > HIHAT_SUSTAIN_THRESHOLD:
+                print("    - Sustain is HIGH. Classified as OPEN HI-HAT.")
                 hihat_event = create_detailed_drum_events(['hi-hat-open'], onset['onset_time'])
             else:
+                print("    - Sustain is LOW. Classified as CLOSED HI-HAT.")
                 hihat_event = create_detailed_drum_events(['hi-hat-closed'], onset['onset_time'])
             
             classified_events.extend(hihat_event)
             continue
+        
+        # If no rules have matched by this point
+        print("  - RESULT: No rule matched.")
 
     return classified_events
 

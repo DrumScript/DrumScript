@@ -48,11 +48,17 @@ DRUM_METADATA = {
         'staff_position': 'C3',
         'display_name': 'Snare Drum'
     },
-    'hi-hat': {
+    'hi_hat_closed': {
         'midi_pitch': 42,
         'note_head_type': 'x',
         'staff_position': 'F#3',
         'display_name': 'Hi-Hat (Closed)'
+    },
+    'hi_hat_open': {
+        'midi_pitch': 46,
+        'note_head_type': 'x-open', # Or a specific open head type
+        'staff_position': 'F#3',
+        'display_name': 'Hi-Hat (Open)'
     }
      # Add other drum types here as you create rules for them
     #, # KEEP THESE FOR NOW
@@ -75,13 +81,16 @@ DRUM_METADATA = {
         #'display_name': 'Tom-Tom'
     #}
 }
-
+# --- Rule-based thresholds ---
 # NEW: Rule-based thresholds. These values are the core of the classifier
 # and can be tuned for better accuracy.
 KICK_SPECTRAL_CENTROID_THRESHOLD = 1500  # Hz
 SNARE_CENTROID_MIN = 1000  # Hz
 SNARE_CENTROID_MAX = 4000  # Hz
 SNARE_ZCR_MIN = 0.09     # A dimensionless measure of noisiness
+HIHAT_CENTROID_MIN = 4000  # Hz (Higher than the snare)
+HIHAT_ZCR_MIN = 0.2        # Noisier than the snare
+HIHAT_SUSTAIN_THRESHOLD = 0.5 # If sustain is > this, it's open
 
 # --- Core Classification Logic ---
 
@@ -96,6 +105,8 @@ def predict_drum_hits(onset_features: List[Dict[str, Any]]) -> List[Dict[str, An
         print(f"\n--- Processing Onset at {onset['onset_time']:.2f}s ---")
         print(f"  - Spectral Centroid: {onset['spectral_centroid']:.2f}")
         print(f"  - Zero-Crossing Rate: {onset['zero_crossing_rate']:.4f}") # Using more precision
+        print(f"  - Sustain Level: {onset['sustain_level']:.2f}") # Use 2f for now
+
 
         # --- RULE 1: Kick Drum ---
         if onset['spectral_centroid'] < KICK_SPECTRAL_CENTROID_THRESHOLD:
@@ -119,8 +130,18 @@ def predict_drum_hits(onset_features: List[Dict[str, Any]]) -> List[Dict[str, An
             classified_events.extend(snare_event)
             continue
 
-        # If no rules have matched by this point
-        print("  - RESULT: No rule matched.")
+        # --- RULE 3: Hi-Hat  ---
+        elif onset['spectral_centroid'] > HIHAT_CENTROID_MIN and \
+             onset['zero_crossing_rate'] >= HIHAT_ZCR_MIN:
+            
+            # This is a hi-hat. Now check if it's open or closed.
+            if onset['sustain_level'] > HIHAT_SUSTAIN_THRESHOLD:
+                hihat_event = create_detailed_drum_events(['hi-hat-open'], onset['onset_time'])
+            else:
+                hihat_event = create_detailed_drum_events(['hi-hat-closed'], onset['onset_time'])
+            
+            classified_events.extend(hihat_event)
+            continue
 
     return classified_events
 

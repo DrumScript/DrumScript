@@ -49,42 +49,42 @@ TOTAL_FEATURES_PER_FRAME = N_MFCC + 3 # TOTAL_FEATURES_PER_FRAME = 44
 def extract_features(audio_segment: np.ndarray, sr: int) -> Dict[str, Any]:
     """
     Extracts a dictionary of features from a single audio segment.
-
     Features are returned as mean values over the segment's duration.
     """
     if audio_segment.size == 0:
         return None
 
     try:
-        # 1. Spectral Centroid
+        # --- Standard Features ---
         spectral_centroid = np.mean(librosa.feature.spectral_centroid(y=audio_segment, sr=sr))
-
-        # 2. Spectral Rolloff
         spectral_rolloff = np.mean(librosa.feature.spectral_rolloff(y=audio_segment, sr=sr))
-
-        # 3. RMS Energy
         rms = np.mean(librosa.feature.rms(y=audio_segment))
-        
-        # 4. Zero-Crossing Rate
         zcr = np.mean(librosa.feature.zero_crossing_rate(y=audio_segment))
-
-        # 5. MFCCs
         mfccs = np.mean(librosa.feature.mfcc(y=audio_segment, sr=sr, n_mfcc=N_MFCC), axis=1)
 
-        # Return a dictionary of features
+        # --- NEW: Sustain Feature Calculation ---
+        # Split the segment into two halves to measure energy decay.
+        half_point = len(audio_segment) // 2
+        first_half_rms = np.mean(librosa.feature.rms(y=audio_segment[:half_point]))
+        second_half_rms = np.mean(librosa.feature.rms(y=audio_segment[half_point:]))
+        
+        # Calculate the ratio. Add a small epsilon to avoid division by zero.
+        sustain_level = second_half_rms / (first_half_rms + 1e-6)
+
         return {
             'spectral_centroid': spectral_centroid,
             'spectral_rolloff': spectral_rolloff,
             'rms': rms,
             'zero_crossing_rate': zcr,
-            'mfccs': mfccs.tolist() # Convert numpy array to list for JSON serialization
+            'mfccs': mfccs.tolist(),
+            'sustain_level': sustain_level # Add the new feature to the dictionary
         }
 
     except Exception as e:
         print(f"Warning: Error extracting features from a segment: {e}")
         return None
 
-# NEW: Wrapper function to process all onsets from a single audio file.
+# Wrapper function to process all onsets from a single audio file.
 # This is the function that `predict.py` will import and use.
 def extract_features_for_onsets(y: np.ndarray, sr: int, onset_times: List[float]) -> List[Dict[str, Any]]:
     """
@@ -149,3 +149,46 @@ if __name__ == '__main__':
 
     print("\n--- feature_extractor.py test finished ---")
     print("\n-----------------------------------------------------")
+
+
+# ---- LEGACY (ML-METHOD) ---------------------------------------------------------------------------------
+"""
+# def extract_features(audio_segment: np.ndarray, sr: int) -> Dict[str, Any]:
+    
+    # Extracts a dictionary of features from a single audio segment.
+
+    # Features are returned as mean values over the segment's duration.
+
+    if audio_segment.size == 0:
+        return None
+
+    try:
+        # 1. Spectral Centroid
+        spectral_centroid = np.mean(librosa.feature.spectral_centroid(y=audio_segment, sr=sr))
+
+        # 2. Spectral Rolloff
+        spectral_rolloff = np.mean(librosa.feature.spectral_rolloff(y=audio_segment, sr=sr))
+
+        # 3. RMS Energy
+        rms = np.mean(librosa.feature.rms(y=audio_segment))
+        
+        # 4. Zero-Crossing Rate
+        zcr = np.mean(librosa.feature.zero_crossing_rate(y=audio_segment))
+
+        # 5. MFCCs
+        mfccs = np.mean(librosa.feature.mfcc(y=audio_segment, sr=sr, n_mfcc=N_MFCC), axis=1)
+
+        # Return a dictionary of features
+        return {
+            'spectral_centroid': spectral_centroid,
+            'spectral_rolloff': spectral_rolloff,
+            'rms': rms,
+            'zero_crossing_rate': zcr,
+            'mfccs': mfccs.tolist() # Convert numpy array to list for JSON serialization
+        }
+
+    except Exception as e:
+        print(f"Warning: Error extracting features from a segment: {e}")
+        return None
+"""
+# ---------------------------------------------------------------------------------------------------------

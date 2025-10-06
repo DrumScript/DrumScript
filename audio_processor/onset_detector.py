@@ -17,13 +17,14 @@ def detect_onsets(audio_data: np.ndarray, sr: int) -> list[float]:
     if audio_data.size == 0:
         return []
 
-    # MODIFIED: Added the `delta` parameter to increase sensitivity to smaller peaks.
+    # Added the `delta` parameter to increase sensitivity to smaller peaks.
     # A smaller delta makes the peak-picking algorithm more sensitive.
     onset_times = librosa.onset.onset_detect(
         y=audio_data, 
         sr=sr, 
         units='time', 
         wait=1,
+        #delta=0.04
         delta=0.08
     )
     
@@ -79,8 +80,8 @@ if __name__ == "__main__":
         print(f'project_root: {project_root}')
 
         # Construct the path to test.mp3/test.wav within the 'test_audio' directory
-        test_audio_path = os.path.join(project_root, "test_audio", "SCHAMMASCH-Split-My-Tongue.mp3") # Change .mp3 to .wav if using WAV, or other audio format
-        #test_audio_path = os.path.join(project_root, "test_audio", "test.wav") # Change .wav to .mp3 if using MP3, or other audio format
+        #test_audio_path = os.path.join(project_root, "test_audio", "SCHAMMASCH-Split-My-Tongue.mp3") # Change .mp3 to .wav if using WAV, or other audio format
+        test_audio_path = os.path.join(project_root, "test_audio", "test.wav") # Change .wav to .mp3 if using MP3, or other audio format
         print(f'test_audio_path: {test_audio_path}')
         print(f"Attempting to load: {test_audio_path}")
 

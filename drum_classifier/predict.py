@@ -79,6 +79,9 @@ DRUM_METADATA = {
 # NEW: Rule-based thresholds. These values are the core of the classifier
 # and can be tuned for better accuracy.
 KICK_SPECTRAL_CENTROID_THRESHOLD = 1500  # Hz
+SNARE_CENTROID_MIN = 1000  # Hz
+SNARE_CENTROID_MAX = 3500  # Hz
+SNARE_ZCR_MIN = 0.1       # A dimensionless measure of noisiness
 
 # --- Core Classification Logic ---
 
@@ -97,25 +100,21 @@ def predict_drum_hits(onset_features: List[Dict[str, Any]]) -> List[Dict[str, An
     """
     classified_events = []
     for onset in onset_features:
+        # (Your debug print statement can stay here for now)
+        print(f"DEBUG: Onset at {onset['onset_time']:.2f}s has spectral_centroid: {onset['spectral_centroid']:.2f}, zcr: {onset['zero_crossing_rate']:.2f}")
 
-        print(f"DEBUG: Onset at {onset['onset_time']:.2f}s has spectral_centroid: {onset['spectral_centroid']:.2f}")     # ADD THIS LINE FOR DEBUGGING
-
-    # --- RULE 1: Kick Drum ---
-    # A kick drum has a very low spectral centroid (center of frequency).
-    if onset['spectral_centroid'] < KICK_SPECTRAL_CENTROID_THRESHOLD:
-            # We identified a kick. Let's create the detailed event object.
-            # We pass a list containing just 'kick' to the helper function.
+        # --- RULE 1: Kick Drum ---
+        if onset['spectral_centroid'] < KICK_SPECTRAL_CENTROID_THRESHOLD:
             kick_event = create_detailed_drum_events(['kick'], onset['onset_time'])
             classified_events.extend(kick_event)
-            #continue # Move to the next onset once classified
+            continue
 
-        # --- RULE 2: Snare Drum (Placeholder Example) ---
-        # To be implemented. A snare might have a high zero-crossing rate
-        # and a spectral centroid in the mid-range.
-        # if 1000 < onset['spectral_centroid'] < 3000 and onset['zero_crossing_rate'] > 0.1:
-        #     snare_event = create_detailed_drum_events(['snare'], onset['onset_time'])
-        #     classified_events.extend(snare_event)
-        #     continue
+        # --- RULE 2: Snare Drum (NEW) ---
+        elif SNARE_CENTROID_MIN < onset['spectral_centroid'] < SNARE_CENTROID_MAX and \
+             onset['zero_crossing_rate'] > SNARE_ZCR_MIN:
+            snare_event = create_detailed_drum_events(['snare'], onset['onset_time'])
+            classified_events.extend(snare_event)
+            continue
 
         # --- RULE 3: Hi-Hat (Placeholder Example) ---
         # To be implemented. A hi-hat is noisy and has a high spectral centroid.

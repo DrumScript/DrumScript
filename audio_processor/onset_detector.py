@@ -10,13 +10,25 @@ import argparse # for command-line argument parsing
 
 
 def detect_onsets(audio_data: np.ndarray, sr: int) -> list[float]:
+    """
+    Detects the onset (start) times of drum hits in the audio.
+    Includes parameters tuned for better sensitivity to fast, percussive hits.
+    """
     if audio_data.size == 0:
         return []
 
-    onset_env = librosa.onset.onset_detect(y=audio_data, sr=sr, units='frames')
-    onset_times = librosa.frames_to_time(onset_env, sr=sr)
+    # Added the `wait` parameter to increase sensitivity.
+    # `wait=1` tells the algorithm to only wait 1 analysis frame before looking
+    # for a new peak, allowing it to detect very close consecutive notes.
+    # `units='time'` directly returns timestamps in seconds.
+    onset_times = librosa.onset.onset_detect(
+        y=audio_data, 
+        sr=sr, 
+        units='time', 
+        wait=1
+    )
+    
     return onset_times.tolist()
-
 
 #-------NEW FCT AUTOMATIC TEMPO DETECTION---- TO BE REVIEWED/.TESTED
 

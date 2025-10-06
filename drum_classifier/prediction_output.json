@@ -6,5 +6,13 @@
         "note_head_type": "normal",
         "staff_position": "C3",
         "display_name": "Snare Drum"
+    },
+    {
+        "drum_type": "snare",
+        "onset_time_seconds": 0.1,
+        "midi_pitch": 38,
+        "note_head_type": "normal",
+        "staff_position": "C3",
+        "display_name": "Snare Drum"
     }
 ]

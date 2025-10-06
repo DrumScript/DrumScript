@@ -40,7 +40,7 @@ DRUM_METADATA = {
         'midi_pitch': 36,
         'note_head_type': 'normal',
         'staff_position': 'F2',
-        'display_name': 'Bass Drum'
+        'display_name': 'Kick Drum'
     },
     'snare': {
         'midi_pitch': 38,

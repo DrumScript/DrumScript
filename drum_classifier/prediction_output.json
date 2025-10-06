@@ -1,7 +1,7 @@
 [
     {
         "drum_type": "snare",
-        "onset_time_seconds": 0.14,
+        "onset_time_seconds": 0.03,
         "midi_pitch": 38,
         "note_head_type": "normal",
         "staff_position": "C3",

@@ -27,8 +27,8 @@ from audio_processor.feature_extractor import extract_features_for_onsets
 
 # --- Configuration (must match model_trainer.py) ---
 SAMPLE_RATE = 22050
-SEGMENT_LENGTH_SECONDS = 0.2 # The length of segments your model was trained on
-HOP_LENGTH_SECONDS = 0.1 # How much to move forward for the next segment (creates overlap)
+# SEGMENT_LENGTH_SECONDS = 0.2 # The length of segments your model was trained on # commenting out but keeping for now, relates to old ML workflow
+# HOP_LENGTH_SECONDS = 0.1 # How much to move forward for the next segment (creates overlap) # commenting out but keeping for now, relates to old ML workflow
 
 # Define all UNIQUE drum types - MUST MATCH process_enst_dataset.py and model_trainer.py
 ALL_DRUM_TYPES = sorted(['kick', 'snare', 'hi-hat', 'crash', 'ride', 'tom']) 
@@ -109,9 +109,9 @@ def predict_drum_hits(onset_features: List[Dict[str, Any]]) -> List[Dict[str, An
             classified_events.extend(kick_event)
             continue
 
-        # --- RULE 2: Snare Drum (NEW) ---
+        # --- RULE 2: Snare Drum ---
         elif SNARE_CENTROID_MIN < onset['spectral_centroid'] < SNARE_CENTROID_MAX and \
-             onset['zero_crossing_rate'] > SNARE_ZCR_MIN:
+             onset['zero_crossing_rate'] >= SNARE_ZCR_MIN:
             snare_event = create_detailed_drum_events(['snare'], onset['onset_time'])
             classified_events.extend(snare_event)
             continue
@@ -146,9 +146,6 @@ def create_detailed_drum_events(predicted_drums: List[str], onset_time: float) -
             detailed_events.append(event)
     return detailed_events
 
-# REMOVED: The `process_long_audio_and_predict` function was removed as its
-# role is now handled by the new `if __name__ == "__main__":` block, which
-# demonstrates the proper, modular workflow.
 
 # --- Main execution block for testing ---
 if __name__ == "__main__":
@@ -161,7 +158,7 @@ if __name__ == "__main__":
 
     # Define paths
     project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir)) # Go up two levels
-    # IMPORTANT: Place a test audio file here to run the example.
+    # IMPORTANT: Place a test audio file in test_audio folder to run the example.
     test_audio_path = os.path.join(project_root, "test_audio", "test.wav")
     print(f'project_root: {project_root}')
     print(f'test_audio_path: {test_audio_path}')
@@ -173,7 +170,7 @@ if __name__ == "__main__":
     else:
         # --- 1. Audio Processing ---
         print(f"Loading and processing audio file: {test_audio_path}")
-        y, sr = load_audio(test_audio_path)
+        y, sr = load_audio(test_audio_path, sr=44100)
         onset_times = detect_onsets(y, sr)
         print(f"Detected {len(onset_times)} onsets.")
 
@@ -185,7 +182,8 @@ if __name__ == "__main__":
         # --- 3. Classification ---
         print("Classifying onsets using rule-based system...")
         classified_drum_events = predict_drum_hits(all_onset_features)
-        print(f"Classification complete. Found {len(classified_drum_events)} potential kick drum events.")
+        # print(f"Classification complete. Found {len(classified_drum_events)} potential kick drum events.") # COMMENT OUT BUT KEEP FOR NOW. REMOVE LATER
+        print(f"Classification complete. Found {len(classified_drum_events)} drum events.")
 
         # --- 4. Output Results ---
         if classified_drum_events:

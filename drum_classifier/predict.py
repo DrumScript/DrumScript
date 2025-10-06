@@ -81,7 +81,7 @@ DRUM_METADATA = {
 KICK_SPECTRAL_CENTROID_THRESHOLD = 1500  # Hz
 SNARE_CENTROID_MIN = 1000  # Hz
 SNARE_CENTROID_MAX = 4000  # Hz
-SNARE_ZCR_MIN = 0.1     # A dimensionless measure of noisiness
+SNARE_ZCR_MIN = 0.09     # A dimensionless measure of noisiness
 
 # --- Core Classification Logic ---
 

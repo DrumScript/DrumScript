@@ -89,7 +89,7 @@ def extract_features(audio_segment: np.ndarray, sr: int) -> Dict[str, Any]:
 def extract_features_for_onsets(y: np.ndarray, sr: int, onset_times: List[float]) -> List[Dict[str, Any]]:
 
     # Slices an audio array around each onset time and extracts features for each slice.
-    
+
     all_features = []
     slice_samples = int((ONSET_SLICE_DURATION_MS / 1000.0) * sr)
 
@@ -97,8 +97,12 @@ def extract_features_for_onsets(y: np.ndarray, sr: int, onset_times: List[float]
         start_sample = librosa.time_to_samples(time_sec, sr=sr)
         end_sample = start_sample + slice_samples
         
+        
         # Ensure the slice does not go out of bounds
-        audio_slice = y[start_sample:end_sample]
+        # audio_slice = y[start_sample:end_sample]
+        # --- NEW BOUNDARY CHECK ---
+        # This ensures the slice does not go past the end of the audio array `y`.
+        audio_slice = y[start_sample:min(end_sample, len(y))]
 
         # Extract features for the slice
         features = extract_features(audio_slice, sr)

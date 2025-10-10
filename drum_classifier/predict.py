@@ -95,13 +95,13 @@ HIHAT_SUSTAIN_THRESHOLD = 0.5 # If sustain is > this, it's open
 # --- Core Classification Logic ---
 
 def predict_drum_hits(onset_features: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-    """
-    Classifies drum hits based on their acoustic features using a rule-based system.
-    This function is the new heart of the classifier.
-    """
+    
+    # Classifies drum hits based on their acoustic features using a rule-based system.
+    # This function is the new heart of the classifier.
+
     classified_events = []
     for onset in onset_features:
-        # --- NEW DETAILED DEBUGGING BLOCK ---
+        # --- DEBUGGING BLOCK ---
         print(f"\n--- Processing Onset at {onset['onset_time']:.2f}s ---")
         print(f"  - Spectral Centroid: {onset['spectral_centroid']:.2f}")
         print(f"  - Zero-Crossing Rate: {onset['zero_crossing_rate']:.4f}")
@@ -118,12 +118,6 @@ def predict_drum_hits(onset_features: List[Dict[str, Any]]) -> List[Dict[str, An
         # The boolean checks are now part of the elif condition itself.
         elif SNARE_CENTROID_MIN < onset['spectral_centroid'] < SNARE_CENTROID_MAX and \
              onset['zero_crossing_rate'] >= SNARE_ZCR_MIN:
-            
-            # The debug prints now happen *inside* the block, after we know it's likely a snare.
-            print(f"  - Checking Snare Rule:")
-            print(f"    - Is Centroid in range ({SNARE_CENTROID_MIN}-{SNARE_CENTROID_MAX})? -> True")
-            print(f"    - Is ZCR >= {SNARE_ZCR_MIN}? -> True")
-            print("  - RESULT: Classified as SNARE.")
             
             snare_event = create_detailed_drum_events(['snare'], onset['onset_time'])
             classified_events.extend(snare_event)

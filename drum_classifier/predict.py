@@ -88,9 +88,11 @@ KICK_SPECTRAL_CENTROID_THRESHOLD = 1500  # Hz
 SNARE_CENTROID_MIN = 1000  # Hz
 SNARE_CENTROID_MAX = 4000  # Hz
 SNARE_ZCR_MIN = 0.09     # A dimensionless measure of noisiness
-HIHAT_CENTROID_MIN = 4000  # Hz (Higher than the snare)
-HIHAT_ZCR_MIN = 0.2        # Noisier than the snare
-HIHAT_SUSTAIN_THRESHOLD = 0.5 # If sustain is > this, it's open
+# HIHAT_CENTROID_MIN = 4000  # Hz (Higher than the snare)
+HIHAT_CENTROID_MIN = 9000  # Hz (Higher than the snare), results from resting open hat classifier shows open hat 9000 > SNARE_CENTROID > 10500 (on single open hat sample, so not necessarily representative)
+HIHAT_ZCR_MIN = 0.2        # ie. noisier than the snare
+#HIHAT_ZCR_MIN = 0.09 # try same as the snare
+# HIHAT_SUSTAIN_THRESHOLD = 0.5 # If sustain is > this, it's open
 
 # --- Core Classification Logic ---
 
@@ -167,6 +169,14 @@ def create_detailed_drum_events(predicted_drums: List[str], onset_time: float) -
 
 # --- Main execution block for testing ---
 if __name__ == "__main__":
+        # --- Project-Specific Imports ---
+    # These functions are now imported from the audio_processor module,
+    # creating a clear workflow: 1. Process Audio -> 2. Classify Features.
+    # from DrumScriptimport audio_processor
+    from audio_processor.audio_loader import load_audio
+    from audio_processor.onset_detector import detect_onsets
+    from audio_processor.feature_extractor import extract_features_for_onsets
+
     # This block now demonstrates the new, correct workflow:
     # 1. Load audio and find onsets using audio_processor.
     # 2. Extract features for those onsets using audio_processor.

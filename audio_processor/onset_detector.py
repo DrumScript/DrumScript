@@ -22,11 +22,10 @@ def detect_onsets(audio_data: np.ndarray, sr: int) -> list[float]:
     onset_times = librosa.onset.onset_detect(
         y=audio_data, 
         sr=sr, 
-        units='time'
-        #, # removing these while testing the kick classifier, ie making onset detection less sensitive 
-        #wait=1,
+        units='time',
+        wait=1,
         #delta=0.04
-        #delta=0.08
+        delta=0.08
     )
     
     return onset_times.tolist()

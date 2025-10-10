@@ -59,7 +59,7 @@ def calculate_tempo_from_onsets(onset_times: np.ndarray, sr: int) -> float:
 
 
 if __name__ == "__main__":
-    from audio_loader import load_audio, normalise_audio
+    from audio_processor.audio_loader import load_audio, normalise_audio
     print("\n#=======================================================================================")
     #print("Running onset_detector.py example with test.wav/test.mp3...")
     print("Running onset_detector.py example with provided filepath...") # FUTURE: Find way to encode this so it prints the file path provided in CLI

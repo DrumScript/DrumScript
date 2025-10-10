@@ -87,9 +87,9 @@ def extract_features(audio_segment: np.ndarray, sr: int) -> Dict[str, Any]:
 # Wrapper function to process all onsets from a single audio file.
 # This is the function that `predict.py` will import and use.
 def extract_features_for_onsets(y: np.ndarray, sr: int, onset_times: List[float]) -> List[Dict[str, Any]]:
-    """
-    Slices an audio array around each onset time and extracts features for each slice.
-    """
+
+    # Slices an audio array around each onset time and extracts features for each slice.
+    
     all_features = []
     slice_samples = int((ONSET_SLICE_DURATION_MS / 1000.0) * sr)
 

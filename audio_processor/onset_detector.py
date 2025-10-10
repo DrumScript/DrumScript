@@ -25,7 +25,9 @@ def detect_onsets(audio_data: np.ndarray, sr: int) -> list[float]:
         units='time',
         wait=1,
         #delta=0.04
-        delta=0.08
+        delta=0.08,
+        pre_avg=8,
+        post_avg=8
     )
     
     return onset_times.tolist()

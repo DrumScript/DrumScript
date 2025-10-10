@@ -22,8 +22,9 @@ SAMPLE_RATE = 22050
 # SEGMENT_LENGTH_SECONDS = 0.2 # The length of segments your model was trained on # commenting out but keeping for now, relates to old ML workflow
 # HOP_LENGTH_SECONDS = 0.1 # How much to move forward for the next segment (creates overlap) # commenting out but keeping for now, relates to old ML workflow
 
-# Define all UNIQUE drum types - MUST MATCH process_enst_dataset.py and model_trainer.py
-ALL_DRUM_TYPES = sorted(['kick', 'snare', 'hi-hat', 'crash', 'ride', 'tom']) 
+
+# Define all UNIQUE drum types - MUST MATCH process_enst_dataset.py and model_trainer.py # commenting out for now (part of old ml-based approach)
+# ALL_DRUM_TYPES = sorted(['kick', 'snare', 'hi-hat', 'crash', 'ride', 'tom']) 
 
 # --- Drum Mapping Dictionary for Enhanced Output ---
 

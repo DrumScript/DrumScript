@@ -9,36 +9,51 @@ import soundfile
 import argparse # for command-line argument parsing
 
 
+
 def detect_onsets(audio_data: np.ndarray, sr: int) -> list[float]:
     """
     Detects the onset (start) times of drum hits in the audio.
-    Includes parameters tuned for better sensitivity to fast, percussive hits.
+    This version includes a post-processing step to filter out spurious
+    onsets that occur too close together, which is common with cymbals.
     """
     if audio_data.size == 0:
         return []
 
-    # --- UPDATED PARAMETERS ---
-    # 1. Increased `delta` to make the peak-picking less sensitive. This prevents
-    #    the ringing sustain of a cymbal from being registered as multiple onsets.
-    # 2. Set `backtrack=True`. This is a useful feature that finds the nearest
-    #    local minimum of energy before the detected peak. This often results in
-    #    more musically accurate onset times.
+    # --- 1. Initial Onset Detection (with sensitive delta) ---
     onset_frames = librosa.onset.onset_detect(
         y=audio_data,
         sr=sr,
         units='frames',
-        #delta=0.08, # This was too sensitive for the open hi-hat
-        delta=0.3,   # Increased delta to ignore smaller peaks in the sustain
+        delta=0.1,   # Keep the sensitive delta to catch the initial hit
         wait=1,
         pre_avg=8,
         post_avg=8,
-        backtrack=True # Backtrack to the nearest energy minimum for more accurate onsets
+        backtrack=True
     )
-
-    # Convert frame indices to timestamps
     onset_times = librosa.frames_to_time(onset_frames, sr=sr)
 
-    return onset_times.tolist()
+    if onset_times.size == 0:
+        return []
+
+    # --- 2. Post-Processing: Filter out double-detections ---
+    # Define a refractory period: a minimum time between valid onsets.
+    # 150ms is a good starting point for preventing double-triggers on a single hit.
+    refractory_period_seconds = 0.15
+
+    # The first detected onset is always considered valid.
+    final_onsets = [onset_times[0]]
+
+    # Iterate through the rest of the onsets
+    for i in range(1, len(onset_times)):
+        # Calculate the time difference between the current onset and the last *accepted* onset
+        time_since_last_onset = onset_times[i] - final_onsets[-1]
+
+        # If the time difference is greater than our refractory period, it's a new, valid hit.
+        if time_since_last_onset >= refractory_period_seconds:
+            final_onsets.append(onset_times[i])
+        # Otherwise, it's likely part of the previous hit's sustain, so we ignore it.
+
+    return final_onsets
 
 #-------NEW FCT AUTOMATIC TEMPO DETECTION---- TO BE REVIEWED/.TESTED
 

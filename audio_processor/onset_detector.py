@@ -17,20 +17,27 @@ def detect_onsets(audio_data: np.ndarray, sr: int) -> list[float]:
     if audio_data.size == 0:
         return []
 
-    # Added the `delta` parameter to increase sensitivity to smaller peaks.
-    # A smaller delta makes the peak-picking algorithm more sensitive.
-    onset_times = librosa.onset.onset_detect(
-        y=audio_data, 
-        sr=sr, 
-        units='time',
+    # --- UPDATED PARAMETERS ---
+    # 1. Increased `delta` to make the peak-picking less sensitive. This prevents
+    #    the ringing sustain of a cymbal from being registered as multiple onsets.
+    # 2. Set `backtrack=True`. This is a useful feature that finds the nearest
+    #    local minimum of energy before the detected peak. This often results in
+    #    more musically accurate onset times.
+    onset_frames = librosa.onset.onset_detect(
+        y=audio_data,
+        sr=sr,
+        units='frames',
+        #delta=0.08, # This was too sensitive for the open hi-hat
+        delta=0.3,   # Increased delta to ignore smaller peaks in the sustain
         wait=1,
-        #delta=0.04,
-        delta=0.08,
-        # delta=0.41, # this gave 1 onset using open hat test audio file. 
         pre_avg=8,
-        post_avg=8
+        post_avg=8,
+        backtrack=True # Backtrack to the nearest energy minimum for more accurate onsets
     )
-    
+
+    # Convert frame indices to timestamps
+    onset_times = librosa.frames_to_time(onset_frames, sr=sr)
+
     return onset_times.tolist()
 
 #-------NEW FCT AUTOMATIC TEMPO DETECTION---- TO BE REVIEWED/.TESTED

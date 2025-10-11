@@ -85,32 +85,44 @@ def extract_features(audio_segment: np.ndarray, sr: int) -> Dict[str, Any]:
         return None
 
 # Wrapper function to process all onsets from a single audio file.
-# This is the function that `predict.py` will import and use.
+# TEST: Uses half-slice sampling for better detection of original hit
 def extract_features_for_onsets(y: np.ndarray, sr: int, onset_times: List[float]) -> List[Dict[str, Any]]:
 
     # Slices an audio array around each onset time and extracts features for each slice.
 
     all_features = []
-    slice_samples = int((ONSET_SLICE_DURATION_MS / 1000.0) * sr)
+    # slice_samples = int((ONSET_SLICE_DURATION_MS / 1000.0) * sr) # for full slice samples
+    # Calculate *half* the slice duration in samples
+    half_slice_samples = int((ONSET_SLICE_DURATION_MS / 1000.0) * sr) // 2 # for half slice samples
 
     for time_sec in onset_times:
-        start_sample = librosa.time_to_samples(time_sec, sr=sr)
-        end_sample = start_sample + slice_samples
+        #start_sample = librosa.time_to_samples(time_sec, sr=sr) # for full slice samples
+        #end_sample = start_sample + slice_samples # for full slice samples
+        center_sample = librosa.time_to_samples(time_sec, sr=sr) # for half slice samples
         
+                # Define start and end points, centered around the onset
+        start_sample = center_sample - half_slice_samples #  for half slice samples
+        end_sample = center_sample + half_slice_samples # for half slice samples
         
-        # Ensure the slice does not go out of bounds
-        # audio_slice = y[start_sample:end_sample]
-        # --- NEW BOUNDARY CHECK ---
-        # This ensures the slice does not go past the end of the audio array `y`.
-        audio_slice = y[start_sample:min(end_sample, len(y))]
+        # ---- BOUNDARY CHECKS FOR SAMPLING ----
+        # Ensure the slice doesn't go before the beginning of the file
+        start_sample = max(0, start_sample) 
+        # Ensure the slice does not go past the end of the audio array `y`
+        end_sample = min(len(y), end_sample)
+        
+
+        # audio_slice = y[start_sample:end_sample] # for full samples
+        # This ensures the slice does not go past the end of the audio array `y`. 
+        # audio_slice = y[start_sample:min(end_sample, len(y))] # for full samples
+        audio_slice = y[start_sample:end_sample]
 
         # Extract features for the slice
-        features = extract_features(audio_slice, sr)
+        features = extract_features(audio_slice, sr) # same for full or half or part-sampling
         
-        if features:
-            # Add the onset time to the dictionary of features
-            features['onset_time'] = time_sec
-            all_features.append(features)
+        if features:  # same for full or half or part-sampling
+            # Add the onset time to the dictionary of features  # same for full or half or part-sampling
+            features['onset_time'] = time_sec  # same for full or half or part-sampling
+            all_features.append(features)  # same for full or half or part-sampling
             
     return all_features
 

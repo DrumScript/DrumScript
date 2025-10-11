@@ -23,7 +23,7 @@ def detect_onsets(audio_data: np.ndarray, sr: int) -> list[float]:
         y=audio_data, 
         sr=sr, 
         units='time',
-        # wait=1,
+        wait=1,
         #delta=0.04,
         #delta=0.08,
         delta=0.41, # this gave 1 onset using open hat test audio file. 

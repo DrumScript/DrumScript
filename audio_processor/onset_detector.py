@@ -18,8 +18,40 @@ def detect_onsets(audio_data: np.ndarray, sr: int) -> list[float]:
     """
     if audio_data.size == 0:
         return []
+    
+    # --- 1. Separate the Percussive Component ---
+    # USES HPSS: HARMONIC PERCUSSIVE SOURCE-SEPARATION  
 
-    # --- 1. Initial Onset Detection (with sensitive delta) ---
+    # NOTE (REMOVE LATER):
+    #Harmonic-Percussive Source Separation (HPSS), we can first split the audio into two separate tracks: one #containing only the harmonic ringing and another containing only the percussive attack. Then, we can run #our sensitive onset detector on the percussive track only.
+
+
+    # This is the key step. We create a new audio signal that only
+    # contains the percussive elements. The harmonic ringing that was
+    # causing false positives is filtered out.
+    y_percussive = librosa.effects.percussive(y=audio_data)
+
+    # --- 2. Run Onset Detection on the Percussive Signal ---
+    # Now, we run the same onset detection, but on the much cleaner
+    # percussive signal. This allows us to get a precise detection
+    # of the initial hit without interference from the sustain.
+    onset_frames = librosa.onset.onset_detect(
+        y=y_percussive,  # Use the percussive-only signal
+        sr=sr,
+        units='frames',
+        delta=0.3,       # The sensitive delta is now effective and safe to use
+        wait=1,
+        pre_avg=8,
+        post_avg=8,
+        backtrack=True
+    )
+
+    onset_times = librosa.frames_to_time(onset_frames, sr=sr)
+
+    return onset_times.tolist()
+
+"""   COMMENTING OUT (OLD) REFRACTORY PERIOD LOGIC FOR NOW (BUT KEEPING (FOR NOW))
+# --- 1. Initial Onset Detection (with sensitive delta) ---
     onset_frames = librosa.onset.onset_detect(
         y=audio_data,
         sr=sr,
@@ -54,6 +86,7 @@ def detect_onsets(audio_data: np.ndarray, sr: int) -> list[float]:
         # Otherwise, it's likely part of the previous hit's sustain, so we ignore it.
 
     return final_onsets
+"""
 
 #-------NEW FCT AUTOMATIC TEMPO DETECTION---- TO BE REVIEWED/.TESTED
 

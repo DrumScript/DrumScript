@@ -28,29 +28,26 @@ classifiers = [
     "Topic :: DrumScript"
 ]
 dependencies = [
-    # List your direct runtime dependencies here
-    "numpy",
-    "scipy",
-    "librosa",
-    "scikit-learn",
-    "music21",
-    "mido",
-    "pandas",
-    "pyyaml",
-    "pydub",
-    "llvmlite",
-    "numba",
-    "soundfile",
-    "sounddevice",
-    "music21",
-    "musescore",
-    "pretty_midi",
-    "setuptools",
-    "tensorflow",
-    "tdqm",
-    "scipy",
     "ipykernel",
-    "matplotlib"
+    "librosa",
+    "llvmlite",
+    "matplotlib",
+    "mido",
+    "musescore",
+    "music21",
+    "numba",
+    "numpy",
+    "pandas",
+    "pretty-midi",
+    "pydub",
+    "pyyaml",
+    "scikit-learn",
+    "scipy",
+    "setuptools",
+    "sounddevice",
+    "soundfile",
+    "tdqm",
+    "tensorflow",
     #"lilypond",
     #"pytorch",
     #"tensorflow"
@@ -69,4 +66,4 @@ dependencies = [
 # [OPTIONAL] If you want to customise how setuptools finds packages. By default, it finds all directories with __init__.py
 where = ["."] # Search for packages in the current directory
 include = ["DrumScript*"] # Only include packages starting with DrumScript
-exclude = ["tests*","development*", "docs*", "archive*"] # Exclude test directories, docs, development and archive folders from build
+exclude = ["tests*","development*", "docs*", "archive*"] # Exclude test directories, docs, development and archive folders from builddeactict

@@ -5,12 +5,5 @@
         "midi_pitch": 46,
         "note_head_type": "x-open",
         "staff_position": "F#3"
-    },
-    {
-        "drum_type": "hi_hat_closed",
-        "onset_time_seconds": 0.55,
-        "midi_pitch": 42,
-        "note_head_type": "x",
-        "staff_position": "F#3"
     }
 ]

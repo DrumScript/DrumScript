@@ -90,7 +90,7 @@ HIHAT_SUSTAIN_THRESHOLD = 0.5 # If sustain is > this, it's open
 # --- NEW: Add a refractory period constant specifically for open hi-hats ---
 # This is the duration (in seconds) for which we'll ignore subsequent onsets
 # after a definitive open hi-hat has been classified. 0.4s is a safe bet.
-OPEN_HIHAT_REFRACTORY_PERIOD_S = 0.4
+OPEN_HIHAT_REFRACTORY_PERIOD_S = 0.6
 
 # --- Core Classification Logic ---
 

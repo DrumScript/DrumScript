@@ -1,10 +1,16 @@
 [
     {
-        "drum_type": "kick",
-        "onset_time_seconds": 0.59,
-        "midi_pitch": 36,
-        "note_head_type": "normal",
-        "staff_position": "F2",
-        "display_name": "Kick Drum"
+        "drum_type": "hi_hat_open",
+        "onset_time_seconds": 0.02,
+        "midi_pitch": 46,
+        "note_head_type": "x-open",
+        "staff_position": "F#3"
+    },
+    {
+        "drum_type": "hi_hat_closed",
+        "onset_time_seconds": 0.55,
+        "midi_pitch": 42,
+        "note_head_type": "x",
+        "staff_position": "F#3"
     }
 ]

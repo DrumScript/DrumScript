@@ -146,3 +146,4 @@ audio_processor/tempogram.png
 visuals/tempogram.png
 visuals/**
 notation_generator/build:update_midi_mapping.md
+drum_classifier/drum_model.py

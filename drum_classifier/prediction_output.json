@@ -1,9 +1,303 @@
 [
     {
-        "drum_type": "hi_hat_closed",
+        "drum_type": "kick",
         "onset_time_seconds": 0.02,
-        "midi_pitch": 42,
-        "note_head_type": "x",
-        "staff_position": "F#3"
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 0.12,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 0.19,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 0.23,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 0.28,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 0.33,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 0.43,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 0.45,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 0.49,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 0.53,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 0.56,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 0.62,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 0.7,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 0.78,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 0.85,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 0.95,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 1.0,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 1.06,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 1.11,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 1.18,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 1.24,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 1.28,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 1.31,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 1.38,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 1.47,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 1.52,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 1.56,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 1.6,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 1.65,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 1.71,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 1.78,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 1.89,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 1.93,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 1.96,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 2.0,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 2.02,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 2.09,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 2.15,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 2.22,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 2.26,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 2.37,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 2.37,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 2.47,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
     }
 ]

@@ -369,7 +369,7 @@ if __name__ == "__main__":
 
     model_load_directory = os.path.join(project_root, "models")
     
-    # Paths for your saved model components
+    # Paths for  saved model components
     model_file = os.path.join(model_load_directory, "multi_label_drum_classifier_model.h5") 
     scaler_file = os.path.join(model_load_directory, "multi_label_scaler.joblib")
     label_map_file = os.path.join(model_load_directory, "multi_label_label_map.json")
@@ -405,14 +405,14 @@ if __name__ == "__main__":
 
     # --- Example 2: Process a longer audio file with detailed output ---
     print("\n--- Longer Audio File Prediction Example (Detailed Output) ---")
-    # IMPORTANT: Replace this with the path to your actual longer audio file
+    # IMPORTANT: Replace this with the path to  actual longer audio file
     # This could be an MP3, WAV, etc. (librosa supports various formats)
     #long_audio_filepath = os.path.join(project_root, "reference_audio", "test.mp3") 
     long_audio_filepath = os.path.join(project_root, "test_audio", "test.wav") 
     
     if not os.path.exists(long_audio_filepath):
         print(f"Error: Long audio file not found at {long_audio_filepath}")
-        print("Please place your longer audio file (e.g., 'test.mp3' or 'test.wav') inside the 'DrumScript/test_audio/' directory, or update the path.")
+        print("Please place  longer audio file (e.g., 'test.mp3' or 'test.wav') inside the 'DrumScript/test_audio/' directory, or update the path.")
     else:
         # Generate detailed output
         detailed_results = process_long_audio_and_predict(long_audio_filepath, loaded_model, loaded_scaler, loaded_label_map, detailed_output=True)

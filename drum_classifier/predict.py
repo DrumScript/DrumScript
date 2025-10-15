@@ -92,7 +92,7 @@ SNARE_ZCR_MIN = 0.09     # A dimensionless measure of noisiness
 LOW_TOM_CENTROID_MIN = 800 # # Rule space for low tom. It should live between the kick and the snare.
 LOW_TOM_CENTROID_MAX = 1500 # This catches our 1406 value.
 LOW_TOM_ZCR_MAX = 0.05 # Toms are tonal, not noisy, so their ZCR should be low.
-TOM_REFRACTORY_PERIOD_S = 1.0 # Toms have long sustains, so let's give them a long cooldown.
+TOM_REFRACTORY_PERIOD_S = 3.0 # Toms have long sustains, so let's give them a long cooldown.
 
 HIHAT_CENTROID_MIN = 9000
 HIHAT_ZCR_MIN = 0.2

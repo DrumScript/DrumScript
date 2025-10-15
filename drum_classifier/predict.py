@@ -52,7 +52,14 @@ DRUM_METADATA = {
         'note_head_type': 'x-open', # Or a specific open head type
         'staff_position': 'F#3',
         'display_name': 'Hi-Hat (Open)'
+    },
+    'low_tom': {
+        'midi_pitch': 41, # General MIDI for Low Floor Tom
+        'note_head_type': 'normal',
+        'staff_position': 'A2',
+        'display_name': 'Low Tom'
     }
+    
      # Add other drum types here as you create rules for them
     #, # KEEP THESE FOR NOW
     #'crash': {
@@ -75,58 +82,75 @@ DRUM_METADATA = {
     #}
 }
 # --- Rule-based thresholds ---
-# NEW: Rule-based thresholds. These values are the core of the classifier
+# Rule-based thresholds. These values are the core of the classifier
 # and can be tuned for better accuracy.
-KICK_SPECTRAL_CENTROID_THRESHOLD = 1500  # Hz
+KICK_SPECTRAL_CENTROID_MAX = 800  # Hz -  Kicks are very low frequency. Let's cap them here.
 SNARE_CENTROID_MIN = 1000  # Hz
 SNARE_CENTROID_MAX = 4000  # Hz
 SNARE_ZCR_MIN = 0.09     # A dimensionless measure of noisiness
-# HIHAT_CENTROID_MIN = 4000  # Hz (Higher than the snare)
-HIHAT_CENTROID_MIN = 9000  # Hz (Higher than the snare), results from resting open hat classifier shows open hat 9000 > SNARE_CENTROID > 10500 (on single open hat sample, so not necessarily representative)
-HIHAT_ZCR_MIN = 0.2        # ie. noisier than the snare
-#HIHAT_ZCR_MIN = 0.09 # try same as the snare
-HIHAT_SUSTAIN_THRESHOLD = 0.5 # If sustain is > this, it's open
 
-# --- NEW: Add a refractory period constant specifically for open hi-hats ---
-# This is the duration (in seconds) for which we'll ignore subsequent onsets
-# after a definitive open hi-hat has been classified. 0.4s is a safe bet.
+LOW_TOM_CENTROID_MIN = 800 # # Rule space for low tom. It should live between the kick and the snare.
+LOW_TOM_CENTROID_MAX = 1500 # This catches our 1406 value.
+LOW_TOM_ZCR_MAX = 0.05 # Toms are tonal, not noisy, so their ZCR should be low.
+TOM_REFRACTORY_PERIOD_S = 1.0 # Toms have long sustains, so let's give them a long cooldown.
+
+HIHAT_CENTROID_MIN = 9000
+HIHAT_ZCR_MIN = 0.2
+HIHAT_SUSTAIN_THRESHOLD = 0.5
 OPEN_HIHAT_REFRACTORY_PERIOD_S = 0.6
+
+
+
+
 
 # --- Core Classification Logic ---
 
 def predict_drum_hits(onset_features: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-    """
-    Classifies drum hits based on their acoustic features using a rule-based system.
-    This version includes logic to handle the sustain of an open hi-hat by
-    ignoring subsequent onsets for a short period after one is detected.
-    """
+    
+    # Classifies drum hits based on their acoustic features using a rule-based system.
+    # This version includes refractory periods for both open hi-hats and toms.
+    
     classified_events = []
-    last_open_hihat_time = -1.0  # Initialize to a value that won't interfere with the first hit
+    last_open_hihat_time = -1.0 # tracker for last open hihat hit
+    last_tom_time = -1.0  # tracker for last tom hit
 
     for onset in onset_features:
-        # --- NEW: Refractory period check ---
+        # --- Refractory period check ---
         # If a recent open hi-hat was detected, check if this new onset is just its sustain.
         if last_open_hihat_time > 0 and (onset['onset_time'] - last_open_hihat_time) < OPEN_HIHAT_REFRACTORY_PERIOD_S:
             print(f"\n--- Ignoring Onset at {onset['onset_time']:.2f}s (within refractory period of open hi-hat at {last_open_hihat_time:.2f}s) ---")
-            continue # Skip this onset and move to the next one
+            continue # Skip this onset and move to the next one        
+        # --- Check if we are inside the sustain of a recently hit tom ---
+        if last_tom_time > 0 and (onset['onset_time'] - last_tom_time) < TOM_REFRACTORY_PERIOD_S:
+            print(f"\n--- Ignoring Onset at {onset['onset_time']:.2f}s (within refractory period of a tom) ---")
+            continue
 
         # --- DEBUGGING BLOCK ---
         print(f"\n--- Processing Onset at {onset['onset_time']:.2f}s ---")
         print(f"  - Spectral Centroid: {onset['spectral_centroid']:.2f}")
         print(f"  - Zero-Crossing Rate: {onset['zero_crossing_rate']:.4f}")
         print(f"  - Sustain Level: {onset['sustain_level']:.2f}")
-
-        # --- RULE 1: Kick Drum ---
-        if onset['spectral_centroid'] < KICK_SPECTRAL_CENTROID_THRESHOLD:
+        # --- RULE 1: Kick Drum  ---
+        if onset['spectral_centroid'] < KICK_SPECTRAL_CENTROID_MAX:
             print("  - RESULT: Classified as KICK.")
             kick_event = create_detailed_drum_events(['kick'], onset['onset_time'])
             classified_events.extend(kick_event)
+            continue
+        
+        # --- Low Tom ---
+        elif LOW_TOM_CENTROID_MIN < onset['spectral_centroid'] < LOW_TOM_CENTROID_MAX and \
+             onset['zero_crossing_rate'] < LOW_TOM_ZCR_MAX:
+            print("  - RESULT: Classified as LOW TOM.")
+            tom_event = create_detailed_drum_events(['low_tom'], onset['onset_time'])
+            classified_events.extend(tom_event)
+            # IMPORTANT: Start the cooldown timer for toms
+            last_tom_time = onset['onset_time']
             continue
 
         # --- RULE 2: Snare Drum ---
         elif SNARE_CENTROID_MIN < onset['spectral_centroid'] < SNARE_CENTROID_MAX and \
              onset['zero_crossing_rate'] >= SNARE_ZCR_MIN:
-            
+            print("  - RESULT: Classified as SNARE.")
             snare_event = create_detailed_drum_events(['snare'], onset['onset_time'])
             classified_events.extend(snare_event)
             continue
@@ -139,12 +163,7 @@ def predict_drum_hits(onset_features: List[Dict[str, Any]]) -> List[Dict[str, An
             if onset['sustain_level'] > HIHAT_SUSTAIN_THRESHOLD:
                 print("    - Sustain is HIGH. Classified as OPEN HI-HAT.")
                 hihat_event = create_detailed_drum_events(['hi_hat_open'], onset['onset_time'])
-                
-                # --- NEW: This is the crucial step ---
-                # We update the time of the last detected open hi-hat.
-                # This activates the refractory period for the *next* onsets in the loop.
                 last_open_hihat_time = onset['onset_time']
-                
             else:
                 print("    - Sustain is LOW. Classified as CLOSED HI-HAT.")
                 hihat_event = create_detailed_drum_events(['hi_hat_closed'], onset['onset_time'])
@@ -157,14 +176,13 @@ def predict_drum_hits(onset_features: List[Dict[str, Any]]) -> List[Dict[str, An
 
     return classified_events
 
-
-# KEPT & MODIFIED: This helper function is still very useful. It now takes a
+# This helper function is still very useful. It now takes a
 # list of classified labels for a single onset (for now, just one label, but
 # this supports concurrent hits in the future) and creates the detailed output.
 def create_detailed_drum_events(predicted_drums: List[str], onset_time: float) -> List[Dict[str, Any]]:
-    """
-    Creates detailed drum event objects with metadata for a list of predicted drums.
-    """
+    
+    # Creates detailed drum event objects with metadata for a list of predicted drums.
+    
     detailed_events = []
     for drum_type in predicted_drums:
         if drum_type in DRUM_METADATA:

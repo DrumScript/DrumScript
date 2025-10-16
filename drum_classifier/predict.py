@@ -16,7 +16,6 @@ DRUM_METADATA = {
     'high_tom': { 'midi_pitch': 48, 'note_head_type': 'normal', 'staff_position': 'E3', 'display_name': 'High Tom' }
 }
 
-
 # --- Rule-based thresholds ---
 # --- Make the kick rule even more specific ---
 KICK_SPECTRAL_CENTROID_MAX = 400  # Kicks are very low. Let's cap them at 400 Hz.
@@ -26,10 +25,14 @@ MID_TOM_CENTROID_MIN = 400
 MID_TOM_CENTROID_MAX = 800 # This now captures our 656.55 value.
 MID_TOM_ZCR_MAX = 0.05    # Toms are tonal, not noisy.
 
-# Low Tom rule remains the same
-LOW_TOM_CENTROID_MIN = 800
-LOW_TOM_CENTROID_MAX = 1500
-LOW_TOM_ZCR_MAX = 0.05
+# --- NEW: Define a rule space for our High Tom ---
+HIGH_TOM_CENTROID_MIN = 800
+HIGH_TOM_CENTROID_MAX = 1380 # Captures the high tom's 1353 Hz
+
+# --- UPDATED: Adjust the Low Tom rule to be higher ---
+LOW_TOM_CENTROID_MIN = 1380
+LOW_TOM_CENTROID_MAX = 1600 # Captures the low tom's 1406 Hz
+LOW_TOM_ZCR_MAX = 0.05 # Re-using this for all toms
 
 SNARE_CENTROID_MIN = 1000
 SNARE_CENTROID_MAX = 4000
@@ -64,41 +67,47 @@ def predict_drum_hits(onset_features: List[Dict[str, Any]]) -> List[Dict[str, An
         print(f"  - Spectral Centroid: {onset['spectral_centroid']:.2f}")
         print(f"  - Zero-Crossing Rate: {onset['zero_crossing_rate']:.4f}")
         print(f"  - Sustain Level: {onset['sustain_level']:.2f}")
-
-
-        # --- RULE 1: Kick Drum (Now more specific) ---
+        # --- RULE 1: Kick Drum ---
         if onset['spectral_centroid'] < KICK_SPECTRAL_CENTROID_MAX:
             print("  - RESULT: Classified as KICK.")
             classified_events.extend(create_detailed_drum_events(['kick'], onset['onset_time']))
             continue
 
-        # --- NEW RULE: Mid Tom ---
+        # --- RULE 2: Mid Tom ---
         elif MID_TOM_CENTROID_MIN < onset['spectral_centroid'] < MID_TOM_CENTROID_MAX and \
              onset['zero_crossing_rate'] < MID_TOM_ZCR_MAX:
             print("  - RESULT: Classified as MID TOM.")
             classified_events.extend(create_detailed_drum_events(['mid_tom'], onset['onset_time']))
-            last_tom_time = onset['onset_time'] # Trigger tom cooldown
+            last_tom_time = onset['onset_time']
             continue
 
-        # --- RULE 3: Low Tom ---
+        # --- RULE 3: High Tom ---
+        elif HIGH_TOM_CENTROID_MIN < onset['spectral_centroid'] < HIGH_TOM_CENTROID_MAX and \
+             onset['zero_crossing_rate'] < LOW_TOM_ZCR_MAX: # Using same ZCR for all toms
+            print("  - RESULT: Classified as HIGH TOM.")
+            classified_events.extend(create_detailed_drum_events(['high_tom'], onset['onset_time']))
+            last_tom_time = onset['onset_time']
+            continue
+
+        # --- RULE 4: Low Tom ---
         elif LOW_TOM_CENTROID_MIN < onset['spectral_centroid'] < LOW_TOM_CENTROID_MAX and \
              onset['zero_crossing_rate'] < LOW_TOM_ZCR_MAX:
             print("  - RESULT: Classified as LOW TOM.")
             classified_events.extend(create_detailed_drum_events(['low_tom'], onset['onset_time']))
-            last_tom_time = onset['onset_time'] # Trigger tom cooldown
+            last_tom_time = onset['onset_time']
             continue
 
-        # --- RULE 4: Snare Drum ---
+        # --- RULE 5: Snare Drum ---
         elif SNARE_CENTROID_MIN < onset['spectral_centroid'] < SNARE_CENTROID_MAX and \
              onset['zero_crossing_rate'] >= SNARE_ZCR_MIN:
             print("  - RESULT: Classified as SNARE.")
             classified_events.extend(create_detailed_drum_events(['snare'], onset['onset_time']))
             continue
 
-        # --- RULE 5: Hi-Hat ---
+        # --- RULE 6: Hi-Hat ---
         elif onset['spectral_centroid'] > HIHAT_CENTROID_MIN and \
              onset['zero_crossing_rate'] >= HIHAT_ZCR_MIN:
-            print("  - RESULT: Potentially a Hi-Hat. Checking sustain...")
+            print("  - RESULT: Potentially a Hi-Hat...")
             if onset['sustain_level'] > HIHAT_SUSTAIN_THRESHOLD:
                 print("    - Sustain is HIGH. Classified as OPEN HI-HAT.")
                 classified_events.extend(create_detailed_drum_events(['hi_hat_open'], onset['onset_time']))
@@ -130,7 +139,6 @@ def create_detailed_drum_events(predicted_drums: List[str], onset_time: float) -
             }
             detailed_events.append(event)
     return detailed_events
-
 
 # --- Main execution block for testing ---
 if __name__ == "__main__":

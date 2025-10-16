@@ -1,9 +1,9 @@
 [
     {
-        "drum_type": "mid_tom",
-        "onset_time_seconds": 0.09,
-        "midi_pitch": 45,
+        "drum_type": "low_tom",
+        "onset_time_seconds": 0.02,
+        "midi_pitch": 41,
         "note_head_type": "normal",
-        "staff_position": "C3"
+        "staff_position": "A2"
     }
 ]

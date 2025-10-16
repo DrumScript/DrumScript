@@ -115,7 +115,7 @@ def extract_features_for_onsets(y: np.ndarray, sr: int, onset_times: List[float]
             
     return all_features
 
-if __name__ == '__main__':
+"""if __name__ == '__main__':
     # This block is for testing the feature_extractor.py script directly.
     import os
     from audio_loader import load_audio
@@ -152,47 +152,4 @@ if __name__ == '__main__':
             print("\nFeature extraction failed or returned no features.")
 
     print("\n--- feature_extractor.py test finished ---")
-    print("\n-----------------------------------------------------")
-
-
-# ---- LEGACY (ML-METHOD) ---------------------------------------------------------------------------------
-"""
-# def extract_features(audio_segment: np.ndarray, sr: int) -> Dict[str, Any]:
-    
-    # Extracts a dictionary of features from a single audio segment.
-
-    # Features are returned as mean values over the segment's duration.
-
-    if audio_segment.size == 0:
-        return None
-
-    try:
-        # 1. Spectral Centroid
-        spectral_centroid = np.mean(librosa.feature.spectral_centroid(y=audio_segment, sr=sr))
-
-        # 2. Spectral Rolloff
-        spectral_rolloff = np.mean(librosa.feature.spectral_rolloff(y=audio_segment, sr=sr))
-
-        # 3. RMS Energy
-        rms = np.mean(librosa.feature.rms(y=audio_segment))
-        
-        # 4. Zero-Crossing Rate
-        zcr = np.mean(librosa.feature.zero_crossing_rate(y=audio_segment))
-
-        # 5. MFCCs
-        mfccs = np.mean(librosa.feature.mfcc(y=audio_segment, sr=sr, n_mfcc=N_MFCC), axis=1)
-
-        # Return a dictionary of features
-        return {
-            'spectral_centroid': spectral_centroid,
-            'spectral_rolloff': spectral_rolloff,
-            'rms': rms,
-            'zero_crossing_rate': zcr,
-            'mfccs': mfccs.tolist() # Convert numpy array to list for JSON serialization
-        }
-
-    except Exception as e:
-        print(f"Warning: Error extracting features from a segment: {e}")
-        return None
-"""
-# ---------------------------------------------------------------------------------------------------------
+    print("\n-----------------------------------------------------")"""

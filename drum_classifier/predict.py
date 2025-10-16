@@ -1,179 +1,111 @@
 # DrumScript/drum_classifier/predict.py
-# REFACTORED (OCT-25): This script has been completely overhauled to use a rule-based
-# classification system instead of a trained Machine Learning model.
-
 import os
 import json
 import librosa
 import numpy as np
 from typing import List, Dict, Any
 
-# import joblib # KEEP FOR NOW
-# import tensorflow as tf # Required to load the Keras model # KEEP FOR NOW
-# from tqdm import tqdm # For progress bar # KEEP FOR NOW
-
-# --- Constants and Metadata ---
-
-# KEPT: This metadata is crucial for mapping classified labels to the
-# information needed for generating sheet music.
-
-# --- Configuration (must match model_trainer.py) ---
-SAMPLE_RATE = 22050
-# SEGMENT_LENGTH_SECONDS = 0.2 # The length of segments your model was trained on # commenting out but keeping for now, relates to old ML workflow
-# HOP_LENGTH_SECONDS = 0.1 # How much to move forward for the next segment (creates overlap) # commenting out but keeping for now, relates to old ML workflow
-
-
-# Define all UNIQUE drum types - MUST MATCH process_enst_dataset.py and model_trainer.py # commenting out for now (part of old ml-based approach)
-# ALL_DRUM_TYPES = sorted(['kick', 'snare', 'hi-hat', 'crash', 'ride', 'tom']) 
-
 # --- Drum Mapping Dictionary for Enhanced Output ---
-
 DRUM_METADATA = {
-    'kick': {
-        'midi_pitch': 36,
-        'note_head_type': 'normal',
-        'staff_position': 'F2',
-        'display_name': 'Kick Drum'
-    },
-    'snare': {
-        'midi_pitch': 38,
-        'note_head_type': 'normal',
-        'staff_position': 'C3',
-        'display_name': 'Snare Drum'
-    },
-    'hi_hat_closed': {
-        'midi_pitch': 42,
-        'note_head_type': 'x',
-        'staff_position': 'F#3',
-        'display_name': 'Hi-Hat (Closed)'
-    },
-    'hi_hat_open': {
-        'midi_pitch': 46,
-        'note_head_type': 'x-open', # Or a specific open head type
-        'staff_position': 'F#3',
-        'display_name': 'Hi-Hat (Open)'
-    },
-    'low_tom': {
-        'midi_pitch': 41, # General MIDI for Low Floor Tom
-        'note_head_type': 'normal',
-        'staff_position': 'A2',
-        'display_name': 'Low Tom'
-    }
-    
-     # Add other drum types here as you create rules for them
-    #, # KEEP THESE FOR NOW
-    #'crash': {
-     #   'midi_pitch': 49,
-      #  'note_head_type': 'x',
-       # 'staff_position': 'C#4',
-        #'display_name': 'Crash Cymbal'
-    #},
-    #'ride': {
-     #   'midi_pitch': 51,
-      #  'note_head_type': 'x',
-       # 'staff_position': 'D#4',
-        #'display_name': 'Ride Cymbal'
-    #},
-    #'tom': {
-     #   'midi_pitch': 45,
-      #  'note_head_type': 'normal',
-       # 'staff_position': 'A3',
-        #'display_name': 'Tom-Tom'
-    #}
+    'kick': { 'midi_pitch': 36, 'note_head_type': 'normal', 'staff_position': 'F2', 'display_name': 'Kick Drum' },
+    'snare': { 'midi_pitch': 38, 'note_head_type': 'normal', 'staff_position': 'C3', 'display_name': 'Snare Drum' },
+    'hi_hat_closed': { 'midi_pitch': 42, 'note_head_type': 'x', 'staff_position': 'F#3', 'display_name': 'Hi-Hat (Closed)' },
+    'hi_hat_open': { 'midi_pitch': 46, 'note_head_type': 'x-open', 'staff_position': 'F#3', 'display_name': 'Hi-Hat (Open)' },
+    'low_tom': { 'midi_pitch': 41, 'note_head_type': 'normal', 'staff_position': 'A2', 'display_name': 'Low Tom' },
+    # --- Add metadata for our mid tom ---
+    'mid_tom': { 'midi_pitch': 45, 'note_head_type': 'normal', 'staff_position': 'C3', 'display_name': 'Mid Tom' }
 }
-# --- Rule-based thresholds ---
-# Rule-based thresholds. These values are the core of the classifier
-# and can be tuned for better accuracy.
-KICK_SPECTRAL_CENTROID_MAX = 800  # Hz -  Kicks are very low frequency. Let's cap them here.
-SNARE_CENTROID_MIN = 1000  # Hz
-SNARE_CENTROID_MAX = 4000  # Hz
-SNARE_ZCR_MIN = 0.09     # A dimensionless measure of noisiness
 
-LOW_TOM_CENTROID_MIN = 800 # # Rule space for low tom. It should live between the kick and the snare.
-LOW_TOM_CENTROID_MAX = 1500 # This catches our 1406 value.
-LOW_TOM_ZCR_MAX = 0.05 # Toms are tonal, not noisy, so their ZCR should be low.
-TOM_REFRACTORY_PERIOD_S = 3.0 # Toms have long sustains, so let's give them a long cooldown.
+# --- Rule-based thresholds ---
+# --- Make the kick rule even more specific ---
+KICK_SPECTRAL_CENTROID_MAX = 400  # Kicks are very low. Let's cap them at 400 Hz.
+
+# --- Define a rule space for our Mid Tom ---
+MID_TOM_CENTROID_MIN = 400
+MID_TOM_CENTROID_MAX = 800 # This now captures our 656.55 value.
+MID_TOM_ZCR_MAX = 0.05    # Toms are tonal, not noisy.
+
+# Low Tom rule remains the same
+LOW_TOM_CENTROID_MIN = 800
+LOW_TOM_CENTROID_MAX = 1500
+LOW_TOM_ZCR_MAX = 0.05
+
+SNARE_CENTROID_MIN = 1000
+SNARE_CENTROID_MAX = 4000
+SNARE_ZCR_MIN = 0.09
 
 HIHAT_CENTROID_MIN = 9000
 HIHAT_ZCR_MIN = 0.2
 HIHAT_SUSTAIN_THRESHOLD = 0.5
+
+# --- Refractory period constants ---
 OPEN_HIHAT_REFRACTORY_PERIOD_S = 0.6
-
-
-
-
+TOM_REFRACTORY_PERIOD_S = 3.0 # Keep this long to handle all toms
 
 # --- Core Classification Logic ---
-
 def predict_drum_hits(onset_features: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-    
-    # Classifies drum hits based on their acoustic features using a rule-based system.
-    # This version includes refractory periods for both open hi-hats and toms.
-    
     classified_events = []
-    last_open_hihat_time = -1.0 # tracker for last open hihat hit
-    last_tom_time = -1.0  # tracker for last tom hit
+    last_open_hihat_time = -1.0
+    last_tom_time = -1.0
 
     for onset in onset_features:
-        # --- Refractory period check ---
-        # If a recent open hi-hat was detected, check if this new onset is just its sustain.
+        # Refractory period checks
         if last_open_hihat_time > 0 and (onset['onset_time'] - last_open_hihat_time) < OPEN_HIHAT_REFRACTORY_PERIOD_S:
-            print(f"\n--- Ignoring Onset at {onset['onset_time']:.2f}s (within refractory period of open hi-hat at {last_open_hihat_time:.2f}s) ---")
-            continue # Skip this onset and move to the next one        
-        # --- Check if we are inside the sustain of a recently hit tom ---
+            print(f"\n--- Ignoring Onset at {onset['onset_time']:.2f}s (within refractory period of an open hi-hat) ---")
+            continue
         if last_tom_time > 0 and (onset['onset_time'] - last_tom_time) < TOM_REFRACTORY_PERIOD_S:
             print(f"\n--- Ignoring Onset at {onset['onset_time']:.2f}s (within refractory period of a tom) ---")
             continue
 
-        # --- DEBUGGING BLOCK ---
+        # Debugging block
         print(f"\n--- Processing Onset at {onset['onset_time']:.2f}s ---")
         print(f"  - Spectral Centroid: {onset['spectral_centroid']:.2f}")
         print(f"  - Zero-Crossing Rate: {onset['zero_crossing_rate']:.4f}")
         print(f"  - Sustain Level: {onset['sustain_level']:.2f}")
-        # --- RULE 1: Kick Drum  ---
+
+        # --- RULE 1: Kick Drum (Now more specific) ---
         if onset['spectral_centroid'] < KICK_SPECTRAL_CENTROID_MAX:
             print("  - RESULT: Classified as KICK.")
-            kick_event = create_detailed_drum_events(['kick'], onset['onset_time'])
-            classified_events.extend(kick_event)
+            classified_events.extend(create_detailed_drum_events(['kick'], onset['onset_time']))
             continue
-        
-        # --- Low Tom ---
+
+        # --- NEW RULE: Mid Tom ---
+        elif MID_TOM_CENTROID_MIN < onset['spectral_centroid'] < MID_TOM_CENTROID_MAX and \
+             onset['zero_crossing_rate'] < MID_TOM_ZCR_MAX:
+            print("  - RESULT: Classified as MID TOM.")
+            classified_events.extend(create_detailed_drum_events(['mid_tom'], onset['onset_time']))
+            last_tom_time = onset['onset_time'] # Trigger tom cooldown
+            continue
+
+        # --- RULE 3: Low Tom ---
         elif LOW_TOM_CENTROID_MIN < onset['spectral_centroid'] < LOW_TOM_CENTROID_MAX and \
              onset['zero_crossing_rate'] < LOW_TOM_ZCR_MAX:
             print("  - RESULT: Classified as LOW TOM.")
-            tom_event = create_detailed_drum_events(['low_tom'], onset['onset_time'])
-            classified_events.extend(tom_event)
-            # IMPORTANT: Start the cooldown timer for toms
-            last_tom_time = onset['onset_time']
+            classified_events.extend(create_detailed_drum_events(['low_tom'], onset['onset_time']))
+            last_tom_time = onset['onset_time'] # Trigger tom cooldown
             continue
 
-        # --- RULE 2: Snare Drum ---
+        # --- RULE 4: Snare Drum ---
         elif SNARE_CENTROID_MIN < onset['spectral_centroid'] < SNARE_CENTROID_MAX and \
              onset['zero_crossing_rate'] >= SNARE_ZCR_MIN:
             print("  - RESULT: Classified as SNARE.")
-            snare_event = create_detailed_drum_events(['snare'], onset['onset_time'])
-            classified_events.extend(snare_event)
+            classified_events.extend(create_detailed_drum_events(['snare'], onset['onset_time']))
             continue
 
-        # --- RULE 3: Hi-Hat ---
+        # --- RULE 5: Hi-Hat ---
         elif onset['spectral_centroid'] > HIHAT_CENTROID_MIN and \
              onset['zero_crossing_rate'] >= HIHAT_ZCR_MIN:
-            
             print("  - RESULT: Potentially a Hi-Hat. Checking sustain...")
             if onset['sustain_level'] > HIHAT_SUSTAIN_THRESHOLD:
                 print("    - Sustain is HIGH. Classified as OPEN HI-HAT.")
-                hihat_event = create_detailed_drum_events(['hi_hat_open'], onset['onset_time'])
+                classified_events.extend(create_detailed_drum_events(['hi_hat_open'], onset['onset_time']))
                 last_open_hihat_time = onset['onset_time']
             else:
                 print("    - Sustain is LOW. Classified as CLOSED HI-HAT.")
-                hihat_event = create_detailed_drum_events(['hi_hat_closed'], onset['onset_time'])
-            
-            classified_events.extend(hihat_event)
+                classified_events.extend(create_detailed_drum_events(['hi_hat_closed'], onset['onset_time']))
             continue
         
-        # If no rules have matched by this point
         print("  - RESULT: No rule matched.")
-
     return classified_events
 
 # This helper function is still very useful. It now takes a

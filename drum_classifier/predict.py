@@ -12,8 +12,10 @@ DRUM_METADATA = {
     'hi_hat_closed': { 'midi_pitch': 42, 'note_head_type': 'x', 'staff_position': 'F#3', 'display_name': 'Hi-Hat (Closed)' },
     'hi_hat_open': { 'midi_pitch': 46, 'note_head_type': 'x-open', 'staff_position': 'F#3', 'display_name': 'Hi-Hat (Open)' },
     'low_tom': { 'midi_pitch': 41, 'note_head_type': 'normal', 'staff_position': 'A2', 'display_name': 'Low Tom' },
-    'mid_tom': { 'midi_pitch': 45, 'note_head_type': 'normal', 'staff_position': 'C3', 'display_name': 'Mid Tom' }
+    'mid_tom': { 'midi_pitch': 45, 'note_head_type': 'normal', 'staff_position': 'C3', 'display_name': 'Mid Tom' },
+    'high_tom': { 'midi_pitch': 48, 'note_head_type': 'normal', 'staff_position': 'E3', 'display_name': 'High Tom' }
 }
+
 
 # --- Rule-based thresholds ---
 # --- Make the kick rule even more specific ---

@@ -43,8 +43,7 @@ HIHAT_SUSTAIN_THRESHOLD = 0.5
 # --- Refractory period constants ---
 OPEN_HIHAT_REFRACTORY_PERIOD_S = 0.6
 TOM_REFRACTORY_PERIOD_S = 3.0
-# --- NEW: Add a refractory period for crash cymbals ---
-CRASH_REFRACTORY_PERIOD_S = 4.0 # Crashes ring out for a long time.
+CRASH_REFRACTORY_PERIOD_S = 10.0 # ie crash test.wav duration
 
 # --- Refractory period constants ---
 OPEN_HIHAT_REFRACTORY_PERIOD_S = 0.6
@@ -102,7 +101,7 @@ def predict_drum_hits(onset_features: List[Dict[str, Any]]) -> List[Dict[str, An
             classified_events.extend(create_detailed_drum_events(['low_tom'], onset['onset_time']))
             last_tom_time = onset['onset_time']
             continue
-        
+
         elif CRASH_CENTROID_MIN < onset['spectral_centroid'] < CRASH_CENTROID_MAX and \
             onset['sustain_level'] > CRASH_SUSTAIN_MIN:
             print("  - RESULT: Classified as CRASH.")

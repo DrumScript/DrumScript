@@ -1,9 +1,9 @@
 [
     {
-        "drum_type": "crash",
-        "onset_time_seconds": 0.16,
-        "midi_pitch": 49,
+        "drum_type": "ride",
+        "onset_time_seconds": 0.02,
+        "midi_pitch": 51,
         "note_head_type": "x",
-        "staff_position": "A3"
+        "staff_position": "B3"
     }
 ]

@@ -48,7 +48,7 @@ HIHAT_SUSTAIN_THRESHOLD = 0.5
 OPEN_HIHAT_REFRACTORY_PERIOD_S = 0.6
 TOM_REFRACTORY_PERIOD_S = 3.0
 CRASH_REFRACTORY_PERIOD_S = 10.0 # ie crash test.wav duration
-RIDE_REFRACTORY_PERIOD_S = 4.0 # Rides can be played faster than crashes
+RIDE_REFRACTORY_PERIOD_S = 10.0 # ie ride test.wav duration
 
 # --- Refractory period constants ---
 OPEN_HIHAT_REFRACTORY_PERIOD_S = 0.6

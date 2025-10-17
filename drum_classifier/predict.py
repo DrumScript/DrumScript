@@ -14,7 +14,8 @@ DRUM_METADATA = {
     'low_tom': { 'midi_pitch': 41, 'note_head_type': 'normal', 'staff_position': 'A2', 'display_name': 'Low Tom' },
     'mid_tom': { 'midi_pitch': 45, 'note_head_type': 'normal', 'staff_position': 'C3', 'display_name': 'Mid Tom' },
     'high_tom': { 'midi_pitch': 48, 'note_head_type': 'normal', 'staff_position': 'E3', 'display_name': 'High Tom' },
-    'crash': { 'midi_pitch': 49, 'note_head_type': 'x', 'staff_position': 'A3', 'display_name': 'Crash Cymbal' }
+    'crash': { 'midi_pitch': 49, 'note_head_type': 'x', 'staff_position': 'A3', 'display_name': 'Crash Cymbal' },
+    'ride': { 'midi_pitch': 51, 'note_head_type': 'x', 'staff_position': 'B3', 'display_name': 'Ride Cymbal' }
 }
 
 # --- Rule-based thresholds ---
@@ -31,11 +32,14 @@ SNARE_CENTROID_MIN = 1600
 SNARE_CENTROID_MAX = 4000
 SNARE_ZCR_MIN = 0.09
 
-# --- NEW: Define a rule space for Cymbals ---
+# --- Define a shared Cymbal frequency space ---
+CYMBAL_CENTROID_MIN = 4000
+CYMBAL_CENTROID_MAX = 7000
 CRASH_CENTROID_MIN = 4000
 CRASH_CENTROID_MAX = 7000 # Cymbals are bright, but less than hi-hats.
+RIDE_SUSTAIN_MIN = 0.4
+RIDE_SUSTAIN_MAX = 0.8  # A ride has medium sustain
 CRASH_SUSTAIN_MIN = 0.8  # Crashes have very high sustain.
-
 HIHAT_CENTROID_MIN = 9000
 HIHAT_ZCR_MIN = 0.2
 HIHAT_SUSTAIN_THRESHOLD = 0.5
@@ -44,6 +48,7 @@ HIHAT_SUSTAIN_THRESHOLD = 0.5
 OPEN_HIHAT_REFRACTORY_PERIOD_S = 0.6
 TOM_REFRACTORY_PERIOD_S = 3.0
 CRASH_REFRACTORY_PERIOD_S = 10.0 # ie crash test.wav duration
+RIDE_REFRACTORY_PERIOD_S = 4.0 # Rides can be played faster than crashes
 
 # --- Refractory period constants ---
 OPEN_HIHAT_REFRACTORY_PERIOD_S = 0.6
@@ -56,10 +61,12 @@ def predict_drum_hits(onset_features: List[Dict[str, Any]]) -> List[Dict[str, An
     last_open_hihat_time = -1.0
     last_tom_time = -1.0
     last_crash_time = -1.0
+    last_ride_time = -1.0
 
+    # ---- Classification Block ----
 
     for onset in onset_features:
-        # Refractory period checks
+        # ---- Refractory period checks ----
         if last_open_hihat_time > 0 and (onset['onset_time'] - last_open_hihat_time) < OPEN_HIHAT_REFRACTORY_PERIOD_S:
             print(f"\n--- Ignoring Onset at {onset['onset_time']:.2f}s (within refractory period of an open hi-hat) ---")
             continue
@@ -68,14 +75,17 @@ def predict_drum_hits(onset_features: List[Dict[str, Any]]) -> List[Dict[str, An
             continue
         if last_crash_time > 0 and (onset['onset_time'] - last_crash_time) < CRASH_REFRACTORY_PERIOD_S:
             print(f"\n--- Ignoring Onset... (within crash refractory period) ---")
+        if last_ride_time > 0 and (onset['onset_time'] - last_ride_time) < RIDE_REFRACTORY_PERIOD_S:
+            print(f"\n--- Ignoring Onset... (within ride refractory period) ---")
             continue
 
-
-        # Debugging block
+        # ---- Debugging block ----
         print(f"\n--- Processing Onset at {onset['onset_time']:.2f}s ---")
         print(f"  - Spectral Centroid: {onset['spectral_centroid']:.2f}")
         print(f"  - Zero-Crossing Rate: {onset['zero_crossing_rate']:.4f}")
         print(f"  - Sustain Level: {onset['sustain_level']:.2f}")
+
+        # ---- Rule-sets ----
         if onset['spectral_centroid'] < KICK_SPECTRAL_CENTROID_MAX:
             print("  - RESULT: Classified as KICK.")
             classified_events.extend(create_detailed_drum_events(['kick'], onset['onset_time']))
@@ -89,7 +99,7 @@ def predict_drum_hits(onset_features: List[Dict[str, Any]]) -> List[Dict[str, An
             continue
 
         elif HIGH_TOM_CENTROID_MIN < onset['spectral_centroid'] < HIGH_TOM_CENTROID_MAX and \
-             onset['zero_crossing_rate'] < LOW_TOM_ZCR_MAX: # Using same ZCR for all toms
+             onset['zero_crossing_rate'] < LOW_TOM_ZCR_MAX: # Using same ZCR for all toms?
             print("  - RESULT: Classified as HIGH TOM.")
             classified_events.extend(create_detailed_drum_events(['high_tom'], onset['onset_time']))
             last_tom_time = onset['onset_time']
@@ -102,11 +112,20 @@ def predict_drum_hits(onset_features: List[Dict[str, Any]]) -> List[Dict[str, An
             last_tom_time = onset['onset_time']
             continue
 
-        elif CRASH_CENTROID_MIN < onset['spectral_centroid'] < CRASH_CENTROID_MAX and \
-            onset['sustain_level'] > CRASH_SUSTAIN_MIN:
+        # --- Ride Cymbal (check this BEFORE the crash) ---
+        elif CYMBAL_CENTROID_MIN < onset['spectral_centroid'] < CYMBAL_CENTROID_MAX and \
+             RIDE_SUSTAIN_MIN < onset['sustain_level'] < RIDE_SUSTAIN_MAX:
+            print("  - RESULT: Classified as RIDE.")
+            classified_events.extend(create_detailed_drum_events(['ride'], onset['onset_time']))
+            last_ride_time = onset['onset_time'] # Trigger ride cooldown
+            continue
+
+        # --- Crash Cymbal Rule (now uses the shared CYMBAL constant) ---
+        elif CYMBAL_CENTROID_MIN < onset['spectral_centroid'] < CYMBAL_CENTROID_MAX and \
+             onset['sustain_level'] > CRASH_SUSTAIN_MIN:
             print("  - RESULT: Classified as CRASH.")
             classified_events.extend(create_detailed_drum_events(['crash'], onset['onset_time']))
-            last_crash_time = onset['onset_time'] # Trigger crash cooldown
+            last_crash_time = onset['onset_time']
             continue
 
         elif SNARE_CENTROID_MIN < onset['spectral_centroid'] < SNARE_CENTROID_MAX and \
@@ -128,6 +147,7 @@ def predict_drum_hits(onset_features: List[Dict[str, Any]]) -> List[Dict[str, An
             continue
         
         print("  - RESULT: No rule matched.")
+
     return classified_events
 
 # This helper function is still very useful. It now takes a

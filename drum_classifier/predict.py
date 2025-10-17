@@ -20,6 +20,10 @@ DRUM_METADATA = {
 
 # --- Rule-based thresholds ---
 KICK_SPECTRAL_CENTROID_MAX = 400
+KICK_LOW_CENTROID_MAX = 400 # For deep, boomy kicks, like single bass
+KICK_CLICKY_CENTROID_MIN = 800 # 'clicky bass drums'
+KICK_CLICKY_CENTROID_MAX = 1400 # This range captures our double-bass sample
+KICK_CLICKY_ZCR_MAX = 0.04    # Kicks have very low ZCR, even when clicky
 MID_TOM_CENTROID_MIN = 400
 MID_TOM_CENTROID_MAX = 800
 MID_TOM_ZCR_MAX = 0.05

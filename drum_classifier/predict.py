@@ -90,10 +90,26 @@ def predict_drum_hits(onset_features: List[Dict[str, Any]]) -> List[Dict[str, An
         print(f"  - Sustain Level: {onset['sustain_level']:.2f}")
 
         # ---- Rule-sets ----
-        if onset['spectral_centroid'] < KICK_SPECTRAL_CENTROID_MAX:
+        # keep this block for now -------------------------------------
+        #if onset['spectral_centroid'] < KICK_SPECTRAL_CENTROID_MAX:
+         #   print("  - RESULT: Classified as KICK.")
+          #  classified_events.extend(create_detailed_drum_events(['kick'], onset['onset_time']))
+           # continue
+        # -------------------------------------------------------------
+
+        # --- RULE 1: All Kick Drums (Checked First) ---
+        # Check for the deep, boomy kick, ie single bass drum
+        if onset['spectral_centroid'] < KICK_LOW_CENTROID_MAX:
             print("  - RESULT: Classified as KICK.")
             classified_events.extend(create_detailed_drum_events(['kick'], onset['onset_time']))
-            continue
+            continue # IMPORTANT: No refractory period for kicks
+        
+        # --- Check for the "clicky" kick, ie double bass drum ---
+        elif KICK_CLICKY_CENTROID_MIN < onset['spectral_centroid'] < KICK_CLICKY_CENTROID_MAX and \
+             onset['zero_crossing_rate'] < KICK_CLICKY_ZCR_MAX:
+            print("  - RESULT: Classified as KICK (Clicky).")
+            classified_events.extend(create_detailed_drum_events(['kick'], onset['onset_time']))
+            continue # IMPORTANT: No refractory period for kicks
 
         elif MID_TOM_CENTROID_MIN < onset['spectral_centroid'] < MID_TOM_CENTROID_MAX and \
              onset['zero_crossing_rate'] < MID_TOM_ZCR_MAX:

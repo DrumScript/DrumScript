@@ -13,34 +13,38 @@ DRUM_METADATA = {
     'hi_hat_open': { 'midi_pitch': 46, 'note_head_type': 'x-open', 'staff_position': 'F#3', 'display_name': 'Hi-Hat (Open)' },
     'low_tom': { 'midi_pitch': 41, 'note_head_type': 'normal', 'staff_position': 'A2', 'display_name': 'Low Tom' },
     'mid_tom': { 'midi_pitch': 45, 'note_head_type': 'normal', 'staff_position': 'C3', 'display_name': 'Mid Tom' },
-    'high_tom': { 'midi_pitch': 48, 'note_head_type': 'normal', 'staff_position': 'E3', 'display_name': 'High Tom' }
+    'high_tom': { 'midi_pitch': 48, 'note_head_type': 'normal', 'staff_position': 'E3', 'display_name': 'High Tom' },
+    'crash': { 'midi_pitch': 49, 'note_head_type': 'x', 'staff_position': 'A3', 'display_name': 'Crash Cymbal' }
 }
 
 # --- Rule-based thresholds ---
-# --- Make the kick rule even more specific ---
-KICK_SPECTRAL_CENTROID_MAX = 400  # Kicks are very low. Let's cap them at 400 Hz.
-
-# --- Define a rule space for our Mid Tom ---
+KICK_SPECTRAL_CENTROID_MAX = 400
 MID_TOM_CENTROID_MIN = 400
-MID_TOM_CENTROID_MAX = 800 # This now captures our 656.55 value.
-MID_TOM_ZCR_MAX = 0.05    # Toms are tonal, not noisy.
-
-# --- NEW: Define a rule space for our High Tom ---
+MID_TOM_CENTROID_MAX = 800
+MID_TOM_ZCR_MAX = 0.05
 HIGH_TOM_CENTROID_MIN = 800
-HIGH_TOM_CENTROID_MAX = 1380 # Captures the high tom's 1353 Hz
-
-# --- UPDATED: Adjust the Low Tom rule to be higher ---
+HIGH_TOM_CENTROID_MAX = 1380
 LOW_TOM_CENTROID_MIN = 1380
-LOW_TOM_CENTROID_MAX = 1600 # Captures the low tom's 1406 Hz
-LOW_TOM_ZCR_MAX = 0.05 # Re-using this for all toms
-
-SNARE_CENTROID_MIN = 1000
+LOW_TOM_CENTROID_MAX = 1600
+LOW_TOM_ZCR_MAX = 0.05
+SNARE_CENTROID_MIN = 1600
 SNARE_CENTROID_MAX = 4000
 SNARE_ZCR_MIN = 0.09
+
+# --- NEW: Define a rule space for Cymbals ---
+CRASH_CENTROID_MIN = 4000
+CRASH_CENTROID_MAX = 7000 # Cymbals are bright, but less than hi-hats.
+CRASH_SUSTAIN_MIN = 0.8  # Crashes have very high sustain.
 
 HIHAT_CENTROID_MIN = 9000
 HIHAT_ZCR_MIN = 0.2
 HIHAT_SUSTAIN_THRESHOLD = 0.5
+
+# --- Refractory period constants ---
+OPEN_HIHAT_REFRACTORY_PERIOD_S = 0.6
+TOM_REFRACTORY_PERIOD_S = 3.0
+# --- NEW: Add a refractory period for crash cymbals ---
+CRASH_REFRACTORY_PERIOD_S = 4.0 # Crashes ring out for a long time.
 
 # --- Refractory period constants ---
 OPEN_HIHAT_REFRACTORY_PERIOD_S = 0.6
@@ -52,6 +56,8 @@ def predict_drum_hits(onset_features: List[Dict[str, Any]]) -> List[Dict[str, An
     classified_events = []
     last_open_hihat_time = -1.0
     last_tom_time = -1.0
+    last_crash_time = -1.0
+
 
     for onset in onset_features:
         # Refractory period checks
@@ -61,19 +67,21 @@ def predict_drum_hits(onset_features: List[Dict[str, Any]]) -> List[Dict[str, An
         if last_tom_time > 0 and (onset['onset_time'] - last_tom_time) < TOM_REFRACTORY_PERIOD_S:
             print(f"\n--- Ignoring Onset at {onset['onset_time']:.2f}s (within refractory period of a tom) ---")
             continue
+        if last_crash_time > 0 and (onset['onset_time'] - last_crash_time) < CRASH_REFRACTORY_PERIOD_S:
+            print(f"\n--- Ignoring Onset... (within crash refractory period) ---")
+            continue
+
 
         # Debugging block
         print(f"\n--- Processing Onset at {onset['onset_time']:.2f}s ---")
         print(f"  - Spectral Centroid: {onset['spectral_centroid']:.2f}")
         print(f"  - Zero-Crossing Rate: {onset['zero_crossing_rate']:.4f}")
         print(f"  - Sustain Level: {onset['sustain_level']:.2f}")
-        # --- RULE 1: Kick Drum ---
         if onset['spectral_centroid'] < KICK_SPECTRAL_CENTROID_MAX:
             print("  - RESULT: Classified as KICK.")
             classified_events.extend(create_detailed_drum_events(['kick'], onset['onset_time']))
             continue
 
-        # --- RULE 2: Mid Tom ---
         elif MID_TOM_CENTROID_MIN < onset['spectral_centroid'] < MID_TOM_CENTROID_MAX and \
              onset['zero_crossing_rate'] < MID_TOM_ZCR_MAX:
             print("  - RESULT: Classified as MID TOM.")
@@ -81,7 +89,6 @@ def predict_drum_hits(onset_features: List[Dict[str, Any]]) -> List[Dict[str, An
             last_tom_time = onset['onset_time']
             continue
 
-        # --- RULE 3: High Tom ---
         elif HIGH_TOM_CENTROID_MIN < onset['spectral_centroid'] < HIGH_TOM_CENTROID_MAX and \
              onset['zero_crossing_rate'] < LOW_TOM_ZCR_MAX: # Using same ZCR for all toms
             print("  - RESULT: Classified as HIGH TOM.")
@@ -89,22 +96,26 @@ def predict_drum_hits(onset_features: List[Dict[str, Any]]) -> List[Dict[str, An
             last_tom_time = onset['onset_time']
             continue
 
-        # --- RULE 4: Low Tom ---
         elif LOW_TOM_CENTROID_MIN < onset['spectral_centroid'] < LOW_TOM_CENTROID_MAX and \
              onset['zero_crossing_rate'] < LOW_TOM_ZCR_MAX:
             print("  - RESULT: Classified as LOW TOM.")
             classified_events.extend(create_detailed_drum_events(['low_tom'], onset['onset_time']))
             last_tom_time = onset['onset_time']
             continue
+        
+        elif CRASH_CENTROID_MIN < onset['spectral_centroid'] < CRASH_CENTROID_MAX and \
+            onset['sustain_level'] > CRASH_SUSTAIN_MIN:
+            print("  - RESULT: Classified as CRASH.")
+            classified_events.extend(create_detailed_drum_events(['crash'], onset['onset_time']))
+            last_crash_time = onset['onset_time'] # Trigger crash cooldown
+            continue
 
-        # --- RULE 5: Snare Drum ---
         elif SNARE_CENTROID_MIN < onset['spectral_centroid'] < SNARE_CENTROID_MAX and \
              onset['zero_crossing_rate'] >= SNARE_ZCR_MIN:
             print("  - RESULT: Classified as SNARE.")
             classified_events.extend(create_detailed_drum_events(['snare'], onset['onset_time']))
             continue
 
-        # --- RULE 6: Hi-Hat ---
         elif onset['spectral_centroid'] > HIHAT_CENTROID_MIN and \
              onset['zero_crossing_rate'] >= HIHAT_ZCR_MIN:
             print("  - RESULT: Potentially a Hi-Hat...")

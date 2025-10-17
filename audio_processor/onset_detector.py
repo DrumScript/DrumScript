@@ -9,14 +9,84 @@ import soundfile
 import argparse # for command-line argument parsing
 
 
+
 def detect_onsets(audio_data: np.ndarray, sr: int) -> list[float]:
+    """
+    Detects the onset (start) times of drum hits in the audio.
+    This version includes a post-processing step to filter out spurious
+    onsets that occur too close together, which is common with cymbals.
+    """
     if audio_data.size == 0:
         return []
+    
+    # --- 1. Separate the Percussive Component ---
+    # USES HPSS: HARMONIC PERCUSSIVE SOURCE-SEPARATION  
 
-    onset_env = librosa.onset.onset_detect(y=audio_data, sr=sr, units='frames')
-    onset_times = librosa.frames_to_time(onset_env, sr=sr)
+    # NOTE (REMOVE LATER):
+    #Harmonic-Percussive Source Separation (HPSS), we can first split the audio into two separate tracks: one #containing only the harmonic ringing and another containing only the percussive attack. Then, we can run #our sensitive onset detector on the percussive track only.
+
+
+    # This is the key step. We create a new audio signal that only
+    # contains the percussive elements. The harmonic ringing that was
+    # causing false positives is filtered out.
+    y_percussive = librosa.effects.percussive(y=audio_data)
+
+    # --- 2. Run Onset Detection on the Percussive Signal ---
+    # Now, we run the same onset detection, but on the much cleaner
+    # percussive signal. This allows us to get a precise detection
+    # of the initial hit without interference from the sustain.
+    onset_frames = librosa.onset.onset_detect(
+        y=y_percussive,  # Use the percussive-only signal
+        sr=sr,
+        units='frames',
+        delta=0.01,       # The sensitive delta is now effective and safe to use
+        wait=1,
+        pre_avg=8,
+        post_avg=8,
+        backtrack=True
+    )
+
+    onset_times = librosa.frames_to_time(onset_frames, sr=sr)
+
     return onset_times.tolist()
 
+"""   COMMENTING OUT (OLD) REFRACTORY PERIOD LOGIC FOR NOW (BUT KEEPING (FOR NOW))
+# --- 1. Initial Onset Detection (with sensitive delta) ---
+    onset_frames = librosa.onset.onset_detect(
+        y=audio_data,
+        sr=sr,
+        units='frames',
+        delta=0.1,   # Keep the sensitive delta to catch the initial hit
+        wait=1,
+        pre_avg=8,
+        post_avg=8,
+        backtrack=True
+    )
+    onset_times = librosa.frames_to_time(onset_frames, sr=sr)
+
+    if onset_times.size == 0:
+        return []
+
+    # --- 2. Post-Processing: Filter out double-detections ---
+    # Define a refractory period: a minimum time between valid onsets.
+    # 150ms is a good starting point for preventing double-triggers on a single hit.
+    refractory_period_seconds = 0.15
+
+    # The first detected onset is always considered valid.
+    final_onsets = [onset_times[0]]
+
+    # Iterate through the rest of the onsets
+    for i in range(1, len(onset_times)):
+        # Calculate the time difference between the current onset and the last *accepted* onset
+        time_since_last_onset = onset_times[i] - final_onsets[-1]
+
+        # If the time difference is greater than our refractory period, it's a new, valid hit.
+        if time_since_last_onset >= refractory_period_seconds:
+            final_onsets.append(onset_times[i])
+        # Otherwise, it's likely part of the previous hit's sustain, so we ignore it.
+
+    return final_onsets
+"""
 
 #-------NEW FCT AUTOMATIC TEMPO DETECTION---- TO BE REVIEWED/.TESTED
 
@@ -44,7 +114,7 @@ def calculate_tempo_from_onsets(onset_times: np.ndarray, sr: int) -> float:
 
 
 if __name__ == "__main__":
-    from audio_loader import load_audio, normalise_audio
+    from audio_processor.audio_loader import load_audio, normalise_audio
     print("\n#=======================================================================================")
     #print("Running onset_detector.py example with test.wav/test.mp3...")
     print("Running onset_detector.py example with provided filepath...") # FUTURE: Find way to encode this so it prints the file path provided in CLI
@@ -68,8 +138,8 @@ if __name__ == "__main__":
         print(f'project_root: {project_root}')
 
         # Construct the path to test.mp3/test.wav within the 'test_audio' directory
-        test_audio_path = os.path.join(project_root, "test_audio", "SCHAMMASCH-Split-My-Tongue.mp3") # Change .mp3 to .wav if using WAV, or other audio format
-        #test_audio_path = os.path.join(project_root, "test_audio", "test.wav") # Change .wav to .mp3 if using MP3, or other audio format
+        #test_audio_path = os.path.join(project_root, "test_audio", "SCHAMMASCH-Split-My-Tongue.mp3") # Change .mp3 to .wav if using WAV, or other audio format
+        test_audio_path = os.path.join(project_root, "test_audio", "test.wav") # Change .wav to .mp3 if using MP3, or other audio format
         print(f'test_audio_path: {test_audio_path}')
         print(f"Attempting to load: {test_audio_path}")
 

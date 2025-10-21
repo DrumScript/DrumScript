@@ -15,15 +15,18 @@ DRUM_METADATA = {
     'mid_tom': { 'midi_pitch': 45, 'note_head_type': 'normal', 'staff_position': 'C3', 'display_name': 'Mid Tom' },
     'high_tom': { 'midi_pitch': 48, 'note_head_type': 'normal', 'staff_position': 'E3', 'display_name': 'High Tom' },
     'crash': { 'midi_pitch': 49, 'note_head_type': 'x', 'staff_position': 'A3', 'display_name': 'Crash Cymbal' },
-    'ride': { 'midi_pitch': 51, 'note_head_type': 'x', 'staff_position': 'B3', 'display_name': 'Ride Cymbal' }
+    'ride': { 'midi_pitch': 51, 'note_head_type': 'x', 'staff_position': 'B3', 'display_name': 'Ride Cymbal' },
+    'kick_clicky': { 'midi_pitch': 36, 'note_head_type': 'normal', 'staff_position': 'F2', 'display_name': 'Kick (Clicky)' }
 }
 
 # --- Rule-based thresholds ---
-KICK_SPECTRAL_CENTROID_MAX = 400
+# KICK_SPECTRAL_CENTROID_MAX = 400
+KICK_SPECTRAL_CENTROID_MAX = 1400
 KICK_LOW_CENTROID_MAX = 400 # For deep, boomy kicks, like single bass
 KICK_CLICKY_CENTROID_MIN = 800 # 'clicky bass drums'
 KICK_CLICKY_CENTROID_MAX = 1400 # This range captures our double-bass sample
-KICK_CLICKY_ZCR_MAX = 0.04    # Kicks have very low ZCR, even when clicky
+# KICK_CLICKY_ZCR_MAX = 0.04    # Kicks have very low ZCR, even when clicky
+KICK_CLICKY_ZCR_MAX = 0.006    # Stricker than previous (0.04) to separate from toms
 MID_TOM_CENTROID_MIN = 400
 MID_TOM_CENTROID_MAX = 800
 MID_TOM_ZCR_MAX = 0.05
@@ -37,13 +40,16 @@ SNARE_CENTROID_MAX = 4000
 SNARE_ZCR_MIN = 0.09
 
 # --- Define a shared Cymbal frequency space ---
-CYMBAL_CENTROID_MIN = 4000
+#CYMBAL_CENTROID_MIN = 4000
+CYMBAL_CENTROID_MIN = 4500
 CYMBAL_CENTROID_MAX = 7000
 CRASH_CENTROID_MIN = 4000
 CRASH_CENTROID_MAX = 7000 # Cymbals are bright, but less than hi-hats.
 RIDE_SUSTAIN_MIN = 0.4
-RIDE_SUSTAIN_MAX = 0.8  # A ride has medium sustain
-CRASH_SUSTAIN_MIN = 0.8  # Crashes have very high sustain.
+# RIDE_SUSTAIN_MAX = 0.8  # A ride has medium sustain
+RIDE_SUSTAIN_MAX = 0.75  # <-- Lowered from 0.8
+# CRASH_SUSTAIN_MIN = 0.8  # Crashes have very high sustain.
+CRASH_SUSTAIN_MIN = 0.75  # <-- Lowered from 0.8
 HIHAT_CENTROID_MIN = 9000
 HIHAT_ZCR_MIN = 0.2
 HIHAT_SUSTAIN_THRESHOLD = 0.5
@@ -105,12 +111,18 @@ def predict_drum_hits(onset_features: List[Dict[str, Any]]) -> List[Dict[str, An
             continue # IMPORTANT: No refractory period for kicks
         
         # --- Check for the "clicky" kick, ie double bass drum ---
+        #elif KICK_CLICKY_CENTROID_MIN < onset['spectral_centroid'] < KICK_CLICKY_CENTROID_MAX and \
+         #    onset['zero_crossing_rate'] < KICK_CLICKY_ZCR_MAX:
+          #  print("  - RESULT: Classified as KICK (Clicky).")
+           # classified_events.extend(create_detailed_drum_events(['kick'], onset['onset_time']))
+            #continue # IMPORTANT: No refractory period for kicks
+
         elif KICK_CLICKY_CENTROID_MIN < onset['spectral_centroid'] < KICK_CLICKY_CENTROID_MAX and \
              onset['zero_crossing_rate'] < KICK_CLICKY_ZCR_MAX:
             print("  - RESULT: Classified as KICK (Clicky).")
-            classified_events.extend(create_detailed_drum_events(['kick'], onset['onset_time']))
+            classified_events.extend(create_detailed_drum_events(['kick_clicky'], onset['onset_time'])) # <-- Use the new label
             continue # IMPORTANT: No refractory period for kicks
-
+        
         elif MID_TOM_CENTROID_MIN < onset['spectral_centroid'] < MID_TOM_CENTROID_MAX and \
              onset['zero_crossing_rate'] < MID_TOM_ZCR_MAX:
             print("  - RESULT: Classified as MID TOM.")

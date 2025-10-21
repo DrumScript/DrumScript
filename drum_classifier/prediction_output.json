@@ -1,9 +1,9 @@
 [
     {
-        "drum_type": "high_tom",
+        "drum_type": "hi_hat_closed",
         "onset_time_seconds": 0.02,
-        "midi_pitch": 48,
-        "note_head_type": "normal",
-        "staff_position": "E3"
+        "midi_pitch": 42,
+        "note_head_type": "x",
+        "staff_position": "F#3"
     }
 ]

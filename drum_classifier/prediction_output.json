@@ -1,9 +1,450 @@
 [
     {
-        "drum_type": "ride",
+        "drum_type": "kick_clicky",
         "onset_time_seconds": 0.02,
-        "midi_pitch": 51,
-        "note_head_type": "x",
-        "staff_position": "B3"
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick_clicky",
+        "onset_time_seconds": 0.05,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick_clicky",
+        "onset_time_seconds": 0.29,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick_clicky",
+        "onset_time_seconds": 0.42,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick_clicky",
+        "onset_time_seconds": 0.58,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick_clicky",
+        "onset_time_seconds": 0.73,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick_clicky",
+        "onset_time_seconds": 0.88,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick_clicky",
+        "onset_time_seconds": 1.03,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick_clicky",
+        "onset_time_seconds": 1.18,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick_clicky",
+        "onset_time_seconds": 1.31,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick_clicky",
+        "onset_time_seconds": 1.46,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick_clicky",
+        "onset_time_seconds": 1.61,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick_clicky",
+        "onset_time_seconds": 1.78,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick_clicky",
+        "onset_time_seconds": 1.93,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick_clicky",
+        "onset_time_seconds": 2.08,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick_clicky",
+        "onset_time_seconds": 2.21,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick_clicky",
+        "onset_time_seconds": 2.38,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick_clicky",
+        "onset_time_seconds": 2.51,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick_clicky",
+        "onset_time_seconds": 2.67,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick_clicky",
+        "onset_time_seconds": 2.81,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick_clicky",
+        "onset_time_seconds": 2.97,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick_clicky",
+        "onset_time_seconds": 3.11,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick_clicky",
+        "onset_time_seconds": 3.27,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick_clicky",
+        "onset_time_seconds": 3.4,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick_clicky",
+        "onset_time_seconds": 3.56,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick_clicky",
+        "onset_time_seconds": 3.7,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick_clicky",
+        "onset_time_seconds": 3.87,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick_clicky",
+        "onset_time_seconds": 4.02,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick_clicky",
+        "onset_time_seconds": 4.17,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick_clicky",
+        "onset_time_seconds": 4.3,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick_clicky",
+        "onset_time_seconds": 4.47,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick_clicky",
+        "onset_time_seconds": 4.6,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick_clicky",
+        "onset_time_seconds": 4.76,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick_clicky",
+        "onset_time_seconds": 4.9,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick_clicky",
+        "onset_time_seconds": 5.06,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick_clicky",
+        "onset_time_seconds": 5.2,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick_clicky",
+        "onset_time_seconds": 5.36,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick_clicky",
+        "onset_time_seconds": 5.49,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick_clicky",
+        "onset_time_seconds": 5.65,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick_clicky",
+        "onset_time_seconds": 5.79,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick_clicky",
+        "onset_time_seconds": 5.94,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick_clicky",
+        "onset_time_seconds": 6.11,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick_clicky",
+        "onset_time_seconds": 6.25,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick_clicky",
+        "onset_time_seconds": 6.39,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick_clicky",
+        "onset_time_seconds": 6.56,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick_clicky",
+        "onset_time_seconds": 6.7,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick_clicky",
+        "onset_time_seconds": 6.85,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick_clicky",
+        "onset_time_seconds": 7.0,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick_clicky",
+        "onset_time_seconds": 7.14,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick_clicky",
+        "onset_time_seconds": 7.3,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick_clicky",
+        "onset_time_seconds": 7.43,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick_clicky",
+        "onset_time_seconds": 7.58,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick_clicky",
+        "onset_time_seconds": 7.74,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick_clicky",
+        "onset_time_seconds": 7.88,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick_clicky",
+        "onset_time_seconds": 8.05,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick_clicky",
+        "onset_time_seconds": 8.2,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick_clicky",
+        "onset_time_seconds": 8.35,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick_clicky",
+        "onset_time_seconds": 8.48,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick_clicky",
+        "onset_time_seconds": 8.65,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick_clicky",
+        "onset_time_seconds": 8.78,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick_clicky",
+        "onset_time_seconds": 8.94,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick_clicky",
+        "onset_time_seconds": 9.09,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick_clicky",
+        "onset_time_seconds": 9.24,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick_clicky",
+        "onset_time_seconds": 9.38,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
     }
 ]

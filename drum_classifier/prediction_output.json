@@ -1,9 +1,9 @@
 [
     {
-        "drum_type": "hi_hat_closed",
+        "drum_type": "hi_hat_open",
         "onset_time_seconds": 0.02,
-        "midi_pitch": 42,
-        "note_head_type": "x",
+        "midi_pitch": 46,
+        "note_head_type": "x-open",
         "staff_position": "F#3"
     }
 ]

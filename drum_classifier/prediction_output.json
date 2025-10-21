@@ -1,9 +1,16 @@
 [
     {
-        "drum_type": "kick",
-        "onset_time_seconds": 0.06,
-        "midi_pitch": 36,
+        "drum_type": "snare",
+        "onset_time_seconds": 0.02,
+        "midi_pitch": 38,
         "note_head_type": "normal",
-        "staff_position": "F2"
+        "staff_position": "C3"
+    },
+    {
+        "drum_type": "snare",
+        "onset_time_seconds": 0.08,
+        "midi_pitch": 38,
+        "note_head_type": "normal",
+        "staff_position": "C3"
     }
 ]

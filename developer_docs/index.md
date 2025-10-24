@@ -185,12 +185,13 @@ We welcome contributions\! `DrumScript` is intended to be a community-owned proj
 :maxdepth: 2
 :caption: Contents:
 
+about.md
 how_it_works.md
-glossary.md
 testing_guidance.md
 contributor_guidance.md
 code_of_conduct.md
 tempo_estimation.md
+glossary.md
 api.rst
 
 ---

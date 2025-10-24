@@ -55,8 +55,8 @@ dependencies = [
 
 # [project.urls]
 # Homepage = ""
-# Repository = "https://github.com/victoria-mckinney/DrumScript"
-# "Bug Tracker" = "https://github.com/victoria-mckinney/DrumScript/issues"
+# Repository = "https://github.com/DrumScript/DrumScript"
+# "Bug Tracker" = "https://github.com/DrumScript/DrumScript/issues"
 
 #[tool.setuptools.package-data]
 # [OPTIONAL] If you have data files inside your package that need to be included

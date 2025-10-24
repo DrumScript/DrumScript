@@ -1,58 +1,57 @@
-xname: Deploy GitHub Pages site
+name: Deploy GitHub Pages site
 
 on:
-    # Runs on pushes to the main branch
-    push:
-        branches: ["main"]
-    # Allows you to run this workflow manually from the Actions tab
-    workflow_dispatch:
+  # Runs on pushes to the main branch
+  push:
+    branches: ["main"]
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
 
 # Allow only one concurrent deployment, cancel older runs
 concurrency:
-    group: "pages"
-    cancel-in-progress: true
+  group: "pages"
+  cancel-in-progress: true
 
 jobs:
-    deploy:
-        runs-on: ubuntu-latest
-        steps:
-            - name: Checkout
-              uses: actions/checkout@v4
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
 
-            - name: Set up Python
-              uses: actions/setup-python@v5
-              with:
-                  # Use the exact version from your .python-version file
-                  python-version: "3.12.10"
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          #  from .python-version file
+          python-version: "3.12.10"
 
-            - name: Set up uv
-              uses: y-yagi/setup-uv@v1
-              with:
-                  uv-version: "latest" # Use the latest version of uv
+      - name: Set up uv
+        uses: y-yagi/setup-uv@v1
+        with:
+          uv-version: "latest" # Use the latest version of uv
 
-            # --- AMENDED STEP ---
-            - name: Install dependencies with uv
-              run: |
-                  # Install the package in editable mode with the [docs] extras
-                  # Quotes are needed to prevent shell globbing
-                  uv pip install -e ".[docs]"
+      - name: Install dependencies with uv
+        run: |
+          # Install the package in editable mode with the [docs] extras
+          # Quotes are needed to prevent shell globbing
+          uv pip install -e ".[docs]"
 
-            - name: Build with Sphinx
-              run: |
-                  # Add the root directory to PYTHONPATH
-                  # This allows Sphinx (in developer_docs/) to find your code
-                  export PYTHONPATH="$PYTHONPATH:$(pwd)"
+      - name: Build with Sphinx
+        run: |
+          # Add the root directory to PYTHONPATH
+          # This allows Sphinx (in developer_docs/) to find your code
+          export PYTHONPATH="$PYTHONPATH:$(pwd)"
 
-                  # Build the HTML site from 'developer_docs/'
-                  # The output will be in 'developer_docs/_build/html'
-                  sphinx-build -b html developer_docs/ developer_docs/_build/html
+          # Build the HTML site from 'developer_docs/'
+          # The output will be in 'developer_docs/_build/html'
+          sphinx-build -b html developer_docs/ developer_docs/_build/html
 
-            - name: Upload artifact
-              uses: actions/upload-pages-artifact@v3
-              with:
-                  # Upload the directory that Sphinx just built
-                  path: "developer_docs/_build/html"
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          # Upload the directory that Sphinx just built
+          path: "developer_docs/_build/html"
 
-            - name: Deploy to GitHub Pages
-              id: deployment
-              uses: actions/deploy-pages@v4
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

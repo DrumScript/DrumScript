@@ -1,7 +1,9 @@
 
 ## `DrumScript` Python Package Structure
 
-<!--date_edited: thurs-23-oct-2025-->
+<!--date_created: weds-25-oct-2025?-->
+<!--date_edited: fri-24-oct-2025-->
+
 
 > **PLEASE NOTE (Oct-2025 Update):** This repository structure has been updated to reflect the project's pivot to a non-ML, classification-based approach. Legacy machine learning modules have been archived.
 
@@ -31,7 +33,10 @@ DrumScript/                          # The main Python package that converts dru
 │   ├── onset_detector.py            # Detects drum hit onsets.
 │   └── static/                      # Stores the documentation GitHub Pages site assets
 │      ├── custom.css                # Style sheet for DrumScript documentation site
-│      ├── ...
+│      ├── conf.py
+│      ├── index.md
+│      ├── api.rst
+│      ├── ...                       # Other `.md` files related to documentation
 ├── drum_classifier/                 # PYTHON MODULE: Classifies drum sounds using a rule-based DSP approach.
 │   ├── __init__.py
 │   ├── generate_score.py            # Script for interpreting classification outputs to generate a score.

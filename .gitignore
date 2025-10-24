@@ -72,6 +72,7 @@ models/models_development/ConvolutionalNeuralNetworks/*
 *.log
 .ipynb_checkpoints/ # Jupyter notebooks
 */logs
+*/.logs
 
 # Logic/DAW files
 

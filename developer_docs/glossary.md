@@ -1,7 +1,11 @@
-<!--date_created: weds-25-june-2025-->
-<!--date_updated: weds-01-oct-2025-->
+# **Glossary of Terms**
 
-# **`DrumScript`: Glossary of Terms**
+<!--DrumScript-->
+
+<!--date_created: weds-25-june-2025-->
+<!--date_updated: fri-24-oct-2025-->
+
+---
 
 # **Python Libraries**
 ## [`Librosa`](#librosa)

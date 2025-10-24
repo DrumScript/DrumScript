@@ -1,5 +1,5 @@
-# **`DrumScript`: How it works**
-
+# **How it works**
+<!--DrumScript-->
 
 <!--date_created: tues-24-june-2025-->
 <!--date_updated: weds-01-oct-2025-->

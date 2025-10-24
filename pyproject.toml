@@ -72,5 +72,6 @@ exclude = ["tests*","development*", "docs*", "archive*"] # Exclude test director
 docs = [
     "sphinx",
     "furo",
-    "myst-parser"
+    "myst-parser",
+    "sphinx-autobuild"
 ]

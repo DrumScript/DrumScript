@@ -47,6 +47,11 @@ exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 
 html_theme = 'furo'
 html_static_path = ['_static']
-
+html_theme_options = {# --- ADD THESE LINES FOR THE GITHUB LINK ---
+    "source_repository": "https://github.com/DrumScript/DrumScript",
+    "source_branch": "main",
+    "source_directory": "developer_docs/",
+    # -------------------------------------------
+}   
 # (Optional) Set a logo
 # html_logo = "_static/your-logo.png"

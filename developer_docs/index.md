@@ -179,6 +179,20 @@ python main.py my_drum_track.wav drum_score.pdf --tempo 120
 
 We welcome contributions\! `DrumScript` is intended to be a community-owned project. If you have ideas, bug fixes, or new features, please **[open an issue](https://github.com/victoria-mckinney/DrumScript/issues/new)** or submit a **[pull request](https://github.com/victoria-mckinney/DrumScript/pulls)**.
 
+## Documentation
+
+```{toctree}
+:maxdepth: 2
+:caption: Contents:
+
+how_it_works.md
+glossary.md
+testing_guidance.md
+contributor_guidance.md
+code_of_conduct.md
+tempo_estimation.md
+api.rst
+
 ---
 
 ### Contact
@@ -208,6 +222,7 @@ For questions or support, please **[open an issue](https://github.com/victoria-m
     $$
     $$$$
     $$
+
 
 ---
 

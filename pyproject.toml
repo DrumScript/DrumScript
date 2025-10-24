@@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "DrumScript"
-version = "0.0.0"
+version = "0.0.0--pre-release"
 # authors = [
   #{ name="Your Name", email="your.email@example.com" },
 #]
@@ -67,3 +67,10 @@ dependencies = [
 where = ["."] # Search for packages in the current directory
 include = ["DrumScript*"] # Only include packages starting with DrumScript
 exclude = ["tests*","development*", "docs*", "archive*"] # Exclude test directories, docs, development and archive folders from builddeactict
+
+[project.optional-dependencies]
+docs = [
+    "sphinx",
+    "furo",
+    "myst-parser"
+]]

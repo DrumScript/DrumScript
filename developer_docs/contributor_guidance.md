@@ -1,6 +1,6 @@
 ## Contributing to `DrumScript`
 <!--date_created: thurs-03-jul-2025-->
-<!--date_updated: weds-09-jul-2025-->
+<!--date_updated: sat-25-oct-2025-->
 
 
 
@@ -164,13 +164,15 @@ If you find a bug or have an idea for a new feature, please open an issue on the
   * **For Bugs:** Please provide a clear description of the problem, steps to reproduce it, expected behavior, and your environment details.
   * **For Features:** Describe the idea, why it would be useful, and any potential implementation details.
 
+> **PLEASE NOTE:** All bug reports and feature requests must be filed as [GitHub Issues](https://github.com/DrumScript/DrumScript/issues). All code changes must be submitted as [Pull Requests](https://github.com/DrumScript/DrumScript/pulls). Please do not email us directly about the project, as keeping all communication public helps everyone.
+
 ---
 
 ## Questions & Support
 
-If you have any questions or need further assistance, feel free to reach out via GitHub Issues or any other communication channel you've established with your colleague.
+If you have any questions or need further assistance, feel free to reach out at **[hello.drumscript@gmail.com](hello.drumscript@gmail.com)**
 
-Thank you for contributing to `DrumScript` :D <3 !
+Thank you for using an contributing to `DrumScript` :D <3 :drum: !
 
 
 

@@ -1,7 +1,7 @@
 ## **DrumScript**
 
 <!--date_created: sun-15-june-2025-->
-<!--date_updated: weds-01-oct-2025-->
+<!--date_updated: sat-25-oct-2025-->
 
 > **Python 3.12.10**
 
@@ -9,7 +9,7 @@
 
 It leverages **audio signal processing** and a **rule-based classification engine** to detect individual drum hits, transcribe them into a **musical score**, and export them as `.pdf` or `.xml` files, which you can use directly or import into software like Guitar Pro or Logic Pro.
 
-***[hello.drumscript@gmail.com](mailto: hello.drumscript@gmail.com)***
+> #### **[hello.drumscript@gmail.com](hello.drumscript@gmail.com)**
 
 ---
 
@@ -24,9 +24,9 @@ It leverages **audio signal processing** and a **rule-based classification engin
   - **[Contact](#contact)**
   - **[FAQs](#faqs)**
 
-> **NOTE:** See **[`developer_docs/how_it_works.md`](#developer_docs/how_it_works.md)** if you are interested in the link between **music theory** and `DrumScript`'s structure.
+> See **[`developer_docs/how_it_works.md`](#developer_docs/how_it_works.md)** if you are interested in the link between **music theory** and `DrumScript`'s structure.
 
-> **NOTE:** For simplicity, `DrumScript` uses the generic spelling of the word ***quantize***, rather than the British English spelling ***quantise***.
+> For simplicity, `DrumScript` uses the generic spelling of the word ***quantize***, rather than the British English spelling ***quantise***.
 
 ---
 
@@ -38,6 +38,8 @@ It leverages **audio signal processing** and a **rule-based classification engin
   * **Multi-Instrument Classification:** Differentiates between various drum kit elements (e.g., kick, snare, hi-hat) and can identify **concurrent hits** (e.g., a kick and crash cymbal played at the same time).
   * **Musical Quantization:** Aligns detected drum hits to a musical grid for clean, accurate notation.
   * **Sheet Music Output:** Generates clear and readable drum notation in both `.pdf` and MusicXML (`.xml`) formats.
+
+---
 
 ### Roadmap
 
@@ -55,7 +57,7 @@ Here are some features planned for future releases:
 
 1.  **Clone the repository:**
     ```bash
-    git clone https://github.com/victoria-mckinney/DrumScript.git
+    git clone https://github.com/DrumScript/DrumScript.git
     cd DrumScript
     ```
 2.  **Create a virtual environment and install dependencies:**
@@ -65,7 +67,7 @@ Here are some features planned for future releases:
     uv pip install -r requirements.txt
     ```
 
-> **NOTE:** Other `Python` package managers, like `pip` or `conda`, can be used interchangeably with the commands above.
+> Other `Python` package managers, like `pip` or `conda`, can be used interchangeably with the commands above.
 
 #### LilyPond Installation
 
@@ -89,9 +91,12 @@ To generate high-quality PDF sheet music, `DrumScript` uses `music21`, which rel
 
 ### Dependencies
 
-A full list of dependencies can be found in **[`requirements.txt`](#requirements.txt)** and **[`pyproject.toml`](#pyproject.toml)**.
+A full list of project- and optional dependencies can be found in the **[`pyproject.toml`](#pyproject.toml)**.
 
----
+**DrumScript** `DrumScript` does not use a [`requirements.txt`](#requirements.txt), or a [`requirements.in`](#requirements.in) file. **All dependencies** are declared in the **[`pyproject.toml`](#pyproject.toml)**.
+
+
+
 
 > **Important note for audio playback (`sounddevice`):**
 >
@@ -103,16 +108,13 @@ A full list of dependencies can be found in **[`requirements.txt`](#requirements
 >
 > **[`PortAudio` source code](https://github.com/PortAudio/portaudio%5D\(https://github.com/PortAudio/portaudio\))**
 
----
 
-> **Important note for `.mp3` users:**
+> ####  **Important note for `.mp3` users** (**see also [FAQs](#faqs)**)
+
+To process `.mp3` files, you must first install **`FFmpeg`**, a command-line tool for handling audio and video.
 >
-> **See also [FAQs](#faqs)**
->
-> To process `.mp3` files, you must first install **`FFmpeg`**, a command-line tool for handling audio and video.
->
-> ##### Installing `FFmpeg`
->
+#### Installing `FFmpeg`
+
 > **How to install `FFmpeg` via `DrumScript`**
 >
 > The package includes a helper script for easy installation.
@@ -121,15 +123,16 @@ A full list of dependencies can be found in **[`requirements.txt`](#requirements
 > # In your main.py or another script
 > import utils.ffmpeg_installer as ffmpeg_installer
 > ```
-
-> # This will prompt for a password on Linux/macOS for system-wide installation.
->
-> ffmpeg\_installer.install\_ffmpeg()
->
-> ```
+> `ffmpeg_installer.install_fmpeg()`
 > 
-> **How to install `FFmpeg` manually**
-> ```
+> This will prompt for a password on Linux/macOS for system-wide installation.
+
+
+
+
+>
+**How to install `FFmpeg` manually**
+>
 >
 >   * **macOS (using [Homebrew](https://brew.sh/))**:
 >     ```bash
@@ -145,8 +148,8 @@ A full list of dependencies can be found in **[`requirements.txt`](#requirements
 >
 > <!-- end list -->
 
-> ```
-> ```
+
+
 
 ---
 
@@ -177,15 +180,16 @@ python main.py my_drum_track.wav drum_score.pdf --tempo 120
 
 ### Contributing
 
-We welcome contributions\! `DrumScript` is intended to be a community-owned project. If you have ideas, bug fixes, or new features, please **[open an issue](https://github.com/victoria-mckinney/DrumScript/issues/new)** or submit a **[pull request](https://github.com/victoria-mckinney/DrumScript/pulls)**.
+We welcome contributions\! `DrumScript` is intended to be a community-owned project. If you have ideas, bug fixes, or new features, please **[open an issue](https://github.com/DrumScript/DrumScript/issues/new)** or submit a **[pull request](https://github.com/DrumScript/DrumScript/pulls)**.
+
+> **All bug reports and feature requests must be filed as [GitHub Issues](https://github.com/DrumScript/DrumScript/issues)**. All code changes must be submitted as [Pull Requests](https://github.com/DrumScript/DrumScript/pulls). Please do not email us directly about the project, as keeping all communication public helps everyone.
 
 ---
 
 ### Contact
 
-For questions or support, please **[open an issue](https://github.com/victoria-mckinney/DrumScript/issues)** on the GitHub repository or email the maintainers:
+> All bug reports and feature requests must be filed as [GitHub Issues](https://github.com/DrumScript/DrumScript/issues). All code changes must be submitted as [Pull Requests](https://github.com/DrumScript/DrumScript/pulls). 
 
-***[hello.drumscript@gmail.com](#hello.drumscript%40gmail.com)***
 
 ---
 
@@ -206,8 +210,7 @@ For questions or support, please **[open an issue](https://github.com/victoria-m
     $$
     $$$$\\frac{256 \\text{ samples}}{44100 \\text{ samples per second}} \\approx 0.0058 \\text{ seconds (or 5.8 milliseconds)}
     $$
-    $$$$
-    $$
+ s
 
 ---
 

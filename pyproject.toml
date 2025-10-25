@@ -55,8 +55,8 @@ dependencies = [
 
 # [project.urls]
 # Homepage = ""
-# Repository = "https://github.com/victoria-mckinney/DrumScript"
-# "Bug Tracker" = "https://github.com/victoria-mckinney/DrumScript/issues"
+# Repository = "https://github.com/DrumScript/DrumScript"
+# "Bug Tracker" = "https://github.com/DrumScript/DrumScript/issues"
 
 #[tool.setuptools.package-data]
 # [OPTIONAL] If you have data files inside your package that need to be included
@@ -67,3 +67,11 @@ dependencies = [
 where = ["."] # Search for packages in the current directory
 include = ["DrumScript*"] # Only include packages starting with DrumScript
 exclude = ["tests*","development*", "docs*", "archive*"] # Exclude test directories, docs, development and archive folders from builddeactict
+
+[project.optional-dependencies]
+docs = [
+    "sphinx",
+    "furo",
+    "myst-parser",
+    "sphinx-autobuild"
+]

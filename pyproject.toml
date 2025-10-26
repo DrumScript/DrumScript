@@ -64,9 +64,6 @@ dependencies = [
 
 [tool.setuptools.packages.find]
 where = ["."] # Keep looking in the root directory
-# Remove the 'include' line entirely, or specify actual packages:
-# Option 1 (Simpler): Rely on default discovery (finds all packages under 'where')
-# Just remove the 'include' line like this:
 exclude = ["tests*", "development*", "docs*", "archive*"] # Keep exclude
 
 [project.optional-dependencies]

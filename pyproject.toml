@@ -8,7 +8,7 @@ build-backend = "setuptools.build_meta"
 name = "DrumScript"
 version = "0.0.0"
 # authors = [
-  #{ name="Your Name", email="your.email@example.com" },
+  #{ name="DrumScript", email="hello.drumscript@gmail.com" },
 #]
 description = "A Python package to convert drum audio to sheet music."
 readme = "README.md"
@@ -19,7 +19,7 @@ classifiers = [
     "Programming Language :: Python :: 3",
     # "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
-    "Development Status :: 3 - Alpha",
+    "Development Status :: 2 - Pre-Alpha,
     "Topic :: Multimedia :: Sound/Audio",
     "Topic :: Scientific/Engineering :: Information Analysis",
     "Topic :: Education",
@@ -55,8 +55,9 @@ dependencies = [
 
 # [project.urls]
 # Homepage = ""
-# Repository = "https://github.com/DrumScript/DrumScript"
-# "Bug Tracker" = "https://github.com/DrumScript/DrumScript/issues"
+Repository = "https://github.com/DrumScript/DrumScript"
+"Bug Tracker" = "https://github.com/DrumScript/DrumScript/issues"
+# "Change requests" =
 
 #[tool.setuptools.package-data]
 # [OPTIONAL] If you have data files inside your package that need to be included

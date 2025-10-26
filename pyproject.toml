@@ -64,8 +64,8 @@ dependencies = [
 
 [tool.setuptools.packages.find]
 where = ["."] # look in root directory
-packages = ["audio_processor", "drum_classifier", "notation_generator", "utils"]
-exclude = ["tests*", "development*", "docs*", "archive*"
+exclude = ["local_tests*", ".development*", "docs*", ".archive*"]
+include = ["DrumScript*"] 
 
 [project.optional-dependencies]
 docs = [

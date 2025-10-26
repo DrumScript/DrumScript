@@ -1,15 +1,6 @@
-# pyproject.toml
-
-[build-system]
-requires = ["setuptools >= 77.0.3"]
-build-backend = "setuptools.build_meta"
-
 [project]
 name = "DrumScript"
 version = "0.0.0"
-# authors = [
-  #{ name="DrumScript", email="hello.drumscript@gmail.com" },
-#]
 description = "A Python package to convert drum audio to sheet music."
 readme = "README.md"
 requires-python= "==3.12.10"
@@ -18,6 +9,7 @@ keywords = ["drum", "audio", "music", "sheet-music", "notation", "dsp", "machine
 classifiers = [
     "Programming Language :: Python :: 3",
     # "License :: OSI Approved :: MIT License",
+  "Development Status :: 4 - Beta",
     "Operating System :: OS Independent",
     "Development Status :: 2 - Pre-Alpha,
     "Topic :: Multimedia :: Sound/Audio",
@@ -27,6 +19,16 @@ classifiers = [
     "Topic :: Drums",
     "Topic :: DrumScript"
 ]
+
+[metadata]
+author = "DrumScript"
+author_email = "hello.drumscript@gmail.com"
+maintainer = "DrumScript"
+maintainer_email = "hello.drumscript@gmail.com"
+url = "https://github.com/drumscript/drumscript"
+long_description = "DrumScript, a lightweight yet powerful drum audio to sheet music engine with automatic tempo detection. 
+license = { file = "LICENSE" }
+
 dependencies = [
     "ipykernel",
     "librosa",
@@ -77,4 +79,15 @@ docs = [
 ]
 
 [project.scripts]
-drumscript = "main:main"
+drumscript = "drum_script.main:main"
+
+# pyproject.toml
+
+[build-system]
+requires = [
+    "setuptools >= 77.0.3",
+    "wheel",
+    "cython"
+]
+
+# build-backend = "setuptools.build_meta"

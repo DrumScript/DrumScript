@@ -75,3 +75,6 @@ docs = [
     "myst-parser",
     "sphinx-autobuild"
 ]
+
+[project.scripts]
+drumscript = "main:main"

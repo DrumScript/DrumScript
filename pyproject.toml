@@ -4,17 +4,18 @@ version = "0.0.0"
 description = "A Python package to convert drum audio to sheet music."
 readme = "README.md"
 requires-python= "==3.12.10"
-# license = { text = "MIT License" } # Or use file = "LICENSE" if you have a LICENSE file
-keywords = ["drum", "audio", "music", "sheet-music", "notation", "dsp", "machine-learning", "drumscript", "drums", "percussion"]
+# license = { text = "Apache License" } # Or use file = "LICENSE" if you have a LICENSE file
+keywords = ["drum", "audio", "music", "sheet-music", "notation", "dsp", "drumscript", "drums", "percussion"]
+
 classifiers = [
     "Programming Language :: Python :: 3",
     # "License :: OSI Approved :: MIT License",
-  "Development Status :: 4 - Beta",
-    "Operating System :: OS Independent",
-    "Development Status :: 2 - Pre-Alpha,
+    "Development Status :: 4 - Beta",
+    # "Operating System :: OS Independent",
+    "Development Status :: 2 - Pre-Alpha",
     "Topic :: Multimedia :: Sound/Audio",
-    "Topic :: Scientific/Engineering :: Information Analysis",
-    "Topic :: Education",
+    # "Topic :: Scientific/Engineering :: Information Analysis",
+    # "Topic :: Education",
     "Topic :: Music Theory",
     "Topic :: Drums",
     "Topic :: DrumScript"
@@ -26,7 +27,7 @@ author_email = "hello.drumscript@gmail.com"
 maintainer = "DrumScript"
 maintainer_email = "hello.drumscript@gmail.com"
 url = "https://github.com/drumscript/drumscript"
-long_description = "DrumScript, a lightweight yet powerful drum audio to sheet music engine with automatic tempo detection. 
+long_description = "DrumScript, a lightweight yet powerful drum audio to sheet music engine with automatic tempo detection."
 license = { file = "LICENSE" }
 
 dependencies = [

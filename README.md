@@ -1,7 +1,7 @@
 ## **DrumScript**
 
 <!--date_created: sun-15-june-2025-->
-<!--date_updated: sat-25-oct-2025-->
+<!--date_updated: mon-25-oct-2025-->
 
 > **Python 3.12.10**
 
@@ -12,7 +12,9 @@ It leverages **audio signal processing** and a **rule-based classification engin
 > #### **[hello.drumscript@gmail.com](hello.drumscript@gmail.com)**
 
 ---
+>   **Repository Structure**
 
+---
   - **[Features](#features)**
   - **[Roadmap](#roadmap)**
   - **[Installation](#installation)**
@@ -68,7 +70,31 @@ Here are some features planned for future releases:
     ```
 
 > Other `Python` package managers, like `pip` or `conda`, can be used interchangeably with the commands above.
+>
 
+**(Assuming you have Python 3.12 and `uv` or `pip` installed)**
+
+3. **From PyPI (Recommended - *Once Published*)**
+
+```bash
+uv pip install drumscript
+```
+
+(Coming soon!)
+
+4. **. From Source (for Development)**
+
+Clone the repository and install in editable mode:
+
+```zsh
+git clone https://github.com/DrumScript/DrumScript.git
+cd DrumScript
+# Activate your virtual environment first (e.g., `python -m venv .venv; source .venv/bin/activate`)
+uv pip install -e .
+Installing with -e . links the installation to your source code, so any edits you make are immediately reflected when you run the drumscript command.
+```
+
+---
 #### LilyPond Installation
 
 To generate high-quality PDF sheet music, `DrumScript` uses `music21`, which relies on the music engraving program **LilyPond**. You must install LilyPond separately.

@@ -2,7 +2,7 @@
 ## `DrumScript` Python Package Structure
 
 <!--date_created: weds-25-oct-2025?-->
-<!--date_edited: fri-24-oct-2025-->
+<!--date_edited: mon-27-oct-2025-->
 
 
 > **PLEASE NOTE (Oct-2025 Update):** This repository structure has been updated to reflect the project's pivot to a non-ML, classification-based approach. Legacy machine learning modules have been archived.
@@ -14,56 +14,61 @@ DrumScript/                          # The main Python package that converts dru
 ├── .python-version                  # Specifies the Python version to use (e.g., 3.12.10).
 ├── README.md                        # Project overview and main documentation.
 ├── pyproject.toml                   # Project metadata and dependencies (managed by `uv`).
-├── requirements.txt                 # Project dependencies.
 ├── uv.lock                          # Pinned versions of all dependencies.
 ├── __init__.py                      # Makes 'DrumScript' a Python package.
-├── main.py                          # Main entry point for the application's full pipeline.
 ├── midi_percussion_map.csv          # Master map for MIDI note numbers, instrument names, and staff positions.
 ├── repository_structure.md          # This file.
 │
-├── audio_processor/                 # PYTHON MODULE: Handles audio loading, onset detection, and feature extraction.
-│   ├── __init__.py
-│   ├── audio_loader.py              # Loads and normalises audio files.
-│   ├── feature_extractor.py         # Extracts DSP features for classification.
-│   ├── onset_detector.py            # Detects drum hit onsets.
-│   └── tempo_detector.py            # Detects tempo from audio data.
+├── drumscript/                      # <--- Main Source Package Directory
+│   ├── __init__.py                  # Makes 'drumscript' a Python package.
+├── main.py                          # Main entry point for the application's full pipeline.
+│   ├── audio_processor/                # PYTHON SUPBPACKAGE/MODULE:  Handles audio loading, onset detection, and feature extraction.
+│   │   ├── __init__.py
+│   │   ├── audio_loader.py              # Loads and normalises audio files.
+│   │   ├── feature_extractor.py         # Extracts DSP features for classification.
+│   │   ├── onset_detector.py            # Detects drum hit onsets.
+│   │   ├── tempo_detector.py            # Detects tempo from audio data.
+│   │   └── tempogram.py                 # Visualisation tool for analysing tempo.
+│   │   
+│   │── drum_classifier/                   # PYTHON SUPBPACKAGE/MODULE:  Classifies drum sounds using a rule-based DSP approach.
+│   │    ├── __init__.py
+│   │    ├── generate_score.py            # Script for interpreting classification outputs to generate a score.
+│   │    ├── predict.py                   # Applies the classification rules to an audio file's features.
+│   │    └── prediction_output.json       # Example output listing all detected and classified events.
+│   │
+│   ├── notation_generator/              # PYTHON SUPBPACKAGE/MODULE:  Generates musical notation (.xml) and sheet music (.pdf).
+│   │   ├── __init__.py
+│   │   ├── constants.py                 # Defines constants for score generation (e.g., staff positions).
+│   │   ├── pdf_exporter.py              # Converts the generated score into a PDF file.
+│   │   └── score_builder.py             # Builds a musical score from the list of classified events.
+│   │ 
+│   └── utils/                           # PYTHON SUPBPACKAGE/MODULE: Utility functions and configuration.
+│   │   ├── __init__.py
+│   │   ├── config.py                    # Stores configuration parameters.
+│       └── ffmpeg_installer.py          # Utility script for installing ffmpeg.
 │
 ├── developer_docs/                  # Documentation for contributors and developers.
-│   ├──
-│   ├── onset_detector.py            # Detects drum hit onsets.
 │   └── static/                      # Stores the documentation GitHub Pages site assets
 │      ├── custom.css                # Style sheet for DrumScript documentation site
 │      ├── conf.py
 │      ├── index.md
 │      ├── api.rst
-│      ├── ...                       # Other `.md` files related to documentation
-├── drum_classifier/                 # PYTHON MODULE: Classifies drum sounds using a rule-based DSP approach.
-│   ├── __init__.py
-│   ├── generate_score.py            # Script for interpreting classification outputs to generate a score.
-│   ├── predict.py                   # Applies the classification rules to an audio file's features.
-│   └── prediction_output.json       # Example output listing all detected and classified events.
+│      └── ...                       # Other `.md` files related to documentation
 │
+├── local_tests/                     # A place for local tests
+│   └── ...                          
 ├── machine-learning/                # [ARCHIVED] Legacy modules from the previous ML-based approach.
 │   ├── data_labeller/               # [LEGACY] Module for building custom drum training datasets.
 │   ├── models/                      # [LEGACY] Saved outputs from the trained CNN model.
 │   └── training_data/               # [LEGACY] Folder for training datasets.
-│
-├── notation_generator/              # PYTHON MODULE: Generates musical notation (.xml) and sheet music (.pdf).
-│   ├── __init__.py
-│   ├── constants.py                 # Defines constants for score generation (e.g., staff positions).
-│   ├── pdf_exporter.py              # Converts the generated score into a PDF file.
-│   └── score_builder.py             # Builds a musical score from the list of classified events.
-│
-├── outputs/                         # Default directory for generated XML, MIDI, and PDF files.
+├── outputs/                         # Default directory for generated XML, MIDI, and PDF files.Not version-controlled.
 ├── test_audio/                      # Directory for sample audio files used for testing.
 ├── theory/                          # Reference material on music theory and audio signal processing.
-└── utils/                           # Utility functions and configuration.
-    ├── __init__.py
-    ├── config.py                    # Stores configuration parameters.
-    └── ffmpeg_installer.py          # Utility script for installing ffmpeg.
+└── training_data/                   # Archived data related to ML model training. Not version-controlled.
+
 ```
 
------
+---
 
 ### **Modular Descriptions**
 

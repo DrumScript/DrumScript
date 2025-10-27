@@ -68,8 +68,8 @@ Repository = "https://github.com/DrumScript/DrumScript"
 
 [tool.setuptools.packages.find]
 where = ["."] # look in root directory
-exclude = ["local_tests*", ".development*", "docs*", ".archive*"]
-include = ["DrumScript*"] 
+exclude = ["local_tests*", ".development*", "docs*", ".archive*", "machine-learning*", "test-audio"]
+include = ["drumscript*"]
 
 [project.optional-dependencies]
 docs = [
@@ -80,9 +80,8 @@ docs = [
 ]
 
 [project.scripts]
-drumscript = "drum_script.main:main"
+drumscript = "drumscript.main:main"
 
-# pyproject.toml
 
 [build-system]
 requires = [

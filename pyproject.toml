@@ -5,7 +5,12 @@ description = "A Python package to convert drum audio to sheet music."
 readme = "README.md"
 requires-python= "==3.12.10"
 # license = { text = "Apache License" } # Or use file = "LICENSE" if you have a LICENSE file
+license = { file = "LICENSE" }
 keywords = ["drum", "audio", "music", "sheet-music", "notation", "dsp", "drumscript", "drums", "percussion"]
+
+
+#url = "https://github.com/drumscript/drumscript"
+#long_description = "DrumScript, a lightweight yet powerful drum audio to sheet music engine with automatic tempo detection."
 
 classifiers = [
     "Programming Language :: Python :: 3",
@@ -26,11 +31,6 @@ authors = [
 maintainers = [
     { name = "DrumScript", email = "hello.drumscript@gmail.com" }
 ]
-maintainer = "DrumScript"
-maintainer_email = "hello.drumscript@gmail.com"
-url = "https://github.com/drumscript/drumscript"
-long_description = "DrumScript, a lightweight yet powerful drum audio to sheet music engine with automatic tempo detection."
-license = { file = "LICENSE" }
 
 dependencies = [
     "ipykernel",
@@ -58,12 +58,13 @@ dependencies = [
     #"tensorflow"
 ]
 
-# [project.urls]
-# Homepage = ""
+# --- URLs go here ---
+[project.urls]
+Homepage = "https://github.com/drumscript/drumscript" # Keep or use your specific URL
 Repository = "https://github.com/DrumScript/DrumScript"
 "Bug Tracker" = "https://github.com/DrumScript/DrumScript/issues"
-# "Change requests" =
 
+# --- Optional Dependencies ---
 #[tool.setuptools.package-data]
 # [OPTIONAL] If you have data files inside your package that need to be included
 # "DrumScript" = ["data/*.csv"] # Example: include all .csv files in DrumScript/data/

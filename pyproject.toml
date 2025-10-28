@@ -9,7 +9,7 @@ keywords = ["drum", "audio", "music", "sheet-music", "notation", "dsp", "drumscr
 
 classifiers = [
     "Programming Language :: Python :: 3",
-    # "License :: OSI Approved :: MIT License",
+    # "License :: OSI Approved :: Apache License",
     "Development Status :: 4 - Beta",
     # "Operating System :: OS Independent",
     "Development Status :: 2 - Pre-Alpha",
@@ -82,12 +82,3 @@ docs = [
 [project.scripts]
 drumscript = "drumscript.main:main"
 
-
-[build-system]
-requires = [
-    "setuptools >= 77.0.3",
-    "wheel",
-    "cython"
-]
-
-# build-backend = "setuptools.build_meta"

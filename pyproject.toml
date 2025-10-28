@@ -20,10 +20,12 @@ classifiers = [
     "Topic :: Drums",
     "Topic :: DrumScript"
 ]
-
-[metadata]
-author = "DrumScript"
-author_email = "hello.drumscript@gmail.com"
+authors = [
+    { name = "DrumScript", email = "hello.drumscript@gmail.com" }
+]
+maintainers = [
+    { name = "DrumScript", email = "hello.drumscript@gmail.com" }
+]
 maintainer = "DrumScript"
 maintainer_email = "hello.drumscript@gmail.com"
 url = "https://github.com/drumscript/drumscript"

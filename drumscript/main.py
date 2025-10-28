@@ -8,17 +8,17 @@ import sys
 # installed correctly, the user gets a helpful error.
 try:
     # Import functions from audio_processor module
-    from audio_processor.audio_loader import load_audio
-    from audio_processor.onset_detector import detect_onsets
-    from audio_processor.feature_extractor import extract_features_for_onsets
+    from drumscript.audio_processor.audio_loader import load_audio
+    from drumscript.audio_processor.onset_detector import detect_onsets
+    from drumscript.audio_processor.feature_extractor import extract_features_for_onsets
 
     # Import the predict function from rule-based engine
-    from drum_classifier.predict import predict_drum_hits
+    from drumscript.drum_classifier.predict import predict_drum_hits
 
     # Import notation functions
     # (Assuming 'build_score' creates the score and exporters save it)
-    from notation_generator.score_builder import build_score
-    from notation_generator.pdf_exporter import export_to_pdf, export_to_xml
+    from drumscript.notation_generator.score_builder import build_score
+    from drumscript.notation_generator.pdf_exporter import export_to_pdf, export_to_xml
 
 except ImportError as e:
     print(f"Error importing DrumScript modules: {e}")

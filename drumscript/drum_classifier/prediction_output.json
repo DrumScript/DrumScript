@@ -1,588 +1,203 @@
 [
     {
-        "drum_type": "crash",
-        "onset_time_seconds": 0.02,
-        "midi_pitch": 49,
+        "drum_type": "ride",
+        "onset_time_seconds": 1.16,
+        "midi_pitch": 51,
         "note_head_type": "x",
-        "staff_position": "A3"
+        "staff_position": "B3"
     },
     {
-        "drum_type": "crash",
-        "onset_time_seconds": 0.16,
-        "midi_pitch": 49,
-        "note_head_type": "x",
-        "staff_position": "A3"
-    },
-    {
-        "drum_type": "crash",
-        "onset_time_seconds": 0.28,
-        "midi_pitch": 49,
-        "note_head_type": "x",
-        "staff_position": "A3"
-    },
-    {
-        "drum_type": "crash",
-        "onset_time_seconds": 0.35,
-        "midi_pitch": 49,
-        "note_head_type": "x",
-        "staff_position": "A3"
-    },
-    {
-        "drum_type": "crash",
-        "onset_time_seconds": 0.41,
-        "midi_pitch": 49,
-        "note_head_type": "x",
-        "staff_position": "A3"
-    },
-    {
-        "drum_type": "crash",
-        "onset_time_seconds": 0.5,
-        "midi_pitch": 49,
-        "note_head_type": "x",
-        "staff_position": "A3"
-    },
-    {
-        "drum_type": "crash",
-        "onset_time_seconds": 0.57,
-        "midi_pitch": 49,
-        "note_head_type": "x",
-        "staff_position": "A3"
-    },
-    {
-        "drum_type": "crash",
-        "onset_time_seconds": 0.59,
-        "midi_pitch": 49,
-        "note_head_type": "x",
-        "staff_position": "A3"
-    },
-    {
-        "drum_type": "crash",
-        "onset_time_seconds": 0.63,
-        "midi_pitch": 49,
-        "note_head_type": "x",
-        "staff_position": "A3"
-    },
-    {
-        "drum_type": "crash",
-        "onset_time_seconds": 0.65,
-        "midi_pitch": 49,
-        "note_head_type": "x",
-        "staff_position": "A3"
-    },
-    {
-        "drum_type": "crash",
-        "onset_time_seconds": 0.7,
-        "midi_pitch": 49,
-        "note_head_type": "x",
-        "staff_position": "A3"
-    },
-    {
-        "drum_type": "crash",
-        "onset_time_seconds": 0.8,
-        "midi_pitch": 49,
-        "note_head_type": "x",
-        "staff_position": "A3"
-    },
-    {
-        "drum_type": "crash",
-        "onset_time_seconds": 0.91,
-        "midi_pitch": 49,
-        "note_head_type": "x",
-        "staff_position": "A3"
-    },
-    {
-        "drum_type": "crash",
-        "onset_time_seconds": 0.94,
-        "midi_pitch": 49,
-        "note_head_type": "x",
-        "staff_position": "A3"
-    },
-    {
-        "drum_type": "crash",
-        "onset_time_seconds": 1.02,
-        "midi_pitch": 49,
-        "note_head_type": "x",
-        "staff_position": "A3"
-    },
-    {
-        "drum_type": "crash",
-        "onset_time_seconds": 1.08,
-        "midi_pitch": 49,
-        "note_head_type": "x",
-        "staff_position": "A3"
-    },
-    {
-        "drum_type": "crash",
-        "onset_time_seconds": 1.13,
-        "midi_pitch": 49,
-        "note_head_type": "x",
-        "staff_position": "A3"
-    },
-    {
-        "drum_type": "crash",
-        "onset_time_seconds": 1.22,
-        "midi_pitch": 49,
-        "note_head_type": "x",
-        "staff_position": "A3"
-    },
-    {
-        "drum_type": "crash",
-        "onset_time_seconds": 1.29,
-        "midi_pitch": 49,
-        "note_head_type": "x",
-        "staff_position": "A3"
-    },
-    {
-        "drum_type": "crash",
-        "onset_time_seconds": 1.29,
-        "midi_pitch": 49,
-        "note_head_type": "x",
-        "staff_position": "A3"
+        "drum_type": "hi_hat_open",
+        "onset_time_seconds": 12.42,
+        "midi_pitch": 46,
+        "note_head_type": "x-open",
+        "staff_position": "F#3"
     },
     {
         "drum_type": "kick",
-        "onset_time_seconds": 1.42,
+        "onset_time_seconds": 13.1,
         "midi_pitch": 36,
         "note_head_type": "normal",
         "staff_position": "F2"
     },
     {
-        "drum_type": "kick",
-        "onset_time_seconds": 1.46,
+        "drum_type": "crash",
+        "onset_time_seconds": 13.77,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 14.0,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "hi_hat_closed",
+        "onset_time_seconds": 14.28,
+        "midi_pitch": 42,
+        "note_head_type": "x",
+        "staff_position": "F#3"
+    },
+    {
+        "drum_type": "hi_hat_open",
+        "onset_time_seconds": 15.19,
+        "midi_pitch": 46,
+        "note_head_type": "x-open",
+        "staff_position": "F#3"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 16.35,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "ride",
+        "onset_time_seconds": 17.79,
+        "midi_pitch": 51,
+        "note_head_type": "x",
+        "staff_position": "B3"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 28.58,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 28.82,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 29.49,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "low_tom",
+        "onset_time_seconds": 29.85,
+        "midi_pitch": 41,
+        "note_head_type": "normal",
+        "staff_position": "A2"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 34.82,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 35.99,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 36.22,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 36.87,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "kick_clicky",
+        "onset_time_seconds": 37.23,
         "midi_pitch": 36,
         "note_head_type": "normal",
         "staff_position": "F2"
     },
     {
-        "drum_type": "kick",
-        "onset_time_seconds": 1.51,
-        "midi_pitch": 36,
-        "note_head_type": "normal",
-        "staff_position": "F2"
-    },
-    {
-        "drum_type": "snare",
-        "onset_time_seconds": 1.59,
-        "midi_pitch": 38,
-        "note_head_type": "normal",
-        "staff_position": "C3"
-    },
-    {
-        "drum_type": "snare",
-        "onset_time_seconds": 1.65,
-        "midi_pitch": 38,
-        "note_head_type": "normal",
-        "staff_position": "C3"
-    },
-    {
-        "drum_type": "snare",
-        "onset_time_seconds": 1.72,
-        "midi_pitch": 38,
-        "note_head_type": "normal",
-        "staff_position": "C3"
-    },
-    {
-        "drum_type": "snare",
-        "onset_time_seconds": 1.74,
-        "midi_pitch": 38,
-        "note_head_type": "normal",
-        "staff_position": "C3"
-    },
-    {
-        "drum_type": "snare",
-        "onset_time_seconds": 1.78,
-        "midi_pitch": 38,
-        "note_head_type": "normal",
-        "staff_position": "C3"
-    },
-    {
-        "drum_type": "snare",
-        "onset_time_seconds": 1.83,
-        "midi_pitch": 38,
-        "note_head_type": "normal",
-        "staff_position": "C3"
-    },
-    {
-        "drum_type": "snare",
-        "onset_time_seconds": 1.89,
-        "midi_pitch": 38,
-        "note_head_type": "normal",
-        "staff_position": "C3"
-    },
-    {
-        "drum_type": "snare",
-        "onset_time_seconds": 1.92,
-        "midi_pitch": 38,
-        "note_head_type": "normal",
-        "staff_position": "C3"
-    },
-    {
-        "drum_type": "snare",
-        "onset_time_seconds": 1.95,
-        "midi_pitch": 38,
-        "note_head_type": "normal",
-        "staff_position": "C3"
-    },
-    {
-        "drum_type": "snare",
-        "onset_time_seconds": 1.97,
-        "midi_pitch": 38,
-        "note_head_type": "normal",
-        "staff_position": "C3"
-    },
-    {
-        "drum_type": "snare",
-        "onset_time_seconds": 2.03,
-        "midi_pitch": 38,
-        "note_head_type": "normal",
-        "staff_position": "C3"
-    },
-    {
-        "drum_type": "snare",
-        "onset_time_seconds": 2.07,
-        "midi_pitch": 38,
-        "note_head_type": "normal",
-        "staff_position": "C3"
-    },
-    {
-        "drum_type": "snare",
-        "onset_time_seconds": 2.11,
-        "midi_pitch": 38,
-        "note_head_type": "normal",
-        "staff_position": "C3"
-    },
-    {
-        "drum_type": "snare",
-        "onset_time_seconds": 2.18,
-        "midi_pitch": 38,
-        "note_head_type": "normal",
-        "staff_position": "C3"
-    },
-    {
-        "drum_type": "snare",
-        "onset_time_seconds": 2.21,
-        "midi_pitch": 38,
-        "note_head_type": "normal",
-        "staff_position": "C3"
-    },
-    {
-        "drum_type": "snare",
-        "onset_time_seconds": 2.23,
-        "midi_pitch": 38,
-        "note_head_type": "normal",
-        "staff_position": "C3"
-    },
-    {
-        "drum_type": "snare",
-        "onset_time_seconds": 2.31,
-        "midi_pitch": 38,
-        "note_head_type": "normal",
-        "staff_position": "C3"
-    },
-    {
-        "drum_type": "snare",
-        "onset_time_seconds": 2.36,
-        "midi_pitch": 38,
-        "note_head_type": "normal",
-        "staff_position": "C3"
-    },
-    {
-        "drum_type": "snare",
-        "onset_time_seconds": 2.4,
-        "midi_pitch": 38,
-        "note_head_type": "normal",
-        "staff_position": "C3"
-    },
-    {
-        "drum_type": "snare",
-        "onset_time_seconds": 2.44,
-        "midi_pitch": 38,
-        "note_head_type": "normal",
-        "staff_position": "C3"
-    },
-    {
-        "drum_type": "snare",
-        "onset_time_seconds": 2.46,
-        "midi_pitch": 38,
-        "note_head_type": "normal",
-        "staff_position": "C3"
-    },
-    {
-        "drum_type": "snare",
-        "onset_time_seconds": 2.51,
-        "midi_pitch": 38,
-        "note_head_type": "normal",
-        "staff_position": "C3"
-    },
-    {
-        "drum_type": "snare",
-        "onset_time_seconds": 2.54,
-        "midi_pitch": 38,
-        "note_head_type": "normal",
-        "staff_position": "C3"
-    },
-    {
-        "drum_type": "snare",
-        "onset_time_seconds": 2.59,
-        "midi_pitch": 38,
-        "note_head_type": "normal",
-        "staff_position": "C3"
-    },
-    {
-        "drum_type": "snare",
-        "onset_time_seconds": 2.67,
-        "midi_pitch": 38,
-        "note_head_type": "normal",
-        "staff_position": "C3"
-    },
-    {
-        "drum_type": "snare",
-        "onset_time_seconds": 2.71,
-        "midi_pitch": 38,
-        "note_head_type": "normal",
-        "staff_position": "C3"
-    },
-    {
-        "drum_type": "snare",
-        "onset_time_seconds": 2.8,
-        "midi_pitch": 38,
-        "note_head_type": "normal",
-        "staff_position": "C3"
-    },
-    {
-        "drum_type": "snare",
-        "onset_time_seconds": 2.83,
-        "midi_pitch": 38,
-        "note_head_type": "normal",
-        "staff_position": "C3"
-    },
-    {
-        "drum_type": "snare",
-        "onset_time_seconds": 2.88,
-        "midi_pitch": 38,
-        "note_head_type": "normal",
-        "staff_position": "C3"
-    },
-    {
-        "drum_type": "snare",
-        "onset_time_seconds": 2.93,
-        "midi_pitch": 38,
-        "note_head_type": "normal",
-        "staff_position": "C3"
-    },
-    {
-        "drum_type": "snare",
-        "onset_time_seconds": 2.96,
-        "midi_pitch": 38,
-        "note_head_type": "normal",
-        "staff_position": "C3"
-    },
-    {
-        "drum_type": "snare",
-        "onset_time_seconds": 3.01,
-        "midi_pitch": 38,
-        "note_head_type": "normal",
-        "staff_position": "C3"
-    },
-    {
-        "drum_type": "snare",
-        "onset_time_seconds": 3.07,
-        "midi_pitch": 38,
-        "note_head_type": "normal",
-        "staff_position": "C3"
-    },
-    {
-        "drum_type": "snare",
-        "onset_time_seconds": 3.13,
-        "midi_pitch": 38,
-        "note_head_type": "normal",
-        "staff_position": "C3"
-    },
-    {
-        "drum_type": "snare",
-        "onset_time_seconds": 3.24,
-        "midi_pitch": 38,
-        "note_head_type": "normal",
-        "staff_position": "C3"
-    },
-    {
-        "drum_type": "snare",
-        "onset_time_seconds": 3.32,
-        "midi_pitch": 38,
-        "note_head_type": "normal",
-        "staff_position": "C3"
-    },
-    {
-        "drum_type": "snare",
-        "onset_time_seconds": 3.38,
-        "midi_pitch": 38,
-        "note_head_type": "normal",
-        "staff_position": "C3"
-    },
-    {
-        "drum_type": "snare",
-        "onset_time_seconds": 3.38,
-        "midi_pitch": 38,
-        "note_head_type": "normal",
-        "staff_position": "C3"
-    },
-    {
-        "drum_type": "snare",
-        "onset_time_seconds": 3.44,
-        "midi_pitch": 38,
-        "note_head_type": "normal",
-        "staff_position": "C3"
-    },
-    {
-        "drum_type": "snare",
-        "onset_time_seconds": 3.49,
-        "midi_pitch": 38,
-        "note_head_type": "normal",
-        "staff_position": "C3"
-    },
-    {
-        "drum_type": "snare",
-        "onset_time_seconds": 3.61,
-        "midi_pitch": 38,
-        "note_head_type": "normal",
-        "staff_position": "C3"
-    },
-    {
-        "drum_type": "snare",
-        "onset_time_seconds": 3.68,
-        "midi_pitch": 38,
-        "note_head_type": "normal",
-        "staff_position": "C3"
-    },
-    {
-        "drum_type": "snare",
-        "onset_time_seconds": 3.73,
-        "midi_pitch": 38,
-        "note_head_type": "normal",
-        "staff_position": "C3"
-    },
-    {
-        "drum_type": "snare",
-        "onset_time_seconds": 3.77,
-        "midi_pitch": 38,
-        "note_head_type": "normal",
-        "staff_position": "C3"
-    },
-    {
-        "drum_type": "snare",
-        "onset_time_seconds": 3.82,
-        "midi_pitch": 38,
-        "note_head_type": "normal",
-        "staff_position": "C3"
-    },
-    {
-        "drum_type": "snare",
-        "onset_time_seconds": 3.91,
-        "midi_pitch": 38,
-        "note_head_type": "normal",
-        "staff_position": "C3"
-    },
-    {
-        "drum_type": "snare",
-        "onset_time_seconds": 3.96,
-        "midi_pitch": 38,
-        "note_head_type": "normal",
-        "staff_position": "C3"
-    },
-    {
-        "drum_type": "snare",
-        "onset_time_seconds": 3.99,
-        "midi_pitch": 38,
-        "note_head_type": "normal",
-        "staff_position": "C3"
-    },
-    {
-        "drum_type": "snare",
-        "onset_time_seconds": 4.09,
-        "midi_pitch": 38,
-        "note_head_type": "normal",
-        "staff_position": "C3"
-    },
-    {
-        "drum_type": "snare",
-        "onset_time_seconds": 4.12,
-        "midi_pitch": 38,
-        "note_head_type": "normal",
-        "staff_position": "C3"
-    },
-    {
-        "drum_type": "snare",
-        "onset_time_seconds": 4.12,
-        "midi_pitch": 38,
-        "note_head_type": "normal",
-        "staff_position": "C3"
-    },
-    {
-        "drum_type": "snare",
-        "onset_time_seconds": 4.2,
-        "midi_pitch": 38,
-        "note_head_type": "normal",
-        "staff_position": "C3"
-    },
-    {
-        "drum_type": "snare",
-        "onset_time_seconds": 4.25,
-        "midi_pitch": 38,
-        "note_head_type": "normal",
-        "staff_position": "C3"
-    },
-    {
-        "drum_type": "snare",
-        "onset_time_seconds": 4.28,
-        "midi_pitch": 38,
-        "note_head_type": "normal",
-        "staff_position": "C3"
-    },
-    {
-        "drum_type": "snare",
-        "onset_time_seconds": 4.35,
-        "midi_pitch": 38,
-        "note_head_type": "normal",
-        "staff_position": "C3"
-    },
-    {
-        "drum_type": "snare",
-        "onset_time_seconds": 4.41,
-        "midi_pitch": 38,
-        "note_head_type": "normal",
-        "staff_position": "C3"
-    },
-    {
-        "drum_type": "snare",
-        "onset_time_seconds": 4.45,
-        "midi_pitch": 38,
-        "note_head_type": "normal",
-        "staff_position": "C3"
-    },
-    {
-        "drum_type": "snare",
-        "onset_time_seconds": 4.5,
-        "midi_pitch": 38,
-        "note_head_type": "normal",
-        "staff_position": "C3"
-    },
-    {
-        "drum_type": "snare",
-        "onset_time_seconds": 4.56,
-        "midi_pitch": 38,
-        "note_head_type": "normal",
-        "staff_position": "C3"
+        "drum_type": "crash",
+        "onset_time_seconds": 38.51,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
     },
     {
         "drum_type": "kick",
-        "onset_time_seconds": 9.21,
+        "onset_time_seconds": 38.73,
         "midi_pitch": 36,
         "note_head_type": "normal",
         "staff_position": "F2"
     },
     {
         "drum_type": "ride",
-        "onset_time_seconds": 9.3,
+        "onset_time_seconds": 39.93,
+        "midi_pitch": 51,
+        "note_head_type": "x",
+        "staff_position": "B3"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 50.74,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 50.97,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "hi_hat_closed",
+        "onset_time_seconds": 51.18,
+        "midi_pitch": 42,
+        "note_head_type": "x",
+        "staff_position": "F#3"
+    },
+    {
+        "drum_type": "hi_hat_closed",
+        "onset_time_seconds": 51.22,
+        "midi_pitch": 42,
+        "note_head_type": "x",
+        "staff_position": "F#3"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 51.64,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 53.31,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 53.52,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "ride",
+        "onset_time_seconds": 54.69,
         "midi_pitch": 51,
         "note_head_type": "x",
         "staff_position": "B3"

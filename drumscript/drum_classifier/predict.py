@@ -214,9 +214,9 @@ if __name__ == "__main__":
     # These functions are now imported from the audio_processor module,
     # creating a clear workflow: 1. Process Audio -> 2. Classify Features.
     # from DrumScriptimport audio_processor
-    from audio_processor.audio_loader import load_audio
-    from audio_processor.onset_detector import detect_onsets
-    from audio_processor.feature_extractor import extract_features_for_onsets
+    from drumscript.audio_processor.audio_loader import load_audio
+    from drumscript.audio_processor.onset_detector import detect_onsets
+    from drumscript.audio_processor.feature_extractor import extract_features_for_onsets
 
     # This block now demonstrates the new, correct workflow:
     # 1. Load audio and find onsets using audio_processor.
@@ -226,7 +226,7 @@ if __name__ == "__main__":
     print("--- Running Rule-Based Drum Classifier Example ---")
 
     # Define paths
-    project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir)) # Go up two levels
+    project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir, os.pardir)) # Go up two levels
     # IMPORTANT: Place a test audio file in test_audio folder to run the example.
     test_audio_path = os.path.join(project_root, "test_audio", "test.wav")
     print(f'project_root: {project_root}')

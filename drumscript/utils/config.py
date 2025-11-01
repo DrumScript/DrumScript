@@ -1,5 +1,24 @@
 # DrumScript/utils/config.py (Updated for full application configuration)
+import os
+import argparse
+
+
+# --- Path to your actual drum recording/audio (test.wav/test.mp3) ---
+# This dynamic path calculation should correctly point to DRUMSCRIPT/test_audio/test.wav
+current_script_dir = os.path.dirname(os.path.abspath(__file__))
+print(f'current_script_dir: {current_script_dir}')
+# Go up one level from audio_processor/onset_detector.py to the outer DRUMSCRIPT/ folder
+project_root = os.path.abspath(os.path.join(current_script_dir, '..', '..'))
+print(f'project_root: {project_root}')
+
+# Construct the path to test.mp3/test.wav within the 'test_audio' directory
+#test_audio_path = os.path.join(project_root, "test_audio", "SCHAMMASCH-Split-My-Tongue.mp3") # Change .mp3 to .wav if using WAV, or other audio format
+drumscript = os.path.join(project_root, "drumscript") # Change .wav to .mp3 if using MP3, or other audio format
+print(f'drumscript_path: {drumscript}')
+
+from drumscript import notation_generator
 from notation_generator import constants
+
 # Audio Processing Settings
 AUDIO_SAMPLE_RATE = 22050
 AUDIO_SEGMENT_LENGTH_SECONDS = 0.2

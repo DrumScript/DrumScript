@@ -16,8 +16,7 @@ print(f'project_root: {project_root}')
 drumscript = os.path.join(project_root, "drumscript") # Change .wav to .mp3 if using MP3, or other audio format
 print(f'drumscript_path: {drumscript}')
 
-from drumscript import notation_generator
-from notation_generator import constants
+from drumscript.notation_generator import constants
 
 # Audio Processing Settings
 AUDIO_SAMPLE_RATE = 22050

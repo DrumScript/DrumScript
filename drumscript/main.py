@@ -17,8 +17,8 @@ try:
 
     # Import notation functions
     # (Assuming 'build_score' creates the score and exporters save it)
-    from drumscript.notation_generator.score_builder import build_score
-    from drumscript.notation_generator.pdf_exporter import export_to_pdf, export_to_xml
+    from drumscript.notation_generator.score_builder import build_and_export_drum_score
+    from drumscript.notation_generator.pdf_exporter import export_to_xml # Keep this for the separate XML export
 
 except ImportError as e:
     print(f"Error importing DrumScript modules: {e}")

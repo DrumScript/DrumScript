@@ -87,8 +87,11 @@ def build_and_export_drum_score(
     events_by_quantized_time = defaultdict(list)
 
     for event in detected_events:
-        onset_time_seconds = event['time']
-        drum_types = event['drums'] # This is the list of detected drums for this event
+        # FIX 1: Use the correct key 'onset_time_seconds'
+        onset_time_seconds = event['onset_time_seconds'] 
+
+        # FIX 2: Get the single 'drum_type' from the event
+        drum_type = event['drum_type'] 
 
         # Convert seconds to beats
         time_in_beats = (onset_time_seconds / 60.0) * tempo
@@ -96,8 +99,8 @@ def build_and_export_drum_score(
         # Quantize the time to the nearest musical subdivision
         quantized_time_beats = round_to_nearest_subdivision(time_in_beats, quantization_subdivision)
 
-        # Add all drum types for this quantized time
-        events_by_quantized_time[quantized_time_beats].extend(drum_types)
+        # Add this single drum type to the list for this quantized time
+        events_by_quantized_time[quantized_time_beats].append(drum_type)
 
     # Sort events by quantized time
     sorted_quantized_times = sorted(events_by_quantized_time.keys())

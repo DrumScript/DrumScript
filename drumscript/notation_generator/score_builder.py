@@ -167,6 +167,7 @@ def build_and_export_drum_score(
 
     print(f"Music21 score built and ready for export to {output_filepath}")
 
+    return score
 
 # You might also want a separate function to just build the score object
 # if you want to inspect it before exporting, but for now, this combined

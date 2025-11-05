@@ -82,3 +82,30 @@ def generate_pdf(music21_score: music21.stream.Score, output_filepath: str):
         #     os.remove(musicxml_filepath)
         #     print(f"Cleaned up temporary MusicXML file: {musicxml_filepath}")
         pass # Keep this 'pass' if you comment out the block
+    
+def export_to_xml(music21_score: music21.stream.Score, output_filepath: str):
+    """
+    Exports a music21 Score object to a MusicXML file.
+
+    Args:
+        music21_score (music21.stream.Score): The music21 Score object.
+        output_filepath (str): The full path where the .xml file should be saved.
+    """
+    if not music21_score:
+        print("No music21 score provided to export to XML.")
+        return
+
+    try:
+        # Ensure output directory exists
+        output_dir = os.path.dirname(output_filepath)
+        os.makedirs(output_dir, exist_ok=True)
+        
+        music21_score.write('musicxml', fp=output_filepath)
+        print(f"MusicXML successfully saved to: {output_filepath}")
+        
+    except music21.converter.ConverterException as e:
+        print(f"Error during music21 MusicXML export: {e}")
+        raise
+    except Exception as e:
+        print(f"An unexpected error occurred during XML export: {e}")
+        raise

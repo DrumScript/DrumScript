@@ -87,7 +87,7 @@ def build_and_export_drum_score(
     events_by_quantized_time = defaultdict(list)
 
     for event in detected_events:
-        onset_time_seconds = event['time']
+        onset_time_seconds = event['onset_time_seconds']
         drum_types = event['drums'] # This is the list of detected drums for this event
 
         # Convert seconds to beats

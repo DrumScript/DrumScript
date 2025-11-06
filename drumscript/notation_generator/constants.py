@@ -1,56 +1,78 @@
 # DrumScript/notation_generator/constants.py
 
-# A standardized map based on the General MIDI Level 1 Percussion Key Map.
-# This map links the drum type (as might be classified by an ML model)
-# to its standard notation properties.
+# Master map for drum notation, referencing midi_percussion_map.csv
+# This map MUST include all drum types output by drum_classifier/predict.py
+# and all keys required by notation_generator/score_builder.py and helpers.py
+
 DRUM_NOTATION_MAP = {
+    # Bass Drums
     'kick': {
-        'midi_pitch': 36,      # MIDI Key# 36 is Bass Drum 1
-        'staff_pos': 'F2',     # Standard notation staff position for kick
-        'note_head': 'normal', # Standard notehead
-        'display_name': 'Bass Drum'
+        'display_name': 'Kick Drum',
+        'midi_program': 36,
+        'note_head': 'normal',
+        'staff_position': 'F2' # This was the missing key
     },
+    'kick_clicky': {
+        'display_name': 'Kick (Clicky)',
+        'midi_program': 36,
+        'note_head': 'normal',
+        'staff_position': 'F2'
+    },
+    
+    # Snare Drums
     'snare': {
-        'midi_pitch': 38,      # MIDI Key# 38 is Acoustic Snare
-        'staff_pos': 'C3',     # Standard notation staff position for snare
+        'display_name': 'Snare',
+        'midi_program': 38,
         'note_head': 'normal',
-        'display_name': 'Snare Drum'
+        'staff_position': 'C3'
     },
-    'hi-hat_closed': {
-        'midi_pitch': 42,      # MIDI Key# 42 is Closed Hi-Hat
-        'staff_pos': 'F#3',    # Often placed on the top line or space above
-        'note_head': 'x',      # 'x' notehead is standard for cymbals/hi-hats
-        'display_name': 'Hi-Hat (Closed)'
-    },
-    'hi-hat_open': {
-        'midi_pitch': 46,      # MIDI Key# 46 is Open Hi-Hat
-        'staff_pos': 'G#3',    # Often placed above the closed hi-hat position
+    
+    # Hi-Hats
+    'hi_hat_closed': {
+        'display_name': 'Hi-Hat (Closed)',
+        'midi_program': 42,
         'note_head': 'x',
-        'display_name': 'Hi-Hat (Open)'
+        'staff_position': 'G3' # Standard notation places this on the top line
     },
-    'crash_cymbal': {
-        'midi_pitch': 49,      # MIDI Key# 49 is Crash Cymbal 1
-        'staff_pos': 'C#4',    # Typically placed on a ledger line above the staff
-        'note_head': 'x',
-        'display_name': 'Crash Cymbal'
+    'hi_hat_open': {
+        'display_name': 'Hi-Hat (Open)',
+        'midi_program': 46,
+        'note_head': 'o', # 'o' is a common 'open' head, 'x-open' might also work
+        'staff_position': 'G3'
     },
-    'ride_cymbal': {
-        'midi_pitch': 51,      # MIDI Key# 51 is Ride Cymbal 1
-        'staff_pos': 'A3',     # Often placed on the top line of the staff
-        'note_head': 'x',
-        'display_name': 'Ride Cymbal'
-    },
+    
+    # Toms
     'high_tom': {
-        'midi_pitch': 50,      # MIDI Key# 50 is High Tom
-        'staff_pos': 'E3',
+        'display_name': 'High Tom',
+        'midi_program': 48,
         'note_head': 'normal',
-        'display_name': 'High Tom'
+        'staff_position': 'E3'
+    },
+    'mid_tom': {
+        'display_name': 'Mid Tom',
+        'midi_program': 45,
+        'note_head': 'normal',
+        'staff_position': 'D3' # Adjusted for standard 5-line staff
     },
     'low_tom': {
-        'midi_pitch': 45,      # MIDI Key# 45 is Low Tom
-        'staff_pos': 'A2',
+        'display_name': 'Low Tom',
+        'midi_program': 41,
         'note_head': 'normal',
-        'display_name': 'Low Tom'
+        'staff_position': 'A2'
+    },
+    
+    # Cymbals
+    'crash': {
+        'display_name': 'Crash Cymbal',
+        'midi_program': 49,
+        'note_head': 'x',
+        'staff_position': 'A3' # Above the top line, with a ledger line
+    },
+    'ride': {
+        'display_name': 'Ride Cymbal',
+        'midi_program': 51,
+        'note_head': 'x',
+        'staff_position': 'G3' # Often shares the hi-hat line, but can be A3
     }
 }
 

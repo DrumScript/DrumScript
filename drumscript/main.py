@@ -2,6 +2,7 @@
 import argparse
 import os
 import sys
+from datetime import datetime
 
 # --- 1. IMPORT MODULES ---
 # This try/except block ensures that if the package isn't
@@ -109,6 +110,10 @@ def main():
     )
 
     args = parser.parse_args()
+
+    run_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    print(f"--- DrumScript run started at: {run_time} ---")
+    print(f"Input file: {args.input_file}\n")
 
     # --- Determine output path ---
     output_base = args.output

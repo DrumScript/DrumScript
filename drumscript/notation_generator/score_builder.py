@@ -5,7 +5,7 @@ import music21
 from typing import List, Dict, Any
 from collections import defaultdict
 from drumscript.notation_generator import constants
-# from drumscript.notation_generator.constants import DRUM_NOTATION_MAP # Assuming constants.py defines DRUM_NOTATION_MAP
+from drumscript.notation_generator.constants import DRUM_NOTATION_MAP # Assuming constants.py defines DRUM_NOTATION_MAP
 from drumscript.notation_generator.helpers import round_to_nearest_subdivision, get_note_duration_name # Assuming these are useful
 from drumscript.notation_generator.pdf_exporter import generate_pdf # To actually export the PDF
 

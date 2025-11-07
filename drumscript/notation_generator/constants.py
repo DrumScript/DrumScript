@@ -37,7 +37,7 @@ DRUM_NOTATION_MAP = {
     'hi_hat_open': {
         'display_name': 'Hi-Hat (Open)',
         'midi_program': 46,
-        'note_head': 'o', # 'o' is a common 'open' head, 'x-open' might also work
+        'note_head': 'circle-x', # trying this for music21
         'staff_position': 'G3'
     },
     

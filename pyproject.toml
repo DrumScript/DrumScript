@@ -1,6 +1,15 @@
+# pyproject.toml
+
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
 [project]
 name = "DrumScript"
 version = "0.0.0"
+# authors = [
+  #{ name="Your Name", email="your.email@example.com" },
+#]
 description = "A Python package to convert drum audio to sheet music."
 readme = "README.md"
 requires-python= "==3.12.10"
@@ -9,9 +18,8 @@ keywords = ["drum", "audio", "music", "sheet-music", "notation", "dsp", "machine
 classifiers = [
     "Programming Language :: Python :: 3",
     # "License :: OSI Approved :: MIT License",
-  "Development Status :: 4 - Beta",
     "Operating System :: OS Independent",
-    "Development Status :: 2 - Pre-Alpha,
+    "Development Status :: 3 - Alpha",
     "Topic :: Multimedia :: Sound/Audio",
     "Topic :: Scientific/Engineering :: Information Analysis",
     "Topic :: Education",
@@ -19,16 +27,6 @@ classifiers = [
     "Topic :: Drums",
     "Topic :: DrumScript"
 ]
-
-[metadata]
-author = "DrumScript"
-author_email = "hello.drumscript@gmail.com"
-maintainer = "DrumScript"
-maintainer_email = "hello.drumscript@gmail.com"
-url = "https://github.com/drumscript/drumscript"
-long_description = "DrumScript, a lightweight yet powerful drum audio to sheet music engine with automatic tempo detection. 
-license = { file = "LICENSE" }
-
 dependencies = [
     "ipykernel",
     "librosa",
@@ -49,7 +47,6 @@ dependencies = [
     "sounddevice",
     "soundfile",
     "tdqm",
-    "spleeter",
     "tensorflow",
     #"lilypond",
     #"pytorch",
@@ -58,37 +55,15 @@ dependencies = [
 
 # [project.urls]
 # Homepage = ""
-Repository = "https://github.com/DrumScript/DrumScript"
-"Bug Tracker" = "https://github.com/DrumScript/DrumScript/issues"
-# "Change requests" =
+# Repository = "https://github.com/victoria-mckinney/DrumScript"
+# "Bug Tracker" = "https://github.com/victoria-mckinney/DrumScript/issues"
 
 #[tool.setuptools.package-data]
 # [OPTIONAL] If you have data files inside your package that need to be included
 # "DrumScript" = ["data/*.csv"] # Example: include all .csv files in DrumScript/data/
 
 [tool.setuptools.packages.find]
-where = ["."] # look in root directory
-exclude = ["local_tests*", ".development*", "docs*", ".archive*"]
-include = ["DrumScript*"] 
-
-[project.optional-dependencies]
-docs = [
-    "sphinx",
-    "furo",
-    "myst-parser",
-    "sphinx-autobuild"
-]
-
-[project.scripts]
-drumscript = "drum_script.main:main"
-
-# pyproject.toml
-
-[build-system]
-requires = [
-    "setuptools >= 77.0.3",
-    "wheel",
-    "cython"
-]
-
-# build-backend = "setuptools.build_meta"
+# [OPTIONAL] If you want to customise how setuptools finds packages. By default, it finds all directories with __init__.py
+where = ["."] # Search for packages in the current directory
+include = ["DrumScript*"] # Only include packages starting with DrumScript
+exclude = ["tests*","development*", "docs*", "archive*"] # Exclude test directories, docs, development and archive folders from builddeactict

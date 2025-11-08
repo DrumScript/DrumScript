@@ -30,7 +30,6 @@ classifiers = [
 dependencies = [
     "ipykernel",
     "librosa",
-    "llvmlite",
     "matplotlib",
     "mido",
     "musescore",
@@ -47,7 +46,7 @@ dependencies = [
     "sounddevice",
     "soundfile",
     "spleeter",
-    "tdqm",
+    "tqdm",
     "tensorflow"
     #"lilypond",
     #"pytorch",

@@ -46,8 +46,9 @@ dependencies = [
     "setuptools",
     "sounddevice",
     "soundfile",
+    "spleeter",
     "tdqm",
-    "tensorflow",
+    "tensorflow"
     #"lilypond",
     #"pytorch",
     #"tensorflow"

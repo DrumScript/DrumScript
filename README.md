@@ -1,7 +1,7 @@
 ## **DrumScript**
 
 <!--date_created: sun-15-june-2025-->
-<!--date_updated: sat-25-oct-2025-->
+<!--date_updated: mon-27-oct-2025-->
 
 > **Python 3.12.10**
 
@@ -12,7 +12,45 @@ It leverages **audio signal processing** and a **rule-based classification engin
 > #### **[hello.drumscript@gmail.com](hello.drumscript@gmail.com)**
 
 ---
+### **Project Structure**
 
+The `DrumScript` project is organised into the following main directories. See the **full [`repository_structure.md`](repository_structure.md)**.
+
+```
+DrumScript/
+├── drumscript/             # Main source package directory
+│   ├── __init__.py
+│   ├── main.py             # Command-line entry point
+│   │
+│   ├── audio_processor/    # Audio loading, onset detection, feature extraction
+│   ├── drum_classifier/    # Rule-based classification engine
+│   ├── notation_generator/ # Score building and PDF/XML export
+│   └── utils/              # Utility functions
+│
+├── developer_docs/         # Documentation for developers
+├── machine-learning/       # Archived ML code
+├── outputs/                # Default directory for generated scores
+├── test_audio/             # Sample audio files for testing
+├── tests/                  # Automated tests
+├── theory/                 # Reference documents (music theory, DSP, etc.)
+│
+├── pyproject.toml          # Project metadata, dependencies, build config
+├── README.md               # Main project overview (this file)
+└── ...                     # Other config files (.gitignore, etc.)
+```
+
+  * **`drumscript/`:** Contains all the core Python code for the package.
+      * `main.py`: The orchestrator script run by the `drumscript` command.
+      * `audio_processor/`: Handles loading audio, finding drum hit timings (onsets), and extracting sound features.
+      * `drum_classifier/`: The rule-based engine that identifies *which* drum was hit based on the extracted features.
+      * `notation_generator/`: Converts the list of classified drum hits into sheet music (`.pdf` and `.xml` files).
+      * `utils/`: Contains helper functions and configuration.
+  * **`developer_docs/`:** Contains detailed documentation for contributors.
+  * **`test_audio/`:** Holds sample audio files for testing.
+  * **`tests/`:** Contains automated tests for the code.
+  * **`pyproject.toml`:** Defines project dependencies, metadata, and how the package is built.
+
+---
   - **[Features](#features)**
   - **[Roadmap](#roadmap)**
   - **[Installation](#installation)**
@@ -68,7 +106,31 @@ Here are some features planned for future releases:
     ```
 
 > Other `Python` package managers, like `pip` or `conda`, can be used interchangeably with the commands above.
+>
 
+**(Assuming you have Python 3.12 and `uv` or `pip` installed)**
+
+3. **From PyPI (Recommended - *Once Published*)**
+
+```bash
+uv pip install drumscript
+```
+
+(Coming soon!)
+
+4. **. From Source (for Development)**
+
+Clone the repository and install in editable mode:
+
+```zsh
+git clone https://github.com/DrumScript/DrumScript.git
+cd DrumScript
+# Activate your virtual environment first (e.g., `python -m venv .venv; source .venv/bin/activate`)
+uv pip install -e .
+Installing with -e . links the installation to your source code, so any edits you make are immediately reflected when you run the drumscript command.
+```
+
+---
 #### LilyPond Installation
 
 To generate high-quality PDF sheet music, `DrumScript` uses `music21`, which relies on the music engraving program **LilyPond**. You must install LilyPond separately.

@@ -114,7 +114,7 @@ def calculate_tempo_from_onsets(onset_times: np.ndarray, sr: int) -> float:
 
 
 if __name__ == "__main__":
-    from audio_processor.audio_loader import load_audio, normalise_audio
+    from drumscript.audio_processor.audio_loader import load_audio, normalise_audio
     print("\n#=======================================================================================")
     #print("Running onset_detector.py example with test.wav/test.mp3...")
     print("Running onset_detector.py example with provided filepath...") # FUTURE: Find way to encode this so it prints the file path provided in CLI
@@ -134,7 +134,7 @@ if __name__ == "__main__":
         current_script_dir = os.path.dirname(os.path.abspath(__file__))
         print(f'current_script_dir: {current_script_dir}')
         # Go up one level from audio_processor/onset_detector.py to the outer DRUMSCRIPT/ folder
-        project_root = os.path.abspath(os.path.join(current_script_dir, '..'))
+        project_root = os.path.abspath(os.path.join(current_script_dir, '..', '..'))
         print(f'project_root: {project_root}')
 
         # Construct the path to test.mp3/test.wav within the 'test_audio' directory

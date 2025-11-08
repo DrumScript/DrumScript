@@ -9,6 +9,7 @@ __pycache__/*
 *.dist-info/
 *.egg/
 *.cpython-312.pyc
+*build/
 
 # Python compiled files
 __pycache__/

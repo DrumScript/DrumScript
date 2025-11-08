@@ -1,0 +1,205 @@
+[
+    {
+        "drum_type": "ride",
+        "onset_time_seconds": 1.16,
+        "midi_pitch": 51,
+        "note_head_type": "x",
+        "staff_position": "B3"
+    },
+    {
+        "drum_type": "hi_hat_open",
+        "onset_time_seconds": 12.42,
+        "midi_pitch": 46,
+        "note_head_type": "x-open",
+        "staff_position": "F#3"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 13.1,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 13.77,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 14.0,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "hi_hat_closed",
+        "onset_time_seconds": 14.28,
+        "midi_pitch": 42,
+        "note_head_type": "x",
+        "staff_position": "F#3"
+    },
+    {
+        "drum_type": "hi_hat_open",
+        "onset_time_seconds": 15.19,
+        "midi_pitch": 46,
+        "note_head_type": "x-open",
+        "staff_position": "F#3"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 16.35,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "ride",
+        "onset_time_seconds": 17.79,
+        "midi_pitch": 51,
+        "note_head_type": "x",
+        "staff_position": "B3"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 28.58,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 28.82,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 29.49,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "low_tom",
+        "onset_time_seconds": 29.85,
+        "midi_pitch": 41,
+        "note_head_type": "normal",
+        "staff_position": "A2"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 34.82,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 35.99,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 36.22,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 36.87,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "kick_clicky",
+        "onset_time_seconds": 37.23,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 38.51,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 38.73,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "ride",
+        "onset_time_seconds": 39.93,
+        "midi_pitch": 51,
+        "note_head_type": "x",
+        "staff_position": "B3"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 50.74,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 50.97,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "hi_hat_closed",
+        "onset_time_seconds": 51.18,
+        "midi_pitch": 42,
+        "note_head_type": "x",
+        "staff_position": "F#3"
+    },
+    {
+        "drum_type": "hi_hat_closed",
+        "onset_time_seconds": 51.22,
+        "midi_pitch": 42,
+        "note_head_type": "x",
+        "staff_position": "F#3"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 51.64,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 53.31,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 53.52,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "ride",
+        "onset_time_seconds": 54.69,
+        "midi_pitch": 51,
+        "note_head_type": "x",
+        "staff_position": "B3"
+    }
+]

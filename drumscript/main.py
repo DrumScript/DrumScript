@@ -2,23 +2,24 @@
 import argparse
 import os
 import sys
+from datetime import datetime
 
 # --- 1. IMPORT MODULES ---
 # This try/except block ensures that if the package isn't
 # installed correctly, the user gets a helpful error.
 try:
     # Import functions from audio_processor module
-    from audio_processor.audio_loader import load_audio
-    from audio_processor.onset_detector import detect_onsets
-    from audio_processor.feature_extractor import extract_features_for_onsets
+    from drumscript.audio_processor.audio_loader import load_audio
+    from drumscript.audio_processor.onset_detector import detect_onsets
+    from drumscript.audio_processor.feature_extractor import extract_features_for_onsets
 
     # Import the predict function from rule-based engine
-    from drum_classifier.predict import predict_drum_hits
+    from drumscript.drum_classifier.predict import predict_drum_hits
 
     # Import notation functions
     # (Assuming 'build_score' creates the score and exporters save it)
-    from notation_generator.score_builder import build_score
-    from notation_generator.pdf_exporter import export_to_pdf, export_to_xml
+    from drumscript.notation_generator.score_builder import build_and_export_drum_score
+    from drumscript.notation_generator.pdf_exporter import export_to_xml # Keep this for the separate XML export
 
 except ImportError as e:
     print(f"Error importing DrumScript modules: {e}")
@@ -36,7 +37,7 @@ def run_transcription_pipeline(input_path: str, output_base_path: str):
         # --- 1. AUDIO PROCESSOR ---
         print(f"Loading and processing audio file: {input_path}")
         y, sr = load_audio(input_path, sr=44100) # Use 44.1kHz as used in our tests
-        
+
         print("Detecting onsets...")
         onset_times = detect_onsets(y, sr)
         print(f"Detected {len(onset_times)} onsets.")
@@ -55,20 +56,26 @@ def run_transcription_pipeline(input_path: str, output_base_path: str):
             return
 
         # --- 3. NOTATION GENERATOR ---
-        print("Building musical score...")
-        # Assuming build_score takes the events and returns a music21 score object
-        score_object = build_score(classified_drum_events)
+        print("Building musical score and exporting...")
 
         # Define output file paths
         output_pdf_path = output_base_path + ".pdf"
         output_xml_path = output_base_path + ".xml"
 
-        print(f"Exporting PDF to: {output_pdf_path}")
-        export_to_pdf(score_object, output_pdf_path)
+        # Call the correct function from score_builder
+        # This function currently builds the score AND exports the PDF
+        score_object = build_and_export_drum_score(
+            detected_events=classified_drum_events,
+            tempo=120, # Placeholder: We'll need to get this from tempo_detector
+            output_filepath=output_pdf_path,
+            quantization_subdivision=16 
+        )
+        print(f"PDF saved to: {output_pdf_path}")
 
+        # Now, export the XML from the returned score object
         print(f"Exporting MusicXML to: {output_xml_path}")
         export_to_xml(score_object, output_xml_path)
-        
+
         print("\n--- Transcription Complete! ---")
         print(f"PDF saved to: {output_pdf_path}")
         print(f"XML saved to: {output_xml_path}")
@@ -79,7 +86,6 @@ def run_transcription_pipeline(input_path: str, output_base_path: str):
         import traceback
         traceback.print_exc(file=sys.stderr)
         sys.exit(1)
-
 
 def main():
     """
@@ -104,6 +110,10 @@ def main():
     )
 
     args = parser.parse_args()
+
+    run_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    print(f"--- DrumScript run started at: {run_time} ---")
+    print(f"Input file: {args.input_file}\n")
 
     # --- Determine output path ---
     output_base = args.output

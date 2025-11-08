@@ -21,8 +21,8 @@ classifiers = [
     "Operating System :: OS Independent",
     "Development Status :: 3 - Alpha",
     "Topic :: Multimedia :: Sound/Audio",
-    "Topic :: Scientific/Engineering :: Information Analysis",
-    "Topic :: Education",
+    # "Topic :: Scientific/Engineering :: Information Analysis",
+    # "Topic :: Education",
     "Topic :: Music Theory",
     "Topic :: Drums",
     "Topic :: DrumScript"
@@ -59,6 +59,7 @@ dependencies = [
 # Repository = "https://github.com/victoria-mckinney/DrumScript"
 # "Bug Tracker" = "https://github.com/victoria-mckinney/DrumScript/issues"
 
+# --- Optional Dependencies ---
 #[tool.setuptools.package-data]
 # [OPTIONAL] If you have data files inside your package that need to be included
 # "DrumScript" = ["data/*.csv"] # Example: include all .csv files in DrumScript/data/

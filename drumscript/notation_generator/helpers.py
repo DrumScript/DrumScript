@@ -1,8 +1,8 @@
 # DrumScript/notation_generator/helpers.py
 
 import math
-import constants
-# from constants import DURATION_WHOLE, DURATION_EIGHTH, DURATION_HALF, DURATION_QUARTER, DURATION_SIXTEENTH, DURATION_THIRTY_SECOND
+from . import constants
+# from drumscript.notation_generator.constants import DURATION_WHOLE, DURATION_EIGHTH, DURATION_HALF, DURATION_QUARTER, DURATION_SIXTEENTH, DURATION_THIRTY_SECOND
 from typing import Dict, Any # Added for type hinting
 
 

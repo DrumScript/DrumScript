@@ -28,6 +28,7 @@ classifiers = [
     "Topic :: DrumScript"
 ]
 dependencies = [
+    "demucs",
     "ipykernel",
     "librosa",
     "matplotlib",
@@ -45,7 +46,7 @@ dependencies = [
     "setuptools",
     "sounddevice",
     "soundfile",
-    "spleeter",
+    #"spleeter",
     "tqdm",
     "tensorflow"
     #"lilypond",

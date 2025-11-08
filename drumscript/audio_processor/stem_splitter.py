@@ -3,6 +3,7 @@ import os
 from pathlib import Path
 import tempfile
 import shutil
+import sys  # <-- Import sys for command-line arguments
 
 # Use 'htdemucs', the default (and high-quality) 4-stem model
 DEMUCS_MODEL = "htdemucs" 
@@ -27,10 +28,6 @@ def extract_drum_stem(input_audio_path: str) -> str:
     temp_output_dir = tempfile.mkdtemp()
 
     # 2. Build the Demucs command
-    # This command tells Demucs to:
-    # -o: Use our temporary output directory
-    # -n: Use the specified model (htdemucs)
-    # The final argument is the input file path.
     command = [
         "demucs",
         "-o", str(temp_output_dir),
@@ -41,19 +38,14 @@ def extract_drum_stem(input_audio_path: str) -> str:
     # 3. Run the Demucs separation process
     print(f"Starting Demucs separation for: {input_audio_path}...")
     try:
-        # We use subprocess.run for a clean, blocking call.
-        # check=True will raise an error if Demucs fails.
-        # capture_output=True keeps stdout/stderr tidy.
         subprocess.run(command, check=True, capture_output=True, text=True)
         
     except subprocess.CalledProcessError as e:
-        # This error means demucs ran but failed.
         print(f"Demucs separation failed with error: {e.stderr}")
         shutil.rmtree(temp_output_dir) # Clean up
         raise RuntimeError(f"Demucs failed to process the audio. Error: {e.stderr}")
         
     except FileNotFoundError:
-        # This error means the 'demucs' command wasn't found at all.
         shutil.rmtree(temp_output_dir) # Clean up
         raise FileNotFoundError(
             "The 'demucs' command was not found. "
@@ -61,9 +53,6 @@ def extract_drum_stem(input_audio_path: str) -> str:
         )
 
     # 4. Find and return the path to the drum file
-    # Demucs creates a specific folder structure:
-    # <temp_output_dir> / <model_name> / <input_filename_stem> / drums.wav
-    
     input_filename_stem = Path(input_audio_path).stem
     expected_drum_path = Path(temp_output_dir) / DEMUCS_MODEL / input_filename_stem / "drums.wav"
 
@@ -76,6 +65,53 @@ def extract_drum_stem(input_audio_path: str) -> str:
     print(f"Drum stem extracted successfully to: {expected_drum_path}")
     
     # Return the full path to the drum file.
-    # The calling script (main.py) will be responsible for deleting
-    # the parent 'temp_output_dir' when it's done.
     return str(expected_drum_path)
+
+# --- NEW: Test harness ---
+if __name__ == "__main__":
+    """
+    Allows the script to be run directly for testing.
+    
+    Usage:
+        python drumscript/audio_processor/stem_splitter.py "path/to/your/song.mp3"
+    """
+    if len(sys.argv) < 2:
+        print("Usage: python stem_splitter.py <path_to_audio_file>")
+        sys.exit(1)
+        
+    input_file = sys.argv[1]
+    
+    if not Path(input_file).exists():
+        print(f"Error: File not found at {input_file}")
+        sys.exit(1)
+
+    temp_drum_file_path = None
+    temp_dir_to_clean = None
+
+    try:
+        # Run the function
+        temp_drum_file_path = extract_drum_stem(input_file)
+        
+        # On success, find the root temp directory
+        if temp_drum_file_path:
+            # Path is .../temp_dir_xyz/htdemucs/song_name/drums.wav
+            # We must delete the root temp directory, 3 levels up.
+            temp_dir_to_clean = Path(temp_drum_file_path).parent.parent.parent
+            print(f"\n--- TEST SUCCESSFUL ---")
+            print(f"Drum file created at: {temp_drum_file_path}")
+            print(f"Root temp directory: {temp_dir_to_clean}")
+
+    except Exception as e:
+        print(f"\n--- TEST FAILED ---")
+        print(f"An error occurred: {e}")
+        
+    finally:
+        # Clean up the temporary directory AFTER the test
+        if temp_dir_to_clean and Path(temp_dir_to_clean).exists():
+            try:
+                shutil.rmtree(temp_dir_to_clean)
+                print(f"Successfully cleaned up temporary directory.")
+            except OSError as e:
+                print(f"Error cleaning up directory {temp_dir_to_clean}: {e}")
+        else:
+            print("No temporary directory to clean up.")

@@ -151,3 +151,5 @@ drum_classifier/drum_model.py
 drum_classifier/model_trainer.py
 # temporarily add all _build files (>50) for Sphix GitHub Pages documentation to .gitignore
 **developer_docs/_build
+# temporarily add drumscript build lib to gitignore:
+*build

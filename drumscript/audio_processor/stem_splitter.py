@@ -3,7 +3,9 @@ import os
 from pathlib import Path
 import tempfile
 import shutil
-import sys  # <-- Import sys for command-line arguments
+import sys
+
+# PLEASE NOTE: This is currently a test script. Original Demucs is no longer being maintained (owned by Meta/Facebook). Owners have forked and maintain occasionally: https://github.com/adefossez/demucs. THe usage of demucs is therefore subject to some uncertainty. We may decide to build our own stem_splitter model in DrumScript in order to ensure the long-term stability of the package, and to continue to make it as lightweight as possible.
 
 # Use 'htdemucs', the default (and high-quality) 4-stem model
 DEMUCS_MODEL = "htdemucs" 
@@ -36,6 +38,7 @@ def extract_drum_stem(input_audio_path: str) -> str:
     ]
 
     # 3. Run the Demucs separation process
+    print(f'# PLEASE NOTE: This is currently a test script. Original Demucs is no longer being maintained (owned by Meta/Facebook). Owners have forked and maintain occasionally: https://github.com/adefossez/demucs. THe usage of demucs is therefore subject to some uncertainty. We may decide to build our own stem_splitter model in DrumScript in order to ensure the long-term stability of the package, and to continue to make it as lightweight as possible.')
     print(f"Starting Demucs separation for: {input_audio_path}...")
     try:
         subprocess.run(command, check=True, capture_output=True, text=True)

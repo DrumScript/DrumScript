@@ -35,6 +35,7 @@ def extract_drum_stem(input_audio_path: str) -> str:
         "demucs",
         "-o", str(temp_output_dir),
         "-n", DEMUCS_MODEL,
+        "--flac",
         str(input_audio_path)
     ]
 
@@ -69,7 +70,9 @@ def extract_drum_stem(input_audio_path: str) -> str:
 
     # 4. Find and return the path to the drum file
     input_filename_stem = Path(input_audio_path).stem
-    expected_drum_path = Path(temp_output_dir) / DEMUCS_MODEL / input_filename_stem / "drums.wav"
+
+    expected_drum_path = Path(temp_output_dir) / DEMUCS_MODEL / input_filename_stem / "drums.flac"
+    # expected_drum_path = Path(temp_output_dir) / DEMUCS_MODEL / input_filename_stem / "drums.wav" # commented out in order to avoid using torchcodec
 
     if not expected_drum_path.exists():
         shutil.rmtree(temp_output_dir) # Clean up

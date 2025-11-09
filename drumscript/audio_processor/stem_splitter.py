@@ -4,8 +4,9 @@ from pathlib import Path
 import tempfile
 import shutil
 import sys
+import time
 
-# PLEASE NOTE: This is currently a test script. Original Demucs is no longer being maintained (owned by Meta/Facebook). Owners have forked and maintain occasionally: https://github.com/adefossez/demucs. THe usage of demucs is therefore subject to some uncertainty. We may decide to build our own stem_splitter model in DrumScript in order to ensure the long-term stability of the package, and to continue to make it as lightweight as possible.
+## PLEASE NOTE: This is currently a test script. Original Demucs is no longer being maintained (owned by Meta/Facebook). Owners have forked and maintain occasionally: https://github.com/adefossez/demucs. THe usage of demucs is therefore subject to some uncertainty. We may decide to build our own stem_splitter model in DrumScript in order to ensure the long-term stability of the package, and to continue to make it as lightweight as possible.
 
 # Use 'htdemucs', the default (and high-quality) 4-stem model
 DEMUCS_MODEL = "htdemucs" 
@@ -40,12 +41,22 @@ def extract_drum_stem(input_audio_path: str) -> str:
     # 3. Run the Demucs separation process
     print(f'# PLEASE NOTE: This is currently a test script. Original Demucs is no longer being maintained (owned by Meta/Facebook). Owners have forked and maintain occasionally: https://github.com/adefossez/demucs. THe usage of demucs is therefore subject to some uncertainty. We may decide to build our own stem_splitter model in DrumScript in order to ensure the long-term stability of the package, and to continue to make it as lightweight as possible.')
     print(f"Starting Demucs separation for: {input_audio_path}...")
+
+
+    ## ---- Timer block, might remove later --------------------------------------------------------------
+    start_time = time.monotonic() # Start timer, MIGHT REMOVE LATER ONCE FINISHED DEBUGGING
+
     try:
         subprocess.run(command, check=True, capture_output=True, text=True)
+                
+        end_time = time.monotonic()  # <-- 3. Stop the timer
+        duration = end_time - start_time
+        print(f"Demucs separation finished in {duration:.2f} seconds.")
+    ## ----------------------------------------------------------------------------------------------------
         
     except subprocess.CalledProcessError as e:
         print(f"Demucs separation failed with error: {e.stderr}")
-        shutil.rmtree(temp_output_dir) # Clean up
+        shutil.rmtree(temp_output_dir) # Clean upc
         raise RuntimeError(f"Demucs failed to process the audio. Error: {e.stderr}")
         
     except FileNotFoundError:
@@ -54,6 +65,7 @@ def extract_drum_stem(input_audio_path: str) -> str:
             "The 'demucs' command was not found. "
             "Is it installed correctly in your environment's PATH?"
         )
+    
 
     # 4. Find and return the path to the drum file
     input_filename_stem = Path(input_audio_path).stem
@@ -70,13 +82,13 @@ def extract_drum_stem(input_audio_path: str) -> str:
     # Return the full path to the drum file.
     return str(expected_drum_path)
 
-# --- NEW: Test harness ---
+# --- Test harness ---
 if __name__ == "__main__":
     """
     Allows the script to be run directly for testing.
     
     Usage:
-        python drumscript/audio_processor/stem_splitter.py "path/to/your/song.mp3"
+        python drumscript/audio_processor/stem_splitter.py "path/to/song.mp3"
     """
     if len(sys.argv) < 2:
         print("Usage: python stem_splitter.py <path_to_audio_file>")

@@ -39,9 +39,9 @@ def extract_drum_stem(input_audio_path: str) -> str:
     ]
 
     # 3. Run the Demucs separation process
-    print(f'# PLEASE NOTE: This is currently a test script. Original Demucs is no longer being maintained (owned by Meta/Facebook). Owners have forked and maintain occasionally: https://github.com/adefossez/demucs. THe usage of demucs is therefore subject to some uncertainty. We may decide to build our own stem_splitter model in DrumScript in order to ensure the long-term stability of the package, and to continue to make it as lightweight as possible.')
+    print("\n# =============================================================================================")
+    print("\n# PLEASE NOTE: This is currently a test script. Original Demucs is no longer being maintained (owned by Meta/Facebook). Owners have forked and maintain occasionally: https://github.com/adefossez/demucs. THe usage of demucs is therefore subject to some uncertainty. We may decide to build our own stem_splitter model in DrumScript in order to ensure the long-term stability of the package, and to continue to make it as lightweight as possible.")
     print(f"Starting Demucs separation for: {input_audio_path}...")
-
 
     ## ---- Timer block, might remove later --------------------------------------------------------------
     start_time = time.monotonic() # Start timer, MIGHT REMOVE LATER ONCE FINISHED DEBUGGING
@@ -130,3 +130,5 @@ if __name__ == "__main__":
                 print(f"Error cleaning up directory {temp_dir_to_clean}: {e}")
         else:
             print("No temporary directory to clean up.")
+
+print("\n# =============================================================================================")

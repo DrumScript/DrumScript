@@ -27,8 +27,23 @@ def extract_drum_stem(input_audio_path: str) -> str:
         RuntimeError: If the Demucs process fails.
     """
     
-    # 1. Create a temporary directory to store the separation output
-    temp_output_dir = tempfile.mkdtemp()
+    # 1. Create a temporary directory to store the separation output. 
+    ## Use this for storing in /var/ folder on local machine, 'ie /var/folders/m0/_mjkpjps6lq_13m2l6sfckw40000gn/T/tmpp8b3ez_e/htdemucs/'
+    ## MIGHT RESTORE THIS POST-TESTING
+
+    # temp_output_dir = tempfile.mkdtemp()
+
+    ### OR...
+
+    # 1. Define a local output directory, ie put the outputs where you want them
+    ## MIGHT COMMENT OUT AGAIN, POST-TESTING
+    output_dir = Path("./outputs/stems_test")
+    
+    # Create the directory if it doesn't exist
+    output_dir.mkdir(parents=True, exist_ok=True)
+    
+    # Use this path as the output directory
+    temp_output_dir = str(output_dir)
 
     # 2. Build the Demucs command
     command = [

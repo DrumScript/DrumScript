@@ -52,7 +52,7 @@ def extract_drum_stem(input_audio_path: str) -> str:
                 
         end_time = time.monotonic()  # <-- 3. Stop the timer
         duration = end_time - start_time
-        print(f"Demucs separation finished in {duration:.2f} seconds.")
+        print(f"Demucs separation finished in {(duration/60):.2f} minutes.")
     ## ----------------------------------------------------------------------------------------------------
         
     except subprocess.CalledProcessError as e:
@@ -123,15 +123,16 @@ if __name__ == "__main__":
         print(f"\n--- TEST FAILED ---")
         print(f"An error occurred: {e}")
         
-    finally:
-        # Clean up the temporary directory AFTER the test
-        if temp_dir_to_clean and Path(temp_dir_to_clean).exists():
-            try:
-                shutil.rmtree(temp_dir_to_clean)
-                print(f"Successfully cleaned up temporary directory.")
-            except OSError as e:
-                print(f"Error cleaning up directory {temp_dir_to_clean}: {e}")
-        else:
-            print("No temporary directory to clean up.")
+    # commenting out the cleaning step (for now)
+    #finally:
+         # Clean up the temporary directory AFTER the test
+        #if temp_dir_to_clean and Path(temp_dir_to_clean).exists():
+            #try:
+             #   shutil.rmtree(temp_dir_to_clean)
+             #   print(f"Successfully cleaned up temporary directory.")
+            #except OSError as e:
+             #   print(f"Error cleaning up directory {temp_dir_to_clean}: {e}")
+        #else:
+         #   print("No temporary directory to clean up.")
 
 print("\n# =============================================================================================")

@@ -2,7 +2,7 @@
 
 This is a document that outlines the sources of various files provided in the `DrumScript/theory/` folder.
 <!--date_created:weds-06-aug-2025-->
-<!--date_updated:fri-15-aug-2025-->
+<!--date_updated:sun-09-nov-->
 
 ---
 ### Sources
@@ -25,6 +25,7 @@ https://usermanuals.finalemusic.com/SongWriter2012Win/Content/PercussionMaps.htm
 * **`Master-Drum-Key_R2.pdf`:**[https://cdn.shopify.com/s/files/1/0559/8055/6373/files/Master-Drum-Key_R2.pdf?v=1663945955](https://cdn.shopify.com/s/files/1/0559/8055/6373/files/Master-Drum-Key_R2.pdf?v=1663945955)
 * **`Note Frequency Chart (Pitch to Note)`:** [https://muted.io/note-frequencies/](https://muted.io/note-frequencies/)
 * **`the_musical_staff.png`**: [https://www.musicnotes.com/blog/how-to-read-sheet-music/?srsltid=AfmBOooXV7OSK3WqHiI4SoSyQ7lrno160Qa10qWHOQgWczYLBItMVdJW](https://www.musicnotes.com/blog/how-to-read-sheet-music/?srsltid=AfmBOooXV7OSK3WqHiI4SoSyQ7lrno160Qa10qWHOQgWczYLBItMVdJW) **PLEASE NOTE:** This specific source of this image (`musical_staff.png`) is about **classical sheet music** and not specifically **drum sheet music** (*They are not the same thing, in practise!*)
+* **`HYBRID TRANSFORMERS FOR MUSIC SOURCE SEPARATION` (`DEMUCS`:)** [Link to paper](https://arxiv.org/pdf/2211.08553) - [Link to paper source] (https://arxiv.org/pdf/2211.08553) - [Link to source code (forked)[https://github.com/adefossez/demucs]]
 
 
   

@@ -1,129 +1,116 @@
-# main.py
-import argparse
+import shutil
+from pathlib import Path
 import os
 import sys
-from datetime import datetime
 
-# --- 1. IMPORT MODULES ---
-# This try/except block ensures that if the package isn't
-# installed correctly, the user gets a helpful error.
-try:
-    # Import functions from audio_processor module
-    from drumscript.audio_processor.audio_loader import load_audio
-    from drumscript.audio_processor.onset_detector import detect_onsets
-    from drumscript.audio_processor.feature_extractor import extract_features_for_onsets
+# 1. Import your new (and fully tested!) function
+from drumscript.audio_processor.stem_splitter import extract_drum_stem
 
-    # Import the predict function from rule-based engine
-    from drumscript.drum_classifier.predict import predict_drum_hits
+# Your existing imports
+from drumscript.audio_processor import audio_loader, onset_detector, feature_extractor, tempo_detector
+from drumscript.drum_classifier import predict
+from drumscript.notation_generator import score_builder, pdf_exporter
+from drumscript.utils.config import setup_logging
 
-    # Import notation functions
-    # (Assuming 'build_score' creates the score and exporters save it)
-    from drumscript.notation_generator.score_builder import build_and_export_drum_score
-    from drumscript.notation_generator.pdf_exporter import export_to_xml # Keep this for the separate XML export
-
-except ImportError as e:
-    print(f"Error importing DrumScript modules: {e}")
-    print("Please ensure DrumScript is installed correctly.")
-    print("If running from source, try 'pip install -e .' from the project root.")
-    sys.exit(1)
-
-
-def run_transcription_pipeline(input_path: str, output_base_path: str):
+def main(input_audio_path: str, transcribe_full_song: bool = False):
     """
-    Orchestrates the complete DrumScript transcription pipeline.
-    This is the new logic, based on rule-based engine.
+    Main orchestration script for the DrumScript transcription pipeline.
+
+    Args:
+        input_audio_path (str): Path to the audio file to process.
+        transcribe_full_song (bool): 
+            If True, treat input as a full song and run stem separation.
+            If False (default), assume input is already a drum-only track.
     """
+    
+    logger = setup_logging()
+    logger.info(f"--- Starting DrumScript transcription for: {input_audio_path} ---")
+
+    temp_drum_file_path = None
+    temp_dir_to_clean = None
+
     try:
-        # --- 1. AUDIO PROCESSOR ---
-        print(f"Loading and processing audio file: {input_path}")
-        y, sr = load_audio(input_path, sr=44100) # Use 44.1kHz as used in our tests
+        # 2. Add the new pre-processing step
+        if transcribe_full_song:
+            try:
+                # 1. SEPARATE DRUM STEM
+                logger.info("Full song mode: Separating drum stem...")
+                # This will create the stems in a temp folder
+                temp_drum_file_path = extract_drum_stem(input_audio_path)
+                
+                # The path to the drum file is .../temp_dir_xyz/htdemucs/song_name/drums.flac
+                # We must delete the root temp directory, 3 levels up.
+                temp_dir_to_clean = Path(temp_drum_file_path).parent.parent.parent
+                
+                logger.info(f"Drum stem extracted to: {temp_drum_file_path}")
+                
+                # Use the new stem path for the rest of the pipeline
+                audio_to_process = temp_drum_file_path
+                
+            except (RuntimeError, FileNotFoundError) as e:
+                logger.error(f"Failed to separate drum stem: {e}")
+                return # Exit if separation fails
+        else:
+            # This is the original behavior: process the file directly
+            logger.info("Drum-only mode: Processing file directly.")
+            audio_to_process = input_audio_path
 
-        print("Detecting onsets...")
-        onset_times = detect_onsets(y, sr)
-        print(f"Detected {len(onset_times)} onsets.")
+        # --- Your existing pipeline (now uses the 'audio_to_process' variable) ---
 
-        print("Extracting features for each onset...")
-        all_onset_features = extract_features_for_onsets(y, sr, onset_times)
-        print("Feature extraction complete.")
+        # 2. LOAD AUDIO
+        logger.info(f"Loading audio from: {audio_to_process}")
+        y, sr = audio_loader.load_audio(audio_to_process)
 
-        # --- 2. DRUM CLASSIFIER (THE ENGINE) ---
-        print("Classifying onsets using rule-based system...")
-        classified_drum_events = predict_drum_hits(all_onset_features)
-        print(f"Classification complete. Found {len(classified_drum_events)} drum events.")
+        # 3. DETECT TEMPO
+        estimated_tempo = tempo_detector.estimate_tempo(y, sr)
+        logger.info(f"Estimated tempo: {estimated_tempo:.2f} BPM")
 
-        if not classified_drum_events:
-            print("No drum events were classified. Exiting.")
-            return
+        # 4. DETECT ONSETS
+        logger.info("Detecting onsets...")
+        onset_frames = onset_detector.find_onsets(y, sr)
+        logger.info(f"Found {len(onset_frames)} onset events.")
 
-        # --- 3. NOTATION GENERATOR ---
-        print("Building musical score and exporting...")
+        # 5. EXTRACT FEATURES
+        logger.info("Extracting features for each onset...")
+        features = feature_extractor.extract_features_for_onsets(y, sr, onset_frames)
+        
+        # 6. CLASSIFY HITS (Rule-Based Engine)
+        logger.info("Classifying drum hits...")
+        classified_events = predict.classify_hits(features)
+        
+        # 7. BUILD SCORE
+        logger.info("Building music score...")
+        score = score_builder.build_score(classified_events, estimated_tempo)
 
-        # Define output file paths
-        output_pdf_path = output_base_path + ".pdf"
-        output_xml_path = output_base_path + ".xml"
-
-        # Call the correct function from score_builder
-        # This function currently builds the score AND exports the PDF
-        score_object = build_and_export_drum_score(
-            detected_events=classified_drum_events,
-            tempo=120, # Placeholder: We'll need to get this from tempo_detector
-            output_filepath=output_pdf_path,
-            quantization_subdivision=16 
-        )
-        print(f"PDF saved to: {output_pdf_path}")
-
-        # Now, export the XML from the returned score object
-        print(f"Exporting MusicXML to: {output_xml_path}")
-        export_to_xml(score_object, output_xml_path)
-
-        print("\n--- Transcription Complete! ---")
-        print(f"PDF saved to: {output_pdf_path}")
-        print(f"XML saved to: {output_xml_path}")
+        # 8. EXPORT SCORE
+        output_filename = f"{Path(input_audio_path).stem}_transcription"
+        logger.info(f"Exporting score to {output_filename}...")
+        pdf_exporter.export_score_to_pdf(score, f"outputs/{output_filename}.pdf")
+        
+        logger.info(f"--- Transcription complete for: {input_audio_path} ---")
 
     except Exception as e:
-        print(f"\n--- An Error Occurred ---", file=sys.stderr)
-        print(f"Error: {e}", file=sys.stderr)
-        import traceback
-        traceback.print_exc(file=sys.stderr)
+        logger.error(f"An unexpected error occurred in the pipeline: {e}", exc_info=True)
+
+    finally:
+        # 3. Add the cleanup block for the temp files
+        if temp_dir_to_clean and Path(temp_dir_to_clean).exists():
+            try:
+                shutil.rmtree(temp_dir_to_clean)
+                logger.info(f"Successfully cleaned up temporary directory: {temp_dir_to_clean}")
+            except OSError as e:
+                logger.error(f"Failed to clean up temporary directory {temp_dir_to_clean}: {e}")
+
+if __name__ == '__main__':
+    # This allows you to test the new feature from the command line.
+    
+    if len(sys.argv) < 2:
+        print("Usage: python main.py <path_to_audio_file> [--full]")
         sys.exit(1)
-
-def main():
-    """
-    Main entry point for the 'drumscript' command-line tool.
-    """
-    parser = argparse.ArgumentParser(
-        description="Transcribe drum audio into sheet music.",
-        formatter_class=argparse.RawTextHelpFormatter
-    )
-    parser.add_argument(
-        "input_file",
-        type=str,
-        help="Path to the input audio file (e.g., my_drums.wav)"
-    )
-    parser.add_argument(
-        "-o", "--output",
-        type=str,
-        default=None,
-        help="The base name for output files (e.g., 'my_score').\n"
-             "This will create 'my_score.pdf' and 'my_score.xml'.\n"
-             "(Default: Same name as the input file)"
-    )
-
-    args = parser.parse_args()
-
-    run_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    print(f"--- DrumScript run started at: {run_time} ---")
-    print(f"Input file: {args.input_file}\n")
-
-    # --- Determine output path ---
-    output_base = args.output
-    if output_base is None:
-        # If no output name is given, use the input file's name
-        output_base = os.path.splitext(os.path.basename(args.input_file))[0]
-
-    # --- Run the pipeline ---
-    run_transcription_pipeline(args.input_file, output_base)
-
-
-if __name__ == "__main__":
-    main()
+        
+    input_path = sys.argv[1]
+    
+    # Check if the '--full' flag is present
+    run_as_full_song = '--full' in sys.argv
+    
+    main(input_path, transcribe_full_song=run_as_full_song)

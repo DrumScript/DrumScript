@@ -2,7 +2,7 @@
 ## `DrumScript` Python Package Structure
 
 <!--date_created: weds-25-oct-2025?-->
-<!--date_edited: mon-27-oct-2025-->
+<!--date_edited: sun-09-nov-2025-->
 
 
 > **PLEASE NOTE (Oct-2025 Update):** This repository structure has been updated to reflect the project's pivot to a non-ML, classification-based approach. Legacy machine learning modules have been archived.
@@ -27,6 +27,7 @@ DrumScript/                          # The main Python package that converts dru
 │   │   ├── audio_loader.py              # Loads and normalises audio files.
 │   │   ├── feature_extractor.py         # Extracts DSP features for classification.
 │   │   ├── onset_detector.py            # Detects drum hit onsets.
+│   │   ├── stem_splitter.py            # Splits audio into 4-stems, uses Demucs
 │   │   ├── tempo_detector.py            # Detects tempo from audio data.
 │   │   └── tempogram.py                 # Visualisation tool for analysing tempo.
 │   │   
@@ -61,7 +62,7 @@ DrumScript/                          # The main Python package that converts dru
 │   ├── data_labeller/               # [LEGACY] Module for building custom drum training datasets.
 │   ├── models/                      # [LEGACY] Saved outputs from the trained CNN model.
 │   └── training_data/               # [LEGACY] Folder for training datasets.
-├── outputs/                         # Default directory for generated XML, MIDI, and PDF files.Not version-controlled.
+├── outputs/                         # Default directory for generated `.MP3/.WAV`, `.XML`, `MIDI`, and `.PDF` files. Not version-controlled.
 ├── test_audio/                      # Directory for sample audio files used for testing.
 ├── theory/                          # Reference material on music theory and audio signal processing.
 └── training_data/                   # Archived data related to ML model training. Not version-controlled.

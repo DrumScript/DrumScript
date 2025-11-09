@@ -69,6 +69,35 @@ def extract_drum_stem(input_audio_path: str) -> str:
         duration = end_time - start_time
         print(f"Demucs separation finished in {(duration/60):.2f} minutes.")
     ## ----------------------------------------------------------------------------------------------------
+    # --- NEW: Step 3.5 - Convert FLAC files to MP3 ---
+        print("Converting stems to MP3...")
+        
+        # Find the folder where demucs saved the files
+        input_filename_stem = Path(input_audio_path).stem
+        stems_folder = Path(temp_output_dir) / DEMUCS_MODEL / input_filename_stem
+        
+        # Find all the .flac files in that folder
+        flac_files = list(stems_folder.glob("*.flac"))
+        if not flac_files:
+            print("Warning: No .flac files found to convert.")
+
+        for flac_file in flac_files:
+            mp3_file = flac_file.with_suffix(".mp3")
+            
+            # This command converts FLAC to high-quality VBR MP3
+            convert_command = [
+                "ffmpeg",
+                "-i", str(flac_file),  # Input file
+                "-q:a", "0",          # Set quality to highest VBR (0)
+                str(mp3_file)         # Output file
+            ]
+            
+            # Run the conversion
+            subprocess.run(convert_command, check=True, capture_output=True, text=True)
+            
+        print(f"Successfully converted {len(flac_files)} stems to MP3.")
+        # --- END OF NEW SECTION ---
+
         
     except subprocess.CalledProcessError as e:
         print(f"Demucs separation failed with error: {e.stderr}")

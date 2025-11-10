@@ -10,7 +10,7 @@ from drumscript.audio_processor.stem_splitter import extract_drum_stem
 from drumscript.audio_processor import audio_loader, onset_detector, feature_extractor, tempo_detector
 from drumscript.drum_classifier import predict
 from drumscript.notation_generator import score_builder, pdf_exporter
-from drumscript.utils.config import setup_logging
+from drumscript.utils.logging import setup_logging
 
 def main(input_audio_path: str, transcribe_full_song: bool = False):
     """

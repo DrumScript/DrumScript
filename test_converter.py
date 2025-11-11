@@ -9,6 +9,7 @@ def test_flac_to_mp3_conversion(input_flac_path: str):
     using the high-quality ffmpeg setting.
     """
     
+    print("\n#=============================================================================================")
     print("--- Starting FLAC to MP3 Conversion Test ---")
     
     flac_file = Path(input_flac_path)
@@ -49,19 +50,24 @@ def test_flac_to_mp3_conversion(input_flac_path: str):
             # Clean up the created MP3 file
             mp3_file.unlink()
             print("Cleaned up test MP3 file.")
+            print("\n#=============================================================================================")
         else:
             print("\n--- TEST FAILED ---")
             print("Conversion ran but output file was not created.")
+            print("\n#=============================================================================================")
 
     except subprocess.CalledProcessError as e:
         print("\n--- TEST FAILED ---")
         print(f"FFmpeg command failed with error: {e.stderr}")
+        print("\n#=============================================================================================")
     except FileNotFoundError:
         print("\n--- TEST FAILED ---")
         print("The 'ffmpeg' command was not found. Is it in your PATH?")
+        print("\n#=============================================================================================")
     except Exception as e:
         print(f"\n--- TEST FAILED ---")
         print(f"An unexpected error occurred: {e}")
+        print("\n#=============================================================================================")
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:

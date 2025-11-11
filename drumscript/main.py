@@ -67,7 +67,8 @@ def main(input_audio_path: str, transcribe_full_song: bool = False):
 
         # 4. DETECT ONSETS
         logger.info("Detecting onsets...")
-        onset_frames = onset_detector.find_onsets(y, sr)
+        # onset_frames = onset_detector.find_onsets(y, sr)
+        onset_frames = onset_detector.detect_onsets(y, sr)
         logger.info(f"Found {len(onset_frames)} onset events.")
 
         # 5. EXTRACT FEATURES
@@ -96,7 +97,7 @@ def main(input_audio_path: str, transcribe_full_song: bool = False):
         # 3. Add the cleanup block for the temp files
         if temp_dir_to_clean and Path(temp_dir_to_clean).exists():
             try:
-                shutil.rmtree(temp_dir_to_clean)
+                # shutil.rmtree(temp_dir_to_clean)
                 logger.info(f"Successfully cleaned up temporary directory: {temp_dir_to_clean}")
             except OSError as e:
                 logger.error(f"Failed to clean up temporary directory {temp_dir_to_clean}: {e}")

@@ -89,7 +89,8 @@ def extract_drum_stem(input_audio_path: str) -> str:
                 "ffmpeg",
                 "-i", str(flac_file),  # Input file
                 "-q:a", "0",          # Set quality to highest VBR (0)
-                str(mp3_file)         # Output file
+                str(mp3_file),        # Output file
+                "-y"
             ]
             
             # Run the conversion

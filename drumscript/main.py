@@ -27,7 +27,7 @@ def main(input_audio_path: str, transcribe_full_song: bool = False):
     logger.info(f"--- Starting DrumScript transcription for: {input_audio_path} ---")
 
     temp_drum_file_path = None
-    temp_dir_to_clean = None
+    temp_output_dir = None
 
     try:
         # 2. Add the new pre-processing step
@@ -40,7 +40,8 @@ def main(input_audio_path: str, transcribe_full_song: bool = False):
                 
                 # The path to the drum file is .../temp_dir_xyz/htdemucs/song_name/drums.flac
                 # We must delete the root temp directory, 3 levels up.
-                temp_dir_to_clean = Path(temp_drum_file_path).parent.parent.parent
+                # temp_dir_to_clean = Path(temp_drum_file_path).parent.parent.parent
+                temp_output_dir = Path(temp_drum_file_path).parent.parent.parent
                 
                 logger.info(f"Drum stem extracted to: {temp_drum_file_path}")
                 
@@ -94,13 +95,13 @@ def main(input_audio_path: str, transcribe_full_song: bool = False):
         logger.error(f"An unexpected error occurred in the pipeline: {e}", exc_info=True)
 
     finally:
-        # 3. Add the cleanup block for the temp files
-        if temp_dir_to_clean and Path(temp_dir_to_clean).exists():
-            try:
-                # shutil.rmtree(temp_dir_to_clean)
-                logger.info(f"Successfully cleaned up temporary directory: {temp_dir_to_clean}")
-            except OSError as e:
-                logger.error(f"Failed to clean up temporary directory {temp_dir_to_clean}: {e}")
+            # 3. Add the cleanup block for the temp files
+            if temp_output_dir and Path(temp_output_dir).exists():
+                try:
+                    # shutil.rmtree(temp_output_dir)
+                    logger.info(f"Successfully cleaned up temporary directory: {temp_output_dir}")
+                except OSError as e:
+                    logger.error(f"Failed to clean up temporary directory {temp_output_dir}: {e}")
 
 if __name__ == '__main__':
     # This allows you to test the new feature from the command line.

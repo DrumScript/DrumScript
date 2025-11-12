@@ -2,11 +2,7 @@ import shutil
 from pathlib import Path
 import os
 import sys
-
-# 1. Import your new (and fully tested!) function
 from drumscript.audio_processor.stem_splitter import extract_drum_stem
-
-# Your existing imports
 from drumscript.audio_processor import audio_loader, onset_detector, feature_extractor, tempo_detector
 from drumscript.drum_classifier import predict
 from drumscript.notation_generator import score_builder, pdf_exporter

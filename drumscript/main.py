@@ -100,7 +100,7 @@ def main(input_audio_path: str, transcribe_full_song: bool = False):
                     logger.error(f"Failed to clean up temporary directory {temp_output_dir}: {e}")
 
 if __name__ == '__main__':
-    # This allows you to test the new feature from the command line.
+    # This allows testing the feature from the command line.
     
     if len(sys.argv) < 2:
         print("Usage: python main.py <path_to_audio_file> [--full]")

@@ -73,7 +73,7 @@ def main(input_audio_path: str, transcribe_full_song: bool = False):
         
         # 6. CLASSIFY HITS (Rule-Based Engine)
         logger.info("Classifying drum hits...")
-        classified_events = predict.classify_hits(features)
+        classified_events = predict.predict_drum_hits(features)
         
         # 7. BUILD SCORE
         logger.info("Building music score...")

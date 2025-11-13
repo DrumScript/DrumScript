@@ -8,6 +8,8 @@ from drumscript.drum_classifier import predict
 from drumscript.notation_generator import score_builder, pdf_exporter
 from drumscript.utils.logging import setup_logging
 
+print("\n#=============================================================================================")
+
 def main(input_audio_path: str, transcribe_full_song: bool = False):
     """
     Main orchestration script for the DrumScript transcription pipeline.
@@ -109,3 +111,5 @@ if __name__ == '__main__':
     run_as_full_song = '--full' in sys.argv
     
     main(input_path, transcribe_full_song=run_as_full_song)
+
+print("\n#=============================================================================================")

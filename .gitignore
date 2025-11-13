@@ -69,11 +69,21 @@ models/models_development/ConvolutionalNeuralNetworks/*
 .vscode/ # VS Code settings
 .idea/   # IntelliJ/PyCharm settings
 
-# Logs and output
+# Jupyter notebooks
+
+.ipynb_checkpoints/
+
+# Ignore log files, but not the log directory itself
 *.log
-.ipynb_checkpoints/ # Jupyter notebooks
-*/logs
 */.logs
+
+# Specifically ignore the drumscript log file
+
+drumscript/logs/drumscript.log
+
+# Add an exception to *never* ignore .gitkeep files
+!*.gitkeep
+!**/.gitkeep
 
 # Logic/DAW files
 

@@ -48,11 +48,8 @@ def main(input_audio_path: str, transcribe_full_song: bool = False):
                 logger.error(f"Failed to separate drum stem: {e}")
                 return # Exit if separation fails
         else:
-            # This is the original behavior: process the file directly
             logger.info("Drum-only mode: Processing file directly.")
             audio_to_process = input_audio_path
-
-        # --- Your existing pipeline (now uses the 'audio_to_process' variable) ---
 
         # 2. LOAD AUDIO
         logger.info(f"Loading audio from: {audio_to_process}")

@@ -138,8 +138,8 @@ def generate_midi_and_xml_from_json(input_json_path: str, midi_output_path: str,
     xml_filepath = os.path.join(xml_output_path, f"{output_filename}.xml")
     score.write('musicxml', fp=xml_filepath)
     
-    print(f"✅ Successfully generated MIDI file: {midi_filepath}")
-    print(f"✅ Successfully generated MusicXML file: {xml_filepath}")
+    print(f"Successfully generated MIDI file: {midi_filepath}")
+    print(f"Successfully generated MusicXML file: {xml_filepath}")
 
 
 if __name__ == "__main__":

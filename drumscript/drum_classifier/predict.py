@@ -206,11 +206,11 @@ def create_detailed_drum_events(predicted_drums: List[str], onset_time: float) -
             event = {
                 'drum_type': drum_type,
                 'onset_time_seconds': round(onset_time, 2), 
-                #'midi_pitch': DRUM_METADATA[drum_type]['midi_pitch'], `midi_pitch` refers to DRUM_METADATA, but `midi_program` is the same thing in terms of .json.
+                #'midi_pitch': DRUM_METADATA[drum_type]['midi_pitch'], `midi_pitch` refers to DRUM_METADATA, but `midi_program` is the same thing in terms of .json, # `note_head_type` refers to DRUM_METADATA, but `note_head` is the same thing in terms of .json
                 #'note_head_type': DRUM_METADATA[drum_type]['note_head_type'],
                 #'staff_position': DRUM_METADATA[drum_type]['staff_position'],
                 'midi_pitch': DRUM_NOTATION_MAP[drum_type]['midi_program'],
-                'note_head_type': DRUM_NOTATION_MAP[drum_type]['note_head_type'],
+                'note_head_type': DRUM_NOTATION_MAP[drum_type]['note_head'], 
                 'staff_position': DRUM_NOTATION_MAP[drum_type]['staff_position'],
             }
             detailed_events.append(event)

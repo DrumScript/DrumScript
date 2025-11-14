@@ -76,15 +76,33 @@ def main(input_audio_path: str, transcribe_full_song: bool = False):
         classified_events = predict.predict_drum_hits(features)
         
         # 7. BUILD SCORE
-        logger.info("Building music score...")
+        #logger.info("Building music score...")
         #score = score_builder.build_score(classified_events, estimated_tempo)
-        score = score_builder.build_and_export_drum_score(classified_events, estimated_tempo)
+        #score = score_builder.build_and_export_drum_score(classified_events, estimated_tempo)
 
         # 8. EXPORT SCORE
-        output_filename = f"{Path(input_audio_path).stem}_transcription"
-        logger.info(f"Exporting score to {output_filename}...")
-        pdf_exporter.export_score_to_pdf(score, f"outputs/{output_filename}.pdf")
+        #output_filename = f"{Path(input_audio_path).stem}_transcription"
+        #logger.info(f"Exporting score to {output_filename}...")
+        #pdf_exporter.export_score_to_pdf(score, f"outputs/{output_filename}.pdf")
         
+        #logger.info(f"--- Transcription complete for: {input_audio_path} ---")
+
+        # 7. BUILD AND EXPORT SCORE
+        logger.info("Building music score...")
+
+        # Define the final output path
+        output_filename = f"{Path(input_audio_path).stem}_transcription"
+        final_pdf_path = f"outputs/{output_filename}.pdf"
+
+        logger.info(f"Exporting score to {final_pdf_path}...")
+
+        # Pass all the arguments to the score builder
+        score = score_builder.build_and_export_drum_score(
+            detected_events=classified_events, 
+            tempo=estimated_tempo, 
+            output_filepath=final_pdf_path  # <-- This is the fix!
+        )
+
         logger.info(f"--- Transcription complete for: {input_audio_path} ---")
 
     except Exception as e:

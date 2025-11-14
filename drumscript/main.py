@@ -77,7 +77,8 @@ def main(input_audio_path: str, transcribe_full_song: bool = False):
         
         # 7. BUILD SCORE
         logger.info("Building music score...")
-        score = score_builder.build_score(classified_events, estimated_tempo)
+        #score = score_builder.build_score(classified_events, estimated_tempo)
+        score = score_builder.build_and_export_drum_score(classified_events, estimated_tempo)
 
         # 8. EXPORT SCORE
         output_filename = f"{Path(input_audio_path).stem}_transcription"

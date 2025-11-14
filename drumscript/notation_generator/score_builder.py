@@ -35,7 +35,8 @@ def get_drum_music21_note_info(drum_type: str) -> Dict[str, Any]:
         'midi_pitch': drum_map['midi_program'], # Use midi_program from map for accurate playback
         'note_head': drum_map['note_head'],
         'display_step': pitch_obj.step,     # E.g., 'F', 'C' - for visual staff placement
-        'display_octave': pitch_obj.octave  # E.g., 2, 3 - for visual staff placement
+        'display_octave': pitch_obj.octave,  # E.g., 2, 3 - for visual staff placement,
+        'staff_position': drum_map['staff_position']
     }
 
 

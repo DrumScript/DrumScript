@@ -41,7 +41,7 @@ def get_drum_music21_note_info(drum_type: str) -> Dict[str, Any]:
 
 def build_and_export_drum_score(
     detected_events: List[Dict[str, Any]],
-    tempo: int = 120,
+    tempo: int = 120, # This is a fallback tempo, but will be overwritten when estimate_tempo is called through main, keep as is for now
     output_filepath: str = "output_drum_sheet.pdf",
     quantization_subdivision: int = 16 # e.g., 4 for quarter, 8 for eighth, 16 for sixteenth
 ):

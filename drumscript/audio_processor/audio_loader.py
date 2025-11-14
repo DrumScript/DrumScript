@@ -102,7 +102,7 @@ def play_audio(audio_data: np.ndarray, sr: int):
     sd.wait()
     print("Audio playback finished.")
 
-# ==========================================================================================================
+# =========================================================================================================
 # MAIN BLOCK
 if __name__ == "__main__":
     from drumscript.audio_processor.tempo_detector import estimate_tempo

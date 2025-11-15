@@ -159,3 +159,5 @@ if __name__ == "__main__":
     xml_output_dir = os.path.join(project_root, "outputs", "drum_classifier", "xml")
 
     generate_midi_and_xml_from_json(input_json, midi_output_dir, xml_output_dir)
+
+print("# ------------------------------------------------------------------------------------")

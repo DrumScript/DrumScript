@@ -19,17 +19,17 @@
     </scaling>
   </defaults>
   <part-list>
-    <score-part id="Pb91a69a39a874fc6023c034b1c230e1e">
+    <score-part id="P19d99c289b27e17306e69786d3bbae1e">
       <part-name>Drum Kit</part-name>
       <part-abbreviation>Dms.</part-abbreviation>
-      <score-instrument id="I9abac958afa7952c874b9b5216f7b68b">
+      <score-instrument id="Ifb2df179169021ec4525bfa0338a0aa3">
         <instrument-name>Percussion</instrument-name>
         <instrument-abbreviation>Perc</instrument-abbreviation>
       </score-instrument>
     </score-part>
   </part-list>
   <!--=========================== Part 1 ===========================-->
-  <part id="Pb91a69a39a874fc6023c034b1c230e1e">
+  <part id="P19d99c289b27e17306e69786d3bbae1e">
     <!--========================= Measure 1 ==========================-->
     <measure implicit="no" number="1">
       <attributes>
@@ -57,6 +57,11 @@
         <type>quarter</type>
       </note>
       <note>
+        <rest />
+        <duration>2520</duration>
+        <type>16th</type>
+      </note>
+      <note>
         <pitch>
           <step>B</step>
           <alter>-1</alter>
@@ -76,11 +81,6 @@
         <type>half</type>
       </note>
       <note>
-        <rest />
-        <duration>2520</duration>
-        <type>16th</type>
-      </note>
-      <note>
         <pitch>
           <step>C</step>
           <alter>1</alter>
@@ -97,31 +97,43 @@
         <beam number="2">begin</beam>
       </note>
       <note>
+        <pitch>
+          <step>C</step>
+          <octave>2</octave>
+        </pitch>
         <unpitched>
-          <display-step>F</display-step>
-          <display-octave>2</display-octave>
+          <display-step>B</display-step>
+          <display-octave>4</display-octave>
         </unpitched>
         <duration>2520</duration>
         <type>16th</type>
         <beam number="1">end</beam>
         <beam number="2">end</beam>
       </note>
+    </measure>
+    <!--========================= Measure 2 ==========================-->
+    <measure implicit="no" number="2">
       <note>
-        <chord />
+        <pitch>
+          <step>E</step>
+          <alter>-1</alter>
+          <octave>3</octave>
+        </pitch>
         <unpitched>
-          <display-step>G</display-step>
-          <display-octave>3</display-octave>
+          <display-step>B</display-step>
+          <display-octave>4</display-octave>
         </unpitched>
         <duration>2520</duration>
         <type>16th</type>
         <notehead parentheses="no">x</notehead>
       </note>
-    </measure>
-    <!--========================= Measure 2 ==========================-->
-    <measure implicit="no" number="2">
       <note>
-        <rest measure="yes" />
-        <duration>40320</duration>
+        <rest />
+        <duration>37800</duration>
+        <type>half</type>
+        <dot />
+        <dot />
+        <dot />
       </note>
     </measure>
     <!--========================= Measure 3 ==========================-->
@@ -191,8 +203,7 @@
       <note>
         <pitch>
           <step>C</step>
-          <alter>1</alter>
-          <octave>3</octave>
+          <octave>2</octave>
         </pitch>
         <unpitched>
           <display-step>B</display-step>
@@ -200,7 +211,6 @@
         </unpitched>
         <duration>2520</duration>
         <type>16th</type>
-        <notehead parentheses="no">x</notehead>
       </note>
       <note>
         <pitch>
@@ -430,10 +440,27 @@
     <measure implicit="no" number="22">
       <note>
         <rest />
-        <duration>17640</duration>
+        <duration>10080</duration>
         <type>quarter</type>
-        <dot />
-        <dot />
+      </note>
+      <note>
+        <pitch>
+          <step>C</step>
+          <alter>1</alter>
+          <octave>3</octave>
+        </pitch>
+        <unpitched>
+          <display-step>B</display-step>
+          <display-octave>4</display-octave>
+        </unpitched>
+        <duration>2520</duration>
+        <type>16th</type>
+        <notehead parentheses="no">x</notehead>
+      </note>
+      <note>
+        <rest />
+        <duration>5040</duration>
+        <type>eighth</type>
       </note>
       <note>
         <pitch>
@@ -475,8 +502,11 @@
         <duration>2520</duration>
         <type>16th</type>
         <notehead parentheses="no">x</notehead>
-        <beam number="1">begin</beam>
-        <beam number="2">begin</beam>
+      </note>
+      <note>
+        <rest />
+        <duration>2520</duration>
+        <type>16th</type>
       </note>
       <note>
         <pitch>
@@ -491,23 +521,12 @@
         <duration>2520</duration>
         <type>16th</type>
         <notehead parentheses="no">circle-x</notehead>
-        <beam number="1">end</beam>
-        <beam number="2">end</beam>
       </note>
       <note>
         <rest />
-        <duration>20160</duration>
+        <duration>30240</duration>
         <type>half</type>
-      </note>
-      <note>
-        <rest />
-        <duration>10080</duration>
-        <type>quarter</type>
-      </note>
-      <note>
-        <rest />
-        <duration>2520</duration>
-        <type>16th</type>
+        <dot />
       </note>
     </measure>
     <!--========================= Measure 24 =========================-->
@@ -883,45 +902,8 @@
     <!--========================= Measure 46 =========================-->
     <measure implicit="no" number="46">
       <note>
-        <rest />
-        <duration>20160</duration>
-        <type>half</type>
-      </note>
-      <note>
-        <pitch>
-          <step>C</step>
-          <octave>2</octave>
-        </pitch>
-        <unpitched>
-          <display-step>B</display-step>
-          <display-octave>4</display-octave>
-        </unpitched>
-        <duration>2520</duration>
-        <type>16th</type>
-      </note>
-      <note>
-        <rest />
-        <duration>7560</duration>
-        <type>eighth</type>
-        <dot />
-      </note>
-      <note>
-        <pitch>
-          <step>C</step>
-          <octave>2</octave>
-        </pitch>
-        <unpitched>
-          <display-step>B</display-step>
-          <display-octave>4</display-octave>
-        </unpitched>
-        <duration>2520</duration>
-        <type>16th</type>
-      </note>
-      <note>
-        <rest />
-        <duration>7560</duration>
-        <type>eighth</type>
-        <dot />
+        <rest measure="yes" />
+        <duration>40320</duration>
       </note>
     </measure>
     <!--========================= Measure 47 =========================-->
@@ -934,9 +916,26 @@
     <!--========================= Measure 48 =========================-->
     <measure implicit="no" number="48">
       <note>
+        <unpitched>
+          <display-step>F</display-step>
+          <display-octave>2</display-octave>
+        </unpitched>
+        <duration>2520</duration>
+        <type>16th</type>
+      </note>
+      <note>
+        <chord />
+        <unpitched>
+          <display-step>F</display-step>
+          <display-octave>2</display-octave>
+        </unpitched>
+        <duration>2520</duration>
+        <type>16th</type>
+      </note>
+      <note>
         <rest />
-        <duration>5040</duration>
-        <type>eighth</type>
+        <duration>2520</duration>
+        <type>16th</type>
       </note>
       <note>
         <pitch>
@@ -959,38 +958,20 @@
       </note>
       <note>
         <unpitched>
-          <display-step>A</display-step>
-          <display-octave>3</display-octave>
+          <display-step>F</display-step>
+          <display-octave>2</display-octave>
         </unpitched>
         <duration>2520</duration>
         <type>16th</type>
-        <notehead parentheses="no">x</notehead>
-        <beam number="1">begin</beam>
-        <beam number="2">begin</beam>
       </note>
       <note>
         <chord />
         <unpitched>
-          <display-step>A</display-step>
-          <display-octave>3</display-octave>
+          <display-step>F</display-step>
+          <display-octave>2</display-octave>
         </unpitched>
         <duration>2520</duration>
         <type>16th</type>
-        <notehead parentheses="no">x</notehead>
-      </note>
-      <note>
-        <pitch>
-          <step>C</step>
-          <octave>2</octave>
-        </pitch>
-        <unpitched>
-          <display-step>B</display-step>
-          <display-octave>4</display-octave>
-        </unpitched>
-        <duration>2520</duration>
-        <type>16th</type>
-        <beam number="1">end</beam>
-        <beam number="2">end</beam>
       </note>
       <note>
         <rest />
@@ -999,8 +980,9 @@
       </note>
       <note>
         <rest />
-        <duration>5040</duration>
+        <duration>7560</duration>
         <type>eighth</type>
+        <dot />
       </note>
     </measure>
     <!--========================= Measure 49 =========================-->
@@ -1072,20 +1054,25 @@
         <beam number="2">continue</beam>
       </note>
       <note>
-        <pitch>
-          <step>C</step>
-          <alter>1</alter>
-          <octave>3</octave>
-        </pitch>
         <unpitched>
-          <display-step>B</display-step>
-          <display-octave>4</display-octave>
+          <display-step>A</display-step>
+          <display-octave>3</display-octave>
         </unpitched>
         <duration>2520</duration>
         <type>16th</type>
         <notehead parentheses="no">x</notehead>
         <beam number="1">end</beam>
         <beam number="2">end</beam>
+      </note>
+      <note>
+        <chord />
+        <unpitched>
+          <display-step>A</display-step>
+          <display-octave>3</display-octave>
+        </unpitched>
+        <duration>2520</duration>
+        <type>16th</type>
+        <notehead parentheses="no">x</notehead>
       </note>
       <note>
         <rest />
@@ -1241,19 +1228,14 @@
         <type>quarter</type>
       </note>
       <note>
+        <pitch>
+          <step>C</step>
+          <alter>1</alter>
+          <octave>3</octave>
+        </pitch>
         <unpitched>
-          <display-step>A</display-step>
-          <display-octave>3</display-octave>
-        </unpitched>
-        <duration>2520</duration>
-        <type>16th</type>
-        <notehead parentheses="no">x</notehead>
-      </note>
-      <note>
-        <chord />
-        <unpitched>
-          <display-step>A</display-step>
-          <display-octave>3</display-octave>
+          <display-step>B</display-step>
+          <display-octave>4</display-octave>
         </unpitched>
         <duration>2520</duration>
         <type>16th</type>
@@ -1372,7 +1354,8 @@
       <note>
         <pitch>
           <step>C</step>
-          <octave>2</octave>
+          <alter>1</alter>
+          <octave>3</octave>
         </pitch>
         <unpitched>
           <display-step>B</display-step>
@@ -1380,6 +1363,7 @@
         </unpitched>
         <duration>2520</duration>
         <type>16th</type>
+        <notehead parentheses="no">x</notehead>
       </note>
       <note>
         <pitch>
@@ -1480,10 +1464,28 @@
     <measure implicit="no" number="71">
       <note>
         <rest />
-        <duration>35280</duration>
+        <duration>30240</duration>
         <type>half</type>
         <dot />
-        <dot />
+      </note>
+      <note>
+        <pitch>
+          <step>C</step>
+          <alter>1</alter>
+          <octave>3</octave>
+        </pitch>
+        <unpitched>
+          <display-step>B</display-step>
+          <display-octave>4</display-octave>
+        </unpitched>
+        <duration>2520</duration>
+        <type>16th</type>
+        <notehead parentheses="no">x</notehead>
+      </note>
+      <note>
+        <rest />
+        <duration>2520</duration>
+        <type>16th</type>
       </note>
       <note>
         <pitch>
@@ -1542,9 +1544,8 @@
       </note>
       <note>
         <rest />
-        <duration>7560</duration>
+        <duration>5040</duration>
         <type>eighth</type>
-        <dot />
       </note>
       <note>
         <pitch>
@@ -1567,8 +1568,8 @@
       </note>
       <note>
         <rest />
-        <duration>2520</duration>
-        <type>16th</type>
+        <duration>5040</duration>
+        <type>eighth</type>
       </note>
     </measure>
     <!--========================= Measure 73 =========================-->
@@ -1681,23 +1682,9 @@
     <!--========================= Measure 75 =========================-->
     <measure implicit="no" number="75">
       <note>
-        <pitch>
-          <step>F</step>
-          <alter>1</alter>
-          <octave>2</octave>
-        </pitch>
-        <unpitched>
-          <display-step>B</display-step>
-          <display-octave>4</display-octave>
-        </unpitched>
-        <duration>2520</duration>
-        <type>16th</type>
-        <notehead parentheses="no">x</notehead>
-      </note>
-      <note>
         <rest />
-        <duration>5040</duration>
-        <type>eighth</type>
+        <duration>10080</duration>
+        <type>quarter</type>
       </note>
       <note>
         <pitch>
@@ -1715,8 +1702,13 @@
       </note>
       <note>
         <rest />
-        <duration>30240</duration>
+        <duration>20160</duration>
         <type>half</type>
+      </note>
+      <note>
+        <rest />
+        <duration>7560</duration>
+        <type>eighth</type>
         <dot />
       </note>
     </measure>
@@ -1893,38 +1885,8 @@
     <!--========================= Measure 93 =========================-->
     <measure implicit="no" number="93">
       <note>
-        <rest />
-        <duration>20160</duration>
-        <type>half</type>
-      </note>
-      <note>
-        <rest />
-        <duration>10080</duration>
-        <type>quarter</type>
-      </note>
-      <note>
-        <rest />
-        <duration>2520</duration>
-        <type>16th</type>
-      </note>
-      <note>
-        <pitch>
-          <step>C</step>
-          <alter>1</alter>
-          <octave>3</octave>
-        </pitch>
-        <unpitched>
-          <display-step>B</display-step>
-          <display-octave>4</display-octave>
-        </unpitched>
-        <duration>2520</duration>
-        <type>16th</type>
-        <notehead parentheses="no">x</notehead>
-      </note>
-      <note>
-        <rest />
-        <duration>5040</duration>
-        <type>eighth</type>
+        <rest measure="yes" />
+        <duration>40320</duration>
       </note>
     </measure>
     <!--========================= Measure 94 =========================-->
@@ -1945,223 +1907,8 @@
       </note>
       <note>
         <rest />
-        <duration>37800</duration>
-        <type>half</type>
-        <dot />
-        <dot />
-        <dot />
-      </note>
-    </measure>
-    <!--========================= Measure 95 =========================-->
-    <measure implicit="no" number="95">
-      <note>
-        <pitch>
-          <step>C</step>
-          <alter>1</alter>
-          <octave>3</octave>
-        </pitch>
-        <unpitched>
-          <display-step>B</display-step>
-          <display-octave>4</display-octave>
-        </unpitched>
-        <duration>2520</duration>
-        <type>16th</type>
-        <notehead parentheses="no">x</notehead>
-      </note>
-      <note>
-        <rest />
-        <duration>35280</duration>
-        <type>half</type>
-        <dot />
-        <dot />
-      </note>
-      <note>
-        <pitch>
-          <step>B</step>
-          <alter>-1</alter>
-          <octave>2</octave>
-        </pitch>
-        <unpitched>
-          <display-step>B</display-step>
-          <display-octave>4</display-octave>
-        </unpitched>
-        <duration>2520</duration>
-        <type>16th</type>
-        <notehead parentheses="no">circle-x</notehead>
-      </note>
-    </measure>
-    <!--========================= Measure 96 =========================-->
-    <measure implicit="no" number="96">
-      <note>
-        <rest measure="yes" />
-        <duration>40320</duration>
-      </note>
-    </measure>
-    <!--========================= Measure 97 =========================-->
-    <measure implicit="no" number="97">
-      <note>
-        <rest />
-        <duration>15120</duration>
-        <type>quarter</type>
-        <dot />
-      </note>
-      <note>
-        <pitch>
-          <step>B</step>
-          <alter>-1</alter>
-          <octave>2</octave>
-        </pitch>
-        <unpitched>
-          <display-step>B</display-step>
-          <display-octave>4</display-octave>
-        </unpitched>
-        <duration>2520</duration>
-        <type>16th</type>
-        <notehead parentheses="no">circle-x</notehead>
-      </note>
-      <note>
-        <rest />
         <duration>20160</duration>
         <type>half</type>
-      </note>
-      <note>
-        <rest />
-        <duration>2520</duration>
-        <type>16th</type>
-      </note>
-    </measure>
-    <!--========================= Measure 98 =========================-->
-    <measure implicit="no" number="98">
-      <note>
-        <pitch>
-          <step>C</step>
-          <alter>1</alter>
-          <octave>3</octave>
-        </pitch>
-        <unpitched>
-          <display-step>B</display-step>
-          <display-octave>4</display-octave>
-        </unpitched>
-        <duration>2520</duration>
-        <type>16th</type>
-        <notehead parentheses="no">x</notehead>
-      </note>
-      <note>
-        <rest />
-        <duration>2520</duration>
-        <type>16th</type>
-      </note>
-      <note>
-        <pitch>
-          <step>C</step>
-          <alter>1</alter>
-          <octave>3</octave>
-        </pitch>
-        <unpitched>
-          <display-step>B</display-step>
-          <display-octave>4</display-octave>
-        </unpitched>
-        <duration>2520</duration>
-        <type>16th</type>
-        <notehead parentheses="no">x</notehead>
-      </note>
-      <note>
-        <rest />
-        <duration>2520</duration>
-        <type>16th</type>
-      </note>
-      <note>
-        <unpitched>
-          <display-step>F</display-step>
-          <display-octave>2</display-octave>
-        </unpitched>
-        <duration>2520</duration>
-        <type>16th</type>
-      </note>
-      <note>
-        <chord />
-        <unpitched>
-          <display-step>F</display-step>
-          <display-octave>2</display-octave>
-        </unpitched>
-        <duration>2520</duration>
-        <type>16th</type>
-      </note>
-      <note>
-        <rest />
-        <duration>2520</duration>
-        <type>16th</type>
-      </note>
-      <note>
-        <pitch>
-          <step>C</step>
-          <alter>1</alter>
-          <octave>3</octave>
-        </pitch>
-        <unpitched>
-          <display-step>B</display-step>
-          <display-octave>4</display-octave>
-        </unpitched>
-        <duration>2520</duration>
-        <type>16th</type>
-        <notehead parentheses="no">x</notehead>
-      </note>
-      <note>
-        <rest />
-        <duration>2520</duration>
-        <type>16th</type>
-      </note>
-      <note>
-        <pitch>
-          <step>C</step>
-          <alter>1</alter>
-          <octave>3</octave>
-        </pitch>
-        <unpitched>
-          <display-step>B</display-step>
-          <display-octave>4</display-octave>
-        </unpitched>
-        <duration>2520</duration>
-        <type>16th</type>
-        <notehead parentheses="no">x</notehead>
-      </note>
-      <note>
-        <rest />
-        <duration>2520</duration>
-        <type>16th</type>
-      </note>
-      <note>
-        <pitch>
-          <step>C</step>
-          <alter>1</alter>
-          <octave>3</octave>
-        </pitch>
-        <unpitched>
-          <display-step>B</display-step>
-          <display-octave>4</display-octave>
-        </unpitched>
-        <duration>2520</duration>
-        <type>16th</type>
-        <notehead parentheses="no">x</notehead>
-      </note>
-      <note>
-        <rest />
-        <duration>2520</duration>
-        <type>16th</type>
-      </note>
-      <note>
-        <pitch>
-          <step>C</step>
-          <alter>1</alter>
-          <octave>3</octave>
-        </pitch>
-        <unpitched>
-          <display-step>B</display-step>
-          <display-octave>4</display-octave>
-        </unpitched>
-        <duration>2520</duration>
-        <type>16th</type>
-        <notehead parentheses="no">x</notehead>
       </note>
       <note>
         <rest />
@@ -2184,8 +1931,41 @@
       </note>
       <note>
         <rest />
+        <duration>10080</duration>
+        <type>quarter</type>
+      </note>
+      <note>
+        <rest />
         <duration>2520</duration>
         <type>16th</type>
+      </note>
+    </measure>
+    <!--========================= Measure 95 =========================-->
+    <measure implicit="no" number="95">
+      <note>
+        <rest measure="yes" />
+        <duration>40320</duration>
+      </note>
+    </measure>
+    <!--========================= Measure 96 =========================-->
+    <measure implicit="no" number="96">
+      <note>
+        <rest measure="yes" />
+        <duration>40320</duration>
+      </note>
+    </measure>
+    <!--========================= Measure 97 =========================-->
+    <measure implicit="no" number="97">
+      <note>
+        <rest measure="yes" />
+        <duration>40320</duration>
+      </note>
+    </measure>
+    <!--========================= Measure 98 =========================-->
+    <measure implicit="no" number="98">
+      <note>
+        <rest measure="yes" />
+        <duration>40320</duration>
       </note>
     </measure>
     <!--========================= Measure 99 =========================-->
@@ -2226,8 +2006,52 @@
     <!--======================== Measure 104 =========================-->
     <measure implicit="no" number="104">
       <note>
-        <rest measure="yes" />
-        <duration>40320</duration>
+        <pitch>
+          <step>B</step>
+          <alter>-1</alter>
+          <octave>2</octave>
+        </pitch>
+        <unpitched>
+          <display-step>B</display-step>
+          <display-octave>4</display-octave>
+        </unpitched>
+        <duration>2520</duration>
+        <type>16th</type>
+        <notehead parentheses="no">circle-x</notehead>
+      </note>
+      <note>
+        <rest />
+        <duration>20160</duration>
+        <type>half</type>
+      </note>
+      <note>
+        <rest />
+        <duration>2520</duration>
+        <type>16th</type>
+      </note>
+      <note>
+        <pitch>
+          <step>E</step>
+          <alter>-1</alter>
+          <octave>3</octave>
+        </pitch>
+        <unpitched>
+          <display-step>B</display-step>
+          <display-octave>4</display-octave>
+        </unpitched>
+        <duration>2520</duration>
+        <type>16th</type>
+        <notehead parentheses="no">x</notehead>
+      </note>
+      <note>
+        <rest />
+        <duration>10080</duration>
+        <type>quarter</type>
+      </note>
+      <note>
+        <rest />
+        <duration>2520</duration>
+        <type>16th</type>
       </note>
     </measure>
     <!--======================== Measure 105 =========================-->
@@ -2254,550 +2078,22 @@
     <!--======================== Measure 108 =========================-->
     <measure implicit="no" number="108">
       <note>
-        <rest />
-        <duration>5040</duration>
-        <type>eighth</type>
-      </note>
-      <note>
-        <pitch>
-          <step>C</step>
-          <alter>1</alter>
-          <octave>3</octave>
-        </pitch>
-        <unpitched>
-          <display-step>B</display-step>
-          <display-octave>4</display-octave>
-        </unpitched>
-        <duration>2520</duration>
-        <type>16th</type>
-        <notehead parentheses="no">x</notehead>
-      </note>
-      <note>
-        <rest />
-        <duration>2520</duration>
-        <type>16th</type>
-      </note>
-      <note>
-        <unpitched>
-          <display-step>A</display-step>
-          <display-octave>3</display-octave>
-        </unpitched>
-        <duration>2520</duration>
-        <type>16th</type>
-        <notehead parentheses="no">x</notehead>
-      </note>
-      <note>
-        <chord />
-        <unpitched>
-          <display-step>A</display-step>
-          <display-octave>3</display-octave>
-        </unpitched>
-        <duration>2520</duration>
-        <type>16th</type>
-        <notehead parentheses="no">x</notehead>
-      </note>
-      <note>
-        <rest />
-        <duration>2520</duration>
-        <type>16th</type>
-      </note>
-      <note>
-        <unpitched>
-          <display-step>F</display-step>
-          <display-octave>2</display-octave>
-        </unpitched>
-        <duration>2520</duration>
-        <type>16th</type>
-      </note>
-      <note>
-        <chord />
-        <unpitched>
-          <display-step>F</display-step>
-          <display-octave>2</display-octave>
-        </unpitched>
-        <duration>2520</duration>
-        <type>16th</type>
-      </note>
-      <note>
-        <rest />
-        <duration>2520</duration>
-        <type>16th</type>
-      </note>
-      <note>
-        <pitch>
-          <step>C</step>
-          <alter>1</alter>
-          <octave>3</octave>
-        </pitch>
-        <unpitched>
-          <display-step>B</display-step>
-          <display-octave>4</display-octave>
-        </unpitched>
-        <duration>2520</duration>
-        <type>16th</type>
-        <notehead parentheses="no">x</notehead>
-      </note>
-      <note>
-        <rest />
-        <duration>2520</duration>
-        <type>16th</type>
-      </note>
-      <note>
-        <pitch>
-          <step>C</step>
-          <alter>1</alter>
-          <octave>3</octave>
-        </pitch>
-        <unpitched>
-          <display-step>B</display-step>
-          <display-octave>4</display-octave>
-        </unpitched>
-        <duration>2520</duration>
-        <type>16th</type>
-        <notehead parentheses="no">x</notehead>
-      </note>
-      <note>
-        <rest />
-        <duration>2520</duration>
-        <type>16th</type>
-      </note>
-      <note>
-        <unpitched>
-          <display-step>A</display-step>
-          <display-octave>3</display-octave>
-        </unpitched>
-        <duration>2520</duration>
-        <type>16th</type>
-        <notehead parentheses="no">x</notehead>
-      </note>
-      <note>
-        <chord />
-        <unpitched>
-          <display-step>A</display-step>
-          <display-octave>3</display-octave>
-        </unpitched>
-        <duration>2520</duration>
-        <type>16th</type>
-        <notehead parentheses="no">x</notehead>
-      </note>
-      <note>
-        <rest />
-        <duration>2520</duration>
-        <type>16th</type>
-      </note>
-      <note>
-        <unpitched>
-          <display-step>A</display-step>
-          <display-octave>3</display-octave>
-        </unpitched>
-        <duration>2520</duration>
-        <type>16th</type>
-        <notehead parentheses="no">x</notehead>
-      </note>
-      <note>
-        <chord />
-        <unpitched>
-          <display-step>A</display-step>
-          <display-octave>3</display-octave>
-        </unpitched>
-        <duration>2520</duration>
-        <type>16th</type>
-        <notehead parentheses="no">x</notehead>
-      </note>
-      <note>
-        <rest />
-        <duration>2520</duration>
-        <type>16th</type>
+        <rest measure="yes" />
+        <duration>40320</duration>
       </note>
     </measure>
     <!--======================== Measure 109 =========================-->
     <measure implicit="no" number="109">
       <note>
-        <unpitched>
-          <display-step>A</display-step>
-          <display-octave>3</display-octave>
-        </unpitched>
-        <duration>2520</duration>
-        <type>16th</type>
-        <notehead parentheses="no">x</notehead>
-      </note>
-      <note>
-        <chord />
-        <unpitched>
-          <display-step>A</display-step>
-          <display-octave>3</display-octave>
-        </unpitched>
-        <duration>2520</duration>
-        <type>16th</type>
-        <notehead parentheses="no">x</notehead>
-      </note>
-      <note>
-        <rest />
-        <duration>2520</duration>
-        <type>16th</type>
-      </note>
-      <note>
-        <pitch>
-          <step>C</step>
-          <alter>1</alter>
-          <octave>3</octave>
-        </pitch>
-        <unpitched>
-          <display-step>B</display-step>
-          <display-octave>4</display-octave>
-        </unpitched>
-        <duration>2520</duration>
-        <type>16th</type>
-        <notehead parentheses="no">x</notehead>
-      </note>
-      <note>
-        <rest />
-        <duration>2520</duration>
-        <type>16th</type>
-      </note>
-      <note>
-        <unpitched>
-          <display-step>A</display-step>
-          <display-octave>3</display-octave>
-        </unpitched>
-        <duration>2520</duration>
-        <type>16th</type>
-        <notehead parentheses="no">x</notehead>
-      </note>
-      <note>
-        <chord />
-        <unpitched>
-          <display-step>A</display-step>
-          <display-octave>3</display-octave>
-        </unpitched>
-        <duration>2520</duration>
-        <type>16th</type>
-        <notehead parentheses="no">x</notehead>
-      </note>
-      <note>
-        <rest />
-        <duration>2520</duration>
-        <type>16th</type>
-      </note>
-      <note>
-        <pitch>
-          <step>C</step>
-          <alter>1</alter>
-          <octave>3</octave>
-        </pitch>
-        <unpitched>
-          <display-step>B</display-step>
-          <display-octave>4</display-octave>
-        </unpitched>
-        <duration>2520</duration>
-        <type>16th</type>
-        <notehead parentheses="no">x</notehead>
-      </note>
-      <note>
-        <rest />
-        <duration>2520</duration>
-        <type>16th</type>
-      </note>
-      <note>
-        <unpitched>
-          <display-step>A</display-step>
-          <display-octave>3</display-octave>
-        </unpitched>
-        <duration>2520</duration>
-        <type>16th</type>
-        <notehead parentheses="no">x</notehead>
-        <beam number="1">begin</beam>
-        <beam number="2">begin</beam>
-      </note>
-      <note>
-        <chord />
-        <unpitched>
-          <display-step>A</display-step>
-          <display-octave>3</display-octave>
-        </unpitched>
-        <duration>2520</duration>
-        <type>16th</type>
-        <notehead parentheses="no">x</notehead>
-      </note>
-      <note>
-        <unpitched>
-          <display-step>A</display-step>
-          <display-octave>3</display-octave>
-        </unpitched>
-        <duration>2520</duration>
-        <type>16th</type>
-        <notehead parentheses="no">x</notehead>
-        <beam number="1">end</beam>
-        <beam number="2">end</beam>
-      </note>
-      <note>
-        <chord />
-        <unpitched>
-          <display-step>A</display-step>
-          <display-octave>3</display-octave>
-        </unpitched>
-        <duration>2520</duration>
-        <type>16th</type>
-        <notehead parentheses="no">x</notehead>
-      </note>
-      <note>
-        <rest />
-        <duration>5040</duration>
-        <type>eighth</type>
-      </note>
-      <note>
-        <unpitched>
-          <display-step>A</display-step>
-          <display-octave>3</display-octave>
-        </unpitched>
-        <duration>2520</duration>
-        <type>16th</type>
-        <notehead parentheses="no">x</notehead>
-      </note>
-      <note>
-        <chord />
-        <unpitched>
-          <display-step>A</display-step>
-          <display-octave>3</display-octave>
-        </unpitched>
-        <duration>2520</duration>
-        <type>16th</type>
-        <notehead parentheses="no">x</notehead>
-      </note>
-      <note>
-        <rest />
-        <duration>2520</duration>
-        <type>16th</type>
-      </note>
-      <note>
-        <unpitched>
-          <display-step>A</display-step>
-          <display-octave>3</display-octave>
-        </unpitched>
-        <duration>2520</duration>
-        <type>16th</type>
-        <notehead parentheses="no">x</notehead>
-      </note>
-      <note>
-        <chord />
-        <unpitched>
-          <display-step>A</display-step>
-          <display-octave>3</display-octave>
-        </unpitched>
-        <duration>2520</duration>
-        <type>16th</type>
-        <notehead parentheses="no">x</notehead>
-      </note>
-      <note>
-        <rest />
-        <duration>2520</duration>
-        <type>16th</type>
+        <rest measure="yes" />
+        <duration>40320</duration>
       </note>
     </measure>
     <!--======================== Measure 110 =========================-->
     <measure implicit="no" number="110">
       <note>
-        <pitch>
-          <step>C</step>
-          <alter>1</alter>
-          <octave>3</octave>
-        </pitch>
-        <unpitched>
-          <display-step>B</display-step>
-          <display-octave>4</display-octave>
-        </unpitched>
-        <duration>2520</duration>
-        <type>16th</type>
-        <notehead parentheses="no">x</notehead>
-      </note>
-      <note>
-        <rest />
-        <duration>2520</duration>
-        <type>16th</type>
-      </note>
-      <note>
-        <pitch>
-          <step>C</step>
-          <alter>1</alter>
-          <octave>3</octave>
-        </pitch>
-        <unpitched>
-          <display-step>B</display-step>
-          <display-octave>4</display-octave>
-        </unpitched>
-        <duration>2520</duration>
-        <type>16th</type>
-        <notehead parentheses="no">x</notehead>
-      </note>
-      <note>
-        <rest />
-        <duration>2520</duration>
-        <type>16th</type>
-      </note>
-      <note>
-        <unpitched>
-          <display-step>A</display-step>
-          <display-octave>3</display-octave>
-        </unpitched>
-        <duration>2520</duration>
-        <type>16th</type>
-        <notehead parentheses="no">x</notehead>
-      </note>
-      <note>
-        <chord />
-        <unpitched>
-          <display-step>A</display-step>
-          <display-octave>3</display-octave>
-        </unpitched>
-        <duration>2520</duration>
-        <type>16th</type>
-        <notehead parentheses="no">x</notehead>
-      </note>
-      <note>
-        <rest />
-        <duration>2520</duration>
-        <type>16th</type>
-      </note>
-      <note>
-        <unpitched>
-          <display-step>F</display-step>
-          <display-octave>2</display-octave>
-        </unpitched>
-        <duration>2520</duration>
-        <type>16th</type>
-      </note>
-      <note>
-        <chord />
-        <unpitched>
-          <display-step>F</display-step>
-          <display-octave>2</display-octave>
-        </unpitched>
-        <duration>2520</duration>
-        <type>16th</type>
-      </note>
-      <note>
-        <rest />
-        <duration>2520</duration>
-        <type>16th</type>
-      </note>
-      <note>
-        <unpitched>
-          <display-step>A</display-step>
-          <display-octave>3</display-octave>
-        </unpitched>
-        <duration>2520</duration>
-        <type>16th</type>
-        <notehead parentheses="no">x</notehead>
-        <beam number="1">begin</beam>
-        <beam number="2">begin</beam>
-      </note>
-      <note>
-        <chord />
-        <unpitched>
-          <display-step>A</display-step>
-          <display-octave>3</display-octave>
-        </unpitched>
-        <duration>2520</duration>
-        <type>16th</type>
-        <notehead parentheses="no">x</notehead>
-      </note>
-      <note>
-        <pitch>
-          <step>C</step>
-          <alter>1</alter>
-          <octave>3</octave>
-        </pitch>
-        <unpitched>
-          <display-step>B</display-step>
-          <display-octave>4</display-octave>
-        </unpitched>
-        <duration>2520</duration>
-        <type>16th</type>
-        <notehead parentheses="no">x</notehead>
-        <beam number="1">continue</beam>
-        <beam number="2">continue</beam>
-      </note>
-      <note>
-        <pitch>
-          <step>C</step>
-          <alter>1</alter>
-          <octave>3</octave>
-        </pitch>
-        <unpitched>
-          <display-step>B</display-step>
-          <display-octave>4</display-octave>
-        </unpitched>
-        <duration>2520</duration>
-        <type>16th</type>
-        <notehead parentheses="no">x</notehead>
-        <beam number="1">end</beam>
-        <beam number="2">end</beam>
-      </note>
-      <note>
-        <rest />
-        <duration>2520</duration>
-        <type>16th</type>
-      </note>
-      <note>
-        <unpitched>
-          <display-step>A</display-step>
-          <display-octave>3</display-octave>
-        </unpitched>
-        <duration>2520</duration>
-        <type>16th</type>
-        <notehead parentheses="no">x</notehead>
-      </note>
-      <note>
-        <chord />
-        <unpitched>
-          <display-step>A</display-step>
-          <display-octave>3</display-octave>
-        </unpitched>
-        <duration>2520</duration>
-        <type>16th</type>
-        <notehead parentheses="no">x</notehead>
-      </note>
-      <note>
-        <rest />
-        <duration>2520</duration>
-        <type>16th</type>
-      </note>
-      <note>
-        <unpitched>
-          <display-step>A</display-step>
-          <display-octave>3</display-octave>
-        </unpitched>
-        <duration>2520</duration>
-        <type>16th</type>
-        <notehead parentheses="no">x</notehead>
-        <beam number="1">begin</beam>
-        <beam number="2">begin</beam>
-      </note>
-      <note>
-        <chord />
-        <unpitched>
-          <display-step>A</display-step>
-          <display-octave>3</display-octave>
-        </unpitched>
-        <duration>2520</duration>
-        <type>16th</type>
-        <notehead parentheses="no">x</notehead>
-      </note>
-      <note>
-        <pitch>
-          <step>E</step>
-          <alter>-1</alter>
-          <octave>3</octave>
-        </pitch>
-        <unpitched>
-          <display-step>B</display-step>
-          <display-octave>4</display-octave>
-        </unpitched>
-        <duration>2520</duration>
-        <type>16th</type>
-        <notehead parentheses="no">x</notehead>
-        <beam number="1">end</beam>
-        <beam number="2">end</beam>
+        <rest measure="yes" />
+        <duration>40320</duration>
       </note>
     </measure>
     <!--======================== Measure 111 =========================-->
@@ -2817,8 +2113,43 @@
     <!--======================== Measure 113 =========================-->
     <measure implicit="no" number="113">
       <note>
-        <rest measure="yes" />
-        <duration>40320</duration>
+        <rest />
+        <duration>35280</duration>
+        <type>half</type>
+        <dot />
+        <dot />
+      </note>
+      <note>
+        <pitch>
+          <step>C</step>
+          <alter>1</alter>
+          <octave>3</octave>
+        </pitch>
+        <unpitched>
+          <display-step>B</display-step>
+          <display-octave>4</display-octave>
+        </unpitched>
+        <duration>2520</duration>
+        <type>16th</type>
+        <notehead parentheses="no">x</notehead>
+        <beam number="1">begin</beam>
+        <beam number="2">begin</beam>
+      </note>
+      <note>
+        <pitch>
+          <step>E</step>
+          <alter>-1</alter>
+          <octave>3</octave>
+        </pitch>
+        <unpitched>
+          <display-step>B</display-step>
+          <display-octave>4</display-octave>
+        </unpitched>
+        <duration>2520</duration>
+        <type>16th</type>
+        <notehead parentheses="no">x</notehead>
+        <beam number="1">end</beam>
+        <beam number="2">end</beam>
       </note>
     </measure>
     <!--======================== Measure 114 =========================-->
@@ -2866,545 +2197,82 @@
     <!--======================== Measure 120 =========================-->
     <measure implicit="no" number="120">
       <note>
-        <rest />
-        <duration>5040</duration>
-        <type>eighth</type>
-      </note>
-      <note>
-        <pitch>
-          <step>C</step>
-          <alter>1</alter>
-          <octave>3</octave>
-        </pitch>
-        <unpitched>
-          <display-step>B</display-step>
-          <display-octave>4</display-octave>
-        </unpitched>
-        <duration>2520</duration>
-        <type>16th</type>
-        <notehead parentheses="no">x</notehead>
-      </note>
-      <note>
-        <rest />
-        <duration>2520</duration>
-        <type>16th</type>
-      </note>
-      <note>
-        <unpitched>
-          <display-step>F</display-step>
-          <display-octave>2</display-octave>
-        </unpitched>
-        <duration>2520</duration>
-        <type>16th</type>
-      </note>
-      <note>
-        <chord />
-        <unpitched>
-          <display-step>F</display-step>
-          <display-octave>2</display-octave>
-        </unpitched>
-        <duration>2520</duration>
-        <type>16th</type>
-      </note>
-      <note>
-        <rest />
-        <duration>2520</duration>
-        <type>16th</type>
-      </note>
-      <note>
-        <pitch>
-          <step>C</step>
-          <octave>2</octave>
-        </pitch>
-        <unpitched>
-          <display-step>B</display-step>
-          <display-octave>4</display-octave>
-        </unpitched>
-        <duration>2520</duration>
-        <type>16th</type>
-      </note>
-      <note>
-        <rest />
-        <duration>2520</duration>
-        <type>16th</type>
-      </note>
-      <note>
-        <pitch>
-          <step>C</step>
-          <octave>2</octave>
-        </pitch>
-        <unpitched>
-          <display-step>B</display-step>
-          <display-octave>4</display-octave>
-        </unpitched>
-        <duration>2520</duration>
-        <type>16th</type>
-      </note>
-      <note>
-        <rest />
-        <duration>2520</duration>
-        <type>16th</type>
-      </note>
-      <note>
-        <unpitched>
-          <display-step>A</display-step>
-          <display-octave>3</display-octave>
-        </unpitched>
-        <duration>2520</duration>
-        <type>16th</type>
-        <notehead parentheses="no">x</notehead>
-      </note>
-      <note>
-        <chord />
-        <unpitched>
-          <display-step>A</display-step>
-          <display-octave>3</display-octave>
-        </unpitched>
-        <duration>2520</duration>
-        <type>16th</type>
-        <notehead parentheses="no">x</notehead>
-      </note>
-      <note>
-        <rest />
-        <duration>2520</duration>
-        <type>16th</type>
-      </note>
-      <note>
-        <pitch>
-          <step>C</step>
-          <alter>1</alter>
-          <octave>3</octave>
-        </pitch>
-        <unpitched>
-          <display-step>B</display-step>
-          <display-octave>4</display-octave>
-        </unpitched>
-        <duration>2520</duration>
-        <type>16th</type>
-        <notehead parentheses="no">x</notehead>
-      </note>
-      <note>
-        <rest />
-        <duration>2520</duration>
-        <type>16th</type>
-      </note>
-      <note>
-        <pitch>
-          <step>C</step>
-          <alter>1</alter>
-          <octave>3</octave>
-        </pitch>
-        <unpitched>
-          <display-step>B</display-step>
-          <display-octave>4</display-octave>
-        </unpitched>
-        <duration>2520</duration>
-        <type>16th</type>
-        <notehead parentheses="no">x</notehead>
-      </note>
-      <note>
-        <rest />
-        <duration>2520</duration>
-        <type>16th</type>
+        <rest measure="yes" />
+        <duration>40320</duration>
       </note>
     </measure>
     <!--======================== Measure 121 =========================-->
     <measure implicit="no" number="121">
       <note>
-        <pitch>
-          <step>C</step>
-          <alter>1</alter>
-          <octave>3</octave>
-        </pitch>
-        <unpitched>
-          <display-step>B</display-step>
-          <display-octave>4</display-octave>
-        </unpitched>
-        <duration>2520</duration>
-        <type>16th</type>
-        <notehead parentheses="no">x</notehead>
-      </note>
-      <note>
-        <rest />
-        <duration>2520</duration>
-        <type>16th</type>
-      </note>
-      <note>
-        <pitch>
-          <step>C</step>
-          <octave>2</octave>
-        </pitch>
-        <unpitched>
-          <display-step>B</display-step>
-          <display-octave>4</display-octave>
-        </unpitched>
-        <duration>2520</duration>
-        <type>16th</type>
-      </note>
-      <note>
-        <rest />
-        <duration>2520</duration>
-        <type>16th</type>
-      </note>
-      <note>
-        <unpitched>
-          <display-step>F</display-step>
-          <display-octave>2</display-octave>
-        </unpitched>
-        <duration>2520</duration>
-        <type>16th</type>
-      </note>
-      <note>
-        <chord />
-        <unpitched>
-          <display-step>F</display-step>
-          <display-octave>2</display-octave>
-        </unpitched>
-        <duration>2520</duration>
-        <type>16th</type>
-      </note>
-      <note>
-        <rest />
-        <duration>2520</duration>
-        <type>16th</type>
-      </note>
-      <note>
-        <unpitched>
-          <display-step>F</display-step>
-          <display-octave>2</display-octave>
-        </unpitched>
-        <duration>2520</duration>
-        <type>16th</type>
-      </note>
-      <note>
-        <chord />
-        <unpitched>
-          <display-step>F</display-step>
-          <display-octave>2</display-octave>
-        </unpitched>
-        <duration>2520</duration>
-        <type>16th</type>
-      </note>
-      <note>
-        <rest />
-        <duration>2520</duration>
-        <type>16th</type>
-      </note>
-      <note>
-        <unpitched>
-          <display-step>A</display-step>
-          <display-octave>3</display-octave>
-        </unpitched>
-        <duration>2520</duration>
-        <type>16th</type>
-        <notehead parentheses="no">x</notehead>
-      </note>
-      <note>
-        <chord />
-        <unpitched>
-          <display-step>A</display-step>
-          <display-octave>3</display-octave>
-        </unpitched>
-        <duration>2520</duration>
-        <type>16th</type>
-        <notehead parentheses="no">x</notehead>
-      </note>
-      <note>
-        <rest />
-        <duration>2520</duration>
-        <type>16th</type>
-      </note>
-      <note>
-        <pitch>
-          <step>C</step>
-          <octave>2</octave>
-        </pitch>
-        <unpitched>
-          <display-step>B</display-step>
-          <display-octave>4</display-octave>
-        </unpitched>
-        <duration>2520</duration>
-        <type>16th</type>
-      </note>
-      <note>
-        <rest />
-        <duration>2520</duration>
-        <type>16th</type>
-      </note>
-      <note>
-        <pitch>
-          <step>C</step>
-          <octave>2</octave>
-        </pitch>
-        <unpitched>
-          <display-step>B</display-step>
-          <display-octave>4</display-octave>
-        </unpitched>
-        <duration>2520</duration>
-        <type>16th</type>
-      </note>
-      <note>
-        <rest />
-        <duration>2520</duration>
-        <type>16th</type>
-      </note>
-      <note>
-        <pitch>
-          <step>C</step>
-          <alter>1</alter>
-          <octave>3</octave>
-        </pitch>
-        <unpitched>
-          <display-step>B</display-step>
-          <display-octave>4</display-octave>
-        </unpitched>
-        <duration>2520</duration>
-        <type>16th</type>
-        <notehead parentheses="no">x</notehead>
-      </note>
-      <note>
-        <rest />
-        <duration>2520</duration>
-        <type>16th</type>
+        <rest measure="yes" />
+        <duration>40320</duration>
       </note>
     </measure>
     <!--======================== Measure 122 =========================-->
     <measure implicit="no" number="122">
       <note>
-        <pitch>
-          <step>C</step>
-          <alter>1</alter>
-          <octave>3</octave>
-        </pitch>
-        <unpitched>
-          <display-step>B</display-step>
-          <display-octave>4</display-octave>
-        </unpitched>
-        <duration>2520</duration>
-        <type>16th</type>
-        <notehead parentheses="no">x</notehead>
-      </note>
-      <note>
-        <rest />
-        <duration>7560</duration>
-        <type>eighth</type>
-        <dot />
-      </note>
-      <note>
-        <pitch>
-          <step>C</step>
-          <alter>1</alter>
-          <octave>3</octave>
-        </pitch>
-        <unpitched>
-          <display-step>B</display-step>
-          <display-octave>4</display-octave>
-        </unpitched>
-        <duration>2520</duration>
-        <type>16th</type>
-        <notehead parentheses="no">x</notehead>
-      </note>
-      <note>
-        <rest />
-        <duration>2520</duration>
-        <type>16th</type>
-      </note>
-      <note>
-        <unpitched>
-          <display-step>A</display-step>
-          <display-octave>3</display-octave>
-        </unpitched>
-        <duration>2520</duration>
-        <type>16th</type>
-        <notehead parentheses="no">x</notehead>
-      </note>
-      <note>
-        <chord />
-        <unpitched>
-          <display-step>A</display-step>
-          <display-octave>3</display-octave>
-        </unpitched>
-        <duration>2520</duration>
-        <type>16th</type>
-        <notehead parentheses="no">x</notehead>
-      </note>
-      <note>
-        <rest />
-        <duration>2520</duration>
-        <type>16th</type>
-      </note>
-      <note>
-        <unpitched>
-          <display-step>A</display-step>
-          <display-octave>3</display-octave>
-        </unpitched>
-        <duration>2520</duration>
-        <type>16th</type>
-        <notehead parentheses="no">x</notehead>
-      </note>
-      <note>
-        <chord />
-        <unpitched>
-          <display-step>A</display-step>
-          <display-octave>3</display-octave>
-        </unpitched>
-        <duration>2520</duration>
-        <type>16th</type>
-        <notehead parentheses="no">x</notehead>
-      </note>
-      <note>
-        <rest />
-        <duration>2520</duration>
-        <type>16th</type>
-      </note>
-      <note>
-        <unpitched>
-          <display-step>F</display-step>
-          <display-octave>2</display-octave>
-        </unpitched>
-        <duration>2520</duration>
-        <type>16th</type>
-      </note>
-      <note>
-        <chord />
-        <unpitched>
-          <display-step>F</display-step>
-          <display-octave>2</display-octave>
-        </unpitched>
-        <duration>2520</duration>
-        <type>16th</type>
-      </note>
-      <note>
-        <rest />
-        <duration>2520</duration>
-        <type>16th</type>
-      </note>
-      <note>
-        <pitch>
-          <step>C</step>
-          <octave>2</octave>
-        </pitch>
-        <unpitched>
-          <display-step>B</display-step>
-          <display-octave>4</display-octave>
-        </unpitched>
-        <duration>2520</duration>
-        <type>16th</type>
-      </note>
-      <note>
-        <rest />
-        <duration>2520</duration>
-        <type>16th</type>
-      </note>
-      <note>
-        <pitch>
-          <step>C</step>
-          <alter>1</alter>
-          <octave>3</octave>
-        </pitch>
-        <unpitched>
-          <display-step>B</display-step>
-          <display-octave>4</display-octave>
-        </unpitched>
-        <duration>2520</duration>
-        <type>16th</type>
-        <notehead parentheses="no">x</notehead>
-      </note>
-      <note>
-        <rest />
-        <duration>2520</duration>
-        <type>16th</type>
+        <rest measure="yes" />
+        <duration>40320</duration>
       </note>
     </measure>
     <!--======================== Measure 123 =========================-->
     <measure implicit="no" number="123">
       <note>
+        <rest />
+        <duration>7560</duration>
+        <type>eighth</type>
+        <dot />
+      </note>
+      <note>
+        <pitch>
+          <step>C</step>
+          <octave>2</octave>
+        </pitch>
         <unpitched>
-          <display-step>A</display-step>
+          <display-step>B</display-step>
+          <display-octave>4</display-octave>
+        </unpitched>
+        <duration>2520</duration>
+        <type>16th</type>
+      </note>
+      <note>
+        <pitch>
+          <step>D</step>
+          <octave>2</octave>
+        </pitch>
+        <unpitched>
+          <display-step>B</display-step>
+          <display-octave>4</display-octave>
+        </unpitched>
+        <duration>2520</duration>
+        <type>16th</type>
+      </note>
+      <note>
+        <rest />
+        <duration>5040</duration>
+        <type>eighth</type>
+      </note>
+      <note>
+        <unpitched>
+          <display-step>C</display-step>
           <display-octave>3</display-octave>
         </unpitched>
         <duration>2520</duration>
         <type>16th</type>
-        <notehead parentheses="no">x</notehead>
-        <beam number="1">begin</beam>
-        <beam number="2">begin</beam>
       </note>
       <note>
         <chord />
         <unpitched>
-          <display-step>A</display-step>
+          <display-step>C</display-step>
           <display-octave>3</display-octave>
         </unpitched>
         <duration>2520</duration>
         <type>16th</type>
-        <notehead parentheses="no">x</notehead>
-      </note>
-      <note>
-        <pitch>
-          <step>C</step>
-          <octave>2</octave>
-        </pitch>
-        <unpitched>
-          <display-step>B</display-step>
-          <display-octave>4</display-octave>
-        </unpitched>
-        <duration>2520</duration>
-        <type>16th</type>
-        <beam number="1">end</beam>
-        <beam number="2">end</beam>
       </note>
       <note>
         <rest />
-        <duration>2520</duration>
-        <type>16th</type>
-      </note>
-      <note>
-        <pitch>
-          <step>C</step>
-          <octave>2</octave>
-        </pitch>
-        <unpitched>
-          <display-step>B</display-step>
-          <display-octave>4</display-octave>
-        </unpitched>
-        <duration>2520</duration>
-        <type>16th</type>
-      </note>
-      <note>
-        <pitch>
-          <step>D</step>
-          <octave>2</octave>
-        </pitch>
-        <unpitched>
-          <display-step>B</display-step>
-          <display-octave>4</display-octave>
-        </unpitched>
-        <duration>2520</duration>
-        <type>16th</type>
-      </note>
-      <note>
-        <rest />
-        <duration>7560</duration>
-        <type>eighth</type>
-        <dot />
-      </note>
-      <note>
-        <pitch>
-          <step>D</step>
-          <octave>2</octave>
-        </pitch>
-        <unpitched>
-          <display-step>B</display-step>
-          <display-octave>4</display-octave>
-        </unpitched>
-        <duration>2520</duration>
-        <type>16th</type>
-      </note>
-      <note>
-        <rest />
-        <duration>7560</duration>
-        <type>eighth</type>
-        <dot />
+        <duration>10080</duration>
+        <type>quarter</type>
       </note>
       <note>
         <pitch>
@@ -3431,18 +2299,11 @@
     <measure implicit="no" number="124">
       <note>
         <rest />
-        <duration>20160</duration>
+        <duration>37800</duration>
         <type>half</type>
-      </note>
-      <note>
-        <rest />
-        <duration>10080</duration>
-        <type>quarter</type>
-      </note>
-      <note>
-        <rest />
-        <duration>2520</duration>
-        <type>16th</type>
+        <dot />
+        <dot />
+        <dot />
       </note>
       <note>
         <pitch>
@@ -3457,11 +2318,6 @@
         <duration>2520</duration>
         <type>16th</type>
         <notehead parentheses="no">x</notehead>
-      </note>
-      <note>
-        <rest />
-        <duration>5040</duration>
-        <type>eighth</type>
       </note>
     </measure>
     <!--======================== Measure 125 =========================-->
@@ -3573,10 +2429,18 @@
     <measure implicit="no" number="140">
       <note>
         <rest />
-        <duration>35280</duration>
+        <duration>20160</duration>
         <type>half</type>
-        <dot />
-        <dot />
+      </note>
+      <note>
+        <rest />
+        <duration>10080</duration>
+        <type>quarter</type>
+      </note>
+      <note>
+        <rest />
+        <duration>2520</duration>
+        <type>16th</type>
       </note>
       <note>
         <pitch>
@@ -3594,8 +2458,8 @@
       </note>
       <note>
         <rest />
-        <duration>2520</duration>
-        <type>16th</type>
+        <duration>5040</duration>
+        <type>eighth</type>
       </note>
     </measure>
     <!--======================== Measure 141 =========================-->
@@ -3744,7 +2608,7 @@
       </note>
       <note>
         <pitch>
-          <step>D</step>
+          <step>C</step>
           <octave>2</octave>
         </pitch>
         <unpitched>
@@ -3823,7 +2687,7 @@
       </note>
       <note>
         <pitch>
-          <step>C</step>
+          <step>D</step>
           <octave>2</octave>
         </pitch>
         <unpitched>
@@ -4015,15 +2879,13 @@
     <measure implicit="no" number="149">
       <note>
         <rest />
-        <duration>17640</duration>
+        <duration>10080</duration>
         <type>quarter</type>
-        <dot />
-        <dot />
       </note>
       <note>
         <pitch>
-          <step>C</step>
-          <alter>1</alter>
+          <step>E</step>
+          <alter>-1</alter>
           <octave>3</octave>
         </pitch>
         <unpitched>
@@ -4038,6 +2900,12 @@
         <rest />
         <duration>20160</duration>
         <type>half</type>
+      </note>
+      <note>
+        <rest />
+        <duration>7560</duration>
+        <type>eighth</type>
+        <dot />
       </note>
     </measure>
     <!--======================== Measure 150 =========================-->
@@ -4085,103 +2953,28 @@
     <!--======================== Measure 156 =========================-->
     <measure implicit="no" number="156">
       <note>
-        <rest />
-        <duration>20160</duration>
-        <type>half</type>
-      </note>
-      <note>
-        <pitch>
-          <step>C</step>
-          <octave>2</octave>
-        </pitch>
-        <unpitched>
-          <display-step>B</display-step>
-          <display-octave>4</display-octave>
-        </unpitched>
-        <duration>2520</duration>
-        <type>16th</type>
-        <beam number="1">begin</beam>
-        <beam number="2">begin</beam>
-      </note>
-      <note>
-        <pitch>
-          <step>C</step>
-          <alter>1</alter>
-          <octave>3</octave>
-        </pitch>
-        <unpitched>
-          <display-step>B</display-step>
-          <display-octave>4</display-octave>
-        </unpitched>
-        <duration>2520</duration>
-        <type>16th</type>
-        <notehead parentheses="no">x</notehead>
-        <beam number="1">end</beam>
-        <beam number="2">end</beam>
-      </note>
-      <note>
-        <rest />
-        <duration>15120</duration>
-        <type>quarter</type>
-        <dot />
+        <rest measure="yes" />
+        <duration>40320</duration>
       </note>
     </measure>
     <!--======================== Measure 157 =========================-->
     <measure implicit="no" number="157">
       <note>
-        <rest />
-        <duration>35280</duration>
-        <type>half</type>
-        <dot />
-        <dot />
-      </note>
-      <note>
-        <pitch>
-          <step>F</step>
-          <alter>1</alter>
-          <octave>2</octave>
-        </pitch>
-        <unpitched>
-          <display-step>B</display-step>
-          <display-octave>4</display-octave>
-        </unpitched>
-        <duration>2520</duration>
-        <type>16th</type>
-        <notehead parentheses="no">x</notehead>
-      </note>
-      <note>
-        <rest />
-        <duration>2520</duration>
-        <type>16th</type>
+        <rest measure="yes" />
+        <duration>40320</duration>
       </note>
     </measure>
     <!--======================== Measure 158 =========================-->
     <measure implicit="no" number="158">
       <note>
         <rest />
-        <duration>5040</duration>
-        <type>eighth</type>
-      </note>
-      <note>
-        <pitch>
-          <step>C</step>
-          <alter>1</alter>
-          <octave>3</octave>
-        </pitch>
-        <unpitched>
-          <display-step>B</display-step>
-          <display-octave>4</display-octave>
-        </unpitched>
-        <duration>2520</duration>
-        <type>16th</type>
-        <notehead parentheses="no">x</notehead>
+        <duration>20160</duration>
+        <type>half</type>
       </note>
       <note>
         <rest />
-        <duration>17640</duration>
-        <type>quarter</type>
-        <dot />
-        <dot />
+        <duration>5040</duration>
+        <type>eighth</type>
       </note>
       <note>
         <unpitched>
@@ -4259,13 +3052,18 @@
       </note>
       <note>
         <rest />
+        <duration>20160</duration>
+        <type>half</type>
+      </note>
+      <note>
+        <rest />
         <duration>2520</duration>
         <type>16th</type>
       </note>
       <note>
         <pitch>
-          <step>E</step>
-          <alter>-1</alter>
+          <step>C</step>
+          <alter>1</alter>
           <octave>3</octave>
         </pitch>
         <unpitched>
@@ -4278,78 +3076,225 @@
       </note>
       <note>
         <rest />
-        <duration>20160</duration>
-        <type>half</type>
+        <duration>2520</duration>
+        <type>16th</type>
+      </note>
+      <note>
+        <pitch>
+          <step>C</step>
+          <alter>1</alter>
+          <octave>3</octave>
+        </pitch>
+        <unpitched>
+          <display-step>B</display-step>
+          <display-octave>4</display-octave>
+        </unpitched>
+        <duration>2520</duration>
+        <type>16th</type>
+        <notehead parentheses="no">x</notehead>
       </note>
       <note>
         <rest />
-        <duration>10080</duration>
-        <type>quarter</type>
+        <duration>5040</duration>
+        <type>eighth</type>
+      </note>
+      <note>
+        <pitch>
+          <step>C</step>
+          <alter>1</alter>
+          <octave>3</octave>
+        </pitch>
+        <unpitched>
+          <display-step>B</display-step>
+          <display-octave>4</display-octave>
+        </unpitched>
+        <duration>2520</duration>
+        <type>16th</type>
+        <notehead parentheses="no">x</notehead>
+      </note>
+    </measure>
+    <!--======================== Measure 160 =========================-->
+    <measure implicit="no" number="160">
+      <note>
+        <pitch>
+          <step>C</step>
+          <alter>1</alter>
+          <octave>3</octave>
+        </pitch>
+        <unpitched>
+          <display-step>B</display-step>
+          <display-octave>4</display-octave>
+        </unpitched>
+        <duration>2520</duration>
+        <type>16th</type>
+        <notehead parentheses="no">x</notehead>
+        <beam number="1">begin</beam>
+        <beam number="2">begin</beam>
+      </note>
+      <note>
+        <pitch>
+          <step>C</step>
+          <alter>1</alter>
+          <octave>3</octave>
+        </pitch>
+        <unpitched>
+          <display-step>B</display-step>
+          <display-octave>4</display-octave>
+        </unpitched>
+        <duration>2520</duration>
+        <type>16th</type>
+        <notehead parentheses="no">x</notehead>
+        <beam number="1">end</beam>
+        <beam number="2">end</beam>
+      </note>
+      <note>
+        <rest />
+        <duration>20160</duration>
+        <type>half</type>
       </note>
       <note>
         <rest />
         <duration>2520</duration>
         <type>16th</type>
       </note>
-    </measure>
-    <!--======================== Measure 160 =========================-->
-    <measure implicit="no" number="160">
       <note>
-        <rest measure="yes" />
-        <duration>40320</duration>
+        <pitch>
+          <step>F</step>
+          <alter>1</alter>
+          <octave>2</octave>
+        </pitch>
+        <unpitched>
+          <display-step>B</display-step>
+          <display-octave>4</display-octave>
+        </unpitched>
+        <duration>2520</duration>
+        <type>16th</type>
+        <notehead parentheses="no">x</notehead>
+      </note>
+      <note>
+        <pitch>
+          <step>B</step>
+          <alter>-1</alter>
+          <octave>2</octave>
+        </pitch>
+        <unpitched>
+          <display-step>B</display-step>
+          <display-octave>4</display-octave>
+        </unpitched>
+        <duration>2520</duration>
+        <type>16th</type>
+        <notehead parentheses="no">circle-x</notehead>
+      </note>
+      <note>
+        <rest />
+        <duration>7560</duration>
+        <type>eighth</type>
+        <dot />
       </note>
     </measure>
     <!--======================== Measure 161 =========================-->
     <measure implicit="no" number="161">
       <note>
-        <rest measure="yes" />
-        <duration>40320</duration>
+        <rest />
+        <duration>20160</duration>
+        <type>half</type>
+      </note>
+      <note>
+        <rest />
+        <duration>5040</duration>
+        <type>eighth</type>
+      </note>
+      <note>
+        <pitch>
+          <step>C</step>
+          <alter>1</alter>
+          <octave>3</octave>
+        </pitch>
+        <unpitched>
+          <display-step>B</display-step>
+          <display-octave>4</display-octave>
+        </unpitched>
+        <duration>2520</duration>
+        <type>16th</type>
+        <notehead parentheses="no">x</notehead>
+        <beam number="1">begin</beam>
+        <beam number="2">begin</beam>
+      </note>
+      <note>
+        <pitch>
+          <step>C</step>
+          <alter>1</alter>
+          <octave>3</octave>
+        </pitch>
+        <unpitched>
+          <display-step>B</display-step>
+          <display-octave>4</display-octave>
+        </unpitched>
+        <duration>2520</duration>
+        <type>16th</type>
+        <notehead parentheses="no">x</notehead>
+        <beam number="1">end</beam>
+        <beam number="2">end</beam>
+      </note>
+      <note>
+        <pitch>
+          <step>C</step>
+          <alter>1</alter>
+          <octave>3</octave>
+        </pitch>
+        <unpitched>
+          <display-step>B</display-step>
+          <display-octave>4</display-octave>
+        </unpitched>
+        <duration>2520</duration>
+        <type>16th</type>
+        <notehead parentheses="no">x</notehead>
+        <beam number="1">begin</beam>
+        <beam number="2">begin</beam>
+      </note>
+      <note>
+        <pitch>
+          <step>C</step>
+          <alter>1</alter>
+          <octave>3</octave>
+        </pitch>
+        <unpitched>
+          <display-step>B</display-step>
+          <display-octave>4</display-octave>
+        </unpitched>
+        <duration>2520</duration>
+        <type>16th</type>
+        <notehead parentheses="no">x</notehead>
+        <beam number="1">end</beam>
+        <beam number="2">end</beam>
+      </note>
+      <note>
+        <rest />
+        <duration>5040</duration>
+        <type>eighth</type>
       </note>
     </measure>
     <!--======================== Measure 162 =========================-->
     <measure implicit="no" number="162">
       <note>
-        <rest measure="yes" />
-        <duration>40320</duration>
+        <pitch>
+          <step>B</step>
+          <alter>-1</alter>
+          <octave>2</octave>
+        </pitch>
+        <unpitched>
+          <display-step>B</display-step>
+          <display-octave>4</display-octave>
+        </unpitched>
+        <duration>2520</duration>
+        <type>16th</type>
+        <notehead parentheses="no">circle-x</notehead>
       </note>
-    </measure>
-    <!--======================== Measure 163 =========================-->
-    <measure implicit="no" number="163">
       <note>
-        <rest measure="yes" />
-        <duration>40320</duration>
+        <rest />
+        <duration>20160</duration>
+        <type>half</type>
       </note>
-    </measure>
-    <!--======================== Measure 164 =========================-->
-    <measure implicit="no" number="164">
-      <note>
-        <rest measure="yes" />
-        <duration>40320</duration>
-      </note>
-    </measure>
-    <!--======================== Measure 165 =========================-->
-    <measure implicit="no" number="165">
-      <note>
-        <rest measure="yes" />
-        <duration>40320</duration>
-      </note>
-    </measure>
-    <!--======================== Measure 166 =========================-->
-    <measure implicit="no" number="166">
-      <note>
-        <rest measure="yes" />
-        <duration>40320</duration>
-      </note>
-    </measure>
-    <!--======================== Measure 167 =========================-->
-    <measure implicit="no" number="167">
-      <note>
-        <rest measure="yes" />
-        <duration>40320</duration>
-      </note>
-    </measure>
-    <!--======================== Measure 168 =========================-->
-    <measure implicit="no" number="168">
       <note>
         <rest />
         <duration>10080</duration>
@@ -4375,6 +3320,515 @@
         <notehead parentheses="no">x</notehead>
         <beam number="1">begin</beam>
         <beam number="2">begin</beam>
+      </note>
+      <note>
+        <pitch>
+          <step>C</step>
+          <alter>1</alter>
+          <octave>3</octave>
+        </pitch>
+        <unpitched>
+          <display-step>B</display-step>
+          <display-octave>4</display-octave>
+        </unpitched>
+        <duration>2520</duration>
+        <type>16th</type>
+        <notehead parentheses="no">x</notehead>
+        <beam number="1">end</beam>
+        <beam number="2">end</beam>
+      </note>
+    </measure>
+    <!--======================== Measure 163 =========================-->
+    <measure implicit="no" number="163">
+      <note>
+        <rest />
+        <duration>5040</duration>
+        <type>eighth</type>
+      </note>
+      <note>
+        <pitch>
+          <step>C</step>
+          <alter>1</alter>
+          <octave>3</octave>
+        </pitch>
+        <unpitched>
+          <display-step>B</display-step>
+          <display-octave>4</display-octave>
+        </unpitched>
+        <duration>2520</duration>
+        <type>16th</type>
+        <notehead parentheses="no">x</notehead>
+        <beam number="1">begin</beam>
+        <beam number="2">begin</beam>
+      </note>
+      <note>
+        <pitch>
+          <step>C</step>
+          <alter>1</alter>
+          <octave>3</octave>
+        </pitch>
+        <unpitched>
+          <display-step>B</display-step>
+          <display-octave>4</display-octave>
+        </unpitched>
+        <duration>2520</duration>
+        <type>16th</type>
+        <notehead parentheses="no">x</notehead>
+        <beam number="1">end</beam>
+        <beam number="2">end</beam>
+      </note>
+      <note>
+        <pitch>
+          <step>C</step>
+          <octave>2</octave>
+        </pitch>
+        <unpitched>
+          <display-step>B</display-step>
+          <display-octave>4</display-octave>
+        </unpitched>
+        <duration>2520</duration>
+        <type>16th</type>
+      </note>
+      <note>
+        <rest />
+        <duration>2520</duration>
+        <type>16th</type>
+      </note>
+      <note>
+        <pitch>
+          <step>C</step>
+          <alter>1</alter>
+          <octave>3</octave>
+        </pitch>
+        <unpitched>
+          <display-step>B</display-step>
+          <display-octave>4</display-octave>
+        </unpitched>
+        <duration>2520</duration>
+        <type>16th</type>
+        <notehead parentheses="no">x</notehead>
+      </note>
+      <note>
+        <rest />
+        <duration>2520</duration>
+        <type>16th</type>
+      </note>
+      <note>
+        <pitch>
+          <step>C</step>
+          <alter>1</alter>
+          <octave>3</octave>
+        </pitch>
+        <unpitched>
+          <display-step>B</display-step>
+          <display-octave>4</display-octave>
+        </unpitched>
+        <duration>2520</duration>
+        <type>16th</type>
+        <notehead parentheses="no">x</notehead>
+      </note>
+      <note>
+        <rest />
+        <duration>15120</duration>
+        <type>quarter</type>
+        <dot />
+      </note>
+      <note>
+        <pitch>
+          <step>C</step>
+          <alter>1</alter>
+          <octave>3</octave>
+        </pitch>
+        <unpitched>
+          <display-step>B</display-step>
+          <display-octave>4</display-octave>
+        </unpitched>
+        <duration>2520</duration>
+        <type>16th</type>
+        <notehead parentheses="no">x</notehead>
+      </note>
+    </measure>
+    <!--======================== Measure 164 =========================-->
+    <measure implicit="no" number="164">
+      <note>
+        <pitch>
+          <step>C</step>
+          <alter>1</alter>
+          <octave>3</octave>
+        </pitch>
+        <unpitched>
+          <display-step>B</display-step>
+          <display-octave>4</display-octave>
+        </unpitched>
+        <duration>2520</duration>
+        <type>16th</type>
+        <notehead parentheses="no">x</notehead>
+        <beam number="1">begin</beam>
+        <beam number="2">begin</beam>
+      </note>
+      <note>
+        <pitch>
+          <step>C</step>
+          <alter>1</alter>
+          <octave>3</octave>
+        </pitch>
+        <unpitched>
+          <display-step>B</display-step>
+          <display-octave>4</display-octave>
+        </unpitched>
+        <duration>2520</duration>
+        <type>16th</type>
+        <notehead parentheses="no">x</notehead>
+        <beam number="1">end</beam>
+        <beam number="2">end</beam>
+      </note>
+      <note>
+        <rest />
+        <duration>2520</duration>
+        <type>16th</type>
+      </note>
+      <note>
+        <pitch>
+          <step>C</step>
+          <alter>1</alter>
+          <octave>3</octave>
+        </pitch>
+        <unpitched>
+          <display-step>B</display-step>
+          <display-octave>4</display-octave>
+        </unpitched>
+        <duration>2520</duration>
+        <type>16th</type>
+        <notehead parentheses="no">x</notehead>
+      </note>
+      <note>
+        <pitch>
+          <step>C</step>
+          <alter>1</alter>
+          <octave>3</octave>
+        </pitch>
+        <unpitched>
+          <display-step>B</display-step>
+          <display-octave>4</display-octave>
+        </unpitched>
+        <duration>2520</duration>
+        <type>16th</type>
+        <notehead parentheses="no">x</notehead>
+        <beam number="1">begin</beam>
+        <beam number="2">begin</beam>
+      </note>
+      <note>
+        <pitch>
+          <step>C</step>
+          <alter>1</alter>
+          <octave>3</octave>
+        </pitch>
+        <unpitched>
+          <display-step>B</display-step>
+          <display-octave>4</display-octave>
+        </unpitched>
+        <duration>2520</duration>
+        <type>16th</type>
+        <notehead parentheses="no">x</notehead>
+        <beam number="1">end</beam>
+        <beam number="2">end</beam>
+      </note>
+      <note>
+        <rest />
+        <duration>15120</duration>
+        <type>quarter</type>
+        <dot />
+      </note>
+      <note>
+        <pitch>
+          <step>C</step>
+          <alter>1</alter>
+          <octave>3</octave>
+        </pitch>
+        <unpitched>
+          <display-step>B</display-step>
+          <display-octave>4</display-octave>
+        </unpitched>
+        <duration>2520</duration>
+        <type>16th</type>
+        <notehead parentheses="no">x</notehead>
+      </note>
+      <note>
+        <rest />
+        <duration>7560</duration>
+        <type>eighth</type>
+        <dot />
+      </note>
+    </measure>
+    <!--======================== Measure 165 =========================-->
+    <measure implicit="no" number="165">
+      <note>
+        <rest />
+        <duration>2520</duration>
+        <type>16th</type>
+      </note>
+      <note>
+        <pitch>
+          <step>B</step>
+          <alter>-1</alter>
+          <octave>2</octave>
+        </pitch>
+        <unpitched>
+          <display-step>B</display-step>
+          <display-octave>4</display-octave>
+        </unpitched>
+        <duration>2520</duration>
+        <type>16th</type>
+        <notehead parentheses="no">circle-x</notehead>
+      </note>
+      <note>
+        <rest />
+        <duration>20160</duration>
+        <type>half</type>
+      </note>
+      <note>
+        <rest />
+        <duration>7560</duration>
+        <type>eighth</type>
+        <dot />
+      </note>
+      <note>
+        <pitch>
+          <step>C</step>
+          <alter>1</alter>
+          <octave>3</octave>
+        </pitch>
+        <unpitched>
+          <display-step>B</display-step>
+          <display-octave>4</display-octave>
+        </unpitched>
+        <duration>2520</duration>
+        <type>16th</type>
+        <notehead parentheses="no">x</notehead>
+      </note>
+      <note>
+        <rest />
+        <duration>2520</duration>
+        <type>16th</type>
+      </note>
+      <note>
+        <pitch>
+          <step>C</step>
+          <alter>1</alter>
+          <octave>3</octave>
+        </pitch>
+        <unpitched>
+          <display-step>B</display-step>
+          <display-octave>4</display-octave>
+        </unpitched>
+        <duration>2520</duration>
+        <type>16th</type>
+        <notehead parentheses="no">x</notehead>
+      </note>
+    </measure>
+    <!--======================== Measure 166 =========================-->
+    <measure implicit="no" number="166">
+      <note>
+        <unpitched>
+          <display-step>A</display-step>
+          <display-octave>3</display-octave>
+        </unpitched>
+        <duration>2520</duration>
+        <type>16th</type>
+        <notehead parentheses="no">x</notehead>
+      </note>
+      <note>
+        <chord />
+        <unpitched>
+          <display-step>A</display-step>
+          <display-octave>3</display-octave>
+        </unpitched>
+        <duration>2520</duration>
+        <type>16th</type>
+        <notehead parentheses="no">x</notehead>
+      </note>
+      <note>
+        <rest />
+        <duration>2520</duration>
+        <type>16th</type>
+      </note>
+      <note>
+        <pitch>
+          <step>C</step>
+          <alter>1</alter>
+          <octave>3</octave>
+        </pitch>
+        <unpitched>
+          <display-step>B</display-step>
+          <display-octave>4</display-octave>
+        </unpitched>
+        <duration>2520</duration>
+        <type>16th</type>
+        <notehead parentheses="no">x</notehead>
+      </note>
+      <note>
+        <rest />
+        <duration>2520</duration>
+        <type>16th</type>
+      </note>
+      <note>
+        <pitch>
+          <step>B</step>
+          <alter>-1</alter>
+          <octave>2</octave>
+        </pitch>
+        <unpitched>
+          <display-step>B</display-step>
+          <display-octave>4</display-octave>
+        </unpitched>
+        <duration>2520</duration>
+        <type>16th</type>
+        <notehead parentheses="no">circle-x</notehead>
+      </note>
+      <note>
+        <rest />
+        <duration>20160</duration>
+        <type>half</type>
+      </note>
+      <note>
+        <rest />
+        <duration>7560</duration>
+        <type>eighth</type>
+        <dot />
+      </note>
+    </measure>
+    <!--======================== Measure 167 =========================-->
+    <measure implicit="no" number="167">
+      <note>
+        <rest />
+        <duration>7560</duration>
+        <type>eighth</type>
+        <dot />
+      </note>
+      <note>
+        <pitch>
+          <step>C</step>
+          <alter>1</alter>
+          <octave>3</octave>
+        </pitch>
+        <unpitched>
+          <display-step>B</display-step>
+          <display-octave>4</display-octave>
+        </unpitched>
+        <duration>2520</duration>
+        <type>16th</type>
+        <notehead parentheses="no">x</notehead>
+      </note>
+      <note>
+        <pitch>
+          <step>C</step>
+          <alter>1</alter>
+          <octave>3</octave>
+        </pitch>
+        <unpitched>
+          <display-step>B</display-step>
+          <display-octave>4</display-octave>
+        </unpitched>
+        <duration>2520</duration>
+        <type>16th</type>
+        <notehead parentheses="no">x</notehead>
+      </note>
+      <note>
+        <rest />
+        <duration>5040</duration>
+        <type>eighth</type>
+      </note>
+      <note>
+        <pitch>
+          <step>C</step>
+          <alter>1</alter>
+          <octave>3</octave>
+        </pitch>
+        <unpitched>
+          <display-step>B</display-step>
+          <display-octave>4</display-octave>
+        </unpitched>
+        <duration>2520</duration>
+        <type>16th</type>
+        <notehead parentheses="no">x</notehead>
+      </note>
+      <note>
+        <pitch>
+          <step>C</step>
+          <alter>1</alter>
+          <octave>3</octave>
+        </pitch>
+        <unpitched>
+          <display-step>B</display-step>
+          <display-octave>4</display-octave>
+        </unpitched>
+        <duration>2520</duration>
+        <type>16th</type>
+        <notehead parentheses="no">x</notehead>
+        <beam number="1">begin</beam>
+        <beam number="2">begin</beam>
+      </note>
+      <note>
+        <pitch>
+          <step>C</step>
+          <alter>1</alter>
+          <octave>3</octave>
+        </pitch>
+        <unpitched>
+          <display-step>B</display-step>
+          <display-octave>4</display-octave>
+        </unpitched>
+        <duration>2520</duration>
+        <type>16th</type>
+        <notehead parentheses="no">x</notehead>
+        <beam number="1">end</beam>
+        <beam number="2">end</beam>
+      </note>
+      <note>
+        <rest />
+        <duration>15120</duration>
+        <type>quarter</type>
+        <dot />
+      </note>
+    </measure>
+    <!--======================== Measure 168 =========================-->
+    <measure implicit="no" number="168">
+      <note>
+        <rest />
+        <duration>10080</duration>
+        <type>quarter</type>
+      </note>
+      <note>
+        <pitch>
+          <step>C</step>
+          <alter>1</alter>
+          <octave>3</octave>
+        </pitch>
+        <unpitched>
+          <display-step>B</display-step>
+          <display-octave>4</display-octave>
+        </unpitched>
+        <duration>2520</duration>
+        <type>16th</type>
+        <notehead parentheses="no">x</notehead>
+        <beam number="1">begin</beam>
+        <beam number="2">begin</beam>
+      </note>
+      <note>
+        <pitch>
+          <step>C</step>
+          <alter>1</alter>
+          <octave>3</octave>
+        </pitch>
+        <unpitched>
+          <display-step>B</display-step>
+          <display-octave>4</display-octave>
+        </unpitched>
+        <duration>2520</duration>
+        <type>16th</type>
+        <notehead parentheses="no">x</notehead>
+        <beam number="1">continue</beam>
+        <beam number="2">continue</beam>
       </note>
       <note>
         <pitch>
@@ -4447,13 +3901,28 @@
       </note>
       <note>
         <rest />
-        <duration>10080</duration>
-        <type>quarter</type>
+        <duration>2520</duration>
+        <type>16th</type>
+      </note>
+      <note>
+        <pitch>
+          <step>C</step>
+          <alter>1</alter>
+          <octave>3</octave>
+        </pitch>
+        <unpitched>
+          <display-step>B</display-step>
+          <display-octave>4</display-octave>
+        </unpitched>
+        <duration>2520</duration>
+        <type>16th</type>
+        <notehead parentheses="no">x</notehead>
       </note>
       <note>
         <rest />
-        <duration>2520</duration>
-        <type>16th</type>
+        <duration>7560</duration>
+        <type>eighth</type>
+        <dot />
       </note>
     </measure>
     <!--======================== Measure 169 =========================-->
@@ -4582,24 +4051,8 @@
       </note>
       <note>
         <rest />
-        <duration>2520</duration>
-        <type>16th</type>
-      </note>
-      <note>
-        <pitch>
-          <step>F</step>
-          <alter>1</alter>
-          <octave>2</octave>
-        </pitch>
-        <unpitched>
-          <display-step>B</display-step>
-          <display-octave>4</display-octave>
-        </unpitched>
-        <duration>2520</duration>
-        <type>16th</type>
-        <notehead parentheses="no">x</notehead>
-        <beam number="1">begin</beam>
-        <beam number="2">begin</beam>
+        <duration>5040</duration>
+        <type>eighth</type>
       </note>
       <note>
         <pitch>
@@ -4614,8 +4067,6 @@
         <duration>2520</duration>
         <type>16th</type>
         <notehead parentheses="no">circle-x</notehead>
-        <beam number="1">end</beam>
-        <beam number="2">end</beam>
       </note>
       <note>
         <rest />
@@ -4632,8 +4083,8 @@
     <measure implicit="no" number="171">
       <note>
         <rest />
-        <duration>10080</duration>
-        <type>quarter</type>
+        <duration>5040</duration>
+        <type>eighth</type>
       </note>
       <note>
         <pitch>
@@ -4649,8 +4100,8 @@
       </note>
       <note>
         <rest />
-        <duration>5040</duration>
-        <type>eighth</type>
+        <duration>2520</duration>
+        <type>16th</type>
       </note>
       <note>
         <pitch>
@@ -4663,6 +4114,12 @@
         </unpitched>
         <duration>2520</duration>
         <type>16th</type>
+      </note>
+      <note>
+        <rest />
+        <duration>7560</duration>
+        <type>eighth</type>
+        <dot />
       </note>
       <note>
         <pitch>
@@ -4702,34 +4159,6 @@
         <type>eighth</type>
       </note>
       <note>
-        <unpitched>
-          <display-step>A</display-step>
-          <display-octave>3</display-octave>
-        </unpitched>
-        <duration>2520</duration>
-        <type>16th</type>
-        <notehead parentheses="no">x</notehead>
-      </note>
-      <note>
-        <chord />
-        <unpitched>
-          <display-step>A</display-step>
-          <display-octave>3</display-octave>
-        </unpitched>
-        <duration>2520</duration>
-        <type>16th</type>
-        <notehead parentheses="no">x</notehead>
-      </note>
-      <note>
-        <rest />
-        <duration>7560</duration>
-        <type>eighth</type>
-        <dot />
-      </note>
-    </measure>
-    <!--======================== Measure 172 =========================-->
-    <measure implicit="no" number="172">
-      <note>
         <pitch>
           <step>C</step>
           <alter>1</alter>
@@ -4744,6 +4173,51 @@
         <notehead parentheses="no">x</notehead>
         <beam number="1">begin</beam>
         <beam number="2">begin</beam>
+      </note>
+      <note>
+        <pitch>
+          <step>C</step>
+          <alter>1</alter>
+          <octave>3</octave>
+        </pitch>
+        <unpitched>
+          <display-step>B</display-step>
+          <display-octave>4</display-octave>
+        </unpitched>
+        <duration>2520</duration>
+        <type>16th</type>
+        <notehead parentheses="no">x</notehead>
+        <beam number="1">end</beam>
+        <beam number="2">end</beam>
+      </note>
+      <note>
+        <rest />
+        <duration>5040</duration>
+        <type>eighth</type>
+      </note>
+    </measure>
+    <!--======================== Measure 172 =========================-->
+    <measure implicit="no" number="172">
+      <note>
+        <unpitched>
+          <display-step>A</display-step>
+          <display-octave>3</display-octave>
+        </unpitched>
+        <duration>2520</duration>
+        <type>16th</type>
+        <notehead parentheses="no">x</notehead>
+        <beam number="1">begin</beam>
+        <beam number="2">begin</beam>
+      </note>
+      <note>
+        <chord />
+        <unpitched>
+          <display-step>A</display-step>
+          <display-octave>3</display-octave>
+        </unpitched>
+        <duration>2520</duration>
+        <type>16th</type>
+        <notehead parentheses="no">x</notehead>
       </note>
       <note>
         <pitch>
@@ -4904,8 +4378,180 @@
         <duration>2520</duration>
         <type>16th</type>
         <notehead parentheses="no">x</notehead>
+      </note>
+      <note>
+        <rest />
+        <duration>10080</duration>
+        <type>quarter</type>
+      </note>
+      <note>
+        <pitch>
+          <step>B</step>
+          <alter>-1</alter>
+          <octave>2</octave>
+        </pitch>
+        <unpitched>
+          <display-step>B</display-step>
+          <display-octave>4</display-octave>
+        </unpitched>
+        <duration>2520</duration>
+        <type>16th</type>
+        <notehead parentheses="no">circle-x</notehead>
+      </note>
+      <note>
+        <rest />
+        <duration>10080</duration>
+        <type>quarter</type>
+      </note>
+      <note>
+        <rest />
+        <duration>2520</duration>
+        <type>16th</type>
+      </note>
+    </measure>
+    <!--======================== Measure 174 =========================-->
+    <measure implicit="no" number="174">
+      <note>
+        <rest />
+        <duration>17640</duration>
+        <type>quarter</type>
+        <dot />
+        <dot />
+      </note>
+      <note>
+        <pitch>
+          <step>C</step>
+          <alter>1</alter>
+          <octave>3</octave>
+        </pitch>
+        <unpitched>
+          <display-step>B</display-step>
+          <display-octave>4</display-octave>
+        </unpitched>
+        <duration>2520</duration>
+        <type>16th</type>
+        <notehead parentheses="no">x</notehead>
+      </note>
+      <note>
+        <rest />
+        <duration>2520</duration>
+        <type>16th</type>
+      </note>
+      <note>
+        <pitch>
+          <step>C</step>
+          <octave>2</octave>
+        </pitch>
+        <unpitched>
+          <display-step>B</display-step>
+          <display-octave>4</display-octave>
+        </unpitched>
+        <duration>2520</duration>
+        <type>16th</type>
+      </note>
+      <note>
+        <rest />
+        <duration>2520</duration>
+        <type>16th</type>
+      </note>
+      <note>
+        <pitch>
+          <step>C</step>
+          <alter>1</alter>
+          <octave>3</octave>
+        </pitch>
+        <unpitched>
+          <display-step>B</display-step>
+          <display-octave>4</display-octave>
+        </unpitched>
+        <duration>2520</duration>
+        <type>16th</type>
+        <notehead parentheses="no">x</notehead>
+      </note>
+      <note>
+        <rest />
+        <duration>2520</duration>
+        <type>16th</type>
+      </note>
+      <note>
+        <pitch>
+          <step>F</step>
+          <alter>1</alter>
+          <octave>2</octave>
+        </pitch>
+        <unpitched>
+          <display-step>B</display-step>
+          <display-octave>4</display-octave>
+        </unpitched>
+        <duration>2520</duration>
+        <type>16th</type>
+        <notehead parentheses="no">x</notehead>
         <beam number="1">begin</beam>
         <beam number="2">begin</beam>
+      </note>
+      <note>
+        <pitch>
+          <step>F</step>
+          <alter>1</alter>
+          <octave>2</octave>
+        </pitch>
+        <unpitched>
+          <display-step>B</display-step>
+          <display-octave>4</display-octave>
+        </unpitched>
+        <duration>2520</duration>
+        <type>16th</type>
+        <notehead parentheses="no">x</notehead>
+        <beam number="1">continue</beam>
+        <beam number="2">continue</beam>
+      </note>
+      <note>
+        <pitch>
+          <step>B</step>
+          <alter>-1</alter>
+          <octave>2</octave>
+        </pitch>
+        <unpitched>
+          <display-step>B</display-step>
+          <display-octave>4</display-octave>
+        </unpitched>
+        <duration>2520</duration>
+        <type>16th</type>
+        <notehead parentheses="no">circle-x</notehead>
+        <beam number="1">end</beam>
+        <beam number="2">end</beam>
+      </note>
+    </measure>
+    <!--======================== Measure 175 =========================-->
+    <measure implicit="no" number="175">
+      <note>
+        <rest />
+        <duration>20160</duration>
+        <type>half</type>
+      </note>
+      <note>
+        <rest />
+        <duration>5040</duration>
+        <type>eighth</type>
+      </note>
+      <note>
+        <pitch>
+          <step>C</step>
+          <alter>1</alter>
+          <octave>3</octave>
+        </pitch>
+        <unpitched>
+          <display-step>B</display-step>
+          <display-octave>4</display-octave>
+        </unpitched>
+        <duration>2520</duration>
+        <type>16th</type>
+        <notehead parentheses="no">x</notehead>
+      </note>
+      <note>
+        <rest />
+        <duration>2520</duration>
+        <type>16th</type>
       </note>
       <note>
         <pitch>
@@ -4920,32 +4566,12 @@
         <duration>2520</duration>
         <type>16th</type>
         <notehead parentheses="no">x</notehead>
-        <beam number="1">end</beam>
-        <beam number="2">end</beam>
       </note>
       <note>
         <rest />
-        <duration>20160</duration>
-        <type>half</type>
-      </note>
-      <note>
-        <rest />
-        <duration>2520</duration>
-        <type>16th</type>
-      </note>
-    </measure>
-    <!--======================== Measure 174 =========================-->
-    <measure implicit="no" number="174">
-      <note>
-        <rest measure="yes" />
-        <duration>40320</duration>
-      </note>
-    </measure>
-    <!--======================== Measure 175 =========================-->
-    <measure implicit="no" number="175">
-      <note>
-        <rest measure="yes" />
-        <duration>40320</duration>
+        <duration>7560</duration>
+        <type>eighth</type>
+        <dot />
       </note>
     </measure>
     <!--======================== Measure 176 =========================-->
@@ -4993,74 +4619,46 @@
     <!--======================== Measure 182 =========================-->
     <measure implicit="no" number="182">
       <note>
-        <rest />
-        <duration>20160</duration>
-        <type>half</type>
-      </note>
-      <note>
-        <rest />
-        <duration>5040</duration>
-        <type>eighth</type>
-      </note>
-      <note>
-        <pitch>
-          <step>C</step>
-          <octave>2</octave>
-        </pitch>
-        <unpitched>
-          <display-step>B</display-step>
-          <display-octave>4</display-octave>
-        </unpitched>
-        <duration>2520</duration>
-        <type>16th</type>
-        <beam number="1">begin</beam>
-        <beam number="2">begin</beam>
-      </note>
-      <note>
-        <pitch>
-          <step>C</step>
-          <octave>2</octave>
-        </pitch>
-        <unpitched>
-          <display-step>B</display-step>
-          <display-octave>4</display-octave>
-        </unpitched>
-        <duration>2520</duration>
-        <type>16th</type>
-        <beam number="1">end</beam>
-        <beam number="2">end</beam>
-      </note>
-      <note>
-        <unpitched>
-          <display-step>C</display-step>
-          <display-octave>3</display-octave>
-        </unpitched>
-        <duration>2520</duration>
-        <type>16th</type>
-      </note>
-      <note>
-        <chord />
-        <unpitched>
-          <display-step>C</display-step>
-          <display-octave>3</display-octave>
-        </unpitched>
-        <duration>2520</duration>
-        <type>16th</type>
-      </note>
-      <note>
-        <rest />
-        <duration>7560</duration>
-        <type>eighth</type>
-        <dot />
+        <rest measure="yes" />
+        <duration>40320</duration>
       </note>
     </measure>
     <!--======================== Measure 183 =========================-->
     <measure implicit="no" number="183">
       <note>
+        <rest measure="yes" />
+        <duration>40320</duration>
+      </note>
+    </measure>
+    <!--======================== Measure 184 =========================-->
+    <measure implicit="no" number="184">
+      <note>
         <rest />
-        <duration>15120</duration>
-        <type>quarter</type>
+        <duration>37800</duration>
+        <type>half</type>
         <dot />
+        <dot />
+        <dot />
+      </note>
+      <note>
+        <pitch>
+          <step>C</step>
+          <octave>2</octave>
+        </pitch>
+        <unpitched>
+          <display-step>B</display-step>
+          <display-octave>4</display-octave>
+        </unpitched>
+        <duration>2520</duration>
+        <type>16th</type>
+      </note>
+    </measure>
+    <!--======================== Measure 185 =========================-->
+    <measure implicit="no" number="185">
+      <note>
+        <rest />
+        <duration>2520</duration>
+        <type>16th</type>
       </note>
       <note>
         <pitch>
@@ -5078,27 +4676,10 @@
       </note>
       <note>
         <rest />
-        <duration>20160</duration>
+        <duration>35280</duration>
         <type>half</type>
-      </note>
-      <note>
-        <rest />
-        <duration>2520</duration>
-        <type>16th</type>
-      </note>
-    </measure>
-    <!--======================== Measure 184 =========================-->
-    <measure implicit="no" number="184">
-      <note>
-        <rest measure="yes" />
-        <duration>40320</duration>
-      </note>
-    </measure>
-    <!--======================== Measure 185 =========================-->
-    <measure implicit="no" number="185">
-      <note>
-        <rest measure="yes" />
-        <duration>40320</duration>
+        <dot />
+        <dot />
       </note>
     </measure>
     <!--======================== Measure 186 =========================-->
@@ -5146,9 +4727,55 @@
     <!--======================== Measure 192 =========================-->
     <measure implicit="no" number="192">
       <note>
+        <rest measure="yes" />
+        <duration>40320</duration>
+      </note>
+    </measure>
+    <!--======================== Measure 193 =========================-->
+    <measure implicit="no" number="193">
+      <note>
+        <rest measure="yes" />
+        <duration>40320</duration>
+      </note>
+    </measure>
+    <!--======================== Measure 194 =========================-->
+    <measure implicit="no" number="194">
+      <note>
         <rest />
         <duration>20160</duration>
         <type>half</type>
+      </note>
+      <note>
+        <pitch>
+          <step>C</step>
+          <alter>1</alter>
+          <octave>3</octave>
+        </pitch>
+        <unpitched>
+          <display-step>B</display-step>
+          <display-octave>4</display-octave>
+        </unpitched>
+        <duration>2520</duration>
+        <type>16th</type>
+        <notehead parentheses="no">x</notehead>
+        <beam number="1">begin</beam>
+        <beam number="2">begin</beam>
+      </note>
+      <note>
+        <pitch>
+          <step>C</step>
+          <alter>1</alter>
+          <octave>3</octave>
+        </pitch>
+        <unpitched>
+          <display-step>B</display-step>
+          <display-octave>4</display-octave>
+        </unpitched>
+        <duration>2520</duration>
+        <type>16th</type>
+        <notehead parentheses="no">x</notehead>
+        <beam number="1">end</beam>
+        <beam number="2">end</beam>
       </note>
       <note>
         <rest />
@@ -5171,6 +4798,202 @@
         <notehead parentheses="no">x</notehead>
       </note>
       <note>
+        <rest />
+        <duration>2520</duration>
+        <type>16th</type>
+      </note>
+      <note>
+        <pitch>
+          <step>C</step>
+          <alter>1</alter>
+          <octave>3</octave>
+        </pitch>
+        <unpitched>
+          <display-step>B</display-step>
+          <display-octave>4</display-octave>
+        </unpitched>
+        <duration>2520</duration>
+        <type>16th</type>
+        <notehead parentheses="no">x</notehead>
+      </note>
+    </measure>
+    <!--======================== Measure 195 =========================-->
+    <measure implicit="no" number="195">
+      <note>
+        <rest />
+        <duration>2520</duration>
+        <type>16th</type>
+      </note>
+      <note>
+        <pitch>
+          <step>C</step>
+          <alter>1</alter>
+          <octave>3</octave>
+        </pitch>
+        <unpitched>
+          <display-step>B</display-step>
+          <display-octave>4</display-octave>
+        </unpitched>
+        <duration>2520</duration>
+        <type>16th</type>
+        <notehead parentheses="no">x</notehead>
+      </note>
+      <note>
+        <rest />
+        <duration>2520</duration>
+        <type>16th</type>
+      </note>
+      <note>
+        <pitch>
+          <step>C</step>
+          <alter>1</alter>
+          <octave>3</octave>
+        </pitch>
+        <unpitched>
+          <display-step>B</display-step>
+          <display-octave>4</display-octave>
+        </unpitched>
+        <duration>2520</duration>
+        <type>16th</type>
+        <notehead parentheses="no">x</notehead>
+      </note>
+      <note>
+        <pitch>
+          <step>C</step>
+          <alter>1</alter>
+          <octave>3</octave>
+        </pitch>
+        <unpitched>
+          <display-step>B</display-step>
+          <display-octave>4</display-octave>
+        </unpitched>
+        <duration>2520</duration>
+        <type>16th</type>
+        <notehead parentheses="no">x</notehead>
+        <beam number="1">begin</beam>
+        <beam number="2">begin</beam>
+      </note>
+      <note>
+        <pitch>
+          <step>C</step>
+          <alter>1</alter>
+          <octave>3</octave>
+        </pitch>
+        <unpitched>
+          <display-step>B</display-step>
+          <display-octave>4</display-octave>
+        </unpitched>
+        <duration>2520</duration>
+        <type>16th</type>
+        <notehead parentheses="no">x</notehead>
+        <beam number="1">end</beam>
+        <beam number="2">end</beam>
+      </note>
+      <note>
+        <rest />
+        <duration>20160</duration>
+        <type>half</type>
+      </note>
+      <note>
+        <rest />
+        <duration>5040</duration>
+        <type>eighth</type>
+      </note>
+    </measure>
+    <!--======================== Measure 196 =========================-->
+    <measure implicit="no" number="196">
+      <note>
+        <rest />
+        <duration>37800</duration>
+        <type>half</type>
+        <dot />
+        <dot />
+        <dot />
+      </note>
+      <note>
+        <pitch>
+          <step>B</step>
+          <alter>-1</alter>
+          <octave>2</octave>
+        </pitch>
+        <unpitched>
+          <display-step>B</display-step>
+          <display-octave>4</display-octave>
+        </unpitched>
+        <duration>2520</duration>
+        <type>16th</type>
+        <notehead parentheses="no">circle-x</notehead>
+      </note>
+    </measure>
+    <!--======================== Measure 197 =========================-->
+    <measure implicit="no" number="197">
+      <note>
+        <rest measure="yes" />
+        <duration>40320</duration>
+      </note>
+    </measure>
+    <!--======================== Measure 198 =========================-->
+    <measure implicit="no" number="198">
+      <note>
+        <rest />
+        <duration>7560</duration>
+        <type>eighth</type>
+        <dot />
+      </note>
+      <note>
+        <pitch>
+          <step>C</step>
+          <alter>1</alter>
+          <octave>3</octave>
+        </pitch>
+        <unpitched>
+          <display-step>B</display-step>
+          <display-octave>4</display-octave>
+        </unpitched>
+        <duration>2520</duration>
+        <type>16th</type>
+        <notehead parentheses="no">x</notehead>
+      </note>
+      <note>
+        <rest />
+        <duration>5040</duration>
+        <type>eighth</type>
+      </note>
+      <note>
+        <pitch>
+          <step>B</step>
+          <alter>-1</alter>
+          <octave>2</octave>
+        </pitch>
+        <unpitched>
+          <display-step>B</display-step>
+          <display-octave>4</display-octave>
+        </unpitched>
+        <duration>2520</duration>
+        <type>16th</type>
+        <notehead parentheses="no">circle-x</notehead>
+      </note>
+      <note>
+        <rest />
+        <duration>20160</duration>
+        <type>half</type>
+      </note>
+      <note>
+        <pitch>
+          <step>C</step>
+          <octave>2</octave>
+        </pitch>
+        <unpitched>
+          <display-step>B</display-step>
+          <display-octave>4</display-octave>
+        </unpitched>
+        <duration>2520</duration>
+        <type>16th</type>
+      </note>
+    </measure>
+    <!--======================== Measure 199 =========================-->
+    <measure implicit="no" number="199">
+      <note>
         <pitch>
           <step>E</step>
           <alter>-1</alter>
@@ -5186,58 +5009,11 @@
       </note>
       <note>
         <rest />
-        <duration>7560</duration>
-        <type>eighth</type>
+        <duration>37800</duration>
+        <type>half</type>
         <dot />
-      </note>
-    </measure>
-    <!--======================== Measure 193 =========================-->
-    <measure implicit="no" number="193">
-      <note>
-        <rest measure="yes" />
-        <duration>40320</duration>
-      </note>
-    </measure>
-    <!--======================== Measure 194 =========================-->
-    <measure implicit="no" number="194">
-      <note>
-        <rest measure="yes" />
-        <duration>40320</duration>
-      </note>
-    </measure>
-    <!--======================== Measure 195 =========================-->
-    <measure implicit="no" number="195">
-      <note>
-        <rest measure="yes" />
-        <duration>40320</duration>
-      </note>
-    </measure>
-    <!--======================== Measure 196 =========================-->
-    <measure implicit="no" number="196">
-      <note>
-        <rest measure="yes" />
-        <duration>40320</duration>
-      </note>
-    </measure>
-    <!--======================== Measure 197 =========================-->
-    <measure implicit="no" number="197">
-      <note>
-        <rest measure="yes" />
-        <duration>40320</duration>
-      </note>
-    </measure>
-    <!--======================== Measure 198 =========================-->
-    <measure implicit="no" number="198">
-      <note>
-        <rest measure="yes" />
-        <duration>40320</duration>
-      </note>
-    </measure>
-    <!--======================== Measure 199 =========================-->
-    <measure implicit="no" number="199">
-      <note>
-        <rest measure="yes" />
-        <duration>40320</duration>
+        <dot />
+        <dot />
       </note>
     </measure>
     <!--======================== Measure 200 =========================-->
@@ -5257,348 +5033,29 @@
     <!--======================== Measure 202 =========================-->
     <measure implicit="no" number="202">
       <note>
-        <rest />
-        <duration>20160</duration>
-        <type>half</type>
-      </note>
-      <note>
-        <rest />
-        <duration>5040</duration>
-        <type>eighth</type>
-      </note>
-      <note>
-        <pitch>
-          <step>D</step>
-          <octave>2</octave>
-        </pitch>
-        <unpitched>
-          <display-step>B</display-step>
-          <display-octave>4</display-octave>
-        </unpitched>
-        <duration>2520</duration>
-        <type>16th</type>
-      </note>
-      <note>
-        <rest />
-        <duration>10080</duration>
-        <type>quarter</type>
-      </note>
-      <note>
-        <rest />
-        <duration>2520</duration>
-        <type>16th</type>
+        <rest measure="yes" />
+        <duration>40320</duration>
       </note>
     </measure>
     <!--======================== Measure 203 =========================-->
     <measure implicit="no" number="203">
       <note>
-        <rest />
-        <duration>5040</duration>
-        <type>eighth</type>
-      </note>
-      <note>
-        <pitch>
-          <step>D</step>
-          <octave>2</octave>
-        </pitch>
-        <unpitched>
-          <display-step>B</display-step>
-          <display-octave>4</display-octave>
-        </unpitched>
-        <duration>2520</duration>
-        <type>16th</type>
-        <beam number="1">begin</beam>
-        <beam number="2">begin</beam>
-      </note>
-      <note>
-        <pitch>
-          <step>D</step>
-          <octave>2</octave>
-        </pitch>
-        <unpitched>
-          <display-step>B</display-step>
-          <display-octave>4</display-octave>
-        </unpitched>
-        <duration>2520</duration>
-        <type>16th</type>
-        <beam number="1">end</beam>
-        <beam number="2">end</beam>
-      </note>
-      <note>
-        <pitch>
-          <step>C</step>
-          <octave>2</octave>
-        </pitch>
-        <unpitched>
-          <display-step>B</display-step>
-          <display-octave>4</display-octave>
-        </unpitched>
-        <duration>2520</duration>
-        <type>16th</type>
-      </note>
-      <note>
-        <rest />
-        <duration>5040</duration>
-        <type>eighth</type>
-      </note>
-      <note>
-        <unpitched>
-          <display-step>A</display-step>
-          <display-octave>3</display-octave>
-        </unpitched>
-        <duration>2520</duration>
-        <type>16th</type>
-        <notehead parentheses="no">x</notehead>
-      </note>
-      <note>
-        <chord />
-        <unpitched>
-          <display-step>A</display-step>
-          <display-octave>3</display-octave>
-        </unpitched>
-        <duration>2520</duration>
-        <type>16th</type>
-        <notehead parentheses="no">x</notehead>
-      </note>
-      <note>
-        <rest />
-        <duration>2520</duration>
-        <type>16th</type>
-      </note>
-      <note>
-        <unpitched>
-          <display-step>F</display-step>
-          <display-octave>2</display-octave>
-        </unpitched>
-        <duration>2520</duration>
-        <type>16th</type>
-        <beam number="1">begin</beam>
-        <beam number="2">begin</beam>
-      </note>
-      <note>
-        <chord />
-        <unpitched>
-          <display-step>F</display-step>
-          <display-octave>2</display-octave>
-        </unpitched>
-        <duration>2520</duration>
-        <type>16th</type>
-      </note>
-      <note>
-        <pitch>
-          <step>C</step>
-          <octave>2</octave>
-        </pitch>
-        <unpitched>
-          <display-step>B</display-step>
-          <display-octave>4</display-octave>
-        </unpitched>
-        <duration>2520</duration>
-        <type>16th</type>
-        <beam number="1">continue</beam>
-        <beam number="2">continue</beam>
-      </note>
-      <note>
-        <pitch>
-          <step>C</step>
-          <octave>2</octave>
-        </pitch>
-        <unpitched>
-          <display-step>B</display-step>
-          <display-octave>4</display-octave>
-        </unpitched>
-        <duration>2520</duration>
-        <type>16th</type>
-        <beam number="1">end</beam>
-        <beam number="2">end</beam>
-      </note>
-      <note>
-        <pitch>
-          <step>C</step>
-          <octave>2</octave>
-        </pitch>
-        <unpitched>
-          <display-step>B</display-step>
-          <display-octave>4</display-octave>
-        </unpitched>
-        <duration>2520</duration>
-        <type>16th</type>
-        <beam number="1">begin</beam>
-        <beam number="2">begin</beam>
-      </note>
-      <note>
-        <pitch>
-          <step>C</step>
-          <octave>2</octave>
-        </pitch>
-        <unpitched>
-          <display-step>B</display-step>
-          <display-octave>4</display-octave>
-        </unpitched>
-        <duration>2520</duration>
-        <type>16th</type>
-        <beam number="1">continue</beam>
-        <beam number="2">end</beam>
-      </note>
-      <note>
-        <pitch>
-          <step>C</step>
-          <octave>2</octave>
-        </pitch>
-        <unpitched>
-          <display-step>B</display-step>
-          <display-octave>4</display-octave>
-        </unpitched>
-        <duration>2520</duration>
-        <type>16th</type>
-        <beam number="1">continue</beam>
-        <beam number="2">begin</beam>
-      </note>
-      <note>
-        <pitch>
-          <step>C</step>
-          <octave>2</octave>
-        </pitch>
-        <unpitched>
-          <display-step>B</display-step>
-          <display-octave>4</display-octave>
-        </unpitched>
-        <duration>2520</duration>
-        <type>16th</type>
-        <beam number="1">end</beam>
-        <beam number="2">end</beam>
+        <rest measure="yes" />
+        <duration>40320</duration>
       </note>
     </measure>
     <!--======================== Measure 204 =========================-->
     <measure implicit="no" number="204">
       <note>
-        <rest />
-        <duration>7560</duration>
-        <type>eighth</type>
-        <dot />
-      </note>
-      <note>
-        <pitch>
-          <step>C</step>
-          <alter>1</alter>
-          <octave>3</octave>
-        </pitch>
-        <unpitched>
-          <display-step>B</display-step>
-          <display-octave>4</display-octave>
-        </unpitched>
-        <duration>2520</duration>
-        <type>16th</type>
-        <notehead parentheses="no">x</notehead>
-      </note>
-      <note>
-        <rest />
-        <duration>30240</duration>
-        <type>half</type>
-        <dot />
+        <rest measure="yes" />
+        <duration>40320</duration>
       </note>
     </measure>
     <!--======================== Measure 205 =========================-->
     <measure implicit="no" number="205">
       <note>
-        <rest />
-        <duration>10080</duration>
-        <type>quarter</type>
-      </note>
-      <note>
-        <rest />
-        <duration>2520</duration>
-        <type>16th</type>
-      </note>
-      <note>
-        <unpitched>
-          <display-step>F</display-step>
-          <display-octave>2</display-octave>
-        </unpitched>
-        <duration>2520</duration>
-        <type>16th</type>
-      </note>
-      <note>
-        <chord />
-        <unpitched>
-          <display-step>F</display-step>
-          <display-octave>2</display-octave>
-        </unpitched>
-        <duration>2520</duration>
-        <type>16th</type>
-      </note>
-      <note>
-        <rest />
-        <duration>2520</duration>
-        <type>16th</type>
-      </note>
-      <note>
-        <pitch>
-          <step>C</step>
-          <octave>2</octave>
-        </pitch>
-        <unpitched>
-          <display-step>B</display-step>
-          <display-octave>4</display-octave>
-        </unpitched>
-        <duration>2520</duration>
-        <type>16th</type>
-      </note>
-      <note>
-        <rest />
-        <duration>2520</duration>
-        <type>16th</type>
-      </note>
-      <note>
-        <pitch>
-          <step>C</step>
-          <alter>1</alter>
-          <octave>3</octave>
-        </pitch>
-        <unpitched>
-          <display-step>B</display-step>
-          <display-octave>4</display-octave>
-        </unpitched>
-        <duration>2520</duration>
-        <type>16th</type>
-        <notehead parentheses="no">x</notehead>
-      </note>
-      <note>
-        <rest />
-        <duration>2520</duration>
-        <type>16th</type>
-      </note>
-      <note>
-        <pitch>
-          <step>C</step>
-          <alter>1</alter>
-          <octave>3</octave>
-        </pitch>
-        <unpitched>
-          <display-step>B</display-step>
-          <display-octave>4</display-octave>
-        </unpitched>
-        <duration>2520</duration>
-        <type>16th</type>
-        <notehead parentheses="no">x</notehead>
-      </note>
-      <note>
-        <pitch>
-          <step>C</step>
-          <octave>2</octave>
-        </pitch>
-        <unpitched>
-          <display-step>B</display-step>
-          <display-octave>4</display-octave>
-        </unpitched>
-        <duration>2520</duration>
-        <type>16th</type>
-      </note>
-      <note>
-        <rest />
-        <duration>7560</duration>
-        <type>eighth</type>
-        <dot />
+        <rest measure="yes" />
+        <duration>40320</duration>
       </note>
     </measure>
     <!--======================== Measure 206 =========================-->
@@ -5611,109 +5068,8 @@
     <!--======================== Measure 207 =========================-->
     <measure implicit="no" number="207">
       <note>
-        <rest />
-        <duration>5040</duration>
-        <type>eighth</type>
-      </note>
-      <note>
-        <pitch>
-          <step>C</step>
-          <alter>1</alter>
-          <octave>3</octave>
-        </pitch>
-        <unpitched>
-          <display-step>B</display-step>
-          <display-octave>4</display-octave>
-        </unpitched>
-        <duration>2520</duration>
-        <type>16th</type>
-        <notehead parentheses="no">x</notehead>
-        <beam number="1">begin</beam>
-        <beam number="2">begin</beam>
-      </note>
-      <note>
-        <pitch>
-          <step>C</step>
-          <alter>1</alter>
-          <octave>3</octave>
-        </pitch>
-        <unpitched>
-          <display-step>B</display-step>
-          <display-octave>4</display-octave>
-        </unpitched>
-        <duration>2520</duration>
-        <type>16th</type>
-        <notehead parentheses="no">x</notehead>
-        <beam number="1">end</beam>
-        <beam number="2">end</beam>
-      </note>
-      <note>
-        <rest />
-        <duration>2520</duration>
-        <type>16th</type>
-      </note>
-      <note>
-        <pitch>
-          <step>C</step>
-          <alter>1</alter>
-          <octave>3</octave>
-        </pitch>
-        <unpitched>
-          <display-step>B</display-step>
-          <display-octave>4</display-octave>
-        </unpitched>
-        <duration>2520</duration>
-        <type>16th</type>
-        <notehead parentheses="no">x</notehead>
-      </note>
-      <note>
-        <rest />
-        <duration>2520</duration>
-        <type>16th</type>
-      </note>
-      <note>
-        <pitch>
-          <step>C</step>
-          <alter>1</alter>
-          <octave>3</octave>
-        </pitch>
-        <unpitched>
-          <display-step>B</display-step>
-          <display-octave>4</display-octave>
-        </unpitched>
-        <duration>2520</duration>
-        <type>16th</type>
-        <notehead parentheses="no">x</notehead>
-      </note>
-      <note>
-        <rest />
-        <duration>7560</duration>
-        <type>eighth</type>
-        <dot />
-      </note>
-      <note>
-        <unpitched>
-          <display-step>A</display-step>
-          <display-octave>3</display-octave>
-        </unpitched>
-        <duration>2520</duration>
-        <type>16th</type>
-        <notehead parentheses="no">x</notehead>
-      </note>
-      <note>
-        <chord />
-        <unpitched>
-          <display-step>A</display-step>
-          <display-octave>3</display-octave>
-        </unpitched>
-        <duration>2520</duration>
-        <type>16th</type>
-        <notehead parentheses="no">x</notehead>
-      </note>
-      <note>
-        <rest />
-        <duration>10080</duration>
-        <type>quarter</type>
+        <rest measure="yes" />
+        <duration>40320</duration>
       </note>
     </measure>
     <!--======================== Measure 208 =========================-->
@@ -5818,19 +5174,14 @@
         <dot />
       </note>
       <note>
+        <pitch>
+          <step>C</step>
+          <alter>1</alter>
+          <octave>3</octave>
+        </pitch>
         <unpitched>
-          <display-step>A</display-step>
-          <display-octave>3</display-octave>
-        </unpitched>
-        <duration>2520</duration>
-        <type>16th</type>
-        <notehead parentheses="no">x</notehead>
-      </note>
-      <note>
-        <chord />
-        <unpitched>
-          <display-step>A</display-step>
-          <display-octave>3</display-octave>
+          <display-step>B</display-step>
+          <display-octave>4</display-octave>
         </unpitched>
         <duration>2520</duration>
         <type>16th</type>
@@ -5842,19 +5193,14 @@
         <type>16th</type>
       </note>
       <note>
+        <pitch>
+          <step>C</step>
+          <alter>1</alter>
+          <octave>3</octave>
+        </pitch>
         <unpitched>
-          <display-step>A</display-step>
-          <display-octave>3</display-octave>
-        </unpitched>
-        <duration>2520</duration>
-        <type>16th</type>
-        <notehead parentheses="no">x</notehead>
-      </note>
-      <note>
-        <chord />
-        <unpitched>
-          <display-step>A</display-step>
-          <display-octave>3</display-octave>
+          <display-step>B</display-step>
+          <display-octave>4</display-octave>
         </unpitched>
         <duration>2520</duration>
         <type>16th</type>
@@ -5912,19 +5258,14 @@
         <type>16th</type>
       </note>
       <note>
+        <pitch>
+          <step>C</step>
+          <alter>1</alter>
+          <octave>3</octave>
+        </pitch>
         <unpitched>
-          <display-step>A</display-step>
-          <display-octave>3</display-octave>
-        </unpitched>
-        <duration>2520</duration>
-        <type>16th</type>
-        <notehead parentheses="no">x</notehead>
-      </note>
-      <note>
-        <chord />
-        <unpitched>
-          <display-step>A</display-step>
-          <display-octave>3</display-octave>
+          <display-step>B</display-step>
+          <display-octave>4</display-octave>
         </unpitched>
         <duration>2520</duration>
         <type>16th</type>
@@ -6021,9 +5362,27 @@
       </note>
       <note>
         <rest />
-        <duration>35280</duration>
+        <duration>2520</duration>
+        <type>16th</type>
+      </note>
+      <note>
+        <pitch>
+          <step>C</step>
+          <alter>1</alter>
+          <octave>3</octave>
+        </pitch>
+        <unpitched>
+          <display-step>B</display-step>
+          <display-octave>4</display-octave>
+        </unpitched>
+        <duration>2520</duration>
+        <type>16th</type>
+        <notehead parentheses="no">x</notehead>
+      </note>
+      <note>
+        <rest />
+        <duration>30240</duration>
         <type>half</type>
-        <dot />
         <dot />
       </note>
     </measure>
@@ -6036,19 +5395,14 @@
         <dot />
       </note>
       <note>
+        <pitch>
+          <step>C</step>
+          <alter>1</alter>
+          <octave>3</octave>
+        </pitch>
         <unpitched>
-          <display-step>A</display-step>
-          <display-octave>3</display-octave>
-        </unpitched>
-        <duration>2520</duration>
-        <type>16th</type>
-        <notehead parentheses="no">x</notehead>
-      </note>
-      <note>
-        <chord />
-        <unpitched>
-          <display-step>A</display-step>
-          <display-octave>3</display-octave>
+          <display-step>B</display-step>
+          <display-octave>4</display-octave>
         </unpitched>
         <duration>2520</duration>
         <type>16th</type>
@@ -6161,11 +5515,8 @@
         <duration>2520</duration>
         <type>16th</type>
         <notehead parentheses="no">x</notehead>
-      </note>
-      <note>
-        <rest />
-        <duration>2520</duration>
-        <type>16th</type>
+        <beam number="1">begin</beam>
+        <beam number="2">begin</beam>
       </note>
       <note>
         <pitch>
@@ -6180,6 +5531,8 @@
         <duration>2520</duration>
         <type>16th</type>
         <notehead parentheses="no">x</notehead>
+        <beam number="1">end</beam>
+        <beam number="2">end</beam>
       </note>
       <note>
         <rest />
@@ -6188,8 +5541,8 @@
       </note>
       <note>
         <rest />
-        <duration>2520</duration>
-        <type>16th</type>
+        <duration>5040</duration>
+        <type>eighth</type>
       </note>
     </measure>
     <!--======================== Measure 215 =========================-->
@@ -6308,6 +5661,25 @@
         <type>half</type>
       </note>
       <note>
+        <pitch>
+          <step>C</step>
+          <alter>1</alter>
+          <octave>3</octave>
+        </pitch>
+        <unpitched>
+          <display-step>B</display-step>
+          <display-octave>4</display-octave>
+        </unpitched>
+        <duration>2520</duration>
+        <type>16th</type>
+        <notehead parentheses="no">x</notehead>
+      </note>
+      <note>
+        <rest />
+        <duration>2520</duration>
+        <type>16th</type>
+      </note>
+      <note>
         <unpitched>
           <display-step>A</display-step>
           <display-octave>3</display-octave>
@@ -6333,9 +5705,9 @@
       </note>
       <note>
         <pitch>
-          <step>C</step>
+          <step>F</step>
           <alter>1</alter>
-          <octave>3</octave>
+          <octave>2</octave>
         </pitch>
         <unpitched>
           <display-step>B</display-step>
@@ -6344,11 +5716,8 @@
         <duration>2520</duration>
         <type>16th</type>
         <notehead parentheses="no">x</notehead>
-      </note>
-      <note>
-        <rest />
-        <duration>5040</duration>
-        <type>eighth</type>
+        <beam number="1">begin</beam>
+        <beam number="2">begin</beam>
       </note>
       <note>
         <pitch>
@@ -6363,6 +5732,8 @@
         <duration>2520</duration>
         <type>16th</type>
         <notehead parentheses="no">circle-x</notehead>
+        <beam number="1">end</beam>
+        <beam number="2">end</beam>
       </note>
       <note>
         <rest />
@@ -6380,131 +5751,6 @@
         <dot />
       </note>
       <note>
-        <unpitched>
-          <display-step>A</display-step>
-          <display-octave>3</display-octave>
-        </unpitched>
-        <duration>2520</duration>
-        <type>16th</type>
-        <notehead parentheses="no">x</notehead>
-      </note>
-      <note>
-        <chord />
-        <unpitched>
-          <display-step>A</display-step>
-          <display-octave>3</display-octave>
-        </unpitched>
-        <duration>2520</duration>
-        <type>16th</type>
-        <notehead parentheses="no">x</notehead>
-      </note>
-      <note>
-        <rest />
-        <duration>2520</duration>
-        <type>16th</type>
-      </note>
-      <note>
-        <unpitched>
-          <display-step>A</display-step>
-          <display-octave>3</display-octave>
-        </unpitched>
-        <duration>2520</duration>
-        <type>16th</type>
-        <notehead parentheses="no">x</notehead>
-      </note>
-      <note>
-        <chord />
-        <unpitched>
-          <display-step>A</display-step>
-          <display-octave>3</display-octave>
-        </unpitched>
-        <duration>2520</duration>
-        <type>16th</type>
-        <notehead parentheses="no">x</notehead>
-      </note>
-      <note>
-        <rest />
-        <duration>7560</duration>
-        <type>eighth</type>
-        <dot />
-      </note>
-      <note>
-        <pitch>
-          <step>B</step>
-          <alter>-1</alter>
-          <octave>2</octave>
-        </pitch>
-        <unpitched>
-          <display-step>B</display-step>
-          <display-octave>4</display-octave>
-        </unpitched>
-        <duration>2520</duration>
-        <type>16th</type>
-        <notehead parentheses="no">circle-x</notehead>
-      </note>
-      <note>
-        <rest />
-        <duration>5040</duration>
-        <type>eighth</type>
-      </note>
-    </measure>
-    <!--======================== Measure 226 =========================-->
-    <measure implicit="no" number="226">
-      <note>
-        <rest />
-        <duration>20160</duration>
-        <type>half</type>
-      </note>
-      <note>
-        <unpitched>
-          <display-step>A</display-step>
-          <display-octave>3</display-octave>
-        </unpitched>
-        <duration>2520</duration>
-        <type>16th</type>
-        <notehead parentheses="no">x</notehead>
-      </note>
-      <note>
-        <chord />
-        <unpitched>
-          <display-step>A</display-step>
-          <display-octave>3</display-octave>
-        </unpitched>
-        <duration>2520</duration>
-        <type>16th</type>
-        <notehead parentheses="no">x</notehead>
-      </note>
-      <note>
-        <rest />
-        <duration>2520</duration>
-        <type>16th</type>
-      </note>
-      <note>
-        <unpitched>
-          <display-step>A</display-step>
-          <display-octave>3</display-octave>
-        </unpitched>
-        <duration>2520</duration>
-        <type>16th</type>
-        <notehead parentheses="no">x</notehead>
-      </note>
-      <note>
-        <chord />
-        <unpitched>
-          <display-step>A</display-step>
-          <display-octave>3</display-octave>
-        </unpitched>
-        <duration>2520</duration>
-        <type>16th</type>
-        <notehead parentheses="no">x</notehead>
-      </note>
-      <note>
-        <rest />
-        <duration>7560</duration>
-        <type>eighth</type>
-        <dot />
-      </note>
-      <note>
         <pitch>
           <step>C</step>
           <alter>1</alter>
@@ -6517,8 +5763,86 @@
         <duration>2520</duration>
         <type>16th</type>
         <notehead parentheses="no">x</notehead>
+      </note>
+      <note>
+        <rest />
+        <duration>2520</duration>
+        <type>16th</type>
+      </note>
+      <note>
+        <unpitched>
+          <display-step>F</display-step>
+          <display-octave>2</display-octave>
+        </unpitched>
+        <duration>2520</duration>
+        <type>16th</type>
+      </note>
+      <note>
+        <chord />
+        <unpitched>
+          <display-step>F</display-step>
+          <display-octave>2</display-octave>
+        </unpitched>
+        <duration>2520</duration>
+        <type>16th</type>
+      </note>
+      <note>
+        <rest />
+        <duration>10080</duration>
+        <type>quarter</type>
+      </note>
+      <note>
+        <rest />
+        <duration>2520</duration>
+        <type>16th</type>
+      </note>
+      <note>
+        <unpitched>
+          <display-step>A</display-step>
+          <display-octave>3</display-octave>
+        </unpitched>
+        <duration>2520</duration>
+        <type>16th</type>
+        <notehead parentheses="no">x</notehead>
+      </note>
+      <note>
+        <chord />
+        <unpitched>
+          <display-step>A</display-step>
+          <display-octave>3</display-octave>
+        </unpitched>
+        <duration>2520</duration>
+        <type>16th</type>
+        <notehead parentheses="no">x</notehead>
+      </note>
+    </measure>
+    <!--======================== Measure 226 =========================-->
+    <measure implicit="no" number="226">
+      <note>
+        <rest />
+        <duration>5040</duration>
+        <type>eighth</type>
+      </note>
+      <note>
+        <unpitched>
+          <display-step>A</display-step>
+          <display-octave>3</display-octave>
+        </unpitched>
+        <duration>2520</duration>
+        <type>16th</type>
+        <notehead parentheses="no">x</notehead>
         <beam number="1">begin</beam>
         <beam number="2">begin</beam>
+      </note>
+      <note>
+        <chord />
+        <unpitched>
+          <display-step>A</display-step>
+          <display-octave>3</display-octave>
+        </unpitched>
+        <duration>2520</duration>
+        <type>16th</type>
+        <notehead parentheses="no">x</notehead>
       </note>
       <note>
         <pitch>
@@ -6535,6 +5859,12 @@
         <notehead parentheses="no">x</notehead>
         <beam number="1">end</beam>
         <beam number="2">end</beam>
+      </note>
+      <note>
+        <rest />
+        <duration>30240</duration>
+        <type>half</type>
+        <dot />
       </note>
     </measure>
     <!--======================== Measure 227 =========================-->
@@ -6596,17 +5926,180 @@
     <!--======================== Measure 235 =========================-->
     <measure implicit="no" number="235">
       <note>
-        <rest measure="yes" />
-        <duration>40320</duration>
+        <rest />
+        <duration>17640</duration>
+        <type>quarter</type>
+        <dot />
+        <dot />
+      </note>
+      <note>
+        <pitch>
+          <step>C</step>
+          <alter>1</alter>
+          <octave>3</octave>
+        </pitch>
+        <unpitched>
+          <display-step>B</display-step>
+          <display-octave>4</display-octave>
+        </unpitched>
+        <duration>2520</duration>
+        <type>16th</type>
+        <notehead parentheses="no">x</notehead>
+      </note>
+      <note>
+        <rest />
+        <duration>2520</duration>
+        <type>16th</type>
+      </note>
+      <note>
+        <pitch>
+          <step>C</step>
+          <alter>1</alter>
+          <octave>3</octave>
+        </pitch>
+        <unpitched>
+          <display-step>B</display-step>
+          <display-octave>4</display-octave>
+        </unpitched>
+        <duration>2520</duration>
+        <type>16th</type>
+        <notehead parentheses="no">x</notehead>
+      </note>
+      <note>
+        <rest />
+        <duration>7560</duration>
+        <type>eighth</type>
+        <dot />
+      </note>
+      <note>
+        <pitch>
+          <step>B</step>
+          <alter>-1</alter>
+          <octave>2</octave>
+        </pitch>
+        <unpitched>
+          <display-step>B</display-step>
+          <display-octave>4</display-octave>
+        </unpitched>
+        <duration>2520</duration>
+        <type>16th</type>
+        <notehead parentheses="no">circle-x</notehead>
+      </note>
+      <note>
+        <rest />
+        <duration>5040</duration>
+        <type>eighth</type>
       </note>
     </measure>
     <!--======================== Measure 236 =========================-->
     <measure implicit="no" number="236">
       <note>
         <rest />
+        <duration>20160</duration>
+        <type>half</type>
+      </note>
+      <note>
+        <pitch>
+          <step>C</step>
+          <alter>1</alter>
+          <octave>3</octave>
+        </pitch>
+        <unpitched>
+          <display-step>B</display-step>
+          <display-octave>4</display-octave>
+        </unpitched>
+        <duration>2520</duration>
+        <type>16th</type>
+        <notehead parentheses="no">x</notehead>
+        <beam number="1">begin</beam>
+        <beam number="2">begin</beam>
+      </note>
+      <note>
+        <pitch>
+          <step>C</step>
+          <alter>1</alter>
+          <octave>3</octave>
+        </pitch>
+        <unpitched>
+          <display-step>B</display-step>
+          <display-octave>4</display-octave>
+        </unpitched>
+        <duration>2520</duration>
+        <type>16th</type>
+        <notehead parentheses="no">x</notehead>
+        <beam number="1">end</beam>
+        <beam number="2">end</beam>
+      </note>
+      <note>
+        <rest />
         <duration>7560</duration>
         <type>eighth</type>
         <dot />
+      </note>
+      <note>
+        <pitch>
+          <step>B</step>
+          <alter>-1</alter>
+          <octave>2</octave>
+        </pitch>
+        <unpitched>
+          <display-step>B</display-step>
+          <display-octave>4</display-octave>
+        </unpitched>
+        <duration>2520</duration>
+        <type>16th</type>
+        <notehead parentheses="no">circle-x</notehead>
+      </note>
+      <note>
+        <rest />
+        <duration>5040</duration>
+        <type>eighth</type>
+      </note>
+    </measure>
+    <!--======================== Measure 237 =========================-->
+    <measure implicit="no" number="237">
+      <note>
+        <rest />
+        <duration>15120</duration>
+        <type>quarter</type>
+        <dot />
+      </note>
+      <note>
+        <pitch>
+          <step>C</step>
+          <alter>1</alter>
+          <octave>3</octave>
+        </pitch>
+        <unpitched>
+          <display-step>B</display-step>
+          <display-octave>4</display-octave>
+        </unpitched>
+        <duration>2520</duration>
+        <type>16th</type>
+        <notehead parentheses="no">x</notehead>
+        <beam number="1">begin</beam>
+        <beam number="2">begin</beam>
+      </note>
+      <note>
+        <pitch>
+          <step>C</step>
+          <alter>1</alter>
+          <octave>3</octave>
+        </pitch>
+        <unpitched>
+          <display-step>B</display-step>
+          <display-octave>4</display-octave>
+        </unpitched>
+        <duration>2520</duration>
+        <type>16th</type>
+        <notehead parentheses="no">x</notehead>
+        <beam number="1">end</beam>
+        <beam number="2">end</beam>
+      </note>
+      <note>
+        <rest />
+        <duration>2520</duration>
+        <type>16th</type>
       </note>
       <note>
         <pitch>
@@ -6624,16 +6117,9 @@
       </note>
       <note>
         <rest />
-        <duration>30240</duration>
-        <type>half</type>
+        <duration>15120</duration>
+        <type>quarter</type>
         <dot />
-      </note>
-    </measure>
-    <!--======================== Measure 237 =========================-->
-    <measure implicit="no" number="237">
-      <note>
-        <rest measure="yes" />
-        <duration>40320</duration>
       </note>
     </measure>
     <!--======================== Measure 238 =========================-->
@@ -6688,6 +6174,463 @@
     <!--======================== Measure 245 =========================-->
     <measure implicit="no" number="245">
       <note>
+        <rest measure="yes" />
+        <duration>40320</duration>
+      </note>
+    </measure>
+    <!--======================== Measure 246 =========================-->
+    <measure implicit="no" number="246">
+      <note>
+        <rest measure="yes" />
+        <duration>40320</duration>
+      </note>
+    </measure>
+    <!--======================== Measure 247 =========================-->
+    <measure implicit="no" number="247">
+      <note>
+        <rest />
+        <duration>2520</duration>
+        <type>16th</type>
+      </note>
+      <note>
+        <pitch>
+          <step>D</step>
+          <octave>2</octave>
+        </pitch>
+        <unpitched>
+          <display-step>B</display-step>
+          <display-octave>4</display-octave>
+        </unpitched>
+        <duration>2520</duration>
+        <type>16th</type>
+        <beam number="1">begin</beam>
+        <beam number="2">begin</beam>
+      </note>
+      <note>
+        <pitch>
+          <step>C</step>
+          <alter>1</alter>
+          <octave>3</octave>
+        </pitch>
+        <unpitched>
+          <display-step>B</display-step>
+          <display-octave>4</display-octave>
+        </unpitched>
+        <duration>2520</duration>
+        <type>16th</type>
+        <notehead parentheses="no">x</notehead>
+        <beam number="1">continue</beam>
+        <beam number="2">continue</beam>
+      </note>
+      <note>
+        <pitch>
+          <step>C</step>
+          <alter>1</alter>
+          <octave>3</octave>
+        </pitch>
+        <unpitched>
+          <display-step>B</display-step>
+          <display-octave>4</display-octave>
+        </unpitched>
+        <duration>2520</duration>
+        <type>16th</type>
+        <notehead parentheses="no">x</notehead>
+        <beam number="1">end</beam>
+        <beam number="2">end</beam>
+      </note>
+      <note>
+        <rest />
+        <duration>2520</duration>
+        <type>16th</type>
+      </note>
+      <note>
+        <unpitched>
+          <display-step>A</display-step>
+          <display-octave>3</display-octave>
+        </unpitched>
+        <duration>2520</duration>
+        <type>16th</type>
+        <notehead parentheses="no">x</notehead>
+      </note>
+      <note>
+        <chord />
+        <unpitched>
+          <display-step>A</display-step>
+          <display-octave>3</display-octave>
+        </unpitched>
+        <duration>2520</duration>
+        <type>16th</type>
+        <notehead parentheses="no">x</notehead>
+      </note>
+      <note>
+        <rest />
+        <duration>2520</duration>
+        <type>16th</type>
+      </note>
+      <note>
+        <unpitched>
+          <display-step>A</display-step>
+          <display-octave>3</display-octave>
+        </unpitched>
+        <duration>2520</duration>
+        <type>16th</type>
+        <notehead parentheses="no">x</notehead>
+      </note>
+      <note>
+        <chord />
+        <unpitched>
+          <display-step>A</display-step>
+          <display-octave>3</display-octave>
+        </unpitched>
+        <duration>2520</duration>
+        <type>16th</type>
+        <notehead parentheses="no">x</notehead>
+      </note>
+      <note>
+        <rest />
+        <duration>5040</duration>
+        <type>eighth</type>
+      </note>
+      <note>
+        <pitch>
+          <step>C</step>
+          <alter>1</alter>
+          <octave>3</octave>
+        </pitch>
+        <unpitched>
+          <display-step>B</display-step>
+          <display-octave>4</display-octave>
+        </unpitched>
+        <duration>2520</duration>
+        <type>16th</type>
+        <notehead parentheses="no">x</notehead>
+      </note>
+      <note>
+        <rest />
+        <duration>5040</duration>
+        <type>eighth</type>
+      </note>
+      <note>
+        <pitch>
+          <step>B</step>
+          <alter>-1</alter>
+          <octave>2</octave>
+        </pitch>
+        <unpitched>
+          <display-step>B</display-step>
+          <display-octave>4</display-octave>
+        </unpitched>
+        <duration>2520</duration>
+        <type>16th</type>
+        <notehead parentheses="no">circle-x</notehead>
+      </note>
+      <note>
+        <rest />
+        <duration>5040</duration>
+        <type>eighth</type>
+      </note>
+    </measure>
+    <!--======================== Measure 248 =========================-->
+    <measure implicit="no" number="248">
+      <note>
+        <rest />
+        <duration>20160</duration>
+        <type>half</type>
+      </note>
+      <note>
+        <rest />
+        <duration>10080</duration>
+        <type>quarter</type>
+      </note>
+      <note>
+        <rest />
+        <duration>2520</duration>
+        <type>16th</type>
+      </note>
+      <note>
+        <pitch>
+          <step>B</step>
+          <alter>-1</alter>
+          <octave>2</octave>
+        </pitch>
+        <unpitched>
+          <display-step>B</display-step>
+          <display-octave>4</display-octave>
+        </unpitched>
+        <duration>2520</duration>
+        <type>16th</type>
+        <notehead parentheses="no">circle-x</notehead>
+      </note>
+      <note>
+        <rest />
+        <duration>5040</duration>
+        <type>eighth</type>
+      </note>
+    </measure>
+    <!--======================== Measure 249 =========================-->
+    <measure implicit="no" number="249">
+      <note>
+        <rest />
+        <duration>17640</duration>
+        <type>quarter</type>
+        <dot />
+        <dot />
+      </note>
+      <note>
+        <pitch>
+          <step>C</step>
+          <alter>1</alter>
+          <octave>3</octave>
+        </pitch>
+        <unpitched>
+          <display-step>B</display-step>
+          <display-octave>4</display-octave>
+        </unpitched>
+        <duration>2520</duration>
+        <type>16th</type>
+        <notehead parentheses="no">x</notehead>
+      </note>
+      <note>
+        <rest />
+        <duration>2520</duration>
+        <type>16th</type>
+      </note>
+      <note>
+        <pitch>
+          <step>C</step>
+          <alter>1</alter>
+          <octave>3</octave>
+        </pitch>
+        <unpitched>
+          <display-step>B</display-step>
+          <display-octave>4</display-octave>
+        </unpitched>
+        <duration>2520</duration>
+        <type>16th</type>
+        <notehead parentheses="no">x</notehead>
+      </note>
+      <note>
+        <rest />
+        <duration>7560</duration>
+        <type>eighth</type>
+        <dot />
+      </note>
+      <note>
+        <pitch>
+          <step>B</step>
+          <alter>-1</alter>
+          <octave>2</octave>
+        </pitch>
+        <unpitched>
+          <display-step>B</display-step>
+          <display-octave>4</display-octave>
+        </unpitched>
+        <duration>2520</duration>
+        <type>16th</type>
+        <notehead parentheses="no">circle-x</notehead>
+      </note>
+      <note>
+        <rest />
+        <duration>5040</duration>
+        <type>eighth</type>
+      </note>
+    </measure>
+    <!--======================== Measure 250 =========================-->
+    <measure implicit="no" number="250">
+      <note>
+        <rest />
+        <duration>17640</duration>
+        <type>quarter</type>
+        <dot />
+        <dot />
+      </note>
+      <note>
+        <pitch>
+          <step>C</step>
+          <alter>1</alter>
+          <octave>3</octave>
+        </pitch>
+        <unpitched>
+          <display-step>B</display-step>
+          <display-octave>4</display-octave>
+        </unpitched>
+        <duration>2520</duration>
+        <type>16th</type>
+        <notehead parentheses="no">x</notehead>
+      </note>
+      <note>
+        <rest />
+        <duration>2520</duration>
+        <type>16th</type>
+      </note>
+      <note>
+        <pitch>
+          <step>C</step>
+          <alter>1</alter>
+          <octave>3</octave>
+        </pitch>
+        <unpitched>
+          <display-step>B</display-step>
+          <display-octave>4</display-octave>
+        </unpitched>
+        <duration>2520</duration>
+        <type>16th</type>
+        <notehead parentheses="no">x</notehead>
+      </note>
+      <note>
+        <rest />
+        <duration>7560</duration>
+        <type>eighth</type>
+        <dot />
+      </note>
+      <note>
+        <pitch>
+          <step>B</step>
+          <alter>-1</alter>
+          <octave>2</octave>
+        </pitch>
+        <unpitched>
+          <display-step>B</display-step>
+          <display-octave>4</display-octave>
+        </unpitched>
+        <duration>2520</duration>
+        <type>16th</type>
+        <notehead parentheses="no">circle-x</notehead>
+      </note>
+      <note>
+        <rest />
+        <duration>5040</duration>
+        <type>eighth</type>
+      </note>
+    </measure>
+    <!--======================== Measure 251 =========================-->
+    <measure implicit="no" number="251">
+      <note>
+        <rest />
+        <duration>17640</duration>
+        <type>quarter</type>
+        <dot />
+        <dot />
+      </note>
+      <note>
+        <pitch>
+          <step>C</step>
+          <alter>1</alter>
+          <octave>3</octave>
+        </pitch>
+        <unpitched>
+          <display-step>B</display-step>
+          <display-octave>4</display-octave>
+        </unpitched>
+        <duration>2520</duration>
+        <type>16th</type>
+        <notehead parentheses="no">x</notehead>
+      </note>
+      <note>
+        <rest />
+        <duration>2520</duration>
+        <type>16th</type>
+      </note>
+      <note>
+        <pitch>
+          <step>C</step>
+          <alter>1</alter>
+          <octave>3</octave>
+        </pitch>
+        <unpitched>
+          <display-step>B</display-step>
+          <display-octave>4</display-octave>
+        </unpitched>
+        <duration>2520</duration>
+        <type>16th</type>
+        <notehead parentheses="no">x</notehead>
+      </note>
+      <note>
+        <rest />
+        <duration>5040</duration>
+        <type>eighth</type>
+      </note>
+      <note>
+        <pitch>
+          <step>B</step>
+          <alter>-1</alter>
+          <octave>2</octave>
+        </pitch>
+        <unpitched>
+          <display-step>B</display-step>
+          <display-octave>4</display-octave>
+        </unpitched>
+        <duration>2520</duration>
+        <type>16th</type>
+        <notehead parentheses="no">circle-x</notehead>
+      </note>
+      <note>
+        <rest />
+        <duration>7560</duration>
+        <type>eighth</type>
+        <dot />
+      </note>
+    </measure>
+    <!--======================== Measure 252 =========================-->
+    <measure implicit="no" number="252">
+      <note>
+        <rest />
+        <duration>20160</duration>
+        <type>half</type>
+      </note>
+      <note>
+        <rest />
+        <duration>2520</duration>
+        <type>16th</type>
+      </note>
+      <note>
+        <unpitched>
+          <display-step>A</display-step>
+          <display-octave>3</display-octave>
+        </unpitched>
+        <duration>2520</duration>
+        <type>16th</type>
+        <notehead parentheses="no">x</notehead>
+      </note>
+      <note>
+        <chord />
+        <unpitched>
+          <display-step>A</display-step>
+          <display-octave>3</display-octave>
+        </unpitched>
+        <duration>2520</duration>
+        <type>16th</type>
+        <notehead parentheses="no">x</notehead>
+      </note>
+      <note>
+        <rest />
+        <duration>7560</duration>
+        <type>eighth</type>
+        <dot />
+      </note>
+      <note>
+        <pitch>
+          <step>B</step>
+          <alter>-1</alter>
+          <octave>2</octave>
+        </pitch>
+        <unpitched>
+          <display-step>B</display-step>
+          <display-octave>4</display-octave>
+        </unpitched>
+        <duration>2520</duration>
+        <type>16th</type>
+        <notehead parentheses="no">circle-x</notehead>
+      </note>
+      <note>
+        <rest />
+        <duration>5040</duration>
+        <type>eighth</type>
+      </note>
+    </measure>
+    <!--======================== Measure 253 =========================-->
+    <measure implicit="no" number="253">
+      <note>
         <rest />
         <duration>15120</duration>
         <type>quarter</type>
@@ -6711,8 +6654,8 @@
       </note>
       <note>
         <pitch>
-          <step>E</step>
-          <alter>-1</alter>
+          <step>C</step>
+          <alter>1</alter>
           <octave>3</octave>
         </pitch>
         <unpitched>
@@ -6727,107 +6670,8 @@
       </note>
       <note>
         <rest />
-        <duration>20160</duration>
-        <type>half</type>
-      </note>
-    </measure>
-    <!--======================== Measure 246 =========================-->
-    <measure implicit="no" number="246">
-      <note>
-        <rest measure="yes" />
-        <duration>40320</duration>
-      </note>
-    </measure>
-    <!--======================== Measure 247 =========================-->
-    <measure implicit="no" number="247">
-      <note>
-        <rest measure="yes" />
-        <duration>40320</duration>
-      </note>
-    </measure>
-    <!--======================== Measure 248 =========================-->
-    <measure implicit="no" number="248">
-      <note>
-        <rest measure="yes" />
-        <duration>40320</duration>
-      </note>
-    </measure>
-    <!--======================== Measure 249 =========================-->
-    <measure implicit="no" number="249">
-      <note>
-        <rest measure="yes" />
-        <duration>40320</duration>
-      </note>
-    </measure>
-    <!--======================== Measure 250 =========================-->
-    <measure implicit="no" number="250">
-      <note>
-        <rest measure="yes" />
-        <duration>40320</duration>
-      </note>
-    </measure>
-    <!--======================== Measure 251 =========================-->
-    <measure implicit="no" number="251">
-      <note>
-        <rest measure="yes" />
-        <duration>40320</duration>
-      </note>
-    </measure>
-    <!--======================== Measure 252 =========================-->
-    <measure implicit="no" number="252">
-      <note>
-        <rest measure="yes" />
-        <duration>40320</duration>
-      </note>
-    </measure>
-    <!--======================== Measure 253 =========================-->
-    <measure implicit="no" number="253">
-      <note>
-        <rest measure="yes" />
-        <duration>40320</duration>
-      </note>
-    </measure>
-    <!--======================== Measure 254 =========================-->
-    <measure implicit="no" number="254">
-      <note>
-        <rest />
-        <duration>20160</duration>
-        <type>half</type>
-      </note>
-      <note>
-        <rest />
-        <duration>5040</duration>
-        <type>eighth</type>
-      </note>
-      <note>
-        <pitch>
-          <step>C</step>
-          <octave>2</octave>
-        </pitch>
-        <unpitched>
-          <display-step>B</display-step>
-          <display-octave>4</display-octave>
-        </unpitched>
         <duration>2520</duration>
         <type>16th</type>
-      </note>
-      <note>
-        <rest />
-        <duration>10080</duration>
-        <type>quarter</type>
-      </note>
-      <note>
-        <rest />
-        <duration>2520</duration>
-        <type>16th</type>
-      </note>
-    </measure>
-    <!--======================== Measure 255 =========================-->
-    <measure implicit="no" number="255">
-      <note>
-        <rest />
-        <duration>10080</duration>
-        <type>quarter</type>
       </note>
       <note>
         <pitch>

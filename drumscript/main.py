@@ -9,7 +9,7 @@ from drumscript.notation_generator import score_builder, pdf_exporter
 from drumscript.utils.logging import setup_logging
 import logging
 
-print("/n# ------------------------------------------------------------------------------------")
+print("# ------------------------------------------------------------------------------------")
 
 def main(input_audio_path: str, transcribe_full_song: bool = False):
     """

@@ -4,6 +4,13 @@ import os
 import music21
 import subprocess # We need subprocess to call LilyPond externally
 from pathlib import Path
+import logging
+
+
+# Get the logger for consistent logging
+logger = logging.getLogger('DrumScript')
+
+
 
 # OLD BLOCK, KEEP FOR NOW, TIDY UP LATER
 """def generate_pdf(music21_score: music21.stream.Score, output_filepath: str):
@@ -85,20 +92,16 @@ from pathlib import Path
         pass # Keep this 'pass' if you comment out the block"""
 
 
-# latest block
+"""#  ALSO NOW OLD, KEEP FOR NOW, TIDY LATER, RELATES TO DEFUNCT MUSIC21 XML TO PDF FUNCTIONALITY
 def generate_pdf(score: music21.stream.Score, output_filepath: str):
-    """
-    Exports a music21 score to both MusicXML and PDF formats.
-    
-    It saves:
-    1. A .musicxml file (at the same path, with .musicxml extension)
-    2. A .pdf file (at the specified output_filepath)
-    
-    Args:
-        score (music21.stream.Score): The music21 score object to be exported.
-        output_filepath (str): The full path for the final .pdf file.
-                               e.g., "outputs/my_song.pdf"
-    """
+    #Exports a music21 score to both MusicXML and PDF formats.
+    #It saves:
+    #1. A .musicxml file (at the same path, with .musicxml extension)
+    #2. A .pdf file (at the specified output_filepath)
+    #Args:
+    #    score (music21.stream.Score): The music21 score object to be exported.
+    #    output_filepath (str): The full path for the final .pdf file.
+    #                           e.g., "outputs/my_song.pdf"
     
     # --- 1. Define File Paths ---
     output_path = Path(output_filepath)
@@ -140,8 +143,9 @@ def generate_pdf(score: music21.stream.Score, output_filepath: str):
         print(f"ERROR: Failed to generate PDF with LilyPond.")
         print("Please ensure LilyPond is installed and accessible in your system's PATH.")
         # Re-raise the error to stop the script
-        raise e
+        raise e"""
     
+
 def export_to_xml(music21_score: music21.stream.Score, output_filepath: str):
     """
     Exports a music21 Score object to a MusicXML file.
@@ -168,3 +172,80 @@ def export_to_xml(music21_score: music21.stream.Score, output_filepath: str):
     except Exception as e:
         print(f"An unexpected error occurred during XML export: {e}")
         raise
+
+def generate_pdf(score: music21.stream.Score, output_filepath: str):
+    """
+    Exports a music21 score to both MusicXML and PDF formats using MuseScore.
+    
+    It saves:
+    1. A .musicxml file
+    2. A .pdf file (by calling MuseScore to convert the .musicxml)
+    
+    Args:
+        score (music21.stream.Score): The music21 score object to be exported.
+        output_filepath (str): The full path for the final .pdf file.
+                               e.g., "outputs/my_song.pdf"
+    """
+    
+    # --- 1. Define File Paths ---
+    output_path = Path(output_filepath)
+    output_dir = output_path.parent
+    file_stem = output_path.stem
+    
+    # Define the .xml path, e.g., "outputs/my_song_transcription.musicxml"
+    # Note: MuseScore seems to prefer the .musicxml extension
+    xml_path = output_dir / f"{file_stem}.musicxml"
+    
+    # Create the output directory if it doesn't exist
+    output_dir.mkdir(parents=True, exist_ok=True)
+    
+    xml_path_str = str(xml_path)
+    pdf_path_str = str(output_path)
+
+    # --- 2. Export the MusicXML file ---
+    try:
+        logger.info(f"Saving MusicXML to: {xml_path_str}...")
+        score.write('musicxml', fp=xml_path_str)
+        logger.info(f"Successfully saved {xml_path_str}")
+        
+    except Exception as e:
+        logger.error(f"ERROR: Failed to save MusicXML file: {e}", exc_info=True)
+        raise # Stop here if we can't even write the XML
+
+    # --- 3. Export the PDF file (using MuseScore) ---
+    # This is the logic from your drum_notation_tester.py
+    musescore_path = '/Applications/MuseScore 4.app/Contents/MacOS/mscore'
+
+    try:
+        logger.info(f"🎵 Attempting to generate PDF using MuseScore...")
+        command = [musescore_path, '-o', pdf_path_str, xml_path_str]
+        
+        # Run the MuseScore command
+        result = subprocess.run(command, check=True, capture_output=True, text=True)
+        
+        logger.info(f"PDF file successfully generated at: {pdf_path_str}")
+        
+        # Log any non-fatal warnings from MuseScore
+        if result.stderr:
+            logger.warning(f"MuseScore STDERR (non-fatal): {result.stderr}")
+            
+    except FileNotFoundError:
+        logger.error(f"ERROR: MuseScore executable not found at '{musescore_path}'.")
+        logger.error("Please check the path in notation_generator/pdf_exporter.py")
+        raise
+    except subprocess.CalledProcessError as e:
+        logger.error(f"ERROR: MuseScore failed to convert the file.")
+        logger.error(f"  Command: {' '.join(e.cmd)}")
+        logger.error(f"  MuseScore Error Output: {e.stderr}")
+        raise
+    except Exception as e:
+        logger.error(f"An unexpected error occurred during MuseScore PDF generation: {e}", exc_info=True)
+        raise
+    finally:
+        # Clean up the intermediate .musicxml file after the PDF is made
+        if Path(xml_path_str).exists():
+            try:
+                os.remove(xml_path_str)
+                logger.info(f"Cleaned up temporary file: {xml_path_str}")
+            except OSError as e:
+                logger.error(f"Failed to clean up temporary file {xml_path_str}: {e}")

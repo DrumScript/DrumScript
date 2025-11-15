@@ -7,7 +7,7 @@ from drumscript.audio_processor import audio_loader, onset_detector, feature_ext
 from drumscript.drum_classifier import predict
 from drumscript.notation_generator import score_builder, pdf_exporter
 from drumscript.utils.logging import setup_logging
-
+import logging
 
 print("/n# ------------------------------------------------------------------------------------")
 
@@ -123,6 +123,9 @@ def main(input_audio_path: str, transcribe_full_song: bool = False):
         pdf_exporter.generate_pdf(score, final_pdf_path)
 
         logger.info(f"--- Transcription complete for: {input_audio_path} ---")
+    
+    except Exception as e:
+        logger.error(f"An unexpected error occurred in the pipeline: {e}", exc_info=True)
 
 if __name__ == '__main__':
     # This allows testing the feature from the command line.

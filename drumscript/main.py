@@ -8,7 +8,8 @@ from drumscript.drum_classifier import predict
 from drumscript.notation_generator import score_builder, pdf_exporter
 from drumscript.utils.logging import setup_logging
 
-print("\n#=============================================================================================")
+
+print("/n# ------------------------------------------------------------------------------------")
 
 def main(input_audio_path: str, transcribe_full_song: bool = False):
     """
@@ -75,47 +76,53 @@ def main(input_audio_path: str, transcribe_full_song: bool = False):
         logger.info("Classifying drum hits...")
         classified_events = predict.predict_drum_hits(features)
         
-        # 7. BUILD SCORE
+        # 7. BUILD SCORE, v1
         #logger.info("Building music score...")
         #score = score_builder.build_score(classified_events, estimated_tempo)
         #score = score_builder.build_and_export_drum_score(classified_events, estimated_tempo)
 
-        # 8. EXPORT SCORE
+        # 8. EXPORT SCORE, v1
         #output_filename = f"{Path(input_audio_path).stem}_transcription"
         #logger.info(f"Exporting score to {output_filename}...")
         #pdf_exporter.export_score_to_pdf(score, f"outputs/{output_filename}.pdf")
         
-        #logger.info(f"--- Transcription complete for: {input_audio_path} ---")
+        #logger.info(f"--- Transcription complete for: {input_audio_path} ---"), v1
 
-        # 7. BUILD AND EXPORT SCORE
+        ## 7. BUILD AND EXPORT SCORE, v2
+        # logger.info("Building music score..."), v2
+
+        # Define the final output path, v2
+        # output_filename = f"{Path(input_audio_path).stem}_transcription", v2
+        # final_pdf_path = f"outputs/{output_filename}.pdf", v2
+
+        # logger.info(f"Exporting score to {final_pdf_path}..."), v2
+
+        # Pass all the arguments to the score builder, v2
+        # score = score_builder.build_and_export_drum_score(, v2
+            # detected_events=classified_events, , v2
+            # tempo=estimated_tempo, v2
+            # output_filepath=final_pdf_path  # <-- This is the fix!, v2
+        # )
+
+        # logger.info(f"--- Transcription complete for: {input_audio_path} ---"), v2
+
+        # 7. BUILD SCORE
         logger.info("Building music score...")
+        score = score_builder.build_score(
+            detected_events=classified_events, 
+            tempo=estimated_tempo
+        )
 
-        # Define the final output path
+        # 8. EXPORT SCORE (PDF and MusicXML)
         output_filename = f"{Path(input_audio_path).stem}_transcription"
         final_pdf_path = f"outputs/{output_filename}.pdf"
 
-        logger.info(f"Exporting score to {final_pdf_path}...")
+        logger.info(f"Exporting score to {final_pdf_path} (and .musicxml)...")
 
-        # Pass all the arguments to the score builder
-        score = score_builder.build_and_export_drum_score(
-            detected_events=classified_events, 
-            tempo=estimated_tempo, 
-            output_filepath=final_pdf_path  # <-- This is the fix!
-        )
+        # This will now create both files
+        pdf_exporter.generate_pdf(score, final_pdf_path)
 
         logger.info(f"--- Transcription complete for: {input_audio_path} ---")
-
-    except Exception as e:
-        logger.error(f"An unexpected error occurred in the pipeline: {e}", exc_info=True)
-
-    finally:
-            # 3. Add the cleanup block for the temp files
-            if temp_output_dir and Path(temp_output_dir).exists():
-                try:
-                    # shutil.rmtree(temp_output_dir)
-                    logger.info(f"Successfully cleaned up temporary directory: {temp_output_dir}")
-                except OSError as e:
-                    logger.error(f"Failed to clean up temporary directory {temp_output_dir}: {e}")
 
 if __name__ == '__main__':
     # This allows testing the feature from the command line.
@@ -131,4 +138,4 @@ if __name__ == '__main__':
     
     main(input_path, transcribe_full_song=run_as_full_song)
 
-print("\n#=============================================================================================")
+print("# ------------------------------------------------------------------------------------")

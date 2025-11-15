@@ -40,10 +40,11 @@ def get_drum_music21_note_info(drum_type: str) -> Dict[str, Any]:
     }
 
 
-def build_and_export_drum_score(
+#def build_and_export_drum_score(, old version
+def build_score(
     detected_events: List[Dict[str, Any]],
     tempo: int = 120, # This is a fallback tempo, but will be overwritten when estimate_tempo is called through main, keep as is for now
-    output_filepath: str = "output_drum_sheet.pdf",
+    # output_filepath: str = "output_drum_sheet.pdf", old version
     quantization_subdivision: int = 16 # e.g., 4 for quarter, 8 for eighth, 16 for sixteenth
 ):
     """
@@ -167,9 +168,9 @@ def build_and_export_drum_score(
     # --- Export to PDF ---
     # The generate_pdf function in pdf_exporter.py already handles music21 Stream to PDF conversion
     # It takes a score-like object and an output filepath.
-    generate_pdf(score, output_filepath) # Pass the music21 score directly
+    #generate_pdf(score, output_filepath) # Pass the music21 score directly, for old version
 
-    print(f"Music21 score built and ready for export to {output_filepath}")
+    #print(f"Music21 score built and ready for export to {output_filepath}"), old version
 
     return score
 

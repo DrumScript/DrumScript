@@ -8,6 +8,14 @@ from collections import defaultdict
 import math
 from typing import List, Dict, Any
 from drumscript.notation_generator.constants import DRUM_NOTATION_MAP
+from datetime import datetime
+
+
+
+print("# ------------------------------------------------------------------------------------")
+date_time = datetime.now()
+print(date_time)
+
 
 # --- Embedded Helper Functions (from notation_generator/helpers.py) ---
 def round_to_nearest_subdivision(time_in_beats: float, subdivision: int) -> float:

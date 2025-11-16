@@ -5,6 +5,7 @@ import music21
 import subprocess # We need subprocess to call LilyPond externally
 from pathlib import Path
 import logging
+import music21.environment
 
 
 # Get the logger for consistent logging

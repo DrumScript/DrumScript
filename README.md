@@ -1,7 +1,7 @@
 ## **DrumScript**
 
 <!--date_created: sun-15-june-2025-->
-<!--date_updated: sun-09-nov-2025-->
+<!--date_updated: mon-17-nov-2025-->
 
 > **Python 3.12.10**
 
@@ -21,8 +21,7 @@ DrumScript/
 ├── drumscript/             # Main source package directory
 │   ├── __init__.py
 │   ├── main.py             # Command-line entry point
-│   │
-│   ├── audio_processor/    # Audio loading, onset detection, feature extraction
+│   ├── audio_processor/    # Audio loading, onset detection, feature extraction, tempo detection, stem-splitter and tempo-detection
 │   ├── drum_classifier/    # Rule-based classification engine
 │   ├── notation_generator/ # Score building and PDF/XML export
 │   └── utils/              # Utility functions

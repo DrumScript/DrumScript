@@ -68,6 +68,34 @@ def main(input_audio_path: str, transcribe_full_song: bool = False):
         # 6. CLASSIFY HITS (Rule-Based Engine)
         print("Classifying drum hits...")
         classified_events = predict.predict_drum_hits(features)
+
+        # We must now combine the classification results with their timestamps
+        # before passing them to the score builder.
+        
+        print("Converting onset frames to timestamps...")
+        # Convert frame indices (e.g., [500, 1000]) to seconds (e.g., [11.6, 23.2])
+        onset_times_sec = onset_detector.onset_frames(onset_frames, sr=sr)
+
+        # Ensure we have the same number of timestamps as classified hits
+        if len(onset_times_sec) != len(classified_events):
+            print(f"Error: Mismatch in onset times ({len(onset_times_sec)}) and classified hits ({len(classified_events)})")
+            return 
+
+        # Build the final 'classified_events' list in the format score_builder expects
+        print("Combining timestamps and classified hits...")
+        classified_events = []
+        for i in range(len(onset_times_sec)):
+            time_sec = onset_times_sec[i]
+            drum_types = classified_events[i]
+            
+            # Only add events that actually have drum hits (not empty classifications)
+            if drum_types: 
+                classified_events.append({
+                    'time': time_sec,
+                    'drums': drum_types
+                })
+                
+        print(f"Successfully combined {len(classified_events)} detected drum events with timestamps.")
         
         # 7. & 8. BUILD AND EXPORT SCORE
         print("Building and exporting music score...")

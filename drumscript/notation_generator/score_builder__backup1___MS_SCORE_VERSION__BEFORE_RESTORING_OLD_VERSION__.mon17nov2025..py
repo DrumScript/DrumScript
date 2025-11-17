@@ -4,10 +4,10 @@
 import music21
 from typing import List, Dict, Any
 from collections import defaultdict
-from . import constants
-from constants import DRUM_NOTATION_MAP # Assuming constants.py defines DRUM_NOTATION_MAP
-from helpers import round_to_nearest_subdivision, get_note_duration_name # Assuming these are useful
-from pdf_exporter import generate_pdf # To actually export the PDF
+from drumscript.notation_generator import constants
+from drumscript.notation_generator.constants import DRUM_NOTATION_MAP # Assuming constants.py defines DRUM_NOTATION_MAP
+from drumscript.notation_generator.helpers import round_to_nearest_subdivision, get_note_duration_name # Assuming these are useful
+from drumscript.notation_generator.pdf_exporter import generate_pdf # To actually export the PDF
 
 def get_drum_music21_note_info(drum_type: str) -> Dict[str, Any]:
     """
@@ -35,14 +35,16 @@ def get_drum_music21_note_info(drum_type: str) -> Dict[str, Any]:
         'midi_pitch': drum_map['midi_program'], # Use midi_program from map for accurate playback
         'note_head': drum_map['note_head'],
         'display_step': pitch_obj.step,     # E.g., 'F', 'C' - for visual staff placement
-        'display_octave': pitch_obj.octave  # E.g., 2, 3 - for visual staff placement
+        'display_octave': pitch_obj.octave,  # E.g., 2, 3 - for visual staff placement,
+        'staff_position': drum_map['staff_position']
     }
 
 
-def build_and_export_drum_score(
+#def build_and_export_drum_score(, old version
+def build_score(
     detected_events: List[Dict[str, Any]],
-    tempo: int = 120,
-    output_filepath: str = "output_drum_sheet.pdf",
+    tempo: int = 120, # This is a fallback tempo, but will be overwritten when estimate_tempo is called through main, keep as is for now
+    # output_filepath: str = "output_drum_sheet.pdf", old version
     quantization_subdivision: int = 16 # e.g., 4 for quarter, 8 for eighth, 16 for sixteenth
 ):
     """
@@ -87,17 +89,20 @@ def build_and_export_drum_score(
     events_by_quantized_time = defaultdict(list)
 
     for event in detected_events:
-        onset_time_seconds = event['time']
-        drum_types = event['drums'] # This is the list of detected drums for this event
+        # FIX 1: Use the correct key 'onset_time_seconds'
+        onset_time_seconds = event['onset_time_seconds'] 
+
+        # FIX 2: Get the single 'drum_type' from the event
+        drum_type = event['drum_type'] 
 
         # Convert seconds to beats
         time_in_beats = (onset_time_seconds / 60.0) * tempo
-        
+
         # Quantize the time to the nearest musical subdivision
         quantized_time_beats = round_to_nearest_subdivision(time_in_beats, quantization_subdivision)
-        
-        # Add all drum types for this quantized time
-        events_by_quantized_time[quantized_time_beats].extend(drum_types)
+
+        # Add this single drum type to the list for this quantized time
+        events_by_quantized_time[quantized_time_beats].append(drum_type)
 
     # Sort events by quantized time
     sorted_quantized_times = sorted(events_by_quantized_time.keys())
@@ -163,10 +168,11 @@ def build_and_export_drum_score(
     # --- Export to PDF ---
     # The generate_pdf function in pdf_exporter.py already handles music21 Stream to PDF conversion
     # It takes a score-like object and an output filepath.
-    generate_pdf(score, output_filepath) # Pass the music21 score directly
+    #generate_pdf(score, output_filepath) # Pass the music21 score directly, for old version
 
-    print(f"Music21 score built and ready for export to {output_filepath}")
+    #print(f"Music21 score built and ready for export to {output_filepath}"), old version
 
+    return score
 
 # You might also want a separate function to just build the score object
 # if you want to inspect it before exporting, but for now, this combined

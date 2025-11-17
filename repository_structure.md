@@ -2,7 +2,7 @@
 ## `DrumScript` Python Package Structure
 
 <!--date_created: weds-25-oct-2025?-->
-<!--date_edited: sun-09-nov-2025-->
+<!--date_edited: mon-17-nov-2025-->
 
 
 > **PLEASE NOTE (Oct-2025 Update):** This repository structure has been updated to reflect the project's pivot to a non-ML, classification-based approach. Legacy machine learning modules have been archived.
@@ -40,8 +40,10 @@ DrumScript/                          # The main Python package that converts dru
 │   ├── notation_generator/              # PYTHON SUPBPACKAGE/MODULE:  Generates musical notation (.xml) and sheet music (.pdf).
 │   │   ├── __init__.py
 │   │   ├── constants.py                 # Defines constants for score generation (e.g., staff positions).
-│   │   ├── pdf_exporter.py              # Converts the generated score into a PDF file.
+│   │   ├── pdf_exporter.py              # [MIGHT REMOVE] Converts the generated score into a PDF file.
+│   │   ├── score_exporter.py            # Converts the generated score into an XML/MIDI file.
 │   │   └── score_builder.py             # Builds a musical score from the list of classified events.
+
 │   │ 
 │   └── utils/                           # PYTHON SUPBPACKAGE/MODULE: Utility functions and configuration.
 │   │   ├── __init__.py

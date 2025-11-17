@@ -164,4 +164,4 @@ drum_classifier/model_trainer.py
 **developer_docs/_build
 # temporarily add drumscript build lib to gitignore:
 *build
-*stems_test
+*outputs

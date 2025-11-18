@@ -9,7 +9,9 @@ import soundfile
 import argparse # for command-line argument parsing
 from datetime import datetime
 
-print(f'')
+print("\n#---------------------------------------------------------------------------------------")
+datetimestamp = datetime.now()
+print(f'date/time of run: {datetimestamp}') # for logging 
 
 def detect_onsets(audio_data: np.ndarray, sr: int) -> list[float]:
     """

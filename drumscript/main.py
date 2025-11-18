@@ -1,8 +1,9 @@
-    # drumscript/main.py
+# drumscript/main.py
 import shutil
 from pathlib import Path
 import os
 import sys
+import json # Needed for saving the analysis file
 from drumscript.audio_processor.stem_splitter import extract_drum_stem
 from drumscript.audio_processor import audio_loader, onset_detector, feature_extractor, tempo_detector
 from drumscript.drum_classifier import predict
@@ -74,6 +75,19 @@ def main(input_audio_path: str, transcribe_full_song: bool = False):
         print("Classifying drum hits...")
         # predict.py returns a list of event dictionaries that ALREADY contain the 'onset_time_seconds'
         raw_classified_events = predict.predict_drum_hits(features)
+
+        # --- NEW: Save Classification Analysis for Accuracy Tuning ---
+        output_dir = "outputs"
+        os.makedirs(output_dir, exist_ok=True)
+        json_output_path = os.path.join(output_dir, "prediction_output.json")
+        
+        print(f"Saving classification analysis to {json_output_path}...")
+        try:
+            with open(json_output_path, 'w') as f:
+                json.dump(raw_classified_events, f, indent=4)
+        except Exception as e:
+            print(f"Warning: Could not save prediction_output.json: {e}")
+        # -------------------------------------------------------------
 
         # 7. FORMAT EVENTS FOR SCORE BUILDER
         print("Formatting events for score builder...")

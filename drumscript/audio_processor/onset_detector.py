@@ -7,8 +7,9 @@ import numpy as np
 import os
 import soundfile
 import argparse # for command-line argument parsing
+from datetime import datetime
 
-
+print(f'')
 
 def detect_onsets(audio_data: np.ndarray, sr: int) -> list[float]:
     """
@@ -88,7 +89,8 @@ def detect_onsets(audio_data: np.ndarray, sr: int) -> list[float]:
     return final_onsets
 """
 
-#-------NEW FCT AUTOMATIC TEMPO DETECTION---- TO BE REVIEWED/.TESTED
+# ==== TEMPO DETECTION ===========================================================
+# TO BE REVIEWED AND POSSIBLY REPLACED WITH IMPORTED `drumscript/audio_processor/tempo_detector.py`
 
 def calculate_tempo_from_onsets(onset_times: np.ndarray, sr: int) -> float:
     """
@@ -110,12 +112,11 @@ def calculate_tempo_from_onsets(onset_times: np.ndarray, sr: int) -> float:
     # librosa.beat.tempo returns an array, we'll take the first (most likely) value
     return tempo[0]
 
-#----------------------------------------------------------------------
-
+# ================================================================================
 
 if __name__ == "__main__":
     from drumscript.audio_processor.audio_loader import load_audio, normalise_audio
-    print("\n#=======================================================================================")
+    print("\n#---------------------------------------------------------------------------------------")
     #print("Running onset_detector.py example with test.wav/test.mp3...")
     print("Running onset_detector.py example with provided filepath...") # FUTURE: Find way to encode this so it prints the file path provided in CLI
     try:
@@ -180,4 +181,4 @@ if __name__ == "__main__":
         traceback.print_exc() # Print full traceback for debugging
 
     print("\nonset_detector.py example finished.")
-    print("\n-----------------------------------------------------")
+    print("\n#---------------------------------------------------------------------------------------")

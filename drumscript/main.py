@@ -58,12 +58,12 @@ def main(input_audio_path: str, transcribe_full_song: bool = False):
 
         # 4. DETECT ONSETS
         print("Detecting onsets...")
-        onset_frames = onset_detector.detect_onsets(y, sr)
-        print(f"Found {len(onset_frames)} onset events.")
+        detected_onsets = onset_detector.detect_onsets(y, sr)
+        print(f"Found {len(detected_onsets)} onset events.")
 
         # 5. EXTRACT FEATURES
         print("Extracting features for each onset...")
-        features = feature_extractor.extract_features_for_onsets(y, sr, onset_frames)
+        features = feature_extractor.extract_features_for_onsets(y, sr, detected_onsets)
         
         # 6. CLASSIFY HITS (Rule-Based Engine)
         print("Classifying drum hits...")
@@ -74,7 +74,7 @@ def main(input_audio_path: str, transcribe_full_song: bool = False):
         
         print("Converting onset frames to timestamps...")
         # Convert frame indices (e.g., [500, 1000]) to seconds (e.g., [11.6, 23.2])
-        onset_times_sec = onset_detector.onset_frames(onset_frames, sr=sr)
+        onset_times_sec = onset_detector.detected_onsets(detected_onsets, sr=sr)
 
         # Ensure we have the same number of timestamps as classified hits
         if len(onset_times_sec) != len(classified_events):

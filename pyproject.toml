@@ -51,7 +51,8 @@ dependencies = [
     "tensorflow", 
     "torch==2.4.0",       
     "torchaudio==2.4.0",
-    "torchcodec", #adding temporarily just to test stem_splitter.py
+    "torchcodec", #adding temporarily just to test stem_splitter.py, 
+    "reportlab"
     #"lilypond",
     #"pytorch",
     #"tensorflow"

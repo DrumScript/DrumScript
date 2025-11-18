@@ -7,47 +7,14 @@ import music21
 from collections import defaultdict
 import math
 from typing import List, Dict, Any
+from drumscript.notation_generator.constants import DRUM_NOTATION_MAP
+from datetime import datetime
 
-# --- Embedded Constants (from notation_generator/constants.py) ---
-DRUM_NOTATION_MAP = {
-    'kick': {
-        'staff_position': 'F2',
-        'midi_program': 36,
-        'note_head': 'normal',
-        'display_name': 'Bass Drum'
-    },
-    'snare': {
-        'staff_position': 'C3',
-        'midi_program': 38,
-        'note_head': 'normal',
-        'display_name': 'Snare Drum'
-    },
-    'hi-hat': {
-        'staff_position': 'F#3',
-        'midi_program': 42,
-        'note_head': 'x',
-        'display_name': 'Hi-Hat (Closed)'
-    },
-    'crash': {
-        'staff_position': 'C4',
-        'midi_program': 49,
-        'note_head': 'x',
-        'display_name': 'Crash Cymbal'
-    },
-    'ride': {
-        'staff_position': 'A3',
-        'midi_program': 51,
-        'note_head': 'x',
-        'display_name': 'Ride Cymbal'
-    },
-    'tom': {
-        'staff_position': 'E3',
-        'midi_program': 50,
-        'note_head': 'normal',
-        'display_name': 'Tom-Tom'
-    }
-}
-# --- End Embedded Constants ---
+
+
+print("# ------------------------------------------------------------------------------------")
+date_time = datetime.now()
+print(date_time)
 
 
 # --- Embedded Helper Functions (from notation_generator/helpers.py) ---
@@ -179,8 +146,8 @@ def generate_midi_and_xml_from_json(input_json_path: str, midi_output_path: str,
     xml_filepath = os.path.join(xml_output_path, f"{output_filename}.xml")
     score.write('musicxml', fp=xml_filepath)
     
-    print(f"✅ Successfully generated MIDI file: {midi_filepath}")
-    print(f"✅ Successfully generated MusicXML file: {xml_filepath}")
+    print(f"Successfully generated MIDI file: {midi_filepath}")
+    print(f"Successfully generated MusicXML file: {xml_filepath}")
 
 
 if __name__ == "__main__":
@@ -192,3 +159,5 @@ if __name__ == "__main__":
     xml_output_dir = os.path.join(project_root, "outputs", "drum_classifier", "xml")
 
     generate_midi_and_xml_from_json(input_json, midi_output_dir, xml_output_dir)
+
+print("# ------------------------------------------------------------------------------------")

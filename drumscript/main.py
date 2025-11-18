@@ -1,16 +1,18 @@
+    # drumscript/main.py
 import shutil
 from pathlib import Path
 import os
 import sys
-
-# 1. Import your new (and fully tested!) function
 from drumscript.audio_processor.stem_splitter import extract_drum_stem
-
-# Your existing imports
 from drumscript.audio_processor import audio_loader, onset_detector, feature_extractor, tempo_detector
 from drumscript.drum_classifier import predict
 from drumscript.notation_generator import score_builder, pdf_exporter
-from drumscript.utils.logging import setup_logging
+from datetime import datetime
+# Logging imports removed
+
+print("\n# ------------------------------------------------------------------------------------")
+datetimestamp = datetime.now()
+print(f'\ndate/time: {datetimestamp}')
 
 def main(input_audio_path: str, transcribe_full_song: bool = False):
     """
@@ -23,86 +25,96 @@ def main(input_audio_path: str, transcribe_full_song: bool = False):
             If False (default), assume input is already a drum-only track.
     """
     
-    logger = setup_logging()
-    logger.info(f"--- Starting DrumScript transcription for: {input_audio_path} ---")
+    print(f"--- Starting DrumScript transcription for: {input_audio_path} ---")
 
     temp_drum_file_path = None
-    temp_dir_to_clean = None
+    temp_output_dir = None
 
     try:
         # 2. Add the new pre-processing step
         if transcribe_full_song:
             try:
                 # 1. SEPARATE DRUM STEM
-                logger.info("Full song mode: Separating drum stem...")
-                # This will create the stems in a temp folder
+                print("Full song mode: Separating drum stem...")
                 temp_drum_file_path = extract_drum_stem(input_audio_path)
                 
-                # The path to the drum file is .../temp_dir_xyz/htdemucs/song_name/drums.flac
-                # We must delete the root temp directory, 3 levels up.
-                temp_dir_to_clean = Path(temp_drum_file_path).parent.parent.parent
+                temp_output_dir = Path(temp_drum_file_path).parent.parent.parent
                 
-                logger.info(f"Drum stem extracted to: {temp_drum_file_path}")
+                print(f"Drum stem extracted to: {temp_drum_file_path}")
                 
-                # Use the new stem path for the rest of the pipeline
                 audio_to_process = temp_drum_file_path
                 
             except (RuntimeError, FileNotFoundError) as e:
-                logger.error(f"Failed to separate drum stem: {e}")
+                print(f"Failed to separate drum stem: {e}")
                 return # Exit if separation fails
         else:
-            # This is the original behavior: process the file directly
-            logger.info("Drum-only mode: Processing file directly.")
+            print("Drum-only mode: Processing file directly.")
             audio_to_process = input_audio_path
 
-        # --- Your existing pipeline (now uses the 'audio_to_process' variable) ---
-
         # 2. LOAD AUDIO
-        logger.info(f"Loading audio from: {audio_to_process}")
+        print(f"Loading audio from: {audio_to_process}")
         y, sr = audio_loader.load_audio(audio_to_process)
 
         # 3. DETECT TEMPO
         estimated_tempo = tempo_detector.estimate_tempo(y, sr)
-        logger.info(f"Estimated tempo: {estimated_tempo:.2f} BPM")
+        print(f"Estimated tempo: {estimated_tempo:.2f} BPM")
 
         # 4. DETECT ONSETS
-        logger.info("Detecting onsets...")
-        onset_frames = onset_detector.find_onsets(y, sr)
-        logger.info(f"Found {len(onset_frames)} onset events.")
+        print("Detecting onsets...")
+        # The onset_detector.detect_onsets function returns TIMESTAMPS (seconds), not frames.
+        onset_times = onset_detector.detect_onsets(y, sr)
+        print(f"Found {len(onset_times)} onset events.")
 
         # 5. EXTRACT FEATURES
-        logger.info("Extracting features for each onset...")
-        features = feature_extractor.extract_features_for_onsets(y, sr, onset_frames)
+        print("Extracting features for each onset...")
+        # Pass the onset timestamps directly to feature extractor
+        features = feature_extractor.extract_features_for_onsets(y, sr, onset_times)
         
         # 6. CLASSIFY HITS (Rule-Based Engine)
-        logger.info("Classifying drum hits...")
-        classified_events = predict.classify_hits(features)
-        
-        # 7. BUILD SCORE
-        logger.info("Building music score...")
-        score = score_builder.build_score(classified_events, estimated_tempo)
+        print("Classifying drum hits...")
+        # predict.py returns a list of event dictionaries that ALREADY contain the 'onset_time_seconds'
+        raw_classified_events = predict.predict_drum_hits(features)
 
-        # 8. EXPORT SCORE
+        # 7. FORMAT EVENTS FOR SCORE BUILDER
+        print("Formatting events for score builder...")
+        # Convert the classifier output to the format score_builder expects: {'time': float, 'drums': [str]}
+        final_classified_events = []
+        
+        for event in raw_classified_events:
+            final_classified_events.append({
+                'time': event['onset_time_seconds'],
+                'drums': [event['drum_type']] # score_builder expects a list of drum types
+            })
+                
+        print(f"Successfully prepared {len(final_classified_events)} detected drum events.")
+        
+        # 8. BUILD AND EXPORT SCORE
+        print("Building and exporting music score...")
+
+        # Define the final output path
         output_filename = f"{Path(input_audio_path).stem}_transcription"
-        logger.info(f"Exporting score to {output_filename}...")
-        pdf_exporter.export_score_to_pdf(score, f"outputs/{output_filename}.pdf")
+        final_pdf_path = f"outputs/{output_filename}.pdf" 
+
+        print(f"Exporting score to {final_pdf_path} (and .musicxml)...")
+
+        # Pass all arguments to the combined score builder and exporter function.
+        score_builder.build_and_export_drum_score(
+            detected_events=final_classified_events, 
+            tempo=estimated_tempo, 
+            output_filepath=final_pdf_path  
+        )
+
+        print(f"--- Transcription complete for: {input_audio_path} ---")
         
-        logger.info(f"--- Transcription complete for: {input_audio_path} ---")
-
     except Exception as e:
-        logger.error(f"An unexpected error occurred in the pipeline: {e}", exc_info=True)
-
-    finally:
-        # 3. Add the cleanup block for the temp files
-        if temp_dir_to_clean and Path(temp_dir_to_clean).exists():
-            try:
-                shutil.rmtree(temp_dir_to_clean)
-                logger.info(f"Successfully cleaned up temporary directory: {temp_dir_to_clean}")
-            except OSError as e:
-                logger.error(f"Failed to clean up temporary directory {temp_dir_to_clean}: {e}")
+        # Replaced logger.error with print
+        print(f"An unexpected error occurred in the pipeline: {e}")
+        # If you want the full error traceback, uncomment the next two lines
+        # import traceback
+        # traceback.print_exc()
 
 if __name__ == '__main__':
-    # This allows you to test the new feature from the command line.
+    # This allows testing the feature from the command line.
     
     if len(sys.argv) < 2:
         print("Usage: python main.py <path_to_audio_file> [--full]")
@@ -114,3 +126,5 @@ if __name__ == '__main__':
     run_as_full_song = '--full' in sys.argv
     
     main(input_path, transcribe_full_song=run_as_full_song)
+
+print("# ------------------------------------------------------------------------------------")

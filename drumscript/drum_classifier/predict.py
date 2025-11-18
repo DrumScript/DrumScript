@@ -4,7 +4,10 @@ import json
 import librosa
 import numpy as np
 from typing import List, Dict, Any
+from drumscript.notation_generator import constants
+from drumscript.notation_generator.constants import DRUM_NOTATION_MAP
 
+"""
 # --- Drum Mapping Dictionary for Enhanced Output ---
 DRUM_METADATA = {
     'kick': { 'midi_pitch': 36, 'note_head_type': 'normal', 'staff_position': 'F2', 'display_name': 'Kick Drum' },
@@ -18,6 +21,7 @@ DRUM_METADATA = {
     'ride': { 'midi_pitch': 51, 'note_head_type': 'x', 'staff_position': 'B3', 'display_name': 'Ride Cymbal' },
     'kick_clicky': { 'midi_pitch': 36, 'note_head_type': 'normal', 'staff_position': 'F2', 'display_name': 'Kick (Clicky)' }
 }
+"""
 
 # --- Rule-based thresholds ---
 KICK_SPECTRAL_CENTROID_MAX = 400
@@ -197,13 +201,17 @@ def create_detailed_drum_events(predicted_drums: List[str], onset_time: float) -
     
     detailed_events = []
     for drum_type in predicted_drums:
-        if drum_type in DRUM_METADATA:
+        #if drum_type in DRUM_METADATA:
+        if drum_type in constants.DRUM_NOTATION_MAP:
             event = {
                 'drum_type': drum_type,
-                'onset_time_seconds': round(onset_time, 2),
-                'midi_pitch': DRUM_METADATA[drum_type]['midi_pitch'],
-                'note_head_type': DRUM_METADATA[drum_type]['note_head_type'],
-                'staff_position': DRUM_METADATA[drum_type]['staff_position'],
+                'onset_time_seconds': round(onset_time, 2), 
+                #'midi_pitch': DRUM_METADATA[drum_type]['midi_pitch'], `midi_pitch` refers to DRUM_METADATA, but `midi_program` is the same thing in terms of .json, # `note_head_type` refers to DRUM_METADATA, but `note_head` is the same thing in terms of .json
+                #'note_head_type': DRUM_METADATA[drum_type]['note_head_type'],
+                #'staff_position': DRUM_METADATA[drum_type]['staff_position'],
+                'midi_pitch': DRUM_NOTATION_MAP[drum_type]['midi_program'],
+                'note_head_type': DRUM_NOTATION_MAP[drum_type]['note_head'], 
+                'staff_position': DRUM_NOTATION_MAP[drum_type]['staff_position'],
             }
             detailed_events.append(event)
     return detailed_events

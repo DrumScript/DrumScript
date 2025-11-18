@@ -1,154 +1,588 @@
 [
     {
-        "drum_type": "ride",
-        "onset_time_seconds": 1.16,
-        "midi_pitch": 51,
-        "note_head_type": "x",
-        "staff_position": "B3"
+        "drum_type": "kick",
+        "onset_time_seconds": 0.03,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
     },
     {
-        "drum_type": "hi_hat_open",
-        "onset_time_seconds": 12.42,
-        "midi_pitch": 46,
-        "note_head_type": "x-open",
-        "staff_position": "F#3"
+        "drum_type": "ride",
+        "onset_time_seconds": 0.27,
+        "midi_pitch": 51,
+        "note_head_type": "x",
+        "staff_position": "G3"
     },
     {
         "drum_type": "kick",
-        "onset_time_seconds": 13.1,
+        "onset_time_seconds": 10.81,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 10.86,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 10.9,
         "midi_pitch": 36,
         "note_head_type": "normal",
         "staff_position": "F2"
     },
     {
         "drum_type": "crash",
-        "onset_time_seconds": 13.77,
+        "onset_time_seconds": 11.17,
         "midi_pitch": 49,
         "note_head_type": "x",
         "staff_position": "A3"
     },
     {
         "drum_type": "crash",
-        "onset_time_seconds": 14.0,
-        "midi_pitch": 49,
-        "note_head_type": "x",
-        "staff_position": "A3"
-    },
-    {
-        "drum_type": "hi_hat_closed",
-        "onset_time_seconds": 14.28,
-        "midi_pitch": 42,
-        "note_head_type": "x",
-        "staff_position": "F#3"
-    },
-    {
-        "drum_type": "hi_hat_open",
-        "onset_time_seconds": 15.19,
-        "midi_pitch": 46,
-        "note_head_type": "x-open",
-        "staff_position": "F#3"
-    },
-    {
-        "drum_type": "crash",
-        "onset_time_seconds": 16.35,
-        "midi_pitch": 49,
-        "note_head_type": "x",
-        "staff_position": "A3"
-    },
-    {
-        "drum_type": "ride",
-        "onset_time_seconds": 17.79,
-        "midi_pitch": 51,
-        "note_head_type": "x",
-        "staff_position": "B3"
-    },
-    {
-        "drum_type": "crash",
-        "onset_time_seconds": 28.58,
-        "midi_pitch": 49,
-        "note_head_type": "x",
-        "staff_position": "A3"
-    },
-    {
-        "drum_type": "crash",
-        "onset_time_seconds": 28.82,
-        "midi_pitch": 49,
-        "note_head_type": "x",
-        "staff_position": "A3"
-    },
-    {
-        "drum_type": "crash",
-        "onset_time_seconds": 29.49,
-        "midi_pitch": 49,
-        "note_head_type": "x",
-        "staff_position": "A3"
-    },
-    {
-        "drum_type": "low_tom",
-        "onset_time_seconds": 29.85,
-        "midi_pitch": 41,
-        "note_head_type": "normal",
-        "staff_position": "A2"
-    },
-    {
-        "drum_type": "crash",
-        "onset_time_seconds": 34.82,
-        "midi_pitch": 49,
-        "note_head_type": "x",
-        "staff_position": "A3"
-    },
-    {
-        "drum_type": "crash",
-        "onset_time_seconds": 35.99,
-        "midi_pitch": 49,
-        "note_head_type": "x",
-        "staff_position": "A3"
-    },
-    {
-        "drum_type": "crash",
-        "onset_time_seconds": 36.22,
-        "midi_pitch": 49,
-        "note_head_type": "x",
-        "staff_position": "A3"
-    },
-    {
-        "drum_type": "crash",
-        "onset_time_seconds": 36.87,
-        "midi_pitch": 49,
-        "note_head_type": "x",
-        "staff_position": "A3"
-    },
-    {
-        "drum_type": "kick_clicky",
-        "onset_time_seconds": 37.23,
-        "midi_pitch": 36,
-        "note_head_type": "normal",
-        "staff_position": "F2"
-    },
-    {
-        "drum_type": "crash",
-        "onset_time_seconds": 38.51,
+        "onset_time_seconds": 11.25,
         "midi_pitch": 49,
         "note_head_type": "x",
         "staff_position": "A3"
     },
     {
         "drum_type": "kick",
-        "onset_time_seconds": 38.73,
+        "onset_time_seconds": 11.32,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 12.72,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 12.79,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 14.78,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 14.84,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 15.26,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 15.35,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 15.39,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 15.48,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 15.52,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 18.2,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 18.33,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 18.33,
         "midi_pitch": 36,
         "note_head_type": "normal",
         "staff_position": "F2"
     },
     {
         "drum_type": "ride",
-        "onset_time_seconds": 39.93,
+        "onset_time_seconds": 18.73,
         "midi_pitch": 51,
         "note_head_type": "x",
-        "staff_position": "B3"
+        "staff_position": "G3"
     },
     {
         "drum_type": "crash",
-        "onset_time_seconds": 50.74,
+        "onset_time_seconds": 28.8,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 28.86,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 28.94,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 29.01,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 29.07,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 29.19,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 29.33,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 29.58,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 29.65,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 29.69,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 29.87,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 29.92,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 30.38,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 30.44,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 30.5,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 30.63,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 30.63,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 30.71,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 30.84,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 30.84,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 30.98,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 31.09,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 31.44,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 31.64,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 31.71,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 31.79,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 31.86,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 31.92,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 32.04,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 32.19,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 32.19,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 32.37,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 32.43,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 32.47,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 32.61,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 32.61,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 32.68,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 32.75,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 32.75,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 32.84,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 32.88,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 32.93,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 33.19,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 33.3,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 33.36,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 33.44,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 33.73,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 33.77,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 33.81,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 33.85,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 33.94,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 34.01,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 34.13,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 34.27,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "ride",
+        "onset_time_seconds": 34.31,
+        "midi_pitch": 51,
+        "note_head_type": "x",
+        "staff_position": "G3"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 46.25,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 46.29,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 47.06,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 47.1,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 47.19,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 48.38,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 48.43,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 50.9,
         "midi_pitch": 49,
         "note_head_type": "x",
         "staff_position": "A3"
@@ -161,45 +595,3881 @@
         "staff_position": "A3"
     },
     {
-        "drum_type": "hi_hat_closed",
-        "onset_time_seconds": 51.18,
-        "midi_pitch": 42,
-        "note_head_type": "x",
-        "staff_position": "F#3"
+        "drum_type": "kick",
+        "onset_time_seconds": 51.05,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
     },
     {
-        "drum_type": "hi_hat_closed",
-        "onset_time_seconds": 51.22,
-        "midi_pitch": 42,
-        "note_head_type": "x",
-        "staff_position": "F#3"
+        "drum_type": "kick",
+        "onset_time_seconds": 53.56,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 53.59,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 53.64,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 53.66,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 53.75,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
     },
     {
         "drum_type": "crash",
-        "onset_time_seconds": 51.64,
+        "onset_time_seconds": 53.89,
         "midi_pitch": 49,
         "note_head_type": "x",
         "staff_position": "A3"
     },
     {
         "drum_type": "crash",
-        "onset_time_seconds": 53.31,
+        "onset_time_seconds": 53.94,
         "midi_pitch": 49,
         "note_head_type": "x",
         "staff_position": "A3"
     },
     {
         "drum_type": "kick",
-        "onset_time_seconds": 53.52,
+        "onset_time_seconds": 54.03,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 54.03,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 54.21,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 54.32,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 54.32,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 54.46,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 54.61,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 54.73,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 54.76,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 54.86,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 54.97,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 55.03,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 55.08,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 55.16,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 55.29,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 55.48,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 55.58,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 55.64,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 55.7,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 55.74,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 55.88,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 55.96,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 56.11,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 56.23,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 56.38,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 56.46,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 56.53,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 56.63,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 56.77,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 56.87,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 56.89,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 56.89,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 57.04,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 57.04,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 57.18,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 57.25,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 57.31,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 57.43,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 57.63,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 57.7,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 57.85,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 57.91,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 57.99,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 58.12,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 58.12,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 58.27,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 58.4,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 58.4,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 58.55,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 58.68,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 58.79,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 58.94,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 59.11,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 59.25,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 59.36,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 59.4,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 59.43,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 59.49,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 59.58,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 59.63,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 59.65,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 60.06,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 60.17,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 60.17,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 60.34,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 60.44,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 60.5,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 60.59,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 60.72,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 60.78,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 60.87,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 60.95,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 60.95,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 61.14,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 61.27,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 61.38,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 61.56,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 61.6,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 62.19,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 64.05,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 68.17,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 68.99,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 69.11,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 69.17,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 69.24,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 69.29,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 70.18,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "low_tom",
+        "onset_time_seconds": 71.85,
+        "midi_pitch": 41,
+        "note_head_type": "normal",
+        "staff_position": "A2"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 74.93,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 74.98,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 75.04,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 75.1,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 75.13,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 75.58,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 75.62,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 75.72,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 75.86,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 75.92,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 75.94,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 76.13,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 76.27,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 76.27,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 76.39,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 76.47,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 76.64,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 76.71,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 76.8,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 76.86,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 76.9,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 76.94,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 77.11,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 77.11,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 77.19,
         "midi_pitch": 36,
         "note_head_type": "normal",
         "staff_position": "F2"
     },
     {
         "drum_type": "ride",
-        "onset_time_seconds": 54.69,
+        "onset_time_seconds": 77.75,
         "midi_pitch": 51,
         "note_head_type": "x",
-        "staff_position": "B3"
+        "staff_position": "G3"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 87.82,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 87.89,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 87.93,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 87.99,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 88.03,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 88.13,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 88.13,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 88.2,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 88.26,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 88.26,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 88.41,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 88.48,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 88.53,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 88.67,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 88.7,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 88.75,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 88.79,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 88.84,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 88.92,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 89.08,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 89.22,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 89.22,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 89.33,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 89.39,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 89.51,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 89.51,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 89.63,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 89.63,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 89.73,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 89.8,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 89.85,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 89.91,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 92.0,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 92.35,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 92.47,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 92.47,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 92.78,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 92.81,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 92.89,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 93.99,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 93.99,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 94.09,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 94.16,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 94.59,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 94.67,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 94.69,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 94.73,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 94.73,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 94.96,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 95.05,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 95.05,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 95.79,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 95.85,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 95.89,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 95.94,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 96.84,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 98.03,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 98.03,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "snare",
+        "onset_time_seconds": 99.24,
+        "midi_pitch": 38,
+        "note_head_type": "normal",
+        "staff_position": "C3"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 99.28,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 99.33,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 99.42,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 99.46,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "snare",
+        "onset_time_seconds": 99.56,
+        "midi_pitch": 38,
+        "note_head_type": "normal",
+        "staff_position": "C3"
+    },
+    {
+        "drum_type": "snare",
+        "onset_time_seconds": 99.6,
+        "midi_pitch": 38,
+        "note_head_type": "normal",
+        "staff_position": "C3"
+    },
+    {
+        "drum_type": "snare",
+        "onset_time_seconds": 100.02,
+        "midi_pitch": 38,
+        "note_head_type": "normal",
+        "staff_position": "C3"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 100.12,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 100.15,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 100.18,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 100.26,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 100.3,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 100.41,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 100.41,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 100.47,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 100.55,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 100.67,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 100.82,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 100.87,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 100.95,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 101.08,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 101.1,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 101.52,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 101.62,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 101.66,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 101.72,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 102.33,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 102.6,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 102.64,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 102.69,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 102.71,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 102.85,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 102.97,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 102.97,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 103.04,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 103.13,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 103.21,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 103.27,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 103.71,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 103.76,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 103.78,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 104.36,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 104.39,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 104.48,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 104.5,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 104.56,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 104.76,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 104.83,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 104.9,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 104.95,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 105.02,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 105.02,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 105.17,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 105.26,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 105.3,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 105.38,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 105.44,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 105.5,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 105.55,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 105.6,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 105.73,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 105.78,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 105.81,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 105.86,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 105.92,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 107.91,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 107.98,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 107.98,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 108.08,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 108.19,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "snare",
+        "onset_time_seconds": 108.29,
+        "midi_pitch": 38,
+        "note_head_type": "normal",
+        "staff_position": "C3"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 108.83,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 108.86,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 108.88,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 108.92,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 108.96,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 109.22,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 109.38,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 109.42,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 109.55,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 109.69,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 109.74,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 109.77,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 109.82,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 109.82,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 110.17,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 110.32,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 110.39,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 111.57,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 111.57,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 111.72,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 111.85,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 111.91,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 112.0,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 112.31,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 112.43,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 112.49,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 112.56,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 112.64,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 113.22,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 113.27,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 113.62,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 113.65,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 113.84,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 113.89,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 113.94,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 114.02,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 114.02,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 114.02,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 114.2,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 114.31,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 121.86,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 121.93,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 121.96,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 122.01,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 122.01,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 122.97,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 123.04,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 123.11,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 123.31,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 123.39,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 131.03,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 131.65,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 131.67,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 131.73,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 131.75,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 131.78,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 132.76,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 132.88,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "snare",
+        "onset_time_seconds": 134.12,
+        "midi_pitch": 38,
+        "note_head_type": "normal",
+        "staff_position": "C3"
+    },
+    {
+        "drum_type": "snare",
+        "onset_time_seconds": 134.16,
+        "midi_pitch": 38,
+        "note_head_type": "normal",
+        "staff_position": "C3"
+    },
+    {
+        "drum_type": "snare",
+        "onset_time_seconds": 134.23,
+        "midi_pitch": 38,
+        "note_head_type": "normal",
+        "staff_position": "C3"
+    },
+    {
+        "drum_type": "snare",
+        "onset_time_seconds": 144.53,
+        "midi_pitch": 38,
+        "note_head_type": "normal",
+        "staff_position": "C3"
+    },
+    {
+        "drum_type": "snare",
+        "onset_time_seconds": 144.61,
+        "midi_pitch": 38,
+        "note_head_type": "normal",
+        "staff_position": "C3"
+    },
+    {
+        "drum_type": "snare",
+        "onset_time_seconds": 144.82,
+        "midi_pitch": 38,
+        "note_head_type": "normal",
+        "staff_position": "C3"
+    },
+    {
+        "drum_type": "snare",
+        "onset_time_seconds": 145.74,
+        "midi_pitch": 38,
+        "note_head_type": "normal",
+        "staff_position": "C3"
+    },
+    {
+        "drum_type": "snare",
+        "onset_time_seconds": 145.83,
+        "midi_pitch": 38,
+        "note_head_type": "normal",
+        "staff_position": "C3"
+    },
+    {
+        "drum_type": "snare",
+        "onset_time_seconds": 145.93,
+        "midi_pitch": 38,
+        "note_head_type": "normal",
+        "staff_position": "C3"
+    },
+    {
+        "drum_type": "snare",
+        "onset_time_seconds": 145.98,
+        "midi_pitch": 38,
+        "note_head_type": "normal",
+        "staff_position": "C3"
+    },
+    {
+        "drum_type": "snare",
+        "onset_time_seconds": 146.55,
+        "midi_pitch": 38,
+        "note_head_type": "normal",
+        "staff_position": "C3"
+    },
+    {
+        "drum_type": "snare",
+        "onset_time_seconds": 146.61,
+        "midi_pitch": 38,
+        "note_head_type": "normal",
+        "staff_position": "C3"
+    },
+    {
+        "drum_type": "snare",
+        "onset_time_seconds": 146.68,
+        "midi_pitch": 38,
+        "note_head_type": "normal",
+        "staff_position": "C3"
+    },
+    {
+        "drum_type": "snare",
+        "onset_time_seconds": 146.77,
+        "midi_pitch": 38,
+        "note_head_type": "normal",
+        "staff_position": "C3"
+    },
+    {
+        "drum_type": "snare",
+        "onset_time_seconds": 146.97,
+        "midi_pitch": 38,
+        "note_head_type": "normal",
+        "staff_position": "C3"
+    },
+    {
+        "drum_type": "snare",
+        "onset_time_seconds": 147.1,
+        "midi_pitch": 38,
+        "note_head_type": "normal",
+        "staff_position": "C3"
+    },
+    {
+        "drum_type": "snare",
+        "onset_time_seconds": 147.25,
+        "midi_pitch": 38,
+        "note_head_type": "normal",
+        "staff_position": "C3"
+    },
+    {
+        "drum_type": "snare",
+        "onset_time_seconds": 147.34,
+        "midi_pitch": 38,
+        "note_head_type": "normal",
+        "staff_position": "C3"
+    },
+    {
+        "drum_type": "snare",
+        "onset_time_seconds": 147.38,
+        "midi_pitch": 38,
+        "note_head_type": "normal",
+        "staff_position": "C3"
+    },
+    {
+        "drum_type": "snare",
+        "onset_time_seconds": 147.44,
+        "midi_pitch": 38,
+        "note_head_type": "normal",
+        "staff_position": "C3"
+    },
+    {
+        "drum_type": "snare",
+        "onset_time_seconds": 147.5,
+        "midi_pitch": 38,
+        "note_head_type": "normal",
+        "staff_position": "C3"
+    },
+    {
+        "drum_type": "snare",
+        "onset_time_seconds": 147.56,
+        "midi_pitch": 38,
+        "note_head_type": "normal",
+        "staff_position": "C3"
+    },
+    {
+        "drum_type": "snare",
+        "onset_time_seconds": 147.63,
+        "midi_pitch": 38,
+        "note_head_type": "normal",
+        "staff_position": "C3"
+    },
+    {
+        "drum_type": "snare",
+        "onset_time_seconds": 147.67,
+        "midi_pitch": 38,
+        "note_head_type": "normal",
+        "staff_position": "C3"
+    },
+    {
+        "drum_type": "snare",
+        "onset_time_seconds": 147.71,
+        "midi_pitch": 38,
+        "note_head_type": "normal",
+        "staff_position": "C3"
+    },
+    {
+        "drum_type": "snare",
+        "onset_time_seconds": 147.78,
+        "midi_pitch": 38,
+        "note_head_type": "normal",
+        "staff_position": "C3"
+    },
+    {
+        "drum_type": "snare",
+        "onset_time_seconds": 147.91,
+        "midi_pitch": 38,
+        "note_head_type": "normal",
+        "staff_position": "C3"
+    },
+    {
+        "drum_type": "snare",
+        "onset_time_seconds": 147.98,
+        "midi_pitch": 38,
+        "note_head_type": "normal",
+        "staff_position": "C3"
+    },
+    {
+        "drum_type": "snare",
+        "onset_time_seconds": 148.11,
+        "midi_pitch": 38,
+        "note_head_type": "normal",
+        "staff_position": "C3"
+    },
+    {
+        "drum_type": "snare",
+        "onset_time_seconds": 148.11,
+        "midi_pitch": 38,
+        "note_head_type": "normal",
+        "staff_position": "C3"
+    },
+    {
+        "drum_type": "snare",
+        "onset_time_seconds": 148.56,
+        "midi_pitch": 38,
+        "note_head_type": "normal",
+        "staff_position": "C3"
+    },
+    {
+        "drum_type": "snare",
+        "onset_time_seconds": 148.7,
+        "midi_pitch": 38,
+        "note_head_type": "normal",
+        "staff_position": "C3"
+    },
+    {
+        "drum_type": "snare",
+        "onset_time_seconds": 148.75,
+        "midi_pitch": 38,
+        "note_head_type": "normal",
+        "staff_position": "C3"
+    },
+    {
+        "drum_type": "snare",
+        "onset_time_seconds": 148.79,
+        "midi_pitch": 38,
+        "note_head_type": "normal",
+        "staff_position": "C3"
+    },
+    {
+        "drum_type": "snare",
+        "onset_time_seconds": 148.86,
+        "midi_pitch": 38,
+        "note_head_type": "normal",
+        "staff_position": "C3"
+    },
+    {
+        "drum_type": "snare",
+        "onset_time_seconds": 148.97,
+        "midi_pitch": 38,
+        "note_head_type": "normal",
+        "staff_position": "C3"
+    },
+    {
+        "drum_type": "snare",
+        "onset_time_seconds": 149.01,
+        "midi_pitch": 38,
+        "note_head_type": "normal",
+        "staff_position": "C3"
+    },
+    {
+        "drum_type": "snare",
+        "onset_time_seconds": 149.06,
+        "midi_pitch": 38,
+        "note_head_type": "normal",
+        "staff_position": "C3"
+    },
+    {
+        "drum_type": "snare",
+        "onset_time_seconds": 149.13,
+        "midi_pitch": 38,
+        "note_head_type": "normal",
+        "staff_position": "C3"
+    },
+    {
+        "drum_type": "snare",
+        "onset_time_seconds": 149.19,
+        "midi_pitch": 38,
+        "note_head_type": "normal",
+        "staff_position": "C3"
+    },
+    {
+        "drum_type": "snare",
+        "onset_time_seconds": 149.26,
+        "midi_pitch": 38,
+        "note_head_type": "normal",
+        "staff_position": "C3"
+    },
+    {
+        "drum_type": "snare",
+        "onset_time_seconds": 149.33,
+        "midi_pitch": 38,
+        "note_head_type": "normal",
+        "staff_position": "C3"
+    },
+    {
+        "drum_type": "snare",
+        "onset_time_seconds": 149.37,
+        "midi_pitch": 38,
+        "note_head_type": "normal",
+        "staff_position": "C3"
+    },
+    {
+        "drum_type": "snare",
+        "onset_time_seconds": 149.71,
+        "midi_pitch": 38,
+        "note_head_type": "normal",
+        "staff_position": "C3"
+    },
+    {
+        "drum_type": "snare",
+        "onset_time_seconds": 149.76,
+        "midi_pitch": 38,
+        "note_head_type": "normal",
+        "staff_position": "C3"
+    },
+    {
+        "drum_type": "snare",
+        "onset_time_seconds": 149.79,
+        "midi_pitch": 38,
+        "note_head_type": "normal",
+        "staff_position": "C3"
+    },
+    {
+        "drum_type": "snare",
+        "onset_time_seconds": 149.88,
+        "midi_pitch": 38,
+        "note_head_type": "normal",
+        "staff_position": "C3"
+    },
+    {
+        "drum_type": "snare",
+        "onset_time_seconds": 149.93,
+        "midi_pitch": 38,
+        "note_head_type": "normal",
+        "staff_position": "C3"
+    },
+    {
+        "drum_type": "snare",
+        "onset_time_seconds": 150.02,
+        "midi_pitch": 38,
+        "note_head_type": "normal",
+        "staff_position": "C3"
+    },
+    {
+        "drum_type": "snare",
+        "onset_time_seconds": 150.12,
+        "midi_pitch": 38,
+        "note_head_type": "normal",
+        "staff_position": "C3"
+    },
+    {
+        "drum_type": "snare",
+        "onset_time_seconds": 150.16,
+        "midi_pitch": 38,
+        "note_head_type": "normal",
+        "staff_position": "C3"
+    },
+    {
+        "drum_type": "snare",
+        "onset_time_seconds": 150.36,
+        "midi_pitch": 38,
+        "note_head_type": "normal",
+        "staff_position": "C3"
+    },
+    {
+        "drum_type": "snare",
+        "onset_time_seconds": 150.4,
+        "midi_pitch": 38,
+        "note_head_type": "normal",
+        "staff_position": "C3"
+    },
+    {
+        "drum_type": "snare",
+        "onset_time_seconds": 150.64,
+        "midi_pitch": 38,
+        "note_head_type": "normal",
+        "staff_position": "C3"
+    },
+    {
+        "drum_type": "snare",
+        "onset_time_seconds": 150.66,
+        "midi_pitch": 38,
+        "note_head_type": "normal",
+        "staff_position": "C3"
+    },
+    {
+        "drum_type": "snare",
+        "onset_time_seconds": 150.78,
+        "midi_pitch": 38,
+        "note_head_type": "normal",
+        "staff_position": "C3"
+    },
+    {
+        "drum_type": "snare",
+        "onset_time_seconds": 150.78,
+        "midi_pitch": 38,
+        "note_head_type": "normal",
+        "staff_position": "C3"
+    },
+    {
+        "drum_type": "snare",
+        "onset_time_seconds": 150.88,
+        "midi_pitch": 38,
+        "note_head_type": "normal",
+        "staff_position": "C3"
+    },
+    {
+        "drum_type": "snare",
+        "onset_time_seconds": 150.95,
+        "midi_pitch": 38,
+        "note_head_type": "normal",
+        "staff_position": "C3"
+    },
+    {
+        "drum_type": "snare",
+        "onset_time_seconds": 151.05,
+        "midi_pitch": 38,
+        "note_head_type": "normal",
+        "staff_position": "C3"
+    },
+    {
+        "drum_type": "snare",
+        "onset_time_seconds": 151.23,
+        "midi_pitch": 38,
+        "note_head_type": "normal",
+        "staff_position": "C3"
+    },
+    {
+        "drum_type": "snare",
+        "onset_time_seconds": 151.31,
+        "midi_pitch": 38,
+        "note_head_type": "normal",
+        "staff_position": "C3"
+    },
+    {
+        "drum_type": "snare",
+        "onset_time_seconds": 151.39,
+        "midi_pitch": 38,
+        "note_head_type": "normal",
+        "staff_position": "C3"
+    },
+    {
+        "drum_type": "snare",
+        "onset_time_seconds": 151.5,
+        "midi_pitch": 38,
+        "note_head_type": "normal",
+        "staff_position": "C3"
+    },
+    {
+        "drum_type": "snare",
+        "onset_time_seconds": 151.67,
+        "midi_pitch": 38,
+        "note_head_type": "normal",
+        "staff_position": "C3"
+    },
+    {
+        "drum_type": "snare",
+        "onset_time_seconds": 151.67,
+        "midi_pitch": 38,
+        "note_head_type": "normal",
+        "staff_position": "C3"
+    },
+    {
+        "drum_type": "snare",
+        "onset_time_seconds": 151.96,
+        "midi_pitch": 38,
+        "note_head_type": "normal",
+        "staff_position": "C3"
+    },
+    {
+        "drum_type": "snare",
+        "onset_time_seconds": 152.04,
+        "midi_pitch": 38,
+        "note_head_type": "normal",
+        "staff_position": "C3"
+    },
+    {
+        "drum_type": "snare",
+        "onset_time_seconds": 152.08,
+        "midi_pitch": 38,
+        "note_head_type": "normal",
+        "staff_position": "C3"
+    },
+    {
+        "drum_type": "snare",
+        "onset_time_seconds": 152.13,
+        "midi_pitch": 38,
+        "note_head_type": "normal",
+        "staff_position": "C3"
+    },
+    {
+        "drum_type": "snare",
+        "onset_time_seconds": 152.22,
+        "midi_pitch": 38,
+        "note_head_type": "normal",
+        "staff_position": "C3"
+    },
+    {
+        "drum_type": "snare",
+        "onset_time_seconds": 152.26,
+        "midi_pitch": 38,
+        "note_head_type": "normal",
+        "staff_position": "C3"
+    },
+    {
+        "drum_type": "snare",
+        "onset_time_seconds": 152.37,
+        "midi_pitch": 38,
+        "note_head_type": "normal",
+        "staff_position": "C3"
+    },
+    {
+        "drum_type": "snare",
+        "onset_time_seconds": 152.4,
+        "midi_pitch": 38,
+        "note_head_type": "normal",
+        "staff_position": "C3"
+    },
+    {
+        "drum_type": "snare",
+        "onset_time_seconds": 152.49,
+        "midi_pitch": 38,
+        "note_head_type": "normal",
+        "staff_position": "C3"
+    },
+    {
+        "drum_type": "snare",
+        "onset_time_seconds": 152.52,
+        "midi_pitch": 38,
+        "note_head_type": "normal",
+        "staff_position": "C3"
+    },
+    {
+        "drum_type": "snare",
+        "onset_time_seconds": 157.13,
+        "midi_pitch": 38,
+        "note_head_type": "normal",
+        "staff_position": "C3"
+    },
+    {
+        "drum_type": "snare",
+        "onset_time_seconds": 157.21,
+        "midi_pitch": 38,
+        "note_head_type": "normal",
+        "staff_position": "C3"
+    },
+    {
+        "drum_type": "snare",
+        "onset_time_seconds": 157.28,
+        "midi_pitch": 38,
+        "note_head_type": "normal",
+        "staff_position": "C3"
+    },
+    {
+        "drum_type": "snare",
+        "onset_time_seconds": 160.46,
+        "midi_pitch": 38,
+        "note_head_type": "normal",
+        "staff_position": "C3"
+    },
+    {
+        "drum_type": "snare",
+        "onset_time_seconds": 160.55,
+        "midi_pitch": 38,
+        "note_head_type": "normal",
+        "staff_position": "C3"
+    },
+    {
+        "drum_type": "snare",
+        "onset_time_seconds": 166.44,
+        "midi_pitch": 38,
+        "note_head_type": "normal",
+        "staff_position": "C3"
+    },
+    {
+        "drum_type": "snare",
+        "onset_time_seconds": 166.51,
+        "midi_pitch": 38,
+        "note_head_type": "normal",
+        "staff_position": "C3"
+    },
+    {
+        "drum_type": "snare",
+        "onset_time_seconds": 166.59,
+        "midi_pitch": 38,
+        "note_head_type": "normal",
+        "staff_position": "C3"
+    },
+    {
+        "drum_type": "ride",
+        "onset_time_seconds": 169.62,
+        "midi_pitch": 51,
+        "note_head_type": "x",
+        "staff_position": "G3"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 179.75,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 179.79,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "snare",
+        "onset_time_seconds": 180.45,
+        "midi_pitch": 38,
+        "note_head_type": "normal",
+        "staff_position": "C3"
+    },
+    {
+        "drum_type": "snare",
+        "onset_time_seconds": 180.45,
+        "midi_pitch": 38,
+        "note_head_type": "normal",
+        "staff_position": "C3"
+    },
+    {
+        "drum_type": "snare",
+        "onset_time_seconds": 180.57,
+        "midi_pitch": 38,
+        "note_head_type": "normal",
+        "staff_position": "C3"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 182.06,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 182.11,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 183.74,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 183.91,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 184.42,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 184.42,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "snare",
+        "onset_time_seconds": 185.11,
+        "midi_pitch": 38,
+        "note_head_type": "normal",
+        "staff_position": "C3"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 185.18,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 185.23,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 185.26,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "snare",
+        "onset_time_seconds": 185.32,
+        "midi_pitch": 38,
+        "note_head_type": "normal",
+        "staff_position": "C3"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 187.93,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 188.42,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "ride",
+        "onset_time_seconds": 188.53,
+        "midi_pitch": 51,
+        "note_head_type": "x",
+        "staff_position": "G3"
+    },
+    {
+        "drum_type": "snare",
+        "onset_time_seconds": 206.84,
+        "midi_pitch": 38,
+        "note_head_type": "normal",
+        "staff_position": "C3"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 208.28,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 208.35,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 208.54,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 208.63,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 208.69,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 208.97,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 209.03,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 209.05,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 209.11,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 209.17,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 209.41,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 209.44,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 209.48,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 209.56,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 209.63,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 209.69,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 209.77,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 209.79,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 209.85,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 210.11,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 210.19,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 210.25,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 210.29,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 210.37,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 210.41,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 210.44,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 210.48,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 210.51,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 210.58,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 210.66,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 210.72,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 210.8,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 210.85,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 210.93,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 210.99,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 210.99,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 211.06,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 211.14,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 211.2,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 211.26,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 211.26,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 211.32,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 211.38,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 211.42,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 211.48,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 211.56,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "ride",
+        "onset_time_seconds": 211.59,
+        "midi_pitch": 51,
+        "note_head_type": "x",
+        "staff_position": "G3"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 222.67,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 222.73,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 222.82,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 222.87,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 225.34,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 225.34,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 225.49,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 225.52,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 225.62,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 225.72,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 225.72,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "ride",
+        "onset_time_seconds": 225.8,
+        "midi_pitch": 51,
+        "note_head_type": "x",
+        "staff_position": "G3"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 235.87,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 235.94,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 240.97,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 241.09,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 241.09,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 241.09,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 242.44,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 242.44,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 243.09,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 243.21,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 243.25,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 243.75,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 244.16,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 244.27,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 244.33,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 244.54,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 245.2,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "ride",
+        "onset_time_seconds": 245.28,
+        "midi_pitch": 51,
+        "note_head_type": "x",
+        "staff_position": "G3"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 256.17,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 256.24,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 256.29,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 256.71,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 256.82,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 257.18,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 257.24,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 257.36,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 260.67,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 261.07,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 261.21,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 261.27,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 261.74,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 261.74,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 262.7,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 262.85,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 262.87,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 263.26,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 263.38,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 263.8,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 263.91,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 264.97,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 265.02,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 265.43,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 265.56,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 265.97,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 266.03,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 266.09,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 266.12,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 269.26,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 269.43,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 269.93,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 270.32,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 270.35,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 270.47,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 270.5,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 271.43,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 271.57,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 271.6,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 271.99,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 272.1,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 272.5,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 272.64,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 272.67,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 273.61,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "crash",
+        "onset_time_seconds": 273.71,
+        "midi_pitch": 49,
+        "note_head_type": "x",
+        "staff_position": "A3"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 273.74,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 274.29,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 274.82,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 274.87,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "snare",
+        "onset_time_seconds": 275.84,
+        "midi_pitch": 38,
+        "note_head_type": "normal",
+        "staff_position": "C3"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 277.58,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 277.62,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 277.69,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 277.79,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "snare",
+        "onset_time_seconds": 281.01,
+        "midi_pitch": 38,
+        "note_head_type": "normal",
+        "staff_position": "C3"
+    },
+    {
+        "drum_type": "snare",
+        "onset_time_seconds": 281.31,
+        "midi_pitch": 38,
+        "note_head_type": "normal",
+        "staff_position": "C3"
+    },
+    {
+        "drum_type": "snare",
+        "onset_time_seconds": 281.37,
+        "midi_pitch": 38,
+        "note_head_type": "normal",
+        "staff_position": "C3"
+    },
+    {
+        "drum_type": "snare",
+        "onset_time_seconds": 281.46,
+        "midi_pitch": 38,
+        "note_head_type": "normal",
+        "staff_position": "C3"
+    },
+    {
+        "drum_type": "snare",
+        "onset_time_seconds": 281.52,
+        "midi_pitch": 38,
+        "note_head_type": "normal",
+        "staff_position": "C3"
+    },
+    {
+        "drum_type": "kick",
+        "onset_time_seconds": 290.99,
+        "midi_pitch": 36,
+        "note_head_type": "normal",
+        "staff_position": "F2"
+    },
+    {
+        "drum_type": "ride",
+        "onset_time_seconds": 291.14,
+        "midi_pitch": 51,
+        "note_head_type": "x",
+        "staff_position": "G3"
     }
 ]

@@ -127,8 +127,12 @@ def build_and_export_drum_score(
             # Use music21.note.Unpitched for percussion notes
             n = music21.note.Unpitched()
             n.storedInstrument = music21.instrument.Percussion()
-            n.pitch = music21.pitch.Pitch() # Create a dummy pitch object to set properties
-            n.pitch.midi = note_info['midi_pitch'] # Set MIDI pitch for playback/positioning
+            # --- TESTING FOR VISUAL PLACEMENT ---
+            n.displayStep = note_info['display_step']
+            n.displayOctave = note_info['display_octave']
+            # ------------------------------------------
+            #n.pitch = music21.pitch.Pitch() # Create a dummy pitch object to set properties
+            #n.pitch.midi = note_info['midi_pitch'] # Set MIDI pitch for playback/positioning
             n.notehead = note_info['note_head']
             n.duration.quarterLength = (4.0 / quantization_subdivision) # Duration of one subdivision (e.g., 16th note)
             drum_part.append(n)

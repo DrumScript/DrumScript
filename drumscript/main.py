@@ -1,4 +1,4 @@
-# drumscript/main.py
+    # drumscript/main.py
 import shutil
 from pathlib import Path
 import os
@@ -58,46 +58,34 @@ def main(input_audio_path: str, transcribe_full_song: bool = False):
 
         # 4. DETECT ONSETS
         print("Detecting onsets...")
-        detected_onsets = onset_detector.detect_onsets(y, sr)
-        print(f"Found {len(detected_onsets)} onset events.")
+        # The onset_detector.detect_onsets function returns TIMESTAMPS (seconds), not frames.
+        onset_times = onset_detector.detect_onsets(y, sr)
+        print(f"Found {len(onset_times)} onset events.")
 
         # 5. EXTRACT FEATURES
         print("Extracting features for each onset...")
-        features = feature_extractor.extract_features_for_onsets(y, sr, detected_onsets)
+        # Pass the onset timestamps directly to feature extractor
+        features = feature_extractor.extract_features_for_onsets(y, sr, onset_times)
         
         # 6. CLASSIFY HITS (Rule-Based Engine)
         print("Classifying drum hits...")
-        classified_events = predict.predict_drum_hits(features)
+        # predict.py returns a list of event dictionaries that ALREADY contain the 'onset_time_seconds'
+        raw_classified_events = predict.predict_drum_hits(features)
 
-        # We must now combine the classification results with their timestamps
-        # before passing them to the score builder.
+        # 7. FORMAT EVENTS FOR SCORE BUILDER
+        print("Formatting events for score builder...")
+        # Convert the classifier output to the format score_builder expects: {'time': float, 'drums': [str]}
+        final_classified_events = []
         
-        print("Converting onset frames to timestamps...")
-        # Convert frame indices (e.g., [500, 1000]) to seconds (e.g., [11.6, 23.2])
-        onset_times_sec = onset_detector.detected_onsets(detected_onsets, sr=sr)
-
-        # Ensure we have the same number of timestamps as classified hits
-        if len(onset_times_sec) != len(classified_events):
-            print(f"Error: Mismatch in onset times ({len(onset_times_sec)}) and classified hits ({len(classified_events)})")
-            return 
-
-        # Build the final 'classified_events' list in the format score_builder expects
-        print("Combining timestamps and classified hits...")
-        classified_events = []
-        for i in range(len(onset_times_sec)):
-            time_sec = onset_times_sec[i]
-            drum_types = classified_events[i]
-            
-            # Only add events that actually have drum hits (not empty classifications)
-            if drum_types: 
-                classified_events.append({
-                    'time': time_sec,
-                    'drums': drum_types
-                })
+        for event in raw_classified_events:
+            final_classified_events.append({
+                'time': event['onset_time_seconds'],
+                'drums': [event['drum_type']] # score_builder expects a list of drum types
+            })
                 
-        print(f"Successfully combined {len(classified_events)} detected drum events with timestamps.")
+        print(f"Successfully prepared {len(final_classified_events)} detected drum events.")
         
-        # 7. & 8. BUILD AND EXPORT SCORE
+        # 8. BUILD AND EXPORT SCORE
         print("Building and exporting music score...")
 
         # Define the final output path
@@ -108,7 +96,7 @@ def main(input_audio_path: str, transcribe_full_song: bool = False):
 
         # Pass all arguments to the combined score builder and exporter function.
         score_builder.build_and_export_drum_score(
-            detected_events=classified_events, 
+            detected_events=final_classified_events, 
             tempo=estimated_tempo, 
             output_filepath=final_pdf_path  
         )

@@ -7,9 +7,12 @@ from drumscript.audio_processor.stem_splitter import extract_drum_stem
 from drumscript.audio_processor import audio_loader, onset_detector, feature_extractor, tempo_detector
 from drumscript.drum_classifier import predict
 from drumscript.notation_generator import score_builder, pdf_exporter
+from datetime import datetime
 # Logging imports removed
 
-print("# ------------------------------------------------------------------------------------")
+print("\n# ------------------------------------------------------------------------------------")
+datetimestamp = datetime.now()
+print(f'\ndate/time: {datetimestamp}')
 
 def main(input_audio_path: str, transcribe_full_song: bool = False):
     """

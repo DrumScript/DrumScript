@@ -4,75 +4,76 @@
 # This map MUST include all drum types output by drum_classifier/predict.py
 # and all keys required by notation_generator/score_builder.py and helpers.py
 
+
 DRUM_NOTATION_MAP = {
-    # Bass Drums
+    # --- Bass Drums ---
     'kick': {
         'display_name': 'Kick Drum',
         'midi_program': 36,
         'note_head': 'normal',
-        'staff_position': 'F2' # This was the missing key
+        'staff_position': 'F3' # Bottom Space (Space 1)
     },
     'kick_clicky': {
         'display_name': 'Kick (Clicky)',
         'midi_program': 36,
         'note_head': 'normal',
-        'staff_position': 'F2'
+        'staff_position': 'F3'
     },
     
-    # Snare Drums
+    # --- Snare Drums ---
     'snare': {
         'display_name': 'Snare',
         'midi_program': 38,
         'note_head': 'normal',
-        'staff_position': 'C3'
+        'staff_position': 'C4' # Space 3 (Second space from top)
     },
     
-    # Hi-Hats
+    # --- Hi-Hats ---
     'hi_hat_closed': {
         'display_name': 'Hi-Hat (Closed)',
         'midi_program': 42,
         'note_head': 'x',
-        'staff_position': 'G3' # Standard notation places this on the top line
+        'staff_position': 'G4' # Sitting above the top line
     },
     'hi_hat_open': {
         'display_name': 'Hi-Hat (Open)',
         'midi_program': 46,
-        'note_head': 'circle-x', # trying this for music21
-        'staff_position': 'G3'
+        'note_head': 'circle-x', 
+        'staff_position': 'G4'
     },
     
-    # Toms
+    # --- Toms ---
     'high_tom': {
         'display_name': 'High Tom',
         'midi_program': 48,
         'note_head': 'normal',
-        'staff_position': 'E3'
+        'staff_position': 'E4' # Top Space
     },
     'mid_tom': {
         'display_name': 'Mid Tom',
         'midi_program': 45,
         'note_head': 'normal',
-        'staff_position': 'D3' # Adjusted for standard 5-line staff
+        'staff_position': 'D4' # Line 4
     },
     'low_tom': {
         'display_name': 'Low Tom',
         'midi_program': 41,
         'note_head': 'normal',
-        'staff_position': 'A2'
+        'staff_position': 'A3' # Space 2
     },
     
-    # Cymbals
+    # --- Cymbals ---
     'crash': {
         'display_name': 'Crash Cymbal',
         'midi_program': 49,
         'note_head': 'x',
-        'staff_position': 'A3' # Above the top line, with a ledger line
+        'staff_position': 'A4' # Ledger line above staff
     },
     'ride': {
         'display_name': 'Ride Cymbal',
         'midi_program': 51,
         'note_head': 'x',
-        'staff_position': 'G3' # Often shares the hi-hat line, but can be A3
+        'staff_position': 'F4' # Top Line
     }
 }
 

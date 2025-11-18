@@ -9,9 +9,9 @@ import soundfile
 import argparse # for command-line argument parsing
 from datetime import datetime
 
-print("\n#---------------------------------------------------------------------------------------")
+print("\n# ---------------------------------------------------------------------------------------")
 datetimestamp = datetime.now()
-print(f'date/time of run: {datetimestamp}') # for logging 
+print(f'\ndate/time of run: {datetimestamp}') # for logging 
 
 def detect_onsets(audio_data: np.ndarray, sr: int) -> list[float]:
     """
@@ -118,9 +118,9 @@ def calculate_tempo_from_onsets(onset_times: np.ndarray, sr: int) -> float:
 
 if __name__ == "__main__":
     from drumscript.audio_processor.audio_loader import load_audio, normalise_audio
-    print("\n#---------------------------------------------------------------------------------------")
+    # print("\n#---------------------------------------------------------------------------------------")
     #print("Running onset_detector.py example with test.wav/test.mp3...")
-    print("Running onset_detector.py example with provided filepath...") # FUTURE: Find way to encode this so it prints the file path provided in CLI
+    print("\nRunning onset_detector.py example with provided filepath...") # FUTURE: Find way to encode this so it prints the file path provided in CLI
     try:
 
         # Import necessary modules from your package
@@ -183,4 +183,4 @@ if __name__ == "__main__":
         traceback.print_exc() # Print full traceback for debugging
 
     print("\nonset_detector.py example finished.")
-    print("\n#---------------------------------------------------------------------------------------")
+    print("\n# ---------------------------------------------------------------------------------------")

@@ -61,7 +61,7 @@ def draw_bar_line(c, x, y):
 
 def draw_note(c, x, y, note_type, staff_y_base):
     """Draws a notehead and stem with ledger line logic."""
-    # UPDATED: Smaller radius for a cleaner look
+    # Keep the smaller size you liked
     r = 2.7 
     
     # Ledger Lines
@@ -81,21 +81,22 @@ def draw_note(c, x, y, note_type, staff_y_base):
         c.line(x - r, y + r, x + r, y - r)
         if note_type == 'circle-x':
             c.setLineWidth(1)
-            # UPDATED: Tighter circle radius (was r+3)
+            # Tighter circle radius for open hi-hat
             c.circle(x, y, r + 1.5, stroke=1, fill=0)
     else:
+        # Draw Normal Notehead (Restored Oval Shape)
         c.saveState()
         c.translate(x, y)
-        # UPDATED: Less extreme scaling for a rounder shape (was 1.2, 0.8)
-        c.scale(1.1, 0.9) 
+        # RESTORED: Classic oval scaling (Wider width, shorter height)
+        c.scale(1.2, 0.8) 
         c.circle(0, 0, r, fill=1, stroke=0)
         c.restoreState()
         
     # Stem
     c.setLineWidth(1)
     stem_height = 25
-    # UPDATED: Adjusted stem attachment point slightly to match new scaling
-    c.line(x + (r * 0.9), y, x + (r * 0.9), y + stem_height)
+    # Adjusted stem to attach nicely to the side of the wider oval
+    c.line(x + r, y, x + r, y + stem_height)
 
 
 def generate_custom_pdf(detected_events, output_filepath, tempo=120):

@@ -61,7 +61,8 @@ def draw_bar_line(c, x, y):
 
 def draw_note(c, x, y, note_type, staff_y_base):
     """Draws a notehead and stem with ledger line logic."""
-    r = 3.5 
+    # UPDATED: Smaller radius for a cleaner look
+    r = 2.7 
     
     # Ledger Lines
     top_line_y = staff_y_base + (4 * LINE_SPACING)
@@ -80,18 +81,21 @@ def draw_note(c, x, y, note_type, staff_y_base):
         c.line(x - r, y + r, x + r, y - r)
         if note_type == 'circle-x':
             c.setLineWidth(1)
-            c.circle(x, y, r + 3, stroke=1, fill=0)
+            # UPDATED: Tighter circle radius (was r+3)
+            c.circle(x, y, r + 1.5, stroke=1, fill=0)
     else:
         c.saveState()
         c.translate(x, y)
-        c.scale(1.2, 0.8) 
+        # UPDATED: Less extreme scaling for a rounder shape (was 1.2, 0.8)
+        c.scale(1.1, 0.9) 
         c.circle(0, 0, r, fill=1, stroke=0)
         c.restoreState()
         
     # Stem
     c.setLineWidth(1)
     stem_height = 25
-    c.line(x + r, y, x + r, y + stem_height)
+    # UPDATED: Adjusted stem attachment point slightly to match new scaling
+    c.line(x + (r * 0.9), y, x + (r * 0.9), y + stem_height)
 
 
 def generate_custom_pdf(detected_events, output_filepath, tempo=120):
@@ -99,7 +103,7 @@ def generate_custom_pdf(detected_events, output_filepath, tempo=120):
     Generates a PDF drum score with 4 bars per system.
     """
     if canvas is None:
-        print("❌ ReportLab missing.")
+        print("ReportLab missing.")
         return
 
     print(f"Generating 4-Bar Layout PDF: {output_filepath}")

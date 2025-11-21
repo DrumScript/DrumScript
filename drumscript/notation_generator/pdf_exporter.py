@@ -2,8 +2,6 @@
 
 import os
 from collections import defaultdict
-import math
-
 try:
     from reportlab.pdfgen import canvas
     from reportlab.lib.pagesizes import A4
@@ -14,6 +12,11 @@ except ImportError:
 
 import music21
 from drumscript.notation_generator import constants
+from datetime import datetime
+
+print("\n# ------------------------------------------------------------------------------------")
+datetimestamp = datetime.now()
+print(f'\ndate/time: {datetimestamp}')
 
 # --- Configuration Constants ---
 PAGE_WIDTH, PAGE_HEIGHT = A4
@@ -22,7 +25,7 @@ MARGIN_Y = 50
 STAFF_SPACING = 120 # Increased spacing for readability
 LINE_SPACING = 6    
 CLEF_WIDTH = 30     # Reserved space at start of each system for the clef
-BARS_PER_SYSTEM = 4 # Target: 4 bars per line
+BARS_PER_SYSTEM = 4 # Target: 4 measures per system
 
 # Reference Pitch (Middle Line = B3)
 REF_PITCH_MIDDLE_LINE = music21.pitch.Pitch('B3')
@@ -61,8 +64,7 @@ def draw_bar_line(c, x, y):
 
 def draw_note(c, x, y, note_type, staff_y_base):
     """Draws a notehead and stem with ledger line logic."""
-    # Keep the smaller size you liked
-    r = 2.7 
+    r = 2.7 # Radius
     
     # Ledger Lines
     top_line_y = staff_y_base + (4 * LINE_SPACING)
@@ -81,13 +83,11 @@ def draw_note(c, x, y, note_type, staff_y_base):
         c.line(x - r, y + r, x + r, y - r)
         if note_type == 'circle-x':
             c.setLineWidth(1)
-            # Tighter circle radius for open hi-hat
             c.circle(x, y, r + 1.5, stroke=1, fill=0)
     else:
-        # Draw Normal Notehead (Restored Oval Shape)
+        # Oval Notehead
         c.saveState()
         c.translate(x, y)
-        # RESTORED: Classic oval scaling (Wider width, shorter height)
         c.scale(1.2, 0.8) 
         c.circle(0, 0, r, fill=1, stroke=0)
         c.restoreState()
@@ -95,34 +95,32 @@ def draw_note(c, x, y, note_type, staff_y_base):
     # Stem
     c.setLineWidth(1)
     stem_height = 25
-    # Adjusted stem to attach nicely to the side of the wider oval
+    # Attach stem to the side of the notehead
     c.line(x + r, y, x + r, y + stem_height)
 
 
 def generate_custom_pdf(detected_events, output_filepath, tempo=120):
     """
-    Generates a PDF drum score with 4 bars per system.
+    Generates a PDF drum score using the direct ReportLab engine.
     """
     if canvas is None:
-        print("ReportLab missing.")
+        print("❌ ReportLab missing.")
         return
 
     print(f"Generating 4-Bar Layout PDF: {output_filepath}")
     c = canvas.Canvas(output_filepath, pagesize=A4)
     c.setTitle("DrumScript Transcription")
     
-    # --- Setup Layout Metrics ---
+    # Layout Metrics
     system_width = PAGE_WIDTH - (2 * MARGIN_X)
-    # Calculate width available for actual music (minus clef)
     music_width = system_width - CLEF_WIDTH
-    # Divide exactly by 4 for the measure width
     measure_width = music_width / BARS_PER_SYSTEM
     
-    # Duration of one measure in seconds (assuming 4/4 time)
-    # 60 sec/min / BPM * 4 beats = sec/measure
+    # Calculate duration of one measure in seconds (4/4 time)
+    # (60 / BPM) * 4 beats
     sec_per_measure = (60.0 / tempo) * 4.0
 
-    # --- 1. Sort and Group Events by Measure ---
+    # 1. Sort and Group Events
     detected_events.sort(key=lambda x: x['time'])
     events_by_measure = defaultdict(list)
     
@@ -133,7 +131,7 @@ def generate_custom_pdf(detected_events, output_filepath, tempo=120):
         if m_idx > last_measure_idx:
             last_measure_idx = m_idx
 
-    # --- 2. Rendering Loop ---
+    # 2. Render
     current_y = PAGE_HEIGHT - 150
     
     # Header
@@ -142,48 +140,35 @@ def generate_custom_pdf(detected_events, output_filepath, tempo=120):
     c.setFont("Helvetica", 12)
     c.drawString(MARGIN_X, PAGE_HEIGHT - 70, f"Tempo: {int(tempo)} BPM")
     
-    # Iterate through all measures (0 to last_measure_idx)
     for m in range(last_measure_idx + 1):
         
-        # Check if we need a new system (start of line)
+        # New System Check
         if m % BARS_PER_SYSTEM == 0:
-            # If not the very first system, move cursor down
             if m > 0:
                 current_y -= STAFF_SPACING
             
-            # Check Page Wrap
             if current_y < MARGIN_Y:
                 c.showPage()
                 current_y = PAGE_HEIGHT - 100
-                # Re-draw header on new page? Optional.
                 c.setFont("Helvetica", 10)
                 c.drawString(MARGIN_X, PAGE_HEIGHT - 50, "DrumScript Transcription (Cont.)")
             
-            # Draw System Basics (Staff + Clef)
             draw_staff(c, MARGIN_X, current_y, system_width)
-            draw_clef(c, MARGIN_X + 5, current_y) # +5 padding
+            draw_clef(c, MARGIN_X + 5, current_y) 
             
-        # Calculate placement for this specific measure
-        # Which slot (0, 1, 2, 3) are we in on the current system?
+        # Measure Placement
         slot_index = m % BARS_PER_SYSTEM
-        
-        # Start X for this measure
         measure_start_x = MARGIN_X + CLEF_WIDTH + (slot_index * measure_width)
         
-        # Draw Bar Line at the END of this measure
         draw_bar_line(c, measure_start_x + measure_width, current_y)
         
-        # Draw Notes in this Measure
+        # Draw Notes
         if m in events_by_measure:
             for event in events_by_measure[m]:
                 time_sec = event['time']
                 drum_types = event['drums']
                 
-                # Relative time inside the measure (0.0 to sec_per_measure)
                 rel_time = time_sec % sec_per_measure
-                
-                # Proportional X position
-                # We add a small padding (10px) so notes don't hit the left bar line
                 padding = 15 
                 usable_width = measure_width - (2 * padding)
                 rel_x = (rel_time / sec_per_measure) * usable_width
@@ -199,4 +184,5 @@ def generate_custom_pdf(detected_events, output_filepath, tempo=120):
                     draw_note(c, note_x, note_y, note_head, current_y)
 
     c.save()
-    print(f"Native PDF successfully saved to: {output_filepath}")
+    print(f"✅ Native PDF successfully saved to: {output_filepath}")
+    print("\n# ------------------------------------------------------------------------------------")

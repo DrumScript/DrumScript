@@ -93,9 +93,9 @@ def build_and_export_drum_score(
     try:
         score.write('musicxml', fp=f"{base_path}.musicxml")
         score.write('midi', fp=f"{base_path}.mid")
-        print(f"✅ Data backup saved: {base_path}.musicxml")
+        print(f" Data backup saved: {base_path}.musicxml")
     except Exception as e:
-        print(f"⚠️  Data export warning: {e}")
+        print(f" Data export warning: {e}")
 
     # ===========================================================
     # PART B: VISUAL PDF (The "Real" Score via ReportLab)

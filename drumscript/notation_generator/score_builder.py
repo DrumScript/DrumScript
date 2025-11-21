@@ -7,74 +7,64 @@ from collections import defaultdict
 from drumscript.notation_generator import constants
 from drumscript.notation_generator.helpers import round_to_nearest_subdivision
 
-# --- FIX: Import the correct function name from your new pdf_exporter ---
+# --- IMPORTANT: Import new native PDF Engine ---
 from drumscript.notation_generator.pdf_exporter import generate_custom_pdf 
 
 def get_drum_music21_note_info(drum_type: str) -> Dict[str, Any]:
-    """
-    Retrieves music21-specific notation info for a given drum type from constants.DRUM_NOTATION_MAP.
-    """
+    """Retrieves notation info for XML export backup."""
     drum_map = constants.DRUM_NOTATION_MAP.get(drum_type)
     if not drum_map:
-        print(f"Warning: No notation mapping found for drum type: {drum_type}. Using default kick.")
-        drum_map = constants.DRUM_NOTATION_MAP['kick'] # Fallback
+        drum_map = constants.DRUM_NOTATION_MAP['kick'] 
     
-    # Parse the staff position string (e.g., 'F2', 'C3') into a music21 Pitch object
-    # to easily extract the step ('F') and octave (2).
     pitch_obj = music21.pitch.Pitch(drum_map['staff_position'])
     
     return {
         'midi_pitch': drum_map['midi_program'], 
         'note_head': drum_map['note_head'],
-        'staff_position': drum_map['staff_position'],
-        'display_step': pitch_obj.step,     # E.g., 'F'
-        'display_octave': pitch_obj.octave  # E.g., 2
+        'display_step': pitch_obj.step,     
+        'display_octave': pitch_obj.octave  
     }
-
 
 def build_and_export_drum_score(
     detected_events: List[Dict[str, Any]],
     tempo: int = 120,
-    output_filepath: str = "outputs/score.pdf", # Default to .pdf
+    output_filepath: str = "outputs/score.pdf", 
     quantization_subdivision: int = 16 
 ):
     """
-    Builds a music21 score for XML/MIDI export (Data Layer).
-    Calls custom ReportLab exporter for PDF (Presentation Layer).
+    1. Exports MusicXML & MIDI (Data Backup).
+    2. Generates Visual PDF using the Custom ReportLab Engine.
     """
     print(f"--- Building Score for: {output_filepath} ---")
 
     # ===========================================================
-    # PART A: DATA EXPORT (MusicXML & MIDI) - Using music21
+    # PART A: DATA BACKUP (MusicXML & MIDI via Music21)
     # ===========================================================
+    # We keep this so you have an editable file if needed,
+    # but we DO NOT use it for the PDF generation anymore.
     score = music21.stream.Score()
     score.metadata = music21.metadata.Metadata(title="Drum Transcription")
     drum_part = music21.stream.Part()
     drum_part.id = 'DrumKit'
-    
-    # Using insert(0, ...) ensures these are at the very start
     drum_part.insert(0, music21.clef.PercussionClef())
     drum_part.insert(0, music21.meter.TimeSignature('4/4')) 
     drum_part.insert(0, music21.instrument.Percussion())
     drum_part.insert(0, music21.tempo.MetronomeMark(number=tempo))
 
-    # Quantize events for XML/MIDI structure
+    # Simple Quantization for the XML backup
     events_by_time = defaultdict(list)
     for event in detected_events:
-        # Convert seconds -> beats
         t_beats = (event['time'] / 60.0) * tempo
         q_time = round_to_nearest_subdivision(t_beats, quantization_subdivision)
         events_by_time[q_time].extend(event['drums'])
 
     last_offset = 0.0
     for q_time in sorted(events_by_time.keys()):
-        # Rests
         if q_time > last_offset:
             r = music21.note.Rest()
             r.duration.quarterLength = q_time - last_offset
             drum_part.append(r)
         
-        # Notes
         drums = events_by_time[q_time]
         notes = []
         for d in drums:
@@ -94,25 +84,24 @@ def build_and_export_drum_score(
             chord = music21.percussion.PercussionChord(notes)
             chord.duration.quarterLength = dur
             drum_part.append(chord)
-            
         last_offset = q_time + dur
         
     score.append(drum_part)
 
-    # Export Data Files (XML and MIDI)
+    # Export Data Files
     base_path = os.path.splitext(output_filepath)[0]
     try:
         score.write('musicxml', fp=f"{base_path}.musicxml")
         score.write('midi', fp=f"{base_path}.mid")
-        print(f"✅ Data files saved: {base_path}.musicxml / .mid")
+        print(f"✅ Data backup saved: {base_path}.musicxml")
     except Exception as e:
         print(f"⚠️  Data export warning: {e}")
 
     # ===========================================================
-    # PART B: VISUAL EXPORT (PDF) - Using Native Exporter
+    # PART B: VISUAL PDF (The "Real" Score via ReportLab)
     # ===========================================================
     
-    # Pass the raw 'detected_events' directly to our custom renderer.
+    # We bypass MusicXML entirely and send the raw events to our custom engine.
     try:
         generate_custom_pdf(
             detected_events=detected_events,
@@ -120,6 +109,6 @@ def build_and_export_drum_score(
             tempo=tempo
         )
     except Exception as e:
-        print(f"❌ Native PDF Export Failed: {e}")
+        print(f"Native PDF Export Failed: {e}")
         import traceback
         traceback.print_exc()

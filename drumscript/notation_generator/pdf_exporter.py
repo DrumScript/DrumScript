@@ -104,7 +104,7 @@ def generate_custom_pdf(detected_events, output_filepath, tempo=120):
     Generates a PDF drum score using the direct ReportLab engine.
     """
     if canvas is None:
-        print("❌ ReportLab missing.")
+        print("ReportLab missing.")
         return
 
     print(f"Generating 4-Bar Layout PDF: {output_filepath}")
@@ -184,5 +184,5 @@ def generate_custom_pdf(detected_events, output_filepath, tempo=120):
                     draw_note(c, note_x, note_y, note_head, current_y)
 
     c.save()
-    print(f"✅ Native PDF successfully saved to: {output_filepath}")
+    print(f"Native PDF successfully saved to: {output_filepath}")
     print("\n# ------------------------------------------------------------------------------------")

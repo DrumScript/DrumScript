@@ -33,7 +33,7 @@ def build_and_export_drum_score(
         with open(json_path, 'w') as f:
             json.dump(detected_events, f, indent=4)
     except Exception as e:
-        print(f"Warning: Could not save intermediate JSON: {e}")
+        print(f" Warning: Could not save intermediate JSON: {e}")
 
     # 3. Generate Visual PDF (Directly from Data)
     try:

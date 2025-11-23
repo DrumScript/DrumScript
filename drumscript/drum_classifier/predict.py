@@ -39,20 +39,21 @@ HIGH_TOM_CENTROID_MAX = 1380
 LOW_TOM_CENTROID_MIN = 1380
 LOW_TOM_CENTROID_MAX = 1600
 LOW_TOM_ZCR_MAX = 0.05
+
 SNARE_CENTROID_MIN = 1600
 SNARE_CENTROID_MAX = 4000
-SNARE_ZCR_MIN = 0.09
+SNARE_ZCR_MIN = 0.05
 
 # --- Define a shared Cymbal frequency space ---
 CYMBAL_CENTROID_MIN = 4500
-CYMBAL_CENTROID_MAX = 7000
+CYMBAL_CENTROID_MAX = 9000
 CRASH_CENTROID_MIN = 4000
-CRASH_CENTROID_MAX = 7000 
+CRASH_CENTROID_MAX = 9000 
 RIDE_SUSTAIN_MIN = 0.4
 RIDE_SUSTAIN_MAX = 0.75 
 CRASH_SUSTAIN_MIN = 0.75 
-HIHAT_CENTROID_MIN = 9000
-HIHAT_ZCR_MIN = 0.2
+HIHAT_CENTROID_MIN = 8500
+HIHAT_ZCR_MIN = 0.08
 HIHAT_SUSTAIN_THRESHOLD = 0.5
 
 # --- Refractory period constants ---
@@ -74,10 +75,11 @@ def predict_drum_hits(onset_features: List[Dict[str, Any]]) -> List[Dict[str, An
 
     for onset in onset_features:
         # Capture the features for this specific hit to save them later
+        # Cast numpy.float32 values to standard Python float using float()
         current_features = {
-            'spectral_centroid': round(onset['spectral_centroid'], 2),
-            'zcr': round(onset['zero_crossing_rate'], 4),
-            'sustain': round(onset['sustain_level'], 2)
+            'spectral_centroid': float(round(onset['spectral_centroid'], 2)),
+            'zcr': float(round(onset['zero_crossing_rate'], 4)),
+            'sustain': float(round(onset['sustain_level'], 2))
         }
 
         # ---- Refractory period checks ----

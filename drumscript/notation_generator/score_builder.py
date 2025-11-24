@@ -3,15 +3,14 @@
 import json
 import os
 from typing import List, Dict, Any
-
-# Import your custom ReportLab PDF engine
 from drumscript.notation_generator.pdf_exporter import generate_custom_pdf 
 
 def build_and_export_drum_score(
     detected_events: List[Dict[str, Any]],
     tempo: int = 120,
     output_filepath: str = "outputs/score.pdf",
-    quantization_subdivision: int = 16 
+    quantization_subdivision: int = 16, 
+    time_signature: str = "4/4" 
 ):
     """
     Builds a drum score by saving the event data to JSON and then 

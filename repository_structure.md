@@ -2,7 +2,7 @@
 ## `DrumScript` Python Package Structure
 
 <!--date_created: weds-25-oct-2025?-->
-<!--date_edited: mon-17-nov-2025-->
+<!--date_edited: mon-24-nov-2025-->
 
 
 > **PLEASE NOTE (Oct-2025 Update):** This repository structure has been updated to reflect the project's pivot to a non-ML, classification-based approach. Legacy machine learning modules have been archived.
@@ -16,7 +16,6 @@ DrumScript/                          # The main Python package that converts dru
 ├── pyproject.toml                   # Project metadata and dependencies (managed by `uv`).
 ├── uv.lock                          # Pinned versions of all dependencies.
 ├── __init__.py                      # Makes 'DrumScript' a Python package.
-├── midi_percussion_map.csv          # Master map for MIDI note numbers, instrument names, and staff positions.
 ├── repository_structure.md          # This file.
 │
 ├── drumscript/                      # <--- Main Source Package Directory

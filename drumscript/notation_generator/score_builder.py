@@ -15,7 +15,7 @@ print(f'\ndate/time: {datetimestamp}')
 def build_and_export_drum_score(
     detected_events: List[Dict[str, Any]],
     # tempo: int = 120,
-    # tempo: int,
+    tempo: int,
     output_filepath: str = "outputs/score.pdf",
     quantization_subdivision: int = 16, 
     time_signature: str = "4/4" 
@@ -48,7 +48,7 @@ def build_and_export_drum_score(
         generate_custom_pdf(
             detected_events=detected_events,
             output_filepath=output_filepath,
-            # tempo=tempo,
+            tempo=tempo,
             time_signature=time_signature
         )
     

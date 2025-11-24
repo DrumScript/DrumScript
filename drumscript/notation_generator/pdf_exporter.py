@@ -196,8 +196,8 @@ def generate_custom_pdf(detected_events, output_filepath, tempo, time_signature=
             draw_clef(c, MARGIN_X + 5, current_y) 
 
             # Draw Time Signature ONLY on the very first measure (Measure 0)
-            if m == 0:
-                draw_time_signature(c, MARGIN_X, current_y, numerator, denominator)
+            # if m == 0:
+            draw_time_signature(c, MARGIN_X, current_y, numerator, denominator)
             
         # Measure Placement
         slot_index = m % BARS_PER_SYSTEM

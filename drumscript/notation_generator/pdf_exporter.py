@@ -28,7 +28,7 @@ CLEF_WIDTH = 30     # Reserved space at start of each system for the clef
 BARS_PER_SYSTEM = 4 # Target: 4 measures per system
 
 # Reference Pitch (Middle Line = B3)
-REF_PITCH_MIDDLE_LINE = music21.pitch.Pitch('B3')
+REF_PITCH_MIDDLE_LINE = music21.pitch.Pitch('B3') # NOTE: DO WE NEED THIS FOR DRUMS? PERHAPS NOT IN GENERAL BUT THE ENGINER NEEDS TO UNDERSTAND HOW TO RUN PLACE THINGS
 
 def get_vertical_position(staff_position_str: str, staff_y_base: float) -> float:
     """Calculates the Y-coordinate for a note based on its staff position."""
@@ -99,23 +99,49 @@ def draw_note(c, x, y, note_type, staff_y_base):
     c.line(x + r, y, x + r, y + stem_height)
 
 
-def generate_custom_pdf(detected_events, output_filepath, tempo=120):
-    """
-    Generates a PDF drum score using the direct ReportLab engine.
-    """
+def generate_custom_pdf(detected_events, output_filepath, tempo=120, time_signature="4/4"):
+    
+    # Generates a PDF drum score using ReportLab engine.
+
     if canvas is None:
         print("ReportLab missing.")
         return
+    
+    # parse Time Signature (e.g. "3/4" -> numerator=3, denominator=4)
+    try:
+        numerator, denominator = map(int, time_signature.split('/'))
+    except ValueError:
+        print(f"Invalid time signature '{time_signature}', defaulting to 4/4")
+        numerator, denominator = 4, 4
+    
+    print(f"Generating PDF: {output_filepath} (Sig: {numerator}/{denominator}, {int(tempo)} BPM)")
 
-    print(f"Generating 4-Bar Layout PDF: {output_filepath}")
+    #print(f"Generating 4-Bar Layout PDF: {output_filepath}")
+
     c = canvas.Canvas(output_filepath, pagesize=A4)
     c.setTitle("DrumScript Transcription")
     
     # Layout Metrics
     system_width = PAGE_WIDTH - (2 * MARGIN_X)
     music_width = system_width - CLEF_WIDTH
+
+    # For 4/4 we use 4 bars per line. For 3/4, we could fit more, but let's stick to 4 for consistency.
+    BARS_PER_SYSTEM = 4 
     measure_width = music_width / BARS_PER_SYSTEM
     
+     # --- KEY CALCULATION: Duration of one measure ---
+    # In X/4 time, a beat is a quarter note.
+    # Seconds per beat = 60 / BPM
+    # Seconds per measure = (60 / BPM) * Numerator
+    # (Note: This logic assumes the denominator is 4. Complex meters like 6/8 would require (60/BPM) * 0.5 * 6)
+
+    seconds_per_beat = 60.0 / tempo
+    if denominator == 8:
+        seconds_per_beat = seconds_per_beat / 2.0 # An 8th note gets the beat? Depends on how BPM is defined.
+        # Usually BPM is quarter notes. So 6/8 measure = 3 quarter notes duration.
+    
+
+
     # Calculate duration of one measure in seconds (4/4 time)
     # (60 / BPM) * 4 beats
     sec_per_measure = (60.0 / tempo) * 4.0
@@ -138,7 +164,8 @@ def generate_custom_pdf(detected_events, output_filepath, tempo=120):
     c.setFont("Helvetica-Bold", 24)
     c.drawString(MARGIN_X, PAGE_HEIGHT - 50, "DrumScript Transcription")
     c.setFont("Helvetica", 12)
-    c.drawString(MARGIN_X, PAGE_HEIGHT - 70, f"Tempo: {int(tempo)} BPM")
+    # c.drawString(MARGIN_X, PAGE_HEIGHT - 70, f"Tempo: {int(tempo)} BPM")
+    c.drawString(MARGIN_X, PAGE_HEIGHT - 70, f"Tempo: {int(tempo)} BPM  |  Time Sig: {numerator}/{denominator}")
     
     for m in range(last_measure_idx + 1):
         
@@ -155,6 +182,10 @@ def generate_custom_pdf(detected_events, output_filepath, tempo=120):
             
             draw_staff(c, MARGIN_X, current_y, system_width)
             draw_clef(c, MARGIN_X + 5, current_y) 
+
+            c.setFont("Helvetica-Bold", 14)  # Draw Time Signature at start of system (Simple text representation for now)
+            c.drawString(MARGIN_X + 20, current_y + LINE_SPACING, f"{numerator}")
+            c.drawString(MARGIN_X + 20, current_y + 3*LINE_SPACING, f"{denominator}")
             
         # Measure Placement
         slot_index = m % BARS_PER_SYSTEM
@@ -184,5 +215,5 @@ def generate_custom_pdf(detected_events, output_filepath, tempo=120):
                     draw_note(c, note_x, note_y, note_head, current_y)
 
     c.save()
-    print(f"Native PDF successfully saved to: {output_filepath}")
+    print(f"PDF successfully saved to: {output_filepath}")
     print("\n# ------------------------------------------------------------------------------------")

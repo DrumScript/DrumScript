@@ -24,7 +24,7 @@ MARGIN_X = 50
 MARGIN_Y = 50
 STAFF_SPACING = 120 # Increased spacing for readability
 LINE_SPACING = 6    
-CLEF_WIDTH = 30     # Reserved space at start of each system for the clef
+CLEF_WIDTH = 40     # Increased to 40 to fit Clef + Time Sig
 BARS_PER_SYSTEM = 4 # Target: 4 measures per system
 
 # Reference Pitch (Middle Line = B3)
@@ -55,6 +55,22 @@ def draw_clef(c, x, y):
     clef_y = y + 1 * LINE_SPACING
     c.rect(x, clef_y, 4, clef_h, fill=1, stroke=0)
     c.rect(x + 8, clef_y, 4, clef_h, fill=1, stroke=0)
+
+def draw_time_signature(c, x, y, numerator, denominator):
+    """Draws the time signature numbers centered in the correct staff spaces."""
+    # Size 12 fits perfectly in 2 spaces (2 * 6px = 12px)
+    c.setFont("Helvetica-Bold", 12) 
+    
+    # Center alignment calculation relative to the clef gap
+    # x passed here is MARGIN_X. The clef takes up ~12px width.
+    # We place the numbers roughly 20px in.
+    text_x = x + 20
+    
+    # Top Number: Baseline on Line 3 (y + 12), fills up to Line 5
+    c.drawString(text_x, y + (2 * LINE_SPACING), f"{numerator}")
+    
+    # Bottom Number: Baseline on Line 1 (y), fills up to Line 3
+    c.drawString(text_x, y, f"{denominator}")
 
 def draw_bar_line(c, x, y):
     """Draws a vertical bar line."""
@@ -98,7 +114,6 @@ def draw_note(c, x, y, note_type, staff_y_base):
     # Attach stem to the side of the notehead
     c.line(x + r, y, x + r, y + stem_height)
 
-
 # def generate_custom_pdf(detected_events, output_filepath, tempo=120, time_signature="4/4"):
 def generate_custom_pdf(detected_events, output_filepath, tempo, time_signature="4/4"):
     # Generates a PDF drum score using ReportLab engine.
@@ -114,10 +129,8 @@ def generate_custom_pdf(detected_events, output_filepath, tempo, time_signature=
         print(f"Invalid time signature '{time_signature}', defaulting to 4/4")
         numerator, denominator = 4, 4
     
-    # print(f"Generating PDF: {output_filepath} (Sig: {numerator}/{denominator}, {int(tempo)} BPM)")
+    # def generate_custom_pdf(detected_events, output_filepath, tempo=120, time_signature="4/4"):
     print(f"Generating PDF: {output_filepath} (Sig: {numerator}/{denominator}, {int(tempo)} BPM)")
-
-    #print(f"Generating 4-Bar Layout PDF: {output_filepath}")
 
     c = canvas.Canvas(output_filepath, pagesize=A4)
     c.setTitle("DrumScript Transcription")
@@ -130,22 +143,18 @@ def generate_custom_pdf(detected_events, output_filepath, tempo, time_signature=
     BARS_PER_SYSTEM = 4 
     measure_width = music_width / BARS_PER_SYSTEM
     
-     # --- KEY CALCULATION: Duration of one measure ---
+    # --- KEY CALCULATION: Duration of one measure ---
     # In X/4 time, a beat is a quarter note.
     # Seconds per beat = 60 / BPM
     # Seconds per measure = (60 / BPM) * Numerator
-    # (Note: This logic assumes the denominator is 4. Complex meters like 6/8 would require (60/BPM) * 0.5 * 6)
-
     seconds_per_beat = 60.0 / tempo
     if denominator == 8:
         seconds_per_beat = seconds_per_beat / 2.0 # An 8th note gets the beat? Depends on how BPM is defined.
         # Usually BPM is quarter notes. So 6/8 measure = 3 quarter notes duration.
     
-
-
     # Calculate duration of one measure in seconds (4/4 time)
     # (60 / BPM) * 4 beats
-    sec_per_measure = (60.0 / tempo) * 4.0
+    sec_per_measure = seconds_per_beat * numerator
 
     # 1. Sort and Group Events
     detected_events.sort(key=lambda x: x['time'])
@@ -165,8 +174,10 @@ def generate_custom_pdf(detected_events, output_filepath, tempo, time_signature=
     c.setFont("Helvetica-Bold", 24)
     c.drawString(MARGIN_X, PAGE_HEIGHT - 50, "DrumScript Transcription")
     c.setFont("Helvetica", 12)
-    # c.drawString(MARGIN_X, PAGE_HEIGHT - 70, f"Tempo: {int(tempo)} BPM")
+        # c.drawString(MARGIN_X, PAGE_HEIGHT - 70, f"Tempo: {int(tempo)} BPM")
     c.drawString(MARGIN_X, PAGE_HEIGHT - 70, f"Tempo: {int(tempo)} BPM  |  Time Sig: {numerator}/{denominator}")
+    # Clean Header without duplicate time sig
+    # c.drawString(MARGIN_X, PAGE_HEIGHT - 70, f"Tempo: {int(tempo)} BPM")
     
     for m in range(last_measure_idx + 1):
         
@@ -178,15 +189,15 @@ def generate_custom_pdf(detected_events, output_filepath, tempo, time_signature=
             if current_y < MARGIN_Y:
                 c.showPage()
                 current_y = PAGE_HEIGHT - 100
-                c.setFont("Helvetica", 10)
+                c.setFont("Helvetica", 14)
                 c.drawString(MARGIN_X, PAGE_HEIGHT - 50, "DrumScript Transcription (Cont.)")
             
             draw_staff(c, MARGIN_X, current_y, system_width)
             draw_clef(c, MARGIN_X + 5, current_y) 
 
-            c.setFont("Helvetica-Bold", 14)  # Draw Time Signature at start of system (Simple text representation for now)
-            c.drawString(MARGIN_X + 20, current_y + LINE_SPACING, f"{numerator}")
-            c.drawString(MARGIN_X + 20, current_y + 3*LINE_SPACING, f"{denominator}")
+            # Draw Time Signature ONLY on the very first measure (Measure 0)
+            if m == 0:
+                draw_time_signature(c, MARGIN_X, current_y, numerator, denominator)
             
         # Measure Placement
         slot_index = m % BARS_PER_SYSTEM

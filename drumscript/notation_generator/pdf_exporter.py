@@ -2,14 +2,9 @@
 
 import os
 from collections import defaultdict
-try:
-    from reportlab.pdfgen import canvas
-    from reportlab.lib.pagesizes import A4
-    from reportlab.lib import colors
-except ImportError:
-    print("Error: 'reportlab' library not found. Please run 'pip install reportlab'")
-    canvas = None
-
+from reportlab.pdfgen import canvas
+from reportlab.lib.pagesizes import A4
+from reportlab.lib import colors
 import music21
 from drumscript.notation_generator import constants
 from datetime import datetime

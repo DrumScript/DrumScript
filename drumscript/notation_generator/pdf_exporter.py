@@ -99,8 +99,8 @@ def draw_note(c, x, y, note_type, staff_y_base):
     c.line(x + r, y, x + r, y + stem_height)
 
 
-def generate_custom_pdf(detected_events, output_filepath, tempo=120, time_signature="4/4"):
-    
+# def generate_custom_pdf(detected_events, output_filepath, tempo=120, time_signature="4/4"):
+def generate_custom_pdf(detected_events, output_filepath, tempo, time_signature="4/4"):
     # Generates a PDF drum score using ReportLab engine.
 
     if canvas is None:
@@ -114,6 +114,7 @@ def generate_custom_pdf(detected_events, output_filepath, tempo=120, time_signat
         print(f"Invalid time signature '{time_signature}', defaulting to 4/4")
         numerator, denominator = 4, 4
     
+    # print(f"Generating PDF: {output_filepath} (Sig: {numerator}/{denominator}, {int(tempo)} BPM)")
     print(f"Generating PDF: {output_filepath} (Sig: {numerator}/{denominator}, {int(tempo)} BPM)")
 
     #print(f"Generating 4-Bar Layout PDF: {output_filepath}")

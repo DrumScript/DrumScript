@@ -3,11 +3,19 @@
 import json
 import os
 from typing import List, Dict, Any
-from drumscript.notation_generator.pdf_exporter import generate_custom_pdf 
+from drumscript.audio_processor import audio_loader, onset_detector, feature_extractor, tempo_detector
+from drumscript.notation_generator.pdf_exporter import generate_custom_pdf
+from datetime import datetime
+
+print("\n# ------------------------------------------------------------------------------------")
+datetimestamp = datetime.now()
+print(f'\ndate/time: {datetimestamp}')
+
 
 def build_and_export_drum_score(
     detected_events: List[Dict[str, Any]],
-    tempo: int = 120,
+    # tempo: int = 120,
+    # tempo: int,
     output_filepath: str = "outputs/score.pdf",
     quantization_subdivision: int = 16, 
     time_signature: str = "4/4" 
@@ -40,7 +48,7 @@ def build_and_export_drum_score(
         generate_custom_pdf(
             detected_events=detected_events,
             output_filepath=output_filepath,
-            tempo=tempo,
+            # tempo=tempo,
             time_signature=time_signature
         )
     
@@ -49,3 +57,5 @@ def build_and_export_drum_score(
         print(f"PDF Export Failed: {e}")
         import traceback
         traceback.print_exc()
+
+print("\n# ------------------------------------------------------------------------------------")

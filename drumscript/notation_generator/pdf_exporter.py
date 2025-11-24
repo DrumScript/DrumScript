@@ -59,7 +59,7 @@ def draw_clef(c, x, y):
 def draw_time_signature(c, x, y, numerator, denominator):
     """Draws the time signature numbers centered in the correct staff spaces."""
     # Size 12 fits perfectly in 2 spaces (2 * 6px = 12px)
-    c.setFont("Helvetica-Bold", 12) 
+    c.setFont("Helvetica-Bold", 16) 
     
     # Center alignment calculation relative to the clef gap
     # x passed here is MARGIN_X. The clef takes up ~12px width.

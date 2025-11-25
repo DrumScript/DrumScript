@@ -4,14 +4,13 @@
 # This map MUST include all drum types output by drum_classifier/predict.py
 # and all keys required by notation_generator/score_builder.py and helpers.py
 
-
 DRUM_NOTATION_MAP = {
     # --- Bass Drums ---
     'kick': {
         'display_name': 'Kick Drum',
         'midi_program': 36,
         'note_head': 'normal',
-        'staff_position': 'F3' # Bottom Space (Space 1)
+        'staff_position': 'F3' # Bottom Space
     },
     'kick_clicky': {
         'display_name': 'Kick (Clicky)',
@@ -25,7 +24,7 @@ DRUM_NOTATION_MAP = {
         'display_name': 'Snare',
         'midi_program': 38,
         'note_head': 'normal',
-        'staff_position': 'C4' # Space 3 (Second space from top)
+        'staff_position': 'C4' # Space 3
     },
     
     # --- Hi-Hats ---
@@ -33,7 +32,7 @@ DRUM_NOTATION_MAP = {
         'display_name': 'Hi-Hat (Closed)',
         'midi_program': 42,
         'note_head': 'x',
-        'staff_position': 'G4' # Sitting above the top line
+        'staff_position': 'G4' # Above Top Line
     },
     'hi_hat_open': {
         'display_name': 'Hi-Hat (Open)',
@@ -59,7 +58,7 @@ DRUM_NOTATION_MAP = {
         'display_name': 'Low Tom',
         'midi_program': 41,
         'note_head': 'normal',
-        'staff_position': 'A3' # Space 2
+        'staff_position': 'A3' # Space 2 (Floor Tom Position)
     },
     
     # --- Cymbals ---
@@ -67,7 +66,7 @@ DRUM_NOTATION_MAP = {
         'display_name': 'Crash Cymbal',
         'midi_program': 49,
         'note_head': 'x',
-        'staff_position': 'A4' # Ledger line above staff
+        'staff_position': 'A4' # Ledger Line Above
     },
     'ride': {
         'display_name': 'Ride Cymbal',
@@ -77,6 +76,34 @@ DRUM_NOTATION_MAP = {
     }
 }
 
+# --- CLASSIFICATION THRESHOLDS (Frequency Zones) ---
+# Based on standard acoustic ranges (Kick < 800Hz, Snare 800-5kHz, Cymbals > 5kHz)
+
+# Frequency Zones (Hz)
+LOW_ZONE_MAX = 800 
+MID_ZONE_MIN = 800
+MID_ZONE_MAX = 5000
+HIGH_ZONE_MIN = 5000
+
+# Noise Thresholds (Zero-Crossing Rate)
+# Distinguishes "Tone" (Toms) from "Noise" (Snare/Cymbals)
+NOISE_THRESHOLD_LOW = 0.02 
+NOISE_THRESHOLD_MID = 0.05  
+NOISE_THRESHOLD_HIGH = 0.08
+
+# Sustain Thresholds (Seconds)
+# Distinguishes "Short" (Hats/Kicks) from "Long" (Crashes/Rides)
+CLOSED_HAT_MAX_SUSTAIN = 0.25 
+CRASH_MIN_SUSTAIN = 0.5
+
+# Refractory Periods (Seconds between hits)
+REFRACTORY = {
+    'kick': 0.1, 
+    'snare': 0.1, 
+    'hi_hat': 0.05, 
+    'crash': 0.2, 
+    'tom': 0.12
+}
 # Add more drum types as classified by your model
 # Example for other possible drum types (already present in the original file, just for context):
 # 'floor_tom': {'note_head': 'normal', 'STAFF_POS': 'A2'}, # A2 for floor tom

@@ -1,4 +1,5 @@
-# DrumScript/drum_classifier/predict.py
+# DrumScript/drum_classifier/classify.py
+# NOTE: This script was renamed from previous predictive model used so some references to 'predict' might still appear
 import numpy as np
 from typing import List, Dict, Any
 from drumscript.notation_generator import constants

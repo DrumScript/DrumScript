@@ -7,7 +7,7 @@ import json
 import argparse
 from drumscript.audio_processor.stem_splitter import extract_drum_stem
 from drumscript.audio_processor import audio_loader, onset_detector, feature_extractor, tempo_detector
-from drumscript.drum_classifier import predict
+from drumscript.drum_classifier import classify
 from drumscript.notation_generator import score_builder
 from datetime import datetime
 
@@ -60,7 +60,7 @@ def main(input_audio_path: str, transcribe_full_song: bool = False, time_signatu
         
         # 6. CLASSIFY HITS
         print("Classifying drum hits...")
-        raw_classified_events = predict.predict_drum_hits(features)
+        raw_classified_events = classify.predict_drum_hits(features)
 
         # Save Analysis
         output_dir = "outputs"

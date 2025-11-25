@@ -11,7 +11,7 @@ import numpy as np
 import librosa
 import soundfile
 import math # Added for math.floor to calculate EXPECTED_N_FRAMES
-import argparse # for command-line argument parsing
+import argparse # for command-line argument parsing
 
 
 # --- Configuration (Mirroring model_trainer.py for consistency) ---
@@ -40,8 +40,9 @@ if EXPECTED_N_FRAMES < 1:
 
 # current TOTAL_FEATURES_PER_FRAME = 40 (MFCCs) + 1 (Zero-Crossing Rate) = 41
 N_MFCC = 41
-TOTAL_FEATURES_PER_FRAME = N_MFCC + 3 # TOTAL_FEATURES_PER_FRAME = 44
-# THE SCRIP WILL ADD 3 FEATURES [1 (Centroid) + 1 (Rolloff) + 1 (RMS)] SO IN TOTAL WE HAVE 44 FEATURES
+# UPDATED: We are adding band energy features (Low, Mid, High), so +3 more features
+TOTAL_FEATURES_PER_FRAME = N_MFCC + 3 + 3 # TOTAL_FEATURES_PER_FRAME = 47
+# THE SCRIP WILL ADD FEATURES [1 (Centroid) + 1 (Rolloff) + 1 (RMS) + 3 (Band Energies)]
 
 
 # --- Main Feature Extraction Functions ---
@@ -71,13 +72,34 @@ def extract_features(audio_segment: np.ndarray, sr: int) -> Dict[str, Any]:
         # Calculate the ratio. Add a small epsilon to avoid division by zero.
         sustain_level = second_half_rms / (first_half_rms + 1e-6)
 
+        # --- Band Energy Calculation (Based on Cheatsheet Logic) ---
+        # Calculate Spectrogram magnitude
+        S = np.abs(librosa.stft(audio_segment, n_fft=N_FFT, hop_length=HOP_LENGTH))
+        
+        # Get frequency bins
+        fft_freqs = librosa.fft_frequencies(sr=sr, n_fft=N_FFT)
+        
+        # Define masks for bands based on constants.py (Low < 300Hz, Mid 300-5000Hz, High > 5000Hz)
+        # Note: 300Hz chosen to separate Kick/Floor Tom from Snare/Rack Tom body
+        low_band_mask = (fft_freqs <= 300)
+        mid_band_mask = (fft_freqs > 300) & (fft_freqs <= 5000)
+        high_band_mask = (fft_freqs > 5000)
+
+        # Sum energy in these bands (averaging over time)
+        energy_low = np.mean(np.sum(S[low_band_mask, :], axis=0))
+        energy_mid = np.mean(np.sum(S[mid_band_mask, :], axis=0))
+        energy_high = np.mean(np.sum(S[high_band_mask, :], axis=0))
+
         return {
             'spectral_centroid': spectral_centroid,
             'spectral_rolloff': spectral_rolloff,
             'rms': rms,
             'zero_crossing_rate': zcr,
             'mfccs': mfccs.tolist(),
-            'sustain_level': sustain_level
+            'sustain_level': sustain_level,
+            'energy_low': energy_low,   # Kick/Floor Tom indicator
+            'energy_mid': energy_mid,   # Snare/Rack Tom indicator
+            'energy_high': energy_high  # Hi-Hat/Cymbal indicator
         }
 
     except Exception as e:

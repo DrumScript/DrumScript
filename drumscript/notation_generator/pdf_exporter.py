@@ -52,7 +52,7 @@ def draw_clef(c, x, y):
 
 def draw_time_signature(c, x, y, numerator, denominator):
     """Draws the time signature numbers centered in the correct staff spaces."""
-    c.setFont("Helvetica-Bold", 12) 
+    c.setFont("Helvetica-Bold", 16) 
     text_x = x + 20 
     c.drawString(text_x, y + (2 * LINE_SPACING), f"{numerator}")
     c.drawString(text_x, y, f"{denominator}")

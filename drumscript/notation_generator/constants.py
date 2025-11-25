@@ -77,11 +77,13 @@ DRUM_NOTATION_MAP = {
 }
 
 # --- CLASSIFICATION THRESHOLDS (Frequency Zones) ---
-# Based on standard acoustic ranges (Kick < 800Hz, Snare 800-5kHz, Cymbals > 5kHz)
+# UPDATED [Tues25Nov2025] to match Equalizer Cheatsheet logic
+# Kick Thump: 60-100Hz | Snare Body: 150-250Hz | Snare Attack: 3-5kHz | Cymbal Sizzle: >5kHz
 
 # Frequency Zones (Hz)
-LOW_ZONE_MAX = 800 
-MID_ZONE_MIN = 800
+# Lowered LOW_ZONE_MAX to 300 to separate "Thump" (Kick/Floor Tom) from "Mud/Boxiness"
+LOW_ZONE_MAX = 300 
+MID_ZONE_MIN = 300
 MID_ZONE_MAX = 5000
 HIGH_ZONE_MIN = 5000
 
@@ -121,7 +123,7 @@ REFRACTORY = {
 # --- General MIDI Standard Percussion Map ---
 # These are common MIDI note numbers for drum sounds.
 # Ensure these align with your model's classification output and desired notation.
-#MIDI_KICK = 36         # C2 on piano
+#MIDI_KICK = 36          # C2 on piano
 #MIDI_SNARE_ACOUSTIC = 38 # D2 on piano
 #MIDI_SNARE_SIDE_STICK = 37 # C#2
 #MIDI_HI_HAT_CLOSED = 42 # F#2
@@ -129,7 +131,7 @@ REFRACTORY = {
 #MIDI_HI_HAT_OPEN = 46   # A#2
 #MIDI_CRASH_CYMBAL_1 = 49 # C#3
 #MIDI_RIDE_CYMBAL_1 = 51  # D#3
-#MIDI_TOM_HIGH = 50      # D3
+#MIDI_TOM_HIGH = 50       # D3
 #MIDI_TOM_MID = 47       # A2
 #MIDI_TOM_LOW = 45       # G2#
 

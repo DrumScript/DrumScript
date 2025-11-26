@@ -7,8 +7,8 @@ from drumscript.notation_generator.constants import DRUM_NOTATION_MAP
 
 def get_band_energy(y, sr, band):
     """Calculates energy within a specific frequency band."""
-    spec = np.abs(librosa.stft(y, n_fft=512))
-    freqs = librosa.fft_frequencies(sr=sr, n_fft=512)
+    spec = np.abs(librosa.stft(y, n_fft=256))
+    freqs = librosa.fft_frequencies(sr=sr, n_fft=256)
     bin_start = np.argmax(freqs >= band[0])
     bin_end = np.argmax(freqs >= band[1])
     if bin_end == 0: bin_end = len(freqs)
@@ -28,7 +28,7 @@ def classify_drum_hits(audio_data, sr, onsets) -> List[Dict[str, Any]]:
 
         # 2. Calculate Specific Band Energies
         # We sum energy across the whole spectrum to normalize
-        total_energy = np.sum(np.abs(librosa.stft(y_window, n_fft=512))) + 1e-8
+        total_energy = np.sum(np.abs(librosa.stft(y_window, n_fft=256))) + 1e-8
         
         # Helper to check ratio
         def check_band(band, threshold):

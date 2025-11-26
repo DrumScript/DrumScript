@@ -77,29 +77,51 @@ DRUM_NOTATION_MAP = {
 }
 
 
-# --- CLASSIFICATION ZONES (Standardized) ---
-# Low: Kick Fundamental + Attack
-BAND_LOW = (20, 800)     
-# Mid: Snare Body/Wires
-BAND_MID = (800, 5000)   
-# High: Cymbals/Hats
-BAND_HIGH = (5000, 16000) 
+# DrumScript/notation_generator/constants.py
 
-# --- ENERGY THRESHOLDS (Relative 0.0 - 1.0) ---
-# If > 40% of signal energy is in Low band -> Kick
-THRESH_LOW_ENERGY = 0.4 
-# If > 30% is in High band -> Cymbal/Hat
-THRESH_HIGH_ENERGY = 0.3
-# If > 30% is in Mid band -> Snare/Tom
-THRESH_MID_ENERGY = 0.3
+# Master map for drum notation
+DRUM_NOTATION_MAP = {
+    'kick': {'display_name': 'Kick Drum', 'midi_program': 36, 'note_head': 'normal', 'staff_position': 'F3'},
+    'kick_clicky': {'display_name': 'Kick (Clicky)', 'midi_program': 36, 'note_head': 'normal', 'staff_position': 'F3'},
+    'snare': {'display_name': 'Snare', 'midi_program': 38, 'note_head': 'normal', 'staff_position': 'C4'},
+    'hi_hat_closed': {'display_name': 'Hi-Hat (Closed)', 'midi_program': 42, 'note_head': 'x', 'staff_position': 'G4'},
+    'hi_hat_open': {'display_name': 'Hi-Hat (Open)', 'midi_program': 46, 'note_head': 'circle-x', 'staff_position': 'G4'},
+    'high_tom': {'display_name': 'High Tom', 'midi_program': 48, 'note_head': 'normal', 'staff_position': 'E4'},
+    'mid_tom': {'display_name': 'Mid Tom', 'midi_program': 45, 'note_head': 'normal', 'staff_position': 'D4'},
+    'low_tom': {'display_name': 'Low Tom', 'midi_program': 41, 'note_head': 'normal', 'staff_position': 'A3'},
+    'crash': {'display_name': 'Crash Cymbal', 'midi_program': 49, 'note_head': 'x', 'staff_position': 'A4'},
+    'ride': {'display_name': 'Ride Cymbal', 'midi_program': 51, 'note_head': 'x', 'staff_position': 'F4'}
+}
+
+# --- CLASSIFICATION ZONES (Refined based on Fundamental Frequencies) ---
+
+# FREQUENCY RANGES (Hz)
+KICK_RANGE = (50, 60)
+LOW_TOM_RANGE = (60, 110)
+SNARE_RANGE = (120, 240)
+MID_TOM_RANGE = (120, 150)
+OPEN_HAT_RANGE = (240, 400) # Fundamental body frequency
+CLOSED_HAT_RANGE = (400, 450) 
+RIDE_RANGE = (450, 550) 
+CRASH_RANGE = (550, 8000) 
+
+# LEGACY BANDS (Commented out to replace with specific ranges above)
+# BAND_LOW = (20, 800)     
+# BAND_MID = (800, 5000)   
+# BAND_HIGH = (5000, 16000) 
+
+# --- ENERGY THRESHOLDS ---
+# If energy in a specific band exceeds this ratio of the TOTAL energy, we trigger it.
+THRESH_KICK = 0.15
+THRESH_SNARE = 0.15
+THRESH_HAT = 0.10
+THRESH_CYMBAL = 0.10
 
 # --- SECONDARY FEATURES ---
-# Sustain Ratio (Decay): Distinguishes Closed Hats (fast decay) from Crashes (slow)
 CLOSED_HAT_MAX_DECAY = 0.25
 CRASH_MIN_DECAY = 0.45
-
-# Zero Crossing Rate (Noise)
 NOISE_THRESH_SNARE = 0.05
+
 
 # legacy: keep for now
 # Add more drum types as classified by your model

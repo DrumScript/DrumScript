@@ -48,14 +48,15 @@ dependencies = [
     "soundfile",
     #"spleeter",
     "tqdm",
-    "tensorflow", 
-    "torch==2.4.0",       
+    "tensorflow",
+    "torch==2.4.0",
     "torchaudio==2.4.0",
-    "torchcodec", #adding temporarily just to test stem_splitter.py, 
-    "reportlab"
+    "torchcodec", #adding temporarily just to test stem_splitter.py,
+    "scipy",
     #"lilypond",
     #"pytorch",
     #"tensorflow"
+    "reportlab"
 ]
 
 # [project.urls]

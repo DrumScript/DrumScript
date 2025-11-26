@@ -9,9 +9,9 @@ import soundfile
 import argparse # for command-line argument parsing
 from datetime import datetime
 
-print("\n# ---------------------------------------------------------------------------------------")
-datetimestamp = datetime.now()
-print(f'\ndate/time of run: {datetimestamp}') # for logging 
+# print("\n# ---------------------------------------------------------------------------------------")
+# datetimestamp = datetime.now()
+# print(f'\ndate/time of run: {datetimestamp}') # for logging 
 
 def detect_onsets(audio_data: np.ndarray, sr: int) -> list[float]:
     """
@@ -183,4 +183,4 @@ if __name__ == "__main__":
         traceback.print_exc() # Print full traceback for debugging
 
     print("\nonset_detector.py example finished.")
-    print("\n# ---------------------------------------------------------------------------------------")
+    # print("\n# ---------------------------------------------------------------------------------------")

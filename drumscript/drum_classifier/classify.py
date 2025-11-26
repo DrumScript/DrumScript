@@ -6,6 +6,7 @@ from typing import List, Dict, Any
 from drumscript.notation_generator import constants
 from drumscript.notation_generator.constants import DRUM_NOTATION_MAP
 
+
 def get_band_energy(y, sr, band):
     """Calculates energy within a specific frequency band."""
     spec = np.abs(librosa.stft(y, n_fft=512))
@@ -17,13 +18,11 @@ def get_band_energy(y, sr, band):
 
 def classify_drum_hits(audio_data, sr, onsets) -> List[Dict[str, Any]]:
     """
-    Classifies drum hits using Multi-Band Energy detection to support polyphony.
+    Classifies drum hits using Multi-Band Energy detection.
+    Optimized for Polyphony (Kick + Hat) and false-positive reduction.
     """
     classified_events = []
     
-
-    # We now process every onset purely based on its acoustic properties.
-
     for onset_time in onsets:
         # 1. Extract Window (100ms)
         start_sample = int(onset_time * sr)
@@ -33,8 +32,7 @@ def classify_drum_hits(audio_data, sr, onsets) -> List[Dict[str, Any]]:
         if start_sample >= end_sample: continue
             
         y_window = audio_data[start_sample:end_sample]
-        
-        if len(y_window) == 0: continue # Safety check
+        if len(y_window) == 0: continue 
 
         # 2. Calculate Band Energies
         e_low = get_band_energy(y_window, sr, constants.BAND_LOW)
@@ -42,14 +40,14 @@ def classify_drum_hits(audio_data, sr, onsets) -> List[Dict[str, Any]]:
         e_high = get_band_energy(y_window, sr, constants.BAND_HIGH)
         
         total_energy = e_low + e_mid + e_high + 1e-8
+        
+        # Ratios (0.0 - 1.0)
         p_low = e_low / total_energy
         p_mid = e_mid / total_energy
         p_high = e_high / total_energy
         
-        # 3. Calculate Secondary Features
+        # 3. Secondary Features
         zcr = np.mean(librosa.feature.zero_crossing_rate(y=y_window))
-        
-        # Sustain (Decay Ratio)
         rms = librosa.feature.rms(y=y_window)[0]
         split = len(rms) // 2
         if np.mean(rms[:split]) < 1e-4:
@@ -67,15 +65,25 @@ def classify_drum_hits(audio_data, sr, onsets) -> List[Dict[str, Any]]:
         
         detected_types = []
 
-        # --- POLYPHONIC LOGIC ---
+        # --- INTELLIGENT CLASSIFICATION LOGIC ---
 
-        # Check LOW (Kick)
+        # 1. CHECK KICK (Base)
+        is_kick = False
         if p_low > constants.THRESH_LOW_ENERGY:
-            if zcr < 0.1: # Kicks are clean
+            # Kick confirmed if low energy is dominant
+            if zcr < 0.1: 
                 detected_types.append('kick')
+                is_kick = True
 
-        # Check HIGH (Cymbals/Hats)
-        if p_high > constants.THRESH_HIGH_ENERGY:
+        # 2. CHECK HIGH (Hats/Cymbals)
+        # If we found a Kick, the High energy will be relatively smaller (drowned out).
+        # So we use a LOWER threshold for high-end if a Kick is present.
+        
+        high_threshold = constants.THRESH_HIGH_ENERGY # Default (0.3)
+        if is_kick:
+            high_threshold = 0.15 # Lower threshold to catch Hi-Hat *with* Kick
+
+        if p_high > high_threshold:
             if decay_ratio < constants.CLOSED_HAT_MAX_DECAY:
                 detected_types.append('hi_hat_closed')
             elif decay_ratio > constants.CRASH_MIN_DECAY:
@@ -83,16 +91,21 @@ def classify_drum_hits(audio_data, sr, onsets) -> List[Dict[str, Any]]:
             else:
                 detected_types.append('hi_hat_open')
 
-        # Check MID (Snare/Toms)
+        # 3. CHECK MID (Snare/Toms) - The "Too Many Notes" Fix
+        # Only detect Mid drums if they are the DOMINANT energy or extremely strong.
+        # This prevents Kicks (which have some mid attack) from triggering a Tom/Snare.
+        
         if p_mid > constants.THRESH_MID_ENERGY:
-            if zcr > constants.NOISE_THRESH_SNARE:
-                detected_types.append('snare')
-            else:
-                # Tonal mid = Tom
-                if p_low > 0.2:
-                    detected_types.append('low_tom')
+            # STRICT RULE: Mid must be the strongest band, OR > 50% energy
+            if p_mid > p_low and p_mid > p_high:
+                if zcr > constants.NOISE_THRESH_SNARE:
+                    detected_types.append('snare')
                 else:
-                    detected_types.append('high_tom')
+                    # Tonal mid = Tom
+                    if p_low > 0.2:
+                        detected_types.append('low_tom')
+                    else:
+                        detected_types.append('high_tom')
 
         # Create Events
         for dtype in detected_types:

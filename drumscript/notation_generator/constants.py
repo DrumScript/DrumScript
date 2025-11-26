@@ -76,36 +76,32 @@ DRUM_NOTATION_MAP = {
     }
 }
 
-# --- CLASSIFICATION THRESHOLDS (Frequency Zones) ---
-# UPDATED [Tues25Nov2025] to match Equalizer Cheatsheet logic
-# Kick Thump: 60-100Hz | Snare Body: 150-250Hz | Snare Attack: 3-5kHz | Cymbal Sizzle: >5kHz
 
-# Frequency Zones (Hz)
-# Lowered LOW_ZONE_MAX to 300 to separate "Thump" (Kick/Floor Tom) from "Mud/Boxiness"
-LOW_ZONE_MAX = 300 
-MID_ZONE_MIN = 300
-MID_ZONE_MAX = 5000
-HIGH_ZONE_MIN = 5000
+# --- CLASSIFICATION ZONES (Standardized) ---
+# Low: Kick Fundamental + Attack
+BAND_LOW = (20, 800)     
+# Mid: Snare Body/Wires
+BAND_MID = (800, 5000)   
+# High: Cymbals/Hats
+BAND_HIGH = (5000, 16000) 
 
-# Noise Thresholds (Zero-Crossing Rate)
-# Distinguishes "Tone" (Toms) from "Noise" (Snare/Cymbals)
-NOISE_THRESHOLD_LOW = 0.02 
-NOISE_THRESHOLD_MID = 0.05  
-NOISE_THRESHOLD_HIGH = 0.08
+# --- ENERGY THRESHOLDS (Relative 0.0 - 1.0) ---
+# If > 40% of signal energy is in Low band -> Kick
+THRESH_LOW_ENERGY = 0.4 
+# If > 30% is in High band -> Cymbal/Hat
+THRESH_HIGH_ENERGY = 0.3
+# If > 30% is in Mid band -> Snare/Tom
+THRESH_MID_ENERGY = 0.3
 
-# Sustain Thresholds (Seconds)
-# Distinguishes "Short" (Hats/Kicks) from "Long" (Crashes/Rides)
-CLOSED_HAT_MAX_SUSTAIN = 0.25 
-CRASH_MIN_SUSTAIN = 0.5
+# --- SECONDARY FEATURES ---
+# Sustain Ratio (Decay): Distinguishes Closed Hats (fast decay) from Crashes (slow)
+CLOSED_HAT_MAX_DECAY = 0.25
+CRASH_MIN_DECAY = 0.45
 
-# Refractory Periods (Seconds between hits)
-REFRACTORY = {
-    'kick': 0.1, 
-    'snare': 0.1, 
-    'hi_hat': 0.05, 
-    'crash': 0.2, 
-    'tom': 0.12
-}
+# Zero Crossing Rate (Noise)
+NOISE_THRESH_SNARE = 0.05
+
+# legacy: keep for now
 # Add more drum types as classified by your model
 # Example for other possible drum types (already present in the original file, just for context):
 # 'floor_tom': {'note_head': 'normal', 'STAFF_POS': 'A2'}, # A2 for floor tom

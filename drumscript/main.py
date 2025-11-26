@@ -11,9 +11,9 @@ from drumscript.drum_classifier import classify
 from drumscript.notation_generator import score_builder
 from datetime import datetime
 
-print("\n# ------------------------------------------------------------------------------------")
-datetimestamp = datetime.now()
-print(f'\ndate/time: {datetimestamp}')
+# print("\n# ------------------------------------------------------------------------------------")
+# datetimestamp = datetime.now()
+# print(f'\ndate/time: {datetimestamp}')
 
 def main(input_audio_path: str, transcribe_full_song: bool = False, time_signature: str = "4/4"):
     """
@@ -116,4 +116,4 @@ if __name__ == '__main__':
          transcribe_full_song=args.full,
          time_signature=args.ts)
 
-print("# ------------------------------------------------------------------------------------")
+# print("# ------------------------------------------------------------------------------------")

@@ -8,14 +8,11 @@ from drumscript.notation_generator.constants import DRUM_NOTATION_MAP
 
 def get_band_energy(y, sr, band):
     """Calculates energy within a specific frequency band."""
-    # We use FFT to measure energy in specific frequency bins
     spec = np.abs(librosa.stft(y, n_fft=512))
     freqs = librosa.fft_frequencies(sr=sr, n_fft=512)
-    
     bin_start = np.argmax(freqs >= band[0])
     bin_end = np.argmax(freqs >= band[1])
     if bin_end == 0: bin_end = len(freqs)
-    
     return np.sum(spec[bin_start:bin_end, :])
 
 def classify_drum_hits(audio_data, sr, onsets) -> List[Dict[str, Any]]:
@@ -24,8 +21,8 @@ def classify_drum_hits(audio_data, sr, onsets) -> List[Dict[str, Any]]:
     """
     classified_events = []
     
-    # Track last hits to prevent machine-gunning
-    last_hits = {k: -1.0 for k in constants.REFRACTORY}
+
+    # We now process every onset purely based on its acoustic properties.
 
     for onset_time in onsets:
         # 1. Extract Window (100ms)
@@ -37,8 +34,8 @@ def classify_drum_hits(audio_data, sr, onsets) -> List[Dict[str, Any]]:
             
         y_window = audio_data[start_sample:end_sample]
         
-        if len(y_window) == 0: continue
-        
+        if len(y_window) == 0: continue # Safety check
+
         # 2. Calculate Band Energies
         e_low = get_band_energy(y_window, sr, constants.BAND_LOW)
         e_mid = get_band_energy(y_window, sr, constants.BAND_MID)
@@ -75,40 +72,27 @@ def classify_drum_hits(audio_data, sr, onsets) -> List[Dict[str, Any]]:
         # Check LOW (Kick)
         if p_low > constants.THRESH_LOW_ENERGY:
             if zcr < 0.1: # Kicks are clean
-                if onset_time - last_hits['kick'] > constants.REFRACTORY['kick']:
-                    detected_types.append('kick')
-                    last_hits['kick'] = onset_time
+                detected_types.append('kick')
 
-        # Check HIGH (Cymbals/Hats) - Independent Check!
+        # Check HIGH (Cymbals/Hats)
         if p_high > constants.THRESH_HIGH_ENERGY:
             if decay_ratio < constants.CLOSED_HAT_MAX_DECAY:
-                if onset_time - last_hits['hi_hat'] > constants.REFRACTORY['hi_hat']:
-                    detected_types.append('hi_hat_closed')
-                    last_hits['hi_hat'] = onset_time
+                detected_types.append('hi_hat_closed')
             elif decay_ratio > constants.CRASH_MIN_DECAY:
-                if onset_time - last_hits['crash'] > constants.REFRACTORY['crash']:
-                    detected_types.append('crash')
-                    last_hits['crash'] = onset_time
+                detected_types.append('crash')
             else:
-                if onset_time - last_hits['hi_hat'] > constants.REFRACTORY['hi_hat']:
-                    detected_types.append('hi_hat_open')
-                    last_hits['hi_hat'] = onset_time
+                detected_types.append('hi_hat_open')
 
         # Check MID (Snare/Toms)
-        # Only if not overwhelmed by High energy
         if p_mid > constants.THRESH_MID_ENERGY:
             if zcr > constants.NOISE_THRESH_SNARE:
-                if onset_time - last_hits['snare'] > constants.REFRACTORY['snare']:
-                    detected_types.append('snare')
-                    last_hits['snare'] = onset_time
+                detected_types.append('snare')
             else:
                 # Tonal mid = Tom
-                if onset_time - last_hits['tom'] > constants.REFRACTORY['tom']:
-                    if p_low > 0.2:
-                        detected_types.append('low_tom')
-                    else:
-                        detected_types.append('high_tom')
-                    last_hits['tom'] = onset_time
+                if p_low > 0.2:
+                    detected_types.append('low_tom')
+                else:
+                    detected_types.append('high_tom')
 
         # Create Events
         for dtype in detected_types:

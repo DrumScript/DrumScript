@@ -7,11 +7,11 @@ from reportlab.lib.pagesizes import A4
 from reportlab.lib import colors
 import music21
 from drumscript.notation_generator import constants
-from datetime import datetime
+# from datetime import datetime
 
-print("\n# ------------------------------------------------------------------------------------")
-datetimestamp = datetime.now()
-print(f'\ndate/time: {datetimestamp}')
+# print("\n# ------------------------------------------------------------------------------------")
+# datetimestamp = datetime.now()
+# print(f'\ndate/time: {datetimestamp}')
 
 # --- Configuration Constants ---
 PAGE_WIDTH, PAGE_HEIGHT = A4
@@ -176,4 +176,4 @@ def generate_custom_pdf(detected_events, output_filepath, tempo, time_signature=
 
     c.save()
     print(f"PDF successfully saved to: {output_filepath}")
-    print("\n# ------------------------------------------------------------------------------------")
+    # print("\n# ------------------------------------------------------------------------------------")

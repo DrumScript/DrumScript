@@ -18,7 +18,7 @@ def get_band_energy(y, sr, band):
 def classify_drum_hits(audio_data, sr, onsets) -> List[Dict[str, Any]]:
     """
     Classifies drum hits using Multi-Band Energy detection.
-    Optimized for Polyphony (Kick + Hat) and false-positive reduction.
+    Optimized for Polyphony (ie. Kick + Hat) and false-positive reduction.
     """
     classified_events = []
     

@@ -73,7 +73,7 @@ def main(input_audio_path: str, transcribe_full_song: bool = False, time_signatu
         print("--- Done! ---\n")
         
     except Exception as e:
-        print(f"\n❌ Error: {e}")
+        print(f"\n Error: {e}")
         import traceback
         traceback.print_exc()
 

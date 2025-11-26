@@ -15,6 +15,7 @@ from datetime import datetime
 # datetimestamp = datetime.now()
 # print(f'\ndate/time: {datetimestamp}')
 
+
 def main(input_audio_path: str, transcribe_full_song: bool = False, time_signature: str = "4/4"):
     print(f"\n--- Starting DrumScript ---")
     print(f"Target: {input_audio_path}")

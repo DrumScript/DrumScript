@@ -6,7 +6,7 @@ from drumscript.notation_generator import constants
 from drumscript.notation_generator.constants import DRUM_NOTATION_MAP
 
 def get_band_energy(y, sr, band):
-    """Calculates energy within a specific frequency band."""
+    # Calculates energy within a specific frequency band.
     spec = np.abs(librosa.stft(y, n_fft=256))
     freqs = librosa.fft_frequencies(sr=sr, n_fft=256)
     bin_start = np.argmax(freqs >= band[0])

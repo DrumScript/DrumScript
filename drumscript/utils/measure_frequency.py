@@ -1,6 +1,24 @@
 import librosa
 import numpy as np
 import matplotlib.pyplot as plt
+import argparse
+# from datetime import datetime
+
+# NOTE: Uncomment to use for logging/tests
+
+# print("\n# ------------------------------------------------------------------------------------")
+# datetimestamp = datetime.now()
+# print(f'\ndatetimestamp: {datetimestamp}')
+
+
+# from drumscript.utils.config import SAMPLE_RATE, HOP_LENGTH, N_FFT
+
+# def measure_kick_frequency(audio_file_path):
+    # Load with the PROJECT'S standardized sample rate, not the file's native rate
+  #  y, sr = librosa.load(audio_file_path, sr=SAMPLE_RATE) 
+    
+    # Use the project's FFT settings
+   # S = librosa.stft(y, n_fft=N_FFT, hop_length=HOP_LENGTH)
 
 """
 # [CONTRIBUTOR UTILITY CODE]
@@ -53,15 +71,25 @@ def measure_kick_frequency(audio_file_path):
         print(f"Estimated peak kick drum frequency: {peak_frequency:.2f} Hz")
         
         # 6. Optional: Visualization
-        plt.figure(figsize=(10, 6))
-        librosa.display.specshow(S_db, sr=sr, hop_length=hop_length, x_axis='time', y_axis='log')
-        plt.title('Spectrogram of the audio file')
-        plt.vlines(librosa.frames_to_time(max_energy_frame, sr=sr, hop_length=hop_length), 0, sr/2, color='white', linestyle='--', label='Analyzed Frame')
-        plt.legend()
-        plt.show()
+        # plt.figure(figsize=(10, 6))
+        # librosa.display.specshow(S_db, sr=sr, hop_length=hop_length, x_axis='time', y_axis='log')
+        # plt.title('Spectrogram of the audio file')
+        # plt.vlines(librosa.frames_to_time(max_energy_frame, sr=sr, hop_length=hop_length), 0, sr/2, color='white', linestyle='--', label='Analyzed Frame')
+        # plt.legend()
+        # plt.show()
         
     else:
         print("Could not find a prominent frequency in the 50-200 Hz range.")
 
 # Usage example (replace 'your_kick_drum_sample.wav' with your file path):
 # measure_kick_frequency('your_kick_drum_sample.wav')
+
+if __name__ == "__main__":
+    # This allows you to run it from the command line with an argument
+    import sys
+    if len(sys.argv) < 2:
+        print("Usage: uv run drumscript/utils/measure_frequency.py <path_to_audio_file>")
+        sys.exit(1)
+    
+    input_file = sys.argv[1]
+    measure_kick_frequency(input_file)

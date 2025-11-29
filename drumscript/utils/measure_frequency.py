@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import argparse
 # from datetime import datetime
 
-# NOTE: Uncomment to use for logging/tests
+# Uncomment to use for logging/tests
 
 # print("\n# ------------------------------------------------------------------------------------")
 # datetimestamp = datetime.now()

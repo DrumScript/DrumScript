@@ -2,7 +2,7 @@
 ## `DrumScript` Python Package Structure
 
 <!--date_created: weds-25-oct-2025?-->
-<!--date_edited: mon-24-nov-2025-->
+<!--date_edited: sat-29-nov-2025 -->
 
 
 > **PLEASE NOTE (Oct-2025 Update):** This repository structure has been updated to reflect the project's pivot to a non-ML, classification-based approach. Legacy machine learning modules have been archived.
@@ -32,9 +32,9 @@ DrumScript/                          # The main Python package that converts dru
 │   │   
 │   │── drum_classifier/                   # PYTHON SUPBPACKAGE/MODULE:  Classifies drum sounds using a rule-based DSP approach.
 │   │    ├── __init__.py
-│   │    ├── generate_score.py            # Script for interpreting classification outputs to generate a score.
-│   │    ├── predict.py                   # Applies the classification rules to an audio file's features.
-│   │    └── prediction_output.json       # Example output listing all detected and classified events.
+│   │    ├── generate_score.py            # *[OUTDATED]* Script for interpreting classification outputs to generate a score.
+│   │    ├── predict.py                   # *[OUTDATED]* Applies the classification rules to an audio file's features.
+│   │    └── prediction_output.json       # *[OUTDATED]* Example output listing all detected and classified events.
 │   │
 │   ├── notation_generator/              # PYTHON SUPBPACKAGE/MODULE:  Generates musical notation (.xml) and sheet music (.pdf).
 │   │   ├── __init__.py
@@ -47,7 +47,9 @@ DrumScript/                          # The main Python package that converts dru
 │   └── utils/                           # PYTHON SUPBPACKAGE/MODULE: Utility functions and configuration.
 │   │   ├── __init__.py
 │   │   ├── config.py                    # Stores configuration parameters.
+│   │   ├── measure_frequency.py         # Uses Librosa to measure frequency of drum part (kick drum used as example)
 │       └── ffmpeg_installer.py          # Utility script for installing ffmpeg.
+
 │
 ├── developer_docs/                  # Documentation for contributors and developers.
 │   └── static/                      # Stores the documentation GitHub Pages site assets

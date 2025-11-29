@@ -59,8 +59,8 @@ dependencies = [
     "reportlab"
 ]
 
-optional = [
-  "ipykernel"
+  [optional] = [
+    "ipykernel"
 ]
 
 # [project.urls]

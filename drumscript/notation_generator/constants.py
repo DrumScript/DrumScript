@@ -76,23 +76,6 @@ DRUM_NOTATION_MAP = {
     }
 }
 
-
-# DrumScript/notation_generator/constants.py
-
-# Master map for drum notation
-DRUM_NOTATION_MAP = {
-    'kick': {'display_name': 'Kick Drum', 'midi_program': 36, 'note_head': 'normal', 'staff_position': 'F3'},
-    'kick_clicky': {'display_name': 'Kick (Clicky)', 'midi_program': 36, 'note_head': 'normal', 'staff_position': 'F3'},
-    'snare': {'display_name': 'Snare', 'midi_program': 38, 'note_head': 'normal', 'staff_position': 'C4'},
-    'hi_hat_closed': {'display_name': 'Hi-Hat (Closed)', 'midi_program': 42, 'note_head': 'x', 'staff_position': 'G4'},
-    'hi_hat_open': {'display_name': 'Hi-Hat (Open)', 'midi_program': 46, 'note_head': 'circle-x', 'staff_position': 'G4'},
-    'high_tom': {'display_name': 'High Tom', 'midi_program': 48, 'note_head': 'normal', 'staff_position': 'E4'},
-    'mid_tom': {'display_name': 'Mid Tom', 'midi_program': 45, 'note_head': 'normal', 'staff_position': 'D4'},
-    'low_tom': {'display_name': 'Low Tom', 'midi_program': 41, 'note_head': 'normal', 'staff_position': 'A3'},
-    'crash': {'display_name': 'Crash Cymbal', 'midi_program': 49, 'note_head': 'x', 'staff_position': 'A4'},
-    'ride': {'display_name': 'Ride Cymbal', 'midi_program': 51, 'note_head': 'x', 'staff_position': 'F4'}
-}
-
 # --- CLASSIFICATION ZONES (Refined based on Fundamental Frequencies) ---
 
 # FREQUENCY RANGES (Hz)

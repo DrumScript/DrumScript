@@ -1,5 +1,3 @@
-# pyproject.toml
-
 [build-system]
 requires = ["setuptools>=61.0", "wheel"]
 build-backend = "setuptools.build_meta"
@@ -57,11 +55,8 @@ dependencies = [
     #"pytorch",
     #"tensorflow"
     "reportlab"
-]
+  ]
 
-  [optional] = [
-    "ipykernel"
-]
 
 # [project.urls]
 # Homepage = ""
@@ -69,6 +64,11 @@ dependencies = [
 # "Bug Tracker" = "https://github.com//DrumScript/DrumScript/issues"
 
 # --- Optional Dependencies ---
+[project.optional-dependencies]
+optional = [
+    "ipykernel"
+  ]
+
 #[tool.setuptools.package-data]
 # [OPTIONAL] If you have data files inside your package that need to be included
 # "DrumScript" = ["data/*.csv"] # Example: include all .csv files in DrumScript/data/
@@ -78,3 +78,10 @@ dependencies = [
 where = ["."] # Search for packages in the current directory
 include = ["DrumScript*"] # Only include packages starting with DrumScript
 exclude = ["tests*","development*", "docs*", "archive*"] # Exclude test directories, docs, development and archive folders from builddeactict
+
+# api = [
+   # "fastapi",
+   # "uvicorn[standard]", # The server to run FastAPI
+   # "pydantic",
+   # "boto3",           # For AWS Bedrock
+#]

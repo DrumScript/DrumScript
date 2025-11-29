@@ -42,7 +42,10 @@ def classify_drum_hits(audio_data, sr, onsets) -> List[Dict[str, Any]]:
         if np.mean(rms[:split]) < 1e-4: decay_ratio = 0.0
         else: decay_ratio = np.mean(rms[split:]) / np.mean(rms[:split])
 
-        analysis = {'zcr': float(round(zcr, 3)), 'decay': float(round(decay_ratio, 2))}
+        analysis = {
+            'zcr': float(round(zcr, 3)), 
+            'decay': float(round(decay_ratio, 2))},
+        
         detected_types = []
 
         # --- CLASSIFICATION LOGIC (Range-Based) ---

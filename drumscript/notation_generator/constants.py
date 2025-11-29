@@ -78,8 +78,10 @@ DRUM_NOTATION_MAP = {
 
 # --- CLASSIFICATION ZONES (Refined based on Fundamental Frequencies) ---
 
-# FREQUENCY RANGES (Hz)
-KICK_RANGE = (50, 60)
+# FUNDAMENTAL FREQUENCY RANGES (Hz) (Based on testing audio manually)
+# Copy and comment out most recent previous freq for reference, when amending
+# KICK_RANGE = (50, 60)
+KICK_RANGE = (64, 87) # majority of kick drum fundaemtals either 64.60 or 86.13 HZ, so this is a good baseline
 LOW_TOM_RANGE = (60, 110)
 SNARE_RANGE = (120, 240)
 MID_TOM_RANGE = (120, 150)

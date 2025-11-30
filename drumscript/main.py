@@ -1,12 +1,13 @@
 # drumscript/main.py
 import shutil
-from pathlib import Path
 import os
 import sys
 import json
 import argparse
-from drumscript.audio_processor.stem_splitter import extract_drum_stem
+from pathlib import Path
+
 from drumscript.audio_processor import audio_loader, onset_detector, feature_extractor, tempo_detector
+from drumscript.audio_processor.stem_splitter import extract_drum_stem
 from drumscript.drum_classifier import classify
 from drumscript.notation_generator import score_builder
 # from datetime import datetime
@@ -14,6 +15,7 @@ from drumscript.notation_generator import score_builder
 # print("\n# ------------------------------------------------------------------------------------")
 # datetimestamp = datetime.now()
 # print(f'\ndate/time: {datetimestamp}')
+
 
 
 def main(input_audio_path: str, transcribe_full_song: bool = False, time_signature: str = "4/4"):
@@ -36,6 +38,7 @@ def main(input_audio_path: str, transcribe_full_song: bool = False, time_signatu
         y, sr = audio_loader.load_audio(audio_path)
         y = audio_loader.normalise_audio(y) 
         
+        # Preserve core functionality: Automatic Tempo Detection
         tempo = tempo_detector.estimate_tempo(y, sr)
         onsets = onset_detector.detect_onsets(y, sr)
         
@@ -43,8 +46,7 @@ def main(input_audio_path: str, transcribe_full_song: bool = False, time_signatu
         print(f"   -> Detected Onsets: {len(onsets)}")
 
         # 3. Classification
-        print("...Classifying Events (Multi-Band)...")
-        # Pass raw audio for polyphonic analysis
+        print("...Classifying (Fundamental Frequency Engine)...")
         classified_events = classify.classify_drum_hits(y, sr, onsets)
         print(f"   -> Classified {len(classified_events)} events")
 
@@ -54,16 +56,18 @@ def main(input_audio_path: str, transcribe_full_song: bool = False, time_signatu
             final_events.append({
                 'time': event['onset_time_seconds'],
                 'drums': [event['drum_type']],
-                'analysis': event['analysis']
+                'analysis': event['analysis'], # Contains f0, sc, width, depth
+                'midi_pitch': event['midi_pitch'],
+                'note_head_type': event['note_head_type'],
+                'staff_position': event['staff_position']
             })
 
         # 5. Output Generation
         output_filename = f"{Path(input_audio_path).stem}_transcription"
         final_pdf_path = f"outputs/{output_filename}.pdf" 
         
-        print(f"...Building Score: {final_pdf_path}...")
+        print(f"...Building Score & JSON: {final_pdf_path}...")
         
-        # This saves the single master JSON and PDF
         score_builder.build_and_export_drum_score(
             detected_events=final_events, 
             tempo=tempo, 
@@ -74,7 +78,7 @@ def main(input_audio_path: str, transcribe_full_song: bool = False, time_signatu
         print("--- Done! ---\n")
         
     except Exception as e:
-        print(f"\n Error: {e}")
+        print(f"\ Error: {e}")
         import traceback
         traceback.print_exc()
 

@@ -91,3 +91,14 @@ def measure_snare_frequency(audio_file_path):
 
 # Example with a generic file (you will need your own snare sample for meaningful results):
 # mean_freq, peak_freq = measure_snare_frequency('path/to/your/snare_drum_sample.wav') 
+
+
+if __name__ == "__main__":
+    # This allows you to run it from the command line with an argument
+    import sys
+    if len(sys.argv) < 2:
+        print("Usage: uv run drumscript/utils/measure_kick/frequency.py <path_to_audio_file>")
+        sys.exit(1)
+    
+    input_file = sys.argv[1]
+    measure_kick_frequency(input_file)

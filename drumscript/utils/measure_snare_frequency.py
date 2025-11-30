@@ -97,8 +97,8 @@ if __name__ == "__main__":
     # This allows you to run it from the command line with an argument
     import sys
     if len(sys.argv) < 2:
-        print("Usage: uv run drumscript/utils/measure_kick/frequency.py <path_to_audio_file>")
+        print("Usage: uv run drumscript/utils/measure_snare_frequency.py <path_to_audio_file>")
         sys.exit(1)
     
     input_file = sys.argv[1]
-    measure_kick_frequency(input_file)
+    measure_snare_frequency(input_file)

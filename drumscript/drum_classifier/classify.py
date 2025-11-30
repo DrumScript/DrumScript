@@ -1,103 +1,107 @@
 # DrumScript/drum_classifier/classify.py
+
 import numpy as np
 import librosa
 from typing import List, Dict, Any
 from drumscript.notation_generator import constants
 from drumscript.notation_generator.constants import DRUM_NOTATION_MAP
 
-def get_band_energy(y, sr, band):
-    # Calculates energy within a specific frequency band.
-    spec = np.abs(librosa.stft(y, n_fft=256))
-    freqs = librosa.fft_frequencies(sr=sr, n_fft=256)
-    bin_start = np.argmax(freqs >= band[0])
-    bin_end = np.argmax(freqs >= band[1])
-    if bin_end == 0: bin_end = len(freqs)
-    return np.sum(spec[bin_start:bin_end, :])
+def analyze_event(y, sr):
+    """
+    Calculates specific acoustic features:
+    - f0: Fundamental Frequency (Peak Magnitude)
+    - sc: Spectral Centroid (Brightness)
+    - width: Spectral Bandwidth
+    - depth: Decay Ratio (Sustain)
+    """
+    # 1. FFT for Frequency Analysis
+    # High resolution (n_fft=2048) to see low frequencies clearly
+    n_fft = 2048
+    spec = np.abs(librosa.stft(y, n_fft=n_fft))
+    freqs = librosa.fft_frequencies(sr=sr, n_fft=n_fft)
+    
+    # Sum magnitudes to find the strongest frequency (Fundamental)
+    sum_spec = np.sum(spec, axis=1)
+    peak_idx = np.argmax(sum_spec)
+    f0 = freqs[peak_idx]
+    
+    # 2. Spectral Features
+    sc = float(np.mean(librosa.feature.spectral_centroid(S=spec, sr=sr)))
+    width = float(np.mean(librosa.feature.spectral_bandwidth(S=spec, sr=sr)))
+    
+    # 3. Depth / Decay (Sustain)
+    rms = librosa.feature.rms(y=y)[0]
+    split = len(rms) // 2
+    if np.mean(rms[:split]) < 1e-5:
+        decay = 0.0
+    else:
+        decay = np.mean(rms[split:]) / np.mean(rms[:split])
+
+    return {
+        'f0': float(f0),
+        'sc': float(round(sc, 2)),
+        'width': float(round(width, 2)),
+        'depth': float(round(decay, 2))
+    }
 
 def classify_drum_hits(audio_data, sr, onsets) -> List[Dict[str, Any]]:
+    """
+    Classifies hits strictly based on Fundamental Frequency ($f_0$) ranges.
+    """
     classified_events = []
     
     for onset_time in onsets:
-        # 1. Extract Window
+        # Extract 150ms window for analysis
         start_sample = int(onset_time * sr)
-        end_sample = int((onset_time + 0.10) * sr)
+        end_sample = int((onset_time + 0.15) * sr)
+        
         if end_sample > len(audio_data): end_sample = len(audio_data)
         if start_sample >= end_sample: continue
+            
         y_window = audio_data[start_sample:end_sample]
         if len(y_window) == 0: continue 
 
-        # 2. Calculate Specific Band Energies
-        # We sum energy across the whole spectrum to normalize
-        total_energy = np.sum(np.abs(librosa.stft(y_window, n_fft=256))) + 1e-8
+        # Analyze
+        features = analyze_event(y_window, sr)
+        f0 = features['f0']
         
-        # Helper to check ratio
-        def check_band(band, threshold):
-            e = get_band_energy(y_window, sr, band)
-            return (e / total_energy) > threshold
+        drum_type = None
 
-        # 3. Secondary Features
-        zcr = np.mean(librosa.feature.zero_crossing_rate(y=y_window))
-        rms = librosa.feature.rms(y=y_window)[0]
-        split = len(rms) // 2
-        if np.mean(rms[:split]) < 1e-4: decay_ratio = 0.0
-        else: decay_ratio = np.mean(rms[split:]) / np.mean(rms[:split])
-
-        analysis = {
-            'zcr': float(round(zcr, 3)), 
-            'decay': float(round(decay_ratio, 2))},
+        # --- STRICT FREQUENCY RANGE CLASSIFICATION ---
+        # Order matters for overlaps!
         
-        detected_types = []
-
-        # --- CLASSIFICATION LOGIC (Range-Based) ---
-
-        # 1. KICK vs LOW TOM
-        if check_band(constants.KICK_RANGE, constants.THRESH_KICK):
-            # Differentiate by ZCR or just prioritize Kick
-            if zcr < 0.1: 
-                detected_types.append('kick')
-        elif check_band(constants.LOW_TOM_RANGE, constants.THRESH_KICK):
-             detected_types.append('low_tom')
-
-        # 2. SNARE vs MID TOM
-        if check_band(constants.SNARE_RANGE, constants.THRESH_SNARE):
-            if zcr > constants.NOISE_THRESH_SNARE:
-                detected_types.append('snare')
-            else:
-                detected_types.append('mid_tom') # Tonal in snare range = Tom
-
-        # 3. HATS vs CYMBALS
-        # Checking fundamental ranges for body/tone
-        
-        # Closed Hat Body
-        if check_band(constants.CLOSED_HAT_RANGE, constants.THRESH_HAT):
-             detected_types.append('hi_hat_closed')
-
-        # Open Hat / Ride Body
-        if check_band(constants.OPEN_HAT_RANGE, constants.THRESH_HAT):
-             if decay_ratio > 0.4: # Long sustain? Maybe Ride
-                 detected_types.append('hi_hat_open') # Or Ride, hard to say without high freq check
-             else:
-                 detected_types.append('hi_hat_open')
-
-        # Crash / Ride (High Freq + Long Sustain)
-        if check_band(constants.CRASH_RANGE, constants.THRESH_CYMBAL):
-            if decay_ratio > constants.CRASH_MIN_DECAY:
-                detected_types.append('crash')
-        
-        # --- Legacy "High Band" Check for Air/Sizzle ---
-        # (Optional: Add back if needed to catch high-end only sounds)
-
-        # Create Events
-        for dtype in set(detected_types): # set() prevents duplicates
-            if dtype in constants.DRUM_NOTATION_MAP:
-                meta = constants.DRUM_NOTATION_MAP[dtype]
-                classified_events.append({
-                    'drum_type': dtype,
-                    'onset_time_seconds': round(onset_time, 2),
-                    'midi_pitch': meta['midi_program'],
-                    'note_head_type': meta['note_head'],
-                    'staff_position': meta['staff_position'],
-                    'analysis': analysis
-                })
+        # 1. Low End
+        if constants.KICK_RANGE[0] <= f0 <= constants.KICK_RANGE[1]:
+            drum_type = 'kick'
+        elif constants.LOW_TOM_RANGE[0] <= f0 <= constants.LOW_TOM_RANGE[1]:
+            drum_type = 'low_tom'
+            
+        # 2. Mids (Check Tom first to catch narrow band, then Snare)
+        elif constants.MID_TOM_RANGE[0] <= f0 <= constants.MID_TOM_RANGE[1]:
+            drum_type = 'mid_tom'
+        elif constants.SNARE_RANGE[0] <= f0 <= constants.SNARE_RANGE[1]:
+            drum_type = 'snare'
+            
+        # 3. Highs
+        elif constants.OPEN_HAT_RANGE[0] <= f0 <= constants.OPEN_HAT_RANGE[1]:
+            drum_type = 'hi_hat_open'
+        elif constants.CLOSED_HAT_RANGE[0] <= f0 <= constants.CLOSED_HAT_RANGE[1]:
+            drum_type = 'hi_hat_closed'
+        elif constants.RIDE_RANGE[0] <= f0 <= constants.RIDE_RANGE[1]:
+            drum_type = 'ride'
+        elif constants.CRASH_RANGE[0] <= f0 <= constants.CRASH_RANGE[1]:
+            drum_type = 'crash'
+            
+        # If detected, append
+        if drum_type:
+            meta = DRUM_NOTATION_MAP[drum_type]
+            classified_events.append({
+                'drum_type': drum_type,
+                'onset_time_seconds': round(onset_time, 2),
+                'midi_pitch': meta['midi_program'],
+                'note_head_type': meta['note_head'],
+                'staff_position': meta['staff_position'],
+                'analysis': features
+            })
             
     return classified_events

@@ -94,6 +94,11 @@ CLOSED_HAT_RANGE = (400, 450)
 RIDE_RANGE = (450, 550) 
 CRASH_RANGE = (550, 8000) 
 
+
+# Overlap Handling:
+# MID_TOM (120-150) is inside SNARE (120-240).
+# The classifier will check MID_TOM first. If identified, it stops.
+
 # LEGACY BANDS (Commented out to replace with specific ranges above)
 # BAND_LOW = (20, 800)     
 # BAND_MID = (800, 5000)   

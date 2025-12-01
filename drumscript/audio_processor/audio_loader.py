@@ -14,6 +14,12 @@ import sounddevice as sd
 import threading
 import argparse # for command-line argument parsing
 
+# from datetime import datetime
+
+# print("\n# ------------------------------------------------------------------------------------")
+# datetimestamp = datetime.now()
+# print(f'\ndate/time: {datetimestamp}')
+
 
 # --- Define functions --------------------------------------------------------------------------------------------
 # 1. Load audio file : -------------------------------------------------------------------------------
@@ -136,5 +142,5 @@ if __name__ == "__main__":
     except Exception as e:
         print(f"\nAn unexpected error occurred during the example execution: {e}")
 
-    print("audio_loader.py example finished.")
-    print("\n#==============================================================================================") 
+# Uncomment to use, for clearer error logs
+# print("\n# ------------------------------------------------------------------------------------")

@@ -1,9 +1,9 @@
 # DrumScript/audio_processor/tempo_detector.py
-# ------------------------------------------------------------------------------------------------------------
+# TO RUN INDIVIDUALLY PLEASE PROVIDE A PATH TO AUDIO, 
+#   ie. `python3 -m drumscript.audio_processor.stem_splitter path_to_audio_file`
 """
 This module contains functions for automatic tempo detection from audio data.
 """
-# Import packages: ------------------------------------------------------------------------------------------------
 
 import librosa
 import numpy as np

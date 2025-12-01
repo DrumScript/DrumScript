@@ -6,6 +6,12 @@ import shutil
 import sys
 import time
 
+# from datetime import datetime
+
+# print("\n# ------------------------------------------------------------------------------------")
+# datetimestamp = datetime.now()
+# print(f'\ndate/time: {datetimestamp}')
+
 ## PLEASE NOTE: This is currently a test script. Original Demucs is no longer being maintained (owned by Meta/Facebook). Owners have forked and maintain occasionally: https://github.com/adefossez/demucs. THe usage of demucs is therefore subject to some uncertainty. We may decide to build our own stem_splitter model in DrumScript in order to ensure the long-term stability of the package, and to continue to make it as lightweight as possible.
 
 # Use 'htdemucs', the default (and high-quality) 4-stem model
@@ -180,4 +186,5 @@ if __name__ == "__main__":
         #else:
          #   print("No temporary directory to clean up.")
 
-# print("\n# =============================================================================================")
+# Uncomment to use, for clearer error logs
+# print("\n# ------------------------------------------------------------------------------------")

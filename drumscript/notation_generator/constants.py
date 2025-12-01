@@ -4,6 +4,8 @@
 # This map MUST include all drum types output by drum_classifier/predict.py
 # and all keys required by notation_generator/score_builder.py and helpers.py
 
+n_fft = 2048
+
 DRUM_NOTATION_MAP = {
     # --- Bass Drums ---
     'kick': {

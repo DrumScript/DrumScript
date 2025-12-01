@@ -1,4 +1,7 @@
 # drumscript/main.py
+"""
+This job of this script is to orchestrate the End-to-End running of DrumScript modules
+"""
 import shutil
 import os
 import sys

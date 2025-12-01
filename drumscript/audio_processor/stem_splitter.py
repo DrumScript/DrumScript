@@ -61,8 +61,8 @@ def extract_drum_stem(input_audio_path: str) -> str:
     ]
 
     # 3. Run the Demucs separation process
-    print("\n# =============================================================================================")
-    print("\n# PLEASE NOTE: This is currently a test script. Original Demucs is no longer being maintained (owned by Meta/Facebook). Owners have forked and maintain occasionally: https://github.com/adefossez/demucs. The usage of demucs is therefore subject to some uncertainty. We may decide to build our own stem_splitter model in DrumScript in order to ensure the long-term stability of the package, and to continue to make it as lightweight as possible.")
+    # print("\n# =============================================================================================")
+    # print("\n# PLEASE NOTE: This is currently a test script. Original Demucs is no longer being maintained (owned by Meta/Facebook). Owners have forked and maintain occasionally: https://github.com/adefossez/demucs. The usage of demucs is therefore subject to some uncertainty. We may decide to build our own stem_splitter model in DrumScript in order to ensure the long-term stability of the package, and to continue to make it as lightweight as possible.")
     print(f"Starting Demucs separation for: {input_audio_path}...")
 
     ## ---- Timer block, might remove later --------------------------------------------------------------

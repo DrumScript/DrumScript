@@ -171,3 +171,16 @@ NOISE_THRESH_SNARE = 0.05
 #STAFF_POS_TOM1 = 3 
 #STAFF_POS_TOM2 = 4 
 #STAFF_POS_TOM3 = 5
+
+
+# --- Configuration ---
+# These should ideally be imported from a central 'constants.py'
+# TO DO: Move these all to constants
+# but for now, we'll keep them consistent by defining them here.
+SAMPLE_RATE = 44100
+SEGMENT_LENGTH_SECONDS = 0.2 # SEGMENT_LENGTH_SECONDS is the duration of the audio snapshot the script analyses at one time. To give two extremes. If you increase it (e.g., to 1.0): You would capture several drum hits in one fingerprint, making it impossible for the model to know which sound happened when, if you decrease it (e.g., to 0.05): You might only capture the initial "click" of the drum hit and miss the sound's body, losing important information. 0.2 is (seconds) is usually good-enough for drum events, ie kick+snare
+N_FFT = 1024 # N_FFT is the 'size of the window for the fourier transform" N_FFT = 1024 (Frequency Resolution)
+# This is the size of the analysis window for the Fourier Transform, which breaks the sound down into its constituent frequencies. A larger N_FFT gives you a more detailed picture of which frequencies are present but a less precise idea of exactly when they happened. If you increase it (e.g., to 2048): You get a very precise frequency analysis, which could help distinguish two very similar-sounding cymbals. If you decrease it (e.g., to 512): You get better timing precision but a "blurrier" picture of the frequencies.
+HOP_LENGTH = 512
+# NEW: Define a fixed duration for the audio slice to analyze around each onset
+ONSET_SLICE_DURATION_MS = 200 # 200 milliseconds

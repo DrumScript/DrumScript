@@ -1,4 +1,7 @@
 # DrumScript/drum_classifier/classify.py
+# Requires path to audio file in cli command, ie:
+    # `python3 -m drumscript.drum_classifier.classify path_to_audio_file
+# ------------------------------------------------------------------------------------------------------------
 """
 This script determines the classification rules by which the parameters in constants.py are applied to audio_file_path.
 """
@@ -27,9 +30,12 @@ def analyze_event(y, sr):
     """
     # 1. FFT for Frequency Analysis
     # High resolution (n_fft=2048) to see low frequencies clearly
-    n_fft = 2048
-    spec = np.abs(librosa.stft(y, n_fft=n_fft))
-    freqs = librosa.fft_frequencies(sr=sr, n_fft=n_fft)
+    # n_fft = 2048
+    # spec = np.abs(librosa.stft(y, n_fft=n_fft))
+    # freqs = librosa.fft_frequencies(sr=sr, n_fft=n_fft)
+    n_fft = N_FFT
+    spec = np.abs(librosa.stft(y, n_fft=N_FFT))
+    freqs = librosa.fft_frequencies(sr=sr, n_fft=N_FFT)
     
     # Sum magnitudes to find the strongest frequency (Fundamental)
     sum_spec = np.sum(spec, axis=1)
@@ -37,9 +43,11 @@ def analyze_event(y, sr):
     f0 = freqs[peak_idx]
     
     # 2. Spectral Features
-    sc = float(np.mean(librosa.feature.spectral_centroid(S=spec, sr=sr)))
-    width = float(np.mean(librosa.feature.spectral_bandwidth(S=spec, sr=sr)))
+    # sc = float(np.mean(librosa.feature.spectral_centroid(S=spec, sr=sr)))
+    # width = float(np.mean(librosa.feature.spectral_bandwidth(S=spec, sr=sr)))
     
+    sc = float(np.mean(librosa.feature.spectral_centroid(S=spec, sr=SAMPLE_RATE)))
+    width = float(np.mean(librosa.feature.spectral_bandwidth(S=spec, sr=SAMPLE_RATE)))
     # 3. Depth / Decay (Sustain)
     rms = librosa.feature.rms(y=y)[0]
     split = len(rms) // 2
@@ -117,5 +125,5 @@ def classify_drum_hits(audio_data, sr, onsets) -> List[Dict[str, Any]]:
             
     return classified_events
 
-# Uncomment to use, for clearer error logs
+# Uncomment to use, for clearer error log
 # print("\n# ------------------------------------------------------------------------------------")

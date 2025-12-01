@@ -1,8 +1,8 @@
 # DrumScript/notation_generator/constants.py
 
-# Master map for drum notation, referencing midi_percussion_map.csv
-# This map MUST include all drum types output by drum_classifier/predict.py
-# and all keys required by notation_generator/score_builder.py and helpers.py
+"""
+This script defines ALL parameters used throughout modules in DrumScript
+"""
 
 n_fft = 2048
 

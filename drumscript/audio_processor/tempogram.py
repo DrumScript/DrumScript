@@ -1,4 +1,6 @@
-# DrumScript/audio_processor/tempo_detector.py
+# DrumScript/audio_processor/tempogram.py
+# Requires path to audio file in cli command, ie:
+    # `python3 -m drumscript.audio_processor.tempogram path_to_audio_file
 # ------------------------------------------------------------------------------------------------------------
 """
 This module contains functions for visualising tempo using librosa's tempogram function
@@ -14,18 +16,28 @@ import os
 import argparse
 from drumscript.audio_processor.audio_loader import load_audio, normalise_audio
 from drumscript.audio_processor.tempo_detector import estimate_tempo
+from drumscript.notation_generator.constants import SAMPLE_RATE, SEGMENT_LENGTH_SECONDS, N_FFT, NOISE_THRESH_SNARE, DRUM_NOTATION_MAP, ONSET_SLICE_DURATION_MS, HOP_LENGTH
+from drumscript.audio_processor import tempo_detector
+from drumscript.audio_processor.tempo_detector import estimate_tempo
+from datetime import datetime
+
+print("\n# ------------------------------------------------------------------------------------")
+datetimestamp = datetime.now()
+print(f'\ndate/time: {datetimestamp}')
 
 # --- Define function --------------------------------------------------------------------------------------------
-def visualise_tempogram(audio_data, sr, hop_length=256, output_path="tempogram.png"):
+#def visualise_tempogram(audio_data, sr, hop_length=256, output_path="tempogram.png"):
+def visualise_tempogram(audio_data, sr, hop_length=HOP_LENGTH, output_path="tempogram.png"):
     """
     Calculates and saves a tempogram visualization for the given audio.
     """
-    oenv = librosa.onset.onset_strength(y=audio_data, sr=sr, hop_length=hop_length)
-    tempogram = librosa.feature.tempogram(onset_envelope=oenv, sr=sr, hop_length=hop_length)
+    sr = SAMPLE_RATE
+    oenv = librosa.onset.onset_strength(y=audio_data, sr=SAMPLE_RATE, hop_length=HOP_LENGTH)
+    tempogram = librosa.feature.tempogram(onset_envelope=oenv, sr=SAMPLE_RATE, hop_length=HOP_LENGTH)
     global_tempo = estimate_tempo(audio_data, sr)
 
     fig, ax = plt.subplots(figsize=(12, 6))
-    librosa.display.specshow(tempogram, sr=sr, hop_length=hop_length, 
+    librosa.display.specshow(tempogram, sr=SAMPLE_RATE, hop_length=HOP_LENGTH, 
                              x_axis='time', y_axis='tempo', cmap='magma', ax=ax)
     ax.axhline(global_tempo, color='w', linestyle='--', alpha=0.8, label=f'Global Tempo: {global_tempo:.2f} BPM')
     ax.set_title('Tempogram')
@@ -52,11 +64,12 @@ if __name__ == "__main__":
     try:
         # Load and normalise the audio
         print(f"Attempting to load: {actual_drum_recording_path}")
-        audio, sr = load_audio(actual_drum_recording_path, sr=44100)
+        # audio, sr = load_audio(actual_drum_recording_path, sr=44100)
+        audio, sr = load_audio(actual_drum_recording_path, sr=SAMPLE_RATE)
         normalised_audio = normalise_audio(audio)
         
         # Estimate the tempo
-        bpm = estimate_tempo(normalised_audio, sr)
+        bpm = estimate_tempo(normalised_audio, sr=SAMPLE_RATE)
         print(f"Estimated Tempo: {int(round(bpm))} BPM")
 
         # Visualise the tempogram
@@ -64,12 +77,12 @@ if __name__ == "__main__":
         project_root = os.path.abspath(os.path.join(current_script_dir, os.pardir, os.pardir))
         print(f'project_root: {project_root}')
         output_image_path = os.path.join(project_root,"visuals", "tempogram.png")
-        visualise_tempogram(normalised_audio, sr, output_path=output_image_path)
+        visualise_tempogram(normalised_audio, sr=SAMPLE_RATE, output_path=output_image_path)
         
     except Exception as e:
         print(f"\nAn unexpected error occurred: {e}")
-    print("\n#==================================================================================================")
-        
-#-----------------------------------------------------------------------------------------------------------
+# ===========================================================================================================
+# MAIN BLOCK - for local testing of this function
 
-    
+# Uncomment to use, for clearer error logs
+# print("\n# ------------------------------------------------------------------------------------")

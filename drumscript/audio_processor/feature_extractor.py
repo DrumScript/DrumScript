@@ -13,11 +13,11 @@ import math # Added for math.floor to calculate EXPECTED_N_FRAMES
 import argparse # for command-line argument parsing
 from datetime import datetime
 from drumscript.notation_generator.constants import SAMPLE_RATE, SEGMENT_LENGTH_SECONDS, N_FFT, NOISE_THRESH_SNARE, DRUM_NOTATION_MAP, ONSET_SLICE_DURATION_MS, HOP_LENGTH
-from datetime import datetime
+# from datetime import datetime
 
-print("\n# ------------------------------------------------------------------------------------")
-datetimestamp = datetime.now()
-print(f'\ndate/time: {datetimestamp}')
+# print("\n# ------------------------------------------------------------------------------------")
+# datetimestamp = datetime.now()
+# print(f'\ndate/time: {datetimestamp}')
 
 
 # Calculate the expected number of frames (timesteps) per segment
@@ -133,4 +133,4 @@ def extract_features_for_onsets(y: np.ndarray, sr: int, onset_times: List[float]
     return all_features
 
 # Uncomment to use, for clearer error logs
-print("\n# ------------------------------------------------------------------------------------")
+# print("\n# ------------------------------------------------------------------------------------")

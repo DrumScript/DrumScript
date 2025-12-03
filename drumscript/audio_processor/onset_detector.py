@@ -10,12 +10,11 @@ import argparse # for command-line argument parsing
 from drumscript.notation_generator.constants import SAMPLE_RATE, SEGMENT_LENGTH_SECONDS, N_FFT, NOISE_THRESH_SNARE, DRUM_NOTATION_MAP, ONSET_SLICE_DURATION_MS, HOP_LENGTH
 from drumscript.audio_processor import tempo_detector
 from drumscript.audio_processor.tempo_detector import estimate_tempo
-# from datetime import datetime
+from datetime import datetime
 
-# print("\n# ------------------------------------------------------------------------------------")
-# datetimestamp = datetime.now()
-# print(f'\ndate/time: {datetimestamp}')
-
+print("\n# ------------------------------------------------------------------------------------")
+datetimestamp = datetime.now()
+print(f'\ndate/time: {datetimestamp}')
 
 def detect_onsets(audio_data: np.ndarray, sr: int) -> list[float]:
     """
@@ -26,19 +25,16 @@ def detect_onsets(audio_data: np.ndarray, sr: int) -> list[float]:
     if audio_data.size == 0:
         return []
     
-    # --- 1. Separate the Percussive Component ---
-    # USES HPSS: HARMONIC PERCUSSIVE SOURCE-SEPARATION  
+    # --- 1. Extract percussive using HPSS ---
+    ## HPSS: HARMONIC PERCUSSIVE SOURCE-SEPARATION  
 
-    # NOTE (REMOVE LATER):
-    #Harmonic-Percussive Source Separation (HPSS), we can first split the audio into two separate tracks: one #containing only the harmonic ringing and another containing only the percussive attack. Then, we can run #our sensitive onset detector on the percussive track only.
+    ## Harmonic-Percussive Source Separation (HPSS), we first split the audio into two separate tracks: one containing only the harmonic ringing and another containing only the percussive attack. Then, we onset detector runs on the PERCUSSIVE track only. 
+    ### [TO DO]??? Maybe this is not so important when the user inputted-audio is specifically drum only? Or maybe it would be more useful doing this in stem_splitter.py, ie when the input audio contains more than the drums??
+    ### The result of using the PERCUSSIVE element only is to create a new audio signal that only contains the percussive elements; then, any `harmonic` 'noise/ringing' (ie which COULD cause false positives) is filtered out. It should produce a cleaner audio output to which apply the function. 
 
-
-    # This is the key step. We create a new audio signal that only
-    # contains the percussive elements. The harmonic ringing that was
-    # causing false positives is filtered out.
     y_percussive = librosa.effects.percussive(y=audio_data)
 
-    # --- 2. Run Onset Detection on the Percussive Signal ---
+    # --- 2. Onset detection
     # Now, we run the same onset detection, but on the much cleaner
     # percussive signal. This allows us to get a precise detection
     # of the initial hit without interference from the sustain.
@@ -47,7 +43,7 @@ def detect_onsets(audio_data: np.ndarray, sr: int) -> list[float]:
         sr=SAMPLE_RATE,
         units='frames',
         delta=0.01,       # The sensitive delta is now effective and safe to use
-        wait=1,
+        #wait=1,
         pre_avg=8,
         post_avg=8,
         backtrack=True

@@ -42,7 +42,7 @@ def detect_onsets(audio_data: np.ndarray, sr: int) -> list[float]:
         y=y_percussive,  # Use the percussive-only signal
         sr=SAMPLE_RATE,
         units='frames',
-        #delta=0.01,       # The sensitive delta is now effective and safe to use
+        delta=0.009,       # The sensitive delta is now effective and safe to use
         #wait=1,
         pre_avg=8,
         post_avg=8,

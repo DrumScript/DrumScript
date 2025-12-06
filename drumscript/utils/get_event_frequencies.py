@@ -4,7 +4,6 @@ Uses hardcoded file path to test (see TEST_AUDIO ~line101)
 """
 
 import json
-from pathlib import Path
 
 import librosa
 import numpy as np
@@ -94,13 +93,31 @@ def process_audio_to_frequency_json(audio_path, output_path="event_frequencies.j
 
     return event_data_list
 
-
-if __name__ == "__main__":
     # Example usage
     # You can point this to a test file in your directory
-    TEST_AUDIO = "test_audio/test.wav"
+    # TEST_AUDIO = "test_audio/test.wav"
 
-    if Path(TEST_AUDIO).exists():
-        process_audio_to_frequency_json(TEST_AUDIO)
-    else:
-        print(f"Please provide a valid audio path. (File not found: {TEST_AUDIO})")
+    # if Path(TEST_AUDIO).exists():
+    #  process_audio_to_frequency_json(TEST_AUDIO)
+    # else:
+    #   print(f"Please provide a valid audio path. (File not found: {TEST_AUDIO})")
+
+
+if __name__ == "__main__":
+    import argparse
+
+    # Setup Command Line Arguments
+    parser = argparse.ArgumentParser(
+        description="Extract frequency data from drum audio events to JSON."
+    )
+
+    parser.add_argument("input_audio", help="Path to the audio file (.wav, .mp3, etc.)")
+
+    parser.add_argument(
+        "-o", "--output", help="Path for the output JSON file (optional)", default=None
+    )
+
+    args = parser.parse_args()
+
+    # Run the processor
+    process_audio_to_frequency_json(args.input_audio, args.output)

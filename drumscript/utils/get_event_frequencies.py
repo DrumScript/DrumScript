@@ -1,3 +1,8 @@
+# drumscript/utils/get_event_frequencies.py
+"""
+Uses hardcoded file path to test (see TEST_AUDIO ~line101)
+"""
+
 import json
 from pathlib import Path
 
@@ -93,7 +98,7 @@ def process_audio_to_frequency_json(audio_path, output_path="event_frequencies.j
 if __name__ == "__main__":
     # Example usage
     # You can point this to a test file in your directory
-    TEST_AUDIO = "test_audio/drum_loop.wav"
+    TEST_AUDIO = "test_audio/test.wav"
 
     if Path(TEST_AUDIO).exists():
         process_audio_to_frequency_json(TEST_AUDIO)

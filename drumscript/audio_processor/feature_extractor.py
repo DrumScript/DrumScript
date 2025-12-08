@@ -2,7 +2,6 @@
 
 """
 This module will extract relevant features from audio segments for drum classification.
-[UPDATE--SUN05OCT2025]: It has been updated slightly for new classification system
 """
 
 import os
@@ -11,19 +10,15 @@ import numpy as np
 import librosa
 import soundfile
 import math # Added for math.floor to calculate EXPECTED_N_FRAMES
-import argparse # for command-line argument parsing
+import argparse # for command-line argument parsing
+from datetime import datetime
+from drumscript.notation_generator.constants import SAMPLE_RATE, SEGMENT_LENGTH_SECONDS, N_FFT, NOISE_THRESH_SNARE, DRUM_NOTATION_MAP, ONSET_SLICE_DURATION_MS, HOP_LENGTH
+# from datetime import datetime
 
+# print("\n# ------------------------------------------------------------------------------------")
+# datetimestamp = datetime.now()
+# print(f'\ndate/time: {datetimestamp}')
 
-# --- Configuration (Mirroring model_trainer.py for consistency) ---
-# These should ideally be imported from a central 'constants.py'
-# but for now, we'll keep them consistent by defining them here.
-SAMPLE_RATE = 44100
-SEGMENT_LENGTH_SECONDS = 0.2 # SEGMENT_LENGTH_SECONDS is the duration of the audio snapshot the script analyses at one time. To give two extremes. If you increase it (e.g., to 1.0): You would capture several drum hits in one fingerprint, making it impossible for the model to know which sound happened when, if you decrease it (e.g., to 0.05): You might only capture the initial "click" of the drum hit and miss the sound's body, losing important information. 0.2 is (seconds) is usually good-enough for drum events, ie kick+snare
-N_FFT = 1024 # N_FFT is the 'size of the window for the fourier transform" N_FFT = 1024 (Frequency Resolution)
-# This is the size of the analysis window for the Fourier Transform, which breaks the sound down into its constituent frequencies. A larger N_FFT gives you a more detailed picture of which frequencies are present but a less precise idea of exactly when they happened. If you increase it (e.g., to 2048): You get a very precise frequency analysis, which could help distinguish two very similar-sounding cymbals. If you decrease it (e.g., to 512): You get better timing precision but a "blurrier" picture of the frequencies.
-HOP_LENGTH = 512
-# NEW: Define a fixed duration for the audio slice to analyze around each onset
-ONSET_SLICE_DURATION_MS = 200 # 200 milliseconds
 
 # Calculate the expected number of frames (timesteps) per segment
 # This calculation needs to be robust to ensure consistency with librosa's output.
@@ -40,8 +35,9 @@ if EXPECTED_N_FRAMES < 1:
 
 # current TOTAL_FEATURES_PER_FRAME = 40 (MFCCs) + 1 (Zero-Crossing Rate) = 41
 N_MFCC = 41
-TOTAL_FEATURES_PER_FRAME = N_MFCC + 3 # TOTAL_FEATURES_PER_FRAME = 44
-# THE SCRIP WILL ADD 3 FEATURES [1 (Centroid) + 1 (Rolloff) + 1 (RMS)] SO IN TOTAL WE HAVE 44 FEATURES
+# UPDATED: We are adding band energy features (Low, Mid, High), so +3 more features
+TOTAL_FEATURES_PER_FRAME = N_MFCC + 3 + 3 # TOTAL_FEATURES_PER_FRAME = 47
+# THE SCRIP WILL ADD FEATURES [1 (Centroid) + 1 (Rolloff) + 1 (RMS) + 3 (Band Energies)]
 
 
 # --- Main Feature Extraction Functions ---
@@ -71,13 +67,34 @@ def extract_features(audio_segment: np.ndarray, sr: int) -> Dict[str, Any]:
         # Calculate the ratio. Add a small epsilon to avoid division by zero.
         sustain_level = second_half_rms / (first_half_rms + 1e-6)
 
+        # --- Band Energy Calculation (Based on Cheatsheet Logic) ---
+        # Calculate Spectrogram magnitude
+        S = np.abs(librosa.stft(audio_segment, n_fft=N_FFT, hop_length=HOP_LENGTH))
+        
+        # Get frequency bins
+        fft_freqs = librosa.fft_frequencies(sr=sr, n_fft=N_FFT)
+        
+        # Define masks for bands based on constants.py (Low < 300Hz, Mid 300-5000Hz, High > 5000Hz)
+        # Note: 300Hz chosen to separate Kick/Floor Tom from Snare/Rack Tom body
+        low_band_mask = (fft_freqs <= 300)
+        mid_band_mask = (fft_freqs > 300) & (fft_freqs <= 5000)
+        high_band_mask = (fft_freqs > 5000)
+
+        # Sum energy in these bands (averaging over time)
+        energy_low = np.mean(np.sum(S[low_band_mask, :], axis=0))
+        energy_mid = np.mean(np.sum(S[mid_band_mask, :], axis=0))
+        energy_high = np.mean(np.sum(S[high_band_mask, :], axis=0))
+
         return {
             'spectral_centroid': spectral_centroid,
             'spectral_rolloff': spectral_rolloff,
             'rms': rms,
             'zero_crossing_rate': zcr,
             'mfccs': mfccs.tolist(),
-            'sustain_level': sustain_level
+            'sustain_level': sustain_level,
+            'energy_low': energy_low,   # Kick/Floor Tom indicator
+            'energy_mid': energy_mid,   # Snare/Rack Tom indicator
+            'energy_high': energy_high  # Hi-Hat/Cymbal indicator
         }
 
     except Exception as e:
@@ -115,41 +132,5 @@ def extract_features_for_onsets(y: np.ndarray, sr: int, onset_times: List[float]
             
     return all_features
 
-"""if __name__ == '__main__':
-    # This block is for testing the feature_extractor.py script directly.
-    import os
-    from audio_loader import load_audio
-    
-    print("--- Running feature_extractor.py test ---")
-    
-    project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir))
-    test_audio_path = os.path.join(project_root, "test_audio", "test.wav")
-    # print(f'project_root: {project_root}') # comment out if need to check imports
-    # print(f'test_audio_path: {test_audio_path}') # comment out if need to check imports
-
-    if not os.path.exists(test_audio_path):
-        print(f"Error: Test audio file not found at {test_audio_path}")
-    else:
-        y, sr = load_audio(test_audio_path)
-        
-        # Dummy onsets for testing
-        onset_times_test = [0.5, 1.0, 1.5] 
-        print(f"Testing with dummy onsets at times: {onset_times_test}")
-
-        # Test the new wrapper function
-        features_list = extract_features_for_onsets(y, sr, onset_times_test)
-        
-        if features_list:
-            print(f"\nSuccessfully extracted features for {len(features_list)} onsets.")
-            print("\n--- Features for first detected onset ---")
-            first_onset = features_list[0]
-            for key, value in first_onset.items():
-                if isinstance(value, list):
-                    print(f"  {key}: list of {len(value)} values")
-                else:
-                    print(f"  {key}: {value:.2f}")
-        else:
-            print("\nFeature extraction failed or returned no features.")
-
-    print("\n--- feature_extractor.py test finished ---")
-    print("\n-----------------------------------------------------")"""
+# Uncomment to use, for clearer error logs
+# print("\n# ------------------------------------------------------------------------------------")

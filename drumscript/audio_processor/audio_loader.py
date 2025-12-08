@@ -13,6 +13,15 @@ import os
 import sounddevice as sd
 import threading
 import argparse # for command-line argument parsing
+from drumscript.notation_generator.constants import SAMPLE_RATE, SEGMENT_LENGTH_SECONDS, N_FFT, NOISE_THRESH_SNARE, DRUM_NOTATION_MAP, ONSET_SLICE_DURATION_MS, HOP_LENGTH
+from drumscript.audio_processor import tempo_detector
+from drumscript.audio_processor.tempo_detector import estimate_tempo
+
+# from datetime import datetime
+
+# print("\n# ------------------------------------------------------------------------------------")
+# datetimestamp = datetime.now()
+# print(f'\ndate/time: {datetimestamp}')
 
 
 # --- Define functions --------------------------------------------------------------------------------------------
@@ -120,7 +129,7 @@ if __name__ == "__main__":
     
     try:
         print(f"Attempting to load: {actual_drum_recording_path}")
-        audio, sr = load_audio(actual_drum_recording_path, sr=44100)
+        audio, sr = load_audio(actual_drum_recording_path, sr=SAMPLE_RATE)
         print(f"Loaded audio: Shape={audio.shape}, Sample Rate={sr}, Duration={len(audio)/sr:.2f} seconds")
 
         normalised_audio = normalise_audio(audio)
@@ -136,5 +145,5 @@ if __name__ == "__main__":
     except Exception as e:
         print(f"\nAn unexpected error occurred during the example execution: {e}")
 
-    print("audio_loader.py example finished.")
-    print("\n#==============================================================================================") 
+# Uncomment to use, for clearer error logs
+# print("\n# ------------------------------------------------------------------------------------")

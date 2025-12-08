@@ -7,11 +7,14 @@ import numpy as np
 import os
 import soundfile
 import argparse # for command-line argument parsing
+from drumscript.notation_generator.constants import SAMPLE_RATE, SEGMENT_LENGTH_SECONDS, N_FFT, NOISE_THRESH_SNARE, DRUM_NOTATION_MAP, ONSET_SLICE_DURATION_MS, HOP_LENGTH
+from drumscript.audio_processor import tempo_detector
+from drumscript.audio_processor.tempo_detector import estimate_tempo
 from datetime import datetime
 
-print("\n# ---------------------------------------------------------------------------------------")
+print("\n# ------------------------------------------------------------------------------------")
 datetimestamp = datetime.now()
-print(f'\ndate/time of run: {datetimestamp}') # for logging 
+print(f'\ndate/time: {datetimestamp}')
 
 def detect_onsets(audio_data: np.ndarray, sr: int) -> list[float]:
     """
@@ -22,77 +25,36 @@ def detect_onsets(audio_data: np.ndarray, sr: int) -> list[float]:
     if audio_data.size == 0:
         return []
     
-    # --- 1. Separate the Percussive Component ---
-    # USES HPSS: HARMONIC PERCUSSIVE SOURCE-SEPARATION  
+    # --- 1. Extract percussive using HPSS ---
+    ## HPSS: HARMONIC PERCUSSIVE SOURCE-SEPARATION  
 
-    # NOTE (REMOVE LATER):
-    #Harmonic-Percussive Source Separation (HPSS), we can first split the audio into two separate tracks: one #containing only the harmonic ringing and another containing only the percussive attack. Then, we can run #our sensitive onset detector on the percussive track only.
+    ## Harmonic-Percussive Source Separation (HPSS), we first split the audio into two separate tracks: one containing only the harmonic ringing and another containing only the percussive attack. Then, we onset detector runs on the PERCUSSIVE track only. 
+    ### [TO DO]??? Maybe this is not so important when the user inputted-audio is specifically drum only? Or maybe it would be more useful doing this in stem_splitter.py, ie when the input audio contains more than the drums??
+    ### The result of using the PERCUSSIVE element only is to create a new audio signal that only contains the percussive elements; then, any `harmonic` 'noise/ringing' (ie which COULD cause false positives) is filtered out. It should produce a cleaner audio output to which apply the function. 
 
-
-    # This is the key step. We create a new audio signal that only
-    # contains the percussive elements. The harmonic ringing that was
-    # causing false positives is filtered out.
     y_percussive = librosa.effects.percussive(y=audio_data)
 
-    # --- 2. Run Onset Detection on the Percussive Signal ---
+    # --- 2. Onset detection
     # Now, we run the same onset detection, but on the much cleaner
     # percussive signal. This allows us to get a precise detection
     # of the initial hit without interference from the sustain.
     onset_frames = librosa.onset.onset_detect(
         y=y_percussive,  # Use the percussive-only signal
-        sr=sr,
+        sr=SAMPLE_RATE,
         units='frames',
-        delta=0.01,       # The sensitive delta is now effective and safe to use
-        wait=1,
+        delta=0.0095,       # The sensitive delta is now effective and safe to use
+        #wait=1,
         pre_avg=8,
         post_avg=8,
         backtrack=True
     )
 
-    onset_times = librosa.frames_to_time(onset_frames, sr=sr)
+    onset_times = librosa.frames_to_time(onset_frames, sr=SAMPLE_RATE)
 
     return onset_times.tolist()
 
-"""   COMMENTING OUT (OLD) REFRACTORY PERIOD LOGIC FOR NOW (BUT KEEPING (FOR NOW))
-# --- 1. Initial Onset Detection (with sensitive delta) ---
-    onset_frames = librosa.onset.onset_detect(
-        y=audio_data,
-        sr=sr,
-        units='frames',
-        delta=0.1,   # Keep the sensitive delta to catch the initial hit
-        wait=1,
-        pre_avg=8,
-        post_avg=8,
-        backtrack=True
-    )
-    onset_times = librosa.frames_to_time(onset_frames, sr=sr)
-
-    if onset_times.size == 0:
-        return []
-
-    # --- 2. Post-Processing: Filter out double-detections ---
-    # Define a refractory period: a minimum time between valid onsets.
-    # 150ms is a good starting point for preventing double-triggers on a single hit.
-    refractory_period_seconds = 0.15
-
-    # The first detected onset is always considered valid.
-    final_onsets = [onset_times[0]]
-
-    # Iterate through the rest of the onsets
-    for i in range(1, len(onset_times)):
-        # Calculate the time difference between the current onset and the last *accepted* onset
-        time_since_last_onset = onset_times[i] - final_onsets[-1]
-
-        # If the time difference is greater than our refractory period, it's a new, valid hit.
-        if time_since_last_onset >= refractory_period_seconds:
-            final_onsets.append(onset_times[i])
-        # Otherwise, it's likely part of the previous hit's sustain, so we ignore it.
-
-    return final_onsets
-"""
-
-# ==== TEMPO DETECTION ===========================================================
-# TO BE REVIEWED AND POSSIBLY REPLACED WITH IMPORTED `drumscript/audio_processor/tempo_detector.py`
+#------- AUTOMATIC TEMPO DETECTION------------------------------------
+# REPLACED THE FUNCTION THAT WAS HARDCODED TO DETECT TEMPO FROM ONSETS WITH IMPORTED FCT FROM THE TEMPO_DETECTOR SCRIPT
 
 def calculate_tempo_from_onsets(onset_times: np.ndarray, sr: int) -> float:
     """
@@ -108,19 +70,23 @@ def calculate_tempo_from_onsets(onset_times: np.ndarray, sr: int) -> float:
     if len(onset_times) < 2:
         return 120.0 # Return a default tempo if not enough onsets are found
 
+    
     # Estimate tempo from the onset timestamps
-    tempo = librosa.beat.tempo(onset_envelope=None, sr=sr, onset_events=onset_times)
+    # tempo = librosa.beat.tempo(onset_envelope=None, sr=sr, onset_events=onset_times)
+    # tempo = librosa.beat.tempo(onset_envelope=None, sr=SAMPLE_RATE, onset_events=onset_times)
+    tempo = estimate_tempo(audio_data, sr=SAMPLE_RATE)
     
     # librosa.beat.tempo returns an array, we'll take the first (most likely) value
-    return tempo[0]
+    return tempo
 
-# ================================================================================
+#----------------------------------------------------------------------
+
 
 if __name__ == "__main__":
     from drumscript.audio_processor.audio_loader import load_audio, normalise_audio
-    # print("\n#---------------------------------------------------------------------------------------")
+    print("\n#=======================================================================================")
     #print("Running onset_detector.py example with test.wav/test.mp3...")
-    print("\nRunning onset_detector.py example with provided filepath...") # FUTURE: Find way to encode this so it prints the file path provided in CLI
+    print("Running onset_detector.py example with provided filepath...") # FUTURE: Find way to encode this so it prints the file path provided in CLI
     try:
 
         # Import necessary modules from your package
@@ -128,8 +94,9 @@ if __name__ == "__main__":
         # if running this script directly and 'audio_processor' is not in the Python path.
         # However, for 'python -m' style execution, 'from audio_processor.audio_loader import ...' is usually correct.
 
-        sr = 44100 # Target sample rate for processing
+        # sr = 44100 # Target sample rate for processing
         #sr = 44100*1.5 # Target sample rate for processing
+        sr = SAMPLE_RATE
         print(f'sample_rate=sr={sr}') # Print current sample rate applied
 
         # --- Path to your actual drum recording/audio (test.wav/test.mp3) ---
@@ -149,7 +116,7 @@ if __name__ == "__main__":
         # Load and normalise the test.mp3/test.wav audio
         audio_data, sample_rate = load_audio(test_audio_path, sr=sr)
         normalised_audio = normalise_audio(audio_data)
-        print(f"Loaded audio: Shape={normalised_audio.shape}, Sample Rate={sample_rate}, Duration={len(normalised_audio)/sample_rate:.2f} seconds")
+
 
         # Detect onsets from test.mp3/test.wav
         #print("\nDetecting onsets from test.mp3/test.wav...")
@@ -169,7 +136,7 @@ if __name__ == "__main__":
              #   print(f"  Onset {i+1}: {onset_time:.2f}s")
         else:
             print("No onsets detected in test.mp3/test.wav.")
-
+        print(f"Loaded audio: Shape={normalised_audio.shape}, Sample Rate={sample_rate}, Duration={len(normalised_audio)/sample_rate:.2f} seconds, Tempo={calculate_tempo_from_onsets(onsets, sr=SAMPLE_RATE)}")
     except FileNotFoundError:
         print(f"\nERROR: The audio file '{test_audio_path}' was not found.")
         print("Please ensure you have placed 'test.mp3/test.wav' inside your 'DrumScript/test_audio/' directory.")
@@ -183,4 +150,5 @@ if __name__ == "__main__":
         traceback.print_exc() # Print full traceback for debugging
 
     print("\nonset_detector.py example finished.")
-    print("\n# ---------------------------------------------------------------------------------------")
+# Uncomment to use, for clearer error logs
+# print("\n# ------------------------------------------------------------------------------------")

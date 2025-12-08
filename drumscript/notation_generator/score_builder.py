@@ -3,13 +3,15 @@
 import json
 import os
 from typing import List, Dict, Any
+from drumscript.notation_generator.constants import SAMPLE_RATE, SEGMENT_LENGTH_SECONDS, N_FFT, NOISE_THRESH_SNARE, DRUM_NOTATION_MAP, ONSET_SLICE_DURATION_MS, HOP_LENGTH
 from drumscript.audio_processor import audio_loader, onset_detector, feature_extractor, tempo_detector
+from drumscript.audio_processor.tempo_detector import estimate_tempo
 from drumscript.notation_generator.pdf_exporter import generate_custom_pdf
-from datetime import datetime
+# from datetime import datetime
 
-print("\n# ------------------------------------------------------------------------------------")
-datetimestamp = datetime.now()
-print(f'\ndate/time: {datetimestamp}')
+# print("\n# ------------------------------------------------------------------------------------")
+# datetimestamp = datetime.now()
+# print(f'\ndate/time: {datetimestamp}')
 
 
 def build_and_export_drum_score(
@@ -28,6 +30,7 @@ def build_and_export_drum_score(
     # Builds a drum score PDF, respecting the provided Time Signature, or assuming default 4/4 if not provided
 
     print(f"--- Building Score for: {output_filepath} [Time Sig: {time_signature}] ---")
+
 
     # 1. Prepare File Paths
     # output_filepath e.g. "outputs/mysong.pdf"
@@ -58,4 +61,4 @@ def build_and_export_drum_score(
         import traceback
         traceback.print_exc()
 
-print("\n# ------------------------------------------------------------------------------------")
+# print("\n# ------------------------------------------------------------------------------------")

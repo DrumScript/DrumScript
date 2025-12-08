@@ -1,8 +1,8 @@
 # DrumScript/notation_generator/helpers.py
 
 import math
-from . import constants
-# from drumscript.notation_generator.constants import DURATION_WHOLE, DURATION_EIGHTH, DURATION_HALF, DURATION_QUARTER, DURATION_SIXTEENTH, DURATION_THIRTY_SECOND
+from drumscript.notation_generator import constants
+from drumscript.notation_generator.constants import SAMPLE_RATE, SEGMENT_LENGTH_SECONDS, N_FFT, NOISE_THRESH_SNARE, DRUM_NOTATION_MAP, ONSET_SLICE_DURATION_MS, HOP_LENGTH
 from typing import Dict, Any # Added for type hinting
 
 

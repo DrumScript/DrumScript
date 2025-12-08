@@ -264,10 +264,16 @@ dependencies = [
     { name = "tqdm" },
 ]
 
+[package.optional-dependencies]
+optional = [
+    { name = "ipykernel" },
+]
+
 [package.metadata]
 requires-dist = [
     { name = "demucs" },
     { name = "ipykernel" },
+    { name = "ipykernel", marker = "extra == 'optional'" },
     { name = "librosa" },
     { name = "matplotlib" },
     { name = "mido" },
@@ -291,6 +297,7 @@ requires-dist = [
     { name = "torchcodec" },
     { name = "tqdm" },
 ]
+provides-extras = ["optional"]
 
 [[package]]
 name = "einops"

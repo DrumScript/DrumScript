@@ -1,123 +1,129 @@
 # DrumScript/drum_classifier/classify.py
+# Requires path to audio file in cli command, ie:
+    # `python3 -m drumscript.drum_classifier.classify path_to_audio_file
+# ------------------------------------------------------------------------------------------------------------
+"""
+This script determines the classification rules by which the parameters in constants.py are applied to audio_file_path.
+"""
 
 import numpy as np
+import librosa
 from typing import List, Dict, Any
 from drumscript.notation_generator import constants
-from drumscript.notation_generator.constants import DRUM_NOTATION_MAP
+from drumscript.notation_generator.constants import SAMPLE_RATE, SEGMENT_LENGTH_SECONDS, N_FFT, NOISE_THRESH_SNARE, DRUM_NOTATION_MAP, ONSET_SLICE_DURATION_MS, HOP_LENGTH
+from drumscript.audio_processor import tempo_detector
+from drumscript.audio_processor.tempo_detector import estimate_tempo
+# from datetime import datetime
 
-# --- ACOUSTIC ZONES (Based on Standard Drum EQ Ranges) ---
-# Ref: IDMT-SMT-Drums / Gear4Music Frequency Charts
+# print("\n# ------------------------------------------------------------------------------------")
+# datetimestamp = datetime.now()
+# print(f'\ndate/time: {datetimestamp}')
 
-# 1. LOW ZONE (0 - 800 Hz)
-# Captures the fundamental "Thump" of Kicks (60-100Hz) and Floor Toms.
-# We extend to 800Hz to capture the "knock" or attack of modern/metal kicks.
-LOW_ZONE_MAX = 800 
 
-# 2. MID ZONE (800 - 5000 Hz)
-# Captures the "Body" and "Crack" of Snares (fundamental ~200Hz, snap ~3-5kHz)
-# and the attack of Rack Toms.
-MID_ZONE_MIN = 800
-MID_ZONE_MAX = 5000
+def analyze_event(y, sr):
+    """
+    Calculates specific acoustic features:
+    - f0: Fundamental Frequency (Peak Magnitude)
+    - sc: Spectral Centroid (Brightness)
+    - width: Spectral Bandwidth
+    - depth: Decay Ratio (Sustain)
+    """
+    # 1. FFT for Frequency Analysis
+    # High resolution (n_fft=2048) to see low frequencies clearly
+    # n_fft = 2048
+    # spec = np.abs(librosa.stft(y, n_fft=n_fft))
+    # freqs = librosa.fft_frequencies(sr=sr, n_fft=n_fft)
+    n_fft = N_FFT
+    spec = np.abs(librosa.stft(y, n_fft=N_FFT))
+    freqs = librosa.fft_frequencies(sr=sr, n_fft=N_FFT)
+    
+    # Sum magnitudes to find the strongest frequency (Fundamental)
+    sum_spec = np.sum(spec, axis=1)
+    peak_idx = np.argmax(sum_spec)
+    f0 = freqs[peak_idx]
+    
+    # 2. Spectral Features
+    # sc = float(np.mean(librosa.feature.spectral_centroid(S=spec, sr=sr)))
+    # width = float(np.mean(librosa.feature.spectral_bandwidth(S=spec, sr=sr)))
+    
+    sc = float(np.mean(librosa.feature.spectral_centroid(S=spec, sr=SAMPLE_RATE)))
+    width = float(np.mean(librosa.feature.spectral_bandwidth(S=spec, sr=SAMPLE_RATE)))
+    # 3. Depth / Decay (Sustain)
+    rms = librosa.feature.rms(y=y)[0]
+    split = len(rms) // 2
+    if np.mean(rms[:split]) < 1e-5:
+        decay = 0.0
+    else:
+        decay = np.mean(rms[split:]) / np.mean(rms[:split])
 
-# 3. HIGH ZONE (> 5000 Hz)
-# Captures the "Brightness" (Cymbals), "Sizzle" (Hats), and "Air".
-HIGH_ZONE_MIN = 5000
+    return {
+        'f0': float(f0),
+        'sc': float(round(sc, 2)),
+        'width': float(round(width, 2)),
+        'depth': float(round(decay, 2))
+    }
 
-# --- THRESHOLDS FOR DIFFERENTIATION ---
-
-# NOISE (Zero-Crossing Rate): Distinguishes "Tone" (Toms) from "Noise" (Snare/Cymbals)
-NOISE_THRESHOLD_LOW = 0.02  # Kicks are very clean
-NOISE_THRESHOLD_MID = 0.05  # Snares are noisy
-NOISE_THRESHOLD_HIGH = 0.08 # Cymbals are very noisy
-
-# SUSTAIN (Seconds): Distinguishes "Short" (Hats/Kicks) from "Long" (Crashes/Rides)
-# Closed Hats are VERY short (< 0.2s). Open Hats/Cymbals are long.
-CLOSED_HAT_MAX_SUSTAIN = 0.25 
-CRASH_MIN_SUSTAIN = 0.5
-
-# Refractory Periods (Min seconds between hits of same type)
-REFRACTORY = {
-    'kick': 0.1, 'snare': 0.1, 'hi_hat': 0.05, 'crash': 0.2, 'tom': 0.12
-}
-
-def classify_drum_hits(onset_features: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+def classify_drum_hits(audio_data, sr, onsets) -> List[Dict[str, Any]]:
+    """
+    Classifies hits strictly based on Fundamental Frequency ($f_0$) ranges.
+    """
     classified_events = []
     
-    # Track last hits to prevent machine-gunning
-    last_hits = {k: -1.0 for k in REFRACTORY}
-
-    for onset in onset_features:
-        # 1. Parse & Cast Features (Fixes JSON float32 error)
-        sc = float(round(onset['spectral_centroid'], 2))
-        zcr = float(round(onset['zero_crossing_rate'], 4))
-        sus = float(round(onset['sustain_level'], 2))
-        time = onset['onset_time']
+    for onset_time in onsets:
+        # Extract 150ms window for analysis
+        start_sample = int(onset_time * sr)
+        end_sample = int((onset_time + 0.15) * sr)
         
-        analysis = {'sc': sc, 'zcr': zcr, 'sus': sus}
-        
-        # --- CLASSIFICATION LOGIC ---
-        
-        # A. LOW ZONE (Kicks & Floor Toms)
-        if sc < LOW_ZONE_MAX:
-            # Kicks are generally cleaner (lower ZCR) than Toms
-            if zcr < NOISE_THRESHOLD_LOW:
-                if time - last_hits['kick'] > REFRACTORY['kick']:
-                    classified_events.extend(create_event('kick', time, analysis))
-                    last_hits['kick'] = time
-            else:
-                # Noisy low end? Could be a loose Kick or Low Tom. 
-                # Defaulting to Kick Clicky for metal contexts.
-                if time - last_hits['kick'] > REFRACTORY['kick']:
-                    classified_events.extend(create_event('kick_clicky', time, analysis))
-                    last_hits['kick'] = time
-
-        # B. MID ZONE (Snares & Rack Toms)
-        elif MID_ZONE_MIN <= sc < MID_ZONE_MAX:
-            # High Noise = Snare (wires)
-            if zcr >= NOISE_THRESHOLD_MID:
-                if time - last_hits['snare'] > REFRACTORY['snare']:
-                    classified_events.extend(create_event('snare', time, analysis))
-                    last_hits['snare'] = time
-            # Low Noise = Tom (tone)
-            else:
-                if time - last_hits['tom'] > REFRACTORY['tom']:
-                    classified_events.extend(create_event('high_tom', time, analysis))
-                    last_hits['tom'] = time
-
-        # C. HIGH ZONE (Cymbals & Hi-Hats)
-        elif sc >= HIGH_ZONE_MIN:
-            # 1. Short Sustain = Closed Hi-Hat (Tight sound)
-            if sus <= CLOSED_HAT_MAX_SUSTAIN:
-                if time - last_hits['hi_hat'] > REFRACTORY['hi_hat']:
-                    classified_events.extend(create_event('hi_hat_closed', time, analysis))
-                    last_hits['hi_hat'] = time
+        if end_sample > len(audio_data): end_sample = len(audio_data)
+        if start_sample >= end_sample: continue
             
-            # 2. Long Sustain = Crash / Ride / Open Hat
-            else:
-                # Very long? Crash.
-                if sus > CRASH_MIN_SUSTAIN:
-                    if time - last_hits['crash'] > REFRACTORY['crash']:
-                        classified_events.extend(create_event('crash', time, analysis))
-                        last_hits['crash'] = time
-                # Medium length? Open Hi-Hat.
-                else:
-                    if time - last_hits['hi_hat'] > REFRACTORY['hi_hat']:
-                        classified_events.extend(create_event('hi_hat_open', time, analysis))
-                        last_hits['hi_hat'] = time
+        y_window = audio_data[start_sample:end_sample]
+        if len(y_window) == 0: continue 
+
+        # Analyze
+        features = analyze_event(y_window, sr)
+        f0 = features['f0']
         
+        drum_type = None
+
+        # --- STRICT FREQUENCY RANGE CLASSIFICATION ---
+        # Order matters for overlaps!
+        
+        # 1. Low End
+        if constants.KICK_RANGE[0] <= f0 <= constants.KICK_RANGE[1]:
+            drum_type = 'kick'
+        elif constants.LOW_TOM_RANGE[0] <= f0 <= constants.LOW_TOM_RANGE[1]:
+            drum_type = 'low_tom'
+            
+        # 2. Mids (Check Tom first to catch narrow band, then Snare)
+        elif constants.MID_TOM_RANGE[0] <= f0 <= constants.MID_TOM_RANGE[1]:
+            drum_type = 'mid_tom'
+        elif constants.SNARE_RANGE[0] <= f0 <= constants.SNARE_RANGE[1]:
+            drum_type = 'snare'
+            
+        # 3. Highs
+        elif constants.OPEN_HAT_RANGE[0] <= f0 <= constants.OPEN_HAT_RANGE[1]:
+            drum_type = 'hi_hat_open'
+        elif constants.CLOSED_HAT_RANGE[0] <= f0 <= constants.CLOSED_HAT_RANGE[1]:
+            drum_type = 'hi_hat_closed'
+        elif constants.RIDE_RANGE[0] <= f0 <= constants.RIDE_RANGE[1]:
+            drum_type = 'ride'
+        elif constants.CRASH_RANGE[0] <= f0 <= constants.CRASH_RANGE[1]:
+            drum_type = 'crash'
+            
+        # If detected, append
+        if drum_type:
+            meta = DRUM_NOTATION_MAP[drum_type]
+            classified_events.append({
+                'drum_type': drum_type,
+                'onset_time_seconds': round(onset_time, 2),
+                'midi_pitch': meta['midi_program'],
+                'note_head_type': meta['note_head'],
+                'staff_position': meta['staff_position'],
+                'analysis': features
+            })
+            
     return classified_events
 
-def create_event(drum_name: str, time: float, analysis: Dict) -> List[Dict[str, Any]]:
-    """Helper to format the event object."""
-    if drum_name not in DRUM_NOTATION_MAP:
-        return []
-        
-    meta = DRUM_NOTATION_MAP[drum_name]
-    return [{
-        'drum_type': drum_name,
-        'onset_time_seconds': round(time, 2),
-        'midi_pitch': meta['midi_program'],
-        'note_head_type': meta['note_head'],
-        'staff_position': meta['staff_position'],
-        'analysis': analysis
-    }]
+# Uncomment to use, for clearer error log
+# print("\n# ------------------------------------------------------------------------------------")

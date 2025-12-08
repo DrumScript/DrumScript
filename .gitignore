@@ -168,4 +168,4 @@ drum_classifier/model_trainer.py
 *machine-learning/
 *drumscript/drum_classifier/
 *drumscript/notation_generator/
-*drumscript/logs/*
+*drumscript/logs/

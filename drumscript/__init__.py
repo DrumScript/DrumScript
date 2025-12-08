@@ -4,7 +4,7 @@ DrumScript: A Python-based suite of tools related to drum audio
 
 # 1. Import internal functions
 from .audio_processor.audio_loader import load_audio, normalise_audio
-from .audio_processor.stem_splitter import stem_split as _internal_split
+from .audio_processor.stem_splitter import extract_drum_stem
 from .audio_processor.tempo_detector import estimate_tempo as _internal_estimate
 from .utils.ffmpeg_installer import install_ffmpeg
 
@@ -14,7 +14,7 @@ def stem_split(audio_path, output_dir=".", full=False):
     """
     Public wrapper for stem splitting.
     """
-    return _internal_split(audio_path, output_dir=output_dir, full=full)
+    return extract_drum_stem(audio_path, output_dir=output_dir, full=full)
 
 
 def tempo_detector(audio_input, full=False):

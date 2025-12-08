@@ -20,52 +20,41 @@ DrumScript/                          # The main Python package that converts dru
 ├── drumscript/                      # <--- Main Source Package Directory
 │   ├── __init__.py                  # Makes 'drumscript' a Python package.
 ├── main.py                          # Main entry point for the application's full pipeline.
-│   ├── audio_processor/                # PYTHON SUPBPACKAGE/MODULE:  Handles audio loading, onset detection, and feature extraction.
+│   ├── audio_processor/             # PYTHON SUPBPACKAGE/MODULE:  Handles audio loading, onset detection, and feature extraction.
 │   │   ├── __init__.py
-│   │   ├── audio_loader.py              # Loads and normalises audio files.
-│   │   ├── feature_extractor.py         # Extracts DSP features for classification.
-│   │   ├── onset_detector.py            # Detects drum hit onsets.
-│   │   ├── stem_splitter.py            # Splits audio into 4-stems, uses Demucs
-│   │   ├── tempo_detector.py            # Detects tempo from audio data.
-│   │   └── tempogram.py                 # Visualisation tool for analysing tempo.
-│   │   
-│   │── drum_classifier/               # *[FORTHCOMING]* PYTHON SUPBPACKAGE/MODULE:  Classifies drum sounds using a rule-based DSP approach.
-│   │    ├── __init__.py
-│   │    └── classify.py              # *[FORTHCOMING]* Forthcoming deterministic classification model for drum audio
+│   │   ├── audio_loader.py          # Loads and normalises audio files.
+│   │   ├── feature_extractor.py     # Extracts DSP features for classification.
+│   │   ├── onset_detector.py        # Detects drum hit onsets.
+│   │   ├── stem_splitter.py         # Splits audio into 4-stems, uses Demucs
+│   │   ├── tempo_detector.py        # Detects tempo from audio data.
+│   │   └── tempogram.py             # Visualisation tool for analysing tempo.
 │   │
-│   ├── notation_generator/              # PYTHON SUPBPACKAGE/MODULE:  Generates musical notation (.xml) and sheet music (.pdf).
+│   └── utils/                       # Utility functions and configuration.
 │   │   ├── __init__.py
-│   │   ├── constants.py                 # Defines constants for score generation (e.g., staff positions).
-│   │   ├── pdf_exporter.py              # [MIGHT REMOVE] Converts the generated score into a PDF file.
-│   │   ├── score_exporter.py            # Converts the generated score into an XML/MIDI file.
-│   │   └── score_builder.py             # Builds a musical score from the list of classified events.
-
-│   │ 
-│   └── utils/                           # PYTHON SUPBPACKAGE/MODULE: Utility functions and configuration.
+│   │   ├── config.py                # Stores configuration parameters.
+│   │   ├── measure_frequency.py     # Uses Librosa to measure frequency of drum part (kick drum used as example)
+│   │   ├── ffmpeg_installer.py      # Utility script for installing ffmpeg
+│   │   └──...                       # ... other utility scripts
+│   │
+│   │── drum_classifier/             # *[FORTHCOMING]* Classifies drum sounds using a rule-based DSP approach.
+│   │    ├── __init__.py
+│   │    └── classify.py             # *[FORTHCOMING]* Deterministic classification model for drum audio
+│   │
+│   ├── notation_generator/          # *[FORTHCOMING]* Generates musical notation (.xml) and sheet music (.pdf).
 │   │   ├── __init__.py
-│   │   ├── config.py                    # Stores configuration parameters.
-│   │   ├── measure_frequency.py         # Uses Librosa to measure frequency of drum part (kick drum used as example)
-│       └── ffmpeg_installer.py          # Utility script for installing ffmpeg.
-
-│
+│   │   ├── constants.py             # *[FORTHCOMING]* Defines constants for classification and score generation (e.g., fundamental freqs)
+│   │   ├── pdf_exporter.py          # *[FORTHCOMING]* Converts the generated score into a PDF file.
+│   │   ├── score_exporter.py        # *[FORTHCOMING]* Converts the generated score into an XML/MIDI file.
+│   │   └── score_builder.py         # *[FORTHCOMING]* Builds a musical score from the list of classified events.
 ├── developer_docs/                  # Documentation for contributors and developers.
 │   └── static/                      # Stores the documentation GitHub Pages site assets
-│      ├── custom.css                # Style sheet for DrumScript documentation site
-│      ├── conf.py
-│      ├── index.md
-│      ├── api.rst
-│      └── ...                       # Other `.md` files related to documentation
-│
-├── local_tests/                     # A place for local tests
-│   └── ...                          
-├── machine-learning/                # [ARCHIVED] Legacy modules from the previous ML-based approach.
-│   ├── data_labeller/               # [LEGACY] Module for building custom drum training datasets.
-│   ├── models/                      # [LEGACY] Saved outputs from the trained CNN model.
-│   └── training_data/               # [LEGACY] Folder for training datasets.
+│   │  │   ├── custom.css                # Style sheet for DrumScript documentation site
+│   │   │  ├── conf.py
+│   │   │  ├── index.md
+│   │   │  ├── api.rst
+│   │   │  └── ...                       # ... other `.md` files related to documentation.            
 ├── outputs/                         # Default directory for generated `.MP3/.WAV`, `.XML`, `MIDI`, and `.PDF` files. Not version-controlled.
-├── test_audio/                      # Directory for sample audio files used for testing.
-├── theory/                          # Reference material on music theory and audio signal processing.
-└── training_data/                   # Archived data related to ML model training. Not version-controlled.
+└── theory/                          # Reference material on music theory and audio/digital signal processing (A/DSP).
 
 ```
 

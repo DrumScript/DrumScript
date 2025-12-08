@@ -2,7 +2,7 @@
 ## `DrumScript` Python Package Structure
 
 <!--date_created: weds-25-oct-2025?-->
-<!--date_edited: sat-29-nov-2025 -->
+<!--date_edited: mon-08-dec-2025 -->
 
 
 > **PLEASE NOTE (Oct-2025 Update):** This repository structure has been updated to reflect the project's pivot to a non-ML, classification-based approach. Legacy machine learning modules have been archived.
@@ -11,7 +11,6 @@
 DrumScript/                          # The main Python package that converts drum audio into sheet music.
 ├── .git/                            # Git version control directory.
 ├── .gitignore                       # Specifies intentionally untracked files to ignore.
-├── .python-version                  # Specifies the Python version to use (e.g., 3.12.10).
 ├── README.md                        # Project overview and main documentation.
 ├── pyproject.toml                   # Project metadata and dependencies (managed by `uv`).
 ├── uv.lock                          # Pinned versions of all dependencies.
@@ -30,11 +29,9 @@ DrumScript/                          # The main Python package that converts dru
 │   │   ├── tempo_detector.py            # Detects tempo from audio data.
 │   │   └── tempogram.py                 # Visualisation tool for analysing tempo.
 │   │   
-│   │── drum_classifier/                   # PYTHON SUPBPACKAGE/MODULE:  Classifies drum sounds using a rule-based DSP approach.
+│   │── drum_classifier/               # *[FORTHCOMING]* PYTHON SUPBPACKAGE/MODULE:  Classifies drum sounds using a rule-based DSP approach.
 │   │    ├── __init__.py
-│   │    ├── generate_score.py            # *[OUTDATED]* Script for interpreting classification outputs to generate a score.
-│   │    ├── predict.py                   # *[OUTDATED]* Applies the classification rules to an audio file's features.
-│   │    └── prediction_output.json       # *[OUTDATED]* Example output listing all detected and classified events.
+│   │    └── classify.py              # *[FORTHCOMING]* Forthcoming deterministic classification model for drum audio
 │   │
 │   ├── notation_generator/              # PYTHON SUPBPACKAGE/MODULE:  Generates musical notation (.xml) and sheet music (.pdf).
 │   │   ├── __init__.py

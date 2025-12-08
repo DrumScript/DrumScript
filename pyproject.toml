@@ -5,25 +5,24 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "DrumScript"
 version = "0.0.0"
-requires-python = "==3.12.10"
-# authors = [
-  #{ name="Your Name", email="your.email@example.com" },
-#]
+authors = [
+  { name="drumscript-admin", email="hello.drumscript@gmail.com" },
+]
 description = "A Python package to convert drum audio to sheet music."
 readme = "README.md"
-# license = { text = "MIT License" } # Or use file = "LICENSE" if you have a LICENSE file
+requires-python = ">=3.9"
+
 keywords = ["drum", "audio", "music", "sheet-music", "notation", "dsp", "machine-learning", "drumscript", "drums", "percussion"]
 classifiers = [
     "Programming Language :: Python :: 3",
-    # "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
     "Development Status :: 3 - Alpha",
     "Topic :: Multimedia :: Sound/Audio",
-    # "Topic :: Scientific/Engineering :: Information Analysis",
-    # "Topic :: Education",
     "Topic :: Music Theory",
     "Topic :: Drums",
-    "Topic :: DrumScript"
+    "Topic :: DrumScript",
+    "Topic :: Music :: DSP",
+    "Topic :: Music :: Digital Signal Processing"
 ]
 dependencies = [
     "demucs",
@@ -59,9 +58,9 @@ dependencies = [
 
 
 # [project.urls]
-# Homepage = ""
-# Repository = "https://github.com/DrumScript/DrumScript"
-# "Bug Tracker" = "https://github.com//DrumScript/DrumScript/issues"
+# Homepage = "" # This will likely be something like github-Pages-hosted drumscript.io.
+"Repository" = "https://github.com/DrumScript/DrumScript"
+"Issues" = "https://github.com//DrumScript/DrumScript/issues"
 
 # --- Optional Dependencies ---
 [project.optional-dependencies]
@@ -76,8 +75,9 @@ optional = [
 [tool.setuptools.packages.find]
 # [OPTIONAL] If you want to customise how setuptools finds packages. By default, it finds all directories with __init__.py
 where = ["."] # Search for packages in the current directory
-include = ["DrumScript*"] # Only include packages starting with DrumScript
-exclude = ["tests*","development*", "docs*", "archive*"] # Exclude test directories, docs, development and archive folders from builddeactict
+# include = ["DrumScript*"] # [LEGACY-CODE]  Only include packages starting with DrumScript
+include = ["drumscript*"] # Only include packages starting with drumscript
+exclude = ["drumscript.drum_classifier*", "drumscript.notation_generator*","local_tests*",".development*",".archive*", "machine-learning*", "test_audio*"] # Exclude test directories, development and archive folders from build
 
 # api = [
    # "fastapi",

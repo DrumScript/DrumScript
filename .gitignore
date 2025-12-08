@@ -165,6 +165,7 @@ drum_classifier/model_trainer.py
 # temporarily add drumscript build lib to gitignore:
 *build
 *outputs
-machine-learning/*
-drumscript/drum_classifier/*
-drumscript/notation_generator/*
+*machine-learning/
+*drumscript/drum_classifier/
+*drumscript/notation_generator/
+*drumscript/logs/*

@@ -57,7 +57,7 @@ dependencies = [
   ]
 
 
-# [project.urls]
+[project.urls]
 # Homepage = "" # This will likely be something like github-Pages-hosted drumscript.io.
 "Repository" = "https://github.com/DrumScript/DrumScript"
 "Issues" = "https://github.com//DrumScript/DrumScript/issues"

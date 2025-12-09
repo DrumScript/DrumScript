@@ -10,6 +10,7 @@
 from .audio_processor.audio_loader import load_audio, normalise_audio
 from .audio_processor.stem_splitter import extract_drum_stem
 from .audio_processor.tempo_detector import estimate_tempo as _internal_estimate
+from .notation_generator.constants import SAMPLE_RATE
 from .utils.ffmpeg_installer import install_ffmpeg
 
 # 2. Create the user-friendly wrappers
@@ -57,7 +58,8 @@ def tempo_detector(audio_input, full=False):
         # Since we don't know the SR of the array passed, we default to 44100
         # or you could require a tuple (y, sr) as input.
         y = audio_input
-        sr = 44100
+        # sr = 44100
+        sr = SAMPLE_RATE
 
     # CALLING INTERNAL FUNCTION
     bpm = _internal_estimate(y, sr)

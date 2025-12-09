@@ -169,3 +169,4 @@ drum_classifier/model_trainer.py
 *drumscript/drum_classifier/
 *drumscript/notation_generator/
 *drumscript/logs/
+drumscript/audio_processor/tempogram.py

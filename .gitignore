@@ -171,4 +171,5 @@ drumscript/notation_generator/pdf_exporter.py
 drumscript/notation_generator/score_builder.py
 drumscript/notation_generator/helpers.py
 *drumscript/logs/
+drumscript/main.py
 # drumscript/audio_processor/tempogram.py

@@ -167,6 +167,8 @@ drum_classifier/model_trainer.py
 *outputs
 *machine-learning/
 *drumscript/drum_classifier/
-*drumscript/notation_generator/
+drumscript/notation_generator/pdf_exporter.py
+drumscript/notation_generator/score_builder.py
+drumscript/notation_generator/helpers.py
 *drumscript/logs/
-drumscript/audio_processor/tempogram.py
+# drumscript/audio_processor/tempogram.py

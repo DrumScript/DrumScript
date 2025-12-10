@@ -68,6 +68,9 @@ optional = [
     "ipykernel"
   ]
 
+[tool.setuptools]
+include-package-data = true
+
 #[tool.setuptools.package-data]
 # [OPTIONAL] If you have data files inside your package that need to be included
 # "DrumScript" = ["data/*.csv"] # Example: include all .csv files in DrumScript/data/
@@ -77,7 +80,7 @@ optional = [
 where = ["."] # Search for packages in the current directory
 # include = ["DrumScript*"] # [LEGACY-CODE]  Only include packages starting with DrumScript
 include = ["drumscript*"] # Only include packages starting with drumscript
-exclude = ["drumscript.drum_classifier*", "drumscript.notation_generator/helpers.py","drumscript.notation_generator/pdf_exporter.py","drumscript.notation_generator/score_generator.py","local_tests*",".development*",".archive*", "machine-learning*", "test_audio*", "drumscript.main"] # Exclude test directories, development and archive folders from build
+exclude = ["drumscript.drum_classifier*","local_tests*",".development*",".archive*", "machine-learning*", "test_audio*", "drumscript.main"] # Exclude test directories, development and archive folders from build
 
 # api = [
    # "fastapi",

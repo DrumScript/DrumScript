@@ -50,7 +50,7 @@ def tempo_detector(audio_input, full=False):
     # Handle case where user passes a file path string
     if isinstance(audio_input, str):
         # We use your internal loader which returns (audio, sr)
-        y, sr = load_audio(audio_input, sr=44100)
+        y, sr = load_audio(audio_input, sr=SAMPLE_RATE)
         y = normalise_audio(y)
     else:
         # Assume it's already loaded audio data (array)

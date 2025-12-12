@@ -1,7 +1,7 @@
 ## **Testing Documentation**
 
 <!--date_created: sat-21-june-2025-->
-<!--date_updated: weds-01-oct-2025-->
+<!--date_updated: fri-12-dec-2025-->
 
 `DrumScript` is a `Python package` that **converts drum audio recordings into sheet music (drum notation) in PDF format**. 
 
@@ -165,7 +165,7 @@ Tempogram saved to: `DrumScript/visuals/tempogram.png`
 
 #### **`drum_classifier/`**
 
-**PLEASE NOTE:**[Testing instructions to be added for the new rule-based classifier scripts: `predict.py` and `generate_score.py`]
+**PLEASE NOTE:**[Testing instructions to be added for the new rule-based classifier scripts: `classify.py` and `generate_score.py`]
 
 
 ---

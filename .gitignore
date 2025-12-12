@@ -1,175 +1,82 @@
-# Python build/distribution artifacts
-*.egg-info/
-.Python
+# --- Python & Build Artifacts ---
 __pycache__/
-__pycache__/*
-*.pyc
+*.py[cod]
+*$py.class
 *.so
-*.pyd
-*.dist-info/
-*.egg/
-*.cpython-312.pyc
-*build/
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
 
-# Python compiled files
-__pycache__/
-*.pyc
-*.pyd
-*.pyo
-*.cpython-312.pyc
-
-# Virtual environment
+# --- Virtual Environments ---
 .venv/
 venv/
 env/
+ENV/
 
-# adhoc dev files used during build
-.archive
-development/*
-development/
-.development/*
-.development/
-tests/*
-tests/
-local_tests/*
-local_tests/
-dev_notes.txt
-test_audio/
-reference_audio/**
-
-# OS generated files
+# --- OS Generated Files ---
 .DS_Store
-.env
-.python-version
-.development
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
 
-**/__pycache__/ # ignore all __pycache__ across the repo
-*/__pycache__/
-
-# Trained models and processed data (optional, but often good practise)
-
-# If you want to keep models in Git, remove or comment out these lines
-# models/
-# If training_data contains large audio files you don't want to commit
-DrumScript/training_data/
-training_data/*
-training_data/
-
-
-# model dev files
-
-models/ConvolutionalNeuralNetworks/*
-models/RandomForest/*
-models/docs/*
-models/development/*
-models/models_development/RandomForest/*
-models/models_development/ConvolutionalNeuralNetworks/*
-
-# Specific IDE files
-.vscode/ # VS Code settings
-.idea/   # IntelliJ/PyCharm settings
-
-# Jupyter notebooks
-
+# --- IDE Settings ---
+.vscode/
+.idea/
 .ipynb_checkpoints/
 
-# Ignore log files, but not the log directory itself
-*.log
-*/.logs
-
-# Specifically ignore the drumscript log file
-
-drumscript/logs/drumscript.log
-
-# Add an exception to *never* ignore .gitkeep files
-!*.gitkeep
-!**/.gitkeep
-
-# Logic/DAW files
-
-
-outputs/outputs.logicx/*
-outputs/outputs.logicx
-
-# output files:
-
+# --- Project Specific Output ---
+# Ignore generated outputs but keep the directory structure if needed
+outputs/*
+!outputs/.gitkeep
 output/*
-outputs/notation_generator/*
-outputs/drum_classifier/*
 
+# --- Logs ---
+*.log
+logs/
+drumscript/logs/
 
-# temp .pyc specific python config files (find a better way to ensure these are ignored in future), temp
-.audio_processor/__pycache__/feature_extractor.cpython-312.pyc
-.audio_processor/__pycache__/** */
-.audio_processor/__pycache__/audio_loader.cpython-312.pyc
-.audio_processor/__pycache__/onset_detector.cpython-312.pyc
-/feature_extractor.cpython-312.pyc
+# --- Local Development & Testing ---
+# Ignore local test scripts if they are scratchpads
+local_tests/*
+!local_tests/drumscript_lite/test_local_interface.py # Exception: Keep the main interface test
+.archive/
+.development/
+dev_notes.txt
 
-# percussion_frequencies.md
+# --- Large/Binary Data ---
+# Ignore large audio files to keep repo light
+test_audio/
+reference_audio/
+training_data/
+machine-learning/models/*.h5
+machine-learning/models/*.joblib
 
-output/my_drum_score.pdf
-output/my_drum_score1__thurs24jul2025.pdf
-output/my_drum_score2__thurs24jul2025.pdf
-drum_notation.ipynb
-data_labeller/data_labeller.ipynb
-audio_processor/feature_extractor.md
+# --- Specific Tooling ---
+.python-version
+.env
 
-
-# Logic/DAW files
-
-outputs/outputs.logicx/Alternatives/000/DisplayState.plist
-outputs/outputs.logicx/Alternatives/000/DisplayStateArchive
-outputs/outputs.logicx/Alternatives/000/MetaData.plist
-outputs/outputs.logicx/Alternatives/000/ProjectData
-outputs/outputs.logicx/Alternatives/000/WindowImage.jpg
-outputs/outputs.logicx/Alternatives/000/Project File Backups/00/MetaData.plist
-outputs/outputs.logicx/Alternatives/000/Project File Backups/00/ProjectData
-outputs/outputs.logicx/Alternatives/000/Project File Backups/01/MetaData.plist
-outputs/outputs.logicx/Alternatives/000/Project File Backups/01/ProjectData
-outputs/outputs.logicx/Alternatives/000/Undo Data.nosync/8_rock-groove8_65_beat_4-4.wav/Undo Data
-outputs/outputs.logicx/Alternatives/000/Undo Data.nosync/8_rock-groove8_65_beat_4-4_Drums.aif/Undo Data
-outputs/outputs.logicx/Resources/ProjectInformation.plist
-
-drum_classifier/correct_prediction_output.json
-notation_generator/constants__new.py
-
-
-
-# temp files (review periodically)
-
-
-logs.txt
-.gitignore
-labelled_datasets/audio_segments/
-output.pdf
-output.xml
-drum_classifier/neural_networks.md
-drum_classifier/logs/model_trainer_logs_1.txt
-drum_classifier/logs/
-model_trainer1_cnn.txt
-package-build.md
-drum_classifier/training_log.txt
-troubleshooting.md
-audio_processor/audio_loader__new.md
-audio_processor/audio_loader__new.py
-audio_processor/error.txt
-audio_processor/tempo_test_notes.txt
-audio_processor/tempogram.png
-visuals/tempogram.png
-visuals/**
-notation_generator/build:update_midi_mapping.md
-drum_classifier/drum_model.py
-drum_classifier/model_trainer.py
-# temporarily add all _build files (>50) for Sphix GitHub Pages documentation to .gitignore
-**developer_docs/_build
-# temporarily add drumscript build lib to gitignore:
-*build
-*outputs
-*machine-learning/
-*drumscript/drum_classifier/
+# --- Excluded Files for Lite Version ---
+drumscript/main.py
+*drumscript/drum_classifier
+*machine-learning
+drumscript/notation_generator/helpers.py
 drumscript/notation_generator/pdf_exporter.py
 drumscript/notation_generator/score_builder.py
-drumscript/notation_generator/helpers.py
-*drumscript/logs/
-drumscript/main.py
-# drumscript/audio_processor/tempogram.py
+visuals/tempogram.png

@@ -65,7 +65,8 @@ dependencies = [
 # --- Optional Dependencies ---
 [project.optional-dependencies]
 optional = [
-    "ipykernel"
+    "ipykernel",
+    "pytest"
   ]
 
 [tool.setuptools]

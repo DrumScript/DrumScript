@@ -54,8 +54,8 @@ drumscript/logs/
 
 # --- Local Development & Testing ---
 # Ignore local test scripts if they are scratchpads
-local_tests/*
 !local_tests/drumscript_lite/test_local_interface.py # Exception: Keep the main interface test
+!local_tests/classification_enginer/librosa
 .archive/
 .development/
 dev_notes.txt

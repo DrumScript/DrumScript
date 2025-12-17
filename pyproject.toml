@@ -89,3 +89,13 @@ exclude = ["drumscript.drum_classifier*","local_tests*",".development*",".archiv
    # "pydantic",
    # "boto3",           # For AWS Bedrock
 #]
+
+
+[tool.pytest.ini_options]
+filterwarnings = [
+    # Suppress specific deprecation warnings from audioread/librosa dependencies
+    "ignore::DeprecationWarning:audioread.rawread",
+    "ignore:'aifc' is deprecated:DeprecationWarning",
+    "ignore:'audioop' is deprecated:DeprecationWarning",
+    "ignore:'sunau' is deprecated:DeprecationWarning",
+]

@@ -80,3 +80,4 @@ drumscript/notation_generator/helpers.py
 drumscript/notation_generator/pdf_exporter.py
 drumscript/notation_generator/score_builder.py
 visuals/tempogram.png
+local_tests/classification_engine/librosa/! Librosa functions for drum classification - ! Librosa functions for drum classification.csv

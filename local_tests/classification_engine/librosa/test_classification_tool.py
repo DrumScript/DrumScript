@@ -7,7 +7,7 @@ import os
 import sys
 
 # ===============================================
-# 1. THE CLASSIFICATION LOGIC (See CSV in folder)
+# 1. THE CLASSIFICATION LOGIC (See .csv in folder)
 # ===============================================
 class DrumClassifier:
     

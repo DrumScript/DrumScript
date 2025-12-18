@@ -6,9 +6,9 @@ import numpy as np
 import os
 import sys
 
-# ==========================================
-# 1. THE CLASSIFICATION LOGIC (From your CSV)
-# ==========================================
+# ===============================================
+# 1. THE CLASSIFICATION LOGIC (See CSV in folder)
+# ===============================================
 class DrumClassifier:
     
     @staticmethod
@@ -177,7 +177,7 @@ def test_dynamic_drum_check(audio_file, drum_type):
     
     print("   ----------------------------------------")
     if is_match:
-        print(f"RESULT: THIS IS A {drum_type.upper()}")
+        print(f"   >>> RESULT: THIS IS A {drum_type.upper()}")
     else:
-        print(f"RESULT: NOT A {drum_type.upper()}")
+        print(f"   >>> RESULT: NOT A {drum_type.upper()}")
     print("   ----------------------------------------\n")

@@ -107,7 +107,10 @@ class DrumClassifier:
         print(f"   [DEBUG] Avg Interval: {avg_ioi:.4f} s")
         return avg_ioi < 0.150
 
-    # --- Helpers ---
+    # ===============================================
+    # HELPERS
+    # ===============================================
+    
     @staticmethod
     def _check_pitch(y, sr, low, high):
         pitches, magnitudes = librosa.piptrack(y=y, sr=sr)

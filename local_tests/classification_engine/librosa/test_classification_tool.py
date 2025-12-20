@@ -36,7 +36,7 @@ class DrumClassifier:
 
         # 4. Final Classification Logic
         # A kick must be dark, loud, and have a fundamental between 50-100Hz
-        is_valid_pitch = (detected_freq >= 50) and (detected_freq <= 100)
+        is_valid_pitch = (detected_freq >= 50) and (detected_freq <= 180)
         
         return (centroid_val < 4000) and (rms_val > 0.05) and is_valid_pitch # Set centroid_val upper bound VERY HIGH so that rule (for now anyway) catches almost all possible kick events, ie render the centroid defunct (for now)
 

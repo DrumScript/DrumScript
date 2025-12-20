@@ -29,7 +29,7 @@ class DrumClassifier:
         rms_val = np.mean(rms)
         print(f"   [DEBUG] Mean RMS:          {rms_val:.4f}")
 
-        # 3. Fundamental Frequency (Using your new STFT masking logic)
+        # 3. Fundamental Frequency (Using new STFT masking logic)
         # We look for the peak freq between 50-200Hz
         detected_freq = DrumClassifier._measure_dominant_freq(y, sr, min_freq=50, max_freq=200)
         print(f"   [DEBUG] Dominant Low Freq: {detected_freq:.2f} Hz")

@@ -15,8 +15,8 @@ class DrumClassifier:
     def kick(y, sr):
         """
         1. Kick Rule:
-           - Centroid < 150 Hz (Dark timbre)
-           - RMS > 0.05 (Significant volume)
+           - (Mean) Centroid 170-3254 Hz expected for kick drums (ie Highly variable)
+           - (Mean) RMS > 0.05 (Significant volume)
            - Dominant Low Freq in 50-100 Hz (Physical kick fundamental)
         """
         # 1. Timbre (Centroid)
@@ -38,7 +38,7 @@ class DrumClassifier:
         # A kick must be dark, loud, and have a fundamental between 50-100Hz
         is_valid_pitch = (detected_freq >= 50) and (detected_freq <= 100)
         
-        return (centroid_val < 150) and (rms_val > 0.05) and is_valid_pitch
+        return (centroid_val < 4000) and (rms_val > 0.05) and is_valid_pitch # Set centroid_val upper bound VERY HIGH so that rule (for now anyway) catches almost all possible kick events, ie render the centroid defunct (for now)
 
     @staticmethod
     def snare(y, sr):

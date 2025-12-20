@@ -13,11 +13,32 @@ class DrumClassifier:
     
     @staticmethod
     def kick(y, sr):
-        """1. Kick: Centroid < 150 Hz"""
+        """
+        1. Kick Rule:
+           - Centroid < 150 Hz (Dark timbre)
+           - RMS > 0.05 (Significant volume)
+           - Dominant Low Freq in 50-100 Hz (Physical kick fundamental)
+        """
+        # 1. Timbre (Centroid)
         centroids = librosa.feature.spectral_centroid(y=y, sr=sr)
-        val = np.mean(centroids)
-        print(f"   [DEBUG] Mean Centroid: {val:.2f} Hz")
-        return val < 150
+        centroid_val = np.mean(centroids)
+        print(f"   [DEBUG] Mean Centroid:     {centroid_val:.2f} Hz")
+
+        # 2. Loudness (RMS)
+        rms = librosa.feature.rms(y=y)
+        rms_val = np.mean(rms)
+        print(f"   [DEBUG] Mean RMS:          {rms_val:.4f}")
+
+        # 3. Fundamental Frequency (Using your new STFT masking logic)
+        # We look for the peak freq between 50-200Hz
+        detected_freq = DrumClassifier._measure_dominant_freq(y, sr, min_freq=50, max_freq=200)
+        print(f"   [DEBUG] Dominant Low Freq: {detected_freq:.2f} Hz")
+
+        # 4. Final Classification Logic
+        # A kick must be dark, loud, and have a fundamental between 50-100Hz
+        is_valid_pitch = (detected_freq >= 50) and (detected_freq <= 100)
+        
+        return (centroid_val < 150) and (rms_val > 0.05) and is_valid_pitch
 
     @staticmethod
     def snare(y, sr):

@@ -205,7 +205,7 @@ def test_dynamic_drum_check(audio_file, drum_type):
 
     # 2. Path Resolution (3 directories up from this script location)
     # logic: local_tests/classification_engine/librosa -> ../../../ -> test_audio/
-    base_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../../test_audio"))
+    base_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../../test_audio")) # could amend this in future so it, instead, goes directly to root and then the path can be provided as user input arg
     file_path = os.path.join(base_path, audio_file)
 
     if not os.path.exists(file_path):
@@ -219,7 +219,7 @@ def test_dynamic_drum_check(audio_file, drum_type):
         pytest.fail(f"Librosa could not load file: {e}")
 
     # 4. Map 'drum_type' string to function
-    # Normalize input (e.g. "Low Tom" -> "low_tom")
+    # Normalise input (e.g. "Low Tom" -> "low_tom")
     method_name = drum_type.lower().replace(" ", "_")
     
     if not hasattr(DrumClassifier, method_name):

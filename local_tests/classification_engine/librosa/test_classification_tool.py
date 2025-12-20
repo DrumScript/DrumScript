@@ -110,7 +110,42 @@ class DrumClassifier:
     # ===============================================
     # HELPERS
     # ===============================================
-    
+
+    @staticmethod
+    def _measure_dominant_freq(y, sr, min_freq=50, max_freq=200):
+        """
+        Calculates the dominant frequency within a specific range using STFT masking.
+        Adapted from contributor utility code.
+        """
+        # 1. Compute STFT
+        n_fft = 2048 
+        hop_length = 512 
+        S = librosa.stft(y, n_fft=n_fft, hop_length=hop_length)
+        S_db = librosa.amplitude_to_db(np.abs(S), ref=np.max)
+
+        # 2. Find the frame with the maximum energy (the "hit")
+        # Summing across freq bins gives energy per frame
+        # We assume the loudest frame is the drum hit
+        max_energy_frame = np.argmax(np.max(S_db, axis=0))
+        
+        # 3. Get the spectrum for that specific frame
+        kick_spectrum = S_db[:, max_energy_frame]
+        freqs = librosa.fft_frequencies(sr=sr, n_fft=n_fft)
+
+        # 4. Filter for relevant frequencies
+        freq_mask = (freqs >= min_freq) & (freqs <= max_freq)
+        
+        if np.any(freq_mask):
+            masked_spectrum = kick_spectrum[freq_mask]
+            masked_freqs = freqs[freq_mask]
+            
+            # 5. Find peak within that range
+            peak_index_masked = np.argmax(masked_spectrum)
+            peak_frequency = masked_freqs[peak_index_masked]
+            return peak_frequency
+            
+        return 0.0 # Return 0 if no frequency found in range
+
     @staticmethod
     def _check_pitch(y, sr, low, high):
         pitches, magnitudes = librosa.piptrack(y=y, sr=sr)

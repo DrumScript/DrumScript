@@ -10,7 +10,10 @@ warnings.filterwarnings('ignore') # Suppress librosa warnings
 
 # --- CONFIGURATION ---
 METADATA_PATH = "test_audio/dataset/samples_metadata.csv" 
-AUDIO_DIR = "test_audio/dataset/samples"
+# AUDIO_DIR = "test_audio/dataset/samples" # only one folder of audio samples
+SAMPLES_DIR = "test_audio/dataset/samples"
+TOMS_DIR = "test_audio/the_dugg_funnie_private_reverse_toms"
+
 OUTPUT_CSV = os.path.join(os.path.dirname(__file__), "fundamental_frequencies_report.csv")
 
 # Map type_id to names (ignoring claps later)
@@ -57,81 +60,108 @@ def measure_fundamental_freq(y, sr, min_freq=20, max_freq=2000):
 
 def main():
     print("--- STARTING FUNDAMENTAL FREQUENCY ANALYSIS ---")
-    
-    # 1. Resolve Paths
-    # If script is run from project root, these should work. 
-    # If not, we try to resolve relative to this script.
-    base_dir = os.getcwd()
-    if not os.path.exists(METADATA_PATH):
-        # Try finding it relative to project root if run from subfolder
-        potential_path = os.path.join(base_dir, "../../../", METADATA_PATH)
-        if os.path.exists(potential_path):
-             # Update global paths
-             print("Adjusting paths relative to script location...")
-             pass # Logic handles itself if we just run from root usually
-    
-    if not os.path.exists(METADATA_PATH):
-        print(f"ERROR: Could not find {METADATA_PATH}. Run this from the project root.")
-        sys.exit(1)
-
-    # 2. Load Data
-    df = pd.read_csv(METADATA_PATH)
-    
-    # Filter: Remove Claps (id 0)
-    df = df[df['type_id'] != 0].copy()
-    
-    # Map Names
-    df['type_name'] = df['type_id'].map(TYPE_MAP)
-    
-    # 3. Processing
     results = []
-    
-    print(f"{'SAMPLE NAME':<20} | {'TYPE':<12} | {'FREQ (Hz)':<10}")
-    print("-" * 50)
 
-    # Grouping by type for display (DataFrame is already somewhat ordered, but let's ensure)
-    df = df.sort_values(by=['type_name', 'sample_name'])
+    # =========================================================
+    # PART 1: Process Metadata CSV (Kicks, Snares, Hats)
+    # =========================================================
+    if os.path.exists(METADATA_PATH):
+        print(f"\nProcessing Standard Library: {METADATA_PATH}")
+        df = pd.read_csv(METADATA_PATH)
+        
+        # Filter out Claps
+        df = df[df['type_id'] != 0].copy()
+        df['type_name'] = df['type_id'].map(TYPE_MAP)
+        
+        for _, row in df.iterrows():
+            sample_name = row['sample_name']
+            drum_type = row['type_name']
+            
+            file_path = os.path.join(SAMPLES_DIR, f"{sample_name}.wav")
+            
+            if os.path.exists(file_path):
+                try:
+                    y, sr = librosa.load(file_path, sr=None)
+                    freq = measure_fundamental_freq(y, sr)
+                    results.append({
+                        "sample_name": sample_name,
+                        "type": drum_type,
+                        "freq_hz": round(freq, 2)
+                    })
+                except Exception:
+                    pass
+    else:
+        print(f"Warning: Metadata file not found at {METADATA_PATH}")
+
+    # =========================================================
+    # PART 2: Process Toms Folder
+    # =========================================================
+    if os.path.exists(TOMS_DIR):
+        print(f"\nProcessing Toms Library: {TOMS_DIR}")
+        
+        # Glob all .wav files in the toms directory
+        wav_files = glob.glob(os.path.join(TOMS_DIR, "*.wav"))
+        
+        if not wav_files:
+            print("   No .wav files found in Toms directory.")
+            
+        for file_path in wav_files:
+            filename = os.path.basename(file_path)
+            
+            # Skip hidden files
+            if filename.startswith('.'):
+                continue
+                
+            drum_type = classify_tom(filename)
+            
+            try:
+                y, sr = librosa.load(file_path, sr=None)
+                freq = measure_fundamental_freq(y, sr)
+                
+                results.append({
+                    "sample_name": filename,
+                    "type": drum_type,
+                    "freq_hz": round(freq, 2)
+                })
+            except Exception as e:
+                print(f"   Error loading {filename}: {e}")
+    else:
+        print(f"Warning: Toms directory not found at {TOMS_DIR}")
+
+    # =========================================================
+    # OUTPUT AND REPORTING
+    # =========================================================
+    if not results:
+        print("\nNo audio files were analyzed.")
+        return
+
+    # Create DataFrame
+    out_df = pd.DataFrame(results)
+    
+    # Sort by Type then Name for the clean grouped look you requested
+    out_df = out_df.sort_values(by=['type', 'sample_name'])
+
+    # Print Report to Console
+    print("\n" + "="*60)
+    print(f"{'TYPE':<15} | {'SAMPLE NAME':<30} | {'FREQ (Hz)':<10}")
+    print("="*60)
     
     current_type = None
-    
-    for _, row in df.iterrows():
-        sample_name = row['sample_name']
-        drum_type = row['type_name']
+    for _, row in out_df.iterrows():
+        if row['type'] != current_type:
+            print("-" * 60) # Separator between groups
+            current_type = row['type']
+            
+        # Truncate long names for display
+        display_name = (row['sample_name'][:27] + '..') if len(row['sample_name']) > 29 else row['sample_name']
         
-        # Header for new drum groups
-        if drum_type != current_type:
-            print(f"\n--- {drum_type.upper()} ---")
-            current_type = drum_type
-            
-        file_path = os.path.join(AUDIO_DIR, f"{sample_name}.wav")
-        
-        if not os.path.exists(file_path):
-            print(f"{sample_name:<20} | {drum_type:<12} | FILE NOT FOUND")
-            continue
-            
-        try:
-            y, sr = librosa.load(file_path, sr=None)
-            freq = measure_fundamental_freq(y, sr)
-            
-            print(f"{sample_name:<20} | {drum_type:<12} | {freq:.2f}")
-            
-            results.append({
-                "sample_name": sample_name,
-                "type": drum_type,
-                "fundamental_freq_hz": round(freq, 2)
-            })
-            
-        except Exception as e:
-            print(f"{sample_name:<20} | {drum_type:<12} | ERROR: {e}")
+        print(f"{row['type']:<15} | {display_name:<30} | {row['freq_hz']:.2f}")
 
-    # 4. Save CSV
-    if results:
-        out_df = pd.DataFrame(results)
-        out_df.to_csv(OUTPUT_CSV, index=False)
-        print(f"\nAnalysis Complete.")
-        print(f"Results saved to: {OUTPUT_CSV}")
-    else:
-        print("\nNo results generated (check audio paths).")
+    # Save to CSV
+    out_df.to_csv(OUTPUT_CSV, index=False)
+    print("\n" + "="*60)
+    print(f"Analysis Complete. Full results saved to:\n{OUTPUT_CSV}")
+    print("="*60)
 
 if __name__ == "__main__":
     main()

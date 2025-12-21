@@ -1,13 +1,14 @@
 # local_tests/classification_engine/librosa/get_fundamental_frequencies.py
-
+## Run from root using `uv run python local_tests/classification_engine/librosa/get_fundamental_frequencies.py
 import pandas as pd
 import librosa
 import numpy as np
 import os
 import sys
+import warnings
+warnings.filterwarnings('ignore') # Suppress librosa warnings
 
 # --- CONFIGURATION ---
-# Adjust these relative to where you run the script from (usually project root)
 METADATA_PATH = "test_audio/dataset/samples_metadata.csv" 
 AUDIO_DIR = "test_audio/dataset/samples"
 OUTPUT_CSV = os.path.join(os.path.dirname(__file__), "fundamental_frequencies_report.csv")

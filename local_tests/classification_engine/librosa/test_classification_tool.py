@@ -17,7 +17,7 @@ class DrumClassifier:
         1. Kick Rule:
            - (Mean) Centroid 170-3254 Hz expected for kick drums (ie Highly variable)
            - (Mean) RMS > 0.05 (Significant volume)
-           - Dominant Low Freq in 50-100 Hz (Physical kick fundamental)
+           - Dominant Low Freq in 50-180 Hz (Physical kick fundamental)
         """
         # 1. Timbre (Centroid)
         centroids = librosa.feature.spectral_centroid(y=y, sr=sr)

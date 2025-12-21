@@ -5,6 +5,7 @@ import librosa
 import numpy as np
 import os
 import sys
+import glob
 import warnings
 warnings.filterwarnings('ignore') # Suppress librosa warnings
 
@@ -57,6 +58,19 @@ def measure_fundamental_freq(y, sr, min_freq=20, max_freq=2000):
     peak_freq = masked_freqs[peak_idx]
     
     return peak_freq
+
+def classify_tom(filename):
+    """
+    Determines tom type based on filename keywords.
+    """
+    fname = filename.lower()
+    if "high" in fname:
+        return "high_tom"
+    elif "mid" in fname:
+        return "mid_tom"
+    elif "low" in fname or "floor" in fname:
+        return "low_tom"
+    return "tom_other"
 
 def main():
     print("--- STARTING FUNDAMENTAL FREQUENCY ANALYSIS ---")

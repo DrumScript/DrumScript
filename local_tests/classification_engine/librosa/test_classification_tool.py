@@ -39,14 +39,29 @@ class DrumClassifier:
         is_valid_pitch = (detected_freq >= 50) and (detected_freq <= 170)
         
         return (centroid_val < 4000) and (rms_val > 0.05) and is_valid_pitch # Set centroid_val upper bound VERY HIGH so that rule (for now anyway) catches almost all possible kick events, ie render the centroid defunct (for now)
-
     @staticmethod
     def snare(y, sr):
-        """2. Snare: High Flatness"""
+        """
+        2. Snare Rule:
+           - Fundamental Freq: 180-260 Hz (Captures deep 107Hz snares up to standard 193Hz)
+           - Flatness: > 0.05 (Ensures we hear the snare wires/noise)
+        """
+        # 1. Fundamental Frequency
+        # We search in a slightly wider window (100-400Hz) to find the peak
+        detected_freq = DrumClassifier._measure_dominant_freq(y, sr, min_freq=100, max_freq=400)
+        print(f"   [DEBUG] Dominant Snare Freq: {detected_freq:.2f} Hz")
+        
+        # Validate against our determined range
+        is_valid_pitch = (detected_freq >= 180) and (detected_freq <= 260)
+
+        # 2. Spectral Flatness (The "Rattle" Check)
+        # Snares have high noise content due to the wires. Toms do not.
         flatness = librosa.feature.spectral_flatness(y=y)
-        val = np.mean(flatness)
-        print(f"   [DEBUG] Spectral Flatness: {val:.4f}")
-        return val > 0.05  # Adjust threshold based on your specific samples
+        flatness_val = np.mean(flatness)
+        print(f"   [DEBUG] Spectral Flatness:   {flatness_val:.4f}")
+        
+        # A snare must be in the right pitch range AND have wire noise
+        return is_valid_pitch and (flatness_val > 0.05)
 
     @staticmethod
     def low_tom(y, sr):

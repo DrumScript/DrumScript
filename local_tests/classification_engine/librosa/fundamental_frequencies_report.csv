@@ -1,4 +1,4 @@
-sample_name,type,fundamental_freq_hz
+sample_name,type,freq_hz
 closedhat_0001,closed_hat,1894.92
 closedhat_0002,closed_hat,21.53
 closedhat_0003,closed_hat,1830.32
@@ -239,6 +239,29 @@ closedhat_0239,closed_hat,1937.99
 closedhat_0240,closed_hat,279.93
 closedhat_0241,closed_hat,1808.79
 closedhat_0242,closed_hat,1916.46
+1 Phat High Tom.wav,high_tom,150.73
+12 Truth High Tom.wav,high_tom,172.27
+15 Yamaha Birch High Tom.wav,high_tom,150.73
+18 Yamaha Stage High Tom.wav,high_tom,258.4
+21 Sonor Classix High Tom.wav,high_tom,215.33
+24 Mapex Saturn High Tom.wav,high_tom,150.73
+29 Maxwell High Tom.wav,high_tom,279.93
+31 Slingerland Bop Kit High Tom.wav,high_tom,172.27
+33 Modern Drum Shop Bop Kit High Tom.wav,high_tom,172.27
+35 Maxwell Custom High Tom.wav,high_tom,172.27
+37 Slingerland 60's High Tom.wav,high_tom,279.93
+39 Rogers 1968 High Tom.wav,high_tom,150.73
+4 Yamaha Maple High Tom.wav,high_tom,193.8
+42 Rogers Holiday High Tom.wav,high_tom,172.27
+45 909 3 High.wav,high_tom,129.2
+7 Ludwig Mahogany High Tom.wav,high_tom,129.2
+A Yamaha Beech High Tom.wav,high_tom,193.8
+D Yamaha Oak Custom High Tom.wav,high_tom,172.27
+G Mapex Maple High Tom.wav,high_tom,150.73
+J Yamaha Absolute High Tom.wav,high_tom,172.27
+M Sonor Beech High Tom.wav,high_tom,129.2
+P Yamaha Nouveau High Tom.wav,high_tom,172.27
+S DW Walnut High Tom.wav,high_tom,172.27
 kick_0001,kick,64.6
 kick_0002,kick,129.2
 kick_0003,kick,64.6
@@ -987,6 +1010,53 @@ kick_0745,kick,129.2
 kick_0746,kick,86.13
 kick_0747,kick,64.6
 kick_0748,kick,64.6
+11 Zin Floor Tom.wav,low_tom,107.67
+14 Truth Low Tom.wav,low_tom,107.67
+17 Yamaha Birch Low Tom.wav,low_tom,86.13
+20 Yamaha Stage Low Tom.wav,low_tom,86.13
+23 Sonor Classix Low Tom.wav,low_tom,129.2
+26 Mapex Saturn Low Tom.wav,low_tom,86.13
+28 Rogers Bop Kit Low Tom.wav,low_tom,193.8
+3 Phat Low Tom.wav,low_tom,150.73
+30 Maxwell Low Tom.wav,low_tom,215.33
+32 Slingerland Bop Kit Low Tom.wav,low_tom,129.2
+34 Modern Drum Shop Bop Kit Low Tom.wav,low_tom,129.2
+36 Maxwell Custom Low Tom.wav,low_tom,107.67
+38 Slingerland 60's Low Tom.wav,low_tom,172.27
+41 Rogers 1968 Low Tom.wav,low_tom,86.13
+44 Rogers Holiday Low Tom.wav,low_tom,86.13
+47 909 1 Low.wav,low_tom,64.6
+6 Yamaha Maple Low Tom.wav,low_tom,107.67
+9 Ludwig Mahogany Low Tom.wav,low_tom,86.13
+C Yamaha Beech Low Tom.wav,low_tom,86.13
+F Yamaha Oak Custom Low Tom.wav,low_tom,107.67
+I Mapex Maple Low Tom.wav,low_tom,107.67
+L Yamaha Absolute Low Tom.wav,low_tom,107.67
+O Sonor Beech Low Tom.wav,low_tom,86.13
+R Yamaha Nouveau Low Tom.wav,low_tom,107.67
+U DW Walnut Low Tom.wav,low_tom,172.27
+W Koan Tom 1 Low.wav,low_tom,129.2
+10 Zin Mid Tom.wav,mid_tom,129.2
+13 Truth Mid Tom.wav,mid_tom,129.2
+16 Yamaha Birch Mid Tom.wav,mid_tom,107.67
+19 Yamaha Stage Mid Tom.wav,mid_tom,215.33
+2 Phat Mid Tom.wav,mid_tom,107.67
+22 Sonor Classix Mid Tom.wav,mid_tom,107.67
+25 Mapex Saturn Mid Tom.wav,mid_tom,129.2
+27 Rogers Bop Kit Mid Tom.wav,mid_tom,279.93
+40 Rogers 1968 Mid Tom.wav,mid_tom,129.2
+43 Rogers Holiday Mid Tom.wav,mid_tom,129.2
+46 909 2 Mid.wav,mid_tom,107.67
+5 Yamaha Maple Mid Tom.wav,mid_tom,150.73
+8 Ludwig Mahogany Mid Tom.wav,mid_tom,129.2
+B Yamaha Beech Mid Tom.wav,mid_tom,129.2
+E Yamaha Oak Custom Mid Tom.wav,mid_tom,129.2
+H Mapex Maple Mid Tom.wav,mid_tom,129.2
+K Yamaha Absolute Mid Tom.wav,mid_tom,129.2
+N Sonor Beech Mid Tom.wav,mid_tom,193.8
+Q Yamaha Nouveau Mid Tom.wav,mid_tom,236.87
+T DW Walnut Mid Tom.wav,mid_tom,107.67
+V Koan Tom 2 Mid.wav,mid_tom,215.33
 openhat_0001,open_hat,1873.39
 openhat_0002,open_hat,1636.52
 openhat_0003,open_hat,1701.12

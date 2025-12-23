@@ -1,4 +1,4 @@
-# drumscipt/audio_processor_stem_splitter
+# drumscript/audio_processor/stem_splitter.py
 """
 This module uses the demucs library () to extract stemms from multi-layer audio files
     Running: `python3 -m drumscript.audio_processor.stem_splitter path_to_audio_file`

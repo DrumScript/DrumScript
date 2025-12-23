@@ -315,6 +315,7 @@ def mix_stems(stems_dict, stems_to_mix, output_path, fmt="wav"):
     return output_path
 
 # ===============================================================================================
+# Legacy prchestration script, ie before adding in the extraction/mute drums etc functionality
 # --- Test harness ---
 if __name__ == "__main__":
     """

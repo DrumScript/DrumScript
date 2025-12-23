@@ -25,6 +25,7 @@ DEMUCS_MODEL = "htdemucs"
 
 def extract_drum_stem(input_audio_path: str) -> str:
     """
+    Legacy wrapper for the transcription pipeline.
     Separates a full audio track using the Demucs command-line tool
     and returns the file path to the isolated drum stem.
     

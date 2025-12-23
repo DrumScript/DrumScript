@@ -325,7 +325,8 @@ if __name__ == "__main__":
         python drumscript/audio_processor/stem_splitter.py "path/to/song.mp3"
     """
     if len(sys.argv) < 2:
-        print("Usage: python stem_splitter.py <path_to_audio_file>")
+        # print("Usage: python stem_splitter.py <path_to_audio_file>")
+        print("Usage: python stem_splitter.py <file> [--drumless] [--mp3] [--all]")
         sys.exit(1)
         
     input_file = sys.argv[1]
@@ -334,25 +335,32 @@ if __name__ == "__main__":
         print(f"Error: File not found at {input_file}")
         sys.exit(1)
 
-    temp_drum_file_path = None
-    temp_dir_to_clean = None
+    dl = "--drumless" in sys.argv
+    mp3 = "--mp3" in sys.argv
+    all_s = "--all" in sys.argv
+    
+    fmt = "mp3" if mp3 else "wav"
+    separate_audio(input_file, output_format=fmt, drumless=dl, all_stems=all_s)
 
-    try:
+    ## The following block was for testing when the original demucs-extraction stem_splitter.py was built
+    #temp_drum_file_path = None
+    #temp_dir_to_clean = None
+    # try:
         # Run the function
-        temp_drum_file_path = extract_drum_stem(input_file)
+      #  temp_drum_file_path = extract_drum_stem(input_file)
         
         # On success, find the root temp directory
-        if temp_drum_file_path:
+       # if temp_drum_file_path:
             # Path is .../temp_dir_xyz/htdemucs/song_name/drums.wav
             # We must delete the root temp directory, 3 levels up.
-            temp_dir_to_clean = Path(temp_drum_file_path).parent.parent.parent
-            print(f"\n--- TEST SUCCESSFUL ---")
-            print(f"Drum file created at: {temp_drum_file_path}")
-            print(f"Root temp directory: {temp_dir_to_clean}")
+        #    temp_dir_to_clean = Path(temp_drum_file_path).parent.parent.parent
+        #    print(f"\n--- TEST SUCCESSFUL ---")
+        #    print(f"Drum file created at: {temp_drum_file_path}")
+        #    print(f"Root temp directory: {temp_dir_to_clean}")
 
-    except Exception as e:
-        print(f"\n--- TEST FAILED ---")
-        print(f"An error occurred: {e}")
+    # except Exception as e:
+      #  print(f"\n--- TEST FAILED ---")
+      #  print(f"An error occurred: {e}")
         
     # commenting out the cleaning step (for now)
     #finally:

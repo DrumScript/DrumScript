@@ -320,9 +320,10 @@ def mix_stems(stems_dict, stems_to_mix, output_path, fmt="wav"):
 if __name__ == "__main__":
     """
     Allows the script to be run directly for testing.
+    Default arguments if not specified otherwise are: .wav for output format, extract all stems and output all separately and NO concatenation of stems
     
     Usage:
-        python drumscript/audio_processor/stem_splitter.py "path/to/song.mp3"
+        python drumscript/audio_processor/stem_splitter.py "path/to/song.mp3" (OR .wav, as required)
     """
     if len(sys.argv) < 2:
         # print("Usage: python stem_splitter.py <path_to_audio_file>")

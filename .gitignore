@@ -73,7 +73,7 @@ machine-learning/models/*.joblib
 .env
 
 # --- Excluded Files for Lite Version ---
-drumscript/main.py
+# drumscript/main.py
 *drumscript/drum_classifier
 *machine-learning
 drumscript/notation_generator/helpers.py

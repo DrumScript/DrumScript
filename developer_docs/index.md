@@ -1,7 +1,7 @@
 ## **DrumScript**
 
 <!--date_created: sun-15-june-2025-->
-<!--date_updated: fri-24-2025-->
+<!--date_updated: tues-30-dec-2025-->
 
 > **Python 3.12.10**
 
@@ -35,9 +35,14 @@ It leverages **audio signal processing** and a **rule-based classification engin
   * **Audio Input:** Supports common audio formats like `.wav` and `.mp3`.
   * **Automatic Tempo Detection:** Estimates the tempo (BPM) of an audio file automatically.
   * **Drum Hit Detection:** Identifies the precise timing of drum strikes using onset detection algorithms.
-  * **Multi-Instrument Classification:** Differentiates between various drum kit elements (e.g., kick, snare, hi-hat) and can identify **concurrent hits** (e.g., a kick and crash cymbal played at the same time).
-  * **Musical Quantization:** Aligns detected drum hits to a musical grid for clean, accurate notation.
-  * **Sheet Music Output:** Generates clear and readable drum notation in both `.pdf` and MusicXML (`.xml`) formats.
+  <!--* **Multi-Instrument Classification:** Differentiates between various drum kit elements (e.g., kick, snare, hi-hat) and can identify **concurrent hits** (e.g., a kick and crash cymbal played at the same time).-->
+  <!--* **Musical Quantization:** Aligns detected drum hits to a musical grid for clean, accurate notation.-->
+  <!--* **Sheet Music Output:** Generates clear and readable drum notation in both `.pdf` and MusicXML (`.xml`) formats.-->
+  * **Stem Splitting**: Isolate drums from full songs using `Demucs` technology.
+  <!--* **Automatic Transcription**: Converts raw audio into readable drum scores.-->
+  <!--* **Multi-Format Export**: Generates `.pdf` for print and `.xml` for MusicXML compatible software (Guitar Pro, Logic Pro, etc.).-->
+  <!--* **Deterministic Engine**: Uses physics-based rules rather than opaque "black box" machine learning for transparent classification.-->
+
 
 ### Roadmap
 
@@ -124,7 +129,7 @@ A full list of dependencies can be found in **[`requirements.txt`](#requirements
 
 > # This will prompt for a password on Linux/macOS for system-wide installation.
 >
-> ffmpeg\_installer.install\_ffmpeg()
+> ffmpeg_installer.install_ffmpeg()
 >
 > ```
 > 
@@ -177,7 +182,7 @@ python main.py my_drum_track.wav drum_score.pdf --tempo 120
 
 ### Contributing
 
-We welcome contributions\! `DrumScript` is intended to be a community-owned project. If you have ideas, bug fixes, or new features, please **[open an issue](https://github.com/victoria-mckinney/DrumScript/issues/new)** or submit a **[pull request](https://github.com/victoria-mckinney/DrumScript/pulls)**.
+We welcome contributions! `DrumScript` is intended to be a community-owned project. If you have ideas, bug fixes, or new features, please **[open an issue](https://github.com/victoria-mckinney/DrumScript/issues/new)** or submit a **[pull request](https://github.com/victoria-mckinney/DrumScript/pulls)**.
 
 ## Documentation
 
@@ -193,6 +198,7 @@ code_of_conduct.md
 tempo_estimation.md
 glossary.md
 api.rst
+```
 
 ---
 
@@ -210,19 +216,18 @@ For questions or support, please **[open an issue](https://github.com/victoria-m
     `FFmpeg` is a system-level program, not a Python library, so it cannot be bundled directly into the package's dependencies via `requirements.txt` or `pyproject.toml`. It must be installed on the operating system itself.
   * #### Is it safe to use the `install_ffmpeg()` helper script?
     Yes. The script is a simple wrapper that runs standard, trusted installation commands for each OS. However, you are always welcome to follow the manual installation instructions instead.
-  * #### What normalization is applied to loaded audio?
-    The `audio_loader.py` script applies **peak normalization** after loading an audio file. It first converts the audio to mono and then normalizes it using `librosa.util.normalize()`.
-  * #### What is `peak normalization`? 🔊
-    Peak normalization adjusts an audio file's volume so that its loudest point (the "peak") is set to a maximum level (1.0) without distortion. This standardizes the volume across different recordings, ensuring the classification engine receives a consistent signal. This allows the classification rules to work reliably across different recordings, focusing on the sonic **character** of each drum, not just its loudness.
-  * #### Does normalization remove audio detail?
-    No. Peak normalization is a **linear process**—it multiplies every audio sample by the same constant value, like turning a volume knob. The "shape" of the sound wave, which contains all the sonic details and rhythmic information, is perfectly preserved.
+  * #### What normalisation is applied to loaded audio?
+    The `audio_loader.py` script applies **peak normalisation** after loading an audio file. It first converts the audio to mono and then normalises it using `librosa.util.normalize()`.
+  * #### What is `peak normalisation`? 🔊
+    Peak normalisation adjusts an audio file's volume so that its loudest point (the "peak") is set to a maximum level (1.0) without distortion. This standardises the volume across different recordings, ensuring the classification engine receives a consistent signal. This allows the classification rules to work reliably across different recordings, focusing on the sonic **character** of each drum, not just its loudness.
+  * #### Does normalisation remove audio detail?
+    No. Peak normalisation is a **linear process**—it multiplies every audio sample by the same constant value, like turning a volume knob. The "shape" of the sound wave, which contains all the sonic details and rhythmic information, is perfectly preserved.
   * #### What is `hop_length`?
-    When analyzing audio, `librosa` slides a small window across the audio file. The **`hop_length`** is the number of audio samples the window "hops" forward for each step. A smaller `hop_length` results in more analysis windows and a more detailed, time-accurate analysis, which is crucial for capturing fast musical passages. For example, with a sample rate of 44100 Hz and a `hop_length` of 256 samples, the analysis resolution is:
+    When analysing audio, `librosa` slides a small window across the audio file. The **`hop_length`** is the number of audio samples the window "hops" forward for each step. A smaller `hop_length` results in more analysis windows and a more detailed, time-accurate analysis, which is crucial for capturing fast musical passages. For example, with a sample rate of 44100 Hz and a `hop_length` of 256 samples, the analysis resolution is:
     $$
     $$$$\\frac{256 \\text{ samples}}{44100 \\text{ samples per second}} \\approx 0.0058 \\text{ seconds (or 5.8 milliseconds)}
     $$
-    $$$$
-    $$
+
 
 
 ---

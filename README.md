@@ -1,7 +1,7 @@
 ## **`DrumScript Lite`**
 
 <!--date_created: sun-15-june-2025-->
-<!--date_updated: weds-10-dec-2025-->
+<!--date_updated: tues-30-dec-2025-->
 
 
 DrumScript is an open-source `Python` library and suite of tools intended to make music more accessible for everyone. The Python package beta is released alongside a free-to-use engine for members of the musical and sound analysis community to use in a zero-code way.
@@ -54,11 +54,18 @@ DrumScript/
 * **Drum Hit Detection:** Identifies the precise timing of drum strikes using onset event detection algorithms.
 * **Audio Extractor:** We utilise the state-of-the-art [Demucs](https://github.com/adefossez/demucs) source separation model to provide high-quality drum extraction so users can separate audio files into their drum, guitar, base guitar and vocal stems. 
 * **UI Integration:** Connect the package to a free-to-use public web interface.
+* **Stem Splitting**: Automatically isolate drum tracks from full audio mixes using the `demucs` hybrid transformer model.
+* **Onset Detection**: Precise identification of drum hits using spectral analysis.
+<!--* **Classification**: Rule-based engine to classify hits (Snare, Kick, Hi-Hat) based on acoustic features.-->
+<!--* **Score Generation**: Export transcribed drums to `.pdf` sheet music and `.xml` formats.-->
+
 
 
 
 ---
 ### Installation
+
+> `DrumScript` manages dependencies using `uv` and `pyproject.toml`.
 
 ```bash
 pip install drumscript

@@ -73,7 +73,7 @@ machine-learning/models/*.joblib
 .env
 
 # --- Excluded Files for Lite Version ---
-drumscript/main.py
+# drumscript/main.py
 *drumscript/drum_classifier
 *machine-learning
 drumscript/notation_generator/helpers.py
@@ -82,3 +82,4 @@ drumscript/notation_generator/score_builder.py
 visuals/tempogram.png
 local_tests/classification_engine/librosa/! Librosa functions for drum classification - ! Librosa functions for drum classification.csv
 local_tests/classification_engine/librosa/get_fundamental_frequencies.py.xlsx
+local_tests/google_mt3_test/**

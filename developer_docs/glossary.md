@@ -3,11 +3,11 @@
 <!--DrumScript-->
 
 <!--date_created: weds-25-june-2025-->
-<!--date_updated: fri-24-oct-2025-->
+<!--date_updated: tues-30-dec-2025-->
 
 ---
 
-# **Python Libraries**
+# **Python Libraries & Classes**
 ## [`Librosa`](#librosa)
 
 > **Python library**
@@ -23,6 +23,28 @@
 
 In `DrumScript`, `librosa` is crucial because it's the underlying library that `audio_loader.py`, `feature_extractor.py`, and `onset_detector.py` use to actually perform the **low-level audio processing** and extract the characteristics of your **drum sound** and **audio recordings**. `Librosa`'s beat and tempo detection functions are specifically used in the `tempo_detector.py` and `tempogram.py` scripts.
 
+
+## `StemSplitter`
+
+> **Class**
+
+* **Meaning:** A class within `drumscript.audio_processor` responsible for separating source audio into distinct stems (drums, bass, vocals, other). It utilizes the `Demucs` model to perform high-quality source separation.
+* **Key Method:** `split_drums(input_file, output_dir)` - Specifically targets and returns the file path of the isolated drum track.
+
+>
+> * **Example:**
+>   ```python
+>   splitter = StemSplitter()
+>   drum_path = splitter.split_drums("song.mp3", "./stems")
+>   ```
+
+## `Demucs`
+
+> **External Library / Model**
+
+* **Meaning:** A state-of-the-art music source separation model architecture. `DrumScript` wraps this technology to isolate drum frequencies from complex audio mixes, ensuring the classification engine receives clean drum audio even from full songs.
+
+<!--
 ## [`MuseScore`](#musescore)
 
   - [`MuseScore`](https://musescore.org/%5D\(https://musescore.org/\)) [source code here](https://github.com/musescore/MuseScore) is a popular, free, and open-source **music notation software**. It provides a comprehensive environment for **creating, editing, printing**, and **playing back sheet music**.
@@ -33,7 +55,9 @@ In `DrumScript`, `librosa` is crucial because it's the underlying library that `
       - **Layout and formatting:** Professional-quality typesetting and customizable layout options for print and digital distribution.
       - **Import/Export options:** Supports various file formats, including **MusicXML**, MIDI, PDF, and audio formats.
 
+
 In `DrumScript`, `MuseScore` is crucial because `music21` can be configured to use it as an **external backend for converting the generated MusicXML score data into a high-quality PDF of drum sheet music**. When LilyPond encounters issues, `MuseScore` serves as a robust and visually capable alternative for rendering the final notation.
+-->
 
 -----
 

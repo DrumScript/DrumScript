@@ -1,7 +1,7 @@
 ## **`DrumScript Lite`**
 
 <!--date_created: sun-15-june-2025-->
-<!--date_updated: weds-10-dec-2025-->
+<!--date_updated: tues-30-dec-2025-->
 
 
 DrumScript is an open-source `Python` library and suite of tools intended to make music more accessible for everyone. The Python package beta is released alongside a free-to-use engine for members of the musical and sound analysis community to use in a zero-code way.
@@ -54,17 +54,31 @@ DrumScript/
 * **Drum Hit Detection:** Identifies the precise timing of drum strikes using onset event detection algorithms.
 * **Audio Extractor:** We utilise the state-of-the-art [Demucs](https://github.com/adefossez/demucs) source separation model to provide high-quality drum extraction so users can separate audio files into their drum, guitar, base guitar and vocal stems. 
 * **UI Integration:** Connect the package to a free-to-use public web interface.
+* **Stem Splitting**: Automatically isolate drum tracks from full audio mixes using the `demucs` hybrid transformer model.
+* **Onset Detection**: Precise identification of drum hits using spectral analysis.
+<!--* **Classification**: Rule-based engine to classify hits (Snare, Kick, Hi-Hat) based on acoustic features.-->
+<!--* **Score Generation**: Export transcribed drums to `.pdf` sheet music and `.xml` formats.-->
+
 
 
 
 ---
 ### Installation
 
+> `DrumScript` manages dependencies using `uv` and `pyproject.toml`.
+
 ```bash
 pip install drumscript
 # or
 uv pip install drumscript
 ```
+
+```bash
+# Install dependencies
+uv sync
+
+```
+
 **Dependencies**
 
 A full list of project- and optional dependencies can be found in the **[`pyproject.toml`](#pyproject.toml)**.
@@ -76,6 +90,54 @@ A full list of project- and optional dependencies can be found in the **[`pyproj
 ---
 
 ### Usage
+
+
+#### **Basic Transcription**
+
+To run the full transcription pipeline on an audio file, use the main entry point. This will load the audio, separate the drums (if needed), classify hits, and generate a PDF score.
+
+```python
+from drumscript.main import main
+
+# Run the full pipeline
+main()
+# Follow the interactive prompts to provide the input file path.
+
+```
+
+#### **Stem Splitting**
+
+Isolate the drum track from a full music mix using the `StemSplitter` class. This is useful if you want to process the drum audio separately.
+
+```python
+from drumscript.audio_processor.stem_splitter import StemSplitter
+
+# Initialise the splitter
+splitter = StemSplitter()
+
+# Split the audio file; returns the path to the isolated drum track
+drum_track_path = splitter.split_drums(
+    input_file="path/to/your/song.mp3",
+    output_dir="output_stems/"
+)
+
+print(f"Drum stem saved at: {drum_track_path}")
+
+```
+
+#### **Audio Loading**
+
+Load and normalise audio files for analysis. The `AudioLoader` handles mono conversion and peak normalisation automatically.
+
+```python
+from drumscript.audio_processor.audio_loader import AudioLoader
+
+# Initialise loader
+loader = AudioLoader()
+
+# Load audio (returns audio time series and sample rate)
+y, sr = loader.load_audio("path/to/drum_stem.wav")
+```
 ---
 
 ### Contributing
@@ -173,11 +235,11 @@ To process `.mp3` files, you must first install **`FFmpeg`**, a command-line too
   * #### Is it safe to use the `install_ffmpeg()` helper script?
     Yes. The script is a simple wrapper that runs standard, trusted ¢¢ commands for each OS. However, you are always welcome to follow the manual ¢¢ instructions instead.
   * #### What normalization is applied to loaded audio?
-    The `audio_loader.py` script applies **peak normalization** after loading an audio file. It first converts the audio to mono and then normalizes it using `librosa.util.normalize()`.
+    The `audio_loader.py` script applies **peak normalization** after loading an audio file. It first converts the audio to mono and then normalises it using `librosa.util.normalize()`.
   * #### What is `peak normalization`? 
-    Peak normalization adjusts an audio file's volume so that its loudest point (the "peak") is set to a maximum level (1.0) without distortion. This standardizes the volume across different recordings, ensuring the classification engine receives a consistent signal. This allows the classification rules to work reliably across different recordings, focusing on the sonic **character** of each drum, not just its loudness.
+    Peak normalisation adjusts an audio file's volume so that its loudest point (the "peak") is set to a maximum level (1.0) without distortion. This standardises the volume across different recordings, ensuring the classification engine receives a consistent signal. This allows the classification rules to work reliably across different recordings, focusing on the sonic **character** of each drum, not just its loudness.
   * #### Does `normalization` remove audio detail?
-    No. Peak normalization is a **linear process**—it multiplies every audio sample by the same constant value, like turning a volume knob. The "shape" of the sound wave, which contains all the sonic details and rhythmic information, is perfectly preserved.
+    No. Peak normalisnoration is a **linear process**—it multiplies every audio sample by the same constant value, like turning a volume knob. The "shape" of the sound wave, which contains all the sonic details and rhythmic information, is perfectly preserved.
   * #### What is `hop_length`?
     When analysing audio, `librosa` slides a small window across the audio file. The **`hop_length`** is the number of audio samples the window "hops" forward for each step. A smaller `hop_length` results in more analysis windows and a more detailed, time-accurate analysis, which is crucial for capturing fast musical passages. For example, with a sample rate of 44100 Hz and a `hop_length` of 256 samples, the analysis resolution is:
     $$

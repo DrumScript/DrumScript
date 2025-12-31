@@ -8,6 +8,9 @@ version = "0.1.0"
 authors = [
   { name="drumscript-admin", email="hello.drumscript@gmail.com" },
 ]
+
+
+
 description = "A Python package to convert drum audio to sheet music."
 readme = "README.md"
 requires-python = ">=3.9"
@@ -15,15 +18,20 @@ requires-python = ">=3.9"
 keywords = ["drum", "audio", "music", "sheet-music", "notation", "dsp", "machine-learning", "drumscript", "drums", "percussion"]
 classifiers = [
     "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
     "Development Status :: 3 - Alpha",
     "Topic :: Multimedia :: Sound/Audio",
     "Topic :: Music Theory",
     "Topic :: Drums",
     "Topic :: DrumScript",
+    "Topic :: Multimedia :: Sound/Audio :: Analysis",
     "Topic :: Music :: DSP",
     "Topic :: Music :: Digital Signal Processing"
+
 ]
+
+# core dependencies
 dependencies = [
     "demucs",
     "ipykernel",
@@ -45,7 +53,7 @@ dependencies = [
     "soundfile",
     #"spleeter",
     "tqdm",
-    "tensorflow",
+    # "tensorflow",
     "torch==2.4.0",
     "torchaudio==2.4.0",
     "torchcodec", #adding temporarily just to test stem_splitter.py,
@@ -64,10 +72,26 @@ dependencies = [
 
 # --- Optional Dependencies ---
 [project.optional-dependencies]
-optional = [
+# Install these for running tests: uv pip install -e ".[optional]"
+# optional = []
+
+# Install these for running tests: uv pip install -e ".[test]"
+test = [
+    "pytest",
+    "pytest-cov",
+]
+
+# Install these for development: uv pip install -e ".[dev]"
+dev = [
     "ipykernel",
-    "pytest"
-  ]
+    "flake8",
+    "black"
+]
+
+# Keep heavy/conflicting libs optional if possible, keep in for now should the need for ML-based models arise in future versions.
+# tensorflow = [
+  #   "tensorflow"
+]
 
 [tool.setuptools]
 include-package-data = true
@@ -82,13 +106,6 @@ where = ["."] # Search for packages in the current directory
 # include = ["DrumScript*"] # [LEGACY-CODE]  Only include packages starting with DrumScript
 include = ["drumscript*"] # Only include packages starting with drumscript
 exclude = ["drumscript.drum_classifier*","local_tests*",".development*",".archive*", "machine-learning*", "test_audio*", "drumscript.main"] # Exclude test directories, development and archive folders from build
-
-# api = [
-   # "fastapi",
-   # "uvicorn[standard]", # The server to run FastAPI
-   # "pydantic",
-   # "boto3",           # For AWS Bedrock
-#]
 
 
 [tool.pytest.ini_options]

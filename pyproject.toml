@@ -91,7 +91,7 @@ dev = [
 # Keep heavy/conflicting libs optional if possible, keep in for now should the need for ML-based models arise in future versions.
 # tensorflow = [
   #   "tensorflow"
-]
+# ]
 
 [tool.setuptools]
 include-package-data = true

@@ -1099,8 +1099,8 @@ requires-dist = [
     { name = "setuptools" },
     { name = "sounddevice" },
     { name = "soundfile" },
-    { name = "torch", specifier = "==2.4.0" },
-    { name = "torchaudio", specifier = "==2.4.0" },
+    { name = "torch" },
+    { name = "torchaudio" },
     { name = "torchcodec" },
     { name = "tqdm" },
 ]

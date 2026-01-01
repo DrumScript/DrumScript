@@ -3,7 +3,7 @@
 <!--date_created: sun-15-june-2025-->
 <!--date_updated: thurs-01-jan-2026-->
 
-DrumScript is an open-source `Python` library and suite of tools intended to make music more accessible for everyone. The Python package beta is released alongside a free-to-use engine for members of the musical and sound analysis/engineering community to use in a zero-code way.
+DrumScript is an open-source `Python` library and suite of tools intended to make music more accessible for everyone. The Python package alpha is released alongside a free-to-use engine for members of the musical and sound analysis/engineering community to use in a zero-code way.
 
 > #### **[hello.drumscript@gmail.com](hello.drumscript@gmail.com)**
 
@@ -23,14 +23,17 @@ DrumScript is an open-source `Python` library and suite of tools intended to mak
 
 ### **Project Structure**
 
-The `DrumScript` (Lite) project is organised into the following main directories. See the **full [`repository_structure.md`](repository_structure.md)**.
+The `DrumScript` project is organised into the following main directories. For completeness, we include folders such as `notation_generator` because they contain functionality used in `DrumScript (Lite)`; however, the alpha release **does not** contain sheet music generation functionality. This is the goal of a forthcoming release of the full `DrumScript` package (targeted for the beginning of Q2 2026). See the **full [`repository_structure.md`](repository_structure.md)**.
 
 ```
 DrumScript/
+├── .github/                # GitActions files
+│   ├── workflows/
+│   │   ├── publish.yml     # Handles publishing of the package to PyPi automatically
 ├── drumscript/             # Main source package directory
 │   ├── __init__.py
 │   ├── audio_processor/    # Audio loading, onset detection, feature extraction, tempo detection, stem-splitter and tempo-detection
-│   ├── notation_generator/ # Constants
+│   ├── notation_generator/ # [LITE] Constants
 │   └── utils/              # Utility functions
 ├── developer_docs/         # Documentation for developers and contributors
 ├── theory/                 # Reference documents (music theory, DSP, etc.)

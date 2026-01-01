@@ -1,4 +1,4 @@
-## **`DrumScript Lite`**
+## **`DrumScript (Lite)`**
 
 <!--date_created: sun-15-june-2025-->
 <!--date_updated: tues-30-dec-2025-->

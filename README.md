@@ -27,22 +27,22 @@ The `DrumScript` project is organised into the following main directories. For c
 
 ```
 DrumScript/
-├── .github/                # GitActions files
-│   ├── workflows/
-│   │   ├── build_test.yml  # Tests whether the package is ready to be rebuilt and pushed to PyPi
-│   │   ├── docs.yml        # Handles publishing of `DrumScript` documentation to GitHub Pages
-│   │   ├── publish.yml     # Handles publishing of the package to PyPi automatically
-│   │   └── tests.yml       # Handles tests on development branch and main to ensure they dont break when PR is merged
-
 ├── drumscript/             # Main source package directory
 │   ├── __init__.py
 │   ├── audio_processor/    # Audio loading, onset detection, feature extraction, tempo detection, stem-splitter and tempo-detection
 │   ├── notation_generator/ # [LITE] Constants
 │   └── utils/              # Utility functions
 ├── developer_docs/         # Documentation for developers and contributors
-├── theory/                 # Reference documents (music theory, DSP, etc.)
-├── pyproject.toml          # Project metadata, dependencies, build config
-├── README.md               # Main project overview (this file)
+├── theory/                 # Reference documents (music theory, DSP, etc.). Sources provided
+├── pyproject.toml          # Project metadata and dependencies (managed by `uv`).
+├── README.md               # [LITE] Main project overview (this file)
+├── repository_structure.md # Full repository_structure.md
+├── .github/                # GitActions files
+│   ├── workflows/
+│   │   ├── build_test.yml  # Tests whether the package is ready to be rebuilt and pushed to PyPi
+│   │   ├── docs.yml        # Handles publishing of `DrumScript` documentation to GitHub Pages
+│   │   ├── publish.yml     # Handles publishing of the package to PyPi automatically
+│   │   └── tests.yml       # Handles tests on development branch and main to ensure they dont break when PR is merged
 └── ...                     # Other config files (.gitignore, etc.)
 ```
 

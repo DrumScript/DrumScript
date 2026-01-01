@@ -1,21 +1,14 @@
 ## **`DrumScript (Lite)`**
 
 <!--date_created: sun-15-june-2025-->
-<!--date_updated: tues-30-dec-2025-->
+<!--date_updated: thurs-01-jan-2026-->
 
-
-DrumScript is an open-source `Python` library and suite of tools intended to make music more accessible for everyone. The Python package beta is released alongside a free-to-use engine for members of the musical and sound analysis community to use in a zero-code way.
+DrumScript is an open-source `Python` library and suite of tools intended to make music more accessible for everyone. The Python package beta is released alongside a free-to-use engine for members of the musical and sound analysis/engineering community to use in a zero-code way.
 
 > #### **[hello.drumscript@gmail.com](hello.drumscript@gmail.com)**
 
 > **Python>=3.9**
 
-
-**Acknowledgements**
-
-* **Demucs**: The stem splitting functionality in DrumScript is built upon the incredible work of the Demucs project by [@adefozzez](https://github.com/adefossez) while at Facebook/Meta. Since he is no longer at Meta, we referenced the forked repo.
-
-* **Librosa**: For the foundational audio processing tools.
 ---
   - **[Project Structure](#project-structure)**
   - **[Features](#features)**
@@ -245,6 +238,13 @@ To process `.mp3` files, you must first install **`FFmpeg`**, a command-line too
     $$
     $$$$\\frac{256 \\text{ samples}}{44100 \\text{ samples per second}} \\approx 0.0058 \\text{ seconds (or 5.8 milliseconds)}
     $$
+
+---
+**Acknowledgements**
+
+* **Demucs**: The stem splitting functionality in DrumScript is built upon the incredible work of the Demucs project by [@adefozzez](https://github.com/adefossez) while at Facebook/Meta. Since he is no longer at Meta, we referenced the forked repo.
+
+* **Librosa**: For the foundational audio processing tools.
 
 ---
 

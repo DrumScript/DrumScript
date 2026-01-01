@@ -234,12 +234,12 @@ To process `.mp3` files, you must first install **`FFmpeg`**, a command-line too
     `FFmpeg` is a system-level program, not a Python library, so it cannot be bundled directly into the package's dependencies via `requirements.txt` or `pyproject.toml`. It must be installed on the operating system itself.
   * #### Is it safe to use the `install_ffmpeg()` helper script?
     Yes. The script is a simple wrapper that runs standard, trusted ¢¢ commands for each OS. However, you are always welcome to follow the manual ¢¢ instructions instead.
-  * #### What normalization is applied to loaded audio?
-    The `audio_loader.py` script applies **peak normalization** after loading an audio file. It first converts the audio to mono and then normalises it using `librosa.util.normalize()`.
-  * #### What is `peak normalization`? 
+  * #### What normalisation is applied to loaded audio?
+    The `audio_loader.py` script applies **peak normalisation** after loading an audio file. It first converts the audio to mono and then normalises it using `librosa.util.normalize()`.
+  * #### What is `peak normalisation`? 
     Peak normalisation adjusts an audio file's volume so that its loudest point (the "peak") is set to a maximum level (1.0) without distortion. This standardises the volume across different recordings, ensuring the classification engine receives a consistent signal. This allows the classification rules to work reliably across different recordings, focusing on the sonic **character** of each drum, not just its loudness.
-  * #### Does `normalization` remove audio detail?
-    No. Peak normalisnoration is a **linear process**—it multiplies every audio sample by the same constant value, like turning a volume knob. The "shape" of the sound wave, which contains all the sonic details and rhythmic information, is perfectly preserved.
+  * #### Does `normalisation` remove audio detail?
+    No. Peak normalisation is a **linear process**—it multiplies every audio sample by the same constant value, like turning a volume knob. The "shape" of the sound wave, which contains all the sonic details and rhythmic information, is perfectly preserved.
   * #### What is `hop_length`?
     When analysing audio, `librosa` slides a small window across the audio file. The **`hop_length`** is the number of audio samples the window "hops" forward for each step. A smaller `hop_length` results in more analysis windows and a more detailed, time-accurate analysis, which is crucial for capturing fast musical passages. For example, with a sample rate of 44100 Hz and a `hop_length` of 256 samples, the analysis resolution is:
     $$

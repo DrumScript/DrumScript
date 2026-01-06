@@ -104,9 +104,9 @@ def build_and_export_drum_score(
     try:
         score.write('musicxml', fp=f"{base_path}.musicxml")
         score.write('midi', fp=f"{base_path}.mid")
-        print(f"✅ Data files saved: {base_path}.musicxml / .mid")
+        print(f"Data files saved: {base_path}.musicxml / .mid")
     except Exception as e:
-        print(f"⚠️  Data export warning: {e}")
+        print(f"Data export warning: {e}")
 
     # ===========================================================
     # PART B: VISUAL EXPORT (PDF) - Using Native Exporter
@@ -120,6 +120,6 @@ def build_and_export_drum_score(
             tempo=tempo
         )
     except Exception as e:
-        print(f"❌ Native PDF Export Failed: {e}")
+        print(f"Native PDF Export Failed: {e}")
         import traceback
         traceback.print_exc()

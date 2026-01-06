@@ -182,4 +182,4 @@ def generate_custom_pdf(detected_events, output_filepath, tempo=120):
         last_event_time = time_sec
 
     c.save()
-    print(f"✅ Native PDF successfully saved to: {output_filepath}")
+    print(f"Native PDF successfully saved to: {output_filepath}")

@@ -99,7 +99,7 @@ include-package-data = true
 # [OPTIONAL] If you want to customise how setuptools finds packages. By default, it finds all directories with __init__.py
 where = ["."] # Search for packages in the current directory
 include = ["drumscript*"] # Only include packages starting with drumscript
-exclude = ("local_tests*",".development*",".archive*", "machine-learning*", "test_audio*") # Exclude test directories, development, archive, machine-learning (legacy code related to previous ML method) and test_audio folders from build
+exclude = ["drumscript.drum_classifier*","local_tests/*",".development*",".archive*", "machine-learning*", "test_audio*", "drumscript.main"] # Exclude test directories, development and archive folders from build
 
 
 [tool.pytest.ini_options]

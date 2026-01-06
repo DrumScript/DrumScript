@@ -100,7 +100,7 @@ include-package-data = true
 where = ["."] # Search for packages in the current directory
 # include = ["DrumScript*"] # [LEGACY-CODE]  Only include packages starting with DrumScript
 include = ["drumscript*"] # Only include packages starting with drumscript
-exclude = ["drumscript.drum_classifier*","local_tests*",".development*",".archive*", "machine-learning*", "test_audio*", "drumscript.main"] # Exclude test directories, development and archive folders from build
+exclude = ["drumscript.drum_classifier*","local_tests/*",".development*",".archive*", "machine-learning*", "test_audio*", "drumscript.main"] # Exclude test directories, development and archive folders from build
 
 
 [tool.pytest.ini_options]

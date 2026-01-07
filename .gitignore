@@ -77,3 +77,4 @@ machine-learning/models/*.joblib
 *machine-learning
 visuals/tempogram.png
 local_tests/
+local_tests/**

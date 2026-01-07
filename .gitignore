@@ -60,7 +60,7 @@ drumscript/logs/
 .development/
 dev_notes.txt
 
-# --- Large/Binary Data ---
+# --- Lar e/Binary Data ---
 # Ignore large audio files to keep repo light
 test_audio/
 reference_audio/

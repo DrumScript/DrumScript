@@ -1,20 +1,16 @@
 # DrumScript/audio_processor/tempo_detector.py
-# TO RUN INDIVIDUALLY PLEASE PROVIDE A PATH TO AUDIO, 
-#   ie. `python3 -m drumscript.audio_processor.stem_splitter path_to_audio_file`
+# ------------------------------------------------------------------------------------------------------------
 """
 This module contains functions for automatic tempo detection from audio data.
 """
+# Import packages: ------------------------------------------------------------------------------------------------
 
 import librosa
 import numpy as np
 import os
 import argparse
-from drumscript.notation_generator.constants import SAMPLE_RATE, SEGMENT_LENGTH_SECONDS, N_FFT, NOISE_THRESH_SNARE, DRUM_NOTATION_MAP, ONSET_SLICE_DURATION_MS, HOP_LENGTH
-# from datetime import datetime
+from drumscript.notation_generator.constants import DRUM_NOTATION_MAP, N_FFT, SAMPLE_RATE, HOP_LENGTH
 
-# print("\n# ------------------------------------------------------------------------------------")
-# datetimestamp = datetime.now()
-# print(f'\ndate/time: {datetimestamp}')
 # --- Define function --------------------------------------------------------------------------------------------
 
 def estimate_tempo(audio_data, sr):
@@ -25,11 +21,6 @@ def estimate_tempo(audio_data, sr):
     if audio_data.size == 0:
         return 0.0
     # oenv = librosa.onset.onset_strength(y=audio_data, sr=sr, hop_length=256)
-    # tempogram = librosa.feature.tempogram(onset_envelope=oenv, sr=sr, hop_length=256)
-    # tempo_spectrum = np.sum(tempogram, axis=1)
-    # tempo_freqs = librosa.tempo_frequencies(tempogram.shape[0], sr=sr, hop_length=256)
-    
-
     oenv = librosa.onset.onset_strength(y=audio_data, sr=SAMPLE_RATE, hop_length=HOP_LENGTH)
     tempogram = librosa.feature.tempogram(onset_envelope=oenv, sr=SAMPLE_RATE, hop_length=HOP_LENGTH)
     tempo_spectrum = np.sum(tempogram, axis=1)
@@ -65,7 +56,8 @@ if __name__ == "__main__":
     try:
         # Load and normalise the audio
         print(f"Attempting to load: {actual_drum_recording_path}")
-        audio, sr = load_audio(actual_drum_recording_path, sr=44100)
+        # audio, sr = load_audio(actual_drum_recording_path, sr=44100)
+        audio, sr = load_audio(actual_drum_recording_path, sr=SAMPLE_RATE)
         normalised_audio = normalise_audio(audio)
         
         # Estimate the tempo
@@ -74,6 +66,7 @@ if __name__ == "__main__":
 
     except Exception as e:
         print(f"\nAn unexpected error occurred: {e}")
-# =====================================================================================================
-# Uncomment to use, for clearer error logs
-# print("\n# ------------------------------------------------------------------------------------")
+    # print("\n#==================================================================================================")
+        
+#------------------------------------------------------------------------------------------------------
+    

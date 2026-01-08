@@ -6,8 +6,6 @@ from typing import List, Dict, Any
 from collections import defaultdict
 from drumscript.notation_generator import constants
 from drumscript.notation_generator.helpers import round_to_nearest_subdivision
-
-# --- FIX: Import the correct function name from your new pdf_exporter ---
 from drumscript.notation_generator.pdf_exporter import generate_custom_pdf 
 
 def get_drum_music21_note_info(drum_type: str) -> Dict[str, Any]:

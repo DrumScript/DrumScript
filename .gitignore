@@ -48,7 +48,7 @@ outputs/*
 output/*
 
 # --- Logs ---
-*.log
+*.logs
 logs/
 drumscript/logs/
 

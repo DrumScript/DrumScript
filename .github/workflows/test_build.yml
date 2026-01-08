@@ -1,0 +1,24 @@
+name: Test Build (Dry Run)
+
+on:
+  push:
+    branches: [ "build/pypi_assets", "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build_dry_run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+      
+      - name: Install build tool
+        run: uv pip install --system build
+
+      - name: Verify Package Builds
+        run: python -m build
+      # No publish step here

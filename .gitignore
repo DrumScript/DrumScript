@@ -55,12 +55,12 @@ drumscript/logs/
 # --- Local Development & Testing ---
 # Ignore local test scripts if they are scratchpads
 !local_tests/drumscript_lite/test_local_interface.py # Exception: Keep the main interface test
-!local_tests/classification_enginer/librosa
+!local_tests/classification_engine/librosa
 .archive/
 .development/
 dev_notes.txt
 
-# --- Large/Binary Data ---
+# --- Lar e/Binary Data ---
 # Ignore large audio files to keep repo light
 test_audio/
 reference_audio/
@@ -74,12 +74,7 @@ machine-learning/models/*.joblib
 
 # --- Excluded Files for Lite Version ---
 # drumscript/main.py
-*drumscript/drum_classifier
 *machine-learning
-drumscript/notation_generator/helpers.py
-drumscript/notation_generator/pdf_exporter.py
-drumscript/notation_generator/score_builder.py
 visuals/tempogram.png
-local_tests/classification_engine/librosa/! Librosa functions for drum classification - ! Librosa functions for drum classification.csv
-local_tests/classification_engine/librosa/get_fundamental_frequencies.py.xlsx
-local_tests/google_mt3_test/**
+local_tests/
+local_tests/**

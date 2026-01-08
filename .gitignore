@@ -78,3 +78,4 @@ machine-learning/models/*.joblib
 visuals/tempogram.png
 local_tests/
 local_tests/**
+*github/workflows/docs.yml

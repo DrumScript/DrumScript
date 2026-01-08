@@ -10,7 +10,6 @@ import argparse
 from pathlib import Path
 
 from drumscript.audio_processor import audio_loader, onset_detector, feature_extractor, tempo_detector
-
 from drumscript.audio_processor.stem_splitter import extract_drum_stem
 from drumscript.audio_processor.stem_splitter import separate_audio
 from drumscript.drum_classifier import classify

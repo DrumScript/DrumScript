@@ -52,11 +52,14 @@ def extract_features(audio_segment: np.ndarray, sr: int) -> Dict[str, Any]:
 
     try:
         # --- Standard Features ---
-        spectral_centroid = np.mean(librosa.feature.spectral_centroid(y=audio_segment, sr=sr))
-        spectral_rolloff = np.mean(librosa.feature.spectral_rolloff(y=audio_segment, sr=sr))
+        # spectral_centroid = np.mean(librosa.feature.spectral_centroid(y=audio_segment, sr=sr))
+        spectral_centroid = np.mean(librosa.feature.spectral_centroid(y=audio_segment, sr=SAMPLE_RATE))
+        spectral_rolloff = np.mean(librosa.feature.spectral_rolloff(y=audio_segment, sr=SAMPLE_RATE))
+        # spectral_rolloff = np.mean(librosa.feature.spectral_rolloff(y=audio_segment, sr=sr))
         rms = np.mean(librosa.feature.rms(y=audio_segment))
         zcr = np.mean(librosa.feature.zero_crossing_rate(y=audio_segment))
-        mfccs = np.mean(librosa.feature.mfcc(y=audio_segment, sr=sr, n_mfcc=N_MFCC), axis=1)
+        # mfccs = np.mean(librosa.feature.mfcc(y=audio_segment, sr=sr, n_mfcc=N_MFCC), axis=1)
+        mfccs = np.mean(librosa.feature.mfcc(y=audio_segment, sr=SAMPLE_RATE, n_mfcc=N_MFCC), axis=1)
 
         # --- Sustain Feature Calculation ---
         # Split the segment into two halves to measure energy decay.
@@ -72,7 +75,8 @@ def extract_features(audio_segment: np.ndarray, sr: int) -> Dict[str, Any]:
         S = np.abs(librosa.stft(audio_segment, n_fft=N_FFT, hop_length=HOP_LENGTH))
         
         # Get frequency bins
-        fft_freqs = librosa.fft_frequencies(sr=sr, n_fft=N_FFT)
+        # fft_freqs = librosa.fft_frequencies(sr=sr, n_fft=N_FFT)
+        fft_freqs = librosa.fft_frequencies(sr=SAMPLE_RATE, n_fft=N_FFT)
         
         # Define masks for bands based on constants.py (Low < 300Hz, Mid 300-5000Hz, High > 5000Hz)
         # Note: 300Hz chosen to separate Kick/Floor Tom from Snare/Rack Tom body
@@ -106,11 +110,13 @@ def extract_features_for_onsets(y: np.ndarray, sr: int, onset_times: List[float]
     Slices an audio array around each onset time and extracts features for each slice.
     """
     all_features = []
+    sr = SAMPLE_RATE
     # Calculate *half* the slice duration in samples
     half_slice_samples = int((ONSET_SLICE_DURATION_MS / 1000.0) * sr) // 2
 
     for time_sec in onset_times:
-        center_sample = librosa.time_to_samples(time_sec, sr=sr)
+        # center_sample = librosa.time_to_samples(time_sec, sr=sr)
+        center_sample = librosa.time_to_samples(time_sec, sr=SAMPLE_RATE)
         
         # Define start and end points, centered around the onset
         start_sample = center_sample - half_slice_samples

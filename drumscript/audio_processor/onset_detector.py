@@ -114,7 +114,8 @@ if __name__ == "__main__":
         print(f"Attempting to load: {test_audio_path}")
 
         # Load and normalise the test.mp3/test.wav audio
-        audio_data, sample_rate = load_audio(test_audio_path, sr=sr)
+        # audio_data, sample_rate = load_audio(test_audio_path, sr=sr)
+        audio_data, sample_rate = load_audio(test_audio_path, sr=SAMPLE_RATE)
         normalised_audio = normalise_audio(audio_data)
 
 

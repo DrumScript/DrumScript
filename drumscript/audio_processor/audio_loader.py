@@ -13,7 +13,7 @@ import os
 import sounddevice as sd
 import threading
 import argparse # for command-line argument parsing
-from drumscript.notation_generator.constants import SAMPLE_RATE, SEGMENT_LENGTH_SECONDS, N_FFT, NOISE_THRESH_SNARE, DRUM_NOTATION_MAP, ONSET_SLICE_DURATION_MS, HOP_LENGTH
+from drumscript.notation_generator.constants import SAMPLE_RATE # Other args avl: SEGMENT_LENGTH_SECONDS, N_FFT, NOISE_THRESH_SNARE, DRUM_NOTATION_MAP, ONSET_SLICE_DURATION_MS, HOP_LENGTH
 from drumscript.audio_processor import tempo_detector
 from drumscript.audio_processor.tempo_detector import estimate_tempo
 
@@ -27,7 +27,7 @@ from drumscript.audio_processor.tempo_detector import estimate_tempo
 # --- Define functions --------------------------------------------------------------------------------------------
 # 1. Load audio file : -------------------------------------------------------------------------------
 
-def load_audio(file_path: str, sr: int = None) -> tuple[np.ndarray, int]:
+def load_audio(file_path: str, sr: int) -> tuple[np.ndarray, int]:
     """
     Loads an audio file and optionally resamples it.
 
@@ -46,7 +46,7 @@ def load_audio(file_path: str, sr: int = None) -> tuple[np.ndarray, int]:
         Exception: For other errors during audio loading (e.g., corrupted file).
     """
     try:
-        audio_data, sample_rate = librosa.load(file_path, sr=sr) # The librosa.load_audio() fct handles wide variety of audio formats, including .mp3, .wav, .flac, .ogg, etc.
+        audio_data, sample_rate = librosa.load(file_path, sr=SAMPLE_RATE) # The librosa.load_audio() fct handles wide variety of audio formats, including .mp3, .wav, .flac, .ogg, etc.
         return audio_data, sample_rate
     except FileNotFoundError:
         print(f"Error: Audio file not found at {file_path}")

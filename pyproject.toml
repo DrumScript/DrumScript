@@ -5,17 +5,16 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "DrumScript"
 version = "0.1.0"
+description = "A Python package to convert drum audio to sheet music."
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "MIT" }
 authors = [
   { name="drumscript-admin", email="hello.drumscript@gmail.com" },
 ]
 
+keywords = ["drum", "audio", "music", "sheet-music", "notation", "dsp", "machine-learning", "drumscript", "drums", "percussion", "sound analysis", "eq"]
 
-
-description = "A Python package to convert drum audio to sheet music."
-readme = "README.md"
-requires-python = ">=3.9"
-
-keywords = ["drum", "audio", "music", "sheet-music", "notation", "dsp", "machine-learning", "drumscript", "drums", "percussion"]
 classifiers = [
     "Programming Language :: Python :: 3",
     "License :: OSI Approved :: MIT License",
@@ -31,78 +30,65 @@ classifiers = [
 
 ]
 
-# core dependencies
 dependencies = [
-    "demucs",
-    "ipykernel",
-    "librosa",
-    "matplotlib",
-    "mido",
-    "musescore",
-    "music21",
-    "numba",
-    "numpy",
-    "pandas",
-    "pretty-midi",
-    "pydub",
-    "pyyaml",
-    "scikit-learn",
-    "scipy",
-    "setuptools",
-    "sounddevice",
-    "soundfile",
-    "tqdm",
-    "torch",
-    "torchaudio",
-    "torchcodec",
-    "scipy",
-    "reportlab"
+    "demucs", 
+    "ipykernel", 
+    "librosa", 
+    "matplotlib", 
+    "mido", 
+    "musescore", 
+    "music21", 
+    "numba", 
+    "numpy", 
+    "pandas", 
+    "pretty-midi", 
+    "pydub", 
+    "pyyaml", 
+    "reportlab", 
+    "scikit-learn", 
+    "scipy", 
+    "scipy", 
+    "setuptools", 
+    "sounddevice", 
+    "soundfile", 
+    "torch", 
+    "torchaudio", 
+    "torchcodec", 
+    "tqdm"
   ]
 
-
 [project.urls]
-# Homepage = "" # This will likely be something like github-Pages-hosted drumscript.io.
 "Repository" = "https://github.com/DrumScript/DrumScript"
 "Issues" = "https://github.com//DrumScript/DrumScript/issues"
 
-# --- Optional Dependencies ---
 [project.optional-dependencies]
-# Install these for running tests: uv pip install -e ".[optional]"
-# optional = []
-
-# Install these for running tests: uv pip install -e ".[test]"
+# Install if a contributor or maintainer, using: uv pip install -e ".[test]"
 test = [
     "pytest",
     "pytest-cov",
-]
-
-# Install these for development: uv pip install -e ".[dev]"
-dev = [
-    "ipykernel",
     "flake8",
-    "black"
+    "black", 
+    "ipykernel", 
+    "sphinx",
+    "sphinx-rtd-theme",
+    "myst-parser"
 ]
 
-# Keep heavy/conflicting libs optional if possible, keep in for now should the need for ML-based models arise in future versions.
-# tensorflow = [
-  #   "tensorflow"
-# ]
+[project.scripts]
+drumscript = "drumscript.main:main"
 
 [tool.setuptools]
 include-package-data = true
 
-#[tool.setuptools.package-data]
-# [OPTIONAL] If you have data files inside your package that need to be included
-# "DrumScript" = ["data/*.csv"] # Example: include all .csv files in DrumScript/data/
-
 [tool.setuptools.packages.find]
-# [OPTIONAL] If you want to customise how setuptools finds packages. By default, it finds all directories with __init__.py
-where = ["."] # Search for packages in the current directory
-include = ["drumscript*"] # Only include packages starting with drumscript
-exclude = ["local_tests*",".development*",".archive*", "machine-learning*", "test_audio*"] # Exclude test directories, development and archive folders from build
-
+# By default, setuptools finds all directories with __init__.py
+where = ["."]
+include = ["drumscript*"]
+# exclude = ["local_tests*",".development*",".archive*", "machine-learning*", "test_audio*"] # Exclude test directories, development and archive folders from build. Commented out while testing file discovery in pre-build for pypi
 
 [tool.pytest.ini_options]
+testpaths = ["tests"]
+norecursedirs = ["local_tests", "outputs", "developer_docs"]
 filterwarnings = [
     # Suppress specific deprecation warnings from audioread/librosa dependencies
     "ignore::DeprecationWarning:audioread.rawread",
@@ -110,7 +96,5 @@ filterwarnings = [
     "ignore:'audioop' is deprecated:DeprecationWarning",
     "ignore:'sunau' is deprecated:DeprecationWarning",
 ]
-
-
 addopts = "--ignore=local_tests/classification_engine --ignore=local_tests/mp3_conversion, --ignore=pdf_generation"
 

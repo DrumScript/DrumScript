@@ -31,28 +31,27 @@ classifiers = [
 ]
 
 dependencies = [
-    "demucs", 
-    "ipykernel", 
-    "librosa", 
-    "matplotlib", 
-    "mido", 
-    "musescore", 
-    "music21", 
-    "numba", 
+    "demucs",
+    "ipykernel",
+    "librosa",
+    "matplotlib",
+    "mido",
+    "musescore",
+    "music21",
+    "numba",
     "numpy", 
     "pandas", 
-    "pretty-midi", 
-    "pydub", 
+    "pretty-midi",
+    "pydub",
     "pyyaml", 
-    "reportlab", 
-    "scikit-learn", 
+    "reportlab",
+    "scikit-learn",
     "scipy", 
-    "scipy", 
-    "setuptools", 
-    "sounddevice", 
-    "soundfile", 
-    "torch", 
-    "torchaudio", 
+    "setuptools",
+    "sounddevice",
+    "soundfile",
+    "torch",
+    "torchaudio",
     "torchcodec", 
     "tqdm"
   ]
@@ -64,14 +63,14 @@ dependencies = [
 [project.optional-dependencies]
 # Install if a contributor or maintainer, using: uv pip install -e ".[test]"
 test = [
+    "black",
+    "flake8",
+    "ipykernel",
+    "sphinx-rtd-theme",
+    "myst-parser",
     "pytest",
     "pytest-cov",
-    "flake8",
-    "black", 
-    "ipykernel", 
-    "sphinx",
-    "sphinx-rtd-theme",
-    "myst-parser"
+    "sphinx"
 ]
 
 [project.scripts]

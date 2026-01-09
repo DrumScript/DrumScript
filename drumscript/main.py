@@ -13,7 +13,11 @@ from drumscript.audio_processor import audio_loader, onset_detector, feature_ext
 from drumscript.audio_processor.stem_splitter import extract_drum_stem
 from drumscript.audio_processor.stem_splitter import separate_audio
 from drumscript.drum_classifier import classify
+from drumscript.drum_classifier.classify import classify_events
 from drumscript.notation_generator import score_builder
+from drumscript.notation_generator.score_builder import build_score
+from drumscript.notation_generator import constants
+from drumscript.notation_generator.constants import SAMPLE_RATE
 # from datetime import datetime
 
 # print("\n# ------------------------------------------------------------------------------------")
@@ -48,7 +52,8 @@ def main(input_audio_path: str,
 
         # 2. Analysis Pipeline
         print("...Loading & Analyzing Audio...")
-        y, sr = audio_loader.load_audio(audio_path)
+        sr = SAMPLE_RATE
+        y, sr = audio_loader.load_audio(audio_path, sr=SAMPLE_RATE)
         y = audio_loader.normalise_audio(y) 
         
         # Preserve core functionality: Automatic Tempo Detection
@@ -60,7 +65,8 @@ def main(input_audio_path: str,
 
         # 3. Classification
         print("...Classifying (Fundamental Frequency Engine)...")
-        classified_events = classify.classify_drum_hits(y, sr, onsets)
+        # classified_events = classify.classify_drum_hits(y, sr, onsets)
+        classified_events = classify.classify_events(y, sr, onsets)
         print(f"   -> Classified {len(classified_events)} events")
 
         # 4. Score Formatting
@@ -81,7 +87,8 @@ def main(input_audio_path: str,
         
         print(f"...Building Score & JSON: {final_pdf_path}...")
         
-        score_builder.build_and_export_drum_score(
+        # score_builder.build_and_export_drum_score(
+        score_builder.build_score(
             detected_events=final_events, 
             tempo=tempo, 
             output_filepath=final_pdf_path,
@@ -143,7 +150,8 @@ def main(input_audio_path: str,
 
         # 3. Classification
         print("...Classifying (Fundamental Frequency Engine)...")
-        classified_events = classify.classify_drum_hits(y, sr, onsets)
+        # classified_events = classify.classify_drum_hits(y, sr, onsets)
+        classified_events = classify.classify_events(y, sr, onsets)
         print(f"   -> Classified {len(classified_events)} events")
 
         # 4. Score Formatting
@@ -164,6 +172,7 @@ def main(input_audio_path: str,
         
         print(f"...Building Score & JSON: {final_pdf_path}...")
         
+        # score_builder.build_and_export_drum_score(
         score_builder.build_and_export_drum_score(
             detected_events=final_events, 
             tempo=tempo, 

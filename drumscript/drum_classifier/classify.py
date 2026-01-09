@@ -69,7 +69,7 @@ def analyze_event(y, sr):
     }
 
 
-def classify_drum_hits(audio_data, sr, onsets) -> List[Dict[str, Any]]:
+def classify_events (audio_data, sr, onsets) -> List[Dict[str, Any]]:
     """
     Classifies hits strictly based on Fundamental Frequency ($f_0$) ranges.
     """

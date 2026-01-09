@@ -94,7 +94,8 @@ def draw_note(c, x, y, note_type, staff_y_base):
     c.line(x + r, y, x + r, y + stem_height)
 
 
-def generate_custom_pdf(detected_events, output_filepath, tempo, time_signature="4/4"):
+# def generate_custom_pdf(detected_events, output_filepath, tempo, time_signature="4/4"):
+def export_pdf(detected_events, output_filepath, tempo, time_signature="4/4"):
     """Generates a PDF drum score using ReportLab engine."""
     if canvas is None:
         print("ReportLab missing.")

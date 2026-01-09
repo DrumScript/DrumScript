@@ -4,7 +4,8 @@ import json
 import os
 from typing import List, Dict, Any
 from drumscript.audio_processor import audio_loader, onset_detector, feature_extractor, tempo_detector
-from drumscript.notation_generator.pdf_exporter import generate_custom_pdf
+# from drumscript.notation_generator.pdf_exporter import generate_custom_pdf
+from drumscript.notation_generator.pdf_exporter import export_pdf
 from datetime import datetime
 
 # print("\n# ------------------------------------------------------------------------------------")
@@ -12,7 +13,7 @@ from datetime import datetime
 # print(f'\ndate/time: {datetimestamp}')
 
 
-def build_and_export_drum_score(
+def build_score(
     detected_events: List[Dict[str, Any]],
     # tempo: int = 120,
     tempo: int,
@@ -45,14 +46,15 @@ def build_and_export_drum_score(
 
     # 3. Generate Visual PDF (Directly from Data)
     try:
-        generate_custom_pdf(
+        # generate_custom_pdf(
+         export_pdf(
             detected_events=detected_events,
             output_filepath=output_filepath,
             tempo=tempo,
             time_signature=time_signature
         )
     
-        # Success message is handled inside generate_custom_pdf
+        # Success message is handled inside generate_custom_pdf/export_pdf in pdf_exporter.py
     except Exception as e:
         print(f"PDF Export Failed: {e}")
         import traceback

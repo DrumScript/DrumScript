@@ -7,7 +7,7 @@
 # We use 'noqa' or try/except blocks in some setups, but here direct import is fine...
 # ...provided the dependencies (librosa, etc.) are installed.
 from .audio_processor.audio_loader import load_audio, normalise_audio
-from .audio_processor.stem_splitter import extract_drum_stem, separate_audio # includes new fct for creating drumless backing track
+from .audio_processor.stem_splitter import extract_drum_stem, separate_audio
 from .audio_processor.tempo_detector import estimate_tempo as _internal_estimate
 from .notation_generator.constants import SAMPLE_RATE
 from .utils.ffmpeg_installer import install_ffmpeg

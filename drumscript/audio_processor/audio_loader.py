@@ -83,33 +83,35 @@ def normalise_audio(audio_data: np.ndarray) -> np.ndarray:
 
 # 3. Audio playback function: -------------------------------------------------------------------------------
 
-def _prompt_user_for_playback() -> bool:
-    """
-    Prompts the user whether to play the audio and returns their choice.
+# def _prompt_user_for_playback() -> bool:
+  #  """
+  #  Prompts the user whether to play the audio and returns their choice.
+  #
+  #
+  #
+   # Returns:
+    #    bool: True if the user wants to play, False otherwise.
+   # """
+   # response = input("Audio loaded. Would you like to play it? (yes/no): ").strip().lower()
+   # return response == 'yes' or response == 'y'
 
-    Returns:
-        bool: True if the user wants to play, False otherwise.
-    """
-    response = input("Audio loaded. Would you like to play it? (yes/no): ").strip().lower()
-    return response == 'yes' or response == 'y'
+# def play_audio(audio_data: np.ndarray, sr: int):
+  #  """
+  #  Plays the provided audio data with an option to stop via user input.
+  #  """
+  #  def stop_playback_on_enter():
+  #      input("Audio is playing. Press Enter to stop...\n")
+  #      sd.stop()
+  #      print("Playback stopped by user.")
+  #  print("\nPlaying loaded audio...")
+  #  sd.play(audio_data, sr)
+  #
 
-def play_audio(audio_data: np.ndarray, sr: int):
-    """
-    Plays the provided audio data with an option to stop via user input.
-    """
-    def stop_playback_on_enter():
-        input("Audio is playing. Press Enter to stop...\n")
-        sd.stop()
-        print("Playback stopped by user.")
+   # listener_thread = threading.Thread(target=stop_playback_on_enter, daemon=True)
+   # listener_thread.start()
 
-    print("\nPlaying loaded audio...")
-    sd.play(audio_data, sr)
-
-    listener_thread = threading.Thread(target=stop_playback_on_enter, daemon=True)
-    listener_thread.start()
-
-    sd.wait()
-    print("Audio playback finished.")
+   # sd.wait()
+   # print("Audio playback finished.")
 
 # =========================================================================================================w
 # MAIN BLOCK
@@ -139,8 +141,8 @@ if __name__ == "__main__":
         bpm = estimate_tempo(normalised_audio, sr)
         print(f"Estimated Tempo (Tempogram-First): {int(round(bpm))} BPM")
 
-        if _prompt_user_for_playback():
-            play_audio(normalised_audio, sr)
+        # if _prompt_user_for_playback():
+          #  play_audio(normalised_audio, sr)
 
     except Exception as e:
         print(f"\nAn unexpected error occurred during the example execution: {e}")

@@ -1,21 +1,24 @@
 # drumscript/__init__py
-# This script serves to make drumscript module a Python package
-# DrumScript: A Python-based suite of tools related to drum audio
 
+"""
+DrumScript: A Python-based suite of tools for drum audio analysis and transcription.
+"""
 
 # 1. Import internal functions
-# We use 'noqa' or try/except blocks in some setups, but here direct import is fine...
-# ...provided the dependencies (librosa, etc.) are installed.
+# We use 'noqa' or try/except blocks in some setups, but here direct import is fine, provided the dependencies (librosa, etc.) are installed.
 from .audio_processor.audio_loader import load_audio, normalise_audio
 from .audio_processor.stem_splitter import extract_drum_stem, separate_audio
 from .audio_processor.tempo_detector import estimate_tempo as _internal_estimate
 from .notation_generator.constants import SAMPLE_RATE
 from .utils.ffmpeg_installer import install_ffmpeg
+from .drum_classifier.classify import classify_events
+from .notation_generator.score_builder import build_score
+from .notation_generator.pdf_exporter import export_pdf
 
 # 2. Create user-friendly wrappers
 
 # def stem_split(audio_path, output_dir=None, full=False):
-def stem_split(audio_path, output_format="wav", drumless=False, mute=None, all_stems=False, full=False):
+def extract_stems(audio_path, output_format="wav", drumless=False, mute=None, all_stems=False, full=False):
     """
     Public wrapper for stem splitting.
 
@@ -53,7 +56,7 @@ def stem_split(audio_path, output_format="wav", drumless=False, mute=None, all_s
     return result_path or results.get('drums') or results.get('drums_stem')
 
 
-def tempo_detector(audio_input, full=False):
+def detect_tempo(audio_input, full=False):
     """
     Public wrapper for tempo detection.
 
@@ -80,4 +83,18 @@ def tempo_detector(audio_input, full=False):
 
 
 # 3. Expose them to the top level
-__all__ = ["stem_split", "tempo_detector", "install_ffmpeg"]
+__all__ = [
+    "detect_tempo",
+    "detect_onsets",
+    "classify_events",
+    "build_score",
+    "detect_tempo",
+    "export_pdf",
+    "extract_stems",
+    "extract_features",
+    "install_ffmpeg",
+    "load_audio",
+    "separate_stems",
+]
+
+__version__ = "0.1.0"

@@ -1,7 +1,7 @@
-## **`DrumScript (Lite)`**
+## **`DrumScript`**
 
 <!--date_created: sun-15-june-2025-->
-<!--date_updated: thurs-01-jan-2026-->
+<!--date_updated: fri-09-jan-2026-->
 
 DrumScript is an open-source `Python` library and suite of tools intended to make music more accessible for everyone. The Python package alpha is released alongside a free-to-use engine for members of the musical and sound analysis/engineering community to use in a zero-code way.
 
@@ -30,12 +30,12 @@ DrumScript/
 ├── drumscript/             # Main source package directory
 │   ├── __init__.py
 │   ├── audio_processor/    # Audio loading, onset detection, feature extraction, tempo detection, stem-splitter and tempo-detection
-│   ├── notation_generator/ # [LITE] Constants
+│   ├── notation_generator/ # Constants
 │   └── utils/              # Utility functions
 ├── developer_docs/         # Documentation for developers and contributors
 ├── theory/                 # Reference documents (music theory, DSP, etc.). Sources provided
 ├── pyproject.toml          # Project metadata and dependencies (managed by `uv`).
-├── README.md               # [LITE] Main project overview (this file)
+├── README.md               # Main project overview (this file)
 ├── repository_structure.md # Full repository_structure.md
 ├── .github/                # GitActions files
 │   ├── workflows/
@@ -91,6 +91,22 @@ A full list of project- and optional dependencies can be found in the **[`pyproj
 
 ### Usage
 
+> **Simple**
+
+```python
+import drumscript as ds
+
+# 1. Load Audio
+y, sr = ds.load_audio("test.wav")
+
+# 2. Detect Tempo
+bpm = ds.detect_tempo(y, sr)
+
+# 3. Separate Stems
+stems = ds.separate_stems("test.wav", output_dir="./my_stems")
+```
+
+> **Full commands**
 
 #### **Basic Transcription**
 
@@ -247,7 +263,7 @@ To process `.mp3` files, you must first install **`FFmpeg`**, a command-line too
     $$
 
 ---
-**Acknowledgements**
+### **Acknowledgements**
 
 * **Demucs**: The stem splitting functionality in DrumScript is built upon the incredible work of the Demucs project by [@adefozzez](https://github.com/adefossez) while at Facebook/Meta. Since he is no longer at Meta, we referenced the forked repo.
 

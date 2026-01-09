@@ -1,4 +1,4 @@
-# --- Python & Build Artifacts ---
+# --- Python ---
 __pycache__/
 *.py[cod]
 *$py.class
@@ -54,11 +54,10 @@ drumscript/logs/
 
 # --- Local Development & Testing ---
 # Ignore local test scripts if they are scratchpads
-!local_tests/drumscript_lite/test_local_interface.py # Exception: Keep the main interface test
-!local_tests/classification_engine/librosa
+# !local_tests/drumscript_lite/test_local_interface.py # Exception: Keep the main interface test
+# !local_tests/classification_engine/librosa
 .archive/
 .development/
-dev_notes.txt
 
 # --- Lar e/Binary Data ---
 # Ignore large audio files to keep repo light
@@ -79,3 +78,35 @@ visuals/tempogram.png
 local_tests/
 local_tests/**
 *github/workflows/docs.yml
+
+
+# Python
+__pycache__/
+*.py[cod]
+*.so
+.Python
+env/
+venv/
+.venv/
+
+# Distribution
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+*.egg-info/
+
+# DrumScript Specific
+outputs/
+local_tests/
+test_audio/
+drumscript_outputs/
+
+# IDEs
+.vscode/
+.idea/
+
+# GitHub Actions (Temporary Hide)
+.github/workflows/pages.yml

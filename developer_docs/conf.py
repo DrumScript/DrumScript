@@ -11,7 +11,7 @@
 project = 'DrumScript'
 copyright = '© 2025, DrumScript'
 author = '© 2025, DrumScript'
-release = '0.0.0'
+release = '0.1.0'
 
 # -- Path setup --------------------------------------------------------------
 # Add the project root directory (one level up) to Python's path

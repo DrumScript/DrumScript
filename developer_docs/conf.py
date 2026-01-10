@@ -15,7 +15,7 @@ release = '0.0.0'
 
 # -- Path setup --------------------------------------------------------------
 # Add the project root directory (one level up) to Python's path
-# This allows Sphinx's 'autodoc' to find your 'audio_processor', 'drum_classifier', etc.
+# This allows Sphinx's 'autodoc' to find 'audio_processor', 'drum_classifier', etc.
 import os
 import sys
 sys.path.insert(0, os.path.abspath('..'))
@@ -54,4 +54,4 @@ html_theme_options = {# --- ADD THESE LINES FOR THE GITHUB LINK ---
     # -------------------------------------------
 }   
 # (Optional) Set a logo
-# html_logo = "_static/your-logo.png"
+# html_logo = "_static/logo.png"

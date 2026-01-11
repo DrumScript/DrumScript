@@ -100,7 +100,7 @@ We follow a **Feature Branch** workflow. We generally do not commit directly to 
     git pull origin main
     ```
 2.  **Create a Branch:**
-    Name it descriptively (`feature/`, `fix/`, `docs/`).
+    Name it descriptively (`feature/`, `fix/`, `docs/`, `build/`).
     ```zsh
     git checkout -b feature/improve-hihat-detection
     ```
@@ -115,6 +115,95 @@ We follow a **Feature Branch** workflow. We generally do not commit directly to 
 5. **When you have made your first commit on the branch, [open a PR](https://github.com/DrumScript/DrumScript/compare)**
 
 6. **When you feel you are ready to merge your changes into main branch *request a review from a drumscript-admin***
+
+
+
+---
+## Forking `DrumScript`
+
+
+You can also contribute to `DrumScript` using forks [main repository](http://github.com/DrumScript/DrumScript/) on GitHub:
+
+1. Fork the [project repository](http://github.com/DrumScript/DrumScript/): 
+    * click on the 'Fork' button near the top of the page. This creates a copy of the code under your account on the GitHub server.
+
+2. Clone this copy to your local machine:
+
+          $ git clone --recursive git@github.com:YourLogin/DrumScript.git
+          $ cd DrumScript 
+          $ git pull --recurse-submodules
+
+    These commands will clone the main `DrumScript` repository.
+
+3. Set the upstream remote to DrumScript's repo:
+
+          $ git remote add upstream git@github.com:DrumScript/DrumScript.git 
+
+4. Create a new `uv` environment to install dependencies:
+
+```zsh
+uv venv
+source .venv/bin/activate # activate venv
+uv pip install -e . # install venv in 'editable' mode
+```
+
+> We use `uv` to manage dependencies as standard. 
+
+<!--4. Create a new conda environment in order to install dependencies:
+
+          $ conda create -n librosa-dev python=3.9
+
+          $ conda env update -n librosa-dev --file .github/environment-ci.yml
+
+          $ conda activate librosa-dev
+
+          $ python -m pip install -e '.[tests]'-->
+
+5. Create a branch to hold your changes:
+
+          ```zsh
+          git switch -c <TYPE/BRANCH_NAME>
+          # ie `git switch -c feature/improve-
+          # or 
+
+          git checkout -b <>
+          ```
+
+   and start making changes. Never work in the `main` branch!
+
+6. Work on this copy on your machine using Git to do the version control. You can check your modified files using:
+
+        ```zsh
+        git status
+        ```
+
+7. When you're done editing, do:
+
+        ```zsh
+        git add <PATH_NAME>
+        ```
+        # or 
+
+        ```zsh
+        git add . # stages all current modifications to git at once
+        ```
+        
+        ```zsh
+        git commit -m "<COMMIT-MESSAGE>"
+        ```
+
+   to record your changes in Git, then push them to GitHub with:
+
+        ```zsh
+        git push --set-upstream origin <NAME-NEW-BRANCH>
+        ```
+
+8. Go to the web page of your fork of the `DrumScript` repo, and click 'Pull request' to review your changes and add a description of what you did. 
+
+Finally, click 'Create pull request' to send your changes to the maintainers for review. This will send an email to the committers.
+
+(If any of the above seems like magic to you, then look up the [Git documentation](http://git-scm.com/documentation) on the web.)
+
 
 ---
 
@@ -158,7 +247,23 @@ If you find a bug, please open an issue on the [GitHub Issues page](https://gith
 
   * **Be Specific:** "The code crashed" is hard to fix. "The code crashed with `ValueError` when inputting a 48kHz WAV file" is helpful!
 
-  * **Provide Context:** Tell us your OS (Mac/Windows/Ubuntu/Linux) and Python version.
+  * **Provide Context:** Tell us your OS (Mac/Windows/Ubuntu/Linux) and Python version.  This information can be found by running the following code snippet:
+
+  ```python
+  import platform; print(platform.platform())
+  import sys; print("Python", sys.version)
+  import numpy; print("NumPy", numpy.__version__)
+  import scipy; print("SciPy", scipy.__version__)
+  import librosa; print("librosa", librosa.__version__)
+  ```
+
+
+It is recommended to check that your issue complies with the following rules before submitting:
+
+-  Verify that your issue is not being currently addressed by other [issues](https://github.com/DrumScript/DrumScript/issues)
+ or [pull requests](https://github.com/DrumScript/DrumScript/pulls).
+
+-  Please ensure all code snippets and error messages are formatted in appropriate code blocks. See [Creating and highlighting code blocks](https://help.github.com/articles/creating-and-highlighting-code-blocks).
 
 ---
 

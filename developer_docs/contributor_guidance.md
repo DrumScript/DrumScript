@@ -148,7 +148,7 @@ To maintain consistency, please adhere to the following:
   * **Python Style:** Follow [PEP 8](https://www.python.org/dev/peps/pep-0008/).
   * **Formatting:** We use `ruff`. The pre-commit hooks set up in step 3 will handle this automatically.
       * *Manual run:* `uv run ruff format .`
-  * **Docstrings:** Every function must have a docstring explaining *Args*, *Returns*, and *Raises*. `DrumScript` uses the [`Sphinx reStructuredText`](https://www.sphinx-doc.org/en/master/usage/restructuredtext/index.html) DocString convention
+  * **Docstrings:** Every function must have a docstring.**`DrumScript` uses the [`Sphinx reStructuredText`](https://www.sphinx-doc.org/en/master/usage/restructuredtext/index.html) DocString convention**. All contributed code must follow this.
 
 ---
 
@@ -157,7 +157,8 @@ To maintain consistency, please adhere to the following:
 If you find a bug, please open an issue on the [GitHub Issues page](https://github.com/DrumScript/DrumScript/issues).
 
   * **Be Specific:** "The code crashed" is hard to fix. "The code crashed with `ValueError` when inputting a 48kHz WAV file" is helpful!
-  * **Provide Context:** Tell us your OS (Mac/Windows) and Python version.
+
+  * **Provide Context:** Tell us your OS (Mac/Windows/Ubuntu/Linux) and Python version.
 
 ---
 
@@ -165,7 +166,7 @@ If you find a bug, please open an issue on the [GitHub Issues page](https://gith
 
 If you have questions, feel free to reach out at **[hello.drumscript@gmail.com](mailto:hello.drumscript@gmail.com)**.
 
-Thank you for helping us build `DrumScript`! 🥁🚀
+Thank you for helping us build `DrumScript`! 🥁🚀 :D
 
 
 

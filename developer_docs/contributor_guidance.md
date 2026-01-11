@@ -1,12 +1,12 @@
 # Contributing to `DrumScript`
-<!--date_created: thurs-03-jul-2025-->
-<!--date_updated: fri-12-dec-2025-->
+<!--date_created: thurs-03-jul-2025 -->
+<!--date_updated: sun-11-jan-2026 -->
 
 
 
 First off, thank you for considering contributing to `DrumScript`! :)
 
-We're thrilled to have you join us. Whether you are a drummer, a Python developer, an audio engineer, or all three, your help is vital to making this the standard open-source tool for drum transcription.
+We're thrilled to have you join us. Whether you are a drummer, a Python developer, a sound engineer, or all three, your help is vital to making this the standard open-source tool for drum transcription.
 
 This document outlines the project's philosophy, how to set up your environment, and how we manage our releases.
 
@@ -41,6 +41,7 @@ Before you begin, ensure you have the following installed:
 * **`uv`:** A fast Python package installer and dependency resolver.
     * *Install:* `curl -LsSf https://astral.sh/uv/install.sh | sh` (macOS/Linux) or see [uv docs](https://astral.sh/uv/install/).
 * **`ffmpeg`:** Required for audio processing.
+> **We provide a utility script for installing `ffmpeg` in [`.drumscript/utils/ffmpeg_installer.py`](drumscript/utils/ffmpeg_installer.py)**. See also **[`ffmpeg` guidance](https://www.ffmpeg.org/download.html)**
 
 ### 2. Clone the Repository
 
@@ -140,7 +141,7 @@ To maintain consistency, please adhere to the following:
 
 If you find a bug, please open an issue on the [GitHub Issues page](https://github.com/DrumScript/DrumScript/issues).
 
-  * **Be Specific:** "The code crashed" is hard to fix. "The code crashed with `ValueError` when inputting a 48kHz WAV file" is helpful\!
+  * **Be Specific:** "The code crashed" is hard to fix. "The code crashed with `ValueError` when inputting a 48kHz WAV file" is helpful!
   * **Provide Context:** Tell us your OS (Mac/Windows) and Python version.
 
 ---
@@ -149,7 +150,7 @@ If you find a bug, please open an issue on the [GitHub Issues page](https://gith
 
 If you have questions, feel free to reach out at **[hello.drumscript@gmail.com](mailto:hello.drumscript@gmail.com)**.
 
-Thank you for helping us build `DrumScript`\! 🥁🚀
+Thank you for helping us build `DrumScript`! 🥁🚀
 
 
 

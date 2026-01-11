@@ -1,4 +1,7 @@
 # DrumScript/audio_processor/audio_loader.py
+"""
+This module handles loading and basic normalisation of audio files.
+"""
 # ------------------------------------------------------------------------------------------------------
 
 """
@@ -31,19 +34,13 @@ def load_audio(file_path: str, sr: int) -> tuple[np.ndarray, int]:
     """
     Loads an audio file and optionally resamples it.
 
-    Args:
-        file_path (str): The path to the audio file.
-        sr (int, optional): The target sample rate. If None, the original
-                            sample rate of the audio file is used. Defaults to None.
-
-    Returns:
-        tuple[np.ndarray, int]: A tuple containing:
-                                - audio_data (np.ndarray): The loaded audio time series.
-                                - sample_rate (int): The sample rate of the loaded audio.
-
-    Raises:
-        FileNotFoundError: If the specified file_path does not exist.
-        Exception: For other errors during audio loading (e.g., corrupted file).
+    :param file_path: The path to the audio file.
+    :type file_path: str
+    :param sr: The target sample rate.
+    :type sr: int
+    :return: A tuple containing (audio_data, sample_rate).
+    :rtype: tuple[np.ndarray, int]
+    :raises FileNotFoundError: If the file does not exist.
     """
     try:
         audio_data, sample_rate = librosa.load(file_path, sr=SAMPLE_RATE) # The librosa.load_audio() fct handles wide variety of audio formats, including .mp3, .wav, .flac, .ogg, etc.
@@ -61,14 +58,11 @@ def normalise_audio(audio_data: np.ndarray) -> np.ndarray:
     """
     Normalises the audio data to a range between -1.0 and 1.0.
 
-    This helps in standardising the amplitude across different recordings
-    and prevents issues with varying loudness levels during processing.
+    :param audio_data: The input audio time series.
+    :type audio_data: np.ndarray
+    :return: The normalised audio time series.
+    :rtype: np.ndarray
 
-    Args:
-        audio_data (np.ndarray): The input audio time series.
-
-    Returns:
-        np.ndarray: The normalised audio time series.
     """
     if audio_data.size == 0:
         return audio_data # Return empty array if input is empty

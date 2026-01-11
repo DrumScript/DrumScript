@@ -55,4 +55,4 @@ html_theme_options = {# --- ADD THESE LINES FOR THE GITHUB LINK ---
     # -------------------------------------------
 }   
 # (Optional) Set a logo
-# html_logo = "_static/logo.png"
+html_logo = "_static/logo.png"

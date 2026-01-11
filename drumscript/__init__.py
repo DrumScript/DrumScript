@@ -22,13 +22,20 @@ def extract_stems(audio_path, output_format="wav", drumless=False, mute=None, al
     """
     Public wrapper for stem splitting.
 
-        Args:
-        audio_path (str): Path to audio file.
-        output_format (str): 'wav' or 'mp3'.
-        drumless (bool): Extract a track with NO drums (plus the isolated drum track).
-        mute (list): List of stems to mute (e.g. ['bass']).
-        all_stems (bool): If True, export all separated stems individually.
-        full (bool): Returns detailed dictionary if True.
+    :param audio_path: Path to the audio file.
+    :type audio_path: str
+    :param output_format: 'wav' or 'mp3', defaults to 'wav'.
+    :type output_format: str, optional
+    :param drumless: Extract a track with NO drums (plus the isolated drum track).
+    :type drumless: bool, optional
+    :param mute: List of stems to mute (e.g. ['bass']).
+    :type mute: list, optional
+    :param all_stems: If True, export all separated stems individually.
+    :type all_stems: bool, optional
+    :param full: Returns detailed dictionary if True.
+    :type full: bool, optional
+    :return: Path to the extracted file or a dictionary of results if full=True.
+    :rtype: str or dict
 
     Please note: Currently, the internal engine uses a default output directory.
     The 'output_dir' argument is kept here for future API compatibility but
@@ -60,9 +67,13 @@ def detect_tempo(audio_input, full=False):
     """
     Public wrapper for tempo detection.
 
-    Args:
-        audio_input (str or np.array): File path OR loaded audio data.
-        full (bool): Return detailed stats if True.
+    :param audio_input: File path OR loaded audio data.
+    :type audio_input: str or np.ndarray
+    :param full: Return detailed stats if True.
+    :type full: bool, optional
+    :return: The estimated BPM (float) or a dictionary of stats.
+    :rtype: float or dict
+    
     """
     # Handle case where user passes a file path string
     if isinstance(audio_input, str):

@@ -47,16 +47,16 @@ Before you begin, ensure you have the following installed:
 
 Start by cloning the `DrumScript` repository to your local machine:
 
-```bash
+```zsh
 git clone [https://github.com/DrumScript/DrumScript.git](https://github.com/DrumScript/DrumScript.git)
 cd DrumScript
-````
+```
 
-### 3\. Set Up Your Development Environment
+### 3. Set Up Your Development Environment
 
 We use `uv` to manage our virtual environment and dependencies. We recommend installing the package in **editable mode** so changes you make are immediately reflected when you run tests.
 
-```bash
+```zsh
 # 1. Create a virtual environment
 uv venv
 
@@ -72,11 +72,19 @@ uv pip install pre-commit
 pre-commit install
 ```
 
-### 4\. Verify Setup
+**Install dependencies AND the package in editable mode**
+
+Install [test] dependencies
+
+```zsh
+uv pip install -e ".[test]"
+```
+
+### 4. Verify Setup
 
 Run the local interface test to ensure your environment handles imports correctly:
 
-```bash
+```zsh
 uv run python local_tests/drumscript_lite/test_local_interface.py
 ```
 
@@ -87,19 +95,26 @@ uv run python local_tests/drumscript_lite/test_local_interface.py
 We follow a **Feature Branch** workflow. We generally do not commit directly to `main`.
 
 1.  **Sync with Main:**
-    ```bash
+    ```zsh
     git checkout main
     git pull origin main
     ```
 2.  **Create a Branch:**
-    Name it descriptively (`feat/`, `fix/`, `docs/`).
-    ```bash
-    git checkout -b feat/improve-hihat-detection
+    Name it descriptively (`feature/`, `fix/`, `docs/`).
+    ```zsh
+    git checkout -b feature/improve-hihat-detection
     ```
 3.  **Code & Test:**
     Make your changes. Run tests frequently.
-4.  **Push & PR:**
-    Push your branch and open a Pull Request on GitHub.
+4.  **Publish on remote:**
+    Push your local branch to the remote
+
+    ```zsh
+    push origin -u feature/improve-hihat-detection
+    ```
+5. **When you have made your first commit on the branch, [open a PR](https://github.com/DrumScript/DrumScript/compare)**
+
+6. **When you feel you are ready to merge your changes into main branch *request a review from a drumscript-admin***
 
 ---
 
@@ -133,7 +148,7 @@ To maintain consistency, please adhere to the following:
   * **Python Style:** Follow [PEP 8](https://www.python.org/dev/peps/pep-0008/).
   * **Formatting:** We use `ruff`. The pre-commit hooks set up in step 3 will handle this automatically.
       * *Manual run:* `uv run ruff format .`
-  * **Docstrings:** Every function must have a docstring explaining *Args*, *Returns*, and *Raises*.
+  * **Docstrings:** Every function must have a docstring explaining *Args*, *Returns*, and *Raises*. `DrumScript` uses the [`Sphinx reStructuredText`](https://www.sphinx-doc.org/en/master/usage/restructuredtext/index.html) DocString convention
 
 ---
 

@@ -29,15 +29,21 @@ DEMUCS_MODEL = "htdemucs"
 # ===============================================================================================
 def separate_audio(input_audio_path: str, output_format: str = "wav", drumless: bool = False, mute: list = None, all_stems: bool = False) -> dict:
     """
-    Separates a full audio track using Demucs and processes the outputs based on flags.
+    Separates a full audio track using Demucs and processes the outputs based on user-input args (optional)
     
     Args:
-        input_audio_path (str): Path to the source audio.
-        output_format (str): 'wav' (default) or 'mp3'.
-        drumless (bool): If True, generates a track with everything EXCEPT drums.
-        mute (list): List of stems to exclude from the main mix (e.g., ['bass']).
-        all_stems (bool): If True, saves all individual raw stems as well.
-
+    :param input_audio_path: Path to the source audio.
+    :type input_audio_path: str
+    :param output_format: 'wav' or 'mp3', defaults to 'wav'.
+    :type output_format: str, optional
+    :param drumless: If True, generates a track with everything EXCEPT drums.
+    :type drumless: bool, optional
+    :param mute: List of stems to exclude (e.g., ['bass']).
+    :type mute: list, optional
+    :param all_stems: If True, saves all individual raw stems.
+    :type all_stems: bool, optional
+    :return: Dictionary of paths to generated files.
+    :rtype: dict
     Returns:
         dict: Paths to the generated files (e.g., {'drums': path, 'mix': path}).
     """
@@ -172,17 +178,12 @@ def extract_drum_stem(input_audio_path: str) -> str:
     Separates a full audio track using the Demucs command-line tool
     and returns the file path to the isolated drum stem.
     
-    Args:
-        input_audio_path: The file path to the user's full song.
-
-    Returns:
-        The file path to the extracted 'drums.wav' stem.
-        
-    Raises:
-        FileNotFoundError: If demucs isn't installed or the drum file isn't created.
-        RuntimeError: If the Demucs process fails.
+    :param input_audio_path: The file path to the user's full song.
+    :type input_audio_path: str
+    :return: The file path to the extracted 'drums.wav' stem.
+    :rtype: str
     """
-    
+
     # 1. Create a temporary directory to store the separation output. 
     ## Use this for storing in /var/ folder on local machine, 'ie /var/folders/m0/_mjkpjps6lq_13m2l6sfckw40000gn/T/tmpp8b3ez_e/htdemucs/'
     ## MIGHT RESTORE THIS POST-TESTING
@@ -291,11 +292,16 @@ def mix_stems(stems_dict, stems_to_mix, output_path, fmt="wav"):
     """
     Helper function to mix multiple audio files into one.
     
-    Args:
-        stems_dict (dict): Dictionary mapping stem names (e.g., 'bass') to file paths.
-        stems_to_mix (list): List of stem names to combine.
-        output_path (Path): Destination path for the mixed audio.
-        fmt (str): Output format ('wav' or 'mp3').
+    :param stems_dict: Dictionary mapping stem names to file paths.
+    :type stems_dict: dict
+    :param stems_to_mix: List of stem names to combine.
+    :type stems_to_mix: list
+    :param output_path: Destination path.
+    :type output_path: Path
+    :param fmt: Output format ('wav' or 'mp3').
+    :type fmt: str
+
+    
     """
     if not stems_to_mix:
         return None

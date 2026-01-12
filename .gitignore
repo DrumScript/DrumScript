@@ -21,6 +21,10 @@ wheels/
 *.egg
 MANIFEST
 
+# --- Sphinx Build Artifacts ---
+
+developer_docs/_build/
+
 # --- Virtual Environments ---
 .venv/
 venv/

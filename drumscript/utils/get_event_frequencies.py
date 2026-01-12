@@ -1,7 +1,7 @@
 # drumscript/utils/get_event_frequencies.py
 """
-Uses hardcoded file path to test (see TEST_AUDIO ~line101)
 Utility script to measure the fundamental frequency of a kick drum sample.
+Uses hardcoded file path to test (see TEST_AUDIO ~line101)
 """
 
 import json
@@ -50,13 +50,15 @@ def extract_frequency_data(y_segment, sr):
 def process_audio_to_frequency_json(audio_path, output_path="event_frequencies.json"):
     print(f"Loading audio: {audio_path}")
 
-    """    
-    :param y_segment: Audio segment array.
-    :type y_segment: np.ndarray
-    :param sr: Sampling rate.
-    :type sr: int
-    :return: Dictionary of frequency metrics.
-    :rtype: dict
+    """
+    Processes an audio file to extract frequency data for each detected event and saves it to JSON.
+
+    :param audio_path: Path to the audio file.
+    :type audio_path: str
+    :param output_path: Path for the output JSON file, defaults to "event_frequencies.json".
+    :type output_path: str, optional
+    :return: List of event data dictionaries.
+    :rtype: list
     """
     # 1. Load Audio
     # Using your existing loader to ensure consistency

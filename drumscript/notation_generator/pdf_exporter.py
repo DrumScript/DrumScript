@@ -1,5 +1,9 @@
 # DrumScript/notation_generator/pdf_exporter.py
 
+"""
+Module for rendering the drum score to PDF using ReportLab.
+"""
+
 import os
 from collections import defaultdict
 from reportlab.pdfgen import canvas
@@ -96,7 +100,18 @@ def draw_note(c, x, y, note_type, staff_y_base):
 
 # def generate_custom_pdf(detected_events, output_filepath, tempo, time_signature="4/4"):
 def export_pdf(detected_events, output_filepath, tempo, time_signature="4/4"):
-    """Generates a PDF drum score using ReportLab engine."""
+    """
+    Generates a PDF drum score using ReportLab engine.
+
+    :param detected_events: List of classified events.
+    :type detected_events: list
+    :param output_filepath: Path to save the PDF.
+    :type output_filepath: str
+    :param tempo: Tempo in BPM.
+    :type tempo: float
+    :param time_signature: Time signature string (e.g., "4/4").
+    :type time_signature: str, optional
+    """
     if canvas is None:
         print("ReportLab missing.")
         return

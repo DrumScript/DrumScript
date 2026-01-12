@@ -99,13 +99,17 @@ def calculate_cents_difference(freq1: float, freq2: float) -> float:
      - freq2 (float): Second frequency in Hz.
      - returns float: Difference in cents. Positive if freq2 is higher, negative if lower.
 
-    :param drum_type: Type of drum (e.g., 'kick').
-    :type drum_type: str
-    :param onset_time_seconds: Time of onset.
-    :type onset_time_seconds: float
-    :return: Formatted event dictionary.
-    :rtype: Dict[str, Any]
+    Calculates the difference between two frequencies in cents.
+    Useful for tuning or pitch analysis.
+
+    :param freq1: First frequency in Hz.
+    :type freq1: float
+    :param freq2: Second frequency in Hz.
+    :type freq2: float
+    :return: Difference in cents. Positive if freq2 is higher, negative if lower.
+    :rtype: float
     """
+
     if freq1 <= 0 or freq2 <= 0:
         raise ValueError("Frequencies must be positive.")
     return 1200 * math.log2(freq2 / freq1)

@@ -17,6 +17,13 @@ def estimate_tempo(audio_data, sr):
     """
     Estimates tempo from the tempogram, but restricted to a plausible range.
     (Corrected to avoid INF and extreme BPM errors, ie 10500 BPM).
+
+    :param audio_data: The input audio time series.
+    :type audio_data: np.ndarray
+    :param sr: Sampling rate of the audio.
+    :type sr: int
+    :return: The estimated tempo in Beats Per Minute (BPM).
+    :rtype: float
     """
     if audio_data.size == 0:
         return 0.0

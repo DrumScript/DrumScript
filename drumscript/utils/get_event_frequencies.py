@@ -17,10 +17,12 @@ def extract_frequency_data(y_segment, sr):
     """
     Extracts key frequency metrics for a single audio event.
 
-    :param audio_file_path: Path to audio file.
-    :type audio_file_path: str
-    :returns event_data_list: list of parameters
-    :rtype: list[float]
+    :param y_segment: Audio segment array.
+    :type y_segment: np.ndarray
+    :param sr: Sampling rate.
+    :type sr: int
+    :return: Dictionary of frequency metrics.
+    :rtype: dict
     """
     # 1. Compute Short-Time Fourier Transform (STFT)
     D = np.abs(librosa.stft(y_segment))
@@ -48,6 +50,14 @@ def extract_frequency_data(y_segment, sr):
 def process_audio_to_frequency_json(audio_path, output_path="event_frequencies.json"):
     print(f"Loading audio: {audio_path}")
 
+    """    
+    :param y_segment: Audio segment array.
+    :type y_segment: np.ndarray
+    :param sr: Sampling rate.
+    :type sr: int
+    :return: Dictionary of frequency metrics.
+    :rtype: dict
+    """
     # 1. Load Audio
     # Using your existing loader to ensure consistency
     y, sr = audio_loader.load_audio(audio_path)

@@ -63,7 +63,14 @@ def get_note_duration_name(duration_beats: float, tempo_bpm: int) -> str:
 def format_drum_event(drum_type: str, onset_time_seconds: float) -> Dict[str, Any]:
     """
     Formats a classified drum event into a dictionary containing notation-specific information
-    using the DRUM_NOTATION_MAP.
+    using the DRUM_NOTATION_MAP imported from constants.py
+
+    :param drum_type: Type of drum (e.g., 'kick').
+    :type drum_type: str
+    :param onset_time_seconds: Time of onset.
+    :type onset_time_seconds: float
+    :return: Formatted event dictionary.
+    :rtype: Dict[str, Any]
     """
     drum_info = constants.DRUM_NOTATION_MAP.get(drum_type)
 

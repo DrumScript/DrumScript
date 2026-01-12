@@ -32,6 +32,14 @@ def analyze_event(y, sr):
     - sc: Spectral Centroid (Brightness)
     - width: Spectral Bandwidth
     - depth: Decay Ratio (Sustain)
+
+    :param y: Audio segment.
+    :type y: np.ndarray
+    :param sr: Sampling rate.
+    :type sr: int
+    :return: Dictionary of features [f0: (Fundamental Frequency (Peak Magnitude)), sc: Spectral Centroid (Brightness), width: Spectral Bandwidth], depth: Decay Ratio (Sustain)]
+    :rtype: dict
+    
     """
     # 1. FFT for Frequency Analysis
     # High resolution (n_fft=2048) to see low frequencies clearly
@@ -72,6 +80,15 @@ def analyze_event(y, sr):
 def classify_events (audio_data, sr, onsets) -> List[Dict[str, Any]]:
     """
     Classifies hits strictly based on Fundamental Frequency ($f_0$) ranges.
+
+    :param audio_data: Full audio array.
+    :type audio_data: np.ndarray
+    :param sr: Sampling rate.
+    :type sr: int
+    :param onsets: List of onset times.
+    :type onsets: list
+    :return: List of classified event dictionaries.
+    :rtype: List[Dict[str, Any]]
     """
     classified_events = []
 

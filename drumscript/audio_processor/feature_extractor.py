@@ -46,6 +46,13 @@ def extract_features(audio_segment: np.ndarray, sr: int) -> Dict[str, Any]:
     """
     Extracts a dictionary of features from a single audio segment.
     Features are returned as mean values over the segment's duration.
+
+    :param audio_segment: The audio data array.
+    :type audio_segment: np.ndarray
+    :param sr: The sampling rate.
+    :type sr: int
+    :return: Dictionary of features (spectral_centroid, rms, mfccs, etc.).
+    :rtype: Dict[str, Any]
     """
     if audio_segment.size == 0:
         return None
@@ -108,6 +115,17 @@ def extract_features(audio_segment: np.ndarray, sr: int) -> Dict[str, Any]:
 def extract_features_for_onsets(y: np.ndarray, sr: int, onset_times: List[float]) -> List[Dict[str, Any]]:
     """
     Slices an audio array around each onset time and extracts features for each slice.
+
+    :param y: Full audio array.
+    :type y: np.ndarray
+    :param sr: Sampling rate.
+    :type sr: int
+    :param onset_times: List of onset timestamps.
+    :type onset_times: List[float]
+    :return: List of feature dictionaries.
+    :rtype: List[Dict[str, Any]]
+
+
     """
     all_features = []
     sr = SAMPLE_RATE

@@ -33,6 +33,24 @@ def main(input_audio_path: str,
          output_format: str = "wav"):
         # .wav format as default, unless --mp3 input specified as an arg in user command
     
+    """
+    Main orchestration function for DrumScript.
+
+    :param input_audio_path: Path to the input audio file.
+    :type input_audio_path: str
+    :param transcribe_full_song: If True, separates drums and generates score.
+    :type transcribe_full_song: bool, optional
+    :param time_signature: Time signature for notation, defaults to "4/4".
+    :type time_signature: str, optional
+    :param drumless: If True, generates a drumless backing track.
+    :type drumless: bool, optional
+    :param mute: List of stems to mute.
+    :type mute: list, optional
+    :param all_stems: If True, exports all individual stems.
+    :type all_stems: bool, optional
+    :param output_format: Output format ('wav' or 'mp3'), defaults to "wav".
+    :type output_format: str, optional
+    """
     print(f"\n--- Starting DrumScript ---")
     print(f"Target: {input_audio_path}")
 

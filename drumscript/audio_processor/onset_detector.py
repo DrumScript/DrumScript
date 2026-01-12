@@ -21,6 +21,13 @@ def detect_onsets(audio_data: np.ndarray, sr: int) -> list[float]:
     Detects the onset (start) times of drum hits in the audio.
     This version includes a post-processing step to filter out spurious
     onsets that occur too close together, which is common with cymbals.
+
+    :param audio_data: The audio time series.
+    :type audio_data: np.ndarray
+    :param sr: The sampling rate.
+    :type sr: int
+    :return: A list of onset timestamps in seconds.
+    :rtype: list[float]
     """
     if audio_data.size == 0:
         return []
@@ -60,12 +67,13 @@ def calculate_tempo_from_onsets(onset_times: np.ndarray, sr: int) -> float:
     """
     Estimates the tempo (BPM) from a list of onset timestamps.
 
-    Args:
-        onset_times (np.ndarray): An array of timestamps for detected onsets.
-        sr (int): The sample rate of the audio.
+    :param audio_data: The audio time series.
+    :type audio_data: np.ndarray
+    :param sr: The sampling rate.
+    :type sr: int
+    :return: An estimated tempo in seconds.
+    :rtype: float
 
-    Returns:
-        float: The estimated tempo in beats per minute (BPM).
     """
     if len(onset_times) < 2:
         return 120.0 # Return a default tempo if not enough onsets are found

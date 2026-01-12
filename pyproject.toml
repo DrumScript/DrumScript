@@ -97,3 +97,8 @@ filterwarnings = [
 ]
 addopts = "--ignore=local_tests/classification_engine --ignore=local_tests/mp3_conversion, --ignore=pdf_generation"
 
+[dependency-groups]
+dev = [
+    "shibuya>=2025.10.21",
+]
+

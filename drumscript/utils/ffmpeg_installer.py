@@ -9,8 +9,8 @@ def is_ffmpeg_installed() -> bool:
     """
     Checks if FFmpeg is installed and accessible in the system's PATH.
 
-    Returns:
-        bool: True if FFmpeg (ffmpeg and ffprobe) is found, False otherwise.
+    :return:  True if FFmpeg (ffmpeg and ffprobe) is found, False otherwise.
+    :rtype: bool
     """
     # Check for 'ffmpeg' executable
     ffmpeg_path = shutil.which("ffmpeg")

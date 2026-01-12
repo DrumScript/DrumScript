@@ -71,9 +71,8 @@ def calculate_tempo_from_onsets(onset_times: np.ndarray, sr: int) -> float:
     :type audio_data: np.ndarray
     :param sr: The sampling rate.
     :type sr: int
-    :return: An estimated tempo in seconds.
+    :return: The estimated tempo in BPM.
     :rtype: float
-
     """
     if len(onset_times) < 2:
         return 120.0 # Return a default tempo if not enough onsets are found

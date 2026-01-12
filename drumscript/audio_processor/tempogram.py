@@ -29,7 +29,18 @@ from drumscript.audio_processor.tempo_detector import estimate_tempo
 #def visualise_tempogram(audio_data, sr, hop_length=256, output_path="tempogram.png"):
 def visualise_tempogram(audio_data, sr, hop_length=HOP_LENGTH, output_path="tempogram.png"):
     """
-    Calculates and saves a tempogram visualization for the given audio.
+    Calculates and saves a tempogram visualization for the given audio in folder `visuals`. Creates folder if not present.
+
+    Calculates and saves a tempogram visualization.
+
+    :param audio_data: The audio time series.
+    :type audio_data: np.ndarray
+    :param sr: Sampling rate.
+    :type sr: int
+    :param hop_length: Hop length for analysis.
+    :type hop_length: int, optional
+    :param output_path: File path to save the image.
+    :type output_path: str, optional
     """
     sr = SAMPLE_RATE
     oenv = librosa.onset.onset_strength(y=audio_data, sr=SAMPLE_RATE, hop_length=HOP_LENGTH)

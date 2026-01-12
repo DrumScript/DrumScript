@@ -4,6 +4,10 @@
 # [CONTRIBUTOR SCRIPT]
 # To measure the frequency characteristics of open and closed hi-hat drums using librosa, you can load the audio, perform a Short-Time Fourier Transform (STFT) to analyze the frequency content over time, and then examine the spectral features. 
 
+"""
+Utility script to measure the fundamental frequency of a drum sample.
+"""
+
 import librosa
 import numpy as np
 import matplotlib.pyplot as plt
@@ -21,6 +25,17 @@ import argparse
 # from drumscript.utils.config import SAMPLE_RATE, HOP_LENGTH, N_FFT
 
 def measure_hat_frequency(audio_file_path):
+    """
+    # To measure the frequency characteristics of open and closed hi-hat drums using librosa, you can load the audio, perform a Short-Time Fourier Transform (STFT) to analyze the frequency content over time, and then examine the spectral features. 
+
+    Extracts key frequency metrics for a single audio event. 
+
+    :param audio_file_path: Path to audio file.
+    :type audio_file_path: str
+    :returns event_data_list: list of parameters
+    :rtype: list[float]
+    """
+    
     # Load with the PROJECT'S standardized sample rate, not the file's native rate
   #  y, sr = librosa.load(audio_file_path, sr=SAMPLE_RATE) 
     

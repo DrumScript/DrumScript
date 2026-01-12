@@ -38,6 +38,12 @@ This script measures the frequency of a snare drum using librosa, and applies th
 
 
 def measure_snare_frequency(audio_file_path):
+    """     
+        #:param audio_file_path: Path to audio file.
+        #:type audio_file_path: str
+        #:returns event_data_list: list of parameters
+        #:rtype: list[float]
+    """
     # 1. Load the audio file
     y, sr = librosa.load(audio_file_path, sr=None) # Use original sampling rate
 

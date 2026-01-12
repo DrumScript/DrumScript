@@ -1,10 +1,10 @@
 # drumscript/utils/get_event_frequencies.py
 """
 Uses hardcoded file path to test (see TEST_AUDIO ~line101)
+Utility script to measure the fundamental frequency of a kick drum sample.
 """
 
 import json
-
 import librosa
 import numpy as np
 
@@ -16,6 +16,11 @@ from drumscript.audio_processor import audio_loader, onset_detector
 def extract_frequency_data(y_segment, sr):
     """
     Extracts key frequency metrics for a single audio event.
+
+    :param audio_file_path: Path to audio file.
+    :type audio_file_path: str
+    :returns event_data_list: list of parameters
+    :rtype: list[float]
     """
     # 1. Compute Short-Time Fourier Transform (STFT)
     D = np.abs(librosa.stft(y_segment))

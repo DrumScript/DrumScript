@@ -1,5 +1,9 @@
 # DrumScript/notation_generator/helpers.py
 
+"""
+Helper functions for musical calculations.
+"""
+
 import math
 from . import constants
 # from drumscript.notation_generator.constants import DURATION_WHOLE, DURATION_EIGHTH, DURATION_HALF, DURATION_QUARTER, DURATION_SIXTEENTH, DURATION_THIRTY_SECOND
@@ -9,6 +13,13 @@ from typing import Dict, Any # Added for type hinting
 def round_to_nearest_subdivision(time_in_beats: float, subdivision: int) -> float:
     """
     Rounds a time value (in beats) to the nearest specified rhythmic subdivision.
+
+    :param time_in_beats: Time in beats.
+    :type time_in_beats: float
+    :param subdivision: Subdivision grid (e.g., 16).
+    :type subdivision: int
+    :return: Quantized time in beats.
+    :rtype: float
     """
     if subdivision == 0:
         raise ValueError("Subdivision cannot be zero.")
@@ -22,6 +33,13 @@ def get_note_duration_name(duration_beats: float, tempo_bpm: int) -> str:
     """
     Converts a duration in beats to a standard musical note name (e.g., 'quarter', 'eighth').
     This function can be further refined for more complex duration mappings (e.g., dotted notes).
+
+    :param duration_beats: Duration in beats.
+    :type duration_beats: float
+    :param tempo_bpm: Tempo in BPM.
+    :type tempo_bpm: int
+    :return: Name of the note duration (e.g., 'quarter').
+    :rtype: str
     """
     # This is a simplified mapping. For real applications, you might need a more robust system
     # that considers tempo and exact beat fractions.
@@ -68,15 +86,18 @@ def format_drum_event(drum_type: str, onset_time_seconds: float) -> Dict[str, An
 # This might be overkill depending on your needs, but shows the concept.
 def calculate_cents_difference(freq1: float, freq2: float) -> float:
     """
-    Calculates the difference between two frequencies in cents.
-    Useful for tuning or pitch analysis.
+    Formats a classified drum event into a dictionary containing notation-specific information. Calculates the difference between two frequencies in cents.
+    Useful for tuning or pitch analysis:
+     - freq1 (float): First frequency in Hz.
+     - freq2 (float): Second frequency in Hz.
+     - returns float: Difference in cents. Positive if freq2 is higher, negative if lower.
 
-    Args:
-        freq1 (float): First frequency in Hz.
-        freq2 (float): Second frequency in Hz.
-
-    Returns:
-        float: Difference in cents. Positive if freq2 is higher, negative if lower.
+    :param drum_type: Type of drum (e.g., 'kick').
+    :type drum_type: str
+    :param onset_time_seconds: Time of onset.
+    :type onset_time_seconds: float
+    :return: Formatted event dictionary.
+    :rtype: Dict[str, Any]
     """
     if freq1 <= 0 or freq2 <= 0:
         raise ValueError("Frequencies must be positive.")

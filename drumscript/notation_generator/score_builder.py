@@ -1,4 +1,8 @@
-    # DrumScript/notation_generator/score_builder.py
+# DrumScript/notation_generator/score_builder.py
+
+"""
+Module to build the final score from classified events.
+"""
 
 import json
 import os
@@ -14,6 +18,8 @@ from datetime import datetime
 
 
 def build_score(
+        
+        
     detected_events: List[Dict[str, Any]],
     # tempo: int = 120,
     tempo: int,
@@ -21,12 +27,28 @@ def build_score(
     quantization_subdivision: int = 16, 
     time_signature: str = "4/4" 
 ):
-
+    
+    """
+    Builds a drum score by saving event data to JSON and rendering to PDF. 
     # Builds a drum score by saving the event data to JSON and then 
     # rendering it directly to PDF using the custom engine.
     
     # This bypasses MusicXML entirely to ensure WYSWYG (What You See Is What You Get) results.
     # Builds a drum score PDF, respecting the provided Time Signature, or assuming default 4/4 if not provided
+
+    :param detected_events: List of classified drum events.
+    :type detected_events: List[Dict[str, Any]]
+    :param tempo: Tempo in BPM.
+    :type tempo: int
+    :param output_filepath: Path to save the PDF.
+    :type output_filepath: str, optional
+    :param quantization_subdivision: Grid for quantization (e.g., 16 for 16th notes).
+    :type quantization_subdivision: int, optional
+    :param time_signature: Time signature string (e.g., "4/4").
+    :type time_signature: str, optional
+    """
+
+
 
     print(f"--- Building Score for: {output_filepath} [Time Sig: {time_signature}] ---")
 

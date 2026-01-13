@@ -70,8 +70,7 @@ dev = [
     "myst-parser",
     "pytest",
     "pytest-cov",
-    "sphinx",
-    "sphinx-rtd-theme"
+    "sphinx"
 ]
 
 

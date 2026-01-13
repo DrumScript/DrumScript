@@ -107,6 +107,7 @@ outputs/
 local_tests/
 test_audio/
 drumscript_outputs/
+docs/github_pages.sh
 
 # IDEs
 .vscode/

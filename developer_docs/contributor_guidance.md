@@ -1,6 +1,6 @@
 # Contributing to `DrumScript`
 <!--date_created: thurs-03-jul-2025 -->
-<!--date_updated: sun-11-jan-2026 -->
+<!--date_updated: tues-13-jan-2026 -->
 
 
 
@@ -72,12 +72,16 @@ uv pip install pre-commit
 pre-commit install
 ```
 
+> It's best practise to run `uv sync --all-groups` even when working in `[dev]` mode on a branch or PR as this will keep all the project dependencies in sync. It will update `uv.lock`, which you commit to your branch as you would any other change
+
 **Install dependencies AND the package in editable mode**
 
-Install [test] dependencies
+1. Install `[dev]` dependencies:
+
+> For simplicity ••all•• of the dependencies you will need for contributing to `DrumScript` have been grouped into one clean dependency group, which we have called `[dev]`. You might not need everything, ie `sphinx` (which is for the documentation website), but nevertheless it simplifies the development process by having all the optionals in one place
 
 ```zsh
-uv pip install -e ".[test]"
+uv pip install -e ".[dev]"
 ```
 
 ### 4. Verify Setup

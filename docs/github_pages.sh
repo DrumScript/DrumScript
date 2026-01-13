@@ -4,14 +4,14 @@
 # Run it from the root of your repository (e.g., ./setup_docs_style.sh)
 
 echo "Creating static directory..."
-mkdir -p developer_docs/_static
+mkdir -p docs/_static
 
 # -----------------------------------------------------------------
 # 1. Create the custom.css file
 # -----------------------------------------------------------------
-echo "Creating developer_docs/_static/custom.css..."
-cat << 'EOF' > developer_docs/_static/custom.css
-/* developer_docs/_static/custom.css */
+echo "Creating docs/_static/custom.css..."
+cat << 'EOF' > docs/_static/custom.css
+/* docs/_static/custom.css */
 
 /* --- Import a modern font (optional, but nice) --- */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
@@ -67,9 +67,9 @@ EOF
 # -----------------------------------------------------------------
 # 2. Create/Overwrite the conf.py file
 # -----------------------------------------------------------------
-echo "Creating developer_docs/conf.py..."
-cat << 'EOF' > developer_docs/conf.py
-# developer_docs/conf.py
+echo "Creating docs/conf.py..."
+cat << 'EOF' > docs/conf.py
+# docs/conf.py
 
 import os
 import sys
@@ -147,6 +147,6 @@ EOF
 
 echo "Done! Your documentation styling files have been created."
 echo "Next steps:"
-echo "1. Create/update 'developer_docs/index.md' to add your content and toctree."
-echo "2. Create 'developer_docs/api.rst' to set up your API reference."
+echo "1. Create/update 'docs/index.md' to add your content and toctree."
+echo "2. Create 'docs/api.rst' to set up your API reference."
 echo "3. Commit and push these new files to GitHub."

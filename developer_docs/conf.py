@@ -46,6 +46,14 @@ exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 
 html_theme = 'furo' # Requires: `uv pip install furo, but this is also added if you install dependencies when you first create your `.venv` on a local branch, if you use `uv pip install -e ".[dev]"`
+
+# Optional: Furo allows custom light/dark mode logos
+# html_theme_options = {
+#     "light_logo": "_static/logo-light.png",
+#     "dark_logo": "logo-dark.png",
+# }
+
+
 html_static_path = ['_static']
 html_theme_options = {# --- ADD THESE LINES FOR THE GITHUB LINK ---
     "source_repository": "https://github.com/DrumScript/DrumScript",

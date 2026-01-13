@@ -5,23 +5,41 @@ API Reference
 
 This is the auto-generated API reference for DrumScript.
 
-.. automodule:: main
-   :members:
+Core Functions
+--------------
+.. autosummary::
+   :toctree: generated
+   :nosignatures:
 
-.. automodule:: audio_processor.audio_loader
-   :members:
+   extract_stems
+   detect_tempo
 
-.. automodule:: audio_processor.onset_detector
-   :members:
+Audio Processing
+----------------
+.. autosummary::
+   :toctree: generated
+   :recursive:
 
-.. automodule:: audio_processor.tempo_detector
-   :members:
+   audio_processor.audio_loader
+   audio_processor.stem_splitter
+   audio_processor.tempo_detector
+   audio_processor.onset_detector
+   audio_processor.feature_extractor
 
-.. automodule:: drum_classifier.predict
-   :members:
+Classification & Notation
+-------------------------
+.. autosummary::
+   :toctree: generated
+   :recursive:
 
-.. automodule:: notation_generator.score_builder
-   :members:
+   drum_classifier.classify
+   notation_generator.score_builder
+   notation_generator.pdf_exporter
 
-.. automodule:: notation_generator.pdf_exporter
-   :members:
+Utilities
+---------
+.. autosummary::
+   :toctree: generated
+   :recursive:
+
+   utils.ffmpeg_installer

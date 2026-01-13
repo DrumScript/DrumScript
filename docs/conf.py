@@ -28,7 +28,6 @@ sys.path.insert(0, os.path.abspath('..'))
 extensions = [
     'sphinx.ext.autodoc',  # Pull documentation from docstrings
     'sphinx.ext.viewcode',
-    'sphinx.ext.napoleon', # Support Google/NumPy style docstrings
     'myst_parser',       # Read .md files
 ]
 

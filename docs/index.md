@@ -56,6 +56,7 @@ tempo_estimation
 advanced_sound_analysis101
 glossary
 
+```{toctree}
 :maxdepth: 1
 :caption: Developer Zone
 
@@ -63,6 +64,7 @@ contributor_guidance
 testing_guidance
 code_of_conduct
 
+```{toctree}
 :maxdepth: 1
 :caption: Reference
 

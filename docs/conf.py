@@ -28,7 +28,7 @@ sys.path.insert(0, os.path.abspath('..'))
 extensions = [
     'sphinx.ext.autodoc',  # Pull documentation from docstrings
     'sphinx.ext.viewcode',
-    'myst_parser',       # Read .md files
+    'myst_parser'       # Read .md files
 ]
 
 # Generate the stub pages automatically

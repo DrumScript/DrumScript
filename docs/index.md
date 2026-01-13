@@ -53,8 +53,10 @@ It leverages **audio signal processing** and a **rule-based classification engin
 
 how_it_works
 tempo_estimation
-advanced_sound_analysis101
+[advanced_sound_analysis101](#docs/advanced_sound_analysis101.md)
 glossary
+
+```
 
 ```{toctree}
 :maxdepth: 1
@@ -64,12 +66,15 @@ contributor_guidance
 testing_guidance
 code_of_conduct
 
+```
+
 ```{toctree}
 :maxdepth: 1
 :caption: Reference
 
 api
 about
+```
 ---
 
 ### Roadmap

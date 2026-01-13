@@ -1,5 +1,5 @@
 
-# developer_docs/conf.py
+# docs/conf.py
 # Configuration file for the Sphinx documentation builder.
 #
 # For the full list of built-in configuration values, see the documentation:
@@ -58,7 +58,7 @@ html_static_path = ['_static']
 html_theme_options = {# --- ADD THESE LINES FOR THE GITHUB LINK ---
     "source_repository": "https://github.com/DrumScript/DrumScript",
     "source_branch": "main",
-    "source_directory": "developer_docs/",
+    "source_directory": "docs/",
     # -------------------------------------------
 }   
 # (Optional) Set a logo

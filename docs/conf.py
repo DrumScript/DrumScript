@@ -27,9 +27,13 @@ sys.path.insert(0, os.path.abspath('..'))
 # Add extensions
 extensions = [
     'sphinx.ext.autodoc',  # Pull documentation from docstrings
+    'sphinx.ext.viewcode',
     'sphinx.ext.napoleon', # Support Google/NumPy style docstrings
     'myst_parser',       # Read .md files
 ]
+
+# Generate the stub pages automatically
+autosummary_generate = True
 
 # Tell Sphinx to treat .md files as Markdown
 source_suffix = {

@@ -14,6 +14,7 @@ It leverages **audio signal processing** and a **rule-based classification engin
 ---
 
   - **[Features](#features)**
+  - **[Documentation](#documentation)**
   - **[Roadmap](#roadmap)**
   - **[Installation](#installation)**
   - **[Usage](#usage)**
@@ -43,6 +44,31 @@ It leverages **audio signal processing** and a **rule-based classification engin
   <!--* **Multi-Format Export**: Generates `.pdf` for print and `.xml` for MusicXML compatible software (Guitar Pro, Logic Pro, etc.).-->
   <!--* **Deterministic Engine**: Uses physics-based rules rather than opaque "black box" machine learning for transparent classification.-->
 
+---
+## 📚 Documentation
+
+```{toctree}
+:maxdepth: 1
+:caption: User Guide
+
+how_it_works
+tempo_estimation
+advanced_sound_analysis101
+glossary
+
+:maxdepth: 1
+:caption: Developer Zone
+
+contributor_guidance
+testing_guidance
+code_of_conduct
+
+:maxdepth: 1
+:caption: Reference
+
+api
+about
+---
 
 ### Roadmap
 

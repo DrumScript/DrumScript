@@ -1,7 +1,7 @@
 ## **DrumScript**
 
 <!--date_created: sun-15-june-2025-->
-<!--date_updated: tues-30-dec-2025-->
+<!--date_updated: tues-13-jan-2026-->
 
 > **Python 3.12.10**
 
@@ -24,7 +24,7 @@ It leverages **audio signal processing** and a **rule-based classification engin
   - **[Contact](#contact)**
   - **[FAQs](#faqs)**
 
-> **NOTE:** See **[`developer_docs/how_it_works.md`](#developer_docs/how_it_works.md)** if you are interested in the link between **music theory** and `DrumScript`'s structure.
+> **NOTE:** See **[`docs/how_it_works.md`](#docs/how_it_works.md)** if you are interested in the link between **music theory** and `DrumScript`'s structure.
 
 > **NOTE:** For simplicity, `DrumScript` uses the generic spelling of the word ***quantize***, rather than the British English spelling ***quantise***.
 

@@ -1,7 +1,7 @@
 ## **`DrumScript`**
 
 <!--date_created: sun-15-june-2025-->
-<!--date_updated: fri-09-jan-2026-->
+<!--date_updated: tues-13-jan-2026-->
 
 DrumScript is an open-source `Python` library and suite of tools intended to make music more accessible for everyone. The Python package alpha is released alongside a free-to-use engine for members of the musical and sound analysis/engineering community to use in a zero-code way.
 
@@ -32,7 +32,7 @@ DrumScript/
 │   ├── audio_processor/    # Audio loading, onset detection, feature extraction, tempo detection, stem-splitter and tempo-detection
 │   ├── notation_generator/ # Constants
 │   └── utils/              # Utility functions
-├── developer_docs/         # Documentation for developers and contributors
+├── docs/                   # Documentation for developers and contributors, as well as the `_build` artifacts for the `DrumScript` documentation website.
 ├── theory/                 # Reference documents (music theory, DSP, etc.). Sources provided
 ├── pyproject.toml          # Project metadata and dependencies (managed by `uv`).
 ├── README.md               # Main project overview (this file)

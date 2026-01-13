@@ -2,7 +2,7 @@
 ## `DrumScript` Python Package Structure
 
 <!--date_created: weds-25-oct-2025-->
-<!--date_edited: thurs-01-jan-2026-->
+<!--date_edited: tues-13-jan-2026-->
 
 ```markdown
 DrumScript/                          # Project root
@@ -27,7 +27,7 @@ DrumScript/                          # Project root
 │   │   └── constants.py             # Single-source of truth for constants such as `SAMPLE_RATE`, `N_FFT` used globally through `DrumScript`
 │   └── utils/                       # Utility functions.
 │
-├── developer_docs/                  # Documentation for developers and contributors
+├── docs/                            # Documentation for developers and contributors, as well as the `_build` artifacts for the `DrumScript` documentation website.
 ├── local_tests/                     # Local test scripts (e.g., interface testing).
 ├── outputs/                         # Default directory for generated files (Ignored by Git).
 ├── test_audio/                      # Audio files used for testing.

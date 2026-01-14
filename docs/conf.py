@@ -48,24 +48,32 @@ exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 
-#html_theme = 'furo' # Requires: `uv pip install furo, but this is also added if you install dependencies when you first create your `.venv` on a local branch, if you use `uv pip install -e ".[dev]"``
-html_theme = 'shibuya' # Requires: `uv pip install shibuya` (or `uv add --dev shibuya`), but this is also added if you install dependencies when you first create your `.venv` on a local branch, if you use `uv pip install -e ".[dev]"``
-
-
-
+html_theme = 'shibuya'
 html_static_path = ['_static']
-html_theme_options = {
-    # 1. GitHub integration
-    "source_repository": "https://github.com/DrumScript/DrumScript",
-    "source_branch": "main",
-    "source_directory": "docs/",
-    # -------------------------------------------
-    # 2. Logo configuration
-    "light_logo": "logo-light.png", # path = docs/_build/html/_static/logo-light.png
-    "dark_logo": "logo-dark.png", # path = docs/_build/html/_static/logo-dark.png
 
-}   
-## (Optional) Set a logo
-# html_logo = "_static/logo.png"
+# Shibuya Setup
+html_theme_options = {
+    # Logos: Shibuya prefers the full relative path from your docs folder
+    "light_logo": "_static/logo-light.png",
+    "dark_logo": "_static/logo-dark.png",
+
+    # Key Links (Top Right)
+    "github_url": "https://github.com/DrumScript/DrumScript",
+    
+    # Navigation Links (Top Bar) - Shibuya does this natively!
+    "nav_links": [
+        {"title": "Getting Started", "url": "installation"},
+        {"title": "User Guide", "url": "how_it_works"},
+        {"title": "API Reference", "url": "api"},
+        {"title": "Development", "url": "contributor_guidance"},
+    ]
+}
+
+# Optional: Add your context for the "Edit on GitHub" button
+html_context = {
+    "source_type": "github",
+    "source_user": "DrumScript",
+    "source_repo": "DrumScript",
+}
 
 

@@ -1,23 +1,26 @@
 # About
 
-<!--date_created:Fri-25-Oct-2025-->
-<!--date_updated:Tues-30-Dec-2025-->
+<!--date_created: Fri-25-Oct-2025-->
+<!--date_updated: Weds-14-Jan-2026-->
 
+DrumScript is an open-source `Python` library and suite of tools intended to make music more accessible for everyone. The Python package alpha is released alongside a free-to-use engine for members of the musical and sound analysis/engineering community to use in a zero-code way.
 
----
-
-`DrumScript` is a Python **classification engine** and **transcription tool**.
-
-It takes audio inputs in various formats (`.wav`, `.mp3`)—ranging from raw drum recordings to full musical mixes. By utilizing advanced **stem splitting** technology, it isolates the drum track before passing it to the classification engine.
-
-The core function is to **transcribe this audio** into `.pdf` drum sheet music, making drum notation accessible to everyone.
+> #### **[hello.drumscript@gmail.com](hello.drumscript@gmail.com)**
 
 ---
+## Features
+
+* **Audio Input:** Supports common audio formats like `.wav` and `.mp3`.
+* **Advanced Tempo Detection:** Estimates the tempo (BPM) of an audio file. A deterministic algorithm for tempo estimation. Analyses the entire audio file (not just local beats) to generate a "Tempogram." Conducts a "tempo election" to find the most consistent BPM, effectively handling complex syncopation and ghost notes where standard metronomes fail.
+* **Drum Hit Detection:** Identifies the precise timing of drum strikes using onset event detection algorithms.
+* **Audio Extractor:** We utilise the state-of-the-art [Demucs](https://github.com/adefossez/demucs) source separation model to provide high-quality drum extraction so users can separate audio files into their drum, guitar, base guitar and vocal stems. 
+* **UI Integration:** Connect the package to a free-to-use public web interface.
+* **Stem Splitting**: Automatically isolate drum tracks from full audio mixes using the `demucs` hybrid transformer model.
+* **Onset Detection**: Precise identification of drum hits using spectral analysis.
+<!--* **Classification**: Rule-based engine to classify hits (Snare, Kick, Hi-Hat) based on acoustic features.-->
+<!--* **Score Generation**: Export transcribed drums to `.pdf` sheet music and `.xml` formats.-->
 
 
-Video Explanation of `stem splitting` using Demucs (for your reference): [Music Source Separation with Demucs](https://www.google.com/search?q=https://www.youtube.com/watch%3Fv%3D4C4Xr6T3_fI)
-
-This video provides a visual and technical explanation of how the underlying technology (Demucs) separates instruments from a mix, which is the core of the`StemSplitter` class, ie how `DrumScript Lite` extracts audio from polyphonic tracks.
 
 ---
 

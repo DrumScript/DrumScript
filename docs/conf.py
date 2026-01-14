@@ -28,6 +28,7 @@ sys.path.insert(0, os.path.abspath('..'))
 extensions = [
     'sphinx.ext.autodoc',  # Pull documentation from docstrings
     'sphinx.ext.viewcode',
+    'sphinx.ext.autosummary',
     'myst_parser'       # Read .md files
 ]
 
@@ -63,8 +64,8 @@ html_theme_options = {
     
     # Navigation Links (Top Bar) - Shibuya does this natively!
     "nav_links": [
-        {"title": "Getting Started", "url": "installation"},
-        {"title": "User Guide", "url": "how_it_works"},
+        {"title": "Getting Started", "url": "index"},
+        # {"title": "User Guide", "url": ""},
         {"title": "API Reference", "url": "api"},
         {"title": "Development", "url": "contributor_guidance"},
     ]

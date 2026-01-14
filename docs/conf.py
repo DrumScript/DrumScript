@@ -48,7 +48,9 @@ exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 
-html_theme = 'furo' # Requires: `uv pip install furo, but this is also added if you install dependencies when you first create your `.venv` on a local branch, if you use `uv pip install -e ".[dev]"`
+#html_theme = 'furo' # Requires: `uv pip install furo, but this is also added if you install dependencies when you first create your `.venv` on a local branch, if you use `uv pip install -e ".[dev]"``
+html_theme = 'shibuya' # Requires: `uv pip install shibuya` (or `uv add --dev shibuya`), but this is also added if you install dependencies when you first create your `.venv` on a local branch, if you use `uv pip install -e ".[dev]"``
+
 
 
 html_static_path = ['_static']

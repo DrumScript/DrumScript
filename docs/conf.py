@@ -9,8 +9,8 @@
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
 project = 'DrumScript'
-copyright = '© 2025, DrumScript'
-author = '© 2025, DrumScript'
+copyright = '© 2026, DrumScript'
+author = 'DrumScript'
 release = '0.1.0'
 
 # -- Path setup --------------------------------------------------------------
@@ -28,7 +28,7 @@ sys.path.insert(0, os.path.abspath('..'))
 extensions = [
     'sphinx.ext.autodoc',  # Pull documentation from docstrings
     'sphinx.ext.viewcode',
-    'sphinx.ext.autosummary',
+    'sphinx.ext.autosummary', # Required for API tables
     'myst_parser'       # Read .md files
 ]
 
@@ -37,10 +37,10 @@ autosummary_generate = True
 add_module_names = False
 
 # Tell Sphinx to treat .md files as Markdown
-source_suffix = {
-    '.rst': 'restructuredtext',
-    '.md': 'markdown',
-}
+#source_suffix = {
+ #   '.rst': 'restructuredtext',
+ #   '.md': 'markdown',
+#}
 
 
 templates_path = ['_templates']
@@ -52,21 +52,20 @@ exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 
 html_theme = 'shibuya'
 html_static_path = ['_static']
-html_css_files = ['custom.css']
-
+# This loads your custom.css
+html_css_files = [
+    'custom.css',
+]
 # Shibuya Setup
-html_theme_options = {
+html_theme_options = { 
     # Logos: Shibuya prefers the full relative path from your docs folder
     "light_logo": "_static/logo-light.png",
     "dark_logo": "_static/logo-dark.png",
 
-    # Key Links (Top Right)
     "github_url": "https://github.com/DrumScript/DrumScript",
     
-    # Navigation Links (Top Bar) - Shibuya does this natively!
     "nav_links": [
         {"title": "Getting Started", "url": "index"},
-        # {"title": "User Guide", "url": ""},
         {"title": "API Reference", "url": "api"},
         {"title": "Development", "url": "contributor_guidance"},
     ]

@@ -64,10 +64,12 @@ DrumScript/
 ---
 ### Documentation
 
+
 ```{toctree}
 :maxdepth: 1
 :caption: Getting Started
 
+index
 how_it_works
 
 ```

@@ -1,18 +1,24 @@
 /* developer_docs/_static/custom.css */
 
-/* --- Import a modern font (optional, but nice) --- */
+/* --- Import a modern font (optional, but nice)
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
 
-/* --- Set the base font to match the UI's modern feel --- */
+/* Adjust the height and width as needed */
+.sy-header .sy-brand img {
+    height: 40px; /* Adjust to your preferred size */
+    width: auto;
+}
+
+/* --- Set the base font to match the UI's modern feel
 body {
     font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
                  "Helvetica Neue", Arial, sans-serif;
 }
 
-/* --- Style links to use "DrumScript Green" --- */
+/* --- Style links to use "DrumScript Green"
 a,
 a:visited {
-    color: #39FF14; /* DrumScript Green */
+    color: #39FF14; /* DrumScript Green
     text-decoration: none;
 }
 
@@ -21,21 +27,20 @@ a:hover {
     text-decoration: underline;
 }
 
-/* --- Style sidebar links --- */
+/* --- Style sidebar links 
 .sidebar-tree a.current {
-    color: #39FF14 !important; /* Green for active page */
+    color: #39FF14 !important; /* Green for active page
 }
 
-/* --- Style for a "Transcribe" style button --- */
+/* --- Style for a "Transcribe" style button
 /* You can use this class in your .md files like this:
    <a href="#" class="btn-primary">Transcribe</a>
-*/
 .btn-primary {
     display: inline-block;
     padding: 10px 20px;
     font-weight: 600;
-    color: #121212; /* Dark text on button */
-    background-color: #39FF14; /* DrumScript Green */
+    color: #121212; /* Dark text on button
+    background-color: #39FF14; /* DrumScript Green
     border: none;
     border-radius: 8px;
     text-decoration: none;
@@ -48,10 +53,7 @@ a:hover {
     text-decoration: none;
     transform: translateY(-2px);
     box-shadow: 0 6px 20px -5px rgba(57, 255, 20, 0.8);
-}
+} 
+    /*
 
-/* Adjust the height and width as needed */
-.sy-header .sy-brand img {
-    height: 40px; /* Adjust to your preferred size */
-    width: auto;
-}
+

@@ -52,18 +52,18 @@ html_theme = 'furo' # Requires: `uv pip install furo, but this is also added if 
 
 
 html_static_path = ['_static']
-html_theme_options = {# --- ADD THESE LINES FOR THE GITHUB LINK ---
+html_theme_options = {
+    # 1. GitHub integration
     "source_repository": "https://github.com/DrumScript/DrumScript",
     "source_branch": "main",
-    "source_directory": "docs/"
+    "source_directory": "docs/",
     # -------------------------------------------
+    # 2. Logo configuration
+    "light_logo": "logo-light.png", # path = docs/_build/html/_static/logo-light.png
+    "dark_logo": "logo-dark.png", # path = docs/_build/html/_static/logo-dark.png
+
 }   
-# (Optional) Set a logo
-html_logo = "_static/logo-dark.png"
+## (Optional) Set a logo
+# html_logo = "_static/logo.png"
 
 
-## Optional: Furo allows custom light/dark mode logos
-html_theme_options = {
-     "light_logo": "_static/logo-light.png",
-     "dark_logo": "_static/logo-dark.png",
- }

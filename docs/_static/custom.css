@@ -49,3 +49,9 @@ a:hover {
     transform: translateY(-2px);
     box-shadow: 0 6px 20px -5px rgba(57, 255, 20, 0.8);
 }
+
+/* Adjust the height and width as needed */
+.sy-header .sy-brand img {
+    height: 40px; /* Adjust to your preferred size */
+    width: auto;
+}

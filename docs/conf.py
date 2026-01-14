@@ -34,6 +34,7 @@ extensions = [
 
 # Generate the stub pages automatically
 autosummary_generate = True
+add_module_names = False
 
 # Tell Sphinx to treat .md files as Markdown
 source_suffix = {

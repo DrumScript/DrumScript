@@ -61,17 +61,20 @@ dependencies = [
 "Issues" = "https://github.com//DrumScript/DrumScript/issues"
 
 [project.optional-dependencies]
-# Install if a contributor or maintainer, using: uv pip install -e ".[test]"
-test = [
+# Install if a contributor or maintainer, using: uv pip install -e ".[dev]"
+dev = [
     "black",
     "flake8",
+    # "furo",
     "ipykernel",
-    "sphinx-rtd-theme",
     "myst-parser",
     "pytest",
     "pytest-cov",
+    "shibuya",
     "sphinx"
 ]
+
+
 
 [project.scripts]
 drumscript = "drumscript.main:main"
@@ -83,11 +86,11 @@ include-package-data = true
 # By default, setuptools finds all directories with __init__.py
 where = ["."]
 include = ["drumscript*"]
-# exclude = ["local_tests*",".development*",".archive*", "machine-learning*", "test_audio*"] # Exclude test directories, development and archive folders from build. Commented out while testing file discovery in pre-build for pypi
+# exclude = ["local_tests*",".development*",".archive*","docs*", "machine-learning*", "test_audio*"] # Exclude test directories, development and archive folders from build. Commented out while testing file discovery in pre-build for pypi
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
-norecursedirs = ["local_tests", "outputs", "developer_docs"]
+norecursedirs = ["local_tests", "outputs", "docs"]
 filterwarnings = [
     # Suppress specific deprecation warnings from audioread/librosa dependencies
     "ignore::DeprecationWarning:audioread.rawread",
@@ -96,4 +99,9 @@ filterwarnings = [
     "ignore:'sunau' is deprecated:DeprecationWarning",
 ]
 addopts = "--ignore=local_tests/classification_engine --ignore=local_tests/mp3_conversion, --ignore=pdf_generation"
+
+[dependency-groups]
+dev = [
+    "shibuya>=2025.10.21",
+]
 

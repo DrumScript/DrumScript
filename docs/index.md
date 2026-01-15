@@ -12,6 +12,7 @@ DrumScript is an open-source `Python` library and suite of tools intended to mak
 ---
   - **[Project Structure](#project-structure)**
   - **[Features](#features)**
+  - **[Documentation](#documentation)**
   - **[Installation](#install)**
   - **[Usage](#usage)**
       - **[Arguments](#arguments)**
@@ -47,7 +48,7 @@ DrumScript/
 ```
 
 ---
-#### Features
+### Features
 
 * **Audio Input:** Supports common audio formats like `.wav` and `.mp3`.
 * **Advanced Tempo Detection:** Estimates the tempo (BPM) of an audio file. A deterministic algorithm for tempo estimation. Analyses the entire audio file (not just local beats) to generate a "Tempogram." Conducts a "tempo election" to find the most consistent BPM, effectively handling complex syncopation and ghost notes where standard metronomes fail.
@@ -60,7 +61,53 @@ DrumScript/
 <!--* **Score Generation**: Export transcribed drums to `.pdf` sheet music and `.xml` formats.-->
 
 
+---
+### Documentation
 
+
+```{toctree}
+:maxdepth: 1
+:caption: Getting Started
+
+index
+how_it_works
+
+```
+```{toctree}
+:maxdepth: 1
+:caption: User Guide
+
+tempo_estimation
+advanced_sound_analysis101.md
+glossary
+
+```
+
+```{toctree}
+:maxdepth: 1
+:caption: API Reference
+
+api
+
+```
+
+```{toctree}
+:maxdepth: 1
+:caption: Development
+
+contributor_guidance
+testing_guidance
+code_of_conduct
+glossary
+
+```
+
+```{toctree}
+:maxdepth: 1
+:caption: About
+
+about
+```
 
 ---
 ### Installation

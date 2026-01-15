@@ -1105,7 +1105,7 @@ dependencies = [
 ]
 
 [package.optional-dependencies]
-test = [
+dev = [
     { name = "black", version = "25.11.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
     { name = "black", version = "25.12.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.10'" },
     { name = "flake8" },
@@ -1116,47 +1116,57 @@ test = [
     { name = "pytest", version = "8.4.2", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
     { name = "pytest", version = "9.0.2", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.10'" },
     { name = "pytest-cov" },
+    { name = "shibuya", version = "2025.10.21", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
+    { name = "shibuya", version = "2026.1.9", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.10'" },
     { name = "sphinx", version = "7.4.7", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
     { name = "sphinx", version = "8.1.3", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version == '3.10.*'" },
     { name = "sphinx", version = "8.2.3", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
-    { name = "sphinx-rtd-theme" },
+]
+
+[package.dev-dependencies]
+dev = [
+    { name = "shibuya", version = "2025.10.21", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
+    { name = "shibuya", version = "2026.1.9", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.10'" },
 ]
 
 [package.metadata]
 requires-dist = [
-    { name = "black", marker = "extra == 'test'" },
+    { name = "black", marker = "extra == 'dev'" },
     { name = "demucs" },
-    { name = "flake8", marker = "extra == 'test'" },
+    { name = "flake8", marker = "extra == 'dev'" },
     { name = "ipykernel" },
-    { name = "ipykernel", marker = "extra == 'test'" },
+    { name = "ipykernel", marker = "extra == 'dev'" },
     { name = "librosa" },
     { name = "matplotlib" },
     { name = "mido" },
     { name = "musescore" },
     { name = "music21" },
-    { name = "myst-parser", marker = "extra == 'test'" },
+    { name = "myst-parser", marker = "extra == 'dev'" },
     { name = "numba" },
     { name = "numpy" },
     { name = "pandas" },
     { name = "pretty-midi" },
     { name = "pydub" },
-    { name = "pytest", marker = "extra == 'test'" },
-    { name = "pytest-cov", marker = "extra == 'test'" },
+    { name = "pytest", marker = "extra == 'dev'" },
+    { name = "pytest-cov", marker = "extra == 'dev'" },
     { name = "pyyaml" },
     { name = "reportlab" },
     { name = "scikit-learn" },
     { name = "scipy" },
     { name = "setuptools" },
+    { name = "shibuya", marker = "extra == 'dev'" },
     { name = "sounddevice" },
     { name = "soundfile" },
-    { name = "sphinx", marker = "extra == 'test'" },
-    { name = "sphinx-rtd-theme", marker = "extra == 'test'" },
+    { name = "sphinx", marker = "extra == 'dev'" },
     { name = "torch" },
     { name = "torchaudio" },
     { name = "torchcodec" },
     { name = "tqdm" },
 ]
-provides-extras = ["test"]
+provides-extras = ["dev"]
+
+[package.metadata.requires-dev]
+dev = [{ name = "shibuya", specifier = ">=2025.10.21" }]
 
 [[package]]
 name = "einops"
@@ -3487,6 +3497,18 @@ wheels = [
 ]
 
 [[package]]
+name = "pygments-styles"
+version = "0.3.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "pygments" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/1c/2c/3886ed4783dd78bb62ccab7d43380f526a7e2ff0db8c77d9c87559b2f5de/pygments_styles-0.3.0.tar.gz", hash = "sha256:67746b8fc6ff72c1179ca4d9a8bc89c7f54c196c2ff9d087f07392cd6fde3ecf", size = 15258, upload-time = "2025-11-04T13:15:23.512Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/8f/64/7e0266f0c541e26df86c31d2add9be3dd9914ae83785ce0aba7cbb693667/pygments_styles-0.3.0-py3-none-any.whl", hash = "sha256:c6c45e9939eb7590345bc9084113bac46c45f12b009d13422be02e80e84a034c", size = 36617, upload-time = "2025-11-04T13:15:21.989Z" },
+]
+
+[[package]]
 name = "pyparsing"
 version = "3.2.5"
 source = { registry = "https://pypi.org/simple" }
@@ -4112,6 +4134,42 @@ wheels = [
 ]
 
 [[package]]
+name = "shibuya"
+version = "2025.10.21"
+source = { registry = "https://pypi.org/simple" }
+resolution-markers = [
+    "python_full_version < '3.10'",
+]
+dependencies = [
+    { name = "pygments-styles", marker = "python_full_version < '3.10'" },
+    { name = "sphinx", version = "7.4.7", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/17/e8/462f93f31465220542ee8f1e415819d9e96da78694dc6d04a96dbbf0011f/shibuya-2025.10.21.tar.gz", hash = "sha256:a668f2a33c8b57d33d78bd6edf723eece5734d01f129f973333e7096ad6b3690", size = 82108, upload-time = "2025-10-21T06:03:40.444Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/15/f4/cfad1fb1395e3756ea8eee7db9510c8dbe6796bb6c34eac2eac50650df9c/shibuya-2025.10.21-py3-none-any.whl", hash = "sha256:916e48c97ba5cc4b1949742beac19cf48923e12965a0d1689fda460d363f4d82", size = 98077, upload-time = "2025-10-21T06:03:38.571Z" },
+]
+
+[[package]]
+name = "shibuya"
+version = "2026.1.9"
+source = { registry = "https://pypi.org/simple" }
+resolution-markers = [
+    "python_full_version >= '3.13'",
+    "python_full_version == '3.12.*'",
+    "python_full_version == '3.11.*'",
+    "python_full_version == '3.10.*'",
+]
+dependencies = [
+    { name = "pygments-styles", marker = "python_full_version >= '3.10'" },
+    { name = "sphinx", version = "8.1.3", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version == '3.10.*'" },
+    { name = "sphinx", version = "8.2.3", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/1d/b2/b94cb04adbb984973fe83fd670dd066514610241d829723f678366e691d2/shibuya-2026.1.9.tar.gz", hash = "sha256:b389f10fd9c07b048e940f32d1e1ac096a2d49736389173ac771b37a10b51fdf", size = 86002, upload-time = "2026-01-09T02:19:14.365Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/37/ae/06d7dfc5633c7250fefc61fd624990aa2c37e3495c08a2f23968b1acb23e/shibuya-2026.1.9-py3-none-any.whl", hash = "sha256:b58a3cc6e5619c71d00fcf0be4a3060c87040c2a62a1b3f1a93a6a41ca8eaf45", size = 103389, upload-time = "2026-01-09T02:19:12.798Z" },
+]
+
+[[package]]
 name = "six"
 version = "1.17.0"
 source = { registry = "https://pypi.org/simple" }
@@ -4300,22 +4358,6 @@ wheels = [
 ]
 
 [[package]]
-name = "sphinx-rtd-theme"
-version = "3.0.2"
-source = { registry = "https://pypi.org/simple" }
-dependencies = [
-    { name = "docutils" },
-    { name = "sphinx", version = "7.4.7", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
-    { name = "sphinx", version = "8.1.3", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version == '3.10.*'" },
-    { name = "sphinx", version = "8.2.3", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
-    { name = "sphinxcontrib-jquery" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/91/44/c97faec644d29a5ceddd3020ae2edffa69e7d00054a8c7a6021e82f20335/sphinx_rtd_theme-3.0.2.tar.gz", hash = "sha256:b7457bc25dda723b20b086a670b9953c859eab60a2a03ee8eb2bb23e176e5f85", size = 7620463, upload-time = "2024-11-13T11:06:04.545Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/85/77/46e3bac77b82b4df5bb5b61f2de98637724f246b4966cfc34bc5895d852a/sphinx_rtd_theme-3.0.2-py2.py3-none-any.whl", hash = "sha256:422ccc750c3a3a311de4ae327e82affdaf59eb695ba4936538552f3b00f4ee13", size = 7655561, upload-time = "2024-11-13T11:06:02.094Z" },
-]
-
-[[package]]
 name = "sphinxcontrib-applehelp"
 version = "2.0.0"
 source = { registry = "https://pypi.org/simple" }
@@ -4340,20 +4382,6 @@ source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/43/93/983afd9aa001e5201eab16b5a444ed5b9b0a7a010541e0ddfbbfd0b2470c/sphinxcontrib_htmlhelp-2.1.0.tar.gz", hash = "sha256:c9e2916ace8aad64cc13a0d233ee22317f2b9025b9cf3295249fa985cc7082e9", size = 22617, upload-time = "2024-07-29T01:09:37.889Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/0a/7b/18a8c0bcec9182c05a0b3ec2a776bba4ead82750a55ff798e8d406dae604/sphinxcontrib_htmlhelp-2.1.0-py3-none-any.whl", hash = "sha256:166759820b47002d22914d64a075ce08f4c46818e17cfc9470a9786b759b19f8", size = 98705, upload-time = "2024-07-29T01:09:36.407Z" },
-]
-
-[[package]]
-name = "sphinxcontrib-jquery"
-version = "4.1"
-source = { registry = "https://pypi.org/simple" }
-dependencies = [
-    { name = "sphinx", version = "7.4.7", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
-    { name = "sphinx", version = "8.1.3", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version == '3.10.*'" },
-    { name = "sphinx", version = "8.2.3", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/de/f3/aa67467e051df70a6330fe7770894b3e4f09436dea6881ae0b4f3d87cad8/sphinxcontrib-jquery-4.1.tar.gz", hash = "sha256:1620739f04e36a2c779f1a131a2dfd49b2fd07351bf1968ced074365933abc7a", size = 122331, upload-time = "2023-03-14T15:01:01.944Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/76/85/749bd22d1a68db7291c89e2ebca53f4306c3f205853cf31e9de279034c3c/sphinxcontrib_jquery-4.1-py2.py3-none-any.whl", hash = "sha256:f936030d7d0147dd026a4f2b5a57343d233f1fc7b363f68b3d4f1cb0993878ae", size = 121104, upload-time = "2023-03-14T15:01:00.356Z" },
 ]
 
 [[package]]

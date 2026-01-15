@@ -1,5 +1,5 @@
 
-# developer_docs/conf.py
+# docs/conf.py
 # Configuration file for the Sphinx documentation builder.
 #
 # For the full list of built-in configuration values, see the documentation:
@@ -9,8 +9,8 @@
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
 project = 'DrumScript'
-copyright = '© 2025, DrumScript'
-author = '© 2025, DrumScript'
+copyright = '© 2026, DrumScript'
+author = 'DrumScript'
 release = '0.1.0'
 
 # -- Path setup --------------------------------------------------------------
@@ -27,15 +27,20 @@ sys.path.insert(0, os.path.abspath('..'))
 # Add extensions
 extensions = [
     'sphinx.ext.autodoc',  # Pull documentation from docstrings
-    'sphinx.ext.napoleon', # Support Google/NumPy style docstrings
-    'myst_parser',       # Read .md files
+    'sphinx.ext.viewcode',
+    'sphinx.ext.autosummary', # Required for API tables
+    'myst_parser'       # Read .md files
 ]
 
+# Generate the stub pages automatically
+autosummary_generate = True
+add_module_names = False
+
 # Tell Sphinx to treat .md files as Markdown
-source_suffix = {
-    '.rst': 'restructuredtext',
-    '.md': 'markdown',
-}
+#source_suffix = {
+ #   '.rst': 'restructuredtext',
+ #   '.md': 'markdown',
+#}
 
 
 templates_path = ['_templates']
@@ -45,14 +50,32 @@ exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 
-#html_theme = 'furo'
-html_theme = 'sphinx_rtd_theme' # Requires: pip install sphinx-rtd-theme, # alternative theme
+html_theme = 'shibuya'
 html_static_path = ['_static']
-html_theme_options = {# --- ADD THESE LINES FOR THE GITHUB LINK ---
-    "source_repository": "https://github.com/DrumScript/DrumScript",
-    "source_branch": "main",
-    "source_directory": "developer_docs/",
-    # -------------------------------------------
-}   
-# (Optional) Set a logo
-html_logo = "_static/logo.png"
+# This loads your custom.css
+html_css_files = [
+    'custom.css',
+]
+# Shibuya Setup
+html_theme_options = { 
+    # Logos: Shibuya prefers the full relative path from your docs folder
+    "light_logo": "_static/logo-light.png",
+    "dark_logo": "_static/logo-dark.png",
+
+    "github_url": "https://github.com/DrumScript/DrumScript",
+    
+    "nav_links": [
+        {"title": "Getting Started", "url": "index"},
+        {"title": "API Reference", "url": "api"},
+        {"title": "Development", "url": "contributor_guidance"},
+    ]
+}
+
+# Optional: Add your context for the "Edit on GitHub" button
+html_context = {
+    "source_type": "github",
+    "source_user": "DrumScript",
+    "source_repo": "DrumScript",
+}
+
+

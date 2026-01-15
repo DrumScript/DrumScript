@@ -11,8 +11,8 @@ Core Functions
    :toctree: generated
    :nosignatures:
 
-   extract_stems
-   detect_tempo
+   drumscript.extract_stems
+   drumscript.detect_tempo
 
 Audio Processing
 ----------------
@@ -20,11 +20,11 @@ Audio Processing
    :toctree: generated
    :recursive:
 
-   audio_processor.audio_loader
-   audio_processor.stem_splitter
-   audio_processor.tempo_detector
-   audio_processor.onset_detector
-   audio_processor.feature_extractor
+   drumscript.audio_processor.audio_loader
+   drumscript.audio_processor.stem_splitter
+   drumscript.audio_processor.tempo_detector
+   drumscript.audio_processor.onset_detector
+   drumscript.audio_processor.feature_extractor
 
 Classification & Notation
 -------------------------
@@ -32,9 +32,9 @@ Classification & Notation
    :toctree: generated
    :recursive:
 
-   drum_classifier.classify
-   notation_generator.score_builder
-   notation_generator.pdf_exporter
+   drumscript.drum_classifier.classify
+   drumscript.notation_generator.score_builder
+   drumscript.notation_generator.pdf_exporter
 
 Utilities
 ---------
@@ -42,4 +42,4 @@ Utilities
    :toctree: generated
    :recursive:
 
-   utils.ffmpeg_installer
+   drumscript.utils.ffmpeg_installer

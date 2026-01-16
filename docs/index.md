@@ -37,7 +37,7 @@ theory/how_it_works
 theory/percussion_frequencies
 theory/bibliography
 guide/glossary
-thoery/sources
+theory/sources
 
 ```
 

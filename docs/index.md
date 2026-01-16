@@ -126,6 +126,15 @@ uv sync
 
 ```
 
+```{toctree}
+:maxdepth: 1
+:caption: Theory & Background
+
+theory/drum_notation_guide
+theory/dsp_background
+theory/sources
+```
+
 **Dependencies**
 
 A full list of project- and optional dependencies can be found in the **[`pyproject.toml`](#pyproject.toml)**.

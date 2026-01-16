@@ -23,10 +23,9 @@ guide/installation
 
 guide/configuration
 guide/usage
-theory/tempo_estimation
 ```
 
-## Theory & Background
+## Theory
 
 ```{toctree}
 :maxdepth: 1
@@ -34,6 +33,7 @@ theory/tempo_estimation
 
 theory/drum_notation_guide
 theory/digital_signal_processing
+theory/tempo_estimation
 theory/how_it_works
 theory/percussion_frequencies
 theory/bibliography

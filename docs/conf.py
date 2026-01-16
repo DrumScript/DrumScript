@@ -59,8 +59,8 @@ html_css_files = [
 # Shibuya Setup
 html_theme_options = { 
     # Logos: Shibuya prefers the full relative path from your docs folder
-    "light_logo": "_static/logo-light.png",
-    "dark_logo": "_static/logo-dark.png",
+    "light_logo": "_static/logo-light.svg",
+    "dark_logo": "_static/logo-dark.svg",
 
     "github_url": "https://github.com/DrumScript/DrumScript",
     

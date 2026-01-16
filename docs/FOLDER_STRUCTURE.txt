@@ -1,0 +1,20 @@
+DrumScript Documentation Structure
+==================================
+
+This folder contains the source files for the Sphinx documentation website.
+
+Key Folders:
+------------
+/guide          -> User-focused tutorials (Installation, Usage).
+/theory         -> Explanations, Background Science, and Notation Guides.
+    /images     -> PNG/JPG assets for theory pages.
+    /references -> PDF academic papers and cheat sheets.
+/development    -> Guides for code contributors (Testing, Code of Conduct).
+/_static        -> Website assets (Logos, Custom CSS).
+/_build         -> The output folder (Generated HTML lives here).
+
+Key Files:
+----------
+index.md        -> The Homepage (Table of Contents).
+conf.py         -> Sphinx Configuration (Theme, Plugins).
+api.rst         -> Auto-generated Python API Reference.

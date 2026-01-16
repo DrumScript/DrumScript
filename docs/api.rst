@@ -13,6 +13,7 @@ Core Functions
 
    drumscript.extract_stems
    drumscript.detect_tempo
+   drumscript.main
 
 Audio Processing
 ----------------
@@ -33,6 +34,8 @@ Classification & Notation
    :recursive:
 
    drumscript.drum_classifier.classify
+   drumscript.notation_generator.constants
+   drumscript.notation_generator.helpers
    drumscript.notation_generator.score_builder
    drumscript.notation_generator.pdf_exporter
 

@@ -9,7 +9,6 @@ You can tweak how sensitive the drum detection is by adjusting the threshold.
 Example:
 ``` python
 ds.detect_onsets(audio, threshold=0.3) # More sensitive
-
 ```
 
 ## Output Settings

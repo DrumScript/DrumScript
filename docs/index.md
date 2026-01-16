@@ -44,6 +44,7 @@ guide/usage
 theory/drum_notation_guide
 theory/digital_signal_processing
 theory/tempo_estimation
+theory/stem_splitting
 theory/how_it_works
 theory/percussion_frequencies
 theory/bibliography

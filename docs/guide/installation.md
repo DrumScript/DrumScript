@@ -29,15 +29,12 @@ brew install ffmpeg lilypond
 > `DrumScript` manages dependencies using `uv` and `pyproject.toml`.
 
 ```bash
-pip install drumscript
-# or
 uv pip install drumscript
 ```
 
 ```bash
 # Install dependencies
-uv sync
-
+uv sync --all-groups
 ```
 
 **Dependencies**

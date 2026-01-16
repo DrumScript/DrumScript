@@ -15,7 +15,7 @@ This document outlines the project's philosophy, how to set up your environment,
 
 ---
 
-## The "Deterministic" Mission
+## The Deterministic Mission
 *Why we aren't using deep learning (for now).*
 
 **DrumScript is pivoting to a rule-based, deterministic classification engine.**
@@ -48,7 +48,7 @@ Before you begin, ensure you have the following installed:
 Start by cloning the `DrumScript` repository to your local machine:
 
 ```zsh
-git clone [https://github.com/DrumScript/DrumScript.git](https://github.com/DrumScript/DrumScript.git)
+git clone https://github.com/DrumScript/DrumScript.git
 cd DrumScript
 ```
 

@@ -12,8 +12,6 @@
 :caption: Getting Started
 
 guide/installation
-guide/usage
-guide/glossary
 
 ```
 
@@ -25,8 +23,6 @@ guide/glossary
 
 guide/configuration
 guide/usage
-guide/glossary
-guide/installation
 ```
 
 ## Theory & Background
@@ -42,7 +38,7 @@ theory/how_it_works
 theory/percussion_frequencies
 theory/sources
 theory/tempo_estimation
-
+guide/glossary
 ```
 
 ## API Reference

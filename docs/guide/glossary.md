@@ -35,7 +35,7 @@ In `DrumScript`, `librosa` is crucial because it's the underlying library that `
 > * **Example:**
 >   ```python
 >   splitter = StemSplitter()
->   drum_path = splitter.split_drums("song.mp3", "./stems")
+>   drum_path = splitter.split_drums(*song.mp3*, *./stems*)
 >   ```
 
 ## `Demucs`
@@ -128,6 +128,30 @@ In `DrumScript`, `MuseScore` is crucial because `music21` can be configured to u
 ```
 > If **`sr=22050 (Hz),`** and the **`input_signal`** of **one of your drum notes** is *`1744 milliseconds`* in length, then your **`sample_rate = ~38450 samples`**
 ```
+
+## Spectral Centroid = *Brightness* or *Center of Gravity* (`sc`)
+
+Imagine the full range of sound (Frequency Spectrum) is a long seesaw or balance beam.
+
+* **Left side:** Low bass frequencies (the *Thud*).
+
+* **Right side:** High treble frequencies (The *Hiss*, *Click*, or *Sizzle*).
+
+The **Spectral Centroid** is the **exact point** where you would place your finger under the beam to make it balance perfectly.
+
+* **Low Centroid** (< 150 Hz): The balance is heavy on the left. The sound is muffled, dark, and deep. Think of a heartbeat, or a distant explosion.
+
+* **High Centroid** (> 2000 Hz): The balance is heavy on the right. The sound is bright, sharp, or tinny. Think of a whistle, or a cymbal.
+
+**Why sometimes classification can fail due to mis-specified Spectral Centroid (`sc`)**
+> You set the rule to a certain number, ie `<150Hz>` in [`drumscript.utils.constants`](https://github.com/DrumScript/DrumScript/blob/main/drumscript/notation_generator/constants.py). However, almost all modern kick drums consist of two parts:
+> 
+> 1. **The Thud (50-100 Hz):** The body of the sound.
+>
+> 2. **The Click (2000-5000 Hz):** The attack of the beater hitting the skin.
+> 
+> ...sometimes, feature extraction can struggle to deal with this conflict.
+>
 
 ---
 

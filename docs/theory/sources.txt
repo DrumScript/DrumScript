@@ -1,0 +1,93 @@
+sources
+LAST UPDATED: wed-24-dec-2025
+
+-----------------------------------------------------------------------------------------
+Signal Processing for Music Analysis
+Meinard Müller, D. Ellis, +1 author G. Richard
+Published in IEEE Journal on Selected… 4 February 2011
+Computer Science
+
+TLDR
+It is demonstrated that, to be successful, music audio signal processing techniques must be informed by a deep and thorough insight into the nature of music itself.
+
+
+https://www.ee.columbia.edu/~dpwe/pubs/MuEKR11-spmus.pdf
+https://www.semanticscholar.org/paper/Signal-Processing-for-Music-Analysis-M%C3%BCller-Ellis/c5104f0e4ad289ecacf7b0bddf861741fbb9f5a9
+
+-----------------------------------------------------------------------------------------
+
+https://perso.telecom-paristech.fr/grichard/Publications/ASLP_Gillet08.pdf
+https://www.semanticscholar.org/paper/Transcription-and-Separation-of-Drum-Signals-From-Gillet-Richard/6a3336560921327553a6a1c952c0e3922b34da74
+
+Transcription and Separation of Drum Signals From Polyphonic Music
+Olivier Gillet, G. Richard
+Published in IEEE Transactions on Audio… 1 March 2008
+Computer Science
+
+TLDR
+A complete drum transcription system is described, which combines information from the original music signal and a drum track enhanced version obtained by source separation, and which integrates a large set of features, optimally selected by feature selection.
+Expand
+
+-----------------------------------------------------------------------------------------
+
+
+An algorithm for detecting and labeling drum events in polyphonic music
+January 2005
+Authors:
+Koen Tanghe
+SampleSumo
+Sven Degroeve
+Flanders Institute for Biotechnology
+Bernard De Baets
+Ghent University
+
+
+
+https://www.researchgate.net/publication/228371926_An_algorithm_for_detecting_and_labeling_drum_events_in_polyphonic_music
+
+-----------------------------------------------------------------------------------------
+
+
+
+
+MT3: MULTI-TASK MULTITRACK
+MUSIC TRANSCRIPTION
+Josh Gardner∗
+, Ian Simon, Ethan Manilow†
+, Curtis Hawthorne, Jesse Engel
+Google Research, Brain Team
+
+https://openreview.net/pdf?id=iMSjopcOn0p
+
+
+-----------------------------------------------------------------------------------------
+
+
+INCREASING DRUM TRANSCRIPTION VOCABULARY USING DATA SYNTHESIS
+Proceedings of the 21st International Conference on Digital Audio Effects (DAFx-18), Aveiro, Portugal, September 4–8, 2018
+INCREASING DRUM TRANSCRIPTION VOCABULARY USING DATA SYNTHESIS
+Mark Cartwright
+Music and Audio Research Lab
+New York University
+New York, New York
+mark.cartwright@nyu.edu
+Juan Pablo Bello
+Music and Audio Research Lab
+New York University
+New York, New York
+jpbello@nyu.edu
+
+https://markcartwright.com/files/cartwright2018increasing.pdf
+
+-----------------------------------------------------------------------------------------
+SEQUENCE-TO-SEQUENCE PIANO TRANSCRIPTION
+WITH TRANSFORMERS
+
+Curtis Hawthorne Ian Simon Rigel Swavely
+Ethan Manilow? Jesse Engel
+Google Research
+{fjord,iansimon,rigeljs,emanilow,jesseengel}@google.com
+
+https://archives.ismir.net/ismir2021/paper/000030.pdf
+
+-----------------------------------------------------------------------------------------

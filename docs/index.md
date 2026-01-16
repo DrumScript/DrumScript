@@ -27,7 +27,6 @@ guide/configuration
 guide/usage
 guide/glossary
 guide/installation
-
 ```
 
 ## Theory & Background

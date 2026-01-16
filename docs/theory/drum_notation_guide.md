@@ -36,3 +36,14 @@ To save space, drum music often uses repeat signs.
 **Repeat Signs Guide:**
 ![Repeat Signs](images/infographic_g4m__repeat_signs.png)
 *Source: [Gear4music - How to Read Drum Music Notation](https://www.gear4music.com/blog/drum-music-notation/)*
+
+## Notating Pitch
+
+![Notating Pitch](images/notating_pitch.png)
+*Source: [Fundamentals of Music Theory (an Introduction)](https://fundamentalsofmusictheory.umasscreate.net/unit-5/)*
+
+
+## Other Useful Resources
+
+* **[Everything Producers Need To Know About Drum Maps](https://ask.video/article/audio/everything-producers-need-to-know-about-drum-maps)**
+* **[Midi2Sheet Music (Melobytes app)](https://melobytes.com/en/app/midi2sheet)**

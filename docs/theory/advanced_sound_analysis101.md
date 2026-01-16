@@ -20,3 +20,5 @@ However, almost all modern kick drums consist of two parts:
 The Thud (50-100 Hz): The body of the sound.
 
 The Click (2000-5000 Hz): The attack of the beater hitting the skin.
+
+Sometimes, feature extraction can struggle to deal with this conflict.

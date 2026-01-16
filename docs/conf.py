@@ -64,10 +64,11 @@ html_theme_options = {
 
     "github_url": "https://github.com/DrumScript/DrumScript",
     
-    "nav_links": [
+    "nav_links": [ # Amend groups that appear in Sphinx top navbar
         {"title": "Getting Started", "url": "index"},
         {"title": "API Reference", "url": "api"},
         {"title": "Development", "url": "development/contributor_guidance"},
+        {"title": "Theory", "url": "theory/drum_notation_guide"},
     ]
 }
 

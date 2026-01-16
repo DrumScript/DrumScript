@@ -16,7 +16,7 @@ guide/usage
 
 ```
 
-## 📖 User Guide
+## User Guide
 
 ```{toctree}
 :maxdepth: 1
@@ -27,7 +27,7 @@ guide/cli_reference
 
 ```
 
-## 🎓 Theory & Background
+## Theory & Background
 
 ```{toctree}
 :maxdepth: 1
@@ -40,7 +40,7 @@ theory/sources
 
 ```
 
-## 📚 API Reference
+## API Reference
 
 ```{toctree}
 :maxdepth: 1
@@ -50,7 +50,7 @@ api
 
 ```
 
-## 🛠 Development
+## Development
 
 ```{toctree}
 :maxdepth: 1
@@ -62,7 +62,7 @@ development/code_of_conduct
 
 ```
 
-## ℹ️ About
+## About
 
 ```{toctree}
 :maxdepth: 1

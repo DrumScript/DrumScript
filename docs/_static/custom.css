@@ -1,10 +1,15 @@
-/* developer_docs/_static/custom.css */
+/* docs/_static/custom.css */
 
-/* --- Import a modern font (optional, but nice) */  /* <--- ADDED CLOSING TAG */
-/*@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');*/
+/* --- Resize Logo (Desktop & Mobile) --- */
+.sy-head .sy-brand img,
+.sy-drawer .sy-brand img {
+    height: 60px !important;  /* Change 60px to whatever size you want */
+    width: auto !important;   /* Keeps the aspect ratio correct */
+    max-height: none !important; /* Removes any default limits */
+}
 
-/* Adjust the height and width as needed */
-.sy-header .sy-brand img {
-    height: 40px; 
-    width: auto;
+/* Optional: If the logo makes the header feel cramped, add some vertical breathing room */
+.sy-head {
+    padding-top: 10px;
+    padding-bottom: 10px;
 }

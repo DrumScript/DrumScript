@@ -56,8 +56,8 @@ api
 :maxdepth: 1
 :caption: Development
 
-development/contributing
-development/testing
+development/contributing_guidance
+development/testing_guidance
 development/code_of_conduct
 
 ```

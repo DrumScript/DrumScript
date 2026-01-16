@@ -13,6 +13,7 @@
 
 guide/installation
 guide/usage
+guide/glossary
 
 ```
 
@@ -23,8 +24,8 @@ guide/usage
 :caption: User Guide
 
 guide/configuration
-guide/glossary
 guide/usage
+guide/glossary
 guide/installation
 
 ```
@@ -38,8 +39,9 @@ guide/installation
 theory/drum_notation_guide
 theory/dsp_background
 theory/bibliography
-theory/sources
 theory/how_it_works
+theory/percussion_frequencies
+theory/sources
 theory/tempo_estimation
 
 ```
@@ -60,9 +62,9 @@ api
 :maxdepth: 1
 :caption: Development
 
+development/code_of_conduct
 development/contributing_guidance
 development/testing_guidance
-development/code_of_conduct
 
 ```
 

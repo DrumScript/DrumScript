@@ -67,7 +67,7 @@ html_theme_options = {
     "nav_links": [
         {"title": "Getting Started", "url": "index"},
         {"title": "API Reference", "url": "api"},
-        {"title": "Development", "url": "contributor_guidance"},
+        {"title": "Development", "url": "development/contributor_guidance"},
     ]
 }
 

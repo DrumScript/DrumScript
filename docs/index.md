@@ -32,13 +32,12 @@ guide/usage
 :caption: Theory
 
 theory/drum_notation_guide
-theory/dsp_background
-theory/bibliography
+theory/digital_signal_processing
 theory/how_it_works
 theory/percussion_frequencies
-theory/sources
-theory/tempo_estimation
+theory/bibliography
 guide/glossary
+
 ```
 
 ## API Reference

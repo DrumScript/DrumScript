@@ -23,6 +23,7 @@ guide/installation
 
 guide/configuration
 guide/usage
+guide/tempo_estimation
 ```
 
 ## Theory & Background

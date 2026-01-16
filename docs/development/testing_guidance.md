@@ -1,4 +1,4 @@
-## **Testing Documentation**
+# **Testing Documentation**
 
 <!--date_created: sat-21-june-2025-->
 <!--date_updated: fri-12-dec-2025-->
@@ -10,11 +10,11 @@ It leverages **advanced audio signal processing** and **machine learning** to de
 **[Package Structure](repository_structure.md)** **[README.md](README.md)**
 
 ---
-### Modules
+## Modules
 
-#### **`audio_processor/`**
+### **`audio_processor/`**
 
-##### `audio_loader.py`
+#### `audio_loader.py`
 
 ```
 python3 audio_processor/audio_loader.py <path_to_audio_file.mp3>
@@ -37,7 +37,7 @@ Audio playback finished.
 audio_loader.py example finished.
 ```
 
-##### `feature_extractor.py`
+#### `feature_extractor.py`
 
 ```
 python3 audio_processor/feature_extractor.py
@@ -90,7 +90,7 @@ feature_extractor.py example finished.
 DrumScript %
 ```
 
-##### `onset_detector.py`
+#### `onset_detector.py`
 
 ```
 python3 audio_processor/onset_detector.py
@@ -134,7 +134,7 @@ onset_detector.py example finished.
 DrumScript %  -
 ```
 
-##### `tempo_detector.py`
+#### `tempo_detector.py`
 
 ```
 python3 audio_processor/tempo_detector.py <path_to_audio_file.mp3>
@@ -148,7 +148,7 @@ Loaded audio: Shape=(324288,), Sample Rate=44100, Duration=14.71 seconds
 Estimated Tempo: 177 BPM
 ```
 
-##### `tempogram.py`
+#### `tempogram.py`
 
 ```
 python3 audio_processor/tempogram.py <path_to_audio_file.mp3>
@@ -163,10 +163,11 @@ Estimated Tempo: 177 BPM
 Tempogram saved to: `DrumScript/visuals/tempogram.png`
 ```
 
-#### **`drum_classifier/`**
+### **`drum_classifier/`**
 
 **PLEASE NOTE:**[Testing instructions to be added for the new rule-based classifier scripts: `classify.py` and `generate_score.py`]
 
+<!--TO DO: Add in missing fcts and modules-->
 
 ---
 <!--END-->

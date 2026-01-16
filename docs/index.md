@@ -62,7 +62,7 @@ api
 :caption: Development
 
 development/code_of_conduct
-development/contributing_guidance
+development/contributor_guidance
 development/testing_guidance
 
 ```

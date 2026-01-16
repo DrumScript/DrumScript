@@ -84,5 +84,5 @@ from drumscript.audio_processor.audio_loader import AudioLoader
 loader = AudioLoader()
 
 # Load audio (returns audio time series and sample rate)
-y, sr = loader.load_audio("path/to/drum_stem.wav")
+y, sr = loader.load_audio("path/to/drum_stem.wav") 
 ```

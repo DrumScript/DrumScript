@@ -3,6 +3,7 @@
 Copies of the academic papers and reference charts used to build DrumScript are available below.
 
 ## Academic Papers
+
 * [**Hybrid Transformers for Music Source Separation**](https://arxiv.org/pdf/2211.08553)  
     *The foundational paper for the Demucs engine.*
 * [**Real-Time Automatic Drum Transcription**](https://publica-rest.fraunhofer.de/server/api/core/bitstreams/ff50d62d-1f2d-47c6-86b4-1e52c603b630/content)  
@@ -13,12 +14,13 @@ Copies of the academic papers and reference charts used to build DrumScript are 
 * [**Transcription and Separation of Drum Signals From Polyphonic Music**](https://perso.telecom-paristech.fr/grichard/Publications/ASLP_Gillet08.pdf)
 * [**An algorithm for detecting and labeling drum events in polyphonic music**](https://www.researchgate.net/publication/228371926_An_algorithm_for_detecting_and_labeling_drum_events_in_polyphonic_music)
 * [**MT3: Multi-Task Multi-Track Music Transcription**](https://openreview.net/pdf?id=iMSjopcOn0p)
-    *Google MT3 Transcription Engine paper*
+    *Google MT3 Transcription Engine paper*s
 * [**Increasing Drum Transcription Vocabulary Using Data Synthesis**](https://markcartwright.com/files/cartwright2018increasing.pdf)
 * [**Sequence-to-Sequence Piano Transcription with Transformers**](https://archives.ismir.net/ismir2021/paper/000030.pdf)
     *Google Research*
 
 ## Standards & Charts
+
 * [**General MIDI Percussion Key Map**](https://musescore.org/sites/musescore.org/files/General%20MIDI%20Standard%20Percussion%20Set%20Key%20Map.pdf)  
     *The standard mapping of notes to drum sounds (e.g., 36 = Kick).*
 * [**Midi Frequency Table**](theory/midi_frequency_table.png)

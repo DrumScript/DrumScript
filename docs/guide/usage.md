@@ -1,20 +1,41 @@
 # Usage Guide
 
 ## Quick Start
-Transcribe a drum beat in three lines of code:
+
+### Load Audio
 
 ```python
 import drumscript as ds
 
-# 1. Load your audio
-audio = ds.load("beat.wav")
+# 1. Load your audio into an .env
+load_audio = ds.load_audio("path_to_audio.wav")
 
-# 2. Transcribe to sheet music
-score = ds.transcribe(audio)
-
-# 3. Save as PDF
-score.export("output.pdf")
+# or
+# load_audio = ds.load_audio("path_to_audio.mp3") # for mp3
 ```
+
+### Extract Drums from a Song
+
+```python
+# 2. Extract drums from a song and save to local path
+extract_drums = ds.extract_drum_stem("path_to_audio.wav")
+
+# or
+
+# extract_drums = ds.extract_drum_stem("path_to_audio.mp3")
+
+```
+
+### Produce backing track (without drums)
+
+```python
+
+
+```
+
+<!--`DrumScript` accepts the default format of `.wav` if the `--mp3` flag is not specified.-->
+
+
 
 ### Command Line Interface
 

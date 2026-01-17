@@ -69,7 +69,7 @@ def main(input_audio_path: str,
                 return
 
         # 2. Analysis Pipeline
-        print("...Loading & Analyzing Audio...")
+        print("...Loading & Analysing Audio...")
         sr = SAMPLE_RATE
         y, sr = audio_loader.load_audio(audio_path, sr=SAMPLE_RATE)
         y = audio_loader.normalise_audio(y) 
@@ -156,7 +156,7 @@ def main(input_audio_path: str,
                 return
 
         # 2. Analysis Pipeline
-        print(f"...Loading & Analyzing Audio ({Path(audio_path).name})...")
+        print(f"...Loading & Analysing Audio ({Path(audio_path).name})...")
         y, sr = audio_loader.load_audio(audio_path)
         y = audio_loader.normalise_audio(y) 
         

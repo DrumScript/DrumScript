@@ -5,6 +5,24 @@ API Reference
 
 This is the auto-generated API reference for DrumScript.
 
+
+   The examples below assume you have imported the package as:
+   
+   .. code-block:: python
+
+      import drumscript as ds
+
+Configuration & Constants
+-------------------------
+DrumScript uses a set of global constants to ensure audio processing consistency. 
+These are **not** hidden magic numbers; they are exposed here for transparency.
+
+.. autosummary::
+   :toctree: generated
+   :recursive:
+
+   drumscript.notation_generator.constants
+
 Core Functions
 --------------
 .. autosummary::

@@ -2,7 +2,7 @@
 
 ## Prerequisites
 * **Python:** 3.9 or higher
-* **System Tools:** `FFmpeg` (for audio)
+* **System Tools:** `FFmpeg` (for `.mp3` users only)
 
 ```bash
 uv pip install drumscript

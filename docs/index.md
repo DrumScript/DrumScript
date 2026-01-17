@@ -1,6 +1,28 @@
 # `DrumScript` Documentation
 
-<!--**`DrumScript`** is a Python suite that converts drum audio into sheet music, as well as provides a range of tools to assist in sound audio manipulation. It leverages audio signal processing and a rule-based classification engine to detect individual drum hits, transcribe them into a **musical score**, and export them as `.pdf` files. -->
+**DrumScript** is an open-source Python library and CLI tool designed for drummers and audio engineers. 
+
+While its core mission is **Automatic Drum Transcription (ADT)** (converting drum recordings into sheet music), it also functions as a powerful **Audio Toolbox** for isolating instruments, creating backing tracks, and analysing rhythm.
+
+
+## What can DrumScript do?
+
+### 1. Audio-to-Sheet Music (Transcription)
+Give DrumScript a recording of a drum beat, and it will generate a **PDF Score**.
+* **Smart Detection:** Uses signal processing to detect Kicks, Snares, and Hi-Hats.
+* **Tempo Aware:** Automatically calculates BPM.
+* **Customizable:** Supports custom time signatures (e.g., `3/4`, `6/8`).
+
+### 2. Stem Splitting (The "De-Mixer")
+Powered by **Demucs** (Hybrid Transformer Source Separation), DrumScript can un-mix a full song.
+* **Isolate Drums:** Extract *just* the drum track from a full mix to study the groove.
+* **Isolate Bass:** Extract *just* the bass line to practice locking in.
+* **Separate Everything:** Explode a song into 4 stems: `Drums`, `Bass`, `Vocals`, `Other`.
+
+### 3. Backing Track Generator
+Want to play along to your favorite song but the drums are in the way?
+* **Drumless Tracks:** Automatically remove the drums from any `.mp3` or `.wav` to create a play-along track.
+* **Bassless Tracks:** Mute the bass to practice your low-end theory.
 
 `DrumScript` is an open-source Python library that converts drum audio (in `.mp3`, or `.wav`) to `.pdf` sheet music. It contains functions for you to **automatically measure tempo of drum-only audio using Tempogram-first principles**. `DrumScript` is unique to any other library because **we do not use machine learning or AI**. Our classification approach is a **deterministic** one. 
 

@@ -2,10 +2,10 @@
 # The owner will be automatically requested for review when these files change.
 
 # Default: The DrumScript admin team owns everything
-* @DrumScript-Admin
+* @drumscript-admin @victoria-mckinney @bellescoincidences
 
-# Specific owners for documentation
-/docs/  @VictoriaMcKinney
+# Specific owners for repo
+/DrumScript/ @drumscript-admin @victoria-mckinney @bellescoincidences
 
 # Specific owners for the core engine
-/drumscript/audio_processor/ @DSP-Wizard-User
+/drumscript/ @drumscript-admin @victoria-mckinney @bellescoincidences

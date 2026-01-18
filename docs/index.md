@@ -94,6 +94,7 @@ api
 
 development/code_of_conduct
 development/contributor_guidance
+development/documentation
 development/testing_guidance
 
 ```

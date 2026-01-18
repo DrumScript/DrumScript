@@ -8,7 +8,6 @@ Key Folders:
 /guide          -> User-focused tutorials (Installation, Usage).
 /theory         -> Explanations, Background Science, and Notation Guides.
     /images     -> PNG/JPG assets for theory pages.
-    /references -> PDF academic papers and cheat sheets.
 /development    -> Guides for code contributors (Testing, Code of Conduct).
 /_static        -> Website assets (Logos, Custom CSS).
 /_build         -> The output folder (Generated HTML lives here).

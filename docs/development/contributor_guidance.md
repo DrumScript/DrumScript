@@ -29,8 +29,11 @@ This document outlines the project's philosophy, how to set up your environment,
 We have the skeleton (stem splitting, tempo detection, onset detection). We need help building the **Classifier Logic**. If you can look at a spectrogram and say *"That's a ride cymbal because it has high energy above 8kHz and a long decay,"* we need you to help us write that rule into code!
 
 ---
+## `CODEOWNERS`
 
+We use the GitHub tool of assigning code 'owners' to the `DrumScript` repository. In the earliest release phases for the library only founding users will be on the `CODEOWNERS` documentation; but as people volunteer to contribute we will expand the scope of the `CODEOWNERS` doc. See [GitHub CODEOWNERS guidance](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners) for more information, or if this will be your first time contributing to an open-source project.
 
+---
 ##  How to Get Started
 ### 1. Prerequisites
 

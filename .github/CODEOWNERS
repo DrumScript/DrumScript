@@ -1,0 +1,11 @@
+# This file defines who owns which files.
+# The owner will be automatically requested for review when these files change.
+
+# Default: The DrumScript admin team owns everything
+* @DrumScript-Admin
+
+# Specific owners for documentation
+/docs/  @VictoriaMcKinney
+
+# Specific owners for the core engine
+/drumscript/audio_processor/ @DSP-Wizard-User

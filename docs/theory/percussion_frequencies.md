@@ -1,4 +1,4 @@
-## **Percussion Frequencies**
+# **Percussion Frequencies**
 
 <!--date_created:weds-16-jul-2025-->
 <!--date_updated:weds-16-jul-2025-->
@@ -12,7 +12,7 @@ The following document outlines two **Markdown tables** with reference frequenci
 These references can be used to inform in testing the model
 
 ---
-### Glossary
+## Glossary
 
 
 **Fundamental/Body:** This refers to the core, lowest, and often most prominent pitch or "weight" of an instrument's sound. It's what gives a drum its "thud" or a maraca its central "shhh." Boosting this area adds fullness and perceived power.
@@ -33,7 +33,7 @@ These describe the dominant, characteristic sound or timbre of specific percussi
 
 
 ---
-### Standard Drumkit
+## Standard Drumkit
 
 
 |**Drum Part**	|**Aspect**	|**Typical Frequency Range (Hz)**	|**Notes & Characteristics**|
@@ -61,7 +61,7 @@ These describe the dominant, characteristic sound or timbre of specific percussi
 
 ---
 
-### Percussion
+## Percussion
 
 |**Instrument Part**	|**Aspect**	|**Typical Frequency Range (Hz)**	|**Notes & Characteristics**|
 |-|-|-|-|

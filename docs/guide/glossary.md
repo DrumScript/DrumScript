@@ -7,8 +7,9 @@
 
 ---
 
-# **Python Libraries & Classes**
-## [`Librosa`](#librosa)
+## **Python Libraries & Classes**
+
+### [`Librosa`](#librosa)
 
 > **Python library**
 
@@ -24,7 +25,7 @@
 In `DrumScript`, `librosa` is crucial because it's the underlying library that `audio_loader.py`, `feature_extractor.py`, and `onset_detector.py` use to actually perform the **low-level audio processing** and extract the characteristics of your **drum sound** and **audio recordings**. `Librosa`'s beat and tempo detection functions are specifically used in the `tempo_detector.py` and `tempogram.py` scripts.
 
 
-## `StemSplitter`
+### `StemSplitter`
 
 > **Class**
 
@@ -38,14 +39,14 @@ In `DrumScript`, `librosa` is crucial because it's the underlying library that `
 >   drum_path = splitter.split_drums(*song.mp3*, *./stems*)
 >   ```
 
-## `Demucs`
+### `Demucs`
 
 > **External Library / Model**
 
 * **Meaning:** A state-of-the-art music source separation model architecture. `DrumScript` wraps this technology to isolate drum frequencies from complex audio mixes, ensuring the classification engine receives clean drum audio even from full songs.
 
 <!--
-## [`MuseScore`](#musescore)
+### [`MuseScore`](#musescore)
 
   - [`MuseScore`](https://musescore.org/%5D\(https://musescore.org/\)) [source code here](https://github.com/musescore/MuseScore) is a popular, free, and open-source **music notation software**. It provides a comprehensive environment for **creating, editing, printing**, and **playing back sheet music**.
   - `MuseScore` offers a wide range of features for **composing and arranging music**, such as:
@@ -63,7 +64,7 @@ In `DrumScript`, `MuseScore` is crucial because `music21` can be configured to u
 
 # Definitions
 
-## `Discrete Fourier Transform` (`DFT`)
+### `Discrete Fourier Transform` (`DFT`)
 
 > ***Mathematics***
 
@@ -73,7 +74,7 @@ In `DrumScript`, `MuseScore` is crucial because `music21` can be configured to u
   * **Example:**
 > Imagine you have a discrete sequence of numbers, such daily temperature readings for a city over a year. **The DFT can analyse this data to tell you if there are dominant cycles**, such as a strong yearly temperature cycle, a weaker weekly cycle (e.g., *warmer weekends*), or even daily temperature fluctuations (if the data were more granular).
 
-## `Fast Fourier Transform` (`FFT`)
+### `Fast Fourier Transform` (`FFT`)
 
 > ***Mathematics***
 
@@ -83,7 +84,7 @@ In `DrumScript`, `MuseScore` is crucial because `music21` can be configured to u
   * **Example:**
 > Given a finite set of digital audio samples, the FFT quickly calculates the exact set of sine and cosine waves (each with a specific frequency and strength) that, when added together, perfectly reconstruct the original sequence of samples. This transformation is crucial for analyzing digital signals in frequency domain.--\>
 
-## `hop_length`
+### `hop_length`
 
 > ***Variable***
 
@@ -97,7 +98,7 @@ In `DrumScript`, `MuseScore` is crucial because `music21` can be configured to u
 
 > There us a **more detailed explanation of `hop_length`**, along with calculated examples in the **[README.md](#README.md#faqs)**
 
-## `n_fft`
+### `n_fft`
 
 > ***Variable***
 
@@ -107,7 +108,7 @@ In `DrumScript`, `MuseScore` is crucial because `music21` can be configured to u
   * **Example:**
 > If **`n_fft= 2048`**, the analysis looks at **2048 samples** **at a time** to determine frequencies. If your `audio_segment` is **shorter than 2048 samples**, you get a warning.
 
-## `sample_rate` (`sr`)
+### `sample_rate` (`sr`)
 
 > ***Variable***
 
@@ -129,7 +130,7 @@ In `DrumScript`, `MuseScore` is crucial because `music21` can be configured to u
 > If **`sr=22050 (Hz),`** and the **`input_signal`** of **one of your drum notes** is *`1744 milliseconds`* in length, then your **`sample_rate = ~38450 samples`**
 ```
 
-## Spectral Centroid = *Brightness* or *Center of Gravity* (`sc`)
+### Spectral Centroid = *Brightness* or *Center of Gravity* (`sc`)
 
 Imagine the full range of sound (Frequency Spectrum) is a long seesaw or balance beam.
 

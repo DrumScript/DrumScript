@@ -163,11 +163,11 @@ Estimated Tempo: 177 BPM
 Tempogram saved to: `DrumScript/visuals/tempogram.png`
 ```
 
-### **`drum_classifier/`**
+#### **`drum_classifier/`**
 
 **PLEASE NOTE:**[Testing instructions to be added for the new rule-based classifier scripts: `classify.py` and `generate_score.py`]
 
-<!--TO DO: Add in missing fcts and modules-->
+<!--TO DO: Add in (any) missing fcts and modules-->
 
 ---
 <!--END-->

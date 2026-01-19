@@ -1,11 +1,11 @@
-## **Theory Sources**
+# **Theory Sources**
 
 This is a document that outlines the sources of various files provided in the `DrumScript/theory/` folder.
 <!--date_created:weds-06-august-2025-->
 <!--date_updated:mon-24-november-2025-->
 
 ---
-### Sources
+## Sources
 
 > **NOTE:** **All theory and sources** listed here are free-to-use at the time of sharing, and are **non-affiliated** with the `CODEOWNERS` of `DrumScript`.
 
@@ -35,7 +35,7 @@ https://usermanuals.finalemusic.com/SongWriter2012Win/Content/PercussionMaps.htm
 
 
 ---
-### Other useful references:
+## Other useful references:
 
 * **[Everything Producers Need To Know About Drum Maps](https://ask.video/article/audio/everything-producers-need-to-know-about-drum-maps)**
 * **[Midi2Sheet Music (Melobytes app)](https://melobytes.com/en/app/midi2sheet)**

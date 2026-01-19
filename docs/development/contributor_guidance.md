@@ -44,7 +44,7 @@ Before you begin, ensure you have the following installed:
 * **`uv`:** A fast Python package installer and dependency resolver.
     * *Install:* `curl -LsSf https://astral.sh/uv/install.sh | sh` (macOS/Linux) or see [uv docs](https://astral.sh/uv/install/).
 * **`ffmpeg`:** Required for audio processing.
-> **We provide a utility script for installing `ffmpeg` in [`.drumscript/utils/ffmpeg_installer.py`](drumscript/utils/ffmpeg_installer.py)**. See also **[`ffmpeg` guidance](https://www.ffmpeg.org/download.html)**
+> **We provide a utility script for installing `ffmpeg` in [`.drumscript/utils/ffmpeg_installer.py`](../../drumscript/utils/ffmpeg_installer.py)**. See also **[`ffmpeg` guidance](https://www.ffmpeg.org/download.html)**
 
 ### 2. Clone the Repository
 

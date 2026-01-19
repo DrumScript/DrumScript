@@ -71,8 +71,7 @@ html_theme_options = {
         {"title": "Theory", "url": "theory/drum_notation_guide"},
         {"title": "Release Notes", "url": "release_notes/index"},
 
-    ],
-    "version_dropdown": True # Versions drop-down on Documentation site
+    ]
 }
 
 html_context = {

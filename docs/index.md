@@ -43,7 +43,6 @@ Want to play along to your favorite song but the drums are in the way?
 ```{toctree}
 :maxdepth: 1
 :caption: Getting Started
-
 guide/installation
 
 ```
@@ -54,6 +53,7 @@ guide/installation
 :maxdepth: 1
 :caption: User Guide
 
+guide/cli_reference
 guide/configuration
 guide/usage
 ```

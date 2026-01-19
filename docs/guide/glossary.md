@@ -1,12 +1,5 @@
 # **Glossary of Terms**
 
-<!--DrumScript-->
-
-<!--date_created: weds-25-june-2025-->
-<!--date_updated: tues-30-dec-2025-->
-
----
-
 ## **Python Libraries & Classes**
 
 ### [`Librosa`](#librosa)
@@ -153,7 +146,3 @@ The **Spectral Centroid** is the **exact point** where you would place your fing
 > 
 > ...sometimes, feature extraction can struggle to deal with this conflict.
 >
-
----
-
-<!--END-->

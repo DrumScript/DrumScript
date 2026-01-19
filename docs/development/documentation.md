@@ -5,7 +5,7 @@ We use [`Sphinx`](https://www.sphinx-doc.org/en/master/) for `DrumScript` docume
 
 ## `DrumScript` documentation structure
 
-See [`here`](docs/FOLDER_STRUCTURE.txt) and below
+See [`here`](../FOLDER_STRUCTURE.txt) and below
 
 ```text
 DrumScript Documentation Structure

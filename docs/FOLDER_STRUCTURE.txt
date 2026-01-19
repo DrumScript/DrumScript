@@ -9,6 +9,7 @@ Key Folders:
 /theory         -> Explanations, Background Science, and Notation Guides.
     /images     -> PNG/JPG assets for theory pages.
 /development    -> Guides for code contributors (Testing, Code of Conduct).
+/release_notes  -> Documentation related to `DrumScript` releases.
 /_static        -> Website assets (Logos, Custom CSS).
 /_build         -> The output folder (Generated HTML lives here).
 

@@ -69,6 +69,8 @@ html_theme_options = {
         {"title": "API Reference", "url": "api"},
         {"title": "Development", "url": "development/contributor_guidance"},
         {"title": "Theory", "url": "theory/drum_notation_guide"},
+        {"title": "Release Notes", "url": "release_notes/index"},
+
     ]
 }
 

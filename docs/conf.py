@@ -71,14 +71,15 @@ html_theme_options = {
         {"title": "Theory", "url": "theory/drum_notation_guide"},
         {"title": "Release Notes", "url": "release_notes/index"},
 
-    ]
+    ],
+    "version_dropdown": True # Versions drop-down on Documentation site
 }
 
-# Optional: Add your context for the "Edit on GitHub" button
 html_context = {
     "source_type": "github",
     "source_user": "DrumScript",
     "source_repo": "DrumScript",
+    "versions_url": "/versions.json",
 }
 
 

@@ -1,0 +1,14 @@
+{
+  "list": [
+    {
+      "name": "0.1.0 (Alpha)",
+      "version": "0.1.0",
+      "url": "https://drumscript.io/v0.1.0/"
+    },
+    {
+      "name": "Development",
+      "version": "dev",
+      "url": "https://drumscript.io/dev/"
+    }
+  ]
+}

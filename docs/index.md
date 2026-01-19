@@ -43,8 +43,8 @@ Want to play along to your favorite song but the drums are in the way?
 ```{toctree}
 :maxdepth: 1
 :caption: Getting Started
-guide/installation
 
+guide/installation
 ```
 
 ## User Guide
@@ -73,7 +73,6 @@ theory/percussion_frequencies
 theory/bibliography
 guide/glossary
 theory/sources
-
 ```
 
 ## API Reference
@@ -83,7 +82,6 @@ theory/sources
 :caption: API Reference
 
 api
-
 ```
 
 ## Development
@@ -96,7 +94,6 @@ development/code_of_conduct
 development/contributor_guidance
 development/documentation
 development/testing_guidance
-
 ```
 
 ## About
@@ -104,5 +101,4 @@ development/testing_guidance
 ```{toctree}
 :maxdepth: 1
 :caption: Project Info
-
 about

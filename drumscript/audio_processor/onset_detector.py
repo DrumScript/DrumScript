@@ -77,8 +77,7 @@ def detect_onsets(audio_data: np.ndarray, sr: int) -> list[float]:
     # No longer needed because onset_detect now returns time directly.
     # onset_times = librosa.frames_to_time(onset_frames, sr=SAMPLE_RATE) # onset_time is in seconds, *1000 to get ms. This is fed into final output .json when transcription is run
 
-
-    return onset_times.tolist()
+    return onset_times.tolist() 
 
 #------- AUTOMATIC TEMPO DETECTION------------------------------------
 # REPLACED THE FUNCTION THAT WAS HARDCODED TO DETECT TEMPO FROM ONSETS WITH IMPORTED FCT FROM THE TEMPO_DETECTOR SCRIPT
@@ -150,6 +149,7 @@ if __name__ == "__main__":
         #print("\nDetecting onsets from test.mp3/test.wav...")
         onsets = detect_onsets(normalised_audio, sample_rate)
         print(f"Detected {len(onsets)} onsets.")
+
 
         if onsets:
             # Print the first few detected onsets for verification

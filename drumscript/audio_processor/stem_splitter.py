@@ -36,7 +36,7 @@ def separate_audio(input_audio_path: str, output_format: str = "wav", drumless: 
     :type input_audio_path: str
     :param output_format: 'wav' or 'mp3', defaults to 'wav'.
     :type output_format: str, optional
-    :param drumless: If True, generates a track with everything EXCEPT drums.
+    :param drumless: If True, generates a track with everything EXCEPT drums, but also saves the drum only output
     :type drumless: bool, optional
     :param mute: List of stems to exclude (e.g., ['bass']).
     :type mute: list, optional

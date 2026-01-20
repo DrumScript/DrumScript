@@ -56,7 +56,7 @@ def detect_onsets(audio_data: np.ndarray, sr: int) -> list[float]:
         backtrack=True
     )
 
-    onset_times = librosa.frames_to_time(onset_frames, sr=SAMPLE_RATE)
+    onset_times = librosa.frames_to_time(onset_frames, sr=SAMPLE_RATE) # onset_time is in seconds, *1000 to get ms. This is fed into final output .json when transcription is run
 
     return onset_times.tolist()
 

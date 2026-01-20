@@ -214,7 +214,7 @@ if __name__ == '__main__':
     parser.add_argument("--full", action="store_true", help="Transcribe the full song (isolates drums first)")
     
     # Stem Splitter arguments
-    parser.add_argument("--drumless", action="store_true", help="Extract a drumless backing track")
+    parser.add_argument("--drumless", action="store_true", help="Extract a drumless backing track. Saves both the backing track and the drum-only audio")
     parser.add_argument("--mute", type=str, action='append', help="Mute specific stems (e.g. --mute bass). Can be used multiple times.")
     parser.add_argument("--all-stems", action="store_true", help="Export all individual stems")
     parser.add_argument("--format", type=str, default="wav", choices=["wav", "mp3"], help="Output format for stems (default: wav)")

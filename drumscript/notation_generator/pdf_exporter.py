@@ -12,6 +12,8 @@ from reportlab.lib import colors
 import music21
 from drumscript.notation_generator import constants
 from datetime import datetime
+from drumscript.audio_processor.tempo_detector import estimate_tempo
+
 
 # print("\n# ------------------------------------------------------------------------------------")
 # datetimestamp = datetime.now()
@@ -120,6 +122,7 @@ def export_pdf(detected_events, output_filepath, tempo, time_signature="4/4"):
         numerator, denominator = map(int, time_signature.split('/'))
     except ValueError:
         numerator, denominator = 4, 4
+
     
     print(f"Generating PDF: {output_filepath} (Sig: {numerator}/{denominator}, {int(tempo)} BPM)")
 

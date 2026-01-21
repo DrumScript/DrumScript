@@ -1,6 +1,6 @@
-# **Theory Sources**
+# **`Theory/` Sources**
 
-This is a reference document that outlines the sources of various files provided in the `DrumScript/theory/` folder.
+This is a reference document that outlines the sources of various files and images, reference pdfs provided in the `DrumScript/theory/` folder and sub-folders.
 <!--date_created:weds-06-august-2025-->
 <!--date_updated:weds-21-january-2026-->
 

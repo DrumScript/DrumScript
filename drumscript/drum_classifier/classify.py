@@ -12,11 +12,7 @@ import librosa
 import numpy as np
 
 from drumscript.notation_generator import constants
-from drumscript.notation_generator.constants import (
-    DRUM_NOTATION_MAP,
-    N_FFT,
-    SAMPLE_RATE,
-)
+from drumscript.notation_generator.constants import DRUM_NOTATION_MAP, N_FFT, SAMPLE_RATE
 
 # from datetime import datetime
 

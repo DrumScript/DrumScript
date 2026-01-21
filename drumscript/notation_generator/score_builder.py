@@ -12,9 +12,9 @@ from drumscript.audio_processor import audio_loader, onset_detector, feature_ext
 from drumscript.notation_generator.pdf_exporter import export_pdf
 from datetime import datetime
 
-# print("\n# ------------------------------------------------------------------------------------")
-# datetimestamp = datetime.now()
-# print(f'\ndate/time: {datetimestamp}')
+print("\n# ------------------------------------------------------------------------------------")
+datetimestamp = datetime.now()
+print(f'\ndate/time: {datetimestamp}')
 
 
 def build_score(
@@ -82,4 +82,4 @@ def build_score(
         import traceback
         traceback.print_exc()
 
-# print("\n# ------------------------------------------------------------------------------------")
+print("\n# ------------------------------------------------------------------------------------")

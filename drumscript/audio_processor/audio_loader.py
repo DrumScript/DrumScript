@@ -111,7 +111,7 @@ def normalise_audio(audio_data: np.ndarray) -> np.ndarray:
 # MAIN BLOCK
 if __name__ == "__main__":
     from drumscript.audio_processor.tempo_detector import estimate_tempo
-    print("\n#=============================================================================================")
+    # print("\n#=============================================================================================")
     print("Running audio_loader.py example with actual MP3/WAV...")  # FUTURE: Find way to encode this so it prints the file path provided in CLI
 
     # Set up argument parser

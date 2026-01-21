@@ -13,9 +13,9 @@ import music21
 from drumscript.notation_generator import constants
 from datetime import datetime
 
-print("\n# ------------------------------------------------------------------------------------")
-datetimestamp = datetime.now()
-print(f'\ndate/time: {datetimestamp}')
+# print("\n# ------------------------------------------------------------------------------------")
+# datetimestamp = datetime.now()
+# print(f'\ndate/time: {datetimestamp}')
 
 # --- Configuration Constants ---
 PAGE_WIDTH, PAGE_HEIGHT = A4
@@ -191,5 +191,5 @@ def export_pdf(detected_events, output_filepath, tempo, time_signature="4/4"):
                     draw_note(c, note_x, note_y, note_head, current_y)
 
     c.save()
+    # print("\n# ------------------------------------------------------------------------------------")
     print(f"PDF successfully saved to: {output_filepath}")
-    print("\n# ------------------------------------------------------------------------------------")

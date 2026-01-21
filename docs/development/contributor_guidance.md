@@ -1,6 +1,6 @@
 # Contributing to `DrumScript`
 <!--date_created: thurs-03-jul-2025 -->
-<!--date_updated: tues-13-jan-2026 -->
+<!--date_updated: weds-21-jan-2026 -->
 
 
 
@@ -81,7 +81,7 @@ pre-commit install
 
 1. Install `[dev]` dependencies:
 
-> For simplicity ••all•• of the dependencies you will need for contributing to `DrumScript` have been grouped into one clean dependency group, which we have called `[dev]`. You might not need everything, ie `sphinx` (which is for the documentation website), but nevertheless it simplifies the development process by having all the optionals in one place
+> For simplicity **all** of the dependencies you will need for contributing to `DrumScript` have been grouped into one clean dependency group, which we have called `[dev]`. You might not need everything, ie `sphinx` (which is for the documentation website), or `ipykernel` (for running Jupyter notebooks), but nevertheless it simplifies the development process by having all the optionals in one place.
 
 ```zsh
 uv pip install -e ".[dev]"

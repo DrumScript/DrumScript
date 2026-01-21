@@ -6,7 +6,7 @@ This script defines ALL parameters used throughout modules in DrumScript
 
 # n_fft = 2048
 # N_FFT = 1024 # N_FFT is the 'size of the window for the fourier transform" N_FFT = 1024 (Frequency Resolution)
-N_FFT = 1024 # This is the size of the analysis window for the Fourier Transform, which breaks the sound down into its constituent frequencies. A larger N_FFT gives you a more detailed picture of which frequencies are present but a less precise idea of exactly when they happened. If you increase it (e.g., to 2048): You get a very precise frequency analysis, which could help distinguish two very similar-sounding cymbals. If you decrease it (e.g., to 512): You get better timing precision but a "blurrier" picture of the frequencies.
+N_FFT = 512 # This is the size of the analysis window for the Fourier Transform, which breaks the sound down into its constituent frequencies. A larger N_FFT gives you a more detailed picture of which frequencies are present but a less precise idea of exactly when they happened. If you increase it (e.g., to 2048): You get a very precise frequency analysis, which could help distinguish two very similar-sounding cymbals. If you decrease it (e.g., to 512): You get better timing precision but a "blurrier" picture of the frequencies.
 
 DRUM_NOTATION_MAP = {
     # --- Bass Drums ---

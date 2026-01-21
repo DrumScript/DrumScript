@@ -63,19 +63,19 @@ def detect_onsets(audio_data: np.ndarray, sr: int) -> list[float]:
     
     #  Changed units from 'frames' to 'time' to get seconds directly.
     # This removes the need for the subsequent librosa.frames_to_time conversion.
-    onset_times = librosa.onset.onset_detect(
-        y=y_percussive,  # Use the percussive-only signal
-        sr=SAMPLE_RATE,
-        units='time',       # Request output directly in seconds (float)
+    # onset_times = librosa.onset.onset_detect(
+      #   y=y_percussive,  # Use the percussive-only signal
+      #  sr=SAMPLE_RATE,
+      #  units='time',       # Request output directly in seconds (float)
         #delta=0.0095,       # The sensitive delta is now effective and safe to use
         #wait=1,
-        pre_avg=8,
-        post_avg=8,
-        backtrack=True
-    )
+      #  pre_avg=8,
+      #  post_avg=8,
+      #  backtrack=True
+    #)
 
-    # No longer needed because onset_detect now returns time directly.
-    # onset_times = librosa.frames_to_time(onset_frames, sr=SAMPLE_RATE) # onset_time is in seconds, *1000 to get ms. This is fed into final output .json when transcription is run
+
+    onset_times = librosa.frames_to_time(onset_frames, sr=SAMPLE_RATE) # onset_time is in seconds, *1000 to get ms. This is fed into final output .json when transcription is run
 
     return onset_times.tolist() 
 

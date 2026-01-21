@@ -25,9 +25,11 @@ vector machine (SVM), Wiener filtering.*
     *Google MT3 Transcription Engine paper*.
 * [**Increasing Drum Transcription Vocabulary Using Data Synthesis**](https://markcartwright.com/files/cartwright2018increasing.pdf)
 * [**Sequence-to-Sequence Piano Transcription with Transformers**](https://archives.ismir.net/ismir2021/paper/000030.pdf)
-    *Magenta Lab, oogle Research*.
+    *Magenta Lab, Google Research*.
 * [**Computational Models of Similarity for Drum Samples**](https://staff.aist.go.jp/m.goto/PAPER/IEEETASLP200802pampalk.pdf)
     *Content-based similarity, drum sounds, percussive music instruments*.
+* [**librosa: Audio and Music Signal Analysis in Python**](https://proceedings.scipy.org/articles/Majora-7b98e3ed-003.pdf)
+    *Audio, Music, Signal Processing, Python, DSP*
 
 
 ## Standards & Charts

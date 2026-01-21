@@ -93,6 +93,7 @@ api
 development/code_of_conduct
 development/contributor_guidance
 development/documentation
+release_notes/0.1.0
 development/testing_guidance
 ```
 

@@ -29,6 +29,7 @@ https://usermanuals.finalemusic.com/SongWriter2012Win/Content/PercussionMaps.htm
 * **`Real-Time Automatic Drum Transcription Using Dynamic Few-Shot Learning`:**[https://publica-rest.fraunhofer.de/server/api/core/bitstreams/ff50d62d-1f2d-47c6-86b4-1e52c603b630/content](https://publica-rest.fraunhofer.de/server/api/core/bitstreams/ff50d62d-1f2d-47c6-86b4-1e52c603b630/content)
 * **`Midi Frequency Table`:** [source](https://www.phys.unsw.edu.au/jw/notes.html) - [table](theory/images/midi_frequency_table.png)
 * **`Computational Models of Similarity for Drum Samples`**(https://staff.aist.go.jp/m.goto/PAPER/IEEETASLP200802pampalk.pdf)
+* **`librosa: Audio and Music Signal Analysis in Python`** (https://proceedings.scipy.org/articles/Majora-7b98e3ed-003.pdf)
 
   
 

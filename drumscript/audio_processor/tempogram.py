@@ -18,7 +18,6 @@ from drumscript.audio_processor.audio_loader import load_audio, normalise_audio
 from drumscript.audio_processor.tempo_detector import estimate_tempo
 from drumscript.notation_generator.constants import SAMPLE_RATE, SEGMENT_LENGTH_SECONDS, N_FFT, NOISE_THRESH_SNARE, DRUM_NOTATION_MAP, ONSET_SLICE_DURATION_MS, HOP_LENGTH
 from drumscript.audio_processor import tempo_detector
-from drumscript.audio_processor.tempo_detector import estimate_tempo
 #from datetime import datetime
 
 #print("\n# ------------------------------------------------------------------------------------")

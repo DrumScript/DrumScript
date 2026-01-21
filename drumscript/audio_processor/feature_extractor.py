@@ -158,3 +158,52 @@ def extract_features_for_onsets(y: np.ndarray, sr: int, onset_times: List[float]
 
 # Uncomment to use, for clearer error logs
 # print("\n# ------------------------------------------------------------------------------------")
+
+"""# ALTERNATIVE FEATURE EXTRACTION FCT WITH PADDING TO PREVENT TOO HIGH NFFT ERRORS
+
+def extract_features(audio_segment: np.ndarray, sr: int = SAMPLE_RATE) -> dict:
+    
+    #Extracts spectral features from a short audio segment (slice).
+    #Includes safety padding for very short segments to prevent crashes.
+    
+    
+    # --- SAFETY PADDING (The Fix) ---
+    # Ensure the segment is at least as long as N_FFT
+    if len(audio_segment) < N_FFT:
+        # Calculate how much silence we need to add
+        padding_needed = N_FFT - len(audio_segment)
+        
+        # Pad with zeros (silence) on the right side only
+        # (mode='constant' defaults to 0)
+        audio_segment = np.pad(audio_segment, (0, padding_needed), mode='constant')
+
+    # --- Feature Extraction (High Quality) ---
+    try:
+        # Spectral Centroid (Brightness)
+        # We use the constants N_FFT and HOP_LENGTH here
+        spectral_centroid = librosa.feature.spectral_centroid(
+            y=audio_segment, sr=sr, n_fft=N_FFT, hop_length=HOP_LENGTH
+        )[0]
+        
+        # Spectral Bandwidth (Width)
+        spectral_bandwidth = librosa.feature.spectral_bandwidth(
+            y=audio_segment, sr=sr, n_fft=N_FFT, hop_length=HOP_LENGTH
+        )[0]
+        
+        # Zero Crossing Rate (Noisiness)
+        # Note: ZCR usually doesn't strictly depend on N_FFT but good to keep standard
+        zcr = librosa.feature.zero_crossing_rate(
+            y=audio_segment, hop_length=HOP_LENGTH
+        )[0]
+
+        # Return the mean (average) of these features for the single hit
+        return {
+            "sc": float(np.mean(spectral_centroid)),
+            "width": float(np.mean(spectral_bandwidth)),
+            "depth": float(np.mean(zcr)) # Mapping ZCR to 'depth' for your classifier
+        }
+
+    except Exception as e:
+        print(f"Warning: Feature extraction failed for segment of length {len(audio_segment)}: {e}")
+        # Return safe default values so the program doesn't crash
+        return {"sc": 0.0, "width": 0.0, "depth": 0.0}"""

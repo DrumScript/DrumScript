@@ -22,7 +22,7 @@ def build_score(
         
     detected_events: List[Dict[str, Any]],
     # tempo: int = 120,
-    tempo: int,
+    tempo: int, # <-- forces the caller to provide tempo
     output_filepath: str = "outputs/score.pdf",
     quantization_subdivision: int = 16, 
     time_signature: str = "4/4" 

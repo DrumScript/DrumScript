@@ -10,6 +10,7 @@ This is a reference document that outlines the sources of various files and imag
 > **NOTE:** **All theory and sources** listed here are free-to-use at the time of sharing, and are **non-affiliated** with the `CODEOWNERS` of `DrumScript`.
 
 * **`Beat Tracking by Dynamic Programming`**: [http://labrosa.ee.columbia.edu/](http://labrosa.ee.columbia.edu/)
+* **`libf0: A PYTHON LIBRARY FOR FUNDAMENTAL FREQUENCY ESTIMATION`**: [https://archives.ismir.net/ismir2022/latebreaking/000003.pdf](https://archives.ismir.net/ismir2022/latebreaking/000003.pdf)
 * **`Improving Perceptual Quality of Drum Transcription with the Expanded Groove MIDI Dataset.pdf`**: [https://magenta.withgoogle.com/oaf-drums](https://magenta.withgoogle.com/oaf-drums)
 * **`notating_pitch.png`**: [https://fundamentalsofmusictheory.umasscreate.net/unit-5/](https://fundamentalsofmusictheory.umasscreate.net/unit-5/)
 * **`basic_drumkit_keys.jpeg`:**[https://www.drumeo.com/beat/how-to-read-drum-music/?srsltid=AfmBOoqnBc3_-xDyvbFzvSLy5ESJ0QPZODdCIMR-I1kPvuTrjPsQAWQC](https://www.drumeo.com/beat/how-to-read-drum-music/?srsltid=AfmBOoqnBc3_-xDyvbFzvSLy5ESJ0QPZODdCIMR-I1kPvuTrjPsQAWQC)

@@ -9,6 +9,7 @@ Copies of the academic papers and reference charts used to build the `DrumScript
 *Links are embedded*
 
 * [**Beat Tracking by Dynamic Programming**](https://www.ee.columbia.edu/~dpwe/pubs/Ellis07-beattrack.pdf)
+* [**libf0: A PYTHON LIBRARY FOR FUNDAMENTAL FREQUENCY ESTIMATION**](https://archives.ismir.net/ismir2022/latebreaking/000003.pdf)
 * [**Hybrid Transformers for Music Source Separation**](https://arxiv.org/pdf/2211.08553)  
     *The foundational paper for the Demucs engine.*
 * [**Real-Time Automatic Drum Transcription**](https://publica-rest.fraunhofer.de/server/api/core/bitstreams/ff50d62d-1f2d-47c6-86b4-1e52c603b630/content)  

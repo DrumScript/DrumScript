@@ -1,8 +1,8 @@
 # **Theory Sources**
 
-This is a document that outlines the sources of various files provided in the `DrumScript/theory/` folder.
+This is a reference document that outlines the sources of various files provided in the `DrumScript/theory/` folder.
 <!--date_created:weds-06-august-2025-->
-<!--date_updated:mon-24-november-2025-->
+<!--date_updated:weds-21-january-2026-->
 
 ---
 ## Sources
@@ -27,7 +27,8 @@ https://usermanuals.finalemusic.com/SongWriter2012Win/Content/PercussionMaps.htm
 * **`the_musical_staff.png`**: [https://www.musicnotes.com/blog/how-to-read-sheet-music/?srsltid=AfmBOooXV7OSK3WqHiI4SoSyQ7lrno160Qa10qWHOQgWczYLBItMVdJW](https://www.musicnotes.com/blog/how-to-read-sheet-music/?srsltid=AfmBOooXV7OSK3WqHiI4SoSyQ7lrno160Qa10qWHOQgWczYLBItMVdJW) **PLEASE NOTE:** This specific source of this image (`musical_staff.png`) is about **classical sheet music** and not specifically **drum sheet music** (*They are not the same thing, in practise!*)
 * **`HYBRID TRANSFORMERS FOR MUSIC SOURCE SEPARATION` (`DEMUCS`:)** [Link to paper](https://arxiv.org/pdf/2211.08553) - [Link to paper source] (https://arxiv.org/pdf/2211.08553) - [Link to source code (forked)[https://github.com/adefossez/demucs]]
 * **`Real-Time Automatic Drum Transcription Using Dynamic Few-Shot Learning`:**[https://publica-rest.fraunhofer.de/server/api/core/bitstreams/ff50d62d-1f2d-47c6-86b4-1e52c603b630/content](https://publica-rest.fraunhofer.de/server/api/core/bitstreams/ff50d62d-1f2d-47c6-86b4-1e52c603b630/content)
-* **Midi Frequency Table:** [source](https://www.phys.unsw.edu.au/jw/notes.html) - [table](theory/midi_frequency_table.png)
+* **`Midi Frequency Table`:** [source](https://www.phys.unsw.edu.au/jw/notes.html) - [table](theory/images/midi_frequency_table.png)
+* **`Computational Models of Similarity for Drum Samples`**(https://staff.aist.go.jp/m.goto/PAPER/IEEETASLP200802pampalk.pdf)
 
   
 

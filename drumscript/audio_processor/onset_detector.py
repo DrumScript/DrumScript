@@ -41,6 +41,11 @@ def detect_onsets(audio_data: np.ndarray, sr: int) -> list[float]:
 
     y_percussive = librosa.effects.percussive(y=audio_data)
 
+    # We must convert seconds to "frames" because librosa 'wait' expects frames.
+    # (Assuming HOP_LENGTH is imported from constants)
+    # min_gap_seconds = 0.10  # 100ms
+    # wait_frames = int(min_gap_seconds * (sr / HOP_LENGTH))
+
     # --- 2. Onset detection
     # Now, we run the same onset detection, but on the much cleaner
     # percussive signal. This allows us to get a precise detection
@@ -50,9 +55,10 @@ def detect_onsets(audio_data: np.ndarray, sr: int) -> list[float]:
         sr=SAMPLE_RATE,
         units='frames',
         #delta=0.0095,       # The sensitive delta is now effective and safe to use
-        #wait=1,
-        pre_avg=8,
-        post_avg=8,
+        # wait=wait_frames,
+        wait=1,
+        # pre_avg=8,
+        # post_avg=8,
         backtrack=True
     )
 

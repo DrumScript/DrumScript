@@ -9,6 +9,7 @@ This is a reference document that outlines the sources of various files and imag
 
 > **NOTE:** **All theory and sources** listed here are free-to-use at the time of sharing, and are **non-affiliated** with the `CODEOWNERS` of `DrumScript`.
 
+* **`Beat Tracking by Dynamic Programming`**: [http://labrosa.ee.columbia.edu/](http://labrosa.ee.columbia.edu/)
 * **`Improving Perceptual Quality of Drum Transcription with the Expanded Groove MIDI Dataset.pdf`**: [https://magenta.withgoogle.com/oaf-drums](https://magenta.withgoogle.com/oaf-drums)
 * **`notating_pitch.png`**: [https://fundamentalsofmusictheory.umasscreate.net/unit-5/](https://fundamentalsofmusictheory.umasscreate.net/unit-5/)
 * **`basic_drumkit_keys.jpeg`:**[https://www.drumeo.com/beat/how-to-read-drum-music/?srsltid=AfmBOoqnBc3_-xDyvbFzvSLy5ESJ0QPZODdCIMR-I1kPvuTrjPsQAWQC](https://www.drumeo.com/beat/how-to-read-drum-music/?srsltid=AfmBOoqnBc3_-xDyvbFzvSLy5ESJ0QPZODdCIMR-I1kPvuTrjPsQAWQC)
@@ -30,6 +31,7 @@ https://usermanuals.finalemusic.com/SongWriter2012Win/Content/PercussionMaps.htm
 * **`Midi Frequency Table`:** [source](https://www.phys.unsw.edu.au/jw/notes.html) - [table](theory/images/midi_frequency_table.png)
 * **`Computational Models of Similarity for Drum Samples`**(https://staff.aist.go.jp/m.goto/PAPER/IEEETASLP200802pampalk.pdf)
 * **`librosa: Audio and Music Signal Analysis in Python`** (https://proceedings.scipy.org/articles/Majora-7b98e3ed-003.pdf)
+
 
   
 

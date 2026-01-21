@@ -88,9 +88,9 @@ def main(input_audio_path: str,
         print(f"   -> Classified {len(classified_events)} events")
 
         # 4. Score Formatting
-        final_events = []
+        detected_events = []
         for event in classified_events:
-            final_events.append({
+            detected_events.append({
                 'time': event['onset_time_seconds'],
                 'drums': [event['drum_type']],
                 'analysis': event['analysis'], # Contains f0, sc, width, depth
@@ -107,7 +107,7 @@ def main(input_audio_path: str,
         
         # score_builder.build_and_export_drum_score(
         score_builder.build_score(
-            detected_events=final_events, 
+            detected_events=detected_events, 
             tempo=tempo, 
             output_filepath=final_pdf_path,
             time_signature=time_signature
@@ -173,9 +173,9 @@ def main(input_audio_path: str,
         print(f"   -> Classified {len(classified_events)} events")
 
         # 4. Score Formatting
-        final_events = []
+        detected_events = []
         for event in classified_events:
-            final_events.append({
+            detected_events.append({
                 'time': event['onset_time_seconds'],
                 'drums': [event['drum_type']],
                 'analysis': event['analysis'], 
@@ -192,7 +192,7 @@ def main(input_audio_path: str,
         
         # score_builder.build_and_export_drum_score(
         score_builder.build_and_export_drum_score(
-            detected_events=final_events, 
+            detected_events=detected_events, 
             tempo=tempo, 
             output_filepath=final_pdf_path,
             time_signature=time_signature

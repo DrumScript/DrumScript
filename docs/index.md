@@ -93,7 +93,6 @@ api
 development/code_of_conduct
 development/contributor_guidance
 development/documentation
-release_notes/0.1.0
 development/testing_guidance
 ```
 
@@ -103,3 +102,13 @@ development/testing_guidance
 :maxdepth: 1
 :caption: Project Info
 about
+```
+## Release Notes
+
+
+```{toctree}
+:maxdepth: 1
+:caption: Versions
+
+0.1.0
+```

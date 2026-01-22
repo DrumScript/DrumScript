@@ -1,19 +1,18 @@
 [build-system]
 requires = ["setuptools>=61.0", "wheel"]
 build-backend = "setuptools.build_meta"
-
 [project]
 name = "DrumScript"
 version = "0.1.0"
 description = "A Python package to convert drum audio to sheet music."
 readme = "README.md"
-requires-python = ">=3.9"
+requires-python = ">=3.9, <3.13"
 license = { text = "MIT" }
 authors = [
-  { name="drumscript-admin", email="hello.drumscript@gmail.com" },
+  { name="drumscript-admin", email="hello.drumscript@gmail.com" }, 
 ]
 
-keywords = ["drum", "audio", "music", "sheet-music", "notation", "dsp", "machine-learning", "drumscript", "drums", "percussion", "sound analysis", "eq"]
+keywords = ["drum", "audio", "music", "sheet-music", "notation", "dsp", "machine-learning", "drumscript", "drums", "percussion", "sound analysis", "eq", "atd", "automatic-drum-transcription"]
 
 classifiers = [
     "Programming Language :: Python :: 3",
@@ -49,12 +48,14 @@ dependencies = [
     "scipy", 
     "setuptools",
     "sounddevice",
-    "soundfile",
+    #"soundfile",
     "torch",
     "torchaudio",
     "torchcodec", 
     "tqdm"
   ]
+
+  # note that torce only compatible with  Python ABI tags: `cp39`, `cp310`, `cp311`, `cp312`. Not yet compatible with 3.13
 
 [project.urls]
 "Repository" = "https://github.com/DrumScript/DrumScript"

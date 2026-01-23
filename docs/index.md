@@ -110,5 +110,7 @@ about
 :maxdepth: 1
 :caption: Versions
 
-0.1.0
+release_notes/index
+release_notes/0.1.0
+
 ```

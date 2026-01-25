@@ -111,6 +111,5 @@ about
 :caption: Versions
 
 release_notes/index
-release_notes/0.1.0
 
 ```

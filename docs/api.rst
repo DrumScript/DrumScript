@@ -5,12 +5,12 @@ API Reference
 
 This is the auto-generated API reference for DrumScript.
 
-
-   The examples below assume you have imported the package as:
+   The examples below can also be used as:
    
    .. code-block:: python
 
       import drumscript as ds
+      ds.notation_generator.constants
 
 Configuration & Constants
 -------------------------

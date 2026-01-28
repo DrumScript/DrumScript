@@ -97,7 +97,6 @@ from drumscript.main import main
 # Run the full pipeline
 main()
 # Follow the interactive prompts to provide the input file path.
-
 ```
 
 #### **Stem Splitting**

@@ -1,6 +1,6 @@
 # Digital Signal Processing (DSP)
 
-DrumScript relies on three major pillars of Music Information Retrieval (MIR): Source Separation, Onset Detection, and Tempo Estimation.
+`DrumScript` relies on three major pillars of **Music Information Retrieval (MIR)**: Source Separation, Onset Detection, and Tempo Estimation.
 
 ## 1. Source Separation (`Demucs`)
 Before transcription begins, we often need to isolate the drums from the rest of the band (guitars, vocals, etc.).

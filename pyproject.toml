@@ -38,22 +38,22 @@ dependencies = [
     "musescore",
     "music21",
     "numba",
-    "numpy", 
-    "pandas", 
+    "numpy",
+    "pandas",
     "pretty-midi",
     "pydub",
-    "pyyaml", 
+    "pyyaml",
     "reportlab",
     "scikit-learn",
-    "scipy", 
+    "scipy",
     "setuptools",
     "sounddevice",
     #"soundfile",
     "torch",
     "torchaudio",
-    "torchcodec", 
-    "tqdm"
-  ]
+    "torchcodec",
+    "tqdm",
+]
 
   # note that torce only compatible with  Python ABI tags: `cp39`, `cp310`, `cp311`, `cp312`. Not yet compatible with 3.13
 

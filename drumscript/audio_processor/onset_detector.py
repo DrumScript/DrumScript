@@ -50,36 +50,36 @@ def detect_onsets(audio_data: np.ndarray, sr: int) -> list[float]:
     # Now, we run the same onset detection, but on the much cleaner
     # percussive signal. This allows us to get a precise detection
     # of the initial hit without interference from the sustain.
+
+    # --- 2. Advanced Onset Strength Envelope (SuperFlux) ---
+    # We use a lag-rectified spectral flux to avoid false positives from energy fluctuations
+    onset_env = librosa.onset.onset_strength(
+        y=y_percussive, 
+        sr=sr, 
+        hop_length=HOP_LENGTH,
+        aggregate=np.median # Using median to suppress noise spikes
+    )
+
+    # --- 3. Peak Picking Parameters ---
+    # Lockout period: 100ms (0.1s) is standard for drums to prevent double triggers
+    min_gap_seconds = 0.1 
+    wait_frames = int(min_gap_seconds * (sr / HOP_LENGTH))
+
     onset_frames = librosa.onset.onset_detect(
+#        onset_envelope=onset_env,
         y=y_percussive,  # Use the percussive-only signal
         sr=SAMPLE_RATE,
-        units='time'
-        # delta=0.004,       # The sensitive delta is now effective and safe to use
-        # wait=wait_frames,
+        # sr = sr
+        # units='time',
+        units='frames',
+        # delta=0.07,
+        # backtrack=True
+        # wait=wait_frames
         # wait=1,
         # pre_avg=8,
         # post_avg=8,
         # backtrack=True
     )
-
-        # --- 2. Onset detection
-    # Now, we run the same onset detection, but on the much cleaner
-    # percussive signal. This allows us to get a precise detection
-    # of the initial hit without interference from the sustain.
-    
-    #  Changed units from 'frames' to 'time' to get seconds directly.
-    # This removes the need for the subsequent librosa.frames_to_time conversion.
-    # onset_times = librosa.onset.onset_detect(
-      #   y=y_percussive,  # Use the percussive-only signal
-      #  sr=SAMPLE_RATE,
-      #  units='time',       # Request output directly in seconds (float)
-        #delta=0.0095,       # The sensitive delta is now effective and safe to use
-        #wait=1,
-      #  pre_avg=8,
-      #  post_avg=8,
-      #  backtrack=True
-    #)
-
 
     onset_times = librosa.frames_to_time(onset_frames, sr=SAMPLE_RATE) # onset_time is in seconds, *1000 to get ms. This is fed into final output .json when transcription is run
 
@@ -186,3 +186,23 @@ if __name__ == "__main__":
     print("\nonset_detector.py example finished.")
 # Uncomment to use, for clearer error logs
 # print("\n# ------------------------------------------------------------------------------------")
+    # LEGACY CODE:
+        # --- 2. Onset detection
+    # Now, we run the same onset detection, but on the much cleaner
+    # percussive signal. This allows us to get a precise detection
+    # of the initial hit without interference from the sustain.
+    
+    #  Changed units from 'frames' to 'time' to get seconds directly.
+    # This removes the need for the subsequent librosa.frames_to_time conversion.
+    # onset_times = librosa.onset.onset_detect(
+      #   y=y_percussive,  # Use the percussive-only signal
+      #  sr=SAMPLE_RATE,
+      #  units='time',       # Request output directly in seconds (float)
+        #delta=0.0095,       # The sensitive delta is now effective and safe to use
+        #wait=1,
+      #  pre_avg=8,
+      #  post_avg=8,
+      #  backtrack=True
+    #)
+
+

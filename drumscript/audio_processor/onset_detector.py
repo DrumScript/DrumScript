@@ -2,9 +2,9 @@
 """
 This module will detect the onset (start) times of drum hits in the audio.
 """
+import os
 import librosa
 import numpy as np
-import os
 import soundfile
 import argparse # for command-line argument parsing
 from drumscript.notation_generator.constants import SAMPLE_RATE, SEGMENT_LENGTH_SECONDS, N_FFT, NOISE_THRESH_SNARE, DRUM_NOTATION_MAP, ONSET_SLICE_DURATION_MS, HOP_LENGTH
@@ -53,13 +53,13 @@ def detect_onsets(audio_data: np.ndarray, sr: int) -> list[float]:
     onset_frames = librosa.onset.onset_detect(
         y=y_percussive,  # Use the percussive-only signal
         sr=SAMPLE_RATE,
-        units='frames',
-        #delta=0.0095,       # The sensitive delta is now effective and safe to use
+        units='time'
+        # delta=0.004,       # The sensitive delta is now effective and safe to use
         # wait=wait_frames,
-        wait=1,
+        # wait=1,
         # pre_avg=8,
         # post_avg=8,
-        backtrack=True
+        # backtrack=True
     )
 
         # --- 2. Onset detection
@@ -170,7 +170,7 @@ if __name__ == "__main__":
              #   print(f"  Onset {i+1}: {onset_time:.2f}s")
         else:
             print("No onsets detected in test.mp3/test.wav.")
-        print(f"Loaded audio: Shape={normalised_audio.shape}, Sample Rate={sample_rate}, Duration={len(normalised_audio)/sample_rate:.2f} seconds, Tempo={calculate_tempo_from_onsets(onsets, sr=SAMPLE_RATE)}")
+        print(f"Loaded audio: Shape={normalised_audio.shape}, Sample Rate={sample_rate}, Duration={len(normalised_audio)/sample_rate:.2f} seconds, Tempo={calculate_tempo_from_onsets(onsets, sr=SAMPLE_RATE):2f}")
     except FileNotFoundError:
         print(f"\nERROR: The audio file '{test_audio_path}' was not found.")
         print("Please ensure you have placed 'test.mp3/test.wav' inside your 'DrumScript/test_audio/' directory.")

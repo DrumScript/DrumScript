@@ -74,7 +74,7 @@ def detect_onsets(audio_data: np.ndarray, sr: int) -> list[float]:
         units='frames',
         # delta=0.07,
         # backtrack=True
-        # wait=wait_frames
+        wait=wait_frames
         # wait=1,
         # pre_avg=8,
         # post_avg=8,

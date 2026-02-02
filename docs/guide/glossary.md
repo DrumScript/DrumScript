@@ -1,5 +1,7 @@
 # **Glossary of Terms**
 
+<!--date_created:03-july-2025-->
+<!--date_updated:02-feb-2026-->
 ## **Python Libraries & Classes**
 
 ### [`Librosa`](#librosa)
@@ -16,7 +18,6 @@
       - **Onset detection:** Finding the **precise moments where sounds begin** (like a *snare hit*).
 
 In `DrumScript`, `librosa` is crucial because it's the underlying library that `audio_loader.py`, `feature_extractor.py`, and `onset_detector.py` use to actually perform the **low-level audio processing** and extract the characteristics of your **drum sound** and **audio recordings**. `Librosa`'s beat and tempo detection functions are specifically used in the `tempo_detector.py` and `tempogram.py` scripts.
-
 
 ### `StemSplitter`
 

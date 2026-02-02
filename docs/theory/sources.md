@@ -1,8 +1,9 @@
 # **`Theory/` Sources**
 
-This is a reference document that outlines the sources of various files and images, reference pdfs provided in the `DrumScript/theory/` folder and sub-folders.
+This is a reference document that outlines the sources of various files and images, reference pdfs provided in the `DrumScript/theory/` folder and sub-folders. Some of the references are duplicated in the **[`bibliography.md`](bibliography.md)**
+
 <!--date_created:weds-06-august-2025-->
-<!--date_updated:weds-21-january-2026-->
+<!--date_updated:mon-02-february-2026-->
 
 ---
 ## Sources
@@ -10,7 +11,8 @@ This is a reference document that outlines the sources of various files and imag
 > **NOTE:** **All theory and sources** listed here are free-to-use at the time of sharing, and are **non-affiliated** with the `CODEOWNERS` of `DrumScript`.
 
 * **`Beat Tracking by Dynamic Programming`**: [http://labrosa.ee.columbia.edu/](http://labrosa.ee.columbia.edu/)
-* **`libf0: A PYTHON LIBRARY FOR FUNDAMENTAL FREQUENCY ESTIMATION`**: [https://archives.ismir.net/ismir2022/latebreaking/000003.pdf](https://archives.ismir.net/ismir2022/latebreaking/000003.pdf)
+* **`Maximum Filter Vibrato Suppression for Onset Detection`**: (https://www.dafx.de/paper-archive/2013/papers/09.dafx2013_submission_12.pdf)
+* **`*libf0*: A Python Library for Frequency Estimation`**: [https://archives.ismir.net/ismir2022/latebreaking/000003.pdf](https://archives.ismir.net/ismir2022/latebreaking/000003.pdf)
 * **`Improving Perceptual Quality of Drum Transcription with the Expanded Groove MIDI Dataset.pdf`**: [https://magenta.withgoogle.com/oaf-drums](https://magenta.withgoogle.com/oaf-drums)
 * **`notating_pitch.png`**: [https://fundamentalsofmusictheory.umasscreate.net/unit-5/](https://fundamentalsofmusictheory.umasscreate.net/unit-5/)
 * **`basic_drumkit_keys.jpeg`:**[https://www.drumeo.com/beat/how-to-read-drum-music/?srsltid=AfmBOoqnBc3_-xDyvbFzvSLy5ESJ0QPZODdCIMR-I1kPvuTrjPsQAWQC](https://www.drumeo.com/beat/how-to-read-drum-music/?srsltid=AfmBOoqnBc3_-xDyvbFzvSLy5ESJ0QPZODdCIMR-I1kPvuTrjPsQAWQC)

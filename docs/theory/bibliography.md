@@ -2,14 +2,16 @@
 
 Copies of the academic papers and reference charts used to build the `DrumScript` engine are provided available below.
 <!-- date_created: mon-19-jan-2026 -->
-<!-- date_updated: weds-21-jan-2026 -->
+<!-- date_updated: mon-02-feb-2026 -->
 
 ## Academic Papers
 
 *Links are embedded*
 
 * [**Beat Tracking by Dynamic Programming**](https://www.ee.columbia.edu/~dpwe/pubs/Ellis07-beattrack.pdf)
-* [**libf0: A PYTHON LIBRARY FOR FUNDAMENTAL FREQUENCY ESTIMATION**](https://archives.ismir.net/ismir2022/latebreaking/000003.pdf)
+* [**Maximum Filter Vibrato Suppression for Onset Detection**](https://www.dafx.de/paper-archive/2013/papers/09.dafx2013_submission_12.pdf)
+    *Onset detection algorithms, vibration suppression*
+* [**`libf0`: A Python Library for Frequency Estimation**](https://archives.ismir.net/ismir2022/latebreaking/000003.pdf)
 * [**Hybrid Transformers for Music Source Separation**](https://arxiv.org/pdf/2211.08553)  
     *The foundational paper for the Demucs engine.*
 * [**Real-Time Automatic Drum Transcription**](https://publica-rest.fraunhofer.de/server/api/core/bitstreams/ff50d62d-1f2d-47c6-86b4-1e52c603b630/content)  

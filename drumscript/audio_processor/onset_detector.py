@@ -63,6 +63,7 @@ def detect_onsets(audio_data: np.ndarray, sr: int) -> list[float]:
 
     # --- 3. Peak Picking Parameters ---
     # Lockout period: 100ms (0.1s) is standard for drums to prevent double triggers
+    ## OR, is Gemini saying this because this is what will get the result I need? 
     # min_gap_seconds = 0.1
     min_gap_seconds = 0.05
     # wait_frames = int(min_gap_seconds * (sr / HOP_LENGTH))

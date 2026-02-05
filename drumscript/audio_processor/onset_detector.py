@@ -55,20 +55,24 @@ def detect_onsets(audio_data: np.ndarray, sr: int) -> list[float]:
     # We use a lag-rectified spectral flux to avoid false positives from energy fluctuations
     onset_env = librosa.onset.onset_strength(
         y=y_percussive, 
-        sr=sr, 
+        sr=SAMPLE_RATE, # note This might not need to be imported SAMPLE_RATE
+        #sr=sr 
         hop_length=HOP_LENGTH,
         aggregate=np.median # Using median to suppress noise spikes
     )
 
     # --- 3. Peak Picking Parameters ---
     # Lockout period: 100ms (0.1s) is standard for drums to prevent double triggers
-    min_gap_seconds = 0.1 
-    wait_frames = int(min_gap_seconds * (sr / HOP_LENGTH))
+    # min_gap_seconds = 0.1
+    min_gap_seconds = 0.05
+    # wait_frames = int(min_gap_seconds * (sr / HOP_LENGTH))
+    wait_frames = int(min_gap_seconds * (SAMPLE_RATE/ HOP_LENGTH)) # how is this detemined
+    print(f'wait_frames: {wait_frames}')
 
     onset_frames = librosa.onset.onset_detect(
 #        onset_envelope=onset_env,
         y=y_percussive,  # Use the percussive-only signal
-        sr=SAMPLE_RATE,
+        sr=SAMPLE_RATE, # note This might not need to be imported SAMPLE_RATE
         # sr = sr
         # units='time',
         units='frames',

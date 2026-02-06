@@ -174,18 +174,22 @@ if __name__ == "__main__":
              #   print(f"  Onset {i+1}: {onset_time:.2f}s")
         else:
             print("No onsets detected in test.mp3/test.wav.")
+
         print(f"Loaded audio: Shape={normalised_audio.shape}, Sample Rate={sample_rate}, Duration={len(normalised_audio)/sample_rate:.2f} seconds, Tempo={calculate_tempo_from_onsets(onsets, sr=SAMPLE_RATE):2f}")
+
     except FileNotFoundError:
         print(f"\nERROR: The audio file '{test_audio_path}' was not found.")
         print("Please ensure you have placed 'test.mp3/test.wav' inside your 'DrumScript/test_audio/' directory.")
+
     except ImportError as e:
         print(f"\nERROR: Required modules/libraries might be missing or imports are incorrect: {e}")
         print("Ensure 'soundfile', 'librosa', 'numpy', and your DrumScript modules are correctly installed and structured.")
         print("For MP3, 'ffmpeg' must also be installed on your system and accessible in PATH.")
+
     except Exception as e:
         print(f"\nAn unexpected error occurred during the example execution: {e}")
         import traceback
-        traceback.print_exc() # Print full traceback for debugging
+        traceback.print_exc() # Print full traceback for debuggin
 
     print("\nonset_detector.py example finished.")
 # Uncomment to use, for clearer error logs

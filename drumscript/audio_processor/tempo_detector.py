@@ -9,7 +9,7 @@ import librosa
 import numpy as np
 import os
 import argparse
-from drumscript.notation_generator.constants import DRUM_NOTATION_MAP, N_FFT, SAMPLE_RATE, HOP_LENGTH
+from drumscript.notation_generator.constants import SAMPLE_RATE, HOP_LENGTH
 
 # --- Define function --------------------------------------------------------------------------------------------
 
@@ -17,6 +17,7 @@ def estimate_tempo(audio_data, sr):
     """
     Estimates tempo from the tempogram, but restricted to a plausible range.
     (Corrected to avoid INF and extreme BPM errors, ie 10500 BPM).
+    Returns a default 120.0 BPM if the audio is too short to analyze.
 
     :param audio_data: The input audio time series.
     :type audio_data: np.ndarray
@@ -27,13 +28,21 @@ def estimate_tempo(audio_data, sr):
     """
     if audio_data.size == 0:
         return 0.0
+    
+    # Check if there are enough hits in the audio
+    # Calculating tempo on clips shorter than ~1-2 seconds is unreliable and often produces artifacts (like 235 BPM for a single kick).
+    duration_seconds = audio_data.shape[0] / sr
+    if duration_seconds < 1.0: # duration_seconds less than 1 second, ie anything over 1 sec duration is valid
+        print(f"Audio too short for tempo detection ({duration_seconds:.2f}s). Defaulting to 120 BPM.")
+        return 120.0
+    
     # oenv = librosa.onset.onset_strength(y=audio_data, sr=sr, hop_length=256)
     oenv = librosa.onset.onset_strength(y=audio_data, sr=SAMPLE_RATE, hop_length=HOP_LENGTH)
     tempogram = librosa.feature.tempogram(onset_envelope=oenv, sr=SAMPLE_RATE, hop_length=HOP_LENGTH)
     tempo_spectrum = np.sum(tempogram, axis=1)
     tempo_freqs = librosa.tempo_frequencies(tempogram.shape[0], sr=SAMPLE_RATE, hop_length=HOP_LENGTH)
     
-    # --- FIX for extreme BPM error ---
+    # --- Fix for extreme BPM error ---
     # Create a mask to only consider tempos in a plausible musical range (e.g., 60-240 BPM)
     plausible_tempos_mask = (tempo_freqs >= 60) & (tempo_freqs <= 240)
     

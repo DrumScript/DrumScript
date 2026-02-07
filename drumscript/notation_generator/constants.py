@@ -202,3 +202,20 @@ KICK_MAX_CENTROID = 400.0   # Hz (Generous upper bound, refined by LFER)
 KICK_MIN_LFER = 0.50        # Min 50% of energy must be below 150Hz
 KICK_LFER_MIN = 0.40   # 40% (Safety margin below observed 46.9%)
 
+# notation_generator/constants.py
+
+# ... (Keep existing Kick constants) ...
+
+# 2. --- SNARE DRUM PHYSICS ---
+# Analysis Source: 20 user-provided wav files
+# Range: Peak Freq 64-366Hz | Centroid 1300-6000Hz
+
+# 1. The "Body" Check (Fundamental Frequency)
+# Most snares sit here. If a sound is here, it's almost certainly a snare.
+SNARE_FREQ_MIN = 130.0   # Hz (Just above the Kick's max of 129Hz)
+SNARE_FREQ_MAX = 400.0   # Hz
+
+# 2. The "Wire" Check (High Frequency Energy > 2000Hz)
+# Used as a tie-breaker for deep snares (like snare_0004) vs clicky kicks.
+# A kick typically has < 15% high energy. A snare typically has > 20%.
+SNARE_HFER_MIN = 0.20    # 20%

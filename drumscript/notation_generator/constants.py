@@ -189,3 +189,9 @@ NOISE_THRESH_SNARE = 0.05
 #STAFF_POS_TOM3 = 5
 
 
+# i. --- KICK DRUM PHYSICS ---
+# Derived from audio analysis of 5 sample kick drum beats (kick_0001 to kick_0005)
+KICK_MIN_PEAK_FREQ = 40.0   # Hz
+KICK_MAX_PEAK_FREQ = 100.0  # Hz
+KICK_MAX_CENTROID = 400.0   # Hz (Generous upper bound, refined by LFER)
+KICK_MIN_LFER = 0.5         # Min 50% of energy must be below 150Hz

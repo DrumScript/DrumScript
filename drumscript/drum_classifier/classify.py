@@ -21,97 +21,67 @@ from drumscript.notation_generator.constants import DRUM_NOTATION_MAP, N_FFT, SA
 # print("\n# ------------------------------------------------------------------------------------")
 # datetimestamp = datetime.now()
 # print(f'\ndate/time: {datetimestamp}')
-
-
-# drum_classifier/classify.py (Snippet)
-
-# import numpy as np
-import scipy.signal
-from notation_generator import constants as c
-
-
-from drumscript.notation_generator import constants as c
-
-def is_kick(audio_segment, sr):
-    """
-    Deterministic classifier for Kick Drum.
-    
-    Checks:
-    1. Peak Frequency in sub-bass range.
-    2. High ratio of low-frequency energy.
-    """
-    # 1. Calculate Power Spectral Density (PSD)
-    freqs, psd = scipy.signal.welch(audio_segment, sr, nperseg=1024)
-    
-    # 2. Identify Peak Frequency
-    peak_idx = np.argmax(psd)
-    peak_freq = freqs[peak_idx]
-    
-    # 3. Calculate Low Frequency Energy Ratio (LFER)
-    # Energy below 150Hz vs Total Energy
-    low_band_mask = freqs < 150
-    low_energy = np.sum(psd[low_band_mask])
-    total_energy = np.sum(psd)
-    lfer = low_energy / (total_energy + 1e-6) # Avoid div by zero
-
-    # 4. Evaluation
-    is_freq_valid = c.KICK_MIN_PEAK_FREQ <= peak_freq <= c.KICK_MAX_PEAK_FREQ
-    is_thump_dominant = lfer >= c.KICK_MIN_LFER
-    
-    return is_freq_valid and is_thump_dominant
-
-# Uncomment to use, for clearer error log
 # print("\n# ------------------------------------------------------------------------------------")
+
+import numpy as np
+import scipy.signal
+from drumscript.notation_generator import constants as c
 
 def get_spectral_features(y, sr):
     """
-    Extracts the physics fingerprints needed for classification.
+    Extracts physics fingerprints: Peak Freq, Low Energy (Bass), High Energy (Treble).
     """
-    # 1. Power Spectral Density (PSD) via Welch's method
-    # nperseg=2048 gives us decent frequency resolution (~21.5Hz per bin at 44.1k)
     freqs, psd = scipy.signal.welch(y, sr, nperseg=2048)
     
-    # 2. Peak Frequency (The dominant note)
+    # Peak Frequency
     peak_idx = np.argmax(psd)
     peak_freq = freqs[peak_idx]
     
-    # 3. Low Frequency Energy Ratio (LFER)
-    # Ratio of energy below 150Hz vs total energy
-    low_band_limit = 150
-    low_energy = np.sum(psd[freqs < low_band_limit])
-    total_energy = np.sum(psd)
-    lfer = low_energy / (total_energy + 1e-9)
+    # Energy Ratios
+    total_energy = np.sum(psd) + 1e-9
     
-    return peak_freq, lfer
+    # Bass (Kick indicator)
+    low_energy = np.sum(psd[freqs < 150])
+    lfer = low_energy / total_energy
+    
+    # Treble (Snare Wire indicator)
+    high_energy = np.sum(psd[freqs > 2000])
+    hfer = high_energy / total_energy
+    
+    return peak_freq, lfer, hfer
 
-def is_kick(peak_freq, lfer):
-    """
-    Deterministic rule for Kick Drum detection.
+def is_kick(peak_freq, lfer, hfer):
+    # Rule 1: Must be in bass range
+    is_bass = c.KICK_FREQ_MIN <= peak_freq <= c.KICK_FREQ_MAX
+    # Rule 2: Must be thump-dominant
+    is_thump = lfer >= c.KICK_LFER_MIN
+    # Rule 3 (Tie-Breaker): Must NOT have too much treble (excludes fat snares)
+    not_too_crisp = hfer < c.SNARE_HFER_MIN
     
-    Physics Profile:
-    - Must have a fundamental frequency in the sub-bass (40-140Hz).
-    - Must have significant low-end energy density (>40%).
-    """
-    freq_check = c.KICK_FREQ_MIN <= peak_freq <= c.KICK_FREQ_MAX
-    lfer_check = lfer >= c.KICK_LFER_MIN
+    return is_bass and is_thump and not_too_crisp
+
+def is_snare(peak_freq, hfer):
+    # Case A: Standard Snare (High pitched body)
+    is_standard = c.SNARE_FREQ_MIN <= peak_freq <= c.SNARE_FREQ_MAX
     
-    return freq_check and lfer_check
+    # Case B: Fat/Deep Snare (Low pitch, but lots of wire noise)
+    # This catches snare_0004 (64Hz)
+    is_fat_snare = (peak_freq < c.SNARE_FREQ_MIN) and (hfer >= c.SNARE_HFER_MIN)
+    
+    return is_standard or is_fat_snare
 
 def classify_event(audio_segment, sr):
-    """
-    Main router for classifying a single drum event.
-    """
-    # Extract features once
-    peak_freq, lfer = get_spectral_features(audio_segment, sr)
+    peak_freq, lfer, hfer = get_spectral_features(audio_segment, sr)
     
-    # Check Rules
-    if is_kick(peak_freq, lfer):
+    # Priority: Check Snare first (as it overlaps kick freq sometimes)
+    if is_snare(peak_freq, hfer):
+        return "Snare"
+    elif is_kick(peak_freq, lfer, hfer):
         return "Kick"
     
-    # Fallback for now (until we build the other classifiers)
     return "Unknown"
 
-
+# print("\n# ------------------------------------------------------------------------------------")
 # LEGACY CODE (PRESERVING FOR EASE)
 
 """def analyze_event(y, sr):

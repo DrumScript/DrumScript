@@ -188,10 +188,17 @@ NOISE_THRESH_SNARE = 0.05
 #STAFF_POS_TOM2 = 4 
 #STAFF_POS_TOM3 = 5
 
-
+# Physical Constants for DrumScript Classification.
 # i. --- KICK DRUM PHYSICS ---
+# Analysis Source: 20 user-provided wav files (7 Feb 2026)
+# Range observed: Peak Freq 43-129Hz | LFER 46-99%
 # Derived from audio analysis of 5 sample kick drum beats (kick_0001 to kick_0005)
 KICK_MIN_PEAK_FREQ = 40.0   # Hz
-KICK_MAX_PEAK_FREQ = 100.0  # Hz
+KICK_FREQ_MIN = 40.0   # Hz
+# KICK_MAX_PEAK_FREQ = 100.0  # Hz
+KICK_MAX_PEAK_FREQ = 100.0  # Hz/
+KICK_FREQ_MAX = 140.0  # Hz (Safety margin above observed 129Hz)
 KICK_MAX_CENTROID = 400.0   # Hz (Generous upper bound, refined by LFER)
-KICK_MIN_LFER = 0.5         # Min 50% of energy must be below 150Hz
+KICK_MIN_LFER = 0.50        # Min 50% of energy must be below 150Hz
+KICK_LFER_MIN = 0.40   # 40% (Safety margin below observed 46.9%)
+

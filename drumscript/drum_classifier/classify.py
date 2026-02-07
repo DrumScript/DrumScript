@@ -11,7 +11,9 @@ from typing import Any, Dict, List
 import librosa
 import numpy as np
 
+
 from drumscript.notation_generator import constants
+from drumscript.notation_generator import constants as c
 from drumscript.notation_generator.constants import DRUM_NOTATION_MAP, N_FFT, SAMPLE_RATE
 
 # from datetime import datetime
@@ -21,22 +23,112 @@ from drumscript.notation_generator.constants import DRUM_NOTATION_MAP, N_FFT, SA
 # print(f'\ndate/time: {datetimestamp}')
 
 
-def analyze_event(y, sr):
-    """
-    Calculates specific acoustic features:
-    - f0: Fundamental Frequency (Peak Magnitude)
-    - sc: Spectral Centroid (Brightness)
-    - width: Spectral Bandwidth
-    - depth: Decay Ratio (Sustain)
+# drum_classifier/classify.py (Snippet)
 
-    :param y: Audio segment.
-    :type y: np.ndarray
-    :param sr: Sampling rate.
-    :type sr: int
-    :return: Dictionary of features [f0: (Fundamental Frequency (Peak Magnitude)), sc: Spectral Centroid (Brightness), width: Spectral Bandwidth], depth: Decay Ratio (Sustain)]
-    :rtype: dict
-    
+# import numpy as np
+import scipy.signal
+from notation_generator import constants as c
+
+
+from drumscript.notation_generator import constants as c
+
+def is_kick(audio_segment, sr):
     """
+    Deterministic classifier for Kick Drum.
+    
+    Checks:
+    1. Peak Frequency in sub-bass range.
+    2. High ratio of low-frequency energy.
+    """
+    # 1. Calculate Power Spectral Density (PSD)
+    freqs, psd = scipy.signal.welch(audio_segment, sr, nperseg=1024)
+    
+    # 2. Identify Peak Frequency
+    peak_idx = np.argmax(psd)
+    peak_freq = freqs[peak_idx]
+    
+    # 3. Calculate Low Frequency Energy Ratio (LFER)
+    # Energy below 150Hz vs Total Energy
+    low_band_mask = freqs < 150
+    low_energy = np.sum(psd[low_band_mask])
+    total_energy = np.sum(psd)
+    lfer = low_energy / (total_energy + 1e-6) # Avoid div by zero
+
+    # 4. Evaluation
+    is_freq_valid = c.KICK_MIN_PEAK_FREQ <= peak_freq <= c.KICK_MAX_PEAK_FREQ
+    is_thump_dominant = lfer >= c.KICK_MIN_LFER
+    
+    return is_freq_valid and is_thump_dominant
+
+# Uncomment to use, for clearer error log
+# print("\n# ------------------------------------------------------------------------------------")
+
+def get_spectral_features(y, sr):
+    """
+    Extracts the physics fingerprints needed for classification.
+    """
+    # 1. Power Spectral Density (PSD) via Welch's method
+    # nperseg=2048 gives us decent frequency resolution (~21.5Hz per bin at 44.1k)
+    freqs, psd = scipy.signal.welch(y, sr, nperseg=2048)
+    
+    # 2. Peak Frequency (The dominant note)
+    peak_idx = np.argmax(psd)
+    peak_freq = freqs[peak_idx]
+    
+    # 3. Low Frequency Energy Ratio (LFER)
+    # Ratio of energy below 150Hz vs total energy
+    low_band_limit = 150
+    low_energy = np.sum(psd[freqs < low_band_limit])
+    total_energy = np.sum(psd)
+    lfer = low_energy / (total_energy + 1e-9)
+    
+    return peak_freq, lfer
+
+def is_kick(peak_freq, lfer):
+    """
+    Deterministic rule for Kick Drum detection.
+    
+    Physics Profile:
+    - Must have a fundamental frequency in the sub-bass (40-140Hz).
+    - Must have significant low-end energy density (>40%).
+    """
+    freq_check = c.KICK_FREQ_MIN <= peak_freq <= c.KICK_FREQ_MAX
+    lfer_check = lfer >= c.KICK_LFER_MIN
+    
+    return freq_check and lfer_check
+
+def classify_event(audio_segment, sr):
+    """
+    Main router for classifying a single drum event.
+    """
+    # Extract features once
+    peak_freq, lfer = get_spectral_features(audio_segment, sr)
+    
+    # Check Rules
+    if is_kick(peak_freq, lfer):
+        return "Kick"
+    
+    # Fallback for now (until we build the other classifiers)
+    return "Unknown"
+
+
+# LEGACY CODE (PRESERVING FOR EASE)
+
+"""def analyze_event(y, sr):
+    #
+    #Calculates specific acoustic features:
+    #- f0: Fundamental Frequency (Peak Magnitude)
+    #- sc: Spectral Centroid (Brightness)
+    #- width: Spectral Bandwidth
+    #- depth: Decay Ratio (Sustain)
+
+    #:param y: Audio segment.
+    #:type y: np.ndarray
+    #:param sr: Sampling rate.
+    #:type sr: int
+    #:return: Dictionary of features [f0: (Fundamental Frequency (Peak Magnitude)), sc: Spectral Centroid (Brightness), width: Spectral Bandwidth], depth: Decay Ratio (Sustain)]
+    #:rtype: dict
+    
     # 1. FFT for Frequency Analysis
     # High resolution (n_fft=2048) to see low frequencies clearly
     # n_fft = 2048
@@ -72,11 +164,10 @@ def analyze_event(y, sr):
         "depth": float(round(decay, 2)),
     }
 
-
+"""
+"""
 def classify_events (audio_data, sr, onsets) -> List[Dict[str, Any]]:
-    """
-    Classifies hits strictly based on Fundamental Frequency ($f_0$) ranges.
-
+    # Classifies hits strictly based on Fundamental Frequency ($f_0$) ranges.
     :param audio_data: Full audio array.
     :type audio_data: np.ndarray
     :param sr: Sampling rate.
@@ -85,7 +176,7 @@ def classify_events (audio_data, sr, onsets) -> List[Dict[str, Any]]:
     :type onsets: list
     :return: List of classified event dictionaries.
     :rtype: List[Dict[str, Any]]
-    """
+
     classified_events = []
 
     for onset_time in onsets:
@@ -147,8 +238,4 @@ def classify_events (audio_data, sr, onsets) -> List[Dict[str, Any]]:
                 }
             )
 
-    return classified_events
-
-
-# Uncomment to use, for clearer error log
-# print("\n# ------------------------------------------------------------------------------------")
+    return classified_events"""

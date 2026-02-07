@@ -14,7 +14,7 @@ import numpy as np
 
 from drumscript.notation_generator import constants
 from drumscript.notation_generator import constants as c
-from drumscript.notation_generator.constants import DRUM_NOTATION_MAP, N_FFT, SAMPLE_RATE
+from drumscript.notation_generator.constants import DRUM_NOTATION_MAP, N_FFT, SAMPLE_RATE, KICK_FREQ_MAX, KICK_FREQ_MIN, KICK_LFER_MIN, KICK_MAX_CENTROID, KICK_MAX_PEAK_FREQ, KICK_MIN_LFER, KICK_MIN_PEAK_FREQ, KICK_RANGE, SNARE_RANGE, SNARE_SPECTRAL_CENTROID, SNARE_FREQ_MIN, SNARE_FREQ_MAX, SNARE_HFER_MIN
 
 # from datetime import datetime
 
@@ -80,7 +80,6 @@ def classify_event(audio_segment, sr):
         return "Kick"
     
     return "Unknown"
-
 # print("\n# ------------------------------------------------------------------------------------")
 # LEGACY CODE (PRESERVING FOR EASE)
 

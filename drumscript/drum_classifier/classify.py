@@ -10,7 +10,8 @@ from typing import Any, Dict, List
 
 import librosa
 import numpy as np
-
+import librosa
+import scipy.signal
 
 from drumscript.notation_generator import constants
 from drumscript.notation_generator import constants as c
@@ -21,34 +22,39 @@ from drumscript.notation_generator.constants import DRUM_NOTATION_MAP, N_FFT, SA
 # print("\n# ------------------------------------------------------------------------------------")
 # datetimestamp = datetime.now()
 # print(f'\ndate/time: {datetimestamp}')
-# print("\n# ------------------------------------------------------------------------------------")
-
-import numpy as np
-import scipy.signal
-from drumscript.notation_generator import constants as c
 
 def get_spectral_features(y, sr):
     """
-    Extracts physics fingerprints: Peak Freq, Low Energy (Bass), High Energy (Treble).
+    Extracts physics fingerprints: Peak Freq, LFER, HFER, and Decay.
     """
-    freqs, psd = scipy.signal.welch(y, sr, nperseg=2048)
-    
-    # Peak Frequency
+    # 1. Frequency Analysis
+    freqs, psd = scipy.signal.welch(y, sr, nperseg=4096)
     peak_idx = np.argmax(psd)
     peak_freq = freqs[peak_idx]
     
-    # Energy Ratios
+    # 2. Energy Ratios
     total_energy = np.sum(psd) + 1e-9
-    
-    # Bass (Kick indicator)
     low_energy = np.sum(psd[freqs < 150])
-    lfer = low_energy / total_energy
-    
-    # Treble (Snare Wire indicator)
     high_energy = np.sum(psd[freqs > 2000])
+    
+    lfer = low_energy / total_energy
     hfer = high_energy / total_energy
     
-    return peak_freq, lfer, hfer
+    # 3. Decay Time (Resonance)
+    rms = librosa.feature.rms(y=y)[0]
+    peak_rms_idx = np.argmax(rms)
+    threshold = rms[peak_rms_idx] * 0.1 # -20dB decay point
+    
+    decay_frames = 0
+    for i in range(peak_rms_idx, len(rms)):
+        if rms[i] < threshold:
+            break
+        decay_frames += 1
+    
+    decay_time = librosa.frames_to_time(decay_frames, sr=sr)
+    
+    return peak_freq, lfer, hfer, decay_time
+
 
 def is_kick(peak_freq, lfer, hfer):
     # Rule 1: Must be in bass range

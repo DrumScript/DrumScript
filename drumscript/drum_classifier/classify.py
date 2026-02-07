@@ -76,6 +76,28 @@ def is_snare(peak_freq, hfer):
     
     return is_standard or is_fat_snare
 
+def classify_tom(peak_freq, hfer, decay_time):
+    """
+    Determines if it is a Tom, and which one.
+    """
+    # Rule 1: Purity Check. Toms have almost no 'wire' noise.
+    if hfer > c.TOM_HFER_MAX:
+        return None
+        
+    # Rule 2: Resonance Check. Toms ring longer than Kicks.
+    # (Unless it's a very high-pitched tom, which might be short, 
+    # but those are distinguished by frequency > Kick range)
+    if decay_time < c.TOM_MIN_DECAY:
+        return None
+
+    # Bucket by Pitch
+    if peak_freq <= c.TOM_FREQ_LOW_MAX:
+        return "Tom Low"
+    elif peak_freq <= c.TOM_FREQ_MID_MAX:
+        return "Tom Mid"
+    else:
+        return "Tom High"
+
 def classify_event(audio_segment, sr):
     peak_freq, lfer, hfer = get_spectral_features(audio_segment, sr)
     

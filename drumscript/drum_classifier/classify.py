@@ -98,13 +98,21 @@ def classify_tom(peak_freq, hfer, decay_time):
     else:
         return "Tom High"
 
+
 def classify_event(audio_segment, sr):
-    peak_freq, lfer, hfer = get_spectral_features(audio_segment, sr)
+    peak_freq, lfer, hfer, decay_time = get_spectral_features(audio_segment, sr)
     
-    # Priority: Check Snare first (as it overlaps kick freq sometimes)
+    # 1. Check Snare (Distinctive Noise Profile)
     if is_snare(peak_freq, hfer):
         return "Snare"
-    elif is_kick(peak_freq, lfer, hfer):
+    
+    # 2. Check Tom (Distinctive Resonance & Purity)
+    tom_type = classify_tom(peak_freq, hfer, decay_time)
+    if tom_type:
+        return tom_type
+        
+    # 3. Check Kick (Sub-bass, Short Decay)
+    if is_kick(peak_freq, lfer, hfer):
         return "Kick"
     
     return "Unknown"

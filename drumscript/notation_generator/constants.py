@@ -219,3 +219,18 @@ SNARE_FREQ_MAX = 400.0   # Hz
 # Used as a tie-breaker for deep snares (like snare_0004) vs clicky kicks.
 # A kick typically has < 15% high energy. A snare typically has > 20%.
 SNARE_HFER_MIN = 0.20    # 20%
+
+# ... (Keep Kick and Snare constants) ...
+
+# 3. -- TOM PHYSICS ---
+# Analysis Source: 15 user-provided wav files, from dugg-funnie reverse tom dataset
+# low, mid and high-tom data provided.
+# Characteristics: Extremely low high-freq energy, long decay.
+
+# Frequency Buckets (for classification)
+TOM_FREQ_LOW_MAX = 95.0   # Hz (Below this is Low Tom)
+TOM_FREQ_MID_MAX = 135.0  # Hz (95-135 is Mid Tom, above is High)
+
+# Physics Rules
+TOM_HFER_MAX = 0.05       # Max 5% high freq energy (Toms are not "hisssy")
+TOM_MIN_DECAY = 0.30      # Seconds. (Kicks usually < 0.25s, Toms > 0.35s)

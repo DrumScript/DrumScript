@@ -97,8 +97,7 @@ def classify_tom(peak_freq, hfer, decay_time):
         return "Tom Mid"
     else:
         return "Tom High"
-
-
+    
 def classify_event(audio_segment, sr):
     peak_freq, lfer, hfer, decay_time = get_spectral_features(audio_segment, sr)
     

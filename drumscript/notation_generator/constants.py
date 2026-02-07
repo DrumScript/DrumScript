@@ -202,10 +202,6 @@ KICK_MAX_CENTROID = 400.0   # Hz (Generous upper bound, refined by LFER)
 KICK_MIN_LFER = 0.50        # Min 50% of energy must be below 150Hz
 KICK_LFER_MIN = 0.40   # 40% (Safety margin below observed 46.9%)
 
-# notation_generator/constants.py
-
-# ... (Keep existing Kick constants) ...
-
 # 2. --- SNARE DRUM PHYSICS ---
 # Analysis Source: 20 user-provided wav files
 # Range: Peak Freq 64-366Hz | Centroid 1300-6000Hz
@@ -219,8 +215,6 @@ SNARE_FREQ_MAX = 400.0   # Hz
 # Used as a tie-breaker for deep snares (like snare_0004) vs clicky kicks.
 # A kick typically has < 15% high energy. A snare typically has > 20%.
 SNARE_HFER_MIN = 0.20    # 20%
-
-# ... (Keep Kick and Snare constants) ...
 
 # 3. -- TOM PHYSICS ---
 # Analysis Source: 15 user-provided wav files, from dugg-funnie reverse tom dataset

@@ -117,14 +117,14 @@ def classify_event(audio_segment, sr):
     return "Unknown"
 # print("\n# ------------------------------------------------------------------------------------")
 # LEGACY CODE (PRESERVING FOR EASE)
-
-"""def analyze_event(y, sr):
-    #
-    #Calculates specific acoustic features:
-    #- f0: Fundamental Frequency (Peak Magnitude)
+# Leave these uncommented so not to break orchestration and docs
+def analyze_event(y, sr):
+    
+    # Calculates specific acoustic features:
+    # - f0: Fundamental Frequency (Peak Magnitude)
     #- sc: Spectral Centroid (Brightness)
-    #- width: Spectral Bandwidth
-    #- depth: Decay Ratio (Sustain)
+    # - width: Spectral Bandwidth
+    # - depth: Decay Ratio (Sustain)
 
     #:param y: Audio segment.
     #:type y: np.ndarray
@@ -138,7 +138,7 @@ def classify_event(audio_segment, sr):
     # n_fft = 2048
     # spec = np.abs(librosa.stft(y, n_fft=n_fft))
     # freqs = librosa.fft_frequencies(sr=sr, n_fft=n_fft)
-    n_fft = N_FFT
+    # n_fft = N_FFT
     spec = np.abs(librosa.stft(y, n_fft=N_FFT))
     freqs = librosa.fft_frequencies(sr=sr, n_fft=N_FFT)
 
@@ -168,18 +168,18 @@ def classify_event(audio_segment, sr):
         "depth": float(round(decay, 2)),
     }
 
-"""
-"""
+
+# Leave these uncommented so not to break orchestration and docs
 def classify_events (audio_data, sr, onsets) -> List[Dict[str, Any]]:
     # Classifies hits strictly based on Fundamental Frequency ($f_0$) ranges.
-    :param audio_data: Full audio array.
-    :type audio_data: np.ndarray
-    :param sr: Sampling rate.
-    :type sr: int
-    :param onsets: List of onset times.
-    :type onsets: list
-    :return: List of classified event dictionaries.
-    :rtype: List[Dict[str, Any]]
+    # :param audio_data: Full audio array.
+    # :type audio_data: np.ndarray
+    # :param sr: Sampling rate.
+    # :type sr: int
+    # :param onsets: List of onset times.
+    # :type onsets: list
+    # :return: List of classified event dictionaries.
+    # :rtype: List[Dict[str, Any]]
 
     classified_events = []
 
@@ -242,4 +242,4 @@ def classify_events (audio_data, sr, onsets) -> List[Dict[str, Any]]:
                 }
             )
 
-    return classified_events"""
+    return classified_events

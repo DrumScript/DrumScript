@@ -3,15 +3,14 @@
 # `python3 -m drumscript.drum_classifier.classify path_to_audio_file
 # ------------------------------------------------------------------------------------------------------------
 """
-This script determines the classification rules by which the parameters in constants.py are applied to audio_file_path.
+This script determines the classification rules by which the parameters in py are applied to audio_file_path.
 """
 
 from typing import Any, Dict, List
 import numpy as np
 import scipy.signal
 import librosa
-from drumscript.notation_generator import constants as c
-from drumscript.notation_generator.constants import DRUM_NOTATION_MAP, N_FFT, SAMPLE_RATE, KICK_FREQ_MAX, KICK_FREQ_MIN, KICK_LFER_MIN, KICK_MAX_CENTROID, KICK_MAX_PEAK_FREQ, KICK_MIN_LFER, KICK_MIN_PEAK_FREQ, KICK_RANGE, SNARE_RANGE, SNARE_SPECTRAL_CENTROID, SNARE_FREQ_MIN, SNARE_FREQ_MAX, SNARE_HFER_MIN
+from drumscript.notation_generator.constants import DRUM_NOTATION_MAP, N_FFT, SAMPLE_RATE, KICK_RANGE, SNARE_RANGE, SNARE_FREQ_MIN, SNARE_FREQ_MAX, SNARE_HFER_MIN, TOM_FREQ_LOW_MAX, TOM_FREQ_MID_MAX, TOM_MIN_DECAY, LOW_TOM_RANGE, MID_TOM_RANGE,HAT_CLOSED_MAX_DECAY, HAT_OPEN_MAX_DECAY, OPEN_HAT_RANGE, CLOSED_HAT_RANGE, RIDE_RANGE, CRASH_RANGE, IDIOPHONE_MIN_HFER_5K, CYMBAL_CENTROID_THRESHOLD
 
 # from datetime import datetime
 
@@ -75,27 +74,27 @@ def classify_membranophone(p):
     """
     # 1. IDENTIFY SNARE (The "Noisy" Skin)
     # Must have wire noise (>2k energy). Frequency alone is unreliable.
-    is_snare_freq = c.SNARE_FREQ_MIN <= p['peak_freq'] <= c.SNARE_FREQ_MAX
-    is_snare_wire = p['hfer_2k'] >= c.SNARE_HFER_MIN
+    is_snare_freq = SNARE_FREQ_MIN <= p['peak_freq'] <= SNARE_FREQ_MAX
+    is_snare_wire = p['hfer_2k'] >= SNARE_HFER_MIN
     
     if is_snare_freq and is_snare_wire:
         return "snare"
     
     # Fallback for deep/fat snares
-    if (p['peak_freq'] < c.SNARE_FREQ_MIN) and is_snare_wire:
+    if (p['peak_freq'] < SNARE_FREQ_MIN) and is_snare_wire:
         return "snare"
 
     # 2. IDENTIFY KICK vs LOW TOM
     # Conflict Zone: < 92Hz. Use Decay to separate.
-    if p['peak_freq'] <= c.TOM_FREQ_LOW_MAX:
-        if p['decay'] > c.TOM_MIN_DECAY:
+    if p['peak_freq'] <= TOM_FREQ_LOW_MAX:
+        if p['decay'] > TOM_MIN_DECAY:
             return "low_tom" # Long boom
         else:
             return "kick"    # Short thud
 
     # 3. IDENTIFY REMAINING TOMS
     # If we are here, it's a skin, not a snare, not a kick.
-    if p['peak_freq'] <= c.TOM_FREQ_MID_MAX:
+    if p['peak_freq'] <= TOM_FREQ_MID_MAX:
         return "mid_tom"
     
     # Default: High Tom (Pure tone > 135Hz)
@@ -108,17 +107,17 @@ def classify_idiophone(p):
     decay = p['decay']
     
     # 1. Check Closed Hi-Hat (Shortest)
-    if decay <= c.HAT_CLOSED_MAX_DECAY:
+    if decay <= HAT_CLOSED_MAX_DECAY:
         return "hi_hat_closed"
     
     # 2. Check Open Hi-Hat (Medium)
-    elif decay <= c.HAT_OPEN_MAX_DECAY:
+    elif decay <= HAT_OPEN_MAX_DECAY:
         return "hi_hat_open"
     
     # 3. Check Cymbals (Longest)
     # Differentiate Ride vs Crash using Spectral Centroid (Brightness)
     else:
-        if p['centroid'] > c.CYMBAL_CENTROID_THRESHOLD:
+        if p['centroid'] > CYMBAL_CENTROID_THRESHOLD:
             return "crash" # Bright, explosive
         else:
             return "ride"  # Darker, gong-like body
@@ -130,7 +129,7 @@ def classify_event(audio_segment, sr):
     physics = get_physics_profile(audio_segment, sr)
     
     # Is it Metal? (High energy > 5kHz)
-    if physics['hfer_5k'] >= c.IDIOPHONE_MIN_HFER_5K:
+    if physics['hfer_5k'] >= IDIOPHONE_MIN_HFER_5K:
         return classify_idiophone(physics)
     else:
         return classify_membranophone(physics)
@@ -227,25 +226,25 @@ def classify_events (audio_data, sr, onsets) -> List[Dict[str, Any]]:
         # Order matters for overlaps!
 
         # 1. Low End
-        if constants.KICK_RANGE[0] <= f0 <= constants.KICK_RANGE[1]:
+        if KICK_RANGE[0] <= f0 <= KICK_RANGE[1]:
             drum_type = "kick"
-        elif constants.LOW_TOM_RANGE[0] <= f0 <= constants.LOW_TOM_RANGE[1]:
+        elif LOW_TOM_RANGE[0] <= f0 <= LOW_TOM_RANGE[1]:
             drum_type = "low_tom"
 
         # 2. Mids (Check Tom first to catch narrow band, then Snare)
-        elif constants.MID_TOM_RANGE[0] <= f0 <= constants.MID_TOM_RANGE[1]:
+        elif MID_TOM_RANGE[0] <= f0 <= MID_TOM_RANGE[1]:
             drum_type = "mid_tom"
-        elif constants.SNARE_RANGE[0] <= f0 <= constants.SNARE_RANGE[1]:
+        elif SNARE_RANGE[0] <= f0 <= SNARE_RANGE[1]:
             drum_type = "snare"
 
         # 3. Highs
-        elif constants.OPEN_HAT_RANGE[0] <= f0 <= constants.OPEN_HAT_RANGE[1]:
+        elif OPEN_HAT_RANGE[0] <= f0 <= OPEN_HAT_RANGE[1]:
             drum_type = "hi_hat_open"
-        elif constants.CLOSED_HAT_RANGE[0] <= f0 <= constants.CLOSED_HAT_RANGE[1]:
+        elif CLOSED_HAT_RANGE[0] <= f0 <= CLOSED_HAT_RANGE[1]:
             drum_type = "hi_hat_closed"
-        elif constants.RIDE_RANGE[0] <= f0 <= constants.RIDE_RANGE[1]:
+        elif RIDE_RANGE[0] <= f0 <= RIDE_RANGE[1]:
             drum_type = "ride"
-        elif constants.CRASH_RANGE[0] <= f0 <= constants.CRASH_RANGE[1]:
+        elif CRASH_RANGE[0] <= f0 <= CRASH_RANGE[1]:
             drum_type = "crash"
 
         # If detected, append

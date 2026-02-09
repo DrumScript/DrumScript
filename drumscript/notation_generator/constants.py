@@ -28,7 +28,7 @@ DRUM_NOTATION_MAP = {
         'note_head': 'normal',
         'staff_position': 'F3' # Bottom Space
     },
-    'kick_clicky': {
+    'kick_clicky': { # TO DO: MIGHT DELETE IN FUTURE IF TEMPORAL MODEL IS BETTER, THEN THE 'CLICKY KICK' WULD JUST BECOME A VERY FAST KICK
         'display_name': 'Kick (Clicky)',
         'midi_program': 36,
         'note_head': 'normal',
@@ -43,14 +43,14 @@ DRUM_NOTATION_MAP = {
         'staff_position': 'C4' # Space 3
     },
     
-    # --- Hi-Hats ---
+    # --- Hi-Hats --- # assumes edge hit
     'hi_hat_closed': {
         'display_name': 'Hi-Hat (Closed)',
         'midi_program': 42,
         'note_head': 'x',
         'staff_position': 'G4' # Above Top Line
     },
-    'hi_hat_open': {
+    'hi_hat_open': { # assumes edge hit
         'display_name': 'Hi-Hat (Open)',
         'midi_program': 46,
         'note_head': 'circle-x', 
@@ -78,13 +78,13 @@ DRUM_NOTATION_MAP = {
     },
     
     # --- Cymbals ---
-    'crash': {
+    'crash': { # assumes edge hit
         'display_name': 'Crash Cymbal',
         'midi_program': 49,
         'note_head': 'x',
         'staff_position': 'A4' # Ledger Line Above
     },
-    'ride': {
+    'ride': { # assumes edge hit
         'display_name': 'Ride Cymbal',
         'midi_program': 51,
         'note_head': 'x',
@@ -228,3 +228,85 @@ TOM_FREQ_MID_MAX = 135.0  # Hz (95-135 is Mid Tom, above is High)
 # Physics Rules
 TOM_HFER_MAX = 0.05       # Max 5% high freq energy (Toms are not "hisssy")
 TOM_MIN_DECAY = 0.30      # Seconds. (Kicks usually < 0.25s, Toms > 0.35s)
+
+# DrumScript/notation_generator/constants.py
+
+"""
+PHYSICS CONSTANTS FOR DRUM CLASSIFICATION
+Derived from iterative analysis of user audio samples (Feb 2026).
+"""
+
+# --- GLOBAL AUDIO CONFIG ---
+SAMPLE_RATE = 44100
+HOP_LENGTH = 256
+N_FFT = 2048
+ONSET_SLICE_DURATION_MS = 200 
+
+# ==============================================================================
+# CLASS 1: MEMBRANOPHONES (SKINS)
+# Characteristics: Fundamental pitch, harmonic structure, lower frequency center.
+# ==============================================================================
+
+# A. KICK DRUM (Sub-Bass, Short Decay)
+KICK_FREQ_MIN = 40.0    # Hz
+KICK_FREQ_MAX = 140.0   # Hz
+KICK_LFER_MIN = 0.40    # Min 40% energy must be < 150Hz
+KICK_MAX_DECAY = 0.25   # Seconds (Thud)
+
+# B. SNARE DRUM (Wire Noise + Body)
+# Note: Frequency overlaps with High Toms. "Wire Energy" is the key separator.
+SNARE_FREQ_MIN = 120.0  
+SNARE_FREQ_MAX = 450.0  
+SNARE_HFER_MIN = 0.15   # Minimum 15% energy > 2000Hz (Wires)
+
+# C. TOMS (Pure Tones, Resonance)
+# Characterized by LOW high-freq energy and LONG decay vs Kicks.
+TOM_MIN_DECAY = 0.28    # Seconds (Separates Low Tom from Kick)
+TOM_MAX_WIRE_ENERGY = 0.05 # Max 5% energy > 2kHz (Toms are not buzzy)
+
+# Tom Frequency Buckets
+TOM_FREQ_LOW_MAX = 92.0    # Hz (Separates 86Hz Low Tom from 96Hz Mid Tom)
+TOM_FREQ_MID_MAX = 135.0   # Hz (Separates 118Hz Mid Tom from 140Hz High Tom)
+# Anything > 135Hz (and not a snare) is a High Tom.
+
+
+# ==============================================================================
+# CLASS 2: IDIOPHONES (METALS)
+# Characteristics: Inharmonic, high energy > 5kHz.
+# ==============================================================================
+
+# SEPARATION FROM SKINS
+# If energy > 5000Hz is above this threshold, it is Metal.
+IDIOPHONE_MIN_HFER_5K = 0.15 
+
+# A. HI-HATS (Decay-Based Separation)
+# Closed Hat: Very tight. (Avg obs: 0.12s)
+HAT_CLOSED_MAX_DECAY = 0.30  # Seconds
+
+# Open Hat: Medium sustain. (Avg obs: 0.42s)
+HAT_OPEN_MIN_DECAY = 0.30
+HAT_OPEN_MAX_DECAY = 0.60    # Seconds (Separates Open Hat from Paperthin Crash 0.7s)
+
+# B. CYMBALS (Long Decay + Centroid Separation)
+# Any metal ringing > 0.60s is a Cymbal.
+CYMBAL_MIN_DECAY = 0.60
+
+# Centroid: The "Brightness" Check.
+# Rides are "Dark" (Gong-like, ~3000Hz). Crashes are "Bright" (Explosive, ~4800Hz).
+CYMBAL_CENTROID_THRESHOLD = 4000.0 # Hz
+
+
+# ==============================================================================
+# NOTATION MAPPING (Used by Score Builder)
+# ==============================================================================
+DRUM_NOTATION_MAP = {
+    'kick':          {'midi_program': 36, 'note_head': 'normal', 'staff_position': 'F3'},
+    'snare':         {'midi_program': 38, 'note_head': 'normal', 'staff_position': 'C4'},
+    'low_tom':       {'midi_program': 41, 'note_head': 'normal', 'staff_position': 'A3'},
+    'mid_tom':       {'midi_program': 45, 'note_head': 'normal', 'staff_position': 'D4'},
+    'high_tom':      {'midi_program': 48, 'note_head': 'normal', 'staff_position': 'E4'},
+    'hi_hat_closed': {'midi_program': 42, 'note_head': 'x',      'staff_position': 'G4'}, # assumes edge hit
+    'hi_hat_open':   {'midi_program': 46, 'note_head': 'circle-x','staff_position': 'G4'}, # assumes edge hit
+    'crash':         {'midi_program': 49, 'note_head': 'x',      'staff_position': 'A4'}, # assumes edge hit
+    'ride':          {'midi_program': 51, 'note_head': 'x',      'staff_position': 'F4'} # assumes edge hit
+}

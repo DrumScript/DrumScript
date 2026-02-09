@@ -7,13 +7,9 @@ This script determines the classification rules by which the parameters in const
 """
 
 from typing import Any, Dict, List
-
-import librosa
 import numpy as np
-import librosa
 import scipy.signal
-
-from drumscript.notation_generator import constants
+import librosa
 from drumscript.notation_generator import constants as c
 from drumscript.notation_generator.constants import DRUM_NOTATION_MAP, N_FFT, SAMPLE_RATE, KICK_FREQ_MAX, KICK_FREQ_MIN, KICK_LFER_MIN, KICK_MAX_CENTROID, KICK_MAX_PEAK_FREQ, KICK_MIN_LFER, KICK_MIN_PEAK_FREQ, KICK_RANGE, SNARE_RANGE, SNARE_SPECTRAL_CENTROID, SNARE_FREQ_MIN, SNARE_FREQ_MAX, SNARE_HFER_MIN
 
@@ -23,98 +19,122 @@ from drumscript.notation_generator.constants import DRUM_NOTATION_MAP, N_FFT, SA
 # datetimestamp = datetime.now()
 # print(f'\ndate/time: {datetimestamp}')
 
-def get_spectral_features(y, sr):
+
+def get_physics_profile(y, sr):
     """
-    Extracts physics fingerprints: Peak Freq, LFER, HFER, and Decay.
+    Extracts the 'DNA' of the drum hit: 
+    Pitch, Decay, Brightness, and Energy Ratios.
     """
-    # 1. Frequency Analysis
+    # 1. Frequency Analysis (High Resolution)
     freqs, psd = scipy.signal.welch(y, sr, nperseg=4096)
     peak_idx = np.argmax(psd)
     peak_freq = freqs[peak_idx]
     
-    # 2. Energy Ratios
+    # 2. Spectral Centroid (Brightness - Critical for Cymbals)
+    centroid = np.mean(librosa.feature.spectral_centroid(y=y, sr=sr))
+    
+    # 3. Energy Distribution Ratios
     total_energy = np.sum(psd) + 1e-9
+    
+    # Bass Energy (<150Hz) - Kick detection
     low_energy = np.sum(psd[freqs < 150])
-    high_energy = np.sum(psd[freqs > 2000])
-    
     lfer = low_energy / total_energy
-    hfer = high_energy / total_energy
     
-    # 3. Decay Time (Resonance)
+    # Wire Energy (>2000Hz) - Snare vs High Tom detection
+    mid_high_energy = np.sum(psd[freqs > 2000])
+    hfer_2k = mid_high_energy / total_energy
+    
+    # Shimmer Energy (>5000Hz) - Skin vs Metal detection
+    high_energy = np.sum(psd[freqs > 5000])
+    hfer_5k = high_energy / total_energy
+    
+    # 4. Resonance (Decay Time)
     rms = librosa.feature.rms(y=y)[0]
     peak_rms_idx = np.argmax(rms)
-    threshold = rms[peak_rms_idx] * 0.1 # -20dB decay point
+    threshold = np.max(rms) * 0.1 # -20dB point
     
     decay_frames = 0
     for i in range(peak_rms_idx, len(rms)):
         if rms[i] < threshold:
             break
         decay_frames += 1
-    
     decay_time = librosa.frames_to_time(decay_frames, sr=sr)
     
-    return peak_freq, lfer, hfer, decay_time
+    return {
+        "peak_freq": peak_freq,
+        "centroid": centroid,
+        "lfer": lfer,
+        "hfer_2k": hfer_2k,
+        "hfer_5k": hfer_5k,
+        "decay": decay_time
+    }
 
-
-def is_kick(peak_freq, lfer, hfer):
-    # Rule 1: Must be in bass range
-    is_bass = c.KICK_FREQ_MIN <= peak_freq <= c.KICK_FREQ_MAX
-    # Rule 2: Must be thump-dominant
-    is_thump = lfer >= c.KICK_LFER_MIN
-    # Rule 3 (Tie-Breaker): Must NOT have too much treble (excludes fat snares)
-    not_too_crisp = hfer < c.SNARE_HFER_MIN
-    
-    return is_bass and is_thump and not_too_crisp
-
-def is_snare(peak_freq, hfer):
-    # Case A: Standard Snare (High pitched body)
-    is_standard = c.SNARE_FREQ_MIN <= peak_freq <= c.SNARE_FREQ_MAX
-    
-    # Case B: Fat/Deep Snare (Low pitch, but lots of wire noise)
-    # This catches snare_0004 (64Hz)
-    is_fat_snare = (peak_freq < c.SNARE_FREQ_MIN) and (hfer >= c.SNARE_HFER_MIN)
-    
-    return is_standard or is_fat_snare
-
-def classify_tom(peak_freq, hfer, decay_time):
+def classify_membranophone(p):
     """
-    Determines if it is a Tom, and which one.
+    Stage 2A: Sorts Skins (Kick, Snare, Toms).
     """
-    # Rule 1: Purity Check. Toms have almost no 'wire' noise.
-    if hfer > c.TOM_HFER_MAX:
-        return None
-        
-    # Rule 2: Resonance Check. Toms ring longer than Kicks.
-    # (Unless it's a very high-pitched tom, which might be short, 
-    # but those are distinguished by frequency > Kick range)
-    if decay_time < c.TOM_MIN_DECAY:
-        return None
+    # 1. IDENTIFY SNARE (The "Noisy" Skin)
+    # Must have wire noise (>2k energy). Frequency alone is unreliable.
+    is_snare_freq = c.SNARE_FREQ_MIN <= p['peak_freq'] <= c.SNARE_FREQ_MAX
+    is_snare_wire = p['hfer_2k'] >= c.SNARE_HFER_MIN
+    
+    if is_snare_freq and is_snare_wire:
+        return "snare"
+    
+    # Fallback for deep/fat snares
+    if (p['peak_freq'] < c.SNARE_FREQ_MIN) and is_snare_wire:
+        return "snare"
 
-    # Bucket by Pitch
-    if peak_freq <= c.TOM_FREQ_LOW_MAX:
-        return "Tom Low"
-    elif peak_freq <= c.TOM_FREQ_MID_MAX:
-        return "Tom Mid"
+    # 2. IDENTIFY KICK vs LOW TOM
+    # Conflict Zone: < 92Hz. Use Decay to separate.
+    if p['peak_freq'] <= c.TOM_FREQ_LOW_MAX:
+        if p['decay'] > c.TOM_MIN_DECAY:
+            return "low_tom" # Long boom
+        else:
+            return "kick"    # Short thud
+
+    # 3. IDENTIFY REMAINING TOMS
+    # If we are here, it's a skin, not a snare, not a kick.
+    if p['peak_freq'] <= c.TOM_FREQ_MID_MAX:
+        return "mid_tom"
+    
+    # Default: High Tom (Pure tone > 135Hz)
+    return "high_tom"
+
+def classify_idiophone(p):
+    """
+    Stage 2B: Sorts Metals (Hats, Cymbals).
+    """
+    decay = p['decay']
+    
+    # 1. Check Closed Hi-Hat (Shortest)
+    if decay <= c.HAT_CLOSED_MAX_DECAY:
+        return "hi_hat_closed"
+    
+    # 2. Check Open Hi-Hat (Medium)
+    elif decay <= c.HAT_OPEN_MAX_DECAY:
+        return "hi_hat_open"
+    
+    # 3. Check Cymbals (Longest)
+    # Differentiate Ride vs Crash using Spectral Centroid (Brightness)
     else:
-        return "Tom High"
-    
+        if p['centroid'] > c.CYMBAL_CENTROID_THRESHOLD:
+            return "crash" # Bright, explosive
+        else:
+            return "ride"  # Darker, gong-like body
+
 def classify_event(audio_segment, sr):
-    peak_freq, lfer, hfer, decay_time = get_spectral_features(audio_segment, sr)
+    """
+    Stage 1: Class Separation (Skin vs Metal)
+    """
+    physics = get_physics_profile(audio_segment, sr)
     
-    # 1. Check Snare (Distinctive Noise Profile)
-    if is_snare(peak_freq, hfer):
-        return "Snare"
-    
-    # 2. Check Tom (Distinctive Resonance & Purity)
-    tom_type = classify_tom(peak_freq, hfer, decay_time)
-    if tom_type:
-        return tom_type
-        
-    # 3. Check Kick (Sub-bass, Short Decay)
-    if is_kick(peak_freq, lfer, hfer):
-        return "Kick"
-    
-    return "Unknown"
+    # Is it Metal? (High energy > 5kHz)
+    if physics['hfer_5k'] >= c.IDIOPHONE_MIN_HFER_5K:
+        return classify_idiophone(physics)
+    else:
+        return classify_membranophone(physics)
+
 # print("\n# ------------------------------------------------------------------------------------")
 # LEGACY CODE (PRESERVING FOR EASE)
 # Leave these uncommented so not to break orchestration and docs

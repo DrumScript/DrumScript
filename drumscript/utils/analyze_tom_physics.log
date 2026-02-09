@@ -1,0 +1,25 @@
+
+# ------------------------------------------------------------------------------------
+
+date/time: 2026-02-09 19:27:46.814586
+Looking for audio in: /Users/victoriamckinney/Library/Visual Studio Projects/DrumScript/test_audio/*tom*.wav
+Found 15 files. Analyzing Tom Physics...
+--------------------------------------------------------------------------------------------------------------
+File                      | Note (Hz)  | Treble %   | Flatness   | Decay (s) 
+--------------------------------------------------------------------------------------------------------------
+high_tom_phat.wav         | 140.0       | 0.0%       | 0.0255     | 0.372
+high_tom_sonor_beech.wav  | 118.4       | 0.1%       | 0.0898     | 0.604
+high_tom_truth.wav        | 150.7       | 0.2%       | 0.0698     | 0.464
+high_tom_yamaha_beech.wav | 172.3       | 0.2%       | 0.0002     | 0.499
+high_tom_yamaha_maple.wav | 161.5       | 0.3%       | 0.0005     | 0.557
+low_tom_phat.wav          | 64.6       | 0.3%       | 0.0129     | 0.987
+low_tom_sonor_beech.wav   | 64.6       | 0.0%       | 0.0781     | 0.650
+low_tom_truth.wav         | 86.1       | 0.2%       | 0.0701     | 0.801
+low_tom_yamaha_beech.wav  | 86.1       | 0.1%       | 0.0002     | 0.964
+low_tom_yamaha_maple.wav  | 75.4       | 0.1%       | 0.0001     | 1.080
+mid_tom_phat.wav          | 96.9       | 0.1%       | 0.0596     | 0.720
+mid_tom_sonor_beech.wav   | 86.1       | 0.2%       | 0.1442     | 0.952
+mid_tom_truth.wav         | 118.4       | 0.0%       | 0.0939     | 0.627
+mid_tom_yamaha_beech.wav  | 107.7       | 0.1%       | 0.0001     | 0.731
+mid_tom_yamaha_maple.wav  | 118.4       | 0.1%       | 0.0004     | 0.720
+--------------------------------------------------------------------------------------------------------------

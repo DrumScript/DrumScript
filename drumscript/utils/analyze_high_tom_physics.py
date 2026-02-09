@@ -4,6 +4,11 @@ import scipy.signal
 import glob
 import os
 from pathlib import Path
+from datetime import datetime
+
+print("\n# ------------------------------------------------------------------------------------")
+datetimestamp = datetime.now()
+print(f'\ndate/time: {datetimestamp}')
 
 def analyze_high_tom_physics(file_path):
     try:

@@ -2,7 +2,7 @@
 
 Copies of the academic papers and reference charts used to build the `DrumScript` engine are provided available below.
 <!-- date_created: mon-19-jan-2026 -->
-<!-- date_updated: mon-02-feb-2026 -->
+<!-- date_updated: tues-10-feb-2026 -->
 
 ## Academic Papers
 
@@ -33,7 +33,9 @@ vector machine (SVM), Wiener filtering.*
 * [**Computational Models of Similarity for Drum Samples**](https://staff.aist.go.jp/m.goto/PAPER/IEEETASLP200802pampalk.pdf)
     *Content-based similarity, drum sounds, percussive music instruments*.
 * [**librosa: Audio and Music Signal Analysis in Python**](https://proceedings.scipy.org/articles/Majora-7b98e3ed-003.pdf)
-    *Audio, Music, Signal Processing, Python, DSP*
+    *audio, music, signal processing, python, DSP*
+* [**Basic Pitch: A Lightweight Instrument-Agnostic Model for Polyphonic Note Transcription and Multi-Pitch Estimation**](https://arxiv.org/pdf/2203.09893)
+    *Automatic Music Transcription, AMT, note estimation, multi-pitch estimation, polyphonic, low-resource*
 
 
 ## Standards & Charts

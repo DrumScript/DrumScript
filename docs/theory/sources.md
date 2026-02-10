@@ -2,8 +2,8 @@
 
 This is a reference document that outlines the sources of various files and images, reference pdfs provided in the `DrumScript/theory/` folder and sub-folders. Some of the references are duplicated in the **[`bibliography.md`](bibliography.md)**
 
-<!--date_created:weds-06-august-2025-->
-<!--date_updated:mon-02-february-2026-->
+<!--date_created: weds-06-august-2025 -->
+<!--date_updated: tues-10-feb-2026 -->
 
 ---
 ## Sources
@@ -34,7 +34,7 @@ https://usermanuals.finalemusic.com/SongWriter2012Win/Content/PercussionMaps.htm
 * **`Midi Frequency Table`:** [source](https://www.phys.unsw.edu.au/jw/notes.html) - [table](theory/images/midi_frequency_table.png)
 * **`Computational Models of Similarity for Drum Samples`**(https://staff.aist.go.jp/m.goto/PAPER/IEEETASLP200802pampalk.pdf)
 * **`librosa: Audio and Music Signal Analysis in Python`** (https://proceedings.scipy.org/articles/Majora-7b98e3ed-003.pdf)
-
+* **`Basic Pitch: A Lightweight Instrument-Agnostic Model for Polyphonic Note Transcription and Multi-Pitch Estimation`** (https://arxiv.org/pdf/2203.09893)
 
   
 

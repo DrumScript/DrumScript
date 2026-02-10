@@ -64,6 +64,7 @@ dependencies = [
 [project.optional-dependencies]
 # Install if a contributor or maintainer, using: uv pip install -e ".[dev]"
 dev = [
+    "basic-pitch",
     "black",
     "flake8",
     # "furo",

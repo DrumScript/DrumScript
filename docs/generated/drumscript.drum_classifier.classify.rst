@@ -11,8 +11,7 @@
       analyze_event
       classify_event
       classify_events
-      classify_tom
-      get_spectral_features
-      is_kick
-      is_snare
+      classify_idiophone
+      classify_membranophone
+      get_physics_profile
    

@@ -38,7 +38,7 @@ dependencies = [
     "musescore",
     "music21",
     "numba",
-    "numpy",
+    "numpy<2",
     "pandas",
     "pretty-midi",
     "pydub",

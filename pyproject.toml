@@ -49,6 +49,7 @@ dependencies = [
     "setuptools",
     "sounddevice",
     #"soundfile",
+    #"tensorflow",
     "torch",
     "torchaudio",
     "torchcodec",
@@ -65,6 +66,7 @@ dependencies = [
 # Install if a contributor or maintainer, using: uv pip install -e ".[dev]"
 dev = [
     "basic-pitch",
+    "basic-pitch[onnx]",
     "black",
     "flake8",
     # "furo",

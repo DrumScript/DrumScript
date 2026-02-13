@@ -6,7 +6,7 @@ name = "DrumScript"
 version = "0.1.0"
 description = "A Python package to convert drum audio to sheet music."
 readme = "README.md"
-requires-python = ">=3.9, <3.12"
+requires-python = ">=3.9, <=3.12"
 license = { text = "MIT" }
 authors = [
   { name="drumscript-admin", email="hello.drumscript@gmail.com" }, 
@@ -65,10 +65,10 @@ dependencies = [
 [project.optional-dependencies]
 # Install if a contributor or maintainer, using: uv pip install -e ".[dev]"
 dev = [
-    "basic-pitch", # remove once tested for experimentation
-    "basic-pitch[onnx]", # remove once tested for experimentation
-    "basic-pitch[tf]",
-    "basic-pitch[coreml]",
+    #"basic-pitch",
+    #"basic-pitch[onnx]",
+    #"basic-pitch[tf]",
+    #"basic-pitch[coreml]",
     "black",
     "flake8",
     # "furo",

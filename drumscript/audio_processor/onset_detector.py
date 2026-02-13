@@ -190,12 +190,10 @@ if __name__ == "__main__":
         audio_data, sample_rate = load_audio(test_audio_path, sr=SAMPLE_RATE)
         normalised_audio = normalise_audio(audio_data)
 
-
         # Detect onsets from test.mp3/test.wav
         #print("\nDetecting onsets from test.mp3/test.wav...")
         onsets = detect_onsets(normalised_audio, sample_rate)
         print(f"Detected {len(onsets)} onsets.")
-
 
         if onsets:
             # Print the first few detected onsets for verification

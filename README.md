@@ -22,6 +22,7 @@ DrumScript is an open-source `Python` library and suite of tools intended to mak
   - **[FAQs](#faqs)**
 
 > **Workflow Statuses**
+>
 > [![Run Tests](https://github.com/DrumScript/DrumScript/actions/workflows/tests.yml/badge.svg?branch=build%2Fclassification_model)](https://github.com/DrumScript/DrumScript/actions/workflows/tests.yml)
 
 ---

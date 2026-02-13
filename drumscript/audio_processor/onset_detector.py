@@ -208,6 +208,8 @@ if __name__ == "__main__":
             print(f"\n All {len(onsets)} detected onsets (seconds):")
             #for i, onset_time in enumerate(onsets):
              #   print(f"  Onset {i+1}: {onset_time:.2f}s")
+            for i, onset_time in enumerate(onsets):
+                print(f"  Onset {i+1}: {onset_time:.4f}s")
         else:
             print("No onsets detected in test.mp3/test.wav.")
         print(f"Loaded audio: Shape={normalised_audio.shape}, Sample Rate={sample_rate}, Duration={len(normalised_audio)/sample_rate:.2f} seconds, Tempo={calculate_tempo_from_onsets(onsets, sr=SAMPLE_RATE):2f}")

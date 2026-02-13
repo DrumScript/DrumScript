@@ -1,7 +1,7 @@
 ## **`DrumScript`**
 
 <!--date_created: sun-15-june-2025-->
-<!--date_updated: tues-13-jan-2026-->
+<!--date_updated: fri-13-february-2026-->
 
 DrumScript is an open-source `Python` library and suite of tools intended to make music more accessible for everyone. The Python package alpha is released alongside a free-to-use engine for members of the musical and sound analysis/engineering community to use in a zero-code way.
 
@@ -20,6 +20,9 @@ DrumScript is an open-source `Python` library and suite of tools intended to mak
   - **[Contributing](#contributing)**
   - **[Contact](#contact)**
   - **[FAQs](#faqs)**
+
+**Workflow Statuses**
+[![Run Tests](https://github.com/DrumScript/DrumScript/actions/workflows/tests.yml/badge.svg?branch=build%2Fclassification_model)](https://github.com/DrumScript/DrumScript/actions/workflows/tests.yml)
 
 ### **Project Structure**
 

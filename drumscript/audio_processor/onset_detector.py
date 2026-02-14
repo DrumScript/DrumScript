@@ -60,6 +60,8 @@ def detect_onsets(audio_data: np.ndarray, sr: int) -> list[float]:
         hop_length=HOP_LENGTH,
         aggregate=np.median # Using median to suppress noise spikes
     )
+    print(f'\n(onset_env: {onset_env})')
+
 
     # --- 3. Peak Picking Parameters ---
     # Lockout period: 100ms (0.1s) is standard for drums to prevent double triggers

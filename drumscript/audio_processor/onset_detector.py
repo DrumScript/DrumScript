@@ -76,10 +76,10 @@ def detect_onsets(audio_data: np.ndarray, sr: int) -> list[float]:
     # 30ms is roughly 1/32nd note at fast tempos. It prevents the double-trigger on a kick
     # (because the second wobble is smaller than the first peak), but allows fast rolls.
     window_secs = 0.03 # 30ms window
-    window_frames = int(window_secs * (sr / HOP_LENGTH))
+    window_frames = int(window_secs * (sr / HOP_LENGTH)) # ie frames PER SECOND
     print(f'\n(window_frames: {window_frames})')
 
-    frame_duration_secs = HOP_LENGTH / sr #  Frame Duration (in seconds) = HOP_LENGTH / SAMPLE_RATE
+    frame_duration_secs = HOP_LENGTH / sr #  Frame Duration (in seconds) = HOP_LENGTH / SAMPLE_RATE,  ie seconds PER FRAME
     print(f"(1 frame = {frame_duration_secs:.6f} seconds)") # print out calculated frame_duration
 
 

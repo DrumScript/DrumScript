@@ -61,6 +61,15 @@ def detect_onsets(audio_data: np.ndarray, sr: int) -> list[float]:
         aggregate=np.median # Using median to suppress noise spikes
     )
     print(f'\n(onset_env: {onset_env})')
+    # Look at the maximum energy spike in the whole file
+    print(f"(Max onset strength: {np.max(onset_env):.4f})")
+    
+    # Look at the average energy
+    print(f"(Average onset strength: {np.mean(onset_env):.4f})")
+    
+    # See exactly how many frames have an energy greater than 0
+    non_zero_frames = np.count_nonzero(onset_env)
+    print(f"(Frames with rising energy: {non_zero_frames} out of {len(onset_env)})")
 
 
     # --- 3. Peak Picking Parameters ---

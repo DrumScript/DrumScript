@@ -169,7 +169,6 @@ def calculate_tempo_from_onsets(onset_times: np.ndarray, sr: int) -> float:
 if __name__ == "__main__":
     from drumscript.audio_processor.audio_loader import load_audio, normalise_audio
     print("\n#=======================================================================================")
-    #print("Running onset_detector.py example with test.wav/test.mp3...")
     print("Running onset_detector.py example with provided filepath...") # FUTURE: Find way to encode this so it prints the file path provided in CLI
     try:
 
@@ -178,7 +177,7 @@ if __name__ == "__main__":
         # if running this script directly and 'audio_processor' is not in the Python path.
         # However, for 'python -m' style execution, 'from audio_processor.audio_loader import ...' is usually correct.
 
-        # --- CLI ARGUMENT PARSING FIX ---
+        # Required for CLI argparsing
         parser = argparse.ArgumentParser(description="Detect onsets in drum audio.")
         parser.add_argument("input_audio", help="Path to the input audio file")
         args = parser.parse_args()
@@ -188,31 +187,24 @@ if __name__ == "__main__":
         sr = SAMPLE_RATE
         print(f'sample_rate=sr={sr}') # Print current sample rate applied
 
-        # --- Path to your actual drum recording/audio (test.wav/test.mp3) ---
-        # This dynamic path calculation should correctly point to DRUMSCRIPT/test_audio/test.wav
+        # --- Get path to audio (cli or import from sister module)
         current_script_dir = os.path.dirname(os.path.abspath(__file__))
         print(f'current_script_dir: {current_script_dir}')
         # Go up one level from audio_processor/onset_detector.py to the outer DRUMSCRIPT/ folder
         project_root = os.path.abspath(os.path.join(current_script_dir, '..', '..'))
         print(f'project_root: {project_root}')
+        audio_path = os.path.abspath(args.input_audio)
 
-        # Construct the path to test.mp3/test.wav within the 'test_audio' directory
-        #test_audio_path = os.path.join(project_root, "test_audio", "SCHAMMASCH-Split-My-Tongue.mp3") # Change .mp3 to .wav if using WAV, or other audio format
-        # test_audio_path = os.path.join(project_root, "test_audio", "test.wav") # Change .wav to .mp3 if using MP3, or other audio format
-
-        # USE CLI ARGUMENT PATH INSTEAD OF HARDCODED
-        test_audio_path = os.path.abspath(args.input_audio)
-
-        print(f'test_audio_path: {test_audio_path}')
-        print(f"Attempting to load: {test_audio_path}")
+        print(f'audio_path: {audio_path}')
+        print(f"Attempting to load: {audio_path}")
         
-        # Load and normalise the test.mp3/test.wav audio
-        # audio_data, sample_rate = load_audio(test_audio_path, sr=sr)
-        audio_data, sample_rate = load_audio(test_audio_path, sr=SAMPLE_RATE)
+        # Load and normalise audio
+        # audio_data, sample_rate = load_audio(audio_path, sr=sr)
+        audio_data, sample_rate = load_audio(audio_path, sr=SAMPLE_RATE)
         normalised_audio = normalise_audio(audio_data)
 
-        # Detect onsets from test.mp3/test.wav
-        #print("\nDetecting onsets from test.mp3/test.wav...")
+        # Detect onsets
+        print(f"\nDetecting onsets in {audio_path}..")
         onsets = detect_onsets(normalised_audio, sample_rate)
         print(f"Detected {len(onsets)} onsets.")
 
@@ -230,11 +222,11 @@ if __name__ == "__main__":
             for i, onset_time in enumerate(onsets):
                 print(f"  Onset {i+1}: {onset_time:.4f}s")
         else:
-            print("No onsets detected in test.mp3/test.wav.")
+            print(f"No onsets detected in audio_path: {audio_path}")
         print(f"Loaded audio: Shape={normalised_audio.shape}, Sample Rate={sample_rate}, Duration={len(normalised_audio)/sample_rate:.2f} seconds, Tempo={calculate_tempo_from_onsets(onsets, sr=SAMPLE_RATE):2f}")
     except FileNotFoundError:
-        print(f"\nERROR: The audio file '{test_audio_path}' was not found.")
-        print("Please ensure you have placed 'test.mp3/test.wav' inside your 'DrumScript/test_audio/' directory.")
+        print(f"\nERROR: The audio file '{audio_path}' was not found.")
+        print(f"\nPlease ensure you have provided the correct path to your audio file: {audio_path}")
     except ImportError as e:
         print(f"\nERROR: Required modules/libraries might be missing or imports are incorrect: {e}")
         print("Ensure 'soundfile', 'librosa', 'numpy', and your DrumScript modules are correctly installed and structured.")

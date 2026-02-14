@@ -76,7 +76,7 @@ def detect_onsets(audio_data: np.ndarray, sr: int) -> list[float]:
     # (because the second wobble is smaller than the first peak), but allows fast rolls.
     window_secs = 0.03 # 30ms window
     window_frames = int(window_secs * (sr / HOP_LENGTH))
-    print(f'\n(window_frames"{window_frames})')
+    print(f'\n(window_frames: {window_frames})')
     
     onset_frames = librosa.util.peak_pick(
         onset_env,

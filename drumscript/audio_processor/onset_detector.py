@@ -78,7 +78,11 @@ def detect_onsets(audio_data: np.ndarray, sr: int) -> list[float]:
     window_secs = 0.03 # 30ms window
     window_frames = int(window_secs * (sr / HOP_LENGTH))
     print(f'\n(window_frames: {window_frames})')
-    
+
+    frame_duration_secs = HOP_LENGTH / sr #  Frame Duration (in seconds) = HOP_LENGTH / SAMPLE_RATE
+    print(f"(1 frame = {frame_duration_secs:.6f} seconds)") # print out calculated frame_duration
+
+
     onset_frames = librosa.util.peak_pick(
         onset_env,
         pre_max=window_frames,      # Must be max value in previous ~30ms
@@ -112,10 +116,11 @@ def detect_onsets(audio_data: np.ndarray, sr: int) -> list[float]:
     # SAFETY CHECK: If no onsets are found, backtracking will crash.
     if len(onset_frames) > 0:
         onset_frames = librosa.onset.onset_backtrack(onset_frames, onset_env)
+    print(f'(onset_frames:{onset_frames})')
 
     onset_times = librosa.frames_to_time(onset_frames, sr=SAMPLE_RATE) # onset_time is in seconds, *1000 to get ms. This is fed into final output .json when transcription is run
 
-    return onset_times.tolist() 
+    return onset_times.tolist()
 
 #------- AUTOMATIC TEMPO DETECTION------------------------------------
 # REPLACED THE FUNCTION THAT WAS HARDCODED TO DETECT TEMPO FROM ONSETS WITH IMPORTED FCT FROM THE TEMPO_DETECTOR SCRIPT

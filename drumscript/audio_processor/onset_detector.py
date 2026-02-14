@@ -75,7 +75,8 @@ def detect_onsets(audio_data: np.ndarray, sr: int) -> list[float]:
     # They say: "A peak is only a peak if it is the maximum value within X frames."
     # 30ms is roughly 1/32nd note at fast tempos. It prevents the double-trigger on a kick
     # (because the second wobble is smaller than the first peak), but allows fast rolls.
-    window_secs = 0.03 # 30ms window
+    # window_secs = 0.03 # 30ms window
+    window_secs = 0.010 # 10ms window. MINIMUM WINDOW
     window_frames = int(window_secs * (sr / HOP_LENGTH)) # ie frames PER SECOND
     print(f'\n(window_frames: {window_frames} FRAMES PER SECOND)')
 
@@ -85,12 +86,14 @@ def detect_onsets(audio_data: np.ndarray, sr: int) -> list[float]:
 
     onset_frames = librosa.util.peak_pick(
         onset_env,
-        pre_max=window_frames,      # Must be max value in previous ~30ms
-        post_max=window_frames,     # Must be max value in subsequent ~30ms
-        pre_avg=window_frames,      # Compare against average of previous ~30ms
-        post_avg=window_frames,     # Compare against average of subsequent ~30ms
+        pre_max=window_frames,      # Must be max value in previous ~10ms
+        post_max=window_frames,     # Must be max value in subsequent ~10ms
+        pre_avg=window_frames,      # Compare against average of previous ~10ms
+        post_avg=window_frames,     # Compare against average of subsequent ~10ms
         delta=0.07,                 # Adaptive threshold (sensitivity)
-        wait=1                      # Minimal wait (just 1 frame) to avoid mathematical overlap
+        # wait=1                  # Minimal wait (just 1 frame) to avoid mathematical overlap
+        wait=0                  # 
+
     )
 
     # onset_frames = librosa.onset.onset_detect(

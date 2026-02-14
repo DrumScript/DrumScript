@@ -119,7 +119,9 @@ def detect_onsets(audio_data: np.ndarray, sr: int) -> list[float]:
     # SAFETY CHECK: If no onsets are found, backtracking will crash.
     if len(onset_frames) > 0:
         onset_frames = librosa.onset.onset_backtrack(onset_frames, onset_env)
+        onset_frames = np.unique(onset_frames) # get unique onset_frames only
     print(f'(onset_frames:{onset_frames})')
+    print(f'(len_onset_frames:{len(onset_frames)})')
 
     onset_times = librosa.frames_to_time(onset_frames, sr=SAMPLE_RATE) # onset_time is in seconds, *1000 to get ms. This is fed into final output .json when transcription is run
 

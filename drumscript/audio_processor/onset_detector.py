@@ -3,10 +3,11 @@
 This module will detect the onset (start) times of drum hits in the audio.
 """
 import os
+import sys
 import librosa
 import numpy as np
 import soundfile
-import argparse # for command-line argument parsing
+import argparse
 from drumscript.notation_generator.constants import SAMPLE_RATE, SEGMENT_LENGTH_SECONDS, N_FFT, NOISE_THRESH_SNARE, DRUM_NOTATION_MAP, ONSET_SLICE_DURATION_MS, HOP_LENGTH
 from drumscript.audio_processor import tempo_detector
 from drumscript.audio_processor.tempo_detector import estimate_tempo
@@ -167,6 +168,11 @@ if __name__ == "__main__":
         # if running this script directly and 'audio_processor' is not in the Python path.
         # However, for 'python -m' style execution, 'from audio_processor.audio_loader import ...' is usually correct.
 
+        # --- CLI ARGUMENT PARSING FIX ---
+        parser = argparse.ArgumentParser(description="Detect onsets in drum audio.")
+        parser.add_argument("input_audio", help="Path to the input audio file")
+        args = parser.parse_args()
+
         # sr = 44100 # Target sample rate for processing
         #sr = 44100*1.5 # Target sample rate for processing
         sr = SAMPLE_RATE
@@ -182,10 +188,14 @@ if __name__ == "__main__":
 
         # Construct the path to test.mp3/test.wav within the 'test_audio' directory
         #test_audio_path = os.path.join(project_root, "test_audio", "SCHAMMASCH-Split-My-Tongue.mp3") # Change .mp3 to .wav if using WAV, or other audio format
-        test_audio_path = os.path.join(project_root, "test_audio", "test.wav") # Change .wav to .mp3 if using MP3, or other audio format
+        # test_audio_path = os.path.join(project_root, "test_audio", "test.wav") # Change .wav to .mp3 if using MP3, or other audio format
+
+        # USE CLI ARGUMENT PATH INSTEAD OF HARDCODED
+        test_audio_path = os.path.abspath(args.input_audio)
+
         print(f'test_audio_path: {test_audio_path}')
         print(f"Attempting to load: {test_audio_path}")
-
+        
         # Load and normalise the test.mp3/test.wav audio
         # audio_data, sample_rate = load_audio(test_audio_path, sr=sr)
         audio_data, sample_rate = load_audio(test_audio_path, sr=SAMPLE_RATE)

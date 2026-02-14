@@ -56,6 +56,9 @@ output/*
 logs/
 drumscript/logs/
 
+# --- Proofs ---
+proofs/
+
 # --- Local Development & Testing ---
 # Ignore local test scripts if they are scratchpads
 # !local_tests/drumscript_lite/test_local_interface.py # Exception: Keep the main interface test

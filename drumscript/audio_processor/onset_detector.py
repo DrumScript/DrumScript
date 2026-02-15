@@ -151,17 +151,18 @@ def detect_onsets(audio_data: np.ndarray, sr: int) -> list[float]:
 #------- AUTOMATIC TEMPO DETECTION------------------------------------
 # REPLACED THE FUNCTION THAT WAS HARDCODED TO DETECT TEMPO FROM ONSETS WITH IMPORTED FCT FROM THE TEMPO_DETECTOR SCRIPT
 
+"""
 def calculate_tempo_from_onsets(onset_times: np.ndarray, sr: int) -> float:
-    """
-    Estimates the tempo (BPM) from a list of onset timestamps.
+    #
+    #Estimates the tempo (BPM) from a list of onset timestamps.
 
-    :param onset_times: Array of onset timestamps in seconds.
-    :type onset_times: np.ndarray
-    :param sr: The sampling rate.
-    :type sr: int
-    :return: The estimated tempo in BPM.
-    :rtype: float
-    """
+   # :param onset_times: Array of onset timestamps in seconds.
+    #:type onset_times: np.ndarray
+    #:param sr: The sampling rate.
+    #:type sr: int
+    #:return: The estimated tempo in BPM.
+    #:rtype: float
+    #
     if len(onset_times) < 2:
         return 120.0 # Return a default tempo if not enough onsets are found
 
@@ -184,11 +185,16 @@ def calculate_tempo_from_onsets(onset_times: np.ndarray, sr: int) -> float:
 
     return float(tempo)
 
+"""
+
+
 #----------------------------------------------------------------------
 
 
 if __name__ == "__main__":
     from drumscript.audio_processor.audio_loader import load_audio, normalise_audio
+    # from drumscript.audio_processor import tempo_detector
+    from drumscript.audio_processor.tempo_detector import estimate_tempo
     print("\n#=======================================================================================")
     print("Running onset_detector.py example with provided filepath...") # FUTURE: Find way to encode this so it prints the file path provided in CLI
     try:
@@ -226,7 +232,7 @@ if __name__ == "__main__":
 
         # Detect onsets
         print(f"\nDetecting onsets in {audio_path}..")
-        onsets = detect_onsets(normalised_audio, sample_rate)
+        onsets = detect_onsets(normalised_audio, SAMPLE_RATE)
         print(f"Detected {len(onsets)} onsets.")
 
         if onsets:
@@ -244,7 +250,11 @@ if __name__ == "__main__":
             #print(f"  Onset {i+1}: {onsets:.4f}s")
         else:
             print(f"No onsets detected in audio_path: {audio_path}")
-        print(f"Loaded audio: Shape={normalised_audio.shape}, Sample Rate={sample_rate}, Duration={len(normalised_audio)/sample_rate:.2f} seconds, Tempo={calculate_tempo_from_onsets(onsets, sr=SAMPLE_RATE):2f}")
+       #global_tempo = estimate_tempo(audio_data, SAMPLE_RATE, HOP_LENGTH)
+        #tempo = estimate_tempo(audio_data, SAMPLE_RATE, HOP_LENGTH)
+        tempo = estimate_tempo(audio_data, SAMPLE_RATE)
+        #print(f"Loaded audio: Shape={normalised_audio.shape}, Sample Rate={sample_rate}, Duration={len(normalised_audio)/sample_rate:.2f} seconds, Tempo={calculate_tempo_from_onsets(onsets, sr=SAMPLE_RATE):2f}")
+        print(f"Loaded audio: Shape={normalised_audio.shape}, Sample Rate={sample_rate}, Duration={len(normalised_audio)/sample_rate:.2f} seconds, Tempo={tempo:2f}")
     except FileNotFoundError:
         print(f"\nERROR: The audio file '{audio_path}' was not found.")
         print(f"\nPlease ensure you have provided the correct path to your audio file: {audio_path}")

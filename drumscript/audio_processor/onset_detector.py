@@ -8,7 +8,7 @@ import librosa
 import numpy as np
 import soundfile
 import argparse
-from drumscript.notation_generator.constants import SAMPLE_RATE, SEGMENT_LENGTH_SECONDS, N_FFT, NOISE_THRESH_SNARE, DRUM_NOTATION_MAP, ONSET_SLICE_DURATION_MS, HOP_LENGTH
+from drumscript.notation_generator.constants import SAMPLE_RATE, HOP_LENGTH
 from drumscript.audio_processor import tempo_detector
 from drumscript.audio_processor.tempo_detector import estimate_tempo
 from datetime import datetime
@@ -56,7 +56,7 @@ def detect_onsets(audio_data: np.ndarray, sr: int) -> list[float]:
     # We use a lag-rectified spectral flux to avoid false positives from energy fluctuations
     onset_env = librosa.onset.onset_strength(
         y=y_percussive, 
-        sr=sr, 
+        sr=SAMPLE_RATE, 
         hop_length=HOP_LENGTH,
         aggregate=np.median # Using median to suppress noise spikes
     )
@@ -88,10 +88,10 @@ def detect_onsets(audio_data: np.ndarray, sr: int) -> list[float]:
     # (because the second wobble is smaller than the first peak), but allows fast rolls.
     # window_secs = 0.03 # 30ms window
     window_secs = 0.01 # 10ms window. MINIMUM WINDOW
-    window_frames = int(window_secs * (sr / HOP_LENGTH)) # ie frames PER SECOND
+    window_frames = int(window_secs * (SAMPLE_RATE / HOP_LENGTH)) # ie frames PER SECOND
     print(f'\n(window_frames: {window_frames} FRAMES PER SECOND)')
 
-    frame_duration_secs = HOP_LENGTH / sr #  Frame Duration (in seconds) = HOP_LENGTH / SAMPLE_RATE,  ie seconds PER FRAME
+    frame_duration_secs = HOP_LENGTH / SAMPLE_RATE #  Frame Duration (in seconds) = HOP_LENGTH / SAMPLE_RATE,  ie seconds PER FRAME
     print(f"(FRAME DURATION: 1 frame = {frame_duration_secs:.6f} seconds)") # print out calculated frame_duration
 
 
@@ -134,7 +134,17 @@ def detect_onsets(audio_data: np.ndarray, sr: int) -> list[float]:
     print(f'(onset_frames:{onset_frames})')
     print(f'(len_onset_frames:{len(onset_frames)})')
 
-    onset_times = librosa.frames_to_time(onset_frames, sr=SAMPLE_RATE) # onset_time is in seconds, *1000 to get ms. This is fed into final output .json when transcription is run
+    print(f'(len_onset_frames:{len(onset_frames)})')
+
+    onset_times = librosa.frames_to_time(onset_frames, sr=SAMPLE_RATE, hop_length=HOP_LENGTH) 
+
+    # onset_times = librosa.onset.onset_detect(
+    #     onset_envelope=onset_env,
+    #     sr=SAMPLE_RATE,
+    #     hop_length=HOP_LENGTH, 
+    #     units='time',
+    #     delta=0.07,
+    # )
 
     return onset_times.tolist()
 
@@ -228,10 +238,10 @@ if __name__ == "__main__":
             
             # Print * (ALL) detected onsets for now
             print(f"\n All {len(onsets)} detected onsets (seconds):")
-            #for i, onset_time in enumerate(onsets):
-             #   print(f"  Onset {i+1}: {onset_time:.2f}s")
             for i, onset_time in enumerate(onsets):
-                print(f"  Onset {i+1}: {onset_time:.4f}s")
+             print(f"  Onset {i+1}: {onset_time:.2f}s")
+            #for i, onset_time in enumerate(onsets):
+            #print(f"  Onset {i+1}: {onsets:.4f}s")
         else:
             print(f"No onsets detected in audio_path: {audio_path}")
         print(f"Loaded audio: Shape={normalised_audio.shape}, Sample Rate={sample_rate}, Duration={len(normalised_audio)/sample_rate:.2f} seconds, Tempo={calculate_tempo_from_onsets(onsets, sr=SAMPLE_RATE):2f}")

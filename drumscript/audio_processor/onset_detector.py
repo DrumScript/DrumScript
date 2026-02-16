@@ -102,7 +102,7 @@ def detect_onsets(audio_data: np.ndarray, sr: int) -> list[float]:
         pre_avg=window_frames,      # Compare against average of previous ~10ms
         post_avg=window_frames,     # Compare against average of subsequent ~10ms
         delta=0.07,                 # Adaptive threshold (sensitivity)
-        # wait=1                  # Minimal wait (just 1 frame) to avoid mathematical overlap
+        #wait=1                  # Minimal wait (just 1 frame) to avoid mathematical overlap
         wait=0                  # 
 
     )
@@ -134,17 +134,17 @@ def detect_onsets(audio_data: np.ndarray, sr: int) -> list[float]:
     print(f'(onset_frames:{onset_frames})')
     print(f'(len_onset_frames:{len(onset_frames)})')
 
-    print(f'(len_onset_frames:{len(onset_frames)})')
+    #print(f'(len_onset_frames:{len(onset_frames)})')
 
     onset_times = librosa.frames_to_time(onset_frames, sr=SAMPLE_RATE, hop_length=HOP_LENGTH) 
 
-    # onset_times = librosa.onset.onset_detect(
-    #     onset_envelope=onset_env,
-    #     sr=SAMPLE_RATE,
-    #     hop_length=HOP_LENGTH, 
-    #     units='time',
-    #     delta=0.07,
-    # )
+    #onset_times = librosa.onset.onset_detect(
+     #    onset_envelope=onset_env,
+     #    sr=SAMPLE_RATE,
+     #    hop_length=HOP_LENGTH, 
+     #    units='time',
+     #    delta=0.07,
+     #)
 
     return onset_times.tolist()
 
@@ -231,7 +231,7 @@ if __name__ == "__main__":
         normalised_audio = normalise_audio(audio_data)
 
         # Detect onsets
-        print(f"\nDetecting onsets in {audio_path}..")
+        print(f"Detecting onsets in {audio_path}..")
         onsets = detect_onsets(normalised_audio, SAMPLE_RATE)
         print(f"Detected {len(onsets)} onsets.")
 

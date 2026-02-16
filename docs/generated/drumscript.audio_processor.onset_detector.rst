@@ -8,6 +8,5 @@
 
    .. autosummary::
    
-      calculate_tempo_from_onsets
       detect_onsets
    

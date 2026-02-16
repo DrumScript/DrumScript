@@ -87,7 +87,7 @@ def detect_onsets(audio_data: np.ndarray, sr: int) -> list[float]:
     # 30ms is roughly 1/32nd note at fast tempos. It prevents the double-trigger on a kick
     # (because the second wobble is smaller than the first peak), but allows fast rolls.
     # window_secs = 0.03 # 30ms window
-    window_secs = 0.01 # 10ms window. MINIMUM WINDOW
+    window_secs = 0.02 # 10ms window. MINIMUM WINDOW
     window_frames = int(window_secs * (SAMPLE_RATE / HOP_LENGTH)) # ie frames PER SECOND
     print(f'\n(window_frames: {window_frames} FRAMES PER SECOND)')
 
@@ -96,12 +96,13 @@ def detect_onsets(audio_data: np.ndarray, sr: int) -> list[float]:
 
 
     onset_frames = librosa.util.peak_pick(
-        onset_env,
+        y_percussive,
+        #onset_env,
         pre_max=window_frames,      # Must be max value in previous ~10ms
         post_max=window_frames,     # Must be max value in subsequent ~10ms
         pre_avg=window_frames,      # Compare against average of previous ~10ms
         post_avg=window_frames,     # Compare against average of subsequent ~10ms
-        delta=0.07,                 # Adaptive threshold (sensitivity)
+        delta=0.02,                 # Adaptive threshold (sensitivity)
         #wait=1                  # Minimal wait (just 1 frame) to avoid mathematical overlap
         wait=0                  # 
 
@@ -128,18 +129,31 @@ def detect_onsets(audio_data: np.ndarray, sr: int) -> list[float]:
     # Backtracking walks backwards from the peak to find where the energy started rising.
     
     # SAFETY CHECK: If no onsets are found, backtracking will crash.
-    if len(onset_frames) > 0:
-        onset_frames = librosa.onset.onset_backtrack(onset_frames, onset_env)
-        onset_frames = np.unique(onset_frames) # get unique onset_frames only
+    #if len(onset_frames) > 0:
+     #   onset_frames = librosa.onset.onset_backtrack(onset_frames, onset_env)
+      #  onset_frames = np.unique(onset_frames) # get unique onset_frames only
     print(f'(onset_frames:{onset_frames})')
     print(f'(len_onset_frames:{len(onset_frames)})')
 
     #print(f'(len_onset_frames:{len(onset_frames)})')
 
-    onset_times = librosa.frames_to_time(onset_frames, sr=SAMPLE_RATE, hop_length=HOP_LENGTH) 
+    onset_times = librosa.frames_to_time(
+        onset_frames, 
+        sr=SAMPLE_RATE 
+        #sr=SAMPLE_RATE, 
+        #hop_length=HOP_LENGTH
+        ) 
+
+    #onset_times = librosa.frames_to_time(
+     #   #onset_frames, 
+      #  y_percussive,
+       # sr=SAMPLE_RATE, 
+        #hop_length=HOP_LENGTH
+    #) 
 
     #onset_times = librosa.onset.onset_detect(
      #    onset_envelope=onset_env,
+
      #    sr=SAMPLE_RATE,
      #    hop_length=HOP_LENGTH, 
      #    units='time',

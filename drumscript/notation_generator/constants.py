@@ -4,7 +4,7 @@
 This script defines ALL parameters used throughout modules in DrumScript
 """
 
-
+# --- GLOBAL AUDIO CONFIG ---
 # --- Configuration ---
 # These should ideally be imported from a central 'constants.py'
 # TO DO: Move these all to constants
@@ -18,7 +18,8 @@ ONSET_SLICE_DURATION_MS = 200 # 200 milliseconds
 
 # n_fft = 2048
 # N_FFT = 1024 # N_FFT is the 'size of the window for the fourier transform" N_FFT = 1024 (Frequency Resolution)
-N_FFT = 512 # This is the size of the analysis window for the Fourier Transform, which breaks the sound down into its constituent frequencies. A larger N_FFT gives you a more detailed picture of which frequencies are present but a less precise idea of exactly when they happened. If you increase it (e.g., to 2048): You get a very precise frequency analysis, which could help distinguish two very similar-sounding cymbals. If you decrease it (e.g., to 512): You get better timing precision but a "blurrier" picture of the frequencies.
+# N_FFT = 512 # This is the size of the analysis window for the Fourier Transform, which breaks the sound down into its constituent frequencies. A larger N_FFT gives you a more detailed picture of which frequencies are present but a less precise idea of exactly when they happened. If you increase it (e.g., to 2048): You get a very precise frequency analysis, which could help distinguish two very similar-sounding cymbals. If you decrease it (e.g., to 512): You get better timing precision but a "blurrier" picture of the frequencies.
+N_FFT = 2048
 
 DRUM_NOTATION_MAP = {
     # --- Bass Drums ---
@@ -235,12 +236,6 @@ TOM_MIN_DECAY = 0.30      # Seconds. (Kicks usually < 0.25s, Toms > 0.35s)
 PHYSICS CONSTANTS FOR DRUM CLASSIFICATION
 Derived from iterative analysis of user audio samples (Feb 2026).
 """
-
-# --- GLOBAL AUDIO CONFIG ---
-SAMPLE_RATE = 44100
-HOP_LENGTH = 256
-N_FFT = 2048
-ONSET_SLICE_DURATION_MS = 200 
 
 # ==============================================================================
 # CLASS 1: MEMBRANOPHONES (SKINS)

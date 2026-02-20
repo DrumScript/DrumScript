@@ -3,7 +3,7 @@
 This is a reference document that outlines the sources of various files and images, reference pdfs provided in the `DrumScript/theory/` folder and sub-folders. Some of the references are duplicated in the **[`bibliography.md`](bibliography.md)**
 
 <!--date_created: weds-06-august-2025 -->
-<!--date_updated: tues-10-feb-2026 -->
+<!-- date_updated: fri-20-feb-2026 -->
 
 ---
 ## Sources
@@ -35,6 +35,7 @@ https://usermanuals.finalemusic.com/SongWriter2012Win/Content/PercussionMaps.htm
 * **`Computational Models of Similarity for Drum Samples`**(https://staff.aist.go.jp/m.goto/PAPER/IEEETASLP200802pampalk.pdf)
 * **`librosa: Audio and Music Signal Analysis in Python`** (https://proceedings.scipy.org/articles/Majora-7b98e3ed-003.pdf)
 * **`Basic Pitch: A Lightweight Instrument-Agnostic Model for Polyphonic Note Transcription and Multi-Pitch Estimation`** (https://arxiv.org/pdf/2203.09893)
+* **`Keep the beat going: Automatic drum transcription with momentum`** (https://www.emergentmind.com/papers/2507.12596)
 
   
 

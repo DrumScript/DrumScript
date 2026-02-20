@@ -2,7 +2,7 @@
 
 Copies of the academic papers and reference charts used to build the `DrumScript` engine are provided available below.
 <!-- date_created: mon-19-jan-2026 -->
-<!-- date_updated: tues-10-feb-2026 -->
+<!-- date_updated: fri-20-feb-2026 -->
 
 ## Academic Papers
 
@@ -36,6 +36,8 @@ vector machine (SVM), Wiener filtering.*
     *audio, music, signal processing, python, DSP*
 * [**Basic Pitch: A Lightweight Instrument-Agnostic Model for Polyphonic Note Transcription and Multi-Pitch Estimation**](https://arxiv.org/pdf/2203.09893)
     *Automatic Music Transcription, AMT, note estimation, multi-pitch estimation, polyphonic, low-resource*
+* [**Keep the beat going: Automatic drum transcription with momentum**](https://www.emergentmind.com/papers/2507.12596)
+    *Automatic Drum Transcription, ADT*
 
 
 ## Standards & Charts

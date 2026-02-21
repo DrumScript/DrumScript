@@ -90,6 +90,7 @@ def detect_onsets(audio_data: np.ndarray, sr: int) -> list[float]:
     window_secs = 0.01 # 10ms window. MINIMUM WINDOW
     window_frames = int(window_secs * (SAMPLE_RATE / HOP_LENGTH)) # ie frames PER SECOND
     print(f'\n(window_frames: {window_frames})')
+    print(f'\n(window_secs: {window_secs})')
 
     frame_duration_secs = HOP_LENGTH / SAMPLE_RATE #  Frame Duration (in seconds) = HOP_LENGTH / SAMPLE_RATE,  ie seconds PER FRAME
     print(f"(FRAME DURATION: 1 frame = {frame_duration_secs:.6f} seconds)") # print out calculated frame_duration
@@ -102,8 +103,8 @@ def detect_onsets(audio_data: np.ndarray, sr: int) -> list[float]:
         pre_avg=window_frames,      # Compare against average of previous ~10ms
         post_avg=window_frames,     # Compare against average of subsequent ~10ms
         delta=0.08,                 # Adaptive threshold (sensitivity)
-        #wait=1                  # Minimal wait (just 1 frame) to avoid mathematical overlap
-        wait=0                  # 
+        wait=window_frames                  # Minimal wait (just 1 frame) to avoid mathematical overlap
+        #wait=0                  # 
 
     )
 
@@ -139,11 +140,15 @@ def detect_onsets(audio_data: np.ndarray, sr: int) -> list[float]:
     onset_times = librosa.frames_to_time(onset_frames, sr=SAMPLE_RATE, hop_length=HOP_LENGTH) 
 
     #onset_times = librosa.onset.onset_detect(
-     #    onset_envelope=onset_env,
-     #    sr=SAMPLE_RATE,
-     #    hop_length=HOP_LENGTH, 
-     #    units='time',
-     #    delta=0.07,
+     #   post_max=window_frames,     # Must be max value in subsequent ~10ms
+      #  pre_avg=window_frames,      # Compare against average of previous ~10ms
+      #  post_avg=window_frames,     # Compare against average of subsequent ~10ms
+      #   onset_envelope=onset_env,
+      #   sr=SAMPLE_RATE,
+      #   hop_length=HOP_LENGTH, 
+      #   units='time',
+      #   delta=0.08,
+      #   wait = 0
      #)
 
     return onset_times.tolist()
@@ -254,7 +259,7 @@ if __name__ == "__main__":
         #tempo = estimate_tempo(audio_data, SAMPLE_RATE, HOP_LENGTH)
         tempo = estimate_tempo(audio_data, SAMPLE_RATE)/2 # temporary fix
         #print(f"Loaded audio: Shape={normalised_audio.shape}, Sample Rate={sample_rate}, Duration={len(normalised_audio)/sample_rate:.2f} seconds, Tempo={calculate_tempo_from_onsets(onsets, sr=SAMPLE_RATE):2f}")
-        print(f"Loaded audio: Shape={normalised_audio.shape}, Sample Rate={sample_rate}, Duration={len(normalised_audio)/sample_rate:.2f} seconds, Tempo={tempo:2f}")
+        print(f"Loaded audio: Shape={normalised_audio.shape}, Sample Rate={sample_rate}, Hop Length = {HOP_LENGTH}, Duration={len(normalised_audio)/sample_rate:.2f} seconds, Tempo={tempo:2f}")
     except FileNotFoundError:
         print(f"\nERROR: The audio file '{audio_path}' was not found.")
         print(f"\nPlease ensure you have provided the correct path to your audio file: {audio_path}")

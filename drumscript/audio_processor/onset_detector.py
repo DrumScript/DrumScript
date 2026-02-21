@@ -58,7 +58,7 @@ def detect_onsets(audio_data: np.ndarray, sr: int) -> list[float]:
         y=y_percussive, 
         sr=SAMPLE_RATE, 
         hop_length=HOP_LENGTH,
-        aggregate=np.median # Using median to suppress noise spikes
+        #aggregate=np.median # Using median to suppress noise spikes
     )
     print(f'\n(onset_env: {onset_env})')
     # Look at the maximum energy spike in the whole file
@@ -89,7 +89,7 @@ def detect_onsets(audio_data: np.ndarray, sr: int) -> list[float]:
     # window_secs = 0.03 # 30ms window
     window_secs = 0.01 # 10ms window. MINIMUM WINDOW
     window_frames = int(window_secs * (SAMPLE_RATE / HOP_LENGTH)) # ie frames PER SECOND
-    print(f'\n(window_frames: {window_frames} FRAMES PER SECOND)') ## not sure this is right as doesnt add up
+    print(f'\n(window_frames: {window_frames})')
 
     frame_duration_secs = HOP_LENGTH / SAMPLE_RATE #  Frame Duration (in seconds) = HOP_LENGTH / SAMPLE_RATE,  ie seconds PER FRAME
     print(f"(FRAME DURATION: 1 frame = {frame_duration_secs:.6f} seconds)") # print out calculated frame_duration
@@ -101,7 +101,7 @@ def detect_onsets(audio_data: np.ndarray, sr: int) -> list[float]:
         post_max=window_frames,     # Must be max value in subsequent ~10ms
         pre_avg=window_frames,      # Compare against average of previous ~10ms
         post_avg=window_frames,     # Compare against average of subsequent ~10ms
-        delta=0.06,                 # Adaptive threshold (sensitivity)
+        delta=0.08,                 # Adaptive threshold (sensitivity)
         #wait=1                  # Minimal wait (just 1 frame) to avoid mathematical overlap
         wait=0                  # 
 
@@ -128,9 +128,9 @@ def detect_onsets(audio_data: np.ndarray, sr: int) -> list[float]:
     # Backtracking walks backwards from the peak to find where the energy started rising.
     
     # SAFETY CHECK: If no onsets are found, backtracking will crash.
-    if len(onset_frames) > 0:
-        onset_frames = librosa.onset.onset_backtrack(onset_frames, onset_env)
-        onset_frames = np.unique(onset_frames) # get unique onset_frames only
+    #if len(onset_frames) > 0:
+     #   onset_frames = librosa.onset.onset_backtrack(onset_frames, onset_env)
+      #  onset_frames = np.unique(onset_frames) # get unique onset_frames only
     print(f'(onset_frames:{onset_frames})')
     print(f'(len_onset_frames:{len(onset_frames)})')
 

@@ -11,7 +11,7 @@ This script defines ALL parameters used throughout modules in DrumScript
 # but for now, we'll keep them consistent by defining them here.
 SAMPLE_RATE = 44100
 SEGMENT_LENGTH_SECONDS = 0.2 # SEGMENT_LENGTH_SECONDS is the duration of the audio snapshot the script analyses at one time. To give two extremes. If you increase it (e.g., to 1.0): You would capture several drum hits in one fingerprint, making it impossible for the model to know which sound happened when, if you decrease it (e.g., to 0.05): You might only capture the initial "click" of the drum hit and miss the sound's body, losing important information. 0.2 is (seconds) is usually good-enough for drum events, ie kick+snare
-# HOP_LENGTH = 512
+#HOP_LENGTH = 512
 HOP_LENGTH = 256
 #HOP_LENGTH = 128
 # NEW: Define a fixed duration for the audio slice to analyze around each onset

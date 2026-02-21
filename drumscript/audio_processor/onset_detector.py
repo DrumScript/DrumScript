@@ -54,12 +54,22 @@ def detect_onsets(audio_data: np.ndarray, sr: int) -> list[float]:
 
     # --- 2. Advanced Onset Strength Envelope (SuperFlux) ---
     # We use a lag-rectified spectral flux to avoid false positives from energy fluctuations
+    #onset_env = librosa.onset.onset_strength(
+    #    y=y_percussive, 
+     #   sr=SAMPLE_RATE, 
+     #   hop_length=HOP_LENGTH,
+        #aggregate=np.median # Using median to suppress noise spikes
+    #)
+
+    # We use a lag-rectified spectral flux to avoid false positives from energy fluctuations
     onset_env = librosa.onset.onset_strength(
         y=y_percussive, 
         sr=SAMPLE_RATE, 
         hop_length=HOP_LENGTH,
-        #aggregate=np.median # Using median to suppress noise spikes
-    )
+        #n_fft=512,   # explicitly declare window size (1024 or 512 is great for drums)
+        center=False  # <--- THE MAGIC BULLET: Stops Librosa from time-shifting the audio
+    )    
+    
     print(f'\n(onset_env: {onset_env})')
     # Look at the maximum energy spike in the whole file
     print(f"(Max onset strength: {np.max(onset_env):.4f})")
@@ -87,7 +97,10 @@ def detect_onsets(audio_data: np.ndarray, sr: int) -> list[float]:
     # 30ms is roughly 1/32nd note at fast tempos. It prevents the double-trigger on a kick
     # (because the second wobble is smaller than the first peak), but allows fast rolls.
     # window_secs = 0.03 # 30ms window
-    window_secs = 0.01 # 10ms window. MINIMUM WINDOW
+    #window_secs = 0.1# 100ms window. 
+    window_secs = 0.01# 100ms window. MINIMUM WINDOW
+    window_secs = 0.15
+    # window_frames = int(window_secs * (SAMPLE_RATE / HOP_LENGTH)) # ie frames PER SECOND
     window_frames = int(window_secs * (SAMPLE_RATE / HOP_LENGTH)) # ie frames PER SECOND
     print(f'\n(window_frames: {window_frames})')
     print(f'\n(window_secs: {window_secs})')

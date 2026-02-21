@@ -98,7 +98,7 @@ def detect_onsets(audio_data: np.ndarray, sr: int) -> list[float]:
     # (because the second wobble is smaller than the first peak), but allows fast rolls.
     # window_secs = 0.03 # 30ms window
     #window_secs = 0.1# 100ms window. 
-    window_secs = 0.01# 100ms window. MINIMUM WINDOW
+    #window_secs = 0.01# 100ms window. MINIMUM WINDOW
     window_secs = 0.15
     # window_frames = int(window_secs * (SAMPLE_RATE / HOP_LENGTH)) # ie frames PER SECOND
     window_frames = int(window_secs * (SAMPLE_RATE / HOP_LENGTH)) # ie frames PER SECOND

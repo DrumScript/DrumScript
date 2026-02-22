@@ -272,7 +272,7 @@ if __name__ == "__main__":
         #tempo = estimate_tempo(audio_data, SAMPLE_RATE, HOP_LENGTH)
         tempo = estimate_tempo(audio_data, SAMPLE_RATE)/2 # temporary fix
         #print(f"Loaded audio: Shape={normalised_audio.shape}, Sample Rate={sample_rate}, Duration={len(normalised_audio)/sample_rate:.2f} seconds, Tempo={calculate_tempo_from_onsets(onsets, sr=SAMPLE_RATE):2f}")
-        print(f"Loaded audio: Shape={normalised_audio.shape}, Sample Rate={sample_rate}, Hop Length={HOP_LENGTH}, Duration={len(normalised_audio)/sample_rate:.2f} seconds, Tempo={tempo:2f}")
+        print(f"Loaded audio: Shape={normalised_audio.shape}, Sample Rate={sample_rate} (Hz), Hop Length={HOP_LENGTH} (Hz), Duration={len(normalised_audio)/sample_rate:.2f} seconds, Tempo={tempo:.2f} BPM")
     except FileNotFoundError:
         print(f"\nERROR: The audio file '{audio_path}' was not found.")
         print(f"\nPlease ensure you have provided the correct path to your audio file: {audio_path}")

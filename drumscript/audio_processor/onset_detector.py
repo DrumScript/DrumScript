@@ -99,27 +99,27 @@ def detect_onsets(audio_data: np.ndarray, sr: int) -> list[float]:
     # window_secs = 0.03 # 30ms window
     #window_secs = 0.1# 100ms window. 
     #window_secs = 0.01# 100ms window. MINIMUM WINDOW
-    window_secs = 0.15
-    # window_frames = int(window_secs * (SAMPLE_RATE / HOP_LENGTH)) # ie frames PER SECOND
-    window_frames = int(window_secs * (SAMPLE_RATE / HOP_LENGTH)) # ie frames PER SECOND
-    print(f'\n(window_frames: {window_frames})')
-    print(f'\n(window_secs: {window_secs})')
+    ##window_secs = 0.15
+    ## window_frames = int(window_secs * (SAMPLE_RATE / HOP_LENGTH)) # ie frames PER SECOND
+    #window_frames = int(window_secs * (SAMPLE_RATE / HOP_LENGTH)) # ie frames PER SECOND
+    ##print(f'\n(window_frames: {window_frames})')
+    #print(f'\n(window_secs: {window_secs})')
 
-    frame_duration_secs = HOP_LENGTH / SAMPLE_RATE #  Frame Duration (in seconds) = HOP_LENGTH / SAMPLE_RATE,  ie seconds PER FRAME
-    print(f"(FRAME DURATION: 1 frame = {frame_duration_secs:.6f} seconds)") # print out calculated frame_duration
+    ##frame_duration_secs = HOP_LENGTH / SAMPLE_RATE #  Frame Duration (in seconds) = HOP_LENGTH / SAMPLE_RATE,  ie seconds PER FRAME
+    ##print(f"(FRAME DURATION: 1 frame = {frame_duration_secs:.6f} seconds)") # print out calculated frame_duration
 
 
-    onset_frames = librosa.util.peak_pick(
-        onset_env,
-        pre_max=window_frames,      # Must be max value in previous ~10ms
-        post_max=window_frames,     # Must be max value in subsequent ~10ms
-        pre_avg=window_frames,      # Compare against average of previous ~10ms
-        post_avg=window_frames,     # Compare against average of subsequent ~10ms
-        delta=0.08,                 # Adaptive threshold (sensitivity)
-        wait=window_frames                  # Minimal wait (just 1 frame) to avoid mathematical overlap
+    ##onset_frames = librosa.util.peak_pick(
+      ##  onset_env,
+      ##  pre_max=window_frames,      # Must be max value in previous ~10ms
+      ##  post_max=window_frames,     # Must be max value in subsequent ~10ms
+      ##  pre_avg=window_frames,      # Compare against average of previous ~10ms
+      ##  post_avg=window_frames,     # Compare against average of subsequent ~10ms
+      ##  delta=0.08,                 # Adaptive threshold (sensitivity)
+      ##  wait=window_frames                  # Minimal wait (just 1 frame) to avoid mathematical overlap
         #wait=0                  # 
 
-    )
+    ##)
 
     # onset_frames = librosa.onset.onset_detect(
 #       onset_envelope=onset_env,
@@ -145,12 +145,12 @@ def detect_onsets(audio_data: np.ndarray, sr: int) -> list[float]:
     #if len(onset_frames) > 0:
      #   onset_frames = librosa.onset.onset_backtrack(onset_frames, onset_env)
       #  onset_frames = np.unique(onset_frames) # get unique onset_frames only
-    print(f'(onset_frames:{onset_frames})')
-    print(f'(len_onset_frames:{len(onset_frames)})')
+    ##print(f'(onset_frames:{onset_frames})')
+    ##print(f'(len_onset_frames:{len(onset_frames)})')
 
     #print(f'(len_onset_frames:{len(onset_frames)})')
 
-    onset_times = librosa.frames_to_time(onset_frames, sr=SAMPLE_RATE, hop_length=HOP_LENGTH) 
+    ##onset_times = librosa.frames_to_time(onset_frames, sr=SAMPLE_RATE, hop_length=HOP_LENGTH) 
 
     #onset_times = librosa.onset.onset_detect(
      #   post_max=window_frames,     # Must be max value in subsequent ~10ms
@@ -164,7 +164,39 @@ def detect_onsets(audio_data: np.ndarray, sr: int) -> list[float]:
       #   wait = 0
      #)
 
+    ##return onset_times.tolist()
+
+    # --- 3. Peak Picking Parameters --- (NEW VERSION TESTING)
+    # 1. The Local Max Window (For separating fast rolls)
+    # 30ms (0.03s) is tight enough to catch 32nd notes at fast tempos, 
+    # but wide enough to prevent double-triggering on a single kick drum waveform.
+    max_window_secs = 0.01
+    max_window_frames = int(max_window_secs * (SAMPLE_RATE / HOP_LENGTH))
+
+    # 2. The Background Average Window (For setting the noise floor)
+    # 100ms (0.10s) gives the algorithm a good chunk of audio to average out 
+    # so it knows what "silence" or "sustain" looks like compared to a new hit.
+    avg_window_secs = 0.1
+    avg_window_frames = int(avg_window_secs * (SAMPLE_RATE / HOP_LENGTH))
+
+    print(f'\n(max_window_frames: {max_window_frames})')
+    print(f'(avg_window_frames: {avg_window_frames})')
+
+    onset_frames = librosa.util.peak_pick(
+        onset_env,
+        pre_max=max_window_frames,  
+        post_max=max_window_frames, 
+        pre_avg=avg_window_frames,  
+        post_avg=avg_window_frames, 
+        delta=0.08,                 
+        wait=max_window_frames      # Only wait the length of the short 30ms window
+    )
+
+
+    onset_times = librosa.frames_to_time(onset_frames, sr=SAMPLE_RATE, hop_length=HOP_LENGTH)
+
     return onset_times.tolist()
+
 
 #------- AUTOMATIC TEMPO DETECTION------------------------------------
 # REPLACED THE FUNCTION THAT WAS HARDCODED TO DETECT TEMPO FROM ONSETS WITH IMPORTED FCT FROM THE TEMPO_DETECTOR SCRIPT
@@ -263,14 +295,15 @@ if __name__ == "__main__":
             # Print * (ALL) detected onsets for now
             print(f"\n All {len(onsets)} detected onsets (seconds):")
             for i, onset_time in enumerate(onsets):
-             print(f"  Onset {i+1}: {onset_time:.2f}s")
+             print(f"  Onset {i+1}: {onset_time:.4f}s")
             #for i, onset_time in enumerate(onsets):
             #print(f"  Onset {i+1}: {onsets:.4f}s")
         else:
             print(f"No onsets detected in audio_path: {audio_path}")
        #global_tempo = estimate_tempo(audio_data, SAMPLE_RATE, HOP_LENGTH)
         #tempo = estimate_tempo(audio_data, SAMPLE_RATE, HOP_LENGTH)
-        tempo = estimate_tempo(audio_data, SAMPLE_RATE)/2 # temporary fix
+        #tempo = estimate_tempo(audio_data, SAMPLE_RATE)/2 # temporary fix
+        tempo = estimate_tempo(audio_data, SAMPLE_RATE)/4 # temporary fix
         #print(f"Loaded audio: Shape={normalised_audio.shape}, Sample Rate={sample_rate}, Duration={len(normalised_audio)/sample_rate:.2f} seconds, Tempo={calculate_tempo_from_onsets(onsets, sr=SAMPLE_RATE):2f}")
         print(f"Loaded audio: Shape={normalised_audio.shape}, Sample Rate={sample_rate} (Hz), Hop Length={HOP_LENGTH} (Hz), Duration={len(normalised_audio)/sample_rate:.2f} seconds, Tempo={tempo:.2f} BPM")
     except FileNotFoundError:

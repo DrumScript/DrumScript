@@ -249,7 +249,7 @@ if __name__ == "__main__":
         normalised_audio = normalise_audio(audio_data)
 
         # Detect onsets
-        print(f"Detecting onsets in {audio_path}..")
+        print(f"Detecting onsets in : {audio_path}")
         onsets = detect_onsets(normalised_audio, SAMPLE_RATE)
         print(f"Detected {len(onsets)} onsets.")
 

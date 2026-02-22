@@ -16,192 +16,49 @@ from datetime import datetime
 print("\n# ------------------------------------------------------------------------------------")
 datetimestamp = datetime.now()
 print(f'\ndate/time: {datetimestamp}')
-
 def detect_onsets(audio_data: np.ndarray, sr: int) -> list[float]:
     """
-    Detects the onset (start) times of drum hits in the audio.
-    This version includes a post-processing step to filter out spurious
-    onsets that occur too close together, which is common with cymbals.
+    Detects the onset (start) times of percussive events in an audio signal.
 
-    :param audio_data: The audio time series.
-    :type audio_data: np.ndarray
-    :param sr: The sampling rate.
-    :type sr: int
-    :return: A list of onset timestamps in seconds.
-    :rtype: list[float]
+    This function uses librosa's built-in onset detection algorithms, which
+    typically rely on spectral flux or other energy-based methods to identify
+    sudden changes in the audio signal characteristic of percussive hits.
+
+    Args:
+        audio_data (np.ndarray): The input audio time series.
+        sr (int): The sample rate of the audio data.
+
+    Returns:
+        list[float]: A list of detected onset times in seconds.
     """
     if audio_data.size == 0:
         return []
-    
-    # --- 1. Extract percussive using HPSS ---
-    ## HPSS: HARMONIC PERCUSSIVE SOURCE-SEPARATION  
-
-    ## Harmonic-Percussive Source Separation (HPSS), we first split the audio into two separate tracks: one containing only the harmonic ringing and another containing only the percussive attack. Then, we onset detector runs on the PERCUSSIVE track only. 
-    ### [TO DO]??? Maybe this is not so important when the user inputted-audio is specifically drum only? Or maybe it would be more useful doing this in stem_splitter.py, ie when the input audio contains more than the drums??
-    ### The result of using the PERCUSSIVE element only is to create a new audio signal that only contains the percussive elements; then, any `harmonic` 'noise/ringing' (ie which COULD cause false positives) is filtered out. It should produce a cleaner audio output to which apply the function. 
 
     y_percussive = librosa.effects.percussive(y=audio_data)
-
-    # We must convert seconds to "frames" because librosa 'wait' expects frames.
-    # (Assuming HOP_LENGTH is imported from constants)
-    # min_gap_seconds = 0.10  # 100ms
-    # wait_frames = int(min_gap_seconds * (sr / HOP_LENGTH))
-
-    # --- 2. Onset detection
-    # Now, we run the same onset detection, but on the much cleaner
-    # percussive signal. This allows us to get a precise detection
-    # of the initial hit without interference from the sustain.
-
-    # --- 2. Advanced Onset Strength Envelope (SuperFlux) ---
-    # We use a lag-rectified spectral flux to avoid false positives from energy fluctuations
-    #onset_env = librosa.onset.onset_strength(
-    #    y=y_percussive, 
-     #   sr=SAMPLE_RATE, 
-     #   hop_length=HOP_LENGTH,
-        #aggregate=np.median # Using median to suppress noise spikes
-    #)
-
-    # We use a lag-rectified spectral flux to avoid false positives from energy fluctuations
-    onset_env = librosa.onset.onset_strength(
+    # Compute onset strength envelope
+    # D = librosa.stft(audio_data) # Could compute STFT explicitly if needed
+    onset_env = librosa.onset.onset_detect(
         y=y_percussive, 
-        sr=SAMPLE_RATE, 
+        sr=SAMPLE_RATE,
         hop_length=HOP_LENGTH,
-        #n_fft=512,   # explicitly declare window size (1024 or 512 is great for drums)
-        center=False  # <--- THE MAGIC BULLET: Stops Librosa from time-shifting the audio
-    )    
+        units='frames'
+        )
     
-    print(f'\n(onset_env: {onset_env})')
-    # Look at the maximum energy spike in the whole file
-    print(f"(Max onset strength: {np.max(onset_env):.4f})")
+    print(f'(onset_env:{onset_env})')
+
+
+    # Convert onset frames to time in seconds
+    onset_times = librosa.frames_to_time(
+        onset_env, 
+        sr=SAMPLE_RATE,
+        hop_length=HOP_LENGTH
+        )
     
-    # Look at the average energy
-    print(f"(Average onset strength: {np.mean(onset_env):.4f})")
-    
-    # See exactly how many frames have an energy greater than 0
-    non_zero_frames = np.count_nonzero(onset_env)
-    print(f"(Frames with rising energy: {non_zero_frames} out of {len(onset_env)})")
-
-
-    # --- 3. Peak Picking Parameters ---
-    # Lockout period: 100ms (0.1s) is standard for drums to prevent double triggers
-    # min_gap_seconds = 0.1 
-    # wait_frames = int(min_gap_seconds * (sr / HOP_LENGTH))
-
-    # --- UPDATED DETECTION METHOD: Direct Peak Picking ---
-    # Instead of using the generic 'onset_detect' wrapper, we use 'peak_pick' directly.
-    # This addresses the "vague" nature of the default function by giving us exact control
-    # over the sliding window.
-    
-    # pre_max / post_max: These replace the "wait" logic. 
-    # They say: "A peak is only a peak if it is the maximum value within X frames."
-    # 30ms is roughly 1/32nd note at fast tempos. It prevents the double-trigger on a kick
-    # (because the second wobble is smaller than the first peak), but allows fast rolls.
-    # window_secs = 0.03 # 30ms window
-    #window_secs = 0.1# 100ms window. 
-    #window_secs = 0.01# 100ms window. MINIMUM WINDOW
-    ##window_secs = 0.15
-    ## window_frames = int(window_secs * (SAMPLE_RATE / HOP_LENGTH)) # ie frames PER SECOND
-    #window_frames = int(window_secs * (SAMPLE_RATE / HOP_LENGTH)) # ie frames PER SECOND
-    ##print(f'\n(window_frames: {window_frames})')
-    #print(f'\n(window_secs: {window_secs})')
-
-    ##frame_duration_secs = HOP_LENGTH / SAMPLE_RATE #  Frame Duration (in seconds) = HOP_LENGTH / SAMPLE_RATE,  ie seconds PER FRAME
-    ##print(f"(FRAME DURATION: 1 frame = {frame_duration_secs:.6f} seconds)") # print out calculated frame_duration
-
-
-    ##onset_frames = librosa.util.peak_pick(
-      ##  onset_env,
-      ##  pre_max=window_frames,      # Must be max value in previous ~10ms
-      ##  post_max=window_frames,     # Must be max value in subsequent ~10ms
-      ##  pre_avg=window_frames,      # Compare against average of previous ~10ms
-      ##  post_avg=window_frames,     # Compare against average of subsequent ~10ms
-      ##  delta=0.08,                 # Adaptive threshold (sensitivity)
-      ##  wait=window_frames                  # Minimal wait (just 1 frame) to avoid mathematical overlap
-        #wait=0                  # 
-
-    ##)
-
-    # onset_frames = librosa.onset.onset_detect(
-#       onset_envelope=onset_env,
-    #    y=y_percussive,  # Use the percussive-only signal
-    #    sr=SAMPLE_RATE,
-        # sr = sr
-        # units='time',
-        # units='frames',
-        # delta=0.07,
-        # backtrack=True
-        # wait=wait_frames
-        # wait=1,
-        # pre_avg=8,
-        # post_avg=8,
-        # backtrack=True
-    # )
-
-    # --- 4. Backtracking ---
-    # Peak picking finds the *top* of the peak. We want the *start* of the drum hit.
-    # Backtracking walks backwards from the peak to find where the energy started rising.
-    
-    # SAFETY CHECK: If no onsets are found, backtracking will crash.
-    #if len(onset_frames) > 0:
-     #   onset_frames = librosa.onset.onset_backtrack(onset_frames, onset_env)
-      #  onset_frames = np.unique(onset_frames) # get unique onset_frames only
-    ##print(f'(onset_frames:{onset_frames})')
-    ##print(f'(len_onset_frames:{len(onset_frames)})')
-
-    #print(f'(len_onset_frames:{len(onset_frames)})')
-
-    ##onset_times = librosa.frames_to_time(onset_frames, sr=SAMPLE_RATE, hop_length=HOP_LENGTH) 
-
-    #onset_times = librosa.onset.onset_detect(
-     #   post_max=window_frames,     # Must be max value in subsequent ~10ms
-      #  pre_avg=window_frames,      # Compare against average of previous ~10ms
-      #  post_avg=window_frames,     # Compare against average of subsequent ~10ms
-      #   onset_envelope=onset_env,
-      #   sr=SAMPLE_RATE,
-      #   hop_length=HOP_LENGTH, 
-      #   units='time',
-      #   delta=0.08,
-      #   wait = 0
-     #)
-
-    ##return onset_times.tolist()
-
-    # --- 3. Peak Picking Parameters --- (NEW VERSION TESTING)
-    # 1. The Local Max Window
-    # Increased to 30ms (0.03s). This enforces that a peak must be the absolute 
-    # loudest point within a 60ms neighborhood (30ms before and after).
-    #max_window_secs = 0.01
-    max_window_secs = 0.03
-    max_window_frames = int(max_window_secs * (SAMPLE_RATE / HOP_LENGTH))
-
-  # 2. The Background Average Window
-    # Kept at 100ms. This accurately tracks the general "noise floor" of ringing cymbals.
-    avg_window_secs = 0.10
-    avg_window_frames = int(avg_window_secs * (SAMPLE_RATE / HOP_LENGTH))
-
-    # 3. The Lockout Timer (The fix for the phantom notes)
-    # 50ms (0.05s). Once a drum hit is registered, the detector completely shuts off 
-    # for 50ms. This prevents it from double-triggering on the decay wobbles.
-    wait_secs = 0.05
-    wait_frames = int(wait_secs * (SAMPLE_RATE / HOP_LENGTH))
-
-    print(f'\n(max_window_frames: {max_window_frames})')
-    print(f'(avg_window_frames: {avg_window_frames})')
-    print(f'(wait_frames: {wait_frames})')
-
-    onset_frames = librosa.util.peak_pick(
-        onset_env,
-        pre_max=max_window_frames,  
-        post_max=max_window_frames, 
-        pre_avg=avg_window_frames,  
-        post_avg=avg_window_frames, 
-        delta=0.08,                 
-        wait=wait_frames      # Uses the new dedicated lockout timer
-    )
-
-    onset_times = librosa.frames_to_time(onset_frames, sr=SAMPLE_RATE, hop_length=HOP_LENGTH)
+    print(f'(len_onset_times:{len(onset_times)})')
+    print(f'(onset_times:{(onset_times)})')
 
     return onset_times.tolist()
+
 
 
 #------- AUTOMATIC TEMPO DETECTION------------------------------------
@@ -249,7 +106,7 @@ def calculate_tempo_from_onsets(onset_times: np.ndarray, sr: int) -> float:
 
 if __name__ == "__main__":
     from drumscript.audio_processor.audio_loader import load_audio, normalise_audio
-    # from drumscript.audio_processor import tempo_detector
+    # from drumscript.audio_processor import tempo_detector x 
     from drumscript.audio_processor.tempo_detector import estimate_tempo
     print("\n#=======================================================================================")
     print("Running onset_detector.py example with provided filepath...") # FUTURE: Find way to encode this so it prints the file path provided in CLI
@@ -308,8 +165,8 @@ if __name__ == "__main__":
             print(f"No onsets detected in audio_path: {audio_path}")
        #global_tempo = estimate_tempo(audio_data, SAMPLE_RATE, HOP_LENGTH)
         #tempo = estimate_tempo(audio_data, SAMPLE_RATE, HOP_LENGTH)
-        #tempo = estimate_tempo(audio_data, SAMPLE_RATE)/2 # temporary fix
-        tempo = estimate_tempo(audio_data, SAMPLE_RATE)/4 # temporary fix
+        tempo = estimate_tempo(audio_data, SAMPLE_RATE)/2 # temporary fix
+        #tempo = estimate_tempo(audio_data, SAMPLE_RATE)/4 # temporary fix
         #print(f"Loaded audio: Shape={normalised_audio.shape}, Sample Rate={sample_rate}, Duration={len(normalised_audio)/sample_rate:.2f} seconds, Tempo={calculate_tempo_from_onsets(onsets, sr=SAMPLE_RATE):2f}")
         print(f"Loaded audio: Shape={normalised_audio.shape}, Sample Rate={sample_rate} (Hz), Hop Length={HOP_LENGTH} (Hz), Duration={len(normalised_audio)/sample_rate:.2f} seconds, Tempo={tempo:.2f} BPM")
     except FileNotFoundError:

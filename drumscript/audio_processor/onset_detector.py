@@ -167,20 +167,27 @@ def detect_onsets(audio_data: np.ndarray, sr: int) -> list[float]:
     ##return onset_times.tolist()
 
     # --- 3. Peak Picking Parameters --- (NEW VERSION TESTING)
-    # 1. The Local Max Window (For separating fast rolls)
-    # 30ms (0.03s) is tight enough to catch 32nd notes at fast tempos, 
-    # but wide enough to prevent double-triggering on a single kick drum waveform.
-    max_window_secs = 0.01
+    # 1. The Local Max Window
+    # Increased to 30ms (0.03s). This enforces that a peak must be the absolute 
+    # loudest point within a 60ms neighborhood (30ms before and after).
+    #max_window_secs = 0.01
+    max_window_secs = 0.03
     max_window_frames = int(max_window_secs * (SAMPLE_RATE / HOP_LENGTH))
 
-    # 2. The Background Average Window (For setting the noise floor)
-    # 100ms (0.10s) gives the algorithm a good chunk of audio to average out 
-    # so it knows what "silence" or "sustain" looks like compared to a new hit.
-    avg_window_secs = 0.1
+  # 2. The Background Average Window
+    # Kept at 100ms. This accurately tracks the general "noise floor" of ringing cymbals.
+    avg_window_secs = 0.10
     avg_window_frames = int(avg_window_secs * (SAMPLE_RATE / HOP_LENGTH))
+
+    # 3. The Lockout Timer (The fix for the phantom notes)
+    # 50ms (0.05s). Once a drum hit is registered, the detector completely shuts off 
+    # for 50ms. This prevents it from double-triggering on the decay wobbles.
+    wait_secs = 0.05
+    wait_frames = int(wait_secs * (SAMPLE_RATE / HOP_LENGTH))
 
     print(f'\n(max_window_frames: {max_window_frames})')
     print(f'(avg_window_frames: {avg_window_frames})')
+    print(f'(wait_frames: {wait_frames})')
 
     onset_frames = librosa.util.peak_pick(
         onset_env,
@@ -189,9 +196,8 @@ def detect_onsets(audio_data: np.ndarray, sr: int) -> list[float]:
         pre_avg=avg_window_frames,  
         post_avg=avg_window_frames, 
         delta=0.08,                 
-        wait=max_window_frames      # Only wait the length of the short 30ms window
+        wait=wait_frames      # Uses the new dedicated lockout timer
     )
-
 
     onset_times = librosa.frames_to_time(onset_frames, sr=SAMPLE_RATE, hop_length=HOP_LENGTH)
 

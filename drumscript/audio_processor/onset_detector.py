@@ -17,20 +17,20 @@ print("\n# ---------------------------------------------------------------------
 datetimestamp = datetime.now()
 print(f'\ndate/time: {datetimestamp}')
 def detect_onsets(audio_data: np.ndarray, sr: int) -> list[float]:
-    """
-    Detects the onset (start) times of percussive events in an audio signal.
+    
+    #Detects the onset (start) times of percussive events in an audio signal.
 
-    This function uses librosa's built-in onset detection algorithms, which
-    typically rely on spectral flux or other energy-based methods to identify
-    sudden changes in the audio signal characteristic of percussive hits.
+    #This function uses librosa's built-in onset detection algorithms, which
+    # typically rely on spectral flux or other energy-based methods to identify
+    # sudden changes in the audio signal characteristic of percussive hits.
 
-    Args:
-        audio_data (np.ndarray): The input audio time series.
-        sr (int): The sample rate of the audio data.
+    #Args:
+     #   audio_data (np.ndarray): The input audio time series.
+     #   sr (int): The sample rate of the audio data.
 
-    Returns:
-        list[float]: A list of detected onset times in seconds.
-    """
+    #Returns:
+     #   list[float]: A list of detected onset times in seconds.
+
     if audio_data.size == 0:
         return []
 

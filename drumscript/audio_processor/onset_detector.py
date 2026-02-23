@@ -35,27 +35,37 @@ def detect_onsets(audio_data: np.ndarray, sr: int) -> list[float]:
         return []
 
     y_percussive = librosa.effects.percussive(y=audio_data)
-    # Compute onset strength envelope
-    # D = librosa.stft(audio_data) # Could compute STFT explicitly if needed
-    onset_env = librosa.onset.onset_detect(
+
+    # --- ENFORCE PHYSICAL DRUMMING LIMITS ---
+    # Because HOP_LENGTH is 128, the frames are very tiny (~2.9ms).
+    # We must explicitly tell Librosa to wait at least 50ms before triggering 
+    # a second hit, otherwise it will trigger on cymbal vibrations.
+    lockout_time_secs = 0.05 
+    wait_frames = int(lockout_time_secs * (SAMPLE_RATE / HOP_LENGTH))
+
+    print(f"(HOP_LENGTH: {HOP_LENGTH})")
+    print(f"(Wait Frames Applied: {wait_frames})")
+
+    # Pass the 'wait' and 'delta' constraints directly into the simple wrapper
+    onset_frames = librosa.onset.onset_detect(
         y=y_percussive, 
         sr=SAMPLE_RATE,
         hop_length=HOP_LENGTH,
-        units='frames'
-        )
+        units='frames',
+        wait=wait_frames,  # Stops rapid double-triggering on cymbals
+        delta=0.05         # Ignores general background noise floor
+    )
     
-    print(f'(onset_env:{onset_env})')
-
+    print(f'(len_onset_frames:{len(onset_frames)})')
 
     # Convert onset frames to time in seconds
     onset_times = librosa.frames_to_time(
-        onset_env, 
+        onset_frames, 
         sr=SAMPLE_RATE,
         hop_length=HOP_LENGTH
-        )
+    )
     
     print(f'(len_onset_times:{len(onset_times)})')
-    print(f'(onset_times:{(onset_times)})')
 
     return onset_times.tolist()
 

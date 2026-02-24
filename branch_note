@@ -1,4 +1,4 @@
-Branch `backups/build/classification_model` created on Tuesday 24 February 2026 following successful building and testing of onset_detector.py (onset_detect) function using pure librosa. 
+Branch `backups/build/classification_model` created on Tuesday 24 February 2026 following successful building and testing of onset_detector.py (onset_detect) function using pure librosa.  Renamed to `backups/build/onset_detection` to prevent confusion in future.
 
 Backup files are stored locally and in local .archive. 
 

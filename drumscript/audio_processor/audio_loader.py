@@ -42,9 +42,10 @@ def load_audio(file_path: str, sr: int) -> tuple[np.ndarray, int]:
     :rtype: tuple[np.ndarray, int]
     :raises FileNotFoundError: If the file does not exist.
     """
+    sample_rate = SAMPLE_RATE
     try:
-        audio_data, sample_rate = librosa.load(file_path, sr=SAMPLE_RATE) # The librosa.load_audio() fct handles wide variety of audio formats, including .mp3, .wav, .flac, .ogg, etc.
-        return audio_data, sample_rate
+        audio_data, sample_rate = librosa.load(file_path, sr=sample_rate) # The librosa.load_audio() fct handles wide variety of audio formats, including .mp3, .wav, .flac, .ogg, etc.
+        return audio_data, sr
     except FileNotFoundError:
         print(f"Error: Audio file not found at {file_path}")
         raise
@@ -126,14 +127,14 @@ if __name__ == "__main__":
     try:
         print(f"Attempting to load: {actual_drum_recording_path}")
         audio, sr = load_audio(actual_drum_recording_path, sr=SAMPLE_RATE)
-        print(f"Loaded audio: Shape={audio.shape}, Sample Rate={sr}, Duration={len(audio)/sr:.2f} seconds")
 
         normalised_audio = normalise_audio(audio)
         normalised_max = np.max(np.abs(normalised_audio))
         assert np.isclose(normalised_max, 1.0) or np.isclose(normalised_max, 0.0), "Normalisation failed!"
 
         bpm = estimate_tempo(normalised_audio, sr)
-        print(f"Estimated Tempo (Tempogram-First): {int(round(bpm))} BPM")
+        # print(f"Estimated Tempo (Tempogram-First): {int(round(bpm))} BPM")
+        print(f"Loaded audio: Shape={audio.shape}, Sample Rate={sr}, Tempo={bpm:.2f}, Duration={len(audio)/sr:.2f} seconds")
 
         # if _prompt_user_for_playback():
           #  play_audio(normalised_audio, sr)

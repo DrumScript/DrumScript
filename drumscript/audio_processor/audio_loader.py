@@ -30,7 +30,7 @@ from drumscript.audio_processor.tempo_detector import estimate_tempo
 # --- Define functions --------------------------------------------------------------------------------------------
 # 1. Load audio file : -------------------------------------------------------------------------------
 
-def load_audio(file_path: str, sr: int) -> tuple[np.ndarray, int]:
+def load_audio(file_path: str, sr: int=SAMPLE_RATE) -> tuple[np.ndarray, int]:
     """
     Loads an audio file and optionally resamples it.
 
@@ -42,9 +42,9 @@ def load_audio(file_path: str, sr: int) -> tuple[np.ndarray, int]:
     :rtype: tuple[np.ndarray, int]
     :raises FileNotFoundError: If the file does not exist.
     """
-    sample_rate = SAMPLE_RATE
+    # sample_rate = SAMPLE_RATE
     try:
-        audio_data, sample_rate = librosa.load(file_path, sr=sample_rate) # The librosa.load_audio() fct handles wide variety of audio formats, including .mp3, .wav, .flac, .ogg, etc.
+        audio_data, sample_rate = librosa.load(file_path, sr=sr) # The librosa.load_audio() fct handles wide variety of audio formats, including .mp3, .wav, .flac, .ogg, etc.
         return audio_data, sr
     except FileNotFoundError:
         print(f"Error: Audio file not found at {file_path}")

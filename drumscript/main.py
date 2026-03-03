@@ -19,11 +19,11 @@ from drumscript.notation_generator.score_builder import build_score
 from drumscript.notation_generator import constants
 from drumscript.notation_generator.constants import SAMPLE_RATE
 
-from datetime import datetime
+#from datetime import datetime
 
-print("\n# ------------------------------------------------------------------------------------")
-datetimestamp = datetime.now()
-print(f'\ndate/time: {datetimestamp}')
+#print("\n# ------------------------------------------------------------------------------------")
+#datetimestamp = datetime.now()
+#print(f'\ndate/time: {datetimestamp}')
 
 def main(input_audio_path: str, 
          transcribe_full_song: bool = False, 

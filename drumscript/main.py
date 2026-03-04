@@ -15,7 +15,7 @@ from drumscript.audio_processor.stem_splitter import separate_audio
 from drumscript.drum_classifier import classify
 # from drumscript.drum_classifier.classify import classify_events
 from drumscript.notation_generator import score_builder
-from notation_generator.score_builder import build_score
+from drumscript.notation_generator.score_builder import build_score
 #from drumscript.notation_generator import constants
 from drumscript.notation_generator.constants import SAMPLE_RATE
 

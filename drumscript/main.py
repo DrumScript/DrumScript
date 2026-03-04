@@ -18,7 +18,6 @@ from drumscript.notation_generator import score_builder
 # from drumscript.notation_generator.score_builder import build_score
 #from drumscript.notation_generator import constants
 from drumscript.notation_generator.constants import SAMPLE_RATE
-
 from datetime import datetime
 
 print("\n# ------------------------------------------------------------------------------------")

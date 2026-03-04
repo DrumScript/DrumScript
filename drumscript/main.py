@@ -72,8 +72,9 @@ def main(input_audio_path: str,
 
         # 2. Analysis Pipeline
         print("...Loading & Analysing Audio...")
-        sr = SAMPLE_RATE
-        y, sr = audio_loader.load_audio(audio_path, sr=SAMPLE_RATE)
+        #sr = SAMPLE_RATE
+        # y, sr = audio_loader.load_audio(audio_path, sr=SAMPLE_RATE)
+        y, sr = audio_loader.load_audio(audio_path) # no longer required to specify sr in arguments as now this is fed in through the load_audio function
         y = audio_loader.normalise_audio(y) 
         
         # Preserve core functionality: Automatic Tempo Detection

@@ -108,6 +108,7 @@ addopts = "--ignore=local_tests/classification_engine --ignore=local_tests/mp3_c
 
 [dependency-groups]
 dev = [
+    "ipywidgets>=8.1.8",
     "shibuya>=2025.10.21",
 ]
 

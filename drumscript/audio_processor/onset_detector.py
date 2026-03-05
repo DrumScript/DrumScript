@@ -11,11 +11,11 @@ import argparse
 from drumscript.notation_generator.constants import SAMPLE_RATE, HOP_LENGTH
 # from drumscript.audio_processor import tempo_detector
 from drumscript.audio_processor.tempo_detector import estimate_tempo
-from datetime import datetime
+# from datetime import datetime
 
-print("\n# ------------------------------------------------------------------------------------")
-datetimestamp = datetime.now()
-print(f'\ndate/time: {datetimestamp}')
+# print("\n# ------------------------------------------------------------------------------------")
+# datetimestamp = datetime.now()
+# print(f'\ndate/time: {datetimestamp}')
 def detect_onsets(audio_data: np.ndarray, sr: int) -> list[float]:
     
     #Detects the onset (start) times of percussive events in an audio signal.
@@ -175,7 +175,8 @@ if __name__ == "__main__":
             print(f"No onsets detected in audio_path: {audio_path}")
        #global_tempo = estimate_tempo(audio_data, SAMPLE_RATE, HOP_LENGTH)
         #tempo = estimate_tempo(audio_data, SAMPLE_RATE, HOP_LENGTH)
-        tempo = estimate_tempo(audio_data, SAMPLE_RATE)/2 # temporary fix
+        tempo = estimate_tempo(audio_data, SAMPLE_RATE)
+        # tempo = estimate_tempo(audio_data, SAMPLE_RATE)/2 # temporary fix
         #tempo = estimate_tempo(audio_data, SAMPLE_RATE)/4 # temporary fix
         #print(f"Loaded audio: Shape={normalised_audio.shape}, Sample Rate={sample_rate}, Duration={len(normalised_audio)/sample_rate:.2f} seconds, Tempo={calculate_tempo_from_onsets(onsets, sr=SAMPLE_RATE):2f}")
         print(f"Loaded audio: Shape={normalised_audio.shape}, Sample Rate={sample_rate} (Hz), Hop Length={HOP_LENGTH} (Hz), Duration={len(normalised_audio)/sample_rate:.2f} seconds, Tempo={tempo:.2f} BPM")

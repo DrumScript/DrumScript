@@ -122,90 +122,16 @@ def classify_idiophone(p):
         else:
             return "ride"  # Darker, gong-like body
 
-def classify_event(audio_segment, sr):
+def classify_events(audio_data, sr, onsets) -> List[Dict[str, Any]]:
     """
-    Stage 1: Class Separation (Skin vs Metal)
+    Wrapper to route detected onsets through the new Physics-First Classification Engine.
     """
-    physics = get_physics_profile(audio_segment, sr)
-    
-    # Is it Metal? (High energy > 5kHz)
-    if physics['hfer_5k'] >= IDIOPHONE_MIN_HFER_5K:
-        return classify_idiophone(physics)
-    else:
-        return classify_membranophone(physics)
-
-# print("\n# ------------------------------------------------------------------------------------")
-# LEGACY CODE (PRESERVING FOR EASE)
-# Leave these uncommented so not to break orchestration and docs
-def analyze_event(y, sr):
-    
-    # Calculates specific acoustic features:
-    # - f0: Fundamental Frequency (Peak Magnitude)
-    #- sc: Spectral Centroid (Brightness)
-    # - width: Spectral Bandwidth
-    # - depth: Decay Ratio (Sustain)
-
-    #:param y: Audio segment.
-    #:type y: np.ndarray
-    #:param sr: Sampling rate.
-    #:type sr: int
-    #:return: Dictionary of features [f0: (Fundamental Frequency (Peak Magnitude)), sc: Spectral Centroid (Brightness), width: Spectral Bandwidth], depth: Decay Ratio (Sustain)]
-    #:rtype: dict
-    
-    # 1. FFT for Frequency Analysis
-    # High resolution (n_fft=2048) to see low frequencies clearly
-    # n_fft = 2048
-    # spec = np.abs(librosa.stft(y, n_fft=n_fft))
-    # freqs = librosa.fft_frequencies(sr=sr, n_fft=n_fft)
-    # n_fft = N_FFT
-    spec = np.abs(librosa.stft(y, n_fft=N_FFT))
-    freqs = librosa.fft_frequencies(sr=sr, n_fft=N_FFT)
-
-    # Sum magnitudes to find the strongest frequency (Fundamental)
-    sum_spec = np.sum(spec, axis=1)
-    peak_idx = np.argmax(sum_spec)
-    f0 = freqs[peak_idx]
-
-    # 2. Spectral Features
-    # sc = float(np.mean(librosa.feature.spectral_centroid(S=spec, sr=sr)))
-    # width = float(np.mean(librosa.feature.spectral_bandwidth(S=spec, sr=sr)))
-
-    sc = float(np.mean(librosa.feature.spectral_centroid(S=spec, sr=SAMPLE_RATE)))
-    width = float(np.mean(librosa.feature.spectral_bandwidth(S=spec, sr=SAMPLE_RATE)))
-    # 3. Depth / Decay (Sustain)
-    rms = librosa.feature.rms(y=y)[0]
-    split = len(rms) // 2
-    if np.mean(rms[:split]) < 1e-5:
-        decay = 0.0
-    else:
-        decay = np.mean(rms[split:]) / np.mean(rms[:split])
-
-    return {
-        "f0": float(f0),
-        "sc": float(round(sc, 2)),
-        "width": float(round(width, 2)),
-        "depth": float(round(decay, 2)),
-    }
-
-
-# Leave these uncommented so not to break orchestration and docs
-def classify_events (audio_data, sr, onsets) -> List[Dict[str, Any]]:
-    # Classifies hits strictly based on Fundamental Frequency ($f_0$) ranges.
-    # :param audio_data: Full audio array.
-    # :type audio_data: np.ndarray
-    # :param sr: Sampling rate.
-    # :type sr: int
-    # :param onsets: List of onset times.
-    # :type onsets: list
-    # :return: List of classified event dictionaries.
-    # :rtype: List[Dict[str, Any]]
-
     classified_events = []
 
     for onset_time in onsets:
-        # Extract 150ms window for analysis
+        # Extract 200ms window (as defined in our Feb 9 constants: ONSET_SLICE_DURATION_MS)
         start_sample = int(onset_time * sr)
-        end_sample = int((onset_time + 0.15) * sr)
+        end_sample = int((onset_time + 0.2) * sr)
 
         if end_sample > len(audio_data):
             end_sample = len(audio_data)
@@ -216,40 +142,17 @@ def classify_events (audio_data, sr, onsets) -> List[Dict[str, Any]]:
         if len(y_window) == 0:
             continue
 
-        # Analyze
-        features = analyze_event(y_window, sr)
-        f0 = features["f0"]
+        # --- ROUTE TO NEW PHYSICS ENGINE ---
+        # We now use the classify_event function we built together!
+        drum_type = classify_event(y_window, sr)
 
-        drum_type = None
-
-        # --- STRICT FREQUENCY RANGE CLASSIFICATION ---
-        # Order matters for overlaps!
-
-        # 1. Low End
-        if KICK_RANGE[0] <= f0 <= KICK_RANGE[1]:
-            drum_type = "kick"
-        elif LOW_TOM_RANGE[0] <= f0 <= LOW_TOM_RANGE[1]:
-            drum_type = "low_tom"
-
-        # 2. Mids (Check Tom first to catch narrow band, then Snare)
-        elif MID_TOM_RANGE[0] <= f0 <= MID_TOM_RANGE[1]:
-            drum_type = "mid_tom"
-        elif SNARE_RANGE[0] <= f0 <= SNARE_RANGE[1]:
-            drum_type = "snare"
-
-        # 3. Highs
-        elif OPEN_HAT_RANGE[0] <= f0 <= OPEN_HAT_RANGE[1]:
-            drum_type = "hi_hat_open"
-        elif CLOSED_HAT_RANGE[0] <= f0 <= CLOSED_HAT_RANGE[1]:
-            drum_type = "hi_hat_closed"
-        elif RIDE_RANGE[0] <= f0 <= RIDE_RANGE[1]:
-            drum_type = "ride"
-        elif CRASH_RANGE[0] <= f0 <= CRASH_RANGE[1]:
-            drum_type = "crash"
-
-        # If detected, append
         if drum_type:
-            meta = DRUM_NOTATION_MAP[drum_type]
+            #meta = c.DRUM_NOTATION_MAP.get(drum_type, c.DRUM_NOTATION_MAP['snare'])
+            meta = constants.DRUM_NOTATION_MAP.get(drum_type, constants.DRUM_NOTATION_MAP['snare'])
+            
+            # To avoid breaking your score_builder which expects an 'analysis' dict:
+            physics_profile = get_physics_profile(y_window, sr)
+            
             classified_events.append(
                 {
                     "drum_type": drum_type,
@@ -257,8 +160,138 @@ def classify_events (audio_data, sr, onsets) -> List[Dict[str, Any]]:
                     "midi_pitch": meta["midi_program"],
                     "note_head_type": meta["note_head"],
                     "staff_position": meta["staff_position"],
-                    "analysis": features,
+                    "analysis": physics_profile, # Feed the new physics data to the JSON output
                 }
             )
 
     return classified_events
+
+
+# print("\n# ------------------------------------------------------------------------------------")
+# LEGACY CODE (PRESERVING FOR EASE)
+# Leave these uncommented so not to break orchestration and docs
+# def analyze_event(y, sr):
+#     
+#     # Calculates specific acoustic features:
+#     # - f0: Fundamental Frequency (Peak Magnitude)
+#     #- sc: Spectral Centroid (Brightness)
+#     # - width: Spectral Bandwidth
+#     # - depth: Decay Ratio (Sustain)
+# 
+#     #:param y: Audio segment.
+#     #:type y: np.ndarray
+#     #:param sr: Sampling rate.
+#     #:type sr: int
+#     #:return: Dictionary of features [f0: (Fundamental Frequency (Peak Magnitude)), sc: Spectral Centroid (Brightness), width: Spectral Bandwidth], depth: Decay Ratio (Sustain)]
+#     #:rtype: dict
+#     
+#     # 1. FFT for Frequency Analysis
+#     # High resolution (n_fft=2048) to see low frequencies clearly
+#     # n_fft = 2048
+#     # spec = np.abs(librosa.stft(y, n_fft=n_fft))
+#     # freqs = librosa.fft_frequencies(sr=sr, n_fft=n_fft)
+#     # n_fft = N_FFT
+#     spec = np.abs(librosa.stft(y, n_fft=N_FFT))
+#     freqs = librosa.fft_frequencies(sr=sr, n_fft=N_FFT)
+# 
+#     # Sum magnitudes to find the strongest frequency (Fundamental)
+#     sum_spec = np.sum(spec, axis=1)
+#     peak_idx = np.argmax(sum_spec)
+#     f0 = freqs[peak_idx]
+# 
+#     # 2. Spectral Features
+#     # sc = float(np.mean(librosa.feature.spectral_centroid(S=spec, sr=sr)))
+#     # width = float(np.mean(librosa.feature.spectral_bandwidth(S=spec, sr=sr)))
+# 
+#     sc = float(np.mean(librosa.feature.spectral_centroid(S=spec, sr=SAMPLE_RATE)))
+#     width = float(np.mean(librosa.feature.spectral_bandwidth(S=spec, sr=SAMPLE_RATE)))
+#     # 3. Depth / Decay (Sustain)
+#     rms = librosa.feature.rms(y=y)[0]
+#     split = len(rms) // 2
+#     if np.mean(rms[:split]) < 1e-5:
+#         decay = 0.0
+#     else:
+#         decay = np.mean(rms[split:]) / np.mean(rms[:split])
+# 
+#     return {
+#         "f0": float(f0),
+#         "sc": float(round(sc, 2)),
+#         "width": float(round(width, 2)),
+#         "depth": float(round(decay, 2)),
+#     }
+# 
+# 
+# # Leave these uncommented so not to break orchestration and docs
+# def classify_events_legacy (audio_data, sr, onsets) -> List[Dict[str, Any]]:
+#     # Classifies hits strictly based on Fundamental Frequency ($f_0$) ranges.
+#     # :param audio_data: Full audio array.
+#     # :type audio_data: np.ndarray
+#     # :param sr: Sampling rate.
+#     # :type sr: int
+#     # :param onsets: List of onset times.
+#     # :type onsets: list
+#     # :return: List of classified event dictionaries.
+#     # :rtype: List[Dict[str, Any]]
+# 
+#     classified_events = []
+# 
+#     for onset_time in onsets:
+#         # Extract 150ms window for analysis
+#         start_sample = int(onset_time * sr)
+#         end_sample = int((onset_time + 0.15) * sr)
+# 
+#         if end_sample > len(audio_data):
+#             end_sample = len(audio_data)
+#         if start_sample >= end_sample:
+#             continue
+# 
+#         y_window = audio_data[start_sample:end_sample]
+#         if len(y_window) == 0:
+#             continue
+# 
+#         # Analyze
+#         features = analyze_event(y_window, sr)
+#         f0 = features["f0"]
+# 
+#         drum_type = None
+# 
+#         # --- STRICT FREQUENCY RANGE CLASSIFICATION ---
+#         # Order matters for overlaps!
+# 
+#         # 1. Low End
+#         if KICK_RANGE[0] <= f0 <= KICK_RANGE[1]:
+#             drum_type = "kick"
+#         elif LOW_TOM_RANGE[0] <= f0 <= LOW_TOM_RANGE[1]:
+#             drum_type = "low_tom"
+# 
+#         # 2. Mids (Check Tom first to catch narrow band, then Snare)
+#         elif MID_TOM_RANGE[0] <= f0 <= MID_TOM_RANGE[1]:
+#             drum_type = "mid_tom"
+#         elif SNARE_RANGE[0] <= f0 <= SNARE_RANGE[1]:
+#             drum_type = "snare"
+# 
+#         # 3. Highs
+#         elif OPEN_HAT_RANGE[0] <= f0 <= OPEN_HAT_RANGE[1]:
+#             drum_type = "hi_hat_open"
+#         elif CLOSED_HAT_RANGE[0] <= f0 <= CLOSED_HAT_RANGE[1]:
+#             drum_type = "hi_hat_closed"
+#         elif RIDE_RANGE[0] <= f0 <= RIDE_RANGE[1]:
+#             drum_type = "ride"
+#         elif CRASH_RANGE[0] <= f0 <= CRASH_RANGE[1]:
+#             drum_type = "crash"
+# 
+#         # If detected, append
+#         if drum_type:
+#             meta = DRUM_NOTATION_MAP[drum_type]
+#             classified_events.append(
+#                 {
+#                     "drum_type": drum_type,
+#                     "onset_time_seconds": round(onset_time, 2),
+#                     "midi_pitch": meta["midi_program"],
+#                     "note_head_type": meta["note_head"],
+#                     "staff_position": meta["staff_position"],
+#                     "analysis": features,
+#                 }
+#             )
+# 
+#     return classified_events

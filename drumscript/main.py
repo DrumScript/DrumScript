@@ -17,7 +17,7 @@ from drumscript.drum_classifier import classify
 from drumscript.notation_generator import score_builder
 # from drumscript.notation_generator.score_builder import build_score
 #from drumscript.notation_generator import constants
-# from drumscript.notation_generator.constants import SAMPLE_RATE
+from drumscript.notation_generator.constants import SAMPLE_RATE
 from datetime import datetime
 
 print("\n# ------------------------------------------------------------------------------------")
@@ -74,7 +74,7 @@ def main(input_audio_path: str,
         print("...Loading & Analysing Audio...")
         #sr = SAMPLE_RATE
         # y, sr = audio_loader.load_audio(audio_path, sr=SAMPLE_RATE)
-        y, sr = audio_loader.load_audio(audio_path) # no longer required to specify sr in arguments as now this is fed in through the load_audio function
+        y, sr = audio_loader.load_audio(audio_path) # no longer required to specify sr in arguments as now this is fed in through the load_audio function
         y = audio_loader.normalise_audio(y) 
         
         # Preserve core functionality: Automatic Tempo Detection
@@ -96,7 +96,8 @@ def main(input_audio_path: str,
             detected_events.append({
                 'time': event['onset_time_seconds'],
                 'drums': [event['drum_type']],
-                'analysis': event['analysis'], # Contains f0, sc, width, depth
+                # 'analysis': event['analysis'], # Contains f0, sc, width, depth
+                'analysis': event['analysis'], # NOW CONTAINS: peak_freq, centroid, lfer, hfer_2k, hfer_5k, decay
                 'midi_pitch': event['midi_pitch'],
                 'note_head_type': event['note_head_type'],
                 'staff_position': event['staff_position']
@@ -181,7 +182,8 @@ def main(input_audio_path: str,
             detected_events.append({
                 'time': event['onset_time_seconds'],
                 'drums': [event['drum_type']],
-                'analysis': event['analysis'], 
+                # 'analysis': event['analysis'], 
+                'analysis': event['analysis'], # NOW CONTAINS: peak_freq, centroid, lfer, hfer_2k, hfer_5k, decay
                 'midi_pitch': event['midi_pitch'],
                 'note_head_type': event['note_head_type'],
                 'staff_position': event['staff_position']
@@ -201,6 +203,7 @@ def main(input_audio_path: str,
             output_filepath=final_pdf_path,
             time_signature=time_signature
         )
+
 
         print("--- Done! ---\n")
         
@@ -246,5 +249,3 @@ if __name__ == '__main__':
   #  main(args.input_audio_path, args.full, args.ts)
     
 # print("# ------------------------------------------------------------------------------------")
-
-

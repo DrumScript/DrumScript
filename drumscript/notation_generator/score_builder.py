@@ -18,14 +18,13 @@ from drumscript.notation_generator.pdf_exporter import export_pdf
 
 
 def build_score(
-        
-        
     detected_events: List[Dict[str, Any]],
-    # tempo: int = 120,
-    tempo: int, # <-- forces the caller to provide tempo
-    output_filepath: str = "outputs/score.pdf",
-    quantization_subdivision: int = 16, 
-    time_signature: str = "4/4" 
+        # tempo: int = 120,
+        #tempo: int, # <-- forces the caller to provide tempo
+        tempo: float,
+        output_filepath: str = "outputs/score.pdf",
+        quantization_subdivision: int = 16, 
+        time_signature: str = "4/4" 
 ):
     
     """
@@ -48,10 +47,22 @@ def build_score(
     :type time_signature: str, optional
     """
 
-
-
     print(f"--- Building Score for: {output_filepath} [Time Sig: {time_signature}] ---")
 
+      # --- 1. QUANTIZATION LOGIC (THE FIX FOR THE PDF) ---
+    # Snap all raw timestamps to a perfect musical grid so notes align vertically
+    if tempo > 0:
+        seconds_per_beat = 60.0 / float(tempo)
+        # If subdivision is 16 (16th notes), that is 4 grid slices per beat
+        grid_step_seconds = seconds_per_beat * (4.0 / quantization_subdivision)
+
+        for event in detected_events:
+            raw_time = event['time']
+            # Round the raw human time to the nearest perfect grid step
+            quantized_time = round(raw_time / grid_step_seconds) * grid_step_seconds
+            # Overwrite the raw time with the "snapped" perfect time
+            event['time'] = quantized_time
+    # ----------------------------------------------------
     # 1. Prepare File Paths
     # output_filepath e.g. "outputs/mysong.pdf"
     base_path = os.path.splitext(output_filepath)[0] # "outputs/mysong"

@@ -11,6 +11,7 @@ import numpy as np
 import scipy.signal
 import librosa
 from drumscript.notation_generator.constants import DRUM_NOTATION_MAP, N_FFT, SAMPLE_RATE, KICK_RANGE, SNARE_RANGE, SNARE_FREQ_MIN, SNARE_FREQ_MAX, SNARE_HFER_MIN, TOM_FREQ_LOW_MAX, TOM_FREQ_MID_MAX, TOM_MIN_DECAY, LOW_TOM_RANGE, MID_TOM_RANGE,HAT_CLOSED_MAX_DECAY, HAT_OPEN_MAX_DECAY, OPEN_HAT_RANGE, CLOSED_HAT_RANGE, RIDE_RANGE, CRASH_RANGE, IDIOPHONE_MIN_HFER_5K, CYMBAL_CENTROID_THRESHOLD
+from drumscript.notation_generator import constants
 
 # from datetime import datetime
 
@@ -122,6 +123,18 @@ def classify_idiophone(p):
         else:
             return "ride"  # Darker, gong-like body
 
+def classify_event(audio_segment, sr):
+    """
+    Stage 1: Class Separation (Skin vs Metal)
+    """
+    physics = get_physics_profile(audio_segment, sr)
+    
+    # Is it Metal? (High energy > 5kHz)
+    if physics['hfer_5k'] >= IDIOPHONE_MIN_HFER_5K:
+        return classify_idiophone(physics)
+    else:
+        return classify_membranophone(physics)
+
 def classify_events(audio_data, sr, onsets) -> List[Dict[str, Any]]:
     """
     Wrapper to route detected onsets through the new Physics-First Classification Engine.
@@ -147,7 +160,6 @@ def classify_events(audio_data, sr, onsets) -> List[Dict[str, Any]]:
         drum_type = classify_event(y_window, sr)
 
         if drum_type:
-            #meta = c.DRUM_NOTATION_MAP.get(drum_type, c.DRUM_NOTATION_MAP['snare'])
             meta = constants.DRUM_NOTATION_MAP.get(drum_type, constants.DRUM_NOTATION_MAP['snare'])
             
             # To avoid breaking your score_builder which expects an 'analysis' dict:

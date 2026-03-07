@@ -8,7 +8,6 @@
 
    .. autosummary::
    
-      analyze_event
       classify_event
       classify_events
       classify_idiophone

@@ -8,6 +8,13 @@ import argparse
 import librosa
 import numpy as np
 from drumscript.notation_generator.constants import SAMPLE_RATE, ONSET_SLICE_DURATION_MS, N_FFT, HOP_LENGTH, KICK_FREQ_MIN, KICK_FREQ_MAX, KICK_LFER_MIN, SNARE_FREQ_MIN, SNARE_FREQ_MAX, SNARE_HFER_MIN,IDIOPHONE_MIN_HFER_5K
+from datetime import datetime
+
+
+print("\n# ------------------------------------------------------------------------------------")
+datetimestamp = datetime.now()
+print(f'\ndate/time: {datetimestamp}')
+
 
 def get_audio_slice(audio_data: np.ndarray, onset_time: float, sr: int) -> np.ndarray:
     """

@@ -1,4 +1,4 @@
-# DrumScript/audio_processor/classifier.py
+# DrumScript/audio_processor/_classifier.py
 """
 This module deterministically classifies drum hits from audio slices
 using pure DSP math and physical frequency constants.
@@ -29,7 +29,7 @@ def get_audio_slice(audio_data: np.ndarray, onset_time: float, sr: int) -> np.nd
 
 def extract_features(audio_slice: np.ndarray, sr: int) -> dict:
     """
-    Analyzes the audio slice and extracts the physical DSP features.
+    Analyses the audio slice and extracts the physical DSP features.
     """
     features = {}
     
@@ -132,6 +132,9 @@ def process_track(audio_data: np.ndarray, onset_times: list[float], sr: int) -> 
 if __name__ == "__main__":
     from drumscript.audio_processor.audio_loader import load_audio, normalise_audio
     from drumscript.audio_processor.onset_detector import detect_onsets
+    from drumscript.audio_processor.tempo_detector import estimate_tempo
+    from drumscript.notation_generator._midi_exporter import export_to_midi
+    from drumscript.notation_generator.pdf_exporter import export_pdf
     
     parser = argparse.ArgumentParser(description="Classify detected onsets.")
     parser.add_argument("input_audio", help="Path to the input audio file")
@@ -148,39 +151,74 @@ if __name__ == "__main__":
     
     print(f"Running Classifier on {len(onset_times)} events...")
     score_events = process_track(normalised_audio, onset_times, sr)
+
+    log_dir = "outputs/pdf_exporter" # Write the log to a text file
+    os.makedirs(log_dir, exist_ok=True) # Ensure the directory exists
+    log_file_path = os.path.join(log_dir, "classification_log.txt")
     
     print("\n--- FINAL CLASSIFICATION LOG ---")
-    #for event in score_events[:20]: # Print just the first 20 to avoid spamming terminal
-    for event in score_events: # Print ALL events and their stats/classifications
-        time_f = event["time_sec"]
-        insts = ", ".join(event["instruments"])
-        pf = event["debug_features"]["peak_freq"]
-        hf = event["debug_features"]["hfer"]
-        lf = event["debug_features"]["lfer"]
-        
-        print(f"Time: {time_f:.3f}s | Inst: [{insts}] | PeakF: {pf:.1f}Hz | LFER: {lf:.2f} | HFER: {hf:.2f}")
-        
-    if len(score_events) > 20:
-         print(f"... and {len(score_events) - 20} more events.")
 
-    print(f"Running Classifier on {len(onset_times)} events...")
-    score_events = process_track(normalised_audio, onset_times, sr)
+        
+    # Open the file in write mode ('w') so it refreshes cleanly on every run
+    with open(log_file_path, "w") as log_file:
+        log_file.write(f"--- FINAL CLASSIFICATION LOG ---\n")
+        log_file.write(f"Source Audio: {audio_path}\n")
+        log_file.write(f"Total Events Detected: {len(score_events)}\n\n")
+        
+        for event in score_events: 
+            time_f = event["time_sec"]
+            insts = ", ".join(event["instruments"])
+            pf = event["debug_features"]["peak_freq"]
+            hf = event["debug_features"]["hfer"]
+            lf = event["debug_features"]["lfer"]
+            
+            # Format the line once
+            log_line = f"Time: {time_f:.3f}s | Inst: [{insts}] | PeakF: {pf:.1f}Hz | LFER: {lf:.2f} | HFER: {hf:.2f}"
+            
+            # Print to terminal AND write to file
+            print(log_line)
+            log_file.write(log_line + "\n")
+            
+            # COMMENTED OUT TO PREVENT SPAMMING IN THE LOOP
+            # print(f"\nSUCCESS: Classification log saved to -> {log_file_path}")
+            
+    # PRINTED ONCE OUTSIDE THE LOOP INSTEAD
+    print(f"\nSUCCESS: Classification log saved to -> {log_file_path}")
+
+
+    # COMMENTED OUT THE REDUNDANT SECOND LOOP SO IT DOESN'T PRINT TWICE
+    #for event in score_events[:20]: # Print just the first 20 to avoid spamming terminal
+    # for event in score_events: # Print ALL events and their stats/classifications
+    #     time_f = event["time_sec"]
+    #     insts = ", ".join(event["instruments"])
+    #     pf = event["debug_features"]["peak_freq"]
+    #     hf = event["debug_features"]["hfer"]
+    #     lf = event["debug_features"]["lfer"]
+    #     
+    #     print(f"Time: {time_f:.3f}s | Inst: [{insts}] | PeakF: {pf:.1f}Hz | LFER: {lf:.2f} | HFER: {hf:.2f}")
+    #     
+    # if len(score_events) > 20:
+    #      print(f"... and {len(score_events) - 20} more events.")
+
+    # COMMENTED OUT REDUNDANT PROCESS TRACK CALL
+    # print(f"Running Classifier on {len(onset_times)} events...")
+    # score_events = process_track(normalised_audio, onset_times, sr)
 
     pass
         
     # estimate tempo
-    from drumscript.audio_processor.tempo_detector import estimate_tempo
+
+
     detected_tempo = estimate_tempo(audio_data, SAMPLE_RATE) / 2
 
-    # 1) transform to midi
-    from drumscript.notation_generator.midi_exporter import export_to_midi
-    #output_file = os.path.join(project_root, "output", "drumscript_transcription.mid")
-    output_file = os.path.join("outputs/midi_exporter/", "drumscript_transcription.mid")
+    # --- 1) Transform to MIDI ---
+    midi_dir = "outputs/midi_exporter"
+    os.makedirs(midi_dir, exist_ok=True)
+    output_file = os.path.join(midi_dir, "drumscript_transcription.mid")
     export_to_midi(score_events, output_file, tempo=detected_tempo)
 
-    # 2) transform to pdf (bypassing midi creation)
-    # Generate PDF / Sheet Music
-    from drumscript.notation_generator.pdf_exporter import export_pdf
-    #pdf_output = os.path.join(project_root, "output", "drumscript_score.pdf")
-    pdf_output = os.path.join("outputs/pdf_exporter/", "drumscript_score.pdf")
+    # --- 2) Transform to PDF ---
+    pdf_dir = "outputs/pdf_exporter"
+    pdf_output = os.path.join(pdf_dir, "drumscript_score.pdf")
+    #pdf_output = os.path.join(log_dir, "drumscript_score.pdf")
     export_pdf(score_events, pdf_output, detected_tempo)

@@ -10,11 +10,9 @@ import numpy as np
 from drumscript.notation_generator.constants import SAMPLE_RATE, ONSET_SLICE_DURATION_MS, N_FFT, HOP_LENGTH, KICK_FREQ_MIN, KICK_FREQ_MAX, KICK_LFER_MIN, SNARE_FREQ_MIN, SNARE_FREQ_MAX, SNARE_HFER_MIN,IDIOPHONE_MIN_HFER_5K
 from datetime import datetime
 
-
 print("\n# ------------------------------------------------------------------------------------")
 datetimestamp = datetime.now()
 print(f'\ndate/time: {datetimestamp}')
-
 
 def get_audio_slice(audio_data: np.ndarray, onset_time: float, sr: int) -> np.ndarray:
     """
@@ -159,9 +157,10 @@ if __name__ == "__main__":
     print(f"Running Classifier on {len(onset_times)} events...")
     score_events = process_track(normalised_audio, onset_times, sr)
 
-    log_dir = "outputs/pdf_exporter" # Write the log to a text file
-    os.makedirs(log_dir, exist_ok=True) # Ensure the directory exists
-    log_file_path = os.path.join(log_dir, "classification_log.txt")
+    #log_dir = "outputs/pdf_exporter" # Write the log to a text file
+    events_log_dir = "outputs/_classifier/_events_log_dir" # Write the log to a text file
+    os.makedirs(events_log_dir, exist_ok=True) # Ensure the directory exists
+    log_file_path = os.path.join(events_log_dir, "classification_log.txt")
     
     print("\n--- FINAL CLASSIFICATION LOG ---")
 
@@ -219,13 +218,15 @@ if __name__ == "__main__":
     detected_tempo = estimate_tempo(audio_data, SAMPLE_RATE) / 2
 
     # --- 1) Transform to MIDI ---
-    midi_dir = "outputs/midi_exporter"
+    #midi_dir = "outputs/midi_exporter"
+    midi_dir = "outputs/_classifier/_midi_exporter"
     os.makedirs(midi_dir, exist_ok=True)
     output_file = os.path.join(midi_dir, "drumscript_transcription.mid")
     export_to_midi(score_events, output_file, tempo=detected_tempo)
 
     # --- 2) Transform to PDF ---
-    pdf_dir = "outputs/pdf_exporter"
+    pdf_dir = "outputs/_classifier/_classifier/_pdf_exporter"
     pdf_output = os.path.join(pdf_dir, "drumscript_score.pdf")
     #pdf_output = os.path.join(log_dir, "drumscript_score.pdf")
+    #pdf_output = os.path.join(events_log_dir, "drumscript_score.pdf")
     export_pdf(score_events, pdf_output, detected_tempo)

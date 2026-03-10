@@ -7,7 +7,8 @@ import os
 import argparse
 import librosa
 import numpy as np
-from drumscript.notation_generator.constants import SAMPLE_RATE, ONSET_SLICE_DURATION_MS, N_FFT, HOP_LENGTH, KICK_FREQ_MIN, KICK_FREQ_MAX, KICK_LFER_MIN, SNARE_FREQ_MIN, SNARE_FREQ_MAX, SNARE_HFER_MIN,IDIOPHONE_MIN_HFER_5K
+# ADDED: DRUM_NOTATION_MAP to imports
+from drumscript.notation_generator.constants import SAMPLE_RATE, ONSET_SLICE_DURATION_MS, N_FFT, HOP_LENGTH, KICK_FREQ_MIN, KICK_FREQ_MAX, KICK_LFER_MIN, SNARE_FREQ_MIN, SNARE_FREQ_MAX, SNARE_HFER_MIN,IDIOPHONE_MIN_HFER_5K, DRUM_NOTATION_MAP
 from datetime import datetime
 
 print("\n# ------------------------------------------------------------------------------------")
@@ -139,7 +140,8 @@ if __name__ == "__main__":
     from drumscript.audio_processor.onset_detector import detect_onsets
     from drumscript.audio_processor.tempo_detector import estimate_tempo
     from drumscript.notation_generator._midi_exporter import export_to_midi
-    from drumscript.notation_generator.pdf_exporter import export_pdf
+    # from drumscript.notation_generator.pdf_exporter import export_pdf
+    from drumscript.notation_generator._pdf_exporter import export_pdf
     
     parser = argparse.ArgumentParser(description="Classify detected onsets.")
     parser.add_argument("input_audio", help="Path to the input audio file")
@@ -178,8 +180,33 @@ if __name__ == "__main__":
             hf = event["debug_features"]["hfer"]
             lf = event["debug_features"]["lfer"]
             
+            # --- NEW FORMATTING FOR MIDI AND PITCH ---
+            midis = []
+            pitches = []
+            for inst in event["instruments"]:
+                if inst in DRUM_NOTATION_MAP:
+                    m_val = DRUM_NOTATION_MAP[inst]['midi_program']
+                    midis.append(str(m_val))
+                    
+                    # Convert to standard pitch string (e.g. C4)
+                    p_val = librosa.midi_to_note(m_val)
+                    # Shift octave down by 1 to match Logic Pro's C3 middle C convention
+                    p_logic = p_val[:-1] + str(int(p_val[-1]) - 1)
+                    pitches.append(p_logic)
+                else:
+                    midis.append("0")
+                    pitches.append("N/A")
+                    
+            midi_str = ", ".join(midis)
+            pitch_str = ", ".join(pitches)
+            vel_str = "100" # Static placeholder until dynamic velocity is added
+            
             # Format the line once
-            log_line = f"Time: {time_f:.3f}s | Inst: [{insts}] | PeakF: {pf:.1f}Hz | LFER: {lf:.2f} | HFER: {hf:.2f}"
+            # OLD FORMAT:
+            # log_line = f"Time: {time_f:.3f}s | Inst: [{insts}] | PeakF: {pf:.1f}Hz | LFER: {lf:.2f} | HFER: {hf:.2f}"
+            
+            # NEW FORMAT:
+            log_line = f"Time: {time_f:.3f}s | MIDI: [{midi_str}] | Pitch: [{pitch_str}] | Inst: [{insts}] | Vel: [{vel_str}] | PeakF: {pf:.1f}Hz | LFER: {lf:.2f} | HFER: {hf:.2f}"
             
             # Print to terminal AND write to file
             print(log_line)
@@ -225,7 +252,8 @@ if __name__ == "__main__":
     export_to_midi(score_events, output_file, tempo=detected_tempo)
 
     # --- 2) Transform to PDF ---
-    pdf_dir = "outputs/_classifier/_classifier/_pdf_exporter"
+    pdf_dir = "outputs/_classifier/_pdf_exporter" # fixed typo in path _classifier/_classifier
+    os.makedirs(pdf_dir, exist_ok=True) # Ensure directory exists
     pdf_output = os.path.join(pdf_dir, "drumscript_score.pdf")
     #pdf_output = os.path.join(log_dir, "drumscript_score.pdf")
     #pdf_output = os.path.join(events_log_dir, "drumscript_score.pdf")

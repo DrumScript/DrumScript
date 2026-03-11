@@ -91,14 +91,20 @@ def classify_onset(features: dict) -> list[str]:
         
     # RULE 2: SNARE DRUM
     # Is the peak frequency in the snare body zone, AND does it have wire buzz (>2kHz)?
-    if (SNARE_FREQ_MIN <= features['peak_freq'] <= SNARE_FREQ_MAX) and features['hfer'] >= SNARE_HFER_MIN:
+    # OLD RULE: if (SNARE_FREQ_MIN <= features['peak_freq'] <= SNARE_FREQ_MAX) and features['hfer'] >= SNARE_HFER_MIN:
+    # NEW RULE: We cap the HFER at 0.85 so pure hi-hats don't falsely trigger the snare rule.
+    is_snare_freq = (SNARE_FREQ_MIN <= features['peak_freq'] <= SNARE_FREQ_MAX)
+    has_snare_wire = (SNARE_HFER_MIN <= features['hfer'] < 0.85)
+    
+    if is_snare_freq and has_snare_wire:
         detected_instruments.append('snare')
         
     # RULE 3: METALS (Hi-Hats / Cymbals)
     # Does it have massive extreme high-frequency energy (>5kHz)?
     if features['hfer_5k'] >= IDIOPHONE_MIN_HFER_5K:
         # Note: We can expand this later using the decay constraints to split Hats vs Crashes
-        if features['centroid'] > 4000:
+        # if features['centroid'] > 4000:
+        if features['centroid'] > 2500: # Lowered to 2500 so Kick drum overlaps don't trick it into thinking it's a Ride.
             detected_instruments.append('hi_hat_closed')
         else:
             detected_instruments.append('ride') 
@@ -108,6 +114,11 @@ def classify_onset(features: dict) -> list[str]:
         detected_instruments.append('unknown')
         
     return detected_instruments
+    # Fallback if the logic doesn't catch it
+    #if not detected_instruments:
+     #   detected_instruments.append('unknown')
+        
+    #return detected_instruments
 
 def process_track(audio_data: np.ndarray, onset_times: list[float], sr: int) -> list[dict]:
     """

@@ -1,19 +1,3 @@
-# DrumScript/notation_generator/pdf_exporter.py
-
-"""
-Module for rendering the drum score directly to PDF using ReportLab.
-"""
-
-import os
-from collections import defaultdict
-from reportlab.pdfgen import canvas
-from reportlab.lib.pagesizes import A4
-from reportlab.lib import colors
-import music21
-from drumscript.notation_generator import constants
-from datetime import datetime
-from drumscript.audio_processor.tempo_detector import estimate_tempo
-
 # DrumScript/notation_generator/_pdf_exporter.py
 
 """
@@ -30,10 +14,9 @@ from drumscript.notation_generator import constants
 from datetime import datetime
 from drumscript.audio_processor.tempo_detector import estimate_tempo
 
-
-# print("\n# ------------------------------------------------------------------------------------")
-# datetimestamp = datetime.now()
-# print(f'\ndate/time: {datetimestamp}')
+print("\n# ------------------------------------------------------------------------------------")
+datetimestamp = datetime.now()
+print(f'\ndate/time: {datetimestamp}')
 
 # --- Configuration Constants ---
 PAGE_WIDTH, PAGE_HEIGHT = A4

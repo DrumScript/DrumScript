@@ -22,7 +22,8 @@ print(f'\ndate/time: {datetimestamp}')
 PAGE_WIDTH, PAGE_HEIGHT = A4
 MARGIN_X = 50
 MARGIN_Y = 50
-STAFF_SPACING = 120 
+# STAFF_SPACING = 120 
+STAFF_SPACING = 90  # Tweak 1: Brought bars closer together vertically
 LINE_SPACING = 6    
 CLEF_WIDTH = 40     
 BARS_PER_SYSTEM = 4 
@@ -99,18 +100,47 @@ def draw_bar_line(c, x, y):
 #     stem_height = 25
 #     c.line(x + r, y, x + r, y + stem_height)
 
-# --- NEW BEAM-READY NOTEHEAD FUNCTION ---
+# --- COMMENTED OUT OLD BEAM-READY NOTEHEAD FUNCTION ---
+# def draw_notehead(c, x, y, note_type, staff_y_base):
+#     """Draws ONLY the notehead and ledger lines (stems are handled by beaming)."""
+#     r = 2.7 
+#     top_line_y = staff_y_base + (4 * LINE_SPACING)
+#     bottom_line_y = staff_y_base
+#     if y >= top_line_y + LINE_SPACING:
+#         c.setLineWidth(1)
+#         c.line(x - 6, y, x + 6, y)
+#     elif y <= bottom_line_y - LINE_SPACING:
+#         c.setLineWidth(1)
+#         c.line(x - 6, y, x + 6, y)
+# 
+#     if note_type == 'x' or note_type == 'circle-x':
+#         c.setLineWidth(2)
+#         c.line(x - r, y - r, x + r, y + r)
+#         c.line(x - r, y + r, x + r, y - r)
+#         if note_type == 'circle-x':
+#             c.setLineWidth(1)
+#             c.circle(x, y, r + 1.5, stroke=1, fill=0)
+#     else:
+#         c.saveState()
+#         c.translate(x, y)
+#         c.scale(1.2, 0.8) 
+#         c.circle(0, 0, r, fill=1, stroke=0)
+#         c.restoreState()
+
+# --- NEW LARGER NOTEHEAD FUNCTION ---
 def draw_notehead(c, x, y, note_type, staff_y_base):
     """Draws ONLY the notehead and ledger lines (stems are handled by beaming)."""
-    r = 2.7 
+    r = 3.5 # Tweak 3: Increased from 2.7 to make the note blobs a wee bit bigger
     top_line_y = staff_y_base + (4 * LINE_SPACING)
     bottom_line_y = staff_y_base
+    
+    # Ledger lines
     if y >= top_line_y + LINE_SPACING:
         c.setLineWidth(1)
-        c.line(x - 6, y, x + 6, y)
+        c.line(x - 8, y, x + 8, y)
     elif y <= bottom_line_y - LINE_SPACING:
         c.setLineWidth(1)
-        c.line(x - 6, y, x + 6, y)
+        c.line(x - 8, y, x + 8, y)
 
     if note_type == 'x' or note_type == 'circle-x':
         c.setLineWidth(2)
@@ -224,7 +254,85 @@ def export_pdf(detected_events, output_filepath, tempo, time_signature="4/4"):
         #             note_y = get_vertical_position(staff_pos, current_y)
         #             draw_note(c, note_x, note_y, note_head, current_y)
 
-        # --- NEW BEAMING RENDERING LOOP ---
+        # --- COMMENTED OUT SINGLE-VOICE BEAMING RENDERING LOOP ---
+        # if m in events_by_measure:
+        #     # 1. Group all events in this measure by Beat (Quarter Note)
+        #     beats = defaultdict(list)
+        #     for event in events_by_measure[m]:
+        #         rel_time = event['time_sec'] % sec_per_measure
+        #         beat_idx = int(rel_time / seconds_per_beat)
+        #         beats[beat_idx].append(event)
+        #         
+        #     # 2. Render each beat group
+        #     for beat_idx, event_list in beats.items():
+        #         beat_x_coords = []
+        #         notes_info = []
+        #         
+        #         # Lowest note dictates how far down the stems go
+        #         lowest_y = current_y + 100 
+        #         
+        #         for event in event_list:
+        #             rel_time = event['time_sec'] % sec_per_measure
+        #             padding = 15 
+        #             usable_width = measure_width - (2 * padding)
+        #             rel_x = (rel_time / sec_per_measure) * usable_width
+        #             note_x = measure_start_x + padding + rel_x
+        #             
+        #             beat_x_coords.append(note_x)
+        #             
+        #             for drum_type in event['instruments']:
+        #                 d_map = constants.DRUM_NOTATION_MAP.get(drum_type, constants.DRUM_NOTATION_MAP['kick'])
+        #                 staff_pos = d_map.get('staff_position', 'F3')
+        #                 note_head = d_map.get('note_head', 'normal')
+        #                 note_y = get_vertical_position(staff_pos, current_y)
+        #                 
+        #                 if note_y < lowest_y:
+        #                     lowest_y = note_y
+        #                     
+        #                 notes_info.append((note_x, note_y, note_head))
+        #         
+        #         # 3. Draw the actual Noteheads
+        #         highest_y_at_x = {}
+        #         for nx, ny, nhead in notes_info:
+        #             draw_notehead(c, nx, ny, nhead, current_y)
+        #             # Track the highest note in a chord to attach the downward stem to
+        #             if nx not in highest_y_at_x or ny > highest_y_at_x[nx]:
+        #                 highest_y_at_x[nx] = ny
+        #                 
+        #         # 4. Draw Stems (Pointing DOWN) and Beams
+        #         if beat_x_coords:
+        #             stem_length = 25
+        #             # Beam sits below the lowest note in the group
+        #             beam_y = lowest_y - stem_length 
+        #             
+        #             unique_x_coords = sorted(list(set(beat_x_coords)))
+        #             
+        #             # Draw individual downward stems (left side of notehead)
+        #             c.setLineWidth(1)
+        #             c.setStrokeColor(colors.black)
+        #             for nx in unique_x_coords:
+        #                 top_y = highest_y_at_x[nx]
+        #                 c.line(nx - 2.7, top_y, nx - 2.7, beam_y)
+        #                 
+        #             # If multiple rhythmic hits exist in this beat, draw the connecting beam
+        #             if len(unique_x_coords) > 1:
+        #                 first_x = unique_x_coords[0]
+        #                 last_x = unique_x_coords[-1]
+        #                 
+        #                 # Primary Beam (8th notes)
+        #                 c.setLineWidth(3)
+        #                 c.line(first_x - 2.7, beam_y, last_x - 2.7, beam_y)
+        #                 
+        #                 # Secondary Beam (16th notes)
+        #                 if len(unique_x_coords) > 2:
+        #                     c.line(first_x - 2.7, beam_y + 4, last_x - 2.7, beam_y + 4)
+        #             else:
+        #                 # If it's a single note, give it a tiny 'flag' hook to indicate 8th note
+        #                 nx = unique_x_coords[0]
+        #                 c.setLineWidth(1)
+        #                 c.line(nx - 2.7, beam_y, nx + 2, beam_y + 5)
+
+        # --- NEW DUAL-VOICE BEAMING RENDERING LOOP ---
         if m in events_by_measure:
             # 1. Group all events in this measure by Beat (Quarter Note)
             beats = defaultdict(list)
@@ -233,13 +341,13 @@ def export_pdf(detected_events, output_filepath, tempo, time_signature="4/4"):
                 beat_idx = int(rel_time / seconds_per_beat)
                 beats[beat_idx].append(event)
                 
-            # 2. Render each beat group
+            # 2. Render each beat group by separating into Voices
             for beat_idx, event_list in beats.items():
-                beat_x_coords = []
-                notes_info = []
+                voice_up_notes = []   # Idiophones (Cymbals, Hats) -> Stems up
+                voice_down_notes = [] # Membranophones (Kicks, Snares, Toms) -> Stems down
                 
-                # Lowest note dictates how far down the stems go
-                lowest_y = current_y + 100 
+                x_coords_up = set()
+                x_coords_down = set()
                 
                 for event in event_list:
                     rel_time = event['time_sec'] % sec_per_measure
@@ -248,59 +356,83 @@ def export_pdf(detected_events, output_filepath, tempo, time_signature="4/4"):
                     rel_x = (rel_time / sec_per_measure) * usable_width
                     note_x = measure_start_x + padding + rel_x
                     
-                    beat_x_coords.append(note_x)
-                    
+                    # Split instruments into voices based on physical type
                     for drum_type in event['instruments']:
                         d_map = constants.DRUM_NOTATION_MAP.get(drum_type, constants.DRUM_NOTATION_MAP['kick'])
                         staff_pos = d_map.get('staff_position', 'F3')
                         note_head = d_map.get('note_head', 'normal')
                         note_y = get_vertical_position(staff_pos, current_y)
                         
-                        if note_y < lowest_y:
-                            lowest_y = note_y
+                        # Tweak 2: Idiophones get upward stems, Membranophones get downward stems
+                        if drum_type in ['hi_hat_closed', 'hi_hat_open', 'ride', 'crash']:
+                            voice_up_notes.append((note_x, note_y, note_head))
+                            x_coords_up.add(note_x)
+                        else:
+                            voice_down_notes.append((note_x, note_y, note_head))
+                            x_coords_down.add(note_x)
                             
-                        notes_info.append((note_x, note_y, note_head))
-                
-                # 3. Draw the actual Noteheads
-                highest_y_at_x = {}
-                for nx, ny, nhead in notes_info:
-                    draw_notehead(c, nx, ny, nhead, current_y)
-                    # Track the highest note in a chord to attach the downward stem to
-                    if nx not in highest_y_at_x or ny > highest_y_at_x[nx]:
-                        highest_y_at_x[nx] = ny
-                        
-                # 4. Draw Stems (Pointing DOWN) and Beams
-                if beat_x_coords:
-                    stem_length = 25
-                    # Beam sits below the lowest note in the group
-                    beam_y = lowest_y - stem_length 
+                stem_length = 25
+                stem_offset = 3.2 # Adjusted slightly for the larger noteheads
+
+                # --- DRAW VOICE 1: STEMS UP (Cymbals) ---
+                if voice_up_notes:
+                    highest_y = max([ny for nx, ny, nh in voice_up_notes])
+                    lowest_y_at_x = {}
                     
-                    unique_x_coords = sorted(list(set(beat_x_coords)))
+                    for nx, ny, nhead in voice_up_notes:
+                        draw_notehead(c, nx, ny, nhead, current_y)
+                        if nx not in lowest_y_at_x or ny < lowest_y_at_x[nx]:
+                            lowest_y_at_x[nx] = ny
+                            
+                    beam_y = highest_y + stem_length
+                    unique_x = sorted(list(x_coords_up))
                     
-                    # Draw individual downward stems (left side of notehead)
                     c.setLineWidth(1)
                     c.setStrokeColor(colors.black)
-                    for nx in unique_x_coords:
-                        top_y = highest_y_at_x[nx]
-                        c.line(nx - 2.7, top_y, nx - 2.7, beam_y)
+                    for nx in unique_x:
+                        bot_y = lowest_y_at_x[nx]
+                        c.line(nx + stem_offset, bot_y, nx + stem_offset, beam_y) # Stem on right side
                         
-                    # If multiple rhythmic hits exist in this beat, draw the connecting beam
-                    if len(unique_x_coords) > 1:
-                        first_x = unique_x_coords[0]
-                        last_x = unique_x_coords[-1]
-                        
-                        # Primary Beam (8th notes)
+                    if len(unique_x) > 1:
+                        first_x, last_x = unique_x[0], unique_x[-1]
                         c.setLineWidth(3)
-                        c.line(first_x - 2.7, beam_y, last_x - 2.7, beam_y)
-                        
-                        # Secondary Beam (16th notes)
-                        if len(unique_x_coords) > 2:
-                            c.line(first_x - 2.7, beam_y + 4, last_x - 2.7, beam_y + 4)
+                        c.line(first_x + stem_offset, beam_y, last_x + stem_offset, beam_y)
+                        if len(unique_x) > 2: # Draw secondary 16th beam
+                            c.line(first_x + stem_offset, beam_y - 4, last_x + stem_offset, beam_y - 4)
                     else:
-                        # If it's a single note, give it a tiny 'flag' hook to indicate 8th note
-                        nx = unique_x_coords[0]
+                        nx = unique_x[0]
                         c.setLineWidth(1)
-                        c.line(nx - 2.7, beam_y, nx + 2, beam_y + 5)
+                        c.line(nx + stem_offset, beam_y, nx + 8, beam_y - 8) # Upward flag hook
+
+                # --- DRAW VOICE 2: STEMS DOWN (Drums) ---
+                if voice_down_notes:
+                    lowest_y = min([ny for nx, ny, nh in voice_down_notes])
+                    highest_y_at_x = {}
+                    
+                    for nx, ny, nhead in voice_down_notes:
+                        draw_notehead(c, nx, ny, nhead, current_y)
+                        if nx not in highest_y_at_x or ny > highest_y_at_x[nx]:
+                            highest_y_at_x[nx] = ny
+                            
+                    beam_y = lowest_y - stem_length
+                    unique_x = sorted(list(x_coords_down))
+                    
+                    c.setLineWidth(1)
+                    c.setStrokeColor(colors.black)
+                    for nx in unique_x:
+                        top_y = highest_y_at_x[nx]
+                        c.line(nx - stem_offset, top_y, nx - stem_offset, beam_y) # Stem on left side
+                        
+                    if len(unique_x) > 1:
+                        first_x, last_x = unique_x[0], unique_x[-1]
+                        c.setLineWidth(3)
+                        c.line(first_x - stem_offset, beam_y, last_x - stem_offset, beam_y)
+                        if len(unique_x) > 2: # Draw secondary 16th beam
+                            c.line(first_x - stem_offset, beam_y + 4, last_x - stem_offset, beam_y + 4)
+                    else:
+                        nx = unique_x[0]
+                        c.setLineWidth(1)
+                        c.line(nx - stem_offset, beam_y, nx + 2, beam_y + 6) # Downward flag hook
 
     c.save()
     # print("\n# ------------------------------------------------------------------------------------")

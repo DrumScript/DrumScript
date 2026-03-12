@@ -1,7 +1,7 @@
 ## **`DrumScript`**
 
 <!--date_created: sun-15-june-2025-->
-<!--date_updated: fri-13-february-2026-->
+<!--date_updated: thurs-12-march-2026-->
 
 DrumScript is an open-source `Python` library and suite of tools intended to make music more accessible for everyone. The Python package alpha is released alongside a free-to-use engine for members of the musical and sound analysis/engineering community to use in a zero-code way.
 
@@ -28,7 +28,7 @@ DrumScript is an open-source `Python` library and suite of tools intended to mak
 ---
 ### **Project Structure**
 
-The `DrumScript` project is organised into the following main directories. For completeness, we include folders such as `notation_generator` because they contain functionality used in `DrumScript (Lite)`; however, the alpha release **does not** contain sheet music generation functionality. This is the goal of a forthcoming release of the full `DrumScript` package (targeted for the beginning of Q2 2026). See the **full [`repository_structure.md`](repository_structure.md)**.
+The `DrumScript` project is organised into the following main directories. See **[`repository_structure.md`](repository_structure.md)** for the full repository structure. 
 
 ```
 DrumScript/

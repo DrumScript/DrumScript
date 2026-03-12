@@ -21,9 +21,14 @@ DrumScript is an open-source `Python` library and suite of tools intended to mak
   - **[Contact](#contact)**
   - **[FAQs](#faqs)**
 
-> **Workflow Statuses**
+**Workflow Statuses**
 >
 > [![Run Tests](https://github.com/DrumScript/DrumScript/actions/workflows/tests.yml/badge.svg?branch=build%2Fclassification_model)](https://github.com/DrumScript/DrumScript/actions/workflows/tests.yml)
+
+**Demo Notebooks**
+>
+> [![Try `DrumScript` in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1eDVXc3d6ezmorxINOjzldRPSC3emTl2I)
+
 
 ---
 ### **Project Structure**
@@ -52,19 +57,21 @@ DrumScript/
 ```
 
 ---
-#### Features
+#### Overview of `DrumScript` Features
 
-* **Audio Input:** Supports common audio formats like `.wav` and `.mp3`.
-* **Advanced Tempo Detection:** Estimates the tempo (BPM) of an audio file. A deterministic algorithm for tempo estimation. Analyses the entire audio file (not just local beats) to generate a "Tempogram." Conducts a "tempo election" to find the most consistent BPM, effectively handling complex syncopation and ghost notes where standard metronomes fail.
-* **Drum Hit Detection:** Identifies the precise timing of drum strikes using onset event detection algorithms.
-* **Audio Extractor:** We utilise the state-of-the-art [Demucs](https://github.com/adefossez/demucs) source separation model to provide high-quality drum extraction so users can separate audio files into their drum, guitar, base guitar and vocal stems. 
-* **UI Integration:** Connect the package to a free-to-use public web interface.
-* **Stem Splitting**: Automatically isolate drum tracks from full audio mixes using the `demucs` hybrid transformer model.
-* **Onset Detection**: Precise identification of drum hits using spectral analysis.
-<!--* **Classification**: Rule-based engine to classify hits (Snare, Kick, Hi-Hat) based on acoustic features.-->
-<!--* **Score Generation**: Export transcribed drums to `.pdf` sheet music and `.xml` formats.-->
+* **Audio Input:** Supports common audio formats like `.wav` and `.mp3`, both as inputs and outputs
+<!--* **Drum Hit Detection:** Identifies the precise timing of drum strikes using onset event detection algorithms.-->
+* **Onset Detection**: Onset detection method which has been tuned to the features of percussion audio physics rather than polyphnic audio physics (such as for piano, guitar etc).
+* **Audio Extraction:** We utilise the state-of-the-art [Demucs](https://github.com/adefossez/demucs) source separation model to provide high-quality drum extraction so users can separate audio files into their drum, guitar, base guitar and vocal stems.
+* **Stem-Manipulation:** We also utilise the state-of-the-art [Demucs](https://github.com/adefossez/demucs) source separation model to provide high-quality drum extraction from given audio path so users can produce **drumless backing tracks** to play along to. The method also allows users to extract bass guitar. In the future we hope to add more advanced stem extraction! [See **Contributing**](#contributing) section for more information.
+* **Drum Classification**: Rule-based engine to classify hits (Snare, Kick, Hi-Hat) based on acoustic features tested and refined on a large dataset of isolated audio samples for each drum part, over almost a year.
+* **Multiple Output Formats**: Export transcribed drums to `midi (.mid)` and `.musicXML` so you can add to your preferred DAW (ie Logic Pro, Cubase, Ableton etc)
+* **PDF Score Generation**: Generate a PDF of extracted drums/ 
+* **UI Integration:** Free-to-use public web interface for no-code users, with no persistent storage of uploaded or transformed files. 
 
 
+> `DrumScript` functionality is based on **deterministic methods** rather than probabilistic (AI/ML).
+> We cannot guarantee however that any non-native Python packages or libraries that form part of `DrumScript` build wheel will not contain probabilities methods (ie `Demucs`) or `Librosa`
 
 
 ---
@@ -73,15 +80,12 @@ DrumScript/
 > `DrumScript` manages dependencies using `uv` and `pyproject.toml`.
 
 ```bash
-pip install drumscript
-# or
 uv pip install drumscript
 ```
 
 ```bash
 # Install dependencies
-uv sync
-
+uv pip install -e .
 ```
 
 **Dependencies**
@@ -181,7 +185,7 @@ It leverages **audio signal processing** and a **rule-based classification engin
 
 
 ---
-### LilyPond Installation
+<!--### LilyPond Installation
 
 To generate high-quality PDF sheet music, `DrumScript` uses `music21`, which relies on the music engraving program **LilyPond**. You must install LilyPond separately.
 
@@ -197,7 +201,7 @@ To generate high-quality PDF sheet music, `DrumScript` uses `music21`, which rel
     lilypond --version
     ```
 
-`music21` will attempt to find LilyPond automatically. If you encounter errors, you may need to configure the path manually (see `DrumScript/notation_generator/pdf_exporter.py`).
+`music21` will attempt to find LilyPond automatically. If you encounter errors, you may need to configure the path manually (see `DrumScript/notation_generator/pdf_exporter.py`).-->
 
 > **Important note for audio playback (`sounddevice`):**
 >

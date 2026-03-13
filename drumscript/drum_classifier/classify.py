@@ -10,14 +10,14 @@ from typing import Any, Dict, List
 import numpy as np
 import scipy.signal
 import librosa
-from drumscript.notation_generator.constants import DRUM_NOTATION_MAP, N_FFT, SAMPLE_RATE, KICK_RANGE, SNARE_RANGE, SNARE_FREQ_MIN, SNARE_FREQ_MAX, SNARE_HFER_MIN, TOM_FREQ_LOW_MAX, TOM_FREQ_MID_MAX, TOM_MIN_DECAY, LOW_TOM_RANGE, MID_TOM_RANGE,HAT_CLOSED_MAX_DECAY, HAT_OPEN_MAX_DECAY, OPEN_HAT_RANGE, CLOSED_HAT_RANGE, RIDE_RANGE, CRASH_RANGE, IDIOPHONE_MIN_HFER_5K, CYMBAL_CENTROID_THRESHOLD
+from drumscript.notation_generator.constants import SNARE_FREQ_MIN, SNARE_FREQ_MAX, SNARE_HFER_MIN, TOM_FREQ_LOW_MAX, TOM_FREQ_MID_MAX, TOM_MIN_DECAY, HAT_CLOSED_MAX_DECAY, HAT_OPEN_MAX_DECAY, IDIOPHONE_MIN_HFER_5K, CYMBAL_CENTROID_THRESHOLD
 from drumscript.notation_generator import constants
 
-# from datetime import datetime
+from datetime import datetime
 
-# print("\n# ------------------------------------------------------------------------------------")
-# datetimestamp = datetime.now()
-# print(f'\ndate/time: {datetimestamp}')
+print("\n# ------------------------------------------------------------------------------------")
+datetimestamp = datetime.now()
+print(f'\ndate/time: {datetimestamp}')
 
 
 def get_physics_profile(y, sr):

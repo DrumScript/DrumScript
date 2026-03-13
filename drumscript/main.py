@@ -169,6 +169,10 @@ def main(input_audio_path: str,
         
         tempo = tempo_detector.estimate_tempo(y, sr)
         onsets = onset_detector.detect_onsets(y, sr)
+        
+        #print(f"   -> Detected Tempo: {tempo:.1f} BPM")
+        #print(f"   -> Detected Onsets: {len(onsets)}, type(onsets):{type}")
+
 
         # 3. Classification
         print("...Classifying (Fundamental Frequency Engine)...")

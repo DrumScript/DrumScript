@@ -20,10 +20,10 @@ datetimestamp = datetime.now()
 print(f'\ndate/time: {datetimestamp}')
 
 
-def get_physics_profile(y, sr):
+def get_physics_profile(y, sr): # remains unchanged but amended function docstring slightly
     """
-    Extracts the 'DNA' of the drum hit: 
-    Pitch, Decay, Brightness, and Energy Ratios.
+    Extracts the 'DNA' of the drum hit: Pitch, Decay, Brightness, and Energy Ratios.
+    Uses High-Res Scipy Welch and RMS.
     """
     # 1. Frequency Analysis (High Resolution)
     freqs, psd = scipy.signal.welch(y, sr, nperseg=4096)
@@ -68,6 +68,8 @@ def get_physics_profile(y, sr):
         "hfer_5k": hfer_5k,
         "decay": decay_time
     }
+
+
 
 def classify_membranophone(p):
     """

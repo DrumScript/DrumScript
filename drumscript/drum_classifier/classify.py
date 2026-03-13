@@ -64,7 +64,8 @@ def get_physics_profile(y, sr): # remains unchanged but amended function docstri
         "peak_freq": peak_freq,
         "centroid": centroid,
         "lfer": lfer,
-        "hfer_2k": hfer_2k,
+        #"hfer_2k": hfer_2k,
+        "hfer": hfer_2k,      # Renamed key to 'hfer' to match _classifier logging
         "hfer_5k": hfer_5k,
         "decay": decay_time
     }

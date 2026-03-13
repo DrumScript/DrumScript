@@ -90,6 +90,13 @@ def main(input_audio_path: str,
         # 3. Classification
         print("...Classifying (Fundamental Frequency Engine)...")
         # classified_events = classify.classify_drum_hits(y, sr, onsets)
+
+        # 1. Extract the physics DNA
+        physics_profile = get_physics_profile(y_window, sr)
+        
+        # 2. Run the simultaneous rules
+        instruments = classify_onset(physics_profile)
+        
         classified_events = classify.classify_events(y, sr, onsets)
         print(f"   -> Classified {len(classified_events)} events")
 
@@ -108,15 +115,15 @@ def main(input_audio_path: str,
 
         # 5. Output Generation
         output_filename = f"{Path(input_audio_path).stem}_transcription"
-        final_pdf_path = f"outputs/{output_filename}.pdf" 
+        pdf_path = f"outputs/{output_filename}.pdf" 
         
-        print(f"...Building Score & JSON: {final_pdf_path}...")
+        print(f"...Building Score & JSON: {pdf_path}...")
         
         # score_builder.build_and_export_drum_score(
         score_builder.build_score(
             detected_events=detected_events, 
             tempo=tempo, 
-            output_filepath=final_pdf_path,
+            output_filepath=pdf_path,
             time_signature=time_signature
         )
 
@@ -186,25 +193,24 @@ def main(input_audio_path: str,
             detected_events.append({
                 'time': event['onset_time_seconds'],
                 'drums': [event['drum_type']],
-                # 'analysis': event['analysis'], 
-                'analysis': event['analysis'], # NOW CONTAINS: peak_freq, centroid, lfer, hfer_2k, hfer_5k, decay
+                #'analysis': event['analysis'], 
+                'analysis': event['analysis'], # NOW CONTAINS: peak_freq, centroid, lfer, hfer, hfer_2k, hfer_5k, decay
                 'midi_pitch': event['midi_pitch'],
-                'note_head_type': event['note_head_type'],
-                'staff_position': event['staff_position']
+                'note_head_type': event['note_head_type']
+                #'staff_position': event['staff_position']
             })
 
         # 5. Output Generation
-        output_filename = f"{Path(input_audio_path).stem}_transcription"
-        final_pdf_path = f"outputs/{output_filename}.pdf" 
+        pdf_path = f"{Path(input_audio_path).stem}_transcription"
+        pdf_path = f"outputs/{pdf_path}.pdf" 
         
-        print(f"...Building Score & JSON: {final_pdf_path}...")
+        print(f"...Building Score & JSON: {pdf_path}...")
         
-        # score_builder.build_and_export_drum_score(
         # score_builder.build_and_export_drum_score(
         score_builder.build_score(
             detected_events=detected_events, 
             tempo=tempo, 
-            output_filepath=final_pdf_path,
+            output_filepath=pdf_path,
             time_signature=time_signature
         )
 

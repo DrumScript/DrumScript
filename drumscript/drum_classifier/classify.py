@@ -42,7 +42,8 @@ def get_physics_profile(y, sr): # remains unchanged but amended function docstri
     
     # Wire Energy (>2000Hz) - Snare vs High Tom detection
     mid_high_energy = np.sum(psd[freqs > 2000])
-    hfer_2k = mid_high_energy / total_energy
+    #hfer_2k = mid_high_energy / total_energy
+    hfer = mid_high_energy / total_energy
     
     # Shimmer Energy (>5000Hz) - Skin vs Metal detection
     high_energy = np.sum(psd[freqs > 5000])
@@ -65,7 +66,7 @@ def get_physics_profile(y, sr): # remains unchanged but amended function docstri
         "centroid": centroid,
         "lfer": lfer,
         #"hfer_2k": hfer_2k,
-        "hfer": hfer_2k,      # Renamed key to 'hfer' to match _classifier logging
+        "hfer": hfer,      # Renamed key to 'hfer' to match _classifier logging
         "hfer_5k": hfer_5k,
         "decay": decay_time
     }

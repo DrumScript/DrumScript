@@ -148,6 +148,9 @@ def classify_events(audio_data, sr, onsets) -> List[Dict[str, Any]]:
         # Extract 200ms window (as defined in our Feb 9 constants: ONSET_SLICE_DURATION_MS)
         start_sample = int(onset_time * sr)
         end_sample = int((onset_time + 0.2) * sr)
+        #duration_secs = ONSET_SLICE_DURATION_MS / 1000.0 
+        #end_sample = start_sample + int(duration_secs * sr)
+
 
         if end_sample > len(audio_data):
             end_sample = len(audio_data)
@@ -175,7 +178,8 @@ def classify_events(audio_data, sr, onsets) -> List[Dict[str, Any]]:
                     "midi_pitch": meta["midi_program"],
                     "note_head_type": meta["note_head"],
                     "staff_position": meta["staff_position"],
-                    "analysis": physics_profile, # Feed the new physics data to the JSON output
+                    #"analysis": physics_profile, # Feed the new physics data to the JSON output
+                    "debug_features": physics_profile, # 
                 }
             )
 

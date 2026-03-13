@@ -10,7 +10,7 @@ from typing import Any, Dict, List
 import numpy as np
 import scipy.signal
 import librosa
-from drumscript.notation_generator.constants import SNARE_FREQ_MIN, SNARE_FREQ_MAX, SNARE_HFER_MIN, TOM_FREQ_LOW_MAX, TOM_FREQ_MID_MAX, TOM_MIN_DECAY, HAT_CLOSED_MAX_DECAY, HAT_OPEN_MAX_DECAY, IDIOPHONE_MIN_HFER_5K, CYMBAL_CENTROID_THRESHOLD
+from drumscript.notation_generator.constants import SAMPLE_RATE, ONSET_SLICE_DURATION_MS, N_FFT, HOP_LENGTH, DRUM_NOTATION_MAP,KICK_FREQ_MIN, KICK_FREQ_MAX, KICK_LFER_MIN, SNARE_FREQ_MIN, SNARE_FREQ_MAX, SNARE_HFER_MIN, TOM_FREQ_LOW_MAX, TOM_FREQ_MID_MAX, TOM_MIN_DECAY, HAT_CLOSED_MAX_DECAY, HAT_OPEN_MAX_DECAY, IDIOPHONE_MIN_HFER_5K, CYMBAL_CENTROID_THRESHOLD
 from drumscript.notation_generator import constants
 
 from datetime import datetime
@@ -138,6 +138,63 @@ def classify_event(audio_segment, sr):
     else:
         return classify_membranophone(physics)
 
+# --- NEW SIMULTANEOUS PHYSICS ENGINE (Merged from _classifier.py + Your Decay Rules) ---
+def classify_onset(p: dict) -> list[str]:
+    """
+    Applies deterministic physics rules to classify the hit.
+    Evaluates Skins and Metals independently so they can trigger simultaneously!
+    """
+    detected_instruments = []
+    
+    # --- CLASS 1: MEMBRANOPHONES (SKINS) ---
+    
+    # RULE 1: KICK vs LOW TOM (Using LFER and Decay)
+    if p['lfer'] >= KICK_LFER_MIN and (KICK_FREQ_MIN <= p['peak_freq'] <= KICK_FREQ_MAX):
+        # We use your awesome RMS decay rule to separate the short thud from the long boom!
+        if p['decay'] > TOM_MIN_DECAY:
+            detected_instruments.append('low_tom')
+        else:
+            detected_instruments.append('kick')
+            
+    # RULE 2: SNARE DRUM
+    is_snare_freq = (SNARE_FREQ_MIN <= p['peak_freq'] <= SNARE_FREQ_MAX)
+    has_snare_wire = (SNARE_HFER_MIN <= p['hfer'] < 0.85) # Capped at 0.85 to avoid pure hi-hats
+    
+    if has_snare_wire and (is_snare_freq or p['peak_freq'] < SNARE_FREQ_MIN):
+        detected_instruments.append('snare')
+        
+    # RULE 3: MID / HIGH TOMS (Pure tones with low wire noise)
+    if p['hfer'] < SNARE_HFER_MIN: # It doesn't have snare wires
+        if TOM_FREQ_LOW_MAX < p['peak_freq'] <= TOM_FREQ_MID_MAX:
+            detected_instruments.append('mid_tom')
+        elif p['peak_freq'] > TOM_FREQ_MID_MAX and p['peak_freq'] <= 400: # Upper safety bound
+            detected_instruments.append('high_tom')
+
+
+    # --- CLASS 2: IDIOPHONES (METALS) ---
+    
+    # RULE 4: METALS (Hats / Cymbals)
+    if p['hfer_5k'] >= IDIOPHONE_MIN_HFER_5K:
+        # We use your decay rules to determine the exact metal!
+        decay = p['decay']
+        if decay <= HAT_CLOSED_MAX_DECAY:
+            detected_instruments.append('hi_hat_closed')
+        elif decay <= HAT_OPEN_MAX_DECAY:
+            detected_instruments.append('hi_hat_open')
+        else:
+            # Note: You may need to tune CYMBAL_CENTROID_THRESHOLD down to ~2500 
+            # if Kick bleed pulls the centroid down.
+            if p['centroid'] > CYMBAL_CENTROID_THRESHOLD:
+                detected_instruments.append('crash') 
+            else:
+                detected_instruments.append('ride') 
+            
+    # Fallback
+    if not detected_instruments:
+        detected_instruments.append('unknown')
+        
+    return detected_instruments
+
 def classify_events(audio_data, sr, onsets) -> List[Dict[str, Any]]:
     """
     Wrapper to route detected onsets through the new Physics-First Classification Engine.
@@ -166,10 +223,12 @@ def classify_events(audio_data, sr, onsets) -> List[Dict[str, Any]]:
         drum_type = classify_event(y_window, sr)
 
         if drum_type:
-            meta = constants.DRUM_NOTATION_MAP.get(drum_type, constants.DRUM_NOTATION_MAP['snare'])
+            meta = constants.DRUM_NOTATION_MAP.get(drum_type, constants.DRUM_NOTATION_MAP['snare']) ## WHY IS THIS ONLY THE SNARE? 
             
             # To avoid breaking your score_builder which expects an 'analysis' dict:
             physics_profile = get_physics_profile(y_window, sr)
+                   # 2. Run the simultaneous rules
+            instruments = classify_onset(physics_profile)
             
             classified_events.append(
                 {

@@ -19,6 +19,9 @@ from drumscript.notation_generator import score_builder
 #from drumscript.notation_generator import constants
 from drumscript.notation_generator.constants import SAMPLE_RATE
 from datetime import datetime
+from drumscript.audio_processor.onset_detector import detect_onsets
+from drumscript.audio_processor.tempo_detector import estimate_tempo
+
 
 print("\n# ------------------------------------------------------------------------------------")
 datetimestamp = datetime.now()
@@ -97,7 +100,7 @@ def main(input_audio_path: str,
                 'time': event['onset_time_seconds'],
                 'drums': [event['drum_type']],
                 # 'analysis': event['analysis'], # Contains f0, sc, width, depth
-                'analysis': event['analysis'], # NOW CONTAINS: peak_freq, centroid, lfer, hfer_2k, hfer_5k, decay
+                'analysis': event['analysis'], # NOW CONTAINS: peak_freq, centroid, lfer, hfer, hfer_2k, hfer_5k, decay
                 'midi_pitch': event['midi_pitch'],
                 'note_head_type': event['note_head_type'],
                 'staff_position': event['staff_position']
@@ -166,9 +169,6 @@ def main(input_audio_path: str,
         
         tempo = tempo_detector.estimate_tempo(y, sr)
         onsets = onset_detector.detect_onsets(y, sr)
-        
-        print(f"   -> Detected Tempo: {tempo:.1f} BPM")
-        print(f"   -> Detected Onsets: {len(onsets)}")
 
         # 3. Classification
         print("...Classifying (Fundamental Frequency Engine)...")

@@ -42,7 +42,7 @@ def get_physics_profile(y, sr): # remains unchanged but amended function docstri
     
     # Wire Energy (>2000Hz) - Snare vs High Tom detection
     mid_high_energy = np.sum(psd[freqs > 2000])
-    #hfer_2k = mid_high_energy / total_energy
+    hfer_2k = mid_high_energy / total_energy
     hfer = mid_high_energy / total_energy
     
     # Shimmer Energy (>5000Hz) - Skin vs Metal detection
@@ -65,7 +65,7 @@ def get_physics_profile(y, sr): # remains unchanged but amended function docstri
         "peak_freq": peak_freq,
         "centroid": centroid,
         "lfer": lfer,
-        #"hfer_2k": hfer_2k,
+        "hfer_2k": hfer_2k,
         "hfer": hfer,      # Renamed key to 'hfer' to match _classifier logging
         "hfer_5k": hfer_5k,
         "decay": decay_time
@@ -238,7 +238,7 @@ def classify_events(audio_data, sr, onsets) -> List[Dict[str, Any]]:
                     "midi_pitch": meta["midi_program"],
                     "note_head_type": meta["note_head"],
                     "staff_position": meta["staff_position"],
-                    #"analysis": physics_profile, # Feed the new physics data to the JSON output
+                    "analysis": physics_profile, # Feed the new physics data to the JSON output
                     "debug_features": physics_profile
                 }
             )

@@ -179,7 +179,7 @@ def classify_events(audio_data, sr, onsets) -> List[Dict[str, Any]]:
                     "note_head_type": meta["note_head"],
                     "staff_position": meta["staff_position"],
                     #"analysis": physics_profile, # Feed the new physics data to the JSON output
-                    "debug_features": physics_profile, # 
+                    "debug_features": physics_profile
                 }
             )
 

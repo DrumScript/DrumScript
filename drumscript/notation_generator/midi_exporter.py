@@ -23,7 +23,7 @@ def export_to_midi(classified_events: list[dict], output_filepath: str, tempo: f
     :param output_filepath: Where to save the file (e.g., 'output/drum_score.mid').
     :param tempo: The detected BPM of the track.
     """
-    # 1. Initialize a new midi object with the detected tempo
+    # 1. Initialise a new midi object with the detected tempo
     midi = pretty_midi.PrettyMIDI(initial_tempo=tempo)
     
     # 2. Create a Drum Track (program=0, is_drum=True forces it to MIDI Channel 10)

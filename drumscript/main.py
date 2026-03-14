@@ -91,11 +91,13 @@ def main(input_audio_path: str,
         print("...Classifying (Fundamental Frequency Engine)...")
         # classified_events = classify.classify_drum_hits(y, sr, onsets)
 
-        # 1. Extract the physics DNA
-        physics_profile = get_physics_profile(y_window, sr)
-        
-        # 2. Run the simultaneous rules
-        instruments = classify_onset(physics_profile)
+        # --- PREVIOUSLY BROKEN LINES (Commented out to prevent crash as y_window is undefined here) ---
+        # # 1. Extract the physics DNA
+        # physics_profile = get_physics_profile(y_window, sr)
+        # 
+        # # 2. Run the simultaneous rules
+        # instruments = classify_onset(physics_profile)
+        # ----------------------------------------------------------------------------------------------
         
         classified_events = classify.classify_events(y, sr, onsets)
         print(f"   -> Classified {len(classified_events)} events")
@@ -104,13 +106,13 @@ def main(input_audio_path: str,
         detected_events = []
         for event in classified_events:
             detected_events.append({
-                'time': event['onset_time_seconds'],
-                'drums': [event['drum_type']],
+                'time': event['time_sec'],
+                'drums': event['instruments'], # IMPORTANT: Now correctly maps the LIST of instruments to 'drums'
                 # 'analysis': event['analysis'], # Contains f0, sc, width, depth
-                'analysis': event['analysis'], # NOW CONTAINS: peak_freq, centroid, lfer, hfer, hfer_2k, hfer_5k, decay
-                'midi_pitch': event['midi_pitch'],
-                'note_head_type': event['note_head_type'],
-                'staff_position': event['staff_position']
+                'analysis': event['debug_features'], # Adjusted to use the debug_features dict from classify.py
+                # 'midi_pitch': event['midi_pitch'], # Re-evaluating this natively inside the exporters
+                # 'note_head_type': event['note_head_type'],
+                # 'staff_position': event['staff_position']
             })
 
         # 5. Output Generation
@@ -191,12 +193,12 @@ def main(input_audio_path: str,
         detected_events = []
         for event in classified_events:
             detected_events.append({
-                'time': event['onset_time_seconds'],
-                'drums': [event['drum_type']],
+                'time': event['time_sec'],
+                'drums': event['instruments'], # Map list to 'drums'
                 #'analysis': event['analysis'], 
-                'analysis': event['analysis'], # NOW CONTAINS: peak_freq, centroid, lfer, hfer, hfer_2k, hfer_5k, decay
-                'midi_pitch': event['midi_pitch'],
-                'note_head_type': event['note_head_type']
+                'analysis': event['debug_features'], # NOW CONTAINS: peak_freq, centroid, lfer, hfer, hfer_2k, hfer_5k, decay
+                # 'midi_pitch': event['midi_pitch'],
+                # 'note_head_type': event['note_head_type']
                 #'staff_position': event['staff_position']
             })
 

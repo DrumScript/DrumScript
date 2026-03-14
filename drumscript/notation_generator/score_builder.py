@@ -49,7 +49,7 @@ def build_score(
 
     print(f"--- Building Score for: {output_filepath} [Time Sig: {time_signature}] ---")
 
-      # --- 1. QUANTIZATION LOGIC (THE FIX FOR THE PDF) ---
+    # --- QUANTIZATION LOGIC 
     # Snap all raw timestamps to a perfect musical grid so notes align vertically
     if tempo > 0:
         seconds_per_beat = 60.0 / float(tempo)

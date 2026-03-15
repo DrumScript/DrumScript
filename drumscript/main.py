@@ -106,10 +106,16 @@ def main(input_audio_path: str,
         detected_events = []
         for event in classified_events:
             detected_events.append({
-                'time': event['time_sec'],
-                'drums': event['instruments'], # IMPORTANT: Now correctly maps the LIST of instruments to 'drums'
-                # 'analysis': event['analysis'], # Contains f0, sc, width, depth
-                'analysis': event['debug_features'], # Adjusted to use the debug_features dict from classify.py
+                # --- LEGACY MAPPING ---
+                # 'time': event['time_sec'],
+                # 'drums': event['instruments'], # IMPORTANT: Now correctly maps the LIST of instruments to 'drums'
+                # 'analysis': event['debug_features'], # Adjusted to use the debug_features dict from classify.py
+                
+                # --- UNIFIED MAPPING ---
+                'time_sec': event['time_sec'],
+                'instruments': event['instruments'], 
+                'debug_features': event['debug_features'], 
+                
                 # 'midi_pitch': event['midi_pitch'], # Re-evaluating this natively inside the exporters
                 # 'note_head_type': event['note_head_type'],
                 # 'staff_position': event['staff_position']
@@ -193,10 +199,16 @@ def main(input_audio_path: str,
         detected_events = []
         for event in classified_events:
             detected_events.append({
-                'time': event['time_sec'],
-                'drums': event['instruments'], # Map list to 'drums'
-                #'analysis': event['analysis'], 
-                'analysis': event['debug_features'], # NOW CONTAINS: peak_freq, centroid, lfer, hfer, hfer_2k, hfer_5k, decay
+                # --- MAPPING ---
+                # 'time': event['time_sec'],
+                # 'drums': event['instruments'], # Map list to 'drums'
+                # 'analysis': event['debug_features'], # NOW CONTAINS: peak_freq, centroid, lfer, hfer, hfer_2k, hfer_5k, decay
+                
+                # --- NEW UNIFIED MAPPING ---
+                'time_sec': event['time_sec'],
+                'instruments': event['instruments'], 
+                'debug_features': event['debug_features'], 
+                
                 # 'midi_pitch': event['midi_pitch'],
                 # 'note_head_type': event['note_head_type']
                 #'staff_position': event['staff_position']

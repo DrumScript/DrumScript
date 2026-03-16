@@ -155,9 +155,9 @@ def export_pdf(detected_events, output_filepath, tempo, time_signature="4/4"):
     
     last_measure_idx = 0
     for event in detected_events:
+        m_idx = int(event['time_sec'] / sec_per_measure) 
         # ADAPTED KEY: Using 'time'
-        # m_idx = int(event['time_sec'] / sec_per_measure) 
-        m_idx = int(event['time'] / sec_per_measure) 
+        #m_idx = int(event['time'] / sec_per_measure) 
         events_by_measure[m_idx].append(event)
         if m_idx > last_measure_idx:
             last_measure_idx = m_idx

@@ -11,6 +11,7 @@ from drumscript.audio_processor import audio_loader, onset_detector, feature_ext
 # from drumscript.notation_generator.pdf_exporter import generate_custom_pdf
 from drumscript.notation_generator.pdf_exporter import export_pdf
 from drumscript.notation_generator.midi_exporter import export_to_midi
+
 #from datetime import datetime
 
 #print("\n# ------------------------------------------------------------------------------------")
@@ -57,11 +58,13 @@ def build_score(
         grid_step_seconds = seconds_per_beat * (4.0 / quantization_subdivision)
 
         for event in detected_events:
-            raw_time = event['time']
+            #raw_time = event['time']
+            raw_time = event['time_sec']
             # Round the raw human time to the nearest perfect grid step
             quantized_time = round(raw_time / grid_step_seconds) * grid_step_seconds
             # Overwrite the raw time with the "snapped" perfect time
-            event['time'] = quantized_time
+            #event['time'] = quantized_time
+            event['time_sec'] = quantized_time
             
     # ----------------------------------------------------
     # 1. Prepare File Paths

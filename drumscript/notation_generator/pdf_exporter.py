@@ -149,8 +149,8 @@ def export_pdf(detected_events, output_filepath, tempo, time_signature="4/4"):
     sec_per_measure = seconds_per_beat * numerator
 
     # ADAPTED KEY: Using 'time' to match current main.py
-    # detected_events.sort(key=lambda x: x['time_sec']) 
-    detected_events.sort(key=lambda x: x['time']) 
+    detected_events.sort(key=lambda x: x['time_sec']) 
+    #detected_events.sort(key=lambda x: x['time']) 
     events_by_measure = defaultdict(list)
     
     last_measure_idx = 0

@@ -12,5 +12,6 @@
       classify_events
       classify_idiophone
       classify_membranophone
+      classify_onset
       get_physics_profile
    

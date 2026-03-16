@@ -219,9 +219,9 @@ def export_pdf(detected_events, output_filepath, tempo, time_signature="4/4"):
             # 1. Group all events in this measure by Beat (Quarter Note)
             beats = defaultdict(list)
             for event in events_by_measure[m]:
+                rel_time = event['time_sec'] % sec_per_measure
                 # ADAPTED KEY: Using 'time'
-                # rel_time = event['time_sec'] % sec_per_measure
-                rel_time = event['time'] % sec_per_measure
+                # rel_time = event['time'] % sec_per_measure
                 beat_idx = int(rel_time / seconds_per_beat)
                 beats[beat_idx].append(event)
                 
@@ -234,9 +234,9 @@ def export_pdf(detected_events, output_filepath, tempo, time_signature="4/4"):
                 x_coords_down = set()
                 
                 for event in event_list:
+                    rel_time = event['time_sec'] % sec_per_measure
                     # ADAPTED KEY: Using 'time'
-                    # rel_time = event['time_sec'] % sec_per_measure
-                    rel_time = event['time'] % sec_per_measure
+                    # rel_time = event['time'] % sec_per_measure
                     padding = 15 
                     usable_width = measure_width - (2 * padding)
                     rel_x = (rel_time / sec_per_measure) * usable_width

@@ -197,74 +197,64 @@ def classify_onset(p: dict) -> list[str]:
         
     return detected_instruments
 
-#def classify_events(audio_data, sr, onsets) -> List[Dict[str, Any]]:
 def classify_events(audio_data: np.ndarray, sr: int, onsets: list[float]) -> list[dict]:
     """
     Wrapper to route detected onsets through the new Physics-First Classification Engine.
+    Uses the unified dictionary keys: time_sec, instruments, debug_features.
     """
     classified_events = []
 
     for onset_time in onsets:
         # Extract 200ms window (as defined in our Feb 9 constants: ONSET_SLICE_DURATION_MS)
         start_sample = int(onset_time * sr)
-        end_sample = int((onset_time + 0.2) * sr)
-        #duration_secs = ONSET_SLICE_DURATION_MS / 1000.0 
-        #end_sample = start_sample + int(duration_secs * sr)
+        
+        # --- OLD TRUNCATING LOGIC ---
+        # end_sample = int((onset_time + 0.2) * sr)
+        # #duration_secs = ONSET_SLICE_DURATION_MS / 1000.0 
+        # #end_sample = start_sample + int(duration_secs * sr)
+        # 
+        # if end_sample > len(audio_data):
+        #     end_sample = len(audio_data)
+        # if start_sample >= end_sample:
+        #     continue
+        #
+        # y_window = audio_data[start_sample:end_sample]
+        # if len(y_window) == 0:
+        #     continue
+
+        # --- PADDING (Prevents SciPy/Librosa STFT Warnings at End of File) ---
+        duration_secs = ONSET_SLICE_DURATION_MS / 1000.0 
+        end_sample = start_sample + int(duration_secs * sr)
 
         if end_sample > len(audio_data):
-            end_sample = len(audio_data)
-        if start_sample >= end_sample:
-            continue
+            slice_data = audio_data[start_sample:]
+            pad_length = end_sample - len(audio_data)
+            y_window = np.pad(slice_data, (0, pad_length), mode='constant')
+        else:
+            y_window = audio_data[start_sample:end_sample]
 
-
-
-        ## from audio_processor._classifier.py, TO DO: Try this and comment out block above
-        #if end_sample > len(audio_data):
-         #   slice_data = audio_data[start_sample:]
-          #  pad_length = end_sample - len(audio_data)
-           # y_window = np.pad(slice_data, (0, pad_length), mode='constant')
-        #else:
-         #   y_window = audio_data[start_sample:end_sample]
-
-        #if len(y_window) == 0:
-         #   continue
-
-
-        y_window = audio_data[start_sample:end_sample]
         if len(y_window) == 0:
             continue
-
 
         # 1. Extract the physics DNA
         physics_profile = get_physics_profile(y_window, sr)
 
-        # --- ROUTE TO NEW PHYSICS ENGINE ---
-        # We now use the classify_event function we built together!
-        drum_type = classify_event(y_window, sr)
-        instruments = classify_onset(physics_profile) ## from audio_processor._classifier.py, 
-
+        # 2. Run the simultaneous rules
         instruments = classify_event(y_window, sr)
-        if instruments:
-        #if drum_type:
-            meta = constants.DRUM_NOTATION_MAP.get(drum_type, constants.DRUM_NOTATION_MAP['snare']) ## WHY IS THIS ONLY THE SNARE? 
-            
-            
-            # To avoid breaking your score_builder which expects an 'analysis' dict:
-            physics_profile = get_physics_profile(y_window, sr)
-                   # 2. Run the simultaneous rules
-            
-            classified_events.append(
+        
+        # 3. Append with unified compatible keys
+        classified_events.append(
                 {
-                    "drum_type": drum_type,
-                    "instruments": instruments, ## from audio_processor._classifier.py, 
-                    "onset_time_seconds": round(onset_time, 2),
-                    "time_sec": float(onset_time), ## from audio_processor._classifier.py, 
-                    "midi_pitch": meta["midi_program"],
-                    "note_head_type": meta["note_head"],
-                    "staff_position": meta["staff_position"],
-                    "analysis": physics_profile, # Feed the new physics data to the JSON output
-                    "debug_features": physics_profile ## from audio_processor._classifier.py, 
-                }
+            # "drum_type": drum_type,
+            "instruments": instruments, ## from audio_processor._classifier.py, 
+            "onset_time_seconds": round(onset_time, 2),
+            "time_sec": float(onset_time), ## from audio_processor._classifier.py, 
+            #"midi_pitch": meta["midi_program"],
+            #"note_head_type": meta["note_head"],
+            #"staff_position": meta["staff_position"],
+            "analysis": physics_profile, # Feed the new physics data to the JSON output
+            "debug_features": physics_profile ## from audio_processor._classifier.py, 
+        }
             )
 
     return classified_events

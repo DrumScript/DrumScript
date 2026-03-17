@@ -200,13 +200,15 @@ def export_pdf(detected_events, output_filepath, tempo, time_signature="4/4"):
 
     sec_per_measure = seconds_per_beat * numerator
 
-    # detected_events.sort(key=lambda x: x['time']) 
+    # LEGACY CODE - detected_events.sort(key=lambda x: x['time'])
+    # ADAPTED KEY: Using 'time_sec' 
     detected_events.sort(key=lambda x: x['time_sec']) 
     events_by_measure = defaultdict(list)
     
     last_measure_idx = 0
     for event in detected_events:
-        # m_idx = int(event['time'] / sec_per_measure) 
+        # LEGACY CODE - m_idx = int(event['time'] / sec_per_measure)
+        # ADAPTED KEY: Using 'time_sec'
         m_idx = int(event['time_sec'] / sec_per_measure) 
         events_by_measure[m_idx].append(event)
         if m_idx > last_measure_idx:
@@ -238,11 +240,11 @@ def export_pdf(detected_events, output_filepath, tempo, time_signature="4/4"):
         
         draw_bar_line(c, measure_start_x + measure_width, current_y)
         
-        # --- DRAW MEASURE NUMBERS (Italics and Offset) ---
+        # --- LEGACY CODE - DRAW MEASURE NUMBERS (Italics and Offset) ---
         # c.setFont("Helvetica-Oblique", 9)
         # c.drawString(measure_start_x + 5, current_y + (6 * LINE_SPACING), str(m + 1))
 
-        # --- NEW: DRAW MEASURE NUMBERS (Tweak 1: Flush left, Roboto-style Helvetica) ---
+        # --- DRAW MEASURE NUMBERS (Tweak 1: Flush left, Roboto-style Helvetica) ---
         c.setFont("Helvetica", 9)
         c.drawString(measure_start_x, current_y + (6 * LINE_SPACING), str(m + 1))
 
@@ -342,12 +344,13 @@ def export_pdf(detected_events, output_filepath, tempo, time_signature="4/4"):
         #                 c.setLineWidth(1)
         #                 c.line(nx - 2.7, beam_y, nx + 2, beam_y + 5)
 
-        # --- NEW DUAL-VOICE BEAMING RENDERING LOOP ---
+        # --- DUAL-VOICE BEAMING RENDERING LOOP ---
         if m in events_by_measure:
             # 1. Group all events in this measure by Beat (Quarter Note)
             beats = defaultdict(list)
             for event in events_by_measure[m]:
-                # rel_time = event['time'] % sec_per_measure
+                # LEGACY CODE - rel_time = event['time'] % sec_per_measure
+                # ADAPTED KEY: Using 'time_sec'
                 rel_time = event['time_sec'] % sec_per_measure
                 beat_idx = int(rel_time / seconds_per_beat)
                 beats[beat_idx].append(event)
@@ -361,7 +364,8 @@ def export_pdf(detected_events, output_filepath, tempo, time_signature="4/4"):
                 x_coords_down = set()
                 
                 for event in event_list:
-                    # rel_time = event['time'] % sec_per_measure
+                    # LEGACY CODE - rel_time = event['time'] % sec_per_measure
+                    # ADAPTED KEY: Using 'time_sec'
                     rel_time = event['time_sec'] % sec_per_measure
                     padding = 15 
                     usable_width = measure_width - (2 * padding)
@@ -372,7 +376,8 @@ def export_pdf(detected_events, output_filepath, tempo, time_signature="4/4"):
                     is_accent = event.get('accent', False)
                     
                     # Split instruments into voices based on physical type
-                    # for drum_type in event['drums']:
+                    # LEGACY CODE - for drum_type in event['drums']:
+                    # ADAPTED KEY: Using 'instruments'
                     for drum_type in event['instruments']:
                         d_map = constants.DRUM_NOTATION_MAP.get(drum_type, constants.DRUM_NOTATION_MAP['kick'])
                         staff_pos = d_map.get('staff_position', 'F3')

@@ -1,4 +1,4 @@
-# DrumScript/notation_generator/midi_exporter.py
+# DrumScript/notation_generator/_midi_exporter.py
 """
 This module takes classified drum events and renders them into a standard MIDI file.
 """

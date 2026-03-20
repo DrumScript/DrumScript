@@ -50,6 +50,12 @@ def build_score(
 
     print(f"--- Building Score for: {output_filepath} [Time Sig: {time_signature}] ---")
 
+    # --- MUSICAL INTERPRETATION LOGIC ---
+    # Drum algorithms often detect the "double time" tempo (e.g. 130 BPM instead of 65 BPM).
+    # To make the sheet music readable in standard 4/4 time (giving it a "half-time feel" 
+    # where the snare lands heavily on beat 3), we halve the raw detected tempo for notation.
+    tempo = tempo / 2.0
+
     # --- QUANTIZATION LOGIC 
     # Snap all raw timestamps to a perfect musical grid so notes align vertically
     if tempo > 0:
@@ -58,12 +64,12 @@ def build_score(
         grid_step_seconds = seconds_per_beat * (4.0 / quantization_subdivision)
 
         for event in detected_events:
-            #raw_time = event['time']
+            # raw_time = event['time']
             raw_time = event['time_sec']
             # Round the raw human time to the nearest perfect grid step
             quantized_time = round(raw_time / grid_step_seconds) * grid_step_seconds
             # Overwrite the raw time with the "snapped" perfect time
-            #event['time'] = quantized_time
+            # event['time'] = quantized_time
             event['time_sec'] = quantized_time
             
     # ----------------------------------------------------

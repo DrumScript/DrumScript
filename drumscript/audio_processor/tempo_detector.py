@@ -11,6 +11,12 @@ import os
 import argparse
 from drumscript.notation_generator.constants import SAMPLE_RATE, HOP_LENGTH
 
+from datetime import datetime
+
+print("\n# ------------------------------------------------------------------------------------")
+datetimestamp = datetime.now()
+print(f'\ndate/time: {datetimestamp}')
+
 # --- Define function --------------------------------------------------------------------------------------------
 
 def estimate_tempo(audio_data, sr):

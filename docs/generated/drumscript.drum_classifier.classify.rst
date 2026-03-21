@@ -12,5 +12,6 @@
       classify_events
       classify_idiophone
       classify_membranophone
-      get_physics_profile
+      extract_features
+      get_audio_slice
    

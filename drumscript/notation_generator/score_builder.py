@@ -54,7 +54,8 @@ def build_score(
     # Drum algorithms often detect the "double time" tempo (e.g. 130 BPM instead of 65 BPM).
     # To make the sheet music readable in standard 4/4 time (giving it a "half-time feel" 
     # where the snare lands heavily on beat 3), we halve the raw detected tempo for notation.
-    tempo = tempo / 2.0
+    #    tempo = tempo / 2.0
+    tempo = tempo
 
     # --- QUANTIZATION LOGIC 
     # Snap all raw timestamps to a perfect musical grid so notes align vertically

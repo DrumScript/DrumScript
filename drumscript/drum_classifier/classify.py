@@ -323,7 +323,7 @@ def classify_event(audio_segment, sr):
 # --- LEGACY CODE - COMMENTED OUT CLASSIFY_EVENTS ---
 # def classify_events(audio_data: np.ndarray, sr: int, onsets: list[float]) -> list[dict]:
 #     """
-#     Wrapper to route detected onsets through the new Physics-First Classification Engine.
+#     Wrapper to route detected onsets through the Physics-First Classification Engine.
 #     Uses the unified dictionary keys: time_sec, instruments, debug_features.
 #     """
 #     classified_events = []
@@ -345,7 +345,7 @@ def classify_event(audio_segment, sr):
 #         # if len(y_window) == 0:
 #         #     continue
 # 
-#         # --- NEW PADDING LOGIC (Prevents SciPy/Librosa STFT Warnings at End of File) ---
+#         # --- PADDING LOGIC (Prevents SciPy/Librosa STFT Warnings at End of File) ---
 #         duration_secs = ONSET_SLICE_DURATION_MS / 1000.0 
 #         end_sample = start_sample + int(duration_secs * sr)
 # 
@@ -378,7 +378,7 @@ def classify_event(audio_segment, sr):
 
 def classify_events(audio_data: np.ndarray, sr: int, onsets: list[float]) -> list[dict]:
     """
-    Wrapper to route detected onsets through the new Physics-First Classification Engine.
+    Wrapper to route detected onsets through the Physics-First Classification Engine.
     Uses the unified dictionary keys: time_sec, instruments, debug_features.
     """
     classified_events = []
@@ -386,7 +386,7 @@ def classify_events(audio_data: np.ndarray, sr: int, onsets: list[float]) -> lis
     for onset_time in onsets:
         start_sample = int(onset_time * sr)
         
-        # --- NEW PADDING LOGIC (Prevents SciPy/Librosa STFT Warnings at End of File) ---
+        # --- PADDING LOGIC (Prevents SciPy/Librosa STFT Warnings at End of File) ---
         duration_secs = ONSET_SLICE_DURATION_MS / 1000.0 
         end_sample = start_sample + int(duration_secs * sr)
 

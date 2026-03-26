@@ -187,11 +187,13 @@ def main(input_audio_path: str,
         y, sr = audio_loader.load_audio(audio_path)
         y = audio_loader.normalise_audio(y) 
         
+        duration_total_sec = len(y) / sr
         tempo = tempo_detector.estimate_tempo(y, sr)
         onsets = onset_detector.detect_onsets(y, sr)
         
-        #print(f"   -> Detected Tempo: {tempo:.1f} BPM")
-        #print(f"   -> Detected Onsets: {len(onsets)}, type(onsets):{type}")
+        print(f"   -> Duration: {mins}:{secs:02d} ({duration_total_sec:.2f}s)")
+        print(f"   -> Detected Tempo: {tempo:.1f} BPM")
+        print(f"   -> Detected Onsets: {len(onsets)}, type(onsets):{type}")
 
 
         # 3. Classification

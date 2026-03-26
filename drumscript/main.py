@@ -78,12 +78,17 @@ def main(input_audio_path: str,
         #sr = SAMPLE_RATE
         # y, sr = audio_loader.load_audio(audio_path, sr=SAMPLE_RATE)
         y, sr = audio_loader.load_audio(audio_path) # no longer required to specify sr in arguments as now this is fed in through the load_audio function
-        y = audio_loader.normalise_audio(y) 
+        y = audio_loader.normalise_audio(y)
+
+        duration_total_sec = len(y) / sr
+        mins = int(duration_total_sec // 60)
+        secs = int(duration_total_sec % 60)
         
         # Preserve core functionality: Automatic Tempo Detection
         tempo = tempo_detector.estimate_tempo(y, sr)
         onsets = onset_detector.detect_onsets(y, sr)
-        
+
+        print(f"   -> Duration: {mins}:{secs:02d} ({duration_total_sec:.2f}s)")
         print(f"   -> Detected Tempo: {tempo:.1f} BPM")
         print(f"   -> Detected Onsets: {len(onsets)}")
 

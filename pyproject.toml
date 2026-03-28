@@ -3,11 +3,10 @@ requires = ["setuptools>=61.0", "wheel"]
 build-backend = "setuptools.build_meta"
 [project]
 name = "DrumScript"
-version = "0.1.0"
+version = "0.1.1"
 description = "A Python package to convert drum audio to sheet music."
 readme = "README.md"
 requires-python = ">=3.9, <=3.12"
-license = "MIT"
 authors = [
   { name="drumscript-admin", email="hello.drumscript@gmail.com" }, 
 ]

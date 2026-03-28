@@ -55,6 +55,7 @@ output/*
 *.logs
 logs/
 drumscript/logs/
+*.log
 
 # --- Proofs ---
 proofs/

@@ -44,34 +44,30 @@ def get_audio_slice(audio_data: np.ndarray, onset_time: float, sr: int) -> np.nd
         
     return audio_data[start_sample:end_sample]
 
-# --- EXTRACT_FEATURES ---
-# This restores the linear magnitude scale from _classifier.py so the thresholds 
-# (like KICK_LFER_MIN and SNARE_HFER_MIN) work flawlessly again.
-def extract_features(audio_slice: np.ndarray, sr: int) -> dict:
+def extract_features(audio_slice_short: np.ndarray, audio_slice_long: np.ndarray, sr: int) -> dict:
     """
     Analyses the audio slice and extracts the physical DSP features.
+    Uses a short 200ms slice for spectral purity, and a long 1.5s slice for decay.
     Wraps numpy outputs in float() to ensure JSON serialization.
     """
     features = {}
     
-    # 1. Compute the Frequency Spectrum (FFT)
-    # We use magnitude (abs) of the Short-Time Fourier Transform
-    stft = np.abs(librosa.stft(audio_slice, n_fft=N_FFT, hop_length=HOP_LENGTH))
+    # 1. Compute the Frequency Spectrum (FFT) on SHORT slice
+    stft = np.abs(librosa.stft(audio_slice_short, n_fft=N_FFT, hop_length=HOP_LENGTH))
     
-    # Average the spectrum across the tiny time slice to get one master frequency profile
     spectrum = np.mean(stft, axis=1)
     frequencies = librosa.fft_frequencies(sr=sr, n_fft=N_FFT)
     
     # 2. Find the Peak Frequency (The strongest fundamental tone)
     peak_idx = np.argmax(spectrum)
-    features['peak_freq'] = float(frequencies[peak_idx]) # Added float() casting
+    features['peak_freq'] = float(frequencies[peak_idx]) 
     
     # 3. Calculate Spectral Centroid (The "Center of Mass" or Brightness)
     centroid = librosa.feature.spectral_centroid(S=stft, sr=sr, n_fft=N_FFT, hop_length=HOP_LENGTH)
-    features['centroid'] = float(np.mean(centroid)) # Added float() casting
+    features['centroid'] = float(np.mean(centroid)) 
     
-    # 4. Resonance (Decay Time) - IMPORTED SO TOMS AND HATS CAN BE CLASSIFIED
-    rms = librosa.feature.rms(y=audio_slice)[0]
+    # 4. Resonance (Decay Time) - ON LONG SLICE
+    rms = librosa.feature.rms(y=audio_slice_long)[0]
     peak_rms_idx = np.argmax(rms)
     threshold = np.max(rms) * 0.1 # -20dB point
     
@@ -80,11 +76,11 @@ def extract_features(audio_slice: np.ndarray, sr: int) -> dict:
         if rms[i] < threshold:
             break
         decay_frames += 1
-    features['decay'] = float(librosa.frames_to_time(decay_frames, sr=sr)) # Added float() casting
+    features['decay'] = float(librosa.frames_to_time(decay_frames, sr=sr))
 
-    # 5. Calculate Energy Ratios (LFER & HFER)
+    # 5. Calculate Energy Ratios (LFER & HFER) on SHORT slice
     total_energy = np.sum(spectrum)
-    if total_energy == 0: # Prevent division by zero on silent slices
+    if total_energy == 0: 
         features['lfer'] = 0.0
         features['hfer'] = 0.0
         features['hfer_5k'] = 0.0
@@ -92,17 +88,198 @@ def extract_features(audio_slice: np.ndarray, sr: int) -> dict:
 
     # Low Frequency Energy Ratio (Energy below 150Hz)
     low_idx = np.where(frequencies <= 150.0)[0]
-    features['lfer'] = float(np.sum(spectrum[low_idx]) / total_energy) # Added float() casting
+    features['lfer'] = float(np.sum(spectrum[low_idx]) / total_energy) 
     
     # Snare Wire Energy Ratio (Energy > 2000Hz)
     high_idx = np.where(frequencies > 2000.0)[0]
-    features['hfer'] = float(np.sum(spectrum[high_idx]) / total_energy) # Added float() casting
+    features['hfer'] = float(np.sum(spectrum[high_idx]) / total_energy) 
     
     # Cymbal/Hat Energy Ratio (Energy > 5000Hz)
     metal_idx = np.where(frequencies > 5000.0)[0]
-    features['hfer_5k'] = float(np.sum(spectrum[metal_idx]) / total_energy) # Added float() casting
+    features['hfer_5k'] = float(np.sum(spectrum[metal_idx]) / total_energy) 
     
     return features
+
+
+def classify_membranophone(p):
+    """
+    Stage 2A: Sorts Skins (Kick, Snare, Toms).
+    """
+    detected_instruments = []
+    
+    # RULE 1: KICK DRUM
+    if p['lfer'] >= KICK_LFER_MIN and (KICK_FREQ_MIN <= p['peak_freq'] <= KICK_FREQ_MAX):
+        detected_instruments.append('kick')
+            
+    # RULE 2: SNARE DRUM 
+    is_snare_freq = (SNARE_FREQ_MIN <= p['peak_freq'] <= SNARE_FREQ_MAX)
+    has_snare_wire = (SNARE_HFER_MIN <= p['hfer'] < 0.85)
+    
+    if has_snare_wire and is_snare_freq:
+        detected_instruments.append('snare')
+        
+    # RULE 3: TOMS 
+    is_pure = p['hfer'] < SNARE_HFER_MIN  
+    is_resonant = p['decay'] >= TOM_MIN_DECAY 
+    
+    if is_pure and is_resonant:
+        if p['peak_freq'] <= TOM_FREQ_LOW_MAX:
+            if 'kick' not in detected_instruments: 
+                detected_instruments.append('low_tom')
+        elif p['peak_freq'] <= TOM_FREQ_MID_MAX:
+            detected_instruments.append('mid_tom')
+        elif p['peak_freq'] <= 400: 
+            detected_instruments.append('high_tom')
+
+    return detected_instruments
+
+
+def classify_idiophone(p):
+    """
+    Stage 2B: Sorts Metals (Hats, Cymbals).
+    """
+    detected_instruments = []
+    decay = p['decay']
+    
+    # RULE 4: METALS (Hats / Cymbals)
+    if p['hfer_5k'] >= IDIOPHONE_MIN_HFER_5K:
+        if decay <= HAT_CLOSED_MAX_DECAY:
+            detected_instruments.append('hi_hat_closed')
+        elif decay <= HAT_OPEN_MAX_DECAY:
+            detected_instruments.append('hi_hat_open')
+        else:
+            if p['centroid'] > 2500:
+                detected_instruments.append('crash') 
+            else:
+                detected_instruments.append('ride') 
+                
+    return detected_instruments
+
+def classify_event(physics):
+    """
+    Stage 1: Evaluates both Skins and Metals simultaneously.
+    """
+    instruments = []
+    instruments.extend(classify_membranophone(physics))
+    instruments.extend(classify_idiophone(physics))
+    
+    if not instruments:
+        instruments.append('unknown')
+        
+    return instruments
+
+def classify_events(audio_data: np.ndarray, sr: int, onsets: list[float]) -> list[dict]:
+    """
+    Wrapper to route detected onsets through the new Physics-First Classification Engine.
+    Uses the unified dictionary keys: time_sec, instruments, debug_features.
+    """
+    classified_events = []
+
+    for onset_time in onsets:
+        start_sample = int(onset_time * sr)
+        
+        # --- SHORT SLICE PADDING LOGIC (200ms) ---
+        duration_short_secs = ONSET_SLICE_DURATION_MS / 1000.0 
+        end_sample_short = start_sample + int(duration_short_secs * sr)
+
+        if end_sample_short > len(audio_data):
+            slice_data = audio_data[start_sample:]
+            pad_length = end_sample_short - len(audio_data)
+            y_window_short = np.pad(slice_data, (0, pad_length), mode='constant')
+        else:
+            y_window_short = audio_data[start_sample:end_sample_short]
+
+        if len(y_window_short) == 0:
+            continue
+
+        # --- LONG SLICE PADDING LOGIC (1.5s) ---
+        duration_long_secs = 1.5 
+        end_sample_long = start_sample + int(duration_long_secs * sr)
+
+        if end_sample_long > len(audio_data):
+            slice_data = audio_data[start_sample:]
+            pad_length = end_sample_long - len(audio_data)
+            y_window_long = np.pad(slice_data, (0, pad_length), mode='constant')
+        else:
+            y_window_long = audio_data[start_sample:end_sample_long]
+
+
+        # 1. Extract the physics DNA
+        physics_profile = extract_features(y_window_short, y_window_long, sr)
+
+        # 2. Run the simultaneous rules
+        instruments = classify_event(physics_profile)
+        
+        # 3. Append with unified compatible keys
+        classified_events.append(
+            {
+                "time_sec": float(onset_time), 
+                "instruments": instruments, 
+                "debug_features": physics_profile 
+            }
+        )
+
+    return classified_events
+
+# --- EXTRACT_FEATURES ---
+# This restores the linear magnitude scale from _classifier.py so the thresholds 
+# (like KICK_LFER_MIN and SNARE_HFER_MIN) work flawlessly again.
+#def extract_features(audio_slice: np.ndarray, sr: int) -> dict:
+ 
+    #Analyses the audio slice and extracts the physical DSP features.
+    #Wraps numpy outputs in float() to ensure JSON serialization.
+    
+    #features = {}
+    
+    # 1. Compute the Frequency Spectrum (FFT)
+    # We use magnitude (abs) of the Short-Time Fourier Transform
+    #stft = np.abs(librosa.stft(audio_slice, n_fft=N_FFT, hop_length=HOP_LENGTH))
+    
+    # Average the spectrum across the tiny time slice to get one master frequency profile
+    #spectrum = np.mean(stft, axis=1)
+    #frequencies = librosa.fft_frequencies(sr=sr, n_fft=N_FFT)
+    
+    # 2. Find the Peak Frequency (The strongest fundamental tone)
+    #peak_idx = np.argmax(spectrum)
+    #features['peak_freq'] = float(frequencies[peak_idx]) # Added float() casting
+    
+    # 3. Calculate Spectral Centroid (The "Center of Mass" or Brightness)
+    #centroid = librosa.feature.spectral_centroid(S=stft, sr=sr, n_fft=N_FFT, hop_length=HOP_LENGTH)
+    #features['centroid'] = float(np.mean(centroid)) # Added float() casting
+    
+    # 4. Resonance (Decay Time) - IMPORTED SO TOMS AND HATS CAN BE CLASSIFIED
+    #rms = librosa.feature.rms(y=audio_slice)[0]
+    #peak_rms_idx = np.argmax(rms)
+    #threshold = np.max(rms) * 0.1 # -20dB point
+    
+    #decay_frames = 0
+    #for i in range(peak_rms_idx, len(rms)):
+     #   if rms[i] < threshold:
+     #       break
+     #   decay_frames += 1
+    #features['decay'] = float(librosa.frames_to_time(decay_frames, sr=sr)) # Added float() casting
+
+    # 5. Calculate Energy Ratios (LFER & HFER)
+    #total_energy = np.sum(spectrum)
+    #if total_energy == 0: # Prevent division by zero on silent slices
+    #    features['lfer'] = 0.0
+    #    features['hfer'] = 0.0
+    #    features['hfer_5k'] = 0.0
+    #    return features
+
+    # Low Frequency Energy Ratio (Energy below 150Hz)
+    #low_idx = np.where(frequencies <= 150.0)[0]
+    #features['lfer'] = float(np.sum(spectrum[low_idx]) / total_energy) # Added float() casting
+    
+    # Snare Wire Energy Ratio (Energy > 2000Hz)
+    #high_idx = np.where(frequencies > 2000.0)[0]
+    #features['hfer'] = float(np.sum(spectrum[high_idx]) / total_energy) # Added float() casting
+    
+    # Cymbal/Hat Energy Ratio (Energy > 5000Hz)
+    #metal_idx = np.where(frequencies > 5000.0)[0]
+    #features['hfer_5k'] = float(np.sum(spectrum[metal_idx]) / total_energy) # Added float() casting
+    
+    #return features
 
 
 # --- COMMENTED OUT GET_PHYSICS_PROFILE ---
@@ -198,17 +375,17 @@ def extract_features(audio_slice: np.ndarray, sr: int) -> dict:
 # 
 #     return detected_instruments
 
-def classify_membranophone(p):
-    """
-    Stage 2A: Sorts Skins (Kick, Snare, Toms).
-    Fuses logic from _classifier.py (Kick/Snare) with the Tom logic from v0.1.0.
-    """
-    detected_instruments = []
+#def classify_membranophone(p):
+    #
+    #Stage 2A: Sorts Skins (Kick, Snare, Toms).
+    #Fuses logic from _classifier.py (Kick/Snare) with the Tom logic from v0.1.0.
+    #
+    #detected_instruments = []
     
     # RULE 1: KICK DRUM (logic from _classifier.py)
     # Does not rely on decay, so overlapping cymbals won't turn Kicks into Low Toms!
-    if p['lfer'] >= KICK_LFER_MIN and (KICK_FREQ_MIN <= p['peak_freq'] <= KICK_FREQ_MAX):
-        detected_instruments.append('kick')
+    #if p['lfer'] >= KICK_LFER_MIN and (KICK_FREQ_MIN <= p['peak_freq'] <= KICK_FREQ_MAX):
+     #   detected_instruments.append('kick')
             
     # --- LEGACY CODE - COMMENTED OUT SNARE RULE (Fat Snare catch caused Kick+Hat hallucinations) ---
     # is_snare_freq = (SNARE_FREQ_MIN <= p['peak_freq'] <= SNARE_FREQ_MAX)
@@ -218,26 +395,26 @@ def classify_membranophone(p):
     #     detected_instruments.append('snare')
 
     # RULE 2: SNARE DRUM (strict logic from _classifier.py to prevent Kick+Hat hallucinations)
-    is_snare_freq = (SNARE_FREQ_MIN <= p['peak_freq'] <= SNARE_FREQ_MAX)
-    has_snare_wire = (SNARE_HFER_MIN <= p['hfer'] < 0.85)
+    #is_snare_freq = (SNARE_FREQ_MIN <= p['peak_freq'] <= SNARE_FREQ_MAX)
+    #has_snare_wire = (SNARE_HFER_MIN <= p['hfer'] < 0.85)
     
-    if has_snare_wire and is_snare_freq:
-        detected_instruments.append('snare')
+    #if has_snare_wire and is_snare_freq:
+     #   detected_instruments.append('snare')
         
     # RULE 3: TOMS (From v0.1.0 - pure tone and longer decay)
-    is_pure = p['hfer'] < SNARE_HFER_MIN  # Toms have almost no 'wire' noise
-    is_resonant = p['decay'] >= TOM_MIN_DECAY # Toms ring longer than isolated kicks
+    #is_pure = p['hfer'] < SNARE_HFER_MIN  # Toms have almost no 'wire' noise
+    #is_resonant = p['decay'] >= TOM_MIN_DECAY # Toms ring longer than isolated kicks
     
-    if is_pure and is_resonant:
-        if p['peak_freq'] <= TOM_FREQ_LOW_MAX:
-            if 'kick' not in detected_instruments: # Don't label a Kick as a Low Tom
-                detected_instruments.append('low_tom')
-        elif p['peak_freq'] <= TOM_FREQ_MID_MAX:
-            detected_instruments.append('mid_tom')
-        elif p['peak_freq'] <= 400: # Upper safety bound
-            detected_instruments.append('high_tom')
+    #if is_pure and is_resonant:
+     #   if p['peak_freq'] <= TOM_FREQ_LOW_MAX:
+     #       if 'kick' not in detected_instruments: # Don't label a Kick as a Low Tom
+     #           detected_instruments.append('low_tom')
+     #   elif p['peak_freq'] <= TOM_FREQ_MID_MAX:
+     #       detected_instruments.append('mid_tom')
+     #   elif p['peak_freq'] <= 400: # Upper safety bound
+     #       detected_instruments.append('high_tom')
 
-    return detected_instruments
+    # return detected_instruments
 
 
 # --- LEGACY CODE - COMMENTED OUT CLASSIFY_IDIOPHONE (March 17 Interim) ---
@@ -263,28 +440,28 @@ def classify_membranophone(p):
 #                 
 #     return detected_instruments
 
-def classify_idiophone(p):
-    """
-    Stage 2B: Sorts Metals (Hats, Cymbals).
-    Uses Feb 9 Decay logic + _classifier.py Centroid thresholds.
-    """
-    detected_instruments = []
-    decay = p['decay']
+# def classify_idiophone(p): 
+    
+    #Stage 2B: Sorts Metals (Hats, Cymbals).
+    #Uses Feb 9 Decay logic + _classifier.py Centroid thresholds.
+    
+    #detected_instruments = []
+    #decay = p['decay']
     
     # RULE 4: METALS (Hats / Cymbals)
-    if p['hfer_5k'] >= IDIOPHONE_MIN_HFER_5K:
-        if decay <= HAT_CLOSED_MAX_DECAY:
-            detected_instruments.append('hi_hat_closed')
-        elif decay <= HAT_OPEN_MAX_DECAY:
-            detected_instruments.append('hi_hat_open')
-        else:
+    #if p['hfer_5k'] >= IDIOPHONE_MIN_HFER_5K:
+    #    if decay <= HAT_CLOSED_MAX_DECAY:
+    #        detected_instruments.append('hi_hat_closed')
+    #    elif decay <= HAT_OPEN_MAX_DECAY:
+    #        detected_instruments.append('hi_hat_open')
+    #    else:
             # Merged logic: use 2500 from _classifier to prevent kick overlaps looking like rides
-            if p['centroid'] > 2500:
-                detected_instruments.append('crash') 
-            else:
-                detected_instruments.append('ride') 
-                
-    return detected_instruments
+    #        if p['centroid'] > 2500:
+    #            detected_instruments.append('crash') 
+    #        else:
+    #            detected_instruments.append('ride') 
+    #            
+    #return detected_instruments
 
 # --- LEGACY CODE - COMMENTED OUT CLASSIFY_EVENT ---
 # def classify_event(audio_segment, sr):
@@ -299,26 +476,26 @@ def classify_idiophone(p):
 #     # else:
 #     #     return classify_membranophone(physics)
 
-def classify_event(audio_segment, sr):
-    """
-    Stage 1: Evaluates both Skins and Metals simultaneously.
-    Returns a list because multiple drums can hit simultaneously!
-    """
+#def  classify_event(audio_segment, sr):
+    #
+    #Stage 1: Evaluates both Skins and Metals simultaneously.
+    #Returns a list because multiple drums can hit simultaneously!
+    
     # LEGACY CODE - physics = get_physics_profile(audio_segment, sr)
-    physics = extract_features(audio_segment, sr)
-    instruments = []
+ #   physics = extract_features(audio_segment, sr)
+ #   instruments = []
     
     # Check skins
-    instruments.extend(classify_membranophone(physics))
+  #  instruments.extend(classify_membranophone(physics))
     
     # Check metals
-    instruments.extend(classify_idiophone(physics))
+  #  instruments.extend(classify_idiophone(physics))
     
     # Fallback
-    if not instruments:
-        instruments.append('unknown')
+   # if not instruments:
+#        instruments.append('unknown')
         
-    return instruments
+ #   return instruments
 
 # --- LEGACY CODE - COMMENTED OUT CLASSIFY_EVENTS ---
 # def classify_events(audio_data: np.ndarray, sr: int, onsets: list[float]) -> list[dict]:
@@ -376,47 +553,49 @@ def classify_event(audio_segment, sr):
 # 
 #     return classified_events
 
-def classify_events(audio_data: np.ndarray, sr: int, onsets: list[float]) -> list[dict]:
-    """
-    Wrapper to route detected onsets through the Physics-First Classification Engine.
-    Uses the unified dictionary keys: time_sec, instruments, debug_features.
-    """
-    classified_events = []
 
-    for onset_time in onsets:
-        start_sample = int(onset_time * sr)
+# LEGACY CODE
+    #def classify_events(audio_data: np.ndarray, sr: int, onsets: list[float]) -> list[dict]:
+    #   
+    #  Wrapper to route detected onsets through the Physics-First Classification Engine.
+    #  Uses the unified dictionary keys: time_sec, instruments, debug_features.
+    #  
+    # classified_events = []
+
+    # for onset_time in onsets:
+     #   start_sample = int(onset_time * sr)
         
         # --- PADDING LOGIC (Prevents SciPy/Librosa STFT Warnings at End of File) ---
-        duration_secs = ONSET_SLICE_DURATION_MS / 1000.0 
-        end_sample = start_sample + int(duration_secs * sr)
+      #  duration_secs = ONSET_SLICE_DURATION_MS / 1000.0 
+       # end_sample = start_sample + int(duration_secs * sr)
 
-        if end_sample > len(audio_data):
-            slice_data = audio_data[start_sample:]
-            pad_length = end_sample - len(audio_data)
-            y_window = np.pad(slice_data, (0, pad_length), mode='constant')
-        else:
-            y_window = audio_data[start_sample:end_sample]
+       # if end_sample > len(audio_data):
+        #    slice_data = audio_data[start_sample:]
+    #        pad_length = end_sample - len(audio_data)
+    #        y_window = np.pad(slice_data, (0, pad_length), mode='constant')
+    #    else:
+    #        y_window = audio_data[start_sample:end_sample]
 
-        if len(y_window) == 0:
-            continue
+    #    if len(y_window) == 0:
+    #        continue
 
         # 1. Extract the physics DNA
         # LEGACY CODE - physics_profile = get_physics_profile(y_window, sr)
-        physics_profile = extract_features(y_window, sr)
+    #    physics_profile = extract_features(y_window, sr)
 
         # 2. Run the simultaneous rules
-        instruments = classify_event(y_window, sr)
+    #    instruments = classify_event(y_window, sr)
         
         # 3. Append with unified compatible keys
-        classified_events.append(
-            {
-                "time_sec": float(onset_time), 
-                "instruments": instruments, 
-                "debug_features": physics_profile 
-            }
-        )
+    #    classified_events.append(
+    #        {
+    #            "time_sec": float(onset_time), 
+    #            "instruments": instruments, 
+    #            "debug_features": physics_profile 
+    #        }
+    #    )
 
-    return classified_events
+    #return classified_events
 
 
 # print("\n# ------------------------------------------------------------------------------------")

@@ -56,19 +56,42 @@ def detect_onsets(audio_data: np.ndarray, sr: int) -> list[float]:
         delta=0.05         # Ignores general background noise floor
     )
     
-    print(f'(len_onset_frames:{len(onset_frames)})')
+    # Commenting out to test single_beat_refinement :) 
+    #print(f'(len_onset_frames:{len(onset_frames)})')
+
+    # Convert onset frames to time in seconds
+    #onset_times = librosa.frames_to_time(
+     #   onset_frames, 
+     #   sr=SAMPLE_RATE,
+     #   hop_length=HOP_LENGTH
+    #)
+    
+    #print(f'(len_onset_times:{len(onset_times)})')
+
+    #return onset_times.tolist()
 
     # Convert onset frames to time in seconds
     onset_times = librosa.frames_to_time(
         onset_frames, 
         sr=SAMPLE_RATE,
         hop_length=HOP_LENGTH
-    )
-    
+    ).tolist()
+
+    # --- PROPOSED VERSION: SINGLE-BEAT REFINEMENT ---
+    # If the total duration is very short (< 2.0s), it's likely a single hit sample.
+    # We apply a stricter "De-bounce" to prevent room reflections from triggering events.
+    duration = len(audio_data) / sr
+    if duration < 2.0 and len(onset_times) > 1:
+        # We only keep the FIRST onset if others follow too closely (within 150ms)
+        # This fixes the 'single hit showing multiple events' issue in your orchestration folder.
+        refined_onsets = [onset_times[0]]
+        for i in range(1, len(onset_times)):
+            if onset_times[i] - refined_onsets[-1] > 0.150: # 150ms threshold
+                refined_onsets.append(onset_times[i])
+        onset_times = refined_onsets
+
     print(f'(len_onset_times:{len(onset_times)})')
-
-    return onset_times.tolist()
-
+    return onset_times
 
 
 #------- AUTOMATIC TEMPO DETECTION------------------------------------
@@ -193,6 +216,7 @@ if __name__ == "__main__":
         traceback.print_exc() # Print full traceback for debugging
 
     print("\nonset_detector.py example finished.")
+    
 # Uncomment to use, for clearer error logs
 # print("\n# ------------------------------------------------------------------------------------")
     # LEGACY CODE:

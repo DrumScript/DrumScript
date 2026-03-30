@@ -77,7 +77,7 @@ def detect_onsets(audio_data: np.ndarray, sr: int) -> list[float]:
         hop_length=HOP_LENGTH
     ).tolist()
 
-    # --- PROPOSED VERSION: SINGLE-BEAT REFINEMENT ---
+    # --- SINGLE-BEAT REFINEMENT ---
     # If the total duration is very short (< 2.0s), it's likely a single hit sample.
     # We apply a stricter "De-bounce" to prevent room reflections from triggering events.
     duration = len(audio_data) / sr

@@ -168,12 +168,73 @@ def classify_event(physics):
         
     return instruments
 
+
+# --- LEGACY CODE ---
+# Reasoning: Added a volume-based amplitude gate within the `classify_events` loop to discard quiet room reflections in short audio clips, thereby stopping double-triggering without affecting full-song transcriptions.
+# def classify_events(audio_data: np.ndarray, sr: int, onsets: list[float]) -> list[dict]:
+#     """
+#     Wrapper to route detected onsets through the new Physics-First Classification Engine.
+#     Uses the unified dictionary keys: time_sec, instruments, debug_features.
+#     """
+#     classified_events = []
+# 
+#     for onset_time in onsets:
+#         start_sample = int(onset_time * sr)
+#         
+#         # --- SHORT SLICE PADDING LOGIC (200ms) ---
+#         duration_short_secs = ONSET_SLICE_DURATION_MS / 1000.0 
+#         end_sample_short = start_sample + int(duration_short_secs * sr)
+# 
+#         if end_sample_short > len(audio_data):
+#             slice_data = audio_data[start_sample:]
+#             pad_length = end_sample_short - len(audio_data)
+#             y_window_short = np.pad(slice_data, (0, pad_length), mode='constant')
+#         else:
+#             y_window_short = audio_data[start_sample:end_sample_short]
+# 
+#         if len(y_window_short) == 0:
+#             continue
+# 
+#         # --- LONG SLICE PADDING LOGIC (1.5s) ---
+#         duration_long_secs = 1.5 
+#         end_sample_long = start_sample + int(duration_long_secs * sr)
+# 
+#         if end_sample_long > len(audio_data):
+#             slice_data = audio_data[start_sample:]
+#             pad_length = end_sample_long - len(audio_data)
+#             y_window_long = np.pad(slice_data, (0, pad_length), mode='constant')
+#         else:
+#             y_window_long = audio_data[start_sample:end_sample_long]
+# 
+# 
+#         # 1. Extract the physics DNA
+#         physics_profile = extract_features(y_window_short, y_window_long, sr)
+# 
+#         # 2. Run the simultaneous rules
+#         instruments = classify_event(physics_profile)
+#         
+#         # 3. Append with unified compatible keys
+#         classified_events.append(
+#             {
+#                 "time_sec": float(onset_time), 
+#                 "instruments": instruments, 
+#                 "debug_features": physics_profile 
+#             }
+#         )
+# 
+#     return classified_events
+
+# --- UPDATED VERSION ---
 def classify_events(audio_data: np.ndarray, sr: int, onsets: list[float]) -> list[dict]:
     """
     Wrapper to route detected onsets through the new Physics-First Classification Engine.
     Uses the unified dictionary keys: time_sec, instruments, debug_features.
     """
     classified_events = []
+    
+    # Calculate global parameters to evaluate amplitude gating
+    global_max = np.max(np.abs(audio_data)) if len(audio_data) > 0 else 1.0
+    duration = len(audio_data) / sr
 
     for onset_time in onsets:
         start_sample = int(onset_time * sr)
@@ -191,6 +252,18 @@ def classify_events(audio_data: np.ndarray, sr: int, onsets: list[float]) -> lis
 
         if len(y_window_short) == 0:
             continue
+            
+        # --- AMPLITUDE GATING FILTER ---
+        slice_max = np.max(np.abs(y_window_short)) if len(y_window_short) > 0 else 0.0
+        
+        # Drop absolute silence (< 2% of max)
+        if slice_max < 0.02 * global_max:
+            continue
+            
+        # For isolated drum samples (< 2.0s), drop secondary quiet room reflections/tails (< 50% max)
+        if duration < 2.0 and len(classified_events) > 0:
+            if slice_max < 0.5 * global_max:
+                continue
 
         # --- LONG SLICE PADDING LOGIC (1.5s) ---
         duration_long_secs = 1.5 
@@ -220,6 +293,7 @@ def classify_events(audio_data: np.ndarray, sr: int, onsets: list[float]) -> lis
         )
 
     return classified_events
+
 
 # --- EXTRACT_FEATURES ---
 # This restores the linear magnitude scale from _classifier.py so the thresholds 

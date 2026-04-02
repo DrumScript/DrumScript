@@ -179,6 +179,13 @@ def classify_events(audio_data: np.ndarray, sr: int, onsets: list[float]) -> lis
     global_max = np.max(np.abs(audio_data)) if len(audio_data) > 0 else 1.0
     duration = len(audio_data) / sr
 
+    # --- DYNAMIC ISOLATED SAMPLE DETECTION ---
+    # Cymbals ring out for 5-15 seconds, bypassing our old 'duration < 2.0' check.
+    # We use Onset Density instead. A single hit test sample is sparse (< 1.5 hits per second).
+    # A real drum track is dense (e.g., 60bpm 8th notes = 2 hits per second).
+    onset_density = len(onsets) / duration if duration > 0 else 0
+    is_isolated_sample = (duration < 20.0) and (onset_density < 1.5 or len(onsets) <= 5)
+
     for onset_time in onsets:
         start_sample = int(onset_time * sr)
         
@@ -197,12 +204,12 @@ def classify_events(audio_data: np.ndarray, sr: int, onsets: list[float]) -> lis
             continue
             
         # --- STRICT SINGLE-BEAT AMPLITUDE GATE ---
-        # For full songs (> 2.0s), we do NOT interfere. We let the onset detector do its job 
+        # For full songs, we do NOT interfere. We let the onset detector do its job 
         # so ghost notes are perfectly preserved (guaranteeing backward compatibility).
-        # We only apply the 50% max volume drop to short, isolated single-beat samples!
-        if duration < 2.0:
+        # We only apply the 50% max volume drop to sparse, isolated single-beat samples!
+        if is_isolated_sample:
             slice_max = np.max(np.abs(y_window_short)) if len(y_window_short) > 0 else 0.0
-            if len(classified_events) > 0 and slice_max < 0.5 * global_max:
+            if slice_max < 0.5 * global_max:
                 continue
 
         # --- LONG SLICE PADDING LOGIC (1.5s) ---
@@ -232,6 +239,74 @@ def classify_events(audio_data: np.ndarray, sr: int, onsets: list[float]) -> lis
         )
 
     return classified_events
+
+# Reasoning: Replaced the static 2.0s duration check with an Onset Density check to safely gate long-ringing cymbals whilst protecting full songs.
+
+# --- LEGACY CODE -- 
+# def classify_events(audio_data: np.ndarray, sr: int, onsets: list[float]) -> list[dict]:
+    
+    #Wrapper to route detected onsets through the new Physics-First Classification Engine.
+    #Uses the unified dictionary keys: time_sec, instruments, debug_features.
+    
+    #classified_events = []
+    
+    # Calculate global parameters to evaluate amplitude gating for single hits
+    #global_max = np.max(np.abs(audio_data)) if len(audio_data) > 0 else 1.0
+    #duration = len(audio_data) / sr
+
+    #for onset_time in onsets:
+    #    start_sample = int(onset_time * sr)
+        
+        # --- SHORT SLICE PADDING LOGIC (200ms) ---
+     #   duration_short_secs = ONSET_SLICE_DURATION_MS / 1000.0 
+     #   end_sample_short = start_sample + int(duration_short_secs * sr)
+
+      #  if end_sample_short > len(audio_data):
+      #      slice_data = audio_data[start_sample:]
+      #      pad_length = end_sample_short - len(audio_data)
+      #      y_window_short = np.pad(slice_data, (0, pad_length), mode='constant')
+      #  else:
+      #      y_window_short = audio_data[start_sample:end_sample_short]
+
+       # if len(y_window_short) == 0:
+       #     continue
+            
+        # --- STRICT SINGLE-BEAT AMPLITUDE GATE ---
+        # For full songs (> 2.0s), we do NOT interfere. We let the onset detector do its job 
+        # so ghost notes are perfectly preserved (guaranteeing backward compatibility).
+        # We only apply the 50% max volume drop to short, isolated single-beat samples!
+        #if duration < 2.0:
+         #   slice_max = np.max(np.abs(y_window_short)) if len(y_window_short) > 0 else 0.0
+          #  if len(classified_events) > 0 and slice_max < 0.5 * global_max:
+           #     continue
+
+        # --- LONG SLICE PADDING LOGIC (1.5s) ---
+        #duration_long_secs = 1.5 
+        #end_sample_long = start_sample + int(duration_long_secs * sr)
+
+        #if end_sample_long > len(audio_data):
+        #    slice_data = audio_data[start_sample:]
+        #    pad_length = end_sample_long - len(audio_data)
+        #    y_window_long = np.pad(slice_data, (0, pad_length), mode='constant')
+        #else:
+        #    y_window_long = audio_data[start_sample:end_sample_long]
+
+        # 1. Extract the physics DNA
+        #physics_profile = extract_features(y_window_short, y_window_long, sr)
+
+        # 2. Run the simultaneous rules
+        #instruments = classify_event(physics_profile)
+        
+        # 3. Append with unified compatible keys
+        #classified_events.append(
+         #   {
+          #      "time_sec": float(onset_time), 
+          #      "instruments": instruments, 
+          #      "debug_features": physics_profile 
+           # }
+        #)
+
+    # return classified_events
 
 # Reasoning: Restricted the amplitude gate strictly to files under 2.0 seconds. This stops double-triggering on single beats while completely bypassing full songs, ensuring 100% backward compatibility for tracks like "My Love for the Stars".
 

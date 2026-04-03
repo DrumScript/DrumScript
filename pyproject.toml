@@ -77,9 +77,7 @@ dev = [
     "pytest",
     "pytest-cov",
     "shibuya",
-    "sphinx",
-    "modal",
-    "modal-python"
+    "sphinx"
 ]
 
 

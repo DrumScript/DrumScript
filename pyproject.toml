@@ -79,7 +79,7 @@ dev = [
     "shibuya",
     "sphinx",
     "modal",
-    "modAL-python"
+    "modal-python"
 ]
 
 

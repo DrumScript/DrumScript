@@ -132,4 +132,18 @@ drumscript_full_review.txt
 .collect_code.log
 collect_code.log
 deploy.sh
+
+## TEMPORARILY GITIGNORING AWS FREE INFRA IN TESTING
 .github/workflows/deploy_aws.yml
+aws_api.py
+Dockerfile
+ui.py
+public/pyodideWorker.js
+terraform/.terraform.lock.hcl
+terraform/iam.tf
+terraform/lambda.tf
+terraform/main.tf
+terraform/terraform.tfstate
+terraform/terraform.tfstate.backup
+terraform/.terraform/providers/registry.terraform.io/hashicorp/aws/5.100.0/darwin_arm64/LICENSE.txt
+terraform/.terraform/providers/registry.terraform.io/hashicorp/aws/5.100.0/darwin_arm64/terraform-provider-aws_v5.100.0_x5

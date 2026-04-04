@@ -132,3 +132,4 @@ drumscript_full_review.txt
 .collect_code.log
 collect_code.log
 deploy.sh
+.github/workflows/deploy_aws.yml

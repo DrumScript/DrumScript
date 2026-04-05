@@ -131,7 +131,8 @@ def detect_onsets(audio_data: np.ndarray, sr: int) -> list[float]:
     # If the total duration is very short (< 2.0s), it's likely a single hit sample.
     # We apply a stricter "De-bounce" to prevent room reflections from triggering events.
     duration = len(audio_data) / sr
-    if duration < 1.0 and len(onset_times) > 1:
+    #if duration < 1.0 and len(onset_times) > 1:
+    if duration < 2.0 and len(onset_times) > 1:
         # We only keep the FIRST onset if others follow too closely (within 150ms)
         # This fixes the 'single hit showing multiple events' issue in your orchestration folder.
         refined_onsets = [onset_times[0]]

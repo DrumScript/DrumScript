@@ -16,6 +16,56 @@ from drumscript.audio_processor.tempo_detector import estimate_tempo
 # print("\n# ------------------------------------------------------------------------------------")
 # datetimestamp = datetime.now()
 # print(f'\ndate/time: {datetimestamp}')
+
+#def validate_onsets(audio_data: np.ndarray, sr: int, onset_times: list[float]) -> list[float]:
+    #
+    #Method B: The Pre-Classification Validator.
+    #Filters out hallucinated cymbal wobbles and kick drum tails using ADSR slope analysis.
+    
+    #if not onset_times:
+     #   return []
+
+    # 1. Backward Compatibility Gate
+    #duration = len(audio_data) / sr
+    #onset_density = len(onset_times) / duration if duration > 0 else 0
+
+    # If it's a dense full song, trust Librosa so we don't accidentally filter out fast ghost notes.
+    # This guarantees 100% backward compatibility for 'Iron Man' and 'The Great Old Ones'.
+    #if duration >= 15.0 and onset_density >= 1.5:
+    #    return onset_times
+
+    # 2. ADSR Transient Filter for Sparse / Single-Beat Tracks
+    #validated_onsets = [onset_times[0]] # Always keep the very first initial impact
+    
+    # Calculate the RMS (volume) envelope for the whole track
+    #rms = librosa.feature.rms(y=audio_data, hop_length=HOP_LENGTH)[0]
+    
+    #for i in range(1, len(onset_times)):
+     #   current_time = onset_times[i]
+        
+        # Convert time to the exact RMS frame index
+      #  frame_idx = librosa.time_to_frames(current_time, sr=sr, hop_length=HOP_LENGTH)
+        
+        # Ensure we have enough frames to look slightly backward and forward
+       # if 2 <= frame_idx < len(rms) - 2:
+            # Volume just before the "hit" (approx 20-30ms prior)
+        #    energy_before = rms[frame_idx - 2]
+            
+            # Volume at the peak of the detected "hit"
+        #    energy_peak = max(rms[frame_idx : frame_idx + 3])
+            
+            # TRANSIENT CHECK: 
+            # A true stick hit creates an instantaneous spike. A ringing cymbal wobble just slowly swells.
+            # If the volume instantaneously spikes by 30% (1.3) or more, it is a real hit.
+        #    if energy_peak > (energy_before * 1.30): 
+        #        validated_onsets.append(current_time)
+        #else:
+            # Keep edge cases near the very end of the file
+         #   validated_onsets.append(current_time)
+
+    #return validated_onsets
+
+
 def detect_onsets(audio_data: np.ndarray, sr: int) -> list[float]:
     
     #Detects the onset (start) times of percussive events in an audio signal.
@@ -81,7 +131,7 @@ def detect_onsets(audio_data: np.ndarray, sr: int) -> list[float]:
     # If the total duration is very short (< 2.0s), it's likely a single hit sample.
     # We apply a stricter "De-bounce" to prevent room reflections from triggering events.
     duration = len(audio_data) / sr
-    if duration < 2.0 and len(onset_times) > 1:
+    if duration < 1.0 and len(onset_times) > 1:
         # We only keep the FIRST onset if others follow too closely (within 150ms)
         # This fixes the 'single hit showing multiple events' issue in your orchestration folder.
         refined_onsets = [onset_times[0]]

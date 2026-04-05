@@ -117,21 +117,25 @@ docs/github_pages.sh
 .vscode/
 .idea/
 
-# GitHub Actions (Temporary Hide)
-.github/workflows/pages.yml
+# docs/theory/images
 docs/theory/images/FFmpeg-Logo.png
 docs/theory/images/FFmpeg-Logo.svg
 docs/theory/images/ismir-logo.png
 docs/theory/images/librosa-logo.png
 docs/theory/images/librosa-logo.svg
 docs/theory/advanced_sound_analysis101.md
-collect_code.sh
-drumscript/drumscript_full_review.txt
-drumscript/complete_script.log
+
+# Local scripts for testing
+backup.sh
 drumscript_full_review.txt
+collect_code.sh
 .collect_code.log
 collect_code.log
 deploy.sh
+
+
+# GitHub Actions (Temporary Hide)
+.github/workflows/pages.yml
 
 ## TEMPORARILY GITIGNORING AWS FREE INFRA IN TESTING
 .github/workflows/deploy_aws.yml
@@ -148,3 +152,4 @@ terraform/terraform.tfstate.backup
 terraform/.terraform/providers/registry.terraform.io/hashicorp/aws/5.100.0/darwin_arm64/LICENSE.txt
 terraform/.terraform/providers/registry.terraform.io/hashicorp/aws/5.100.0/darwin_arm64/terraform-provider-aws_v5.100.0_x5
 terraform/.terraform.tfstate.lock.info
+

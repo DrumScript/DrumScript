@@ -5,6 +5,7 @@
 │   ├── CODEOWNERS
 │   └── workflows
 │       ├── .DS_Store
+│       ├── deploy_aws.yml
 │       ├── docs.yml
 │       ├── publish.yml
 │       ├── test_build.yml
@@ -20,8 +21,10 @@
 │       └── cache
 │           ├── lastfailed
 │           └── nodeids
+├── .testing
 ├── .vscode
 │   └── settings.json
+├── Dockerfile
 ├── DrumScript.egg-info
 │   ├── PKG-INFO
 │   ├── SOURCES.txt
@@ -33,10 +36,13 @@
 ├── MANIFEST.in
 ├── Makefile
 ├── README.md
+├── aws_api.py
 ├── branch_note
 ├── build
+│   ├── .DS_Store
 │   ├── bdist.macosx-10.9-universal2
 │   └── lib
+│       ├── .DS_Store
 │       └── drumscript
 │           ├── __init__.py
 │           ├── audio_processor
@@ -83,9 +89,11 @@
 │               └── measure_snare_frequency.py
 ├── collect_code.log
 ├── collect_code.sh
+├── deploy.sh
 ├── dist
-│   └── drumscript-0.1.1-py3-none-any.whl
-├── dist.log
+│   ├── drumscript-0.1.1-py3-none-any.whl
+│   └── logs
+│       └── dist.log
 ├── docs
 │   ├── .DS_Store
 │   ├── FOLDER_STRUCTURE.txt
@@ -136,10 +144,8 @@
 │   │   │       ├── stem_splitting.doctree
 │   │   │       └── tempo_estimation.doctree
 │   │   └── html
-│   │       ├── .DS_Store
 │   │       ├── .buildinfo
 │   │       ├── _downloads
-│   │       │   ├── .DS_Store
 │   │       │   ├── 467503e129ea4e152e7860928a5adad1
 │   │       │   │   └── FOLDER_STRUCTURE.txt
 │   │       │   ├── 61fdbcc93496055dd3bfc8f7fbe13ce2
@@ -158,7 +164,6 @@
 │   │       │   ├── drumscript.html
 │   │       │   └── index.html
 │   │       ├── _sources
-│   │       │   ├── .DS_Store
 │   │       │   ├── about.md.txt
 │   │       │   ├── api.rst.txt
 │   │       │   ├── development
@@ -365,7 +370,6 @@
 │   ├── audio_processor
 │   │   ├── .DS_Store
 │   │   ├── __init__.py
-│   │   ├── _classifier.py
 │   │   ├── audio_loader.py
 │   │   ├── feature_extractor.py
 │   │   ├── logs
@@ -408,8 +412,6 @@
 │   ├── notation_generator
 │   │   ├── .DS_Store
 │   │   ├── __init__.py
-│   │   ├── _midi_exporter.py
-│   │   ├── _pdf_exporter.py
 │   │   ├── constants.py
 │   │   ├── helpers.py
 │   │   ├── logs
@@ -457,7 +459,6 @@
 │       ├── measure_snare_frequency.py
 │       └── proofs
 ├── drumscript_full_review.txt
-├── grep.log
 ├── local_tests
 │   ├── .DS_Store
 │   ├── _drumscript
@@ -2817,6 +2818,10 @@
 │   └── pdf_generation
 │       ├── json_to_pdf.log
 │       └── test_pdf_generation.log
+├── logs
+│   └── docker
+│       ├── builds.log
+│       └── docker.log
 ├── machine-learning
 │   ├── .DS_Store
 │   ├── data_labeller
@@ -5429,10 +5434,12 @@
 │   ├── .DS_Store
 │   ├── _classifier
 │   │   ├── .DS_Store
+│   │   ├── _classifier.py
 │   │   ├── _pdf_exporter
 │   │   │   ├── .DS_Store
 │   │   │   ├── test.png
 │   │   │   └── test__score__59secs copy.png
+│   │   ├── _pdf_exporter.py
 │   │   ├── archive__-_classifier
 │   │   │   ├── .DS_Store
 │   │   │   ├── archive__-_classify_py
@@ -5625,17 +5632,17 @@
 │   │   └── midi
 │   ├── orchestration_outputs
 │   │   ├── .DS_Store
-│   │   ├── _classifier__thurs12march2026__COPY
-│   │   │   ├── _classifier.py
-│   │   │   ├── _midi_exporter.py
-│   │   │   ├── _pdf_exporter.py
-│   │   │   ├── classification_log.txt
-│   │   │   ├── drumscript_score.pdf
-│   │   │   ├── drumscript_transcription.mid
-│   │   │   └── score_comparison5.png
 │   │   ├── archive__orchestration_outputs
 │   │   │   ├── .DS_Store
 │   │   │   ├── [EMPTY]--tues25november2025__orchestration_outputs__EtoE__UPDATED_EQUALIZER_CHEATSHEET_CONSTANTS_FEATURE_EXTRACTOR__22
+│   │   │   ├── _classifier__thurs12march2026__COPY
+│   │   │   │   ├── _classifier.py
+│   │   │   │   ├── _midi_exporter.py
+│   │   │   │   ├── _pdf_exporter.py
+│   │   │   │   ├── classification_log.txt
+│   │   │   │   ├── drumscript_score.pdf
+│   │   │   │   ├── drumscript_transcription.mid
+│   │   │   │   └── score_comparison5.png
 │   │   │   ├── fri05december2025__orchestration_outputs___EtoE__AFTER_REMOVING_NON_KICK_SNARE_TOM_EVENTS_FROM_AUDIO_WITH_LOGIC__35
 │   │   │   │   ├── test_transcription.json
 │   │   │   │   └── test_transcription.pdf
@@ -5735,6 +5742,52 @@
 │   │   │   │   ├── score_builder.py
 │   │   │   │   ├── test_transcription.json
 │   │   │   │   └── test_transcription.pdf
+│   │   │   ├── sat21march2026__orchestration_outputs__incldemucs__AFTER__SCORE_BUILDER_QUANTIZATION_TEMPO_CORRECTION__iron_man__3
+│   │   │   │   ├── Iron Man (2012 Remaster)_transcription.json
+│   │   │   │   ├── Iron Man (2012 Remaster)_transcription.mid
+│   │   │   │   ├── Iron Man (2012 Remaster)_transcription.pdf
+│   │   │   │   ├── iron_man__scripter.log
+│   │   │   │   └── stems_test
+│   │   │   │       └── htdemucs
+│   │   │   │           └── Iron Man (2012 Remaster)
+│   │   │   │               ├── bass.flac
+│   │   │   │               ├── bass.mp3
+│   │   │   │               ├── drums.flac
+│   │   │   │               ├── drums.mp3
+│   │   │   │               ├── drums.wav
+│   │   │   │               ├── other.flac
+│   │   │   │               ├── other.mp3
+│   │   │   │               ├── vocals.flac
+│   │   │   │               └── vocals.mp3
+│   │   │   ├── sat21march2026__orchestration_outputs__incldemucs__AFTER__SCORE_BUILDER_QUANTIZATION_TEMPO_CORRECTION__iron_man__4
+│   │   │   │   ├── .DS_Store
+│   │   │   │   ├── 65bpm__iron_man3__drumsonly_transcription.json
+│   │   │   │   ├── 65bpm__iron_man3__drumsonly_transcription.mid
+│   │   │   │   ├── 65bpm__iron_man3__drumsonly_transcription.pdf
+│   │   │   │   ├── _iron_man__stem_split.logicx
+│   │   │   │   │   ├── Alternatives
+│   │   │   │   │   │   └── 000
+│   │   │   │   │   │       ├── DisplayState.plist
+│   │   │   │   │   │       ├── DisplayStateArchive
+│   │   │   │   │   │       ├── MetaData.plist
+│   │   │   │   │   │       ├── Project File Backups
+│   │   │   │   │   │       │   ├── 00
+│   │   │   │   │   │       │   │   ├── MetaData.plist
+│   │   │   │   │   │       │   │   └── ProjectData
+│   │   │   │   │   │       │   └── 01
+│   │   │   │   │   │       │       ├── MetaData.plist
+│   │   │   │   │   │       │       └── ProjectData
+│   │   │   │   │   │       ├── ProjectData
+│   │   │   │   │   │       ├── Undo Data.nosync
+│   │   │   │   │   │       └── WindowImage.jpg
+│   │   │   │   │   ├── Media
+│   │   │   │   │   │   └── Audio Files
+│   │   │   │   │   └── Resources
+│   │   │   │   │       └── ProjectInformation.plist
+│   │   │   │   ├── _iron_man__stem_split.wav
+│   │   │   │   ├── iron_man_stem_split__drums_transcription.json
+│   │   │   │   ├── iron_man_stem_split__drums_transcription.mid
+│   │   │   │   └── iron_man_stem_split__drums_transcription.pdf
 │   │   │   ├── sat29november2025__orchestration_outputs__AMENDED_KICK_DRUM_FFREQ___EtoE__25
 │   │   │   │   ├── classify.py
 │   │   │   │   ├── constants.py
@@ -5747,6 +5800,53 @@
 │   │   │   ├── sat29november2025__orchestration_outputs__RESTORING_ONSET_DETECTOR_TO_MON17NOV25_VERS___EtoE__27
 │   │   │   │   ├── test_transcription.json
 │   │   │   │   └── test_transcription.pdf
+│   │   │   ├── sun22march2026__orchestration_outputs__TESTING_SCORE_BUILDER_EoE__iron_man__2
+│   │   │   │   ├── .DS_Store
+│   │   │   │   ├── _iron_man__stem_split.logicx
+│   │   │   │   │   ├── Alternatives
+│   │   │   │   │   │   └── 000
+│   │   │   │   │   │       ├── DisplayState.plist
+│   │   │   │   │   │       ├── DisplayStateArchive
+│   │   │   │   │   │       ├── MetaData.plist
+│   │   │   │   │   │       ├── Project File Backups
+│   │   │   │   │   │       │   ├── 00
+│   │   │   │   │   │       │   │   ├── MetaData.plist
+│   │   │   │   │   │       │   │   └── ProjectData
+│   │   │   │   │   │       │   └── 01
+│   │   │   │   │   │       │       ├── MetaData.plist
+│   │   │   │   │   │       │       └── ProjectData
+│   │   │   │   │   │       ├── ProjectData
+│   │   │   │   │   │       ├── Undo Data.nosync
+│   │   │   │   │   │       └── WindowImage.jpg
+│   │   │   │   │   ├── Media
+│   │   │   │   │   │   └── Audio Files
+│   │   │   │   │   └── Resources
+│   │   │   │   │       └── ProjectInformation.plist
+│   │   │   │   ├── iron_man_stem_split__drums_transcription.json
+│   │   │   │   ├── iron_man_stem_split__drums_transcription.mid
+│   │   │   │   └── iron_man_stem_split__drums_transcription.pdf
+│   │   │   ├── sun22march2026__orchestration_outputs__TESTING_SCORE_BUILDER_EoE__test__1
+│   │   │   │   ├── .DS_Store
+│   │   │   │   ├── _test.logicx
+│   │   │   │   │   ├── Alternatives
+│   │   │   │   │   │   └── 000
+│   │   │   │   │   │       ├── DisplayState.plist
+│   │   │   │   │   │       ├── DisplayStateArchive
+│   │   │   │   │   │       ├── MetaData.plist
+│   │   │   │   │   │       ├── Project File Backups
+│   │   │   │   │   │       │   └── 00
+│   │   │   │   │   │       │       ├── MetaData.plist
+│   │   │   │   │   │       │       └── ProjectData
+│   │   │   │   │   │       ├── ProjectData
+│   │   │   │   │   │       ├── Undo Data.nosync
+│   │   │   │   │   │       └── WindowImage.jpg
+│   │   │   │   │   ├── Media
+│   │   │   │   │   │   └── Audio Files
+│   │   │   │   │   └── Resources
+│   │   │   │   │       └── ProjectInformation.plist
+│   │   │   │   ├── test_transcription.json
+│   │   │   │   ├── test_transcription.mid
+│   │   │   │   └── test_transcription.pdf
 │   │   │   ├── sun23nov2025__orchestration_outputs__EtoE__12 
 │   │   │   │   ├── prediction_output.json
 │   │   │   │   ├── test___sun23nov2025.mid
@@ -5756,6 +5856,40 @@
 │   │   │   │   ├── test_klangio1__sun23nov2025.png
 │   │   │   │   ├── test_transcription.json
 │   │   │   │   └── test_transcription.pdf
+│   │   │   ├── sun29march2026__orchestration_outputs__AFTER_AMENDING_WINDOWS_SNARE_AND_RIM__single_beats__1
+│   │   │   │   ├── crash__201_bronze__14_crash_edge.wav
+│   │   │   │   ├── crash__201_bronze__16_crash_edge.wav
+│   │   │   │   ├── crash__201_bronze__16_crash_edge_transcription.json
+│   │   │   │   ├── crash__201_bronze__16_crash_edge_transcription.mid
+│   │   │   │   ├── crash__201_bronze__16_crash_edge_transcription.pdf
+│   │   │   │   ├── hatclosed__2002__113_medium_hi-hat_closed.wav
+│   │   │   │   ├── hatclosed__201_bronze__13_hi-hat_closed.wav
+│   │   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed.wav
+│   │   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.json
+│   │   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.mid
+│   │   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.pdf
+│   │   │   │   ├── hatopen__2002__113_medium_hi-hat_open.wav
+│   │   │   │   ├── hatopen__201_bronze__13_hi-hat_open.wav
+│   │   │   │   ├── hatopen__201_bronze__13_hi-hat_open_transcription.json
+│   │   │   │   ├── hatopen__201_bronze__13_hi-hat_open_transcription.mid
+│   │   │   │   ├── hatopen__201_bronze__13_hi-hat_open_transcription.pdf
+│   │   │   │   ├── high_tom_phat.wav
+│   │   │   │   ├── high_tom_phat_transcription.json
+│   │   │   │   ├── high_tom_phat_transcription.mid
+│   │   │   │   ├── high_tom_phat_transcription.pdf
+│   │   │   │   ├── kick_0006.wav
+│   │   │   │   ├── kick_0006_transcription.json
+│   │   │   │   ├── kick_0006_transcription.mid
+│   │   │   │   ├── kick_0006_transcription.pdf
+│   │   │   │   ├── ride__2002__18_wild_crush_ride_edge.wav
+│   │   │   │   ├── ride__2002__20_deep_full_ride_edge.wav
+│   │   │   │   ├── ride__2002__20_deep_full_ride_edge_transcription.json
+│   │   │   │   ├── ride__2002__20_deep_full_ride_edge_transcription.mid
+│   │   │   │   ├── ride__2002__20_deep_full_ride_edge_transcription.pdf
+│   │   │   │   ├── snare_0007.wav
+│   │   │   │   ├── snare_0007_transcription.json
+│   │   │   │   ├── snare_0007_transcription.mid
+│   │   │   │   └── snare_0007_transcription.pdf
 │   │   │   ├── sun30november2025__orchestration_outputs__AFTER_COMPLETE_STRIP-DOWN_CLASSIFICATION_RULES___EtoE__30
 │   │   │   │   ├── classify.py
 │   │   │   │   ├── constants.py
@@ -5798,12 +5932,86 @@
 │   │   │   │   ├── test_transcription.json
 │   │   │   │   ├── test_transcription.mid
 │   │   │   │   └── test_transcription.pdf
+│   │   │   ├── thurs20march2026__orchestration_outputs__BEFORE__SCORE_BUILDER_QUANTIZATION_TEMPO_CORRECTION__1
+│   │   │   │   ├── drumscript_full_review__BEFORE_SCORE_BUILDER_QUANTIZATION_TEMPO_CORRECTION__thurs19march2026.txt
+│   │   │   │   ├── main.py
+│   │   │   │   ├── score_builder.py
+│   │   │   │   ├── test_transcription.json
+│   │   │   │   ├── test_transcription.mid
+│   │   │   │   └── test_transcription.pdf
+│   │   │   ├── thurs20march2026__orchestration_outputs___AFTER__SCORE_BUILDER_QUANTIZATION_TEMPO_CORRECTION__2
+│   │   │   │   ├── drumscript_full_review__AFTER_SCORE_BUILDER_QUANTIZATION_TEMPO_CORRECTION__thurs19march2026.txt
+│   │   │   │   ├── main.py
+│   │   │   │   ├── score_builder.py
+│   │   │   │   ├── test_transcription.json
+│   │   │   │   ├── test_transcription.mid
+│   │   │   │   └── test_transcription.pdf
 │   │   │   ├── thurs20nov2025__orchestration_outputs__ALL_NOTES__AMENDING_NOTEHEAD_PRESENTATION__8
 │   │   │   │   ├── extended_drum_test.pdf
 │   │   │   │   └── pdf_exporter.py
 │   │   │   ├── thurs20nov2025__orchestration_outputs__ALL_NOTES__RESTORING_OVAL_NOTEHEADS__9
 │   │   │   │   ├── extended_drum_test.pdf
 │   │   │   │   └── pdf_exporter.py
+│   │   │   ├── thurs26march2026__orchestration_outputs___AFTER_AMENDING_KICK_LFER_MIN_CONSTANTS__V011_CLASSIFICATION_MODEL_TESTED_ON_IRON_MAN__my_love_for_the_stars__1
+│   │   │   │   ├── .DS_Store
+│   │   │   │   ├── The Great Old Ones - My Love For The Stars (Cthulhu Fhtagn) [ ezmp3.cc ].logicx
+│   │   │   │   │   ├── Alternatives
+│   │   │   │   │   │   └── 000
+│   │   │   │   │   │       ├── DisplayState.plist
+│   │   │   │   │   │       ├── DisplayStateArchive
+│   │   │   │   │   │       ├── MetaData.plist
+│   │   │   │   │   │       ├── Project File Backups
+│   │   │   │   │   │       │   ├── 00
+│   │   │   │   │   │       │   │   ├── MetaData.plist
+│   │   │   │   │   │       │   │   └── ProjectData
+│   │   │   │   │   │       │   ├── 01
+│   │   │   │   │   │       │   │   ├── MetaData.plist
+│   │   │   │   │   │       │   │   └── ProjectData
+│   │   │   │   │   │       │   ├── 02
+│   │   │   │   │   │       │   │   ├── MetaData.plist
+│   │   │   │   │   │       │   │   └── ProjectData
+│   │   │   │   │   │       │   ├── 03
+│   │   │   │   │   │       │   │   ├── MetaData.plist
+│   │   │   │   │   │       │   │   └── ProjectData
+│   │   │   │   │   │       │   ├── 04
+│   │   │   │   │   │       │   │   ├── MetaData.plist
+│   │   │   │   │   │       │   │   └── ProjectData
+│   │   │   │   │   │       │   ├── 05
+│   │   │   │   │   │       │   │   ├── MetaData.plist
+│   │   │   │   │   │       │   │   └── ProjectData
+│   │   │   │   │   │       │   ├── 06
+│   │   │   │   │   │       │   │   ├── MetaData.plist
+│   │   │   │   │   │       │   │   └── ProjectData
+│   │   │   │   │   │       │   ├── 07
+│   │   │   │   │   │       │   │   ├── MetaData.plist
+│   │   │   │   │   │       │   │   └── ProjectData
+│   │   │   │   │   │       │   ├── 08
+│   │   │   │   │   │       │   │   ├── MetaData.plist
+│   │   │   │   │   │       │   │   └── ProjectData
+│   │   │   │   │   │       │   └── 09
+│   │   │   │   │   │       │       ├── MetaData.plist
+│   │   │   │   │   │       │       └── ProjectData
+│   │   │   │   │   │       ├── ProjectData
+│   │   │   │   │   │       ├── Undo Data.nosync
+│   │   │   │   │   │       └── WindowImage.jpg
+│   │   │   │   │   ├── Media
+│   │   │   │   │   │   └── Audio Files
+│   │   │   │   │   │       ├── The Great Old Ones - My Love For The Stars (Cthulhu Fhtagn) [ ezmp3.cc ].mp3
+│   │   │   │   │   │       ├── The Great Old Ones - My Love For The Stars (Cthulhu Fhtagn) [ ezmp3.cc ]_Bass.aif
+│   │   │   │   │   │       ├── The Great Old Ones - My Love For The Stars (Cthulhu Fhtagn) [ ezmp3.cc ]_Drums.aif
+│   │   │   │   │   │       ├── The Great Old Ones - My Love For The Stars (Cthulhu Fhtagn) [ ezmp3.cc ]_Other.aif
+│   │   │   │   │   │       ├── The Great Old Ones - My Love For The Stars (Cthulhu Fhtagn) [ ezmp3.cc ]_Vocals.aif
+│   │   │   │   │   │       ├── The Truth - The Great Old Ones.mp3
+│   │   │   │   │   │       ├── The Truth - The Great Old Ones_Bass.aif
+│   │   │   │   │   │       ├── The Truth - The Great Old Ones_Drums.aif
+│   │   │   │   │   │       ├── The Truth - The Great Old Ones_Other.aif
+│   │   │   │   │   │       └── The Truth - The Great Old Ones_Vocals.aif
+│   │   │   │   │   └── Resources
+│   │   │   │   │       └── ProjectInformation.plist
+│   │   │   │   ├── The Great Old Ones - My Love For The Stars (Cthulhu Fhtagn) [ ezmp3.cc ]__drumscript_midi.wav
+│   │   │   │   ├── The Great Old Ones - My Love For The Stars (Cthulhu Fhtagn)_transcription.json
+│   │   │   │   ├── The Great Old Ones - My Love For The Stars (Cthulhu Fhtagn)_transcription.mid
+│   │   │   │   └── The Great Old Ones - My Love For The Stars (Cthulhu Fhtagn)_transcription.pdf
 │   │   │   ├── thurs27november2025__orchestration_outputs___EtoE__24
 │   │   │   │   ├── classify.py
 │   │   │   │   ├── constants.py
@@ -5867,6 +6075,91 @@
 │   │   │   ├── tues18nov2025__orchestration_outputs__MOCK_DATA__SNARE_HAT__KICK__CRASH__5
 │   │   │   │   ├── mock_drum_test.pdf
 │   │   │   │   └── test_pdf_generation.py
+│   │   │   ├── tues24march2026__BEFORE_ADDING_IN_MANUAL_OVERRIDE_FOR_TEMPO_ARG_MAIN__iron_man_actual__1
+│   │   │   │   ├── .DS_Store
+│   │   │   │   ├── 65bpm_iron_man_actual.logicx
+│   │   │   │   │   ├── Alternatives
+│   │   │   │   │   │   └── 000
+│   │   │   │   │   │       ├── DisplayState.plist
+│   │   │   │   │   │       ├── DisplayStateArchive
+│   │   │   │   │   │       ├── MetaData.plist
+│   │   │   │   │   │       ├── ProjectData
+│   │   │   │   │   │       ├── Undo Data.nosync
+│   │   │   │   │   │       └── WindowImage.jpg
+│   │   │   │   │   ├── Media
+│   │   │   │   │   │   └── Audio Files
+│   │   │   │   │   └── Resources
+│   │   │   │   │       └── ProjectInformation.plist
+│   │   │   │   ├── 65bpm_iron_man_actual.wav
+│   │   │   │   ├── 65bpm_iron_man_actual__drumscript_output__scripter.txt
+│   │   │   │   ├── 65bpm_iron_man_actual__logic_project__alias
+│   │   │   │   ├── 65bpm_iron_man_actual__scripter.txt
+│   │   │   │   ├── 65bpm_iron_man_actual_drumscript_output.logicx
+│   │   │   │   │   ├── Alternatives
+│   │   │   │   │   │   └── 000
+│   │   │   │   │   │       ├── DisplayState.plist
+│   │   │   │   │   │       ├── DisplayStateArchive
+│   │   │   │   │   │       ├── MetaData.plist
+│   │   │   │   │   │       ├── Project File Backups
+│   │   │   │   │   │       │   ├── 00
+│   │   │   │   │   │       │   │   ├── MetaData.plist
+│   │   │   │   │   │       │   │   └── ProjectData
+│   │   │   │   │   │       │   ├── 01
+│   │   │   │   │   │       │   │   ├── MetaData.plist
+│   │   │   │   │   │       │   │   └── ProjectData
+│   │   │   │   │   │       │   ├── 02
+│   │   │   │   │   │       │   │   ├── MetaData.plist
+│   │   │   │   │   │       │   │   └── ProjectData
+│   │   │   │   │   │       │   ├── 03
+│   │   │   │   │   │       │   │   ├── MetaData.plist
+│   │   │   │   │   │       │   │   └── ProjectData
+│   │   │   │   │   │       │   ├── 04
+│   │   │   │   │   │       │   │   ├── MetaData.plist
+│   │   │   │   │   │       │   │   └── ProjectData
+│   │   │   │   │   │       │   ├── 05
+│   │   │   │   │   │       │   │   ├── MetaData.plist
+│   │   │   │   │   │       │   │   └── ProjectData
+│   │   │   │   │   │       │   ├── 06
+│   │   │   │   │   │       │   │   ├── MetaData.plist
+│   │   │   │   │   │       │   │   └── ProjectData
+│   │   │   │   │   │       │   ├── 07
+│   │   │   │   │   │       │   │   ├── MetaData.plist
+│   │   │   │   │   │       │   │   └── ProjectData
+│   │   │   │   │   │       │   ├── 08
+│   │   │   │   │   │       │   │   ├── MetaData.plist
+│   │   │   │   │   │       │   │   └── ProjectData
+│   │   │   │   │   │       │   └── 09
+│   │   │   │   │   │       │       ├── MetaData.plist
+│   │   │   │   │   │       │       └── ProjectData
+│   │   │   │   │   │       ├── ProjectData
+│   │   │   │   │   │       ├── Undo Data.nosync
+│   │   │   │   │   │       └── WindowImage.jpg
+│   │   │   │   │   ├── Media
+│   │   │   │   │   │   └── Audio Files
+│   │   │   │   │   └── Resources
+│   │   │   │   │       └── ProjectInformation.plist
+│   │   │   │   ├── 65bpm_iron_man_actual_transcription.json
+│   │   │   │   ├── 65bpm_iron_man_actual_transcription.mid
+│   │   │   │   ├── 65bpm_iron_man_actual_transcription.pdf
+│   │   │   │   ├── 65bpm_iron_man_actual_transcription_drumscript_output.wav
+│   │   │   │   ├── 65bpm_iron_man_drumscript.logicx
+│   │   │   │   │   ├── Alternatives
+│   │   │   │   │   │   └── 000
+│   │   │   │   │   │       ├── DisplayState.plist
+│   │   │   │   │   │       ├── DisplayStateArchive
+│   │   │   │   │   │       ├── MetaData.plist
+│   │   │   │   │   │       ├── Project File Backups
+│   │   │   │   │   │       │   └── 00
+│   │   │   │   │   │       │       ├── MetaData.plist
+│   │   │   │   │   │       │       └── ProjectData
+│   │   │   │   │   │       ├── ProjectData
+│   │   │   │   │   │       ├── Undo Data.nosync
+│   │   │   │   │   │       └── WindowImage.jpg
+│   │   │   │   │   ├── Media
+│   │   │   │   │   │   └── Audio Files
+│   │   │   │   │   └── Resources
+│   │   │   │   │       └── ProjectInformation.plist
+│   │   │   │   └── drumscript___LAST__backup__BEFORE_ADDING_IN_MANUAL_OVERRIDE_FOR_TEMPO_ARG_MAIN__tues24march2026 alias
 │   │   │   ├── tues25november2025__orchestration_outputs__EtoE__GEMINI__HARD_COPY_PASTE_NO_CHECKS__21
 │   │   │   │   ├── classify.py
 │   │   │   │   ├── constants.py
@@ -5915,6 +6208,36 @@
 │   │   │   ├── weds19nov2025__orchestration_outputs__MOCK_DATA__INCL_DOUBLE_BASS_MID_HIGH_TOMS_RIDE_TEST_6
 │   │   │   │   ├── extended_drum_test.pdf
 │   │   │   │   └── test_pdf_generation.py
+│   │   │   ├── weds25march2026__orchestration_outputs___AFTER_AMENDING_KICK_LFER_MIN_CONSTANTS__V011_CLASSIFICATION_MODEL_TESTED_ON_IRON_MAN__iron_man__1
+│   │   │   │   ├── 65bpm_iron_man_actual_transcription.json
+│   │   │   │   ├── 65bpm_iron_man_actual_transcription.mid
+│   │   │   │   ├── 65bpm_iron_man_actual_transcription.pdf
+│   │   │   │   └── drumscript_full_review__AFTER_AMENDING_KICK_LFER_MIN_CONSTANTS__V011_CLASSIFICATION_MODEL_TESTED_ON_IRON_MAN.txt
+│   │   │   ├── weds25march2026__orchestration_outputs___AFTER_AMENDING_KICK_LFER_MIN_CONSTANTS__V011_CLASSIFICATION_MODEL_TESTED_ON_IRON_MAN__test_wav__1
+│   │   │   │   ├── .DS_Store
+│   │   │   │   ├── Project.logicx
+│   │   │   │   │   ├── Alternatives
+│   │   │   │   │   │   └── 000
+│   │   │   │   │   │       ├── DisplayState.plist
+│   │   │   │   │   │       ├── DisplayStateArchive
+│   │   │   │   │   │       ├── MetaData.plist
+│   │   │   │   │   │       ├── Project File Backups
+│   │   │   │   │   │       │   └── 00
+│   │   │   │   │   │       │       ├── MetaData.plist
+│   │   │   │   │   │       │       └── ProjectData
+│   │   │   │   │   │       ├── ProjectData
+│   │   │   │   │   │       ├── Undo Data.nosync
+│   │   │   │   │   │       └── WindowImage.jpg
+│   │   │   │   │   ├── Media
+│   │   │   │   │   │   └── Audio Files
+│   │   │   │   │   └── Resources
+│   │   │   │   │       └── ProjectInformation.plist
+│   │   │   │   ├── drumscript_full_review__AFTER_AMENDING_KICK_LFER_MIN_CONSTANTS__V011_CLASSIFICATION_MODEL_TESTED_ON_IRON_MAN.txt
+│   │   │   │   ├── scripter.log
+│   │   │   │   ├── scripter_actual.log
+│   │   │   │   ├── test_transcription.json
+│   │   │   │   ├── test_transcription.mid
+│   │   │   │   └── test_transcription.pdf
 │   │   │   ├── weds26november2025__orchestration_outputs__ADDED_MY_THRESHOLDS__EtoE__24
 │   │   │   │   ├── classify.py
 │   │   │   │   ├── constants.py
@@ -5937,285 +6260,294 @@
 │   │   │   │   └── test_transcription.pdf
 │   │   │   └── weds26november2025__orchestration_outputs__REMOVE_REFRACTORY_PERIOD_LOGIC_EtoE__22
 │   │   │       └── classify.py
-│   │   ├── sat21march2026__orchestration_outputs__incldemucs__AFTER__SCORE_BUILDER_QUANTIZATION_TEMPO_CORRECTION__iron_man__3
-│   │   │   ├── Iron Man (2012 Remaster)_transcription.json
-│   │   │   ├── Iron Man (2012 Remaster)_transcription.mid
-│   │   │   ├── Iron Man (2012 Remaster)_transcription.pdf
-│   │   │   ├── iron_man__scripter.log
-│   │   │   └── stems_test
-│   │   │       └── htdemucs
-│   │   │           └── Iron Man (2012 Remaster)
-│   │   │               ├── bass.flac
-│   │   │               ├── bass.mp3
-│   │   │               ├── drums.flac
-│   │   │               ├── drums.mp3
-│   │   │               ├── drums.wav
-│   │   │               ├── other.flac
-│   │   │               ├── other.mp3
-│   │   │               ├── vocals.flac
-│   │   │               └── vocals.mp3
-│   │   ├── sat21march2026__orchestration_outputs__incldemucs__AFTER__SCORE_BUILDER_QUANTIZATION_TEMPO_CORRECTION__iron_man__4
+│   │   ├── mon30march2026__orchestration_outputs__V012__AMEND_WAIT_TIMES__ONSET_DETECTOR__005_TO_003__single_beats__iron_man__1
+│   │   │   ├── 65bpm_iron_man_actual_transcription.json
+│   │   │   ├── 65bpm_iron_man_actual_transcription.mid
+│   │   │   ├── 65bpm_iron_man_actual_transcription.pdf
+│   │   │   └── drumscript_full_review.txt
+│   │   ├── mon30march2026__orchestration_outputs__V012__AMEND_WAIT_TIMES__ONSET_DETECTOR__005_TO_003__single_beats__iron_man__2
 │   │   │   ├── .DS_Store
-│   │   │   ├── 65bpm__iron_man3__drumsonly_transcription.json
-│   │   │   ├── 65bpm__iron_man3__drumsonly_transcription.mid
-│   │   │   ├── 65bpm__iron_man3__drumsonly_transcription.pdf
-│   │   │   ├── _iron_man__stem_split.logicx
-│   │   │   │   ├── Alternatives
-│   │   │   │   │   └── 000
-│   │   │   │   │       ├── DisplayState.plist
-│   │   │   │   │       ├── DisplayStateArchive
-│   │   │   │   │       ├── MetaData.plist
-│   │   │   │   │       ├── Project File Backups
-│   │   │   │   │       │   ├── 00
-│   │   │   │   │       │   │   ├── MetaData.plist
-│   │   │   │   │       │   │   └── ProjectData
-│   │   │   │   │       │   └── 01
-│   │   │   │   │       │       ├── MetaData.plist
-│   │   │   │   │       │       └── ProjectData
-│   │   │   │   │       ├── ProjectData
-│   │   │   │   │       ├── Undo Data.nosync
-│   │   │   │   │       └── WindowImage.jpg
-│   │   │   │   ├── Media
-│   │   │   │   │   └── Audio Files
-│   │   │   │   └── Resources
-│   │   │   │       └── ProjectInformation.plist
-│   │   │   ├── _iron_man__stem_split.wav
-│   │   │   ├── iron_man_stem_split__drums_transcription.json
-│   │   │   ├── iron_man_stem_split__drums_transcription.mid
-│   │   │   └── iron_man_stem_split__drums_transcription.pdf
-│   │   ├── sun22march2026__orchestration_outputs__TESTING_SCORE_BUILDER_EoE__iron_man__2
-│   │   │   ├── .DS_Store
-│   │   │   ├── _iron_man__stem_split.logicx
-│   │   │   │   ├── Alternatives
-│   │   │   │   │   └── 000
-│   │   │   │   │       ├── DisplayState.plist
-│   │   │   │   │       ├── DisplayStateArchive
-│   │   │   │   │       ├── MetaData.plist
-│   │   │   │   │       ├── Project File Backups
-│   │   │   │   │       │   ├── 00
-│   │   │   │   │       │   │   ├── MetaData.plist
-│   │   │   │   │       │   │   └── ProjectData
-│   │   │   │   │       │   └── 01
-│   │   │   │   │       │       ├── MetaData.plist
-│   │   │   │   │       │       └── ProjectData
-│   │   │   │   │       ├── ProjectData
-│   │   │   │   │       ├── Undo Data.nosync
-│   │   │   │   │       └── WindowImage.jpg
-│   │   │   │   ├── Media
-│   │   │   │   │   └── Audio Files
-│   │   │   │   └── Resources
-│   │   │   │       └── ProjectInformation.plist
-│   │   │   ├── iron_man_stem_split__drums_transcription.json
-│   │   │   ├── iron_man_stem_split__drums_transcription.mid
-│   │   │   └── iron_man_stem_split__drums_transcription.pdf
-│   │   ├── sun22march2026__orchestration_outputs__TESTING_SCORE_BUILDER_EoE__test__1
-│   │   │   ├── .DS_Store
-│   │   │   ├── _test.logicx
-│   │   │   │   ├── Alternatives
-│   │   │   │   │   └── 000
-│   │   │   │   │       ├── DisplayState.plist
-│   │   │   │   │       ├── DisplayStateArchive
-│   │   │   │   │       ├── MetaData.plist
-│   │   │   │   │       ├── Project File Backups
-│   │   │   │   │       │   └── 00
-│   │   │   │   │       │       ├── MetaData.plist
-│   │   │   │   │       │       └── ProjectData
-│   │   │   │   │       ├── ProjectData
-│   │   │   │   │       ├── Undo Data.nosync
-│   │   │   │   │       └── WindowImage.jpg
-│   │   │   │   ├── Media
-│   │   │   │   │   └── Audio Files
-│   │   │   │   └── Resources
-│   │   │   │       └── ProjectInformation.plist
-│   │   │   ├── test_transcription.json
-│   │   │   ├── test_transcription.mid
-│   │   │   └── test_transcription.pdf
-│   │   ├── thurs20march2026__orchestration_outputs__BEFORE__SCORE_BUILDER_QUANTIZATION_TEMPO_CORRECTION__1
-│   │   │   ├── drumscript_full_review__BEFORE_SCORE_BUILDER_QUANTIZATION_TEMPO_CORRECTION__thurs19march2026.txt
-│   │   │   ├── main.py
-│   │   │   ├── score_builder.py
-│   │   │   ├── test_transcription.json
-│   │   │   ├── test_transcription.mid
-│   │   │   └── test_transcription.pdf
-│   │   ├── thurs20march2026__orchestration_outputs___AFTER__SCORE_BUILDER_QUANTIZATION_TEMPO_CORRECTION__2
-│   │   │   ├── drumscript_full_review__AFTER_SCORE_BUILDER_QUANTIZATION_TEMPO_CORRECTION__thurs19march2026.txt
-│   │   │   ├── main.py
-│   │   │   ├── score_builder.py
-│   │   │   ├── test_transcription.json
-│   │   │   ├── test_transcription.mid
-│   │   │   └── test_transcription.pdf
-│   │   ├── thurs26march2026__orchestration_outputs___AFTER_AMENDING_KICK_LFER_MIN_CONSTANTS__V011_CLASSIFICATION_MODEL_TESTED_ON_IRON_MAN__my_love_for_the_stars__1
-│   │   │   ├── .DS_Store
-│   │   │   ├── The Great Old Ones - My Love For The Stars (Cthulhu Fhtagn) [ ezmp3.cc ].logicx
-│   │   │   │   ├── Alternatives
-│   │   │   │   │   └── 000
-│   │   │   │   │       ├── DisplayState.plist
-│   │   │   │   │       ├── DisplayStateArchive
-│   │   │   │   │       ├── MetaData.plist
-│   │   │   │   │       ├── Project File Backups
-│   │   │   │   │       │   ├── 00
-│   │   │   │   │       │   │   ├── MetaData.plist
-│   │   │   │   │       │   │   └── ProjectData
-│   │   │   │   │       │   ├── 01
-│   │   │   │   │       │   │   ├── MetaData.plist
-│   │   │   │   │       │   │   └── ProjectData
-│   │   │   │   │       │   ├── 02
-│   │   │   │   │       │   │   ├── MetaData.plist
-│   │   │   │   │       │   │   └── ProjectData
-│   │   │   │   │       │   ├── 03
-│   │   │   │   │       │   │   ├── MetaData.plist
-│   │   │   │   │       │   │   └── ProjectData
-│   │   │   │   │       │   ├── 04
-│   │   │   │   │       │   │   ├── MetaData.plist
-│   │   │   │   │       │   │   └── ProjectData
-│   │   │   │   │       │   ├── 05
-│   │   │   │   │       │   │   ├── MetaData.plist
-│   │   │   │   │       │   │   └── ProjectData
-│   │   │   │   │       │   ├── 06
-│   │   │   │   │       │   │   ├── MetaData.plist
-│   │   │   │   │       │   │   └── ProjectData
-│   │   │   │   │       │   ├── 07
-│   │   │   │   │       │   │   ├── MetaData.plist
-│   │   │   │   │       │   │   └── ProjectData
-│   │   │   │   │       │   ├── 08
-│   │   │   │   │       │   │   ├── MetaData.plist
-│   │   │   │   │       │   │   └── ProjectData
-│   │   │   │   │       │   └── 09
-│   │   │   │   │       │       ├── MetaData.plist
-│   │   │   │   │       │       └── ProjectData
-│   │   │   │   │       ├── ProjectData
-│   │   │   │   │       ├── Undo Data.nosync
-│   │   │   │   │       └── WindowImage.jpg
-│   │   │   │   ├── Media
-│   │   │   │   │   └── Audio Files
-│   │   │   │   │       ├── The Great Old Ones - My Love For The Stars (Cthulhu Fhtagn) [ ezmp3.cc ].mp3
-│   │   │   │   │       ├── The Great Old Ones - My Love For The Stars (Cthulhu Fhtagn) [ ezmp3.cc ]_Bass.aif
-│   │   │   │   │       ├── The Great Old Ones - My Love For The Stars (Cthulhu Fhtagn) [ ezmp3.cc ]_Drums.aif
-│   │   │   │   │       ├── The Great Old Ones - My Love For The Stars (Cthulhu Fhtagn) [ ezmp3.cc ]_Other.aif
-│   │   │   │   │       ├── The Great Old Ones - My Love For The Stars (Cthulhu Fhtagn) [ ezmp3.cc ]_Vocals.aif
-│   │   │   │   │       ├── The Truth - The Great Old Ones.mp3
-│   │   │   │   │       ├── The Truth - The Great Old Ones_Bass.aif
-│   │   │   │   │       ├── The Truth - The Great Old Ones_Drums.aif
-│   │   │   │   │       ├── The Truth - The Great Old Ones_Other.aif
-│   │   │   │   │       └── The Truth - The Great Old Ones_Vocals.aif
-│   │   │   │   └── Resources
-│   │   │   │       └── ProjectInformation.plist
-│   │   │   ├── The Great Old Ones - My Love For The Stars (Cthulhu Fhtagn) [ ezmp3.cc ]__drumscript_midi.wav
+│   │   │   ├── 65bpm_iron_man_actual_transcription.json
+│   │   │   ├── 65bpm_iron_man_actual_transcription.mid
+│   │   │   ├── 65bpm_iron_man_actual_transcription.pdf
+│   │   │   ├── 65bpm_iron_man_actual_transcription__AFTER.json
+│   │   │   └── drumscript_full_review.txt
+│   │   ├── mon30march2026__orchestration_outputs__V012__AMEND_WAIT_TIMES__ONSET_DETECTOR__005_TO_003__single_beats__my_love_for_the_stars__1
 │   │   │   ├── The Great Old Ones - My Love For The Stars (Cthulhu Fhtagn)_transcription.json
 │   │   │   ├── The Great Old Ones - My Love For The Stars (Cthulhu Fhtagn)_transcription.mid
-│   │   │   └── The Great Old Ones - My Love For The Stars (Cthulhu Fhtagn)_transcription.pdf
-│   │   ├── tues24march2026__BEFORE_ADDING_IN_MANUAL_OVERRIDE_FOR_TEMPO_ARG_MAIN__iron_man_actual__1
+│   │   │   ├── The Great Old Ones - My Love For The Stars (Cthulhu Fhtagn)_transcription.pdf
+│   │   │   └── drumscript_full_review.txt
+│   │   ├── mon30march2026__orchestration_outputs__V012__AMEND_WAIT_TIMES__ONSET_DETECTOR__005_TO_003__single_beats__my_love_for_the_stars__2
 │   │   │   ├── .DS_Store
-│   │   │   ├── 65bpm_iron_man_actual.logicx
-│   │   │   │   ├── Alternatives
-│   │   │   │   │   └── 000
-│   │   │   │   │       ├── DisplayState.plist
-│   │   │   │   │       ├── DisplayStateArchive
-│   │   │   │   │       ├── MetaData.plist
-│   │   │   │   │       ├── ProjectData
-│   │   │   │   │       ├── Undo Data.nosync
-│   │   │   │   │       └── WindowImage.jpg
-│   │   │   │   ├── Media
-│   │   │   │   │   └── Audio Files
-│   │   │   │   └── Resources
-│   │   │   │       └── ProjectInformation.plist
-│   │   │   ├── 65bpm_iron_man_actual.wav
-│   │   │   ├── 65bpm_iron_man_actual__drumscript_output__scripter.txt
-│   │   │   ├── 65bpm_iron_man_actual__logic_project__alias
-│   │   │   ├── 65bpm_iron_man_actual__scripter.txt
-│   │   │   ├── 65bpm_iron_man_actual_drumscript_output.logicx
-│   │   │   │   ├── Alternatives
-│   │   │   │   │   └── 000
-│   │   │   │   │       ├── DisplayState.plist
-│   │   │   │   │       ├── DisplayStateArchive
-│   │   │   │   │       ├── MetaData.plist
-│   │   │   │   │       ├── Project File Backups
-│   │   │   │   │       │   ├── 00
-│   │   │   │   │       │   │   ├── MetaData.plist
-│   │   │   │   │       │   │   └── ProjectData
-│   │   │   │   │       │   ├── 01
-│   │   │   │   │       │   │   ├── MetaData.plist
-│   │   │   │   │       │   │   └── ProjectData
-│   │   │   │   │       │   ├── 02
-│   │   │   │   │       │   │   ├── MetaData.plist
-│   │   │   │   │       │   │   └── ProjectData
-│   │   │   │   │       │   ├── 03
-│   │   │   │   │       │   │   ├── MetaData.plist
-│   │   │   │   │       │   │   └── ProjectData
-│   │   │   │   │       │   ├── 04
-│   │   │   │   │       │   │   ├── MetaData.plist
-│   │   │   │   │       │   │   └── ProjectData
-│   │   │   │   │       │   ├── 05
-│   │   │   │   │       │   │   ├── MetaData.plist
-│   │   │   │   │       │   │   └── ProjectData
-│   │   │   │   │       │   ├── 06
-│   │   │   │   │       │   │   ├── MetaData.plist
-│   │   │   │   │       │   │   └── ProjectData
-│   │   │   │   │       │   ├── 07
-│   │   │   │   │       │   │   ├── MetaData.plist
-│   │   │   │   │       │   │   └── ProjectData
-│   │   │   │   │       │   ├── 08
-│   │   │   │   │       │   │   ├── MetaData.plist
-│   │   │   │   │       │   │   └── ProjectData
-│   │   │   │   │       │   └── 09
-│   │   │   │   │       │       ├── MetaData.plist
-│   │   │   │   │       │       └── ProjectData
-│   │   │   │   │       ├── ProjectData
-│   │   │   │   │       ├── Undo Data.nosync
-│   │   │   │   │       └── WindowImage.jpg
-│   │   │   │   ├── Media
-│   │   │   │   │   └── Audio Files
-│   │   │   │   └── Resources
-│   │   │   │       └── ProjectInformation.plist
+│   │   │   ├── drums_transcription.json
+│   │   │   ├── drums_transcription.mid
+│   │   │   ├── drums_transcription.pdf
+│   │   │   ├── drumscript_full_review.txt
+│   │   │   └── my_love_for_the_stars__AFTER.json
+│   │   ├── mon30march2026__orchestration_outputs__V012__AMEND_WAIT_TIMES__ONSET_DETECTOR__005_TO_003__single_beats__single_beats__1-1
+│   │   │   ├── .DS_Store
+│   │   │   ├── crash__201_bronze__16_crash_edge_transcription.json
+│   │   │   ├── crash__201_bronze__16_crash_edge_transcription.mid
+│   │   │   ├── crash__201_bronze__16_crash_edge_transcription.pdf
+│   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.json
+│   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.mid
+│   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.pdf
+│   │   │   ├── hatopen__201_bronze__13_hi-hat_open_transcription.json
+│   │   │   ├── hatopen__201_bronze__13_hi-hat_open_transcription.mid
+│   │   │   ├── hatopen__201_bronze__13_hi-hat_open_transcription.pdf
+│   │   │   ├── high_tom_phat_transcription.json
+│   │   │   ├── high_tom_phat_transcription.mid
+│   │   │   ├── high_tom_phat_transcription.pdf
+│   │   │   ├── kick_0006_transcription.json
+│   │   │   ├── kick_0006_transcription.mid
+│   │   │   ├── kick_0006_transcription.pdf
+│   │   │   ├── ride__2002__20_deep_full_ride_edge_transcription.json
+│   │   │   ├── ride__2002__20_deep_full_ride_edge_transcription.mid
+│   │   │   ├── ride__2002__20_deep_full_ride_edge_transcription.pdf
+│   │   │   ├── snare_0007_transcription.json
+│   │   │   ├── snare_0007_transcription.mid
+│   │   │   └── snare_0007_transcription.pdf
+│   │   ├── mon30march2026__orchestration_outputs__V012__AMEND_WAIT_TIMES__ONSET_DETECTOR__005_TO_003__single_beats__single_beats__1-2
+│   │   │   ├── crash__201_bronze__16_crash_edge_transcription.json
+│   │   │   ├── crash__201_bronze__16_crash_edge_transcription.mid
+│   │   │   ├── crash__201_bronze__16_crash_edge_transcription.pdf
+│   │   │   ├── drumscript_full_review.txt
+│   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.json
+│   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.mid
+│   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.pdf
+│   │   │   ├── hatopen__201_bronze__13_hi-hat_open_transcription.json
+│   │   │   ├── hatopen__201_bronze__13_hi-hat_open_transcription.mid
+│   │   │   ├── hatopen__201_bronze__13_hi-hat_open_transcription.pdf
+│   │   │   ├── high_tom_phat_transcription.json
+│   │   │   ├── high_tom_phat_transcription.mid
+│   │   │   ├── high_tom_phat_transcription.pdf
+│   │   │   ├── kick_0006_transcription.json
+│   │   │   ├── kick_0006_transcription.mid
+│   │   │   ├── kick_0006_transcription.pdf
+│   │   │   ├── ride__2002__20_deep_full_ride_edge_transcription.json
+│   │   │   ├── ride__2002__20_deep_full_ride_edge_transcription.mid
+│   │   │   ├── ride__2002__20_deep_full_ride_edge_transcription.pdf
+│   │   │   ├── snare_0007_transcription.json
+│   │   │   ├── snare_0007_transcription.mid
+│   │   │   └── snare_0007_transcription.pdf
+│   │   ├── mon30march2026__orchestration_outputs__V012__AMEND_WAIT_TIMES__ONSET_DETECTOR__005_TO_003__single_beats__test_wav__1
+│   │   │   ├── drumscript_full_review.txt
+│   │   │   ├── test_transcription.json
+│   │   │   ├── test_transcription.mid
+│   │   │   └── test_transcription.pdf
+│   │   ├── mon30march2026__orchestration_outputs__V012__AMEND_WAIT_TIMES__ONSET_DETECTOR__005_TO_003__single_beats__test_wav__2
+│   │   │   ├── .DS_Store
+│   │   │   ├── drumscript_full_review.txt
+│   │   │   ├── test_transcription.json
+│   │   │   ├── test_transcription.mid
+│   │   │   ├── test_transcription.pdf
+│   │   │   └── test_transcription__AFTER.json
+│   │   ├── sun29march2026__orchestration_outputs__AFTER_AMENDING_WINDOWS_SNARE_AND_RIM__iron_man__1
 │   │   │   ├── 65bpm_iron_man_actual_transcription.json
 │   │   │   ├── 65bpm_iron_man_actual_transcription.mid
 │   │   │   ├── 65bpm_iron_man_actual_transcription.pdf
-│   │   │   ├── 65bpm_iron_man_actual_transcription_drumscript_output.wav
-│   │   │   ├── 65bpm_iron_man_drumscript.logicx
-│   │   │   │   ├── Alternatives
-│   │   │   │   │   └── 000
-│   │   │   │   │       ├── DisplayState.plist
-│   │   │   │   │       ├── DisplayStateArchive
-│   │   │   │   │       ├── MetaData.plist
-│   │   │   │   │       ├── Project File Backups
-│   │   │   │   │       │   └── 00
-│   │   │   │   │       │       ├── MetaData.plist
-│   │   │   │   │       │       └── ProjectData
-│   │   │   │   │       ├── ProjectData
-│   │   │   │   │       ├── Undo Data.nosync
-│   │   │   │   │       └── WindowImage.jpg
-│   │   │   │   ├── Media
-│   │   │   │   │   └── Audio Files
-│   │   │   │   └── Resources
-│   │   │   │       └── ProjectInformation.plist
-│   │   │   └── drumscript___LAST__backup__BEFORE_ADDING_IN_MANUAL_OVERRIDE_FOR_TEMPO_ARG_MAIN__tues24march2026 alias
-│   │   ├── weds25march2026__orchestration_outputs___AFTER_AMENDING_KICK_LFER_MIN_CONSTANTS__V011_CLASSIFICATION_MODEL_TESTED_ON_IRON_MAN__iron_man__1
+│   │   │   └── 65bpm_iron_man_actual_transcription__BEFORE.json
+│   │   ├── sun29march2026__orchestration_outputs__AFTER_AMENDING_WINDOWS_SNARE_AND_RIM__my_love_for_the_stars__1
+│   │   │   ├── .DS_Store
+│   │   │   ├── drums_transcription copy.mid
+│   │   │   ├── drums_transcription copy.pdf
+│   │   │   ├── drums_transcription.json
+│   │   │   ├── drums_transcription.mid
+│   │   │   ├── drums_transcription.pdf
+│   │   │   ├── drumscript_full_review.txt
+│   │   │   ├── my_love_for_the_stars_transcription__BEFORE.json
+│   │   │   └── outputs.logicx
+│   │   │       ├── Alternatives
+│   │   │       │   └── 000
+│   │   │       │       ├── DisplayState.plist
+│   │   │       │       ├── DisplayStateArchive
+│   │   │       │       ├── MetaData.plist
+│   │   │       │       ├── Project File Backups
+│   │   │       │       │   └── 00
+│   │   │       │       │       ├── MetaData.plist
+│   │   │       │       │       └── ProjectData
+│   │   │       │       ├── ProjectData
+│   │   │       │       ├── Undo Data.nosync
+│   │   │       │       └── WindowImage.jpg
+│   │   │       ├── Media
+│   │   │       │   └── Audio Files
+│   │   │       └── Resources
+│   │   │           └── ProjectInformation.plist
+│   │   ├── sun29march2026__orchestration_outputs__AFTER_AMENDING_WINDOWS_SNARE_AND_RIM__test_wav__1
+│   │   │   ├── classify.py
+│   │   │   ├── drumscript_full_review.txt
+│   │   │   ├── drumscript_full_review__BEFORE.txt
+│   │   │   ├── main.py
+│   │   │   ├── test_transcription.json
+│   │   │   ├── test_transcription.mid
+│   │   │   ├── test_transcription.pdf
+│   │   │   └── test_transcription__BEFORE.json
+│   │   ├── thurs02april2026__orchestration__ADDING_ONSET_DENSITY_CHECK_FOR_SINGLE_BEAT_ISSUE__iron_man__2
 │   │   │   ├── 65bpm_iron_man_actual_transcription.json
 │   │   │   ├── 65bpm_iron_man_actual_transcription.mid
 │   │   │   ├── 65bpm_iron_man_actual_transcription.pdf
-│   │   │   └── drumscript_full_review__AFTER_AMENDING_KICK_LFER_MIN_CONSTANTS__V011_CLASSIFICATION_MODEL_TESTED_ON_IRON_MAN.txt
-│   │   └── weds25march2026__orchestration_outputs___AFTER_AMENDING_KICK_LFER_MIN_CONSTANTS__V011_CLASSIFICATION_MODEL_TESTED_ON_IRON_MAN__test_wav__1
-│   │       ├── .DS_Store
-│   │       ├── Project.logicx
-│   │       │   ├── Alternatives
-│   │       │   │   └── 000
-│   │       │   │       ├── DisplayState.plist
-│   │       │   │       ├── DisplayStateArchive
-│   │       │   │       ├── MetaData.plist
-│   │       │   │       ├── Project File Backups
-│   │       │   │       │   └── 00
-│   │       │   │       │       ├── MetaData.plist
-│   │       │   │       │       └── ProjectData
-│   │       │   │       ├── ProjectData
-│   │       │   │       ├── Undo Data.nosync
-│   │       │   │       └── WindowImage.jpg
-│   │       │   ├── Media
-│   │       │   │   └── Audio Files
-│   │       │   └── Resources
-│   │       │       └── ProjectInformation.plist
-│   │       ├── drumscript_full_review__AFTER_AMENDING_KICK_LFER_MIN_CONSTANTS__V011_CLASSIFICATION_MODEL_TESTED_ON_IRON_MAN.txt
-│   │       ├── scripter.log
-│   │       ├── scripter_actual.log
+│   │   │   └── drumscript_full_review.txt
+│   │   ├── thurs02april2026__orchestration__ADDING_ONSET_DENSITY_CHECK_FOR_SINGLE_BEAT_ISSUE__my_love_for_the_stars__2
+│   │   │   ├── drums_transcription.json
+│   │   │   ├── drums_transcription.mid
+│   │   │   ├── drums_transcription.pdf
+│   │   │   └── drumscript_full_review.txt
+│   │   ├── thurs02april2026__orchestration__ADDING_ONSET_DENSITY_CHECK_FOR_SINGLE_BEAT_ISSUE__single_beats__2
+│   │   │   ├── .DS_Store
+│   │   │   ├── crash__201_bronze__16_crash_edge_transcription.json
+│   │   │   ├── crash__201_bronze__16_crash_edge_transcription.mid
+│   │   │   ├── crash__201_bronze__16_crash_edge_transcription.pdf
+│   │   │   ├── drumscript_full_review.txt
+│   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.json
+│   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.mid
+│   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.pdf
+│   │   │   ├── hatopen__201_bronze__13_hi-hat_open_transcription.json
+│   │   │   ├── hatopen__201_bronze__13_hi-hat_open_transcription.mid
+│   │   │   ├── hatopen__201_bronze__13_hi-hat_open_transcription.pdf
+│   │   │   ├── high_tom_phat_transcription.json
+│   │   │   ├── high_tom_phat_transcription.mid
+│   │   │   ├── high_tom_phat_transcription.pdf
+│   │   │   ├── json
+│   │   │   │   ├── crash__201_bronze__16_crash_edge_transcription.json
+│   │   │   │   ├── drumscript_full_review.txt
+│   │   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.json
+│   │   │   │   ├── hatopen__201_bronze__13_hi-hat_open_transcription.json
+│   │   │   │   ├── high_tom_phat_transcription.json
+│   │   │   │   ├── kick_0006_transcription.json
+│   │   │   │   ├── ride__2002__20_deep_full_ride_edge_transcription.json
+│   │   │   │   └── snare_0007_transcription.json
+│   │   │   ├── kick_0006_transcription.json
+│   │   │   ├── kick_0006_transcription.mid
+│   │   │   ├── kick_0006_transcription.pdf
+│   │   │   ├── ride__2002__20_deep_full_ride_edge_transcription.json
+│   │   │   ├── ride__2002__20_deep_full_ride_edge_transcription.mid
+│   │   │   ├── ride__2002__20_deep_full_ride_edge_transcription.pdf
+│   │   │   ├── snare_0007_transcription.json
+│   │   │   ├── snare_0007_transcription.mid
+│   │   │   └── snare_0007_transcription.pdf
+│   │   ├── thurs02april2026__orchestration__ADDING_ONSET_DENSITY_CHECK_FOR_SINGLE_BEAT_ISSUE__test_wav__2
+│   │   │   ├── drumscript_full_review.txt
+│   │   │   ├── test_transcription.json
+│   │   │   ├── test_transcription.mid
+│   │   │   └── test_transcription.pdf
+│   │   ├── tues31march2026__orchestration__AFTER_AMENDING_CLASSIFY_EVENTS_FUNCTION_IN_CLASSIFY__ANOTHER_ATTEMPT_AT_FIXING_SINGLE_BEATS_WITH_BACKWARD_COMPAT__iron_man__2
+│   │   │   ├── .DS_Store
+│   │   │   ├── 65bpm_iron_man_actual_transcription.json
+│   │   │   ├── 65bpm_iron_man_actual_transcription.mid
+│   │   │   ├── 65bpm_iron_man_actual_transcription.pdf
+│   │   │   ├── drumscript_full_review.txt
+│   │   │   └── drumscript_full_review___CURRENT.txt
+│   │   ├── tues31march2026__orchestration__AFTER_AMENDING_CLASSIFY_EVENTS_FUNCTION_IN_CLASSIFY__ANOTHER_ATTEMPT_AT_FIXING_SINGLE_BEATS_WITH_BACKWARD_COMPAT__my_love_for_the_stars__2__AFTER
+│   │   │   ├── .DS_Store
+│   │   │   ├── drums_transcription.json
+│   │   │   ├── drums_transcription.mid
+│   │   │   ├── drums_transcription.pdf
+│   │   │   └── drumscript_full_review.txt
+│   │   ├── tues31march2026__orchestration__AFTER_AMENDING_CLASSIFY_EVENTS_FUNCTION_IN_CLASSIFY__ANOTHER_ATTEMPT_AT_FIXING_SINGLE_BEATS_WITH_BACKWARD_COMPAT__single_beats__2
+│   │   │   ├── crash__201_bronze__16_crash_edge_transcription.json
+│   │   │   ├── crash__201_bronze__16_crash_edge_transcription.mid
+│   │   │   ├── crash__201_bronze__16_crash_edge_transcription.pdf
+│   │   │   ├── drumscript_full_review.txt
+│   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.json
+│   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.mid
+│   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.pdf
+│   │   │   ├── hatopen__201_bronze__13_hi-hat_open_transcription.json
+│   │   │   ├── hatopen__201_bronze__13_hi-hat_open_transcription.mid
+│   │   │   ├── hatopen__201_bronze__13_hi-hat_open_transcription.pdf
+│   │   │   ├── high_tom_phat_transcription.json
+│   │   │   ├── high_tom_phat_transcription.mid
+│   │   │   ├── high_tom_phat_transcription.pdf
+│   │   │   ├── kick_0006_transcription.json
+│   │   │   ├── kick_0006_transcription.mid
+│   │   │   ├── kick_0006_transcription.pdf
+│   │   │   ├── ride__2002__20_deep_full_ride_edge_transcription.json
+│   │   │   ├── ride__2002__20_deep_full_ride_edge_transcription.mid
+│   │   │   ├── ride__2002__20_deep_full_ride_edge_transcription.pdf
+│   │   │   ├── snare_0007_transcription.json
+│   │   │   ├── snare_0007_transcription.mid
+│   │   │   └── snare_0007_transcription.pdf
+│   │   ├── tues31march2026__orchestration__AFTER_AMENDING_CLASSIFY_EVENTS_FUNCTION_IN_CLASSIFY__ANOTHER_ATTEMPT_AT_FIXING_SINGLE_BEATS_WITH_BACKWARD_COMPAT__test_wav__2
+│   │   │   ├── drumscript_full_review.txt
+│   │   │   ├── test_transcription.json
+│   │   │   ├── test_transcription.mid
+│   │   │   └── test_transcription.pdf
+│   │   ├── tues31march2026__orchestration__AFTER_REMOVING__AUDIO_PROCESSOR__CLASSIFIER_AND_NOTATION_GENERATOR__PDF_EXPORTER__MIDI_EXPORTER_SCRIPTS_TO_OUTPUTS_CLASSIFIER_FOLDER__iron_man__1
+│   │   │   ├── .DS_Store
+│   │   │   ├── 65bpm_iron_man_actual_transcription.json
+│   │   │   ├── 65bpm_iron_man_actual_transcription.mid
+│   │   │   ├── 65bpm_iron_man_actual_transcription.pdf
+│   │   │   └── drumscript_full_review.txt
+│   │   ├── tues31march2026__orchestration__AFTER_REMOVING__AUDIO_PROCESSOR__CLASSIFIER_AND_NOTATION_GENERATOR__PDF_EXPORTER__MIDI_EXPORTER_SCRIPTS_TO_OUTPUTS_CLASSIFIER_FOLDER__my_love_for_the_stars__1__BEFORE
+│   │   │   ├── .DS_Store
+│   │   │   ├── drums_transcription.json
+│   │   │   ├── drums_transcription.mid
+│   │   │   ├── drums_transcription.pdf
+│   │   │   ├── drumscript_full_review.txt
+│   │   │   └── drumscript_full_review__BEFORE.txt
+│   │   ├── tues31march2026__orchestration__AFTER_REMOVING__AUDIO_PROCESSOR__CLASSIFIER_AND_NOTATION_GENERATOR__PDF_EXPORTER__MIDI_EXPORTER_SCRIPTS_TO_OUTPUTS_CLASSIFIER_FOLDER__single_beats__1
+│   │   │   ├── .DS_Store
+│   │   │   ├── crash__201_bronze__16_crash_edge_transcription.json
+│   │   │   ├── crash__201_bronze__16_crash_edge_transcription.mid
+│   │   │   ├── crash__201_bronze__16_crash_edge_transcription.pdf
+│   │   │   ├── drumscript_full_review.txt
+│   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.json
+│   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.mid
+│   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.pdf
+│   │   │   ├── hatopen__201_bronze__13_hi-hat_open_transcription.json
+│   │   │   ├── hatopen__201_bronze__13_hi-hat_open_transcription.mid
+│   │   │   ├── hatopen__201_bronze__13_hi-hat_open_transcription.pdf
+│   │   │   ├── high_tom_phat_transcription.json
+│   │   │   ├── high_tom_phat_transcription.mid
+│   │   │   ├── high_tom_phat_transcription.pdf
+│   │   │   ├── kick_0006_transcription.json
+│   │   │   ├── kick_0006_transcription.mid
+│   │   │   ├── kick_0006_transcription.pdf
+│   │   │   ├── ride__2002__20_deep_full_ride_edge_transcription.json
+│   │   │   ├── ride__2002__20_deep_full_ride_edge_transcription.mid
+│   │   │   ├── ride__2002__20_deep_full_ride_edge_transcription.pdf
+│   │   │   ├── snare_0007_transcription.json
+│   │   │   ├── snare_0007_transcription.mid
+│   │   │   └── snare_0007_transcription.pdf
+│   │   ├── tues31march2026__orchestration__AFTER_REMOVING__AUDIO_PROCESSOR__CLASSIFIER_AND_NOTATION_GENERATOR__PDF_EXPORTER__MIDI_EXPORTER_SCRIPTS_TO_OUTPUTS_CLASSIFIER_FOLDER__test_wav__1
+│   │   │   ├── drumscript_full_review.txt
+│   │   │   ├── test_transcription.json
+│   │   │   ├── test_transcription.mid
+│   │   │   └── test_transcription.pdf
+│   │   ├── weds01april2026__orchestration__INTRODUCTING_BACKWARD_COMPATIBLE_AMPLITUDE_GATE__iron_man__1
+│   │   │   ├── 65bpm_iron_man_actual_transcription.json
+│   │   │   ├── 65bpm_iron_man_actual_transcription.mid
+│   │   │   ├── 65bpm_iron_man_actual_transcription.pdf
+│   │   │   └── drumscript_full_review.txt
+│   │   ├── weds01april2026__orchestration__INTRODUCTING_BACKWARD_COMPATIBLE_AMPLITUDE_GATE__my_love_for_the_stars__1
+│   │   │   ├── drums_transcription.json
+│   │   │   ├── drums_transcription.mid
+│   │   │   ├── drums_transcription.pdf
+│   │   │   └── drumscript_full_review.txt
+│   │   ├── weds01april2026__orchestration__INTRODUCTING_BACKWARD_COMPATIBLE_AMPLITUDE_GATE__single_beats__1
+│   │   │   ├── crash__201_bronze__16_crash_edge_transcription.json
+│   │   │   ├── crash__201_bronze__16_crash_edge_transcription.mid
+│   │   │   ├── crash__201_bronze__16_crash_edge_transcription.pdf
+│   │   │   ├── drumscript_full_review.txt
+│   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.json
+│   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.mid
+│   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.pdf
+│   │   │   ├── hatopen__201_bronze__13_hi-hat_open_transcription.json
+│   │   │   ├── hatopen__201_bronze__13_hi-hat_open_transcription.mid
+│   │   │   ├── hatopen__201_bronze__13_hi-hat_open_transcription.pdf
+│   │   │   ├── high_tom_phat_transcription.json
+│   │   │   ├── high_tom_phat_transcription.mid
+│   │   │   ├── high_tom_phat_transcription.pdf
+│   │   │   ├── kick_0006_transcription.json
+│   │   │   ├── kick_0006_transcription.mid
+│   │   │   ├── kick_0006_transcription.pdf
+│   │   │   ├── ride__2002__20_deep_full_ride_edge_transcription.json
+│   │   │   ├── ride__2002__20_deep_full_ride_edge_transcription.mid
+│   │   │   ├── ride__2002__20_deep_full_ride_edge_transcription.pdf
+│   │   │   ├── snare_0007_transcription.json
+│   │   │   ├── snare_0007_transcription.mid
+│   │   │   └── snare_0007_transcription.pdf
+│   │   └── weds01april2026__orchestration__INTRODUCTING_BACKWARD_COMPATIBLE_AMPLITUDE_GATE__test_wav__1
+│   │       ├── drumscript_full_review.txt
 │   │       ├── test_transcription.json
 │   │       ├── test_transcription.mid
 │   │       └── test_transcription.pdf
@@ -6239,6 +6571,7 @@
 │   │       │   ├── bass.mp3
 │   │       │   ├── drums.flac
 │   │       │   ├── drums.mp3
+│   │       │   ├── drums.wav
 │   │       │   ├── other.flac
 │   │       │   ├── other.mp3
 │   │       │   ├── vocals.flac
@@ -6267,6 +6600,31 @@
 │   └── pyodideWorker.js
 ├── pyproject.toml
 ├── repository_structure.md
+├── terraform
+│   ├── .DS_Store
+│   ├── .terraform
+│   │   ├── .DS_Store
+│   │   └── providers
+│   │       ├── .DS_Store
+│   │       └── registry.terraform.io
+│   │           ├── .DS_Store
+│   │           └── hashicorp
+│   │               ├── .DS_Store
+│   │               └── aws
+│   │                   ├── .DS_Store
+│   │                   └── 5.100.0
+│   │                       └── darwin_arm64
+│   │                           ├── LICENSE.txt
+│   │                           └── terraform-provider-aws_v5.100.0_x5
+│   ├── .terraform.lock.hcl
+│   ├── iam.tf
+│   ├── lambda.tf
+│   ├── logs
+│   │   ├── aws.log
+│   │   └── terraform.log
+│   ├── main.tf
+│   ├── terraform.tfstate
+│   └── terraform.tfstate.backup
 ├── test_audio
 │   ├── .DS_Store
 │   ├── 5. Cymbals
@@ -6962,8 +7320,8 @@
 │   ├── Iron Man (2012 Remaster).mp3
 │   ├── Iron Man (2012 Remaster).wav
 │   ├── Max Richter - November (Official Audio).mp3
-│   ├── The Great Old Ones - My Love For The Stars (Cthulhu Fhtagn).mp3
-│   ├── The Great Old Ones - My Love For The Stars (Cthulhu Fhtagn).wav
+│   ├── The Great Old Ones - My Love For The Stars (Cthulhu Fhtagn) [FULL AUDIO] .wav
+│   ├── The Great Old Ones - My Love For The Stars (Cthulhu Fhtagn) [FULL AUDIO].mp3
 │   ├── You're Full Of Stars (From Invasion).mp3
 │   ├── archive__test_audio
 │   │   ├── .DS_Store
@@ -10258,8 +10616,9 @@
 │       ├── V Koan Tom 2 Mid.wav
 │       └── W Koan Tom 1 Low.wav
 ├── tree.txt
+├── ui.py
 ├── uv.lock
 └── visuals
     └── tempogram.png
 
-678 directories, 9585 files
+728 directories, 9894 files

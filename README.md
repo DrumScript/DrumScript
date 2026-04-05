@@ -1,7 +1,7 @@
 ## **`DrumScript`**
 
 <!--date_created: sun-15-june-2025-->
-<!--date_updated: thurs-12-march-2026-->
+<!--date_updated: sun-05-apr-2026-->
 
 DrumScript is an open-source `Python` library and suite of tools intended to make music more accessible for everyone. The Python package alpha is released alongside a free-to-use engine for members of the musical and sound analysis/engineering community to use in a zero-code way.
 
@@ -36,24 +36,45 @@ DrumScript is an open-source `Python` library and suite of tools intended to mak
 The `DrumScript` project is organised into the following main directories. See **[`repository_structure.md`](repository_structure.md)** for the full repository structure. 
 
 ```
-DrumScript/
-├── drumscript/             # Main source package directory
-│   ├── __init__.py
-│   ├── audio_processor/    # Audio loading, onset detection, feature extraction, tempo detection, stem-splitter and tempo-detection
-│   ├── notation_generator/ # Constants
-│   └── utils/              # Utility functions
-├── docs/                   # Documentation for developers and contributors, as well as the `_build` artifacts for the `DrumScript` documentation website.
-├── theory/                 # Reference documents (music theory, DSP, etc.). Sources provided
-├── pyproject.toml          # Project metadata and dependencies (managed by `uv`).
-├── README.md               # Main project overview (this file)
-├── repository_structure.md # Full repository_structure.md
-├── .github/                # GitActions files
+DrumScript/                          # Project root
+├── drumscript/                      # <--- Main Source Package Directory
+│   ├── __init__.py                  # Exposes the package.
+│   ├── main.py                      # Main entry point for the application's full pipeline.
+│   ├── audio_processor/             # Handles audio loading, Digital Signal Processing (DSP), and stem-splitting (ie audio extraction).
+│   │   ├── __init__.py
+│   │   ├── audio_loader.py          # Loads and normalises audio files.
+│   │   ├── feature_extractor.py     # Extracts Digital Signal Processing (DSP) features (spectral centroid, etc.).
+│   │   ├── onset_detector.py        # Detects drum hit timestamps.
+│   │   ├── stem_splitter.py         # Splits audio into 4 stems using Demucs.
+│   │   ├── tempo_detector.py        # "Voting System" algorithm for tempo estimation.
+│   │   └── tempogram.py             # Visualization tool for analysing tempo.
+│   │
+│   ├── drum_classifier/             # Rule-based DSP classification engine.
+│   │    ├── __init__.py
+│   │    └── classify.py             # The core rule engine for deterministically classifying drum audio using `constants.py`
+│   │
+│   ├── notation_generator/          # Generates musical notation (`.json`), (`.midi`) and sheet music (`.pdf`) from audio provided.
+│   │   ├── __init__.py
+│   │   ├── score_builder.py
+│   │   ├── pdf_generator.py
+│   │   └── constants.py             # Single-source of truth for constants such as `SAMPLE_RATE`, `N_FFT` used globally through `DrumScript`
+│   └── utils/                       # Utility functions.
+├── docs/                            # Documentation for developers and contributors, as well as the `_build` artifacts for the `DrumScript` documentation website.
+│    ├── theory/                          # Reference documents (music theory, DSP, etc.). Sources provided
+├── local_tests/                     # Local test scripts (e.g., interface testing).
+├── .gitignore                       # Specifies intentionally untracked files.
+├── .github/                         # GitActions files
 │   ├── workflows/
-│   │   ├── build_test.yml  # Tests whether the package is ready to be rebuilt and pushed to PyPi
-│   │   ├── docs.yml        # Handles publishing of `DrumScript` documentation to GitHub Pages
-│   │   ├── publish.yml     # Handles publishing of the package to PyPi automatically
-│   │   └── tests.yml       # Handles tests on development branch and main to ensure they dont break when PR is merged
-└── ...                     # Other config files (.gitignore, etc.)
+│   │   ├── build_test.yml           # Tests whether the package is ready to be rebuilt and pushed to PyPi
+│   │   ├── docs.yml                 # Handles publishing of `DrumScript` documentation to GitHub Pages
+│   │   ├── publish.yml              # Handles publishing of the package to PyPi automatically
+│   │   └── tests.yml                # Handles tests on development branch and main to ensure they dont break when PR is merged
+├── LICENSE                          # Apache
+├── README.md                        # Project overview and main documentation.
+├── repository_structure.md          # This file.
+├── tree.txt                         # Tree diagram (generated using `homebrew tree`)
+├── pyproject.toml                   # Project metadata and dependencies (managed by `uv`).
+└── uv.lock                          # Pinned versions of all dependencies.
 ```
 
 ---

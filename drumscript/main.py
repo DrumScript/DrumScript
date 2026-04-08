@@ -6,6 +6,8 @@ This job of this script is to orchestrate the End-to-End running of DrumScript m
 #import os
 #import sys
 #import json
+
+
 import argparse
 from pathlib import Path
 
@@ -21,6 +23,8 @@ from drumscript.notation_generator.constants import SAMPLE_RATE
 from datetime import datetime
 from drumscript.audio_processor.onset_detector import detect_onsets
 from drumscript.audio_processor.tempo_detector import estimate_tempo
+# Add this near the top with your other drum_classifier imports
+from drumscript.drum_classifier.profiler import analyse_track_profile
 
 
 print("\n# ------------------------------------------------------------------------------------")
@@ -92,7 +96,19 @@ def main(input_audio_path: str,
         print(f"   -> Detected Tempo: {tempo:.1f} BPM")
         print(f"   -> Detected Onsets: {len(onsets)}")
 
-        # 3. Classification
+        # 3. Profile the audio before classification
+        print("...Profiling Track Dynamics...")
+        # User CLI flag takes absolute priority. If not provided, we ask the Profiler.
+        is_single_beat = args.single_beat
+        if not is_single_beat:
+            is_single_beat = analyse_track_profile(y, sr, onsets)
+            
+        if is_single_beat:
+            print("   -> Profile: Single Beat / Isolated Sample Mode Active")
+        else:
+            print("   -> Profile: Standard Polyphonic Song Mode Active")
+
+        # 4. Classification
         print("...Classifying (Fundamental Frequency Engine)...")
         # classified_events = classify.classify_drum_hits(y, sr, onsets)
 
@@ -107,7 +123,7 @@ def main(input_audio_path: str,
         classified_events = classify.classify_events(y, sr, onsets)
         print(f"   -> Classified {len(classified_events)} events")
 
-        # 4. Score Formatting
+        # 5. Score Formatting
         detected_events = []
         for event in classified_events:
             detected_events.append({
@@ -126,7 +142,7 @@ def main(input_audio_path: str,
                 # 'staff_position': event['staff_position']
             })
 
-        # 5. Output Generation
+        # 6. Output Generation
         output_filename = f"{Path(input_audio_path).stem}_transcription"
         pdf_path = f"outputs/{output_filename}.pdf" 
         
@@ -196,13 +212,25 @@ def main(input_audio_path: str,
         print(f"   -> Detected Onsets: {len(onsets)}, type(onsets):{type}")
 
 
-        # 3. Classification
+        # 3. Profile the audio before classification
+        print("...Profiling Track Dynamics...")
+        # User CLI flag takes absolute priority. If not provided, we ask the Profiler.
+        is_single_beat = args.single_beat
+        if not is_single_beat:
+            is_single_beat = analyse_track_profile(y, sr, onsets)
+            
+        if is_single_beat:
+            print("   -> Profile: Single Beat / Isolated Sample Mode Active")
+        else:
+            print("   -> Profile: Standard Polyphonic Song Mode Active")
+
+        # 4. Classification
         print("...Classifying (Fundamental Frequency Engine)...")
         # classified_events = classify.classify_drum_hits(y, sr, onsets)
         classified_events = classify.classify_events(y, sr, onsets)
         print(f"   -> Classified {len(classified_events)} events")
 
-        # 4. Score Formatting
+        # 5. Score Formatting
         detected_events = []
         for event in classified_events:
             detected_events.append({
@@ -221,7 +249,7 @@ def main(input_audio_path: str,
                 #'staff_position': event['staff_position']
             })
 
-        # 5. Output Generation
+        # 6. Output Generation
         pdf_path = f"{Path(input_audio_path).stem}_transcription"
         pdf_path = f"outputs/{pdf_path}.pdf" 
         
@@ -259,10 +287,16 @@ if __name__ == '__main__':
     
     # Notation arguments
     parser.add_argument("--ts", type=str, default="4/4", help="Time signature (default: 4/4)")
+    # Force simplified classification, ie single beats rather than polyphonic audio
+    parser.add_argument(
+        "--single-beat", 
+        action="store_true", 
+        help="Force single beat classification mode for isolated drum samples."
+    )
     
     args = parser.parse_args()
     
-    main(input_audio_path=args.input_audio_path, 
+    main(input_audio_path=args.input_audio_path,
          transcribe_full_song=args.full, 
          time_signature=args.ts,
          drumless=args.drumless,
@@ -280,3 +314,9 @@ if __name__ == '__main__':
   #  main(args.input_audio_path, args.full, args.ts)
     
 # print("# ------------------------------------------------------------------------------------")
+
+parser.add_argument(
+        "--single-beat", 
+        action="store_true", 
+        help="Force single beat classification mode for isolated drum samples."
+    )

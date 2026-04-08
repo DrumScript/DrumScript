@@ -119,8 +119,10 @@ def main(input_audio_path: str,
         # # 2. Run the simultaneous rules
         # instruments = classify_onset(physics_profile)
         # ----------------------------------------------------------------------------------------------
-        
-        classified_events = classify.classify_events(y, sr, onsets)
+        # Pass the boolean flag to your classifier
+
+        #classified_events = classify.classify_events(y, sr, onsets)
+        classified_events = classify.classify_events(y, sr, onsets, is_single_beat=is_single_beat)
         print(f"   -> Classified {len(classified_events)} events")
 
         # 5. Score Formatting
@@ -314,9 +316,3 @@ if __name__ == '__main__':
   #  main(args.input_audio_path, args.full, args.ts)
     
 # print("# ------------------------------------------------------------------------------------")
-
-parser.add_argument(
-        "--single-beat", 
-        action="store_true", 
-        help="Force single beat classification mode for isolated drum samples."
-    )

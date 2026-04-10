@@ -170,23 +170,24 @@ def classify_event(physics):
     return instruments
 
 def classify_events(audio_data: np.ndarray, sr: int, onsets: list[float]) -> list[dict]:
+
+    # Restored the explicit `physics_profile` variable name throughout the consolidated rule block for clarity and strict consistency with JSON exports.
     """
-    Wrapper to route detected onsets through the new Physics-First Classification Engine.
-    Uses the unified dictionary keys: time_sec, instruments, debug_features.
+    Wrapper to route validated onsets through the Physics-First Classification Engine.
     Natively detects and filters isolated single-beat cymbals/kicks using Peak Dominance.
+    All classification rules (membranophone/idiophone) are integrated natively.
     """
+    from drumscript.notation_generator import constants
     classified_events = []
     
-    # Calculate global parameters to evaluate amplitude gating for single hits
     global_max = np.max(np.abs(audio_data)) if len(audio_data) > 0 else 1.0
     duration = len(audio_data) / sr
 
-    # --- Peak Dominance Check (Single-Beat Detection) ---
-    # Look ahead at the volume of all detected onsets. A ringing cymbal might hallucinate 30 fake onsets due to "shimmer", but only the initial stick impact will be loud.
+    # --- NATIVE PEAK DOMINANCE CHECK (Seamless Single-Beat Detection) ---
     loud_hit_count = 0
     for t in onsets:
         s_start = int(t * sr)
-        s_end = s_start + int(0.1 * sr) # Look at the first 100ms of the hit
+        s_end = s_start + int(0.1 * sr) 
         s_data = audio_data[s_start:min(s_end, len(audio_data))]
         s_vol = np.max(np.abs(s_data)) if len(s_data) > 0 else 0.0
         
@@ -194,15 +195,7 @@ def classify_events(audio_data: np.ndarray, sr: int, onsets: list[float]) -> lis
             loud_hit_count += 1
 
     # If the track is short and has exactly ONE loud hit, it is a single drum sample.
-    #is_single_beat = (loud_hit_count == 1 and duration < 30.0)
-    is_isolated_sample = (loud_hit_count == 1 and duration < 30.0)
-
-    # --- DYNAMIC ISOLATED SAMPLE DETECTION ---
-    # Cymbals ring out for 5-15 seconds, bypassing our old 'duration < 2.0' check.
-    # We use Onset Density instead. A single hit test sample is sparse (< 1.5 hits per second).
-    # A real drum track is dense (e.g., 60bpm 8th notes = 2 hits per second).
-    onset_density = len(onsets) / duration if duration > 0 else 0
-    is_isolated_sample = (duration < 20.0) and (onset_density < 1.5 or len(onsets) <= 5)
+    is_single_beat = (loud_hit_count == 1 and duration < 30.0)
 
     for onset_time in onsets:
         start_sample = int(onset_time * sr)
@@ -220,22 +213,20 @@ def classify_events(audio_data: np.ndarray, sr: int, onsets: list[float]) -> lis
 
         if len(y_window_short) == 0:
             continue
-        
+            
         slice_max = np.max(np.abs(y_window_short)) if len(y_window_short) > 0 else 0.0
-
-        # Standard safety: Drop absolute dead silence to keep the noise floor clean
+        
+        # Standard safety: Drop absolute dead silence
         if slice_max < 0.02 * global_max:
             continue
 
-        # --- Strict Single Beat 'Amplitude Gate' ---
-        # For full songs, we do NOT interfere. We let the onset detector do its job  so ghost notes are perfectly preserved (guaranteeing backward compatibility). We only apply the 50% max volume drop to sparse, isolated single-beat samples
-        if is_isolated_sample:
-            # 1. Ruthless Gate: Drop the quiet cymbal shimmers/kick sub-bass tails
-            #slice_max = np.max(np.abs(y_window_short)) if len(y_window_short) > 0 else 0.0
-            if slice_max < 0.5 * global_max:
+        # --- SEAMLESS SINGLE BEAT GATE ---
+        if is_single_beat:
+            # 1. Ruthless Gate
+            if slice_max < global_max * 0.50:
                 continue
-
-            # 2. De-Bounce Lockout: Prevent double-triggering within 150ms of the valid hit
+                
+            # 2. De-Bounce Lockout
             if len(classified_events) > 0:
                 last_time = classified_events[-1]["time_sec"]
                 if float(onset_time) - last_time < 0.15:
@@ -252,23 +243,165 @@ def classify_events(audio_data: np.ndarray, sr: int, onsets: list[float]) -> lis
         else:
             y_window_long = audio_data[start_sample:end_sample_long]
 
-
         # 1. Extract the physics DNA
         physics_profile = extract_features(y_window_short, y_window_long, sr)
 
-        # 2. Run the simultaneous rules
-        instruments = classify_event(physics_profile)
+        # 2. Apply Classification Rules (Integrated Logic)
+        instruments = []
+        
+        # --- MEMBRANOPHONES (Skins) ---
+        # RULE 1: KICK DRUM
+        if physics_profile['lfer'] >= KICK_LFER_MIN and (KICK_FREQ_MIN <= physics_profile['peak_freq'] <= KICK_FREQ_MAX):
+            instruments.append('kick')
+                
+        # RULE 2: SNARE DRUM 
+        is_snare_freq = (SNARE_FREQ_MIN <= physics_profile['peak_freq'] <= SNARE_FREQ_MAX)
+        has_snare_wire = (SNARE_HFER_MIN <= physics_profile['hfer'] < 0.85)
+        if has_snare_wire and is_snare_freq:
+            instruments.append('snare')
+            
+        # RULE 3: TOMS 
+        is_pure = physics_profile['hfer'] < SNARE_HFER_MIN  
+        is_resonant = physics_profile['decay'] >= TOM_MIN_DECAY 
+        if is_pure and is_resonant:
+            if physics_profile['peak_freq'] <= TOM_FREQ_LOW_MAX:
+                if 'kick' not in instruments: 
+                    instruments.append('low_tom')
+            elif physics_profile['peak_freq'] <= TOM_FREQ_MID_MAX:
+                instruments.append('mid_tom')
+            elif physics_profile['peak_freq'] <= 400: 
+                instruments.append('high_tom')
+
+        # --- IDIOPHONES (Metals) ---
+        # RULE 4: METALS (Hats / Cymbals)
+        if physics_profile['hfer_5k'] >= IDIOPHONE_MIN_HFER_5K:
+            if physics_profile['decay'] <= HAT_CLOSED_MAX_DECAY:
+                instruments.append('hi_hat_closed')
+            elif physics_profile['decay'] <= HAT_OPEN_MAX_DECAY:
+                instruments.append('hi_hat_open')
+            else:
+                if physics_profile['centroid'] > 2500:
+                    instruments.append('crash') 
+                else:
+                    instruments.append('ride') 
+                    
+        # Fallback for undetected sounds
+        if not instruments:
+            instruments.append('unknown')
         
         # 3. Append with unified compatible keys
-        classified_events.append(
-            {
-                "time_sec": float(onset_time), 
-                "instruments": instruments, 
-                "debug_features": physics_profile 
-            }
-        )
+        classified_events.append({
+            "time_sec": float(onset_time), 
+            "instruments": instruments, 
+            "debug_features": physics_profile
+        })
 
     return classified_events
+
+
+
+## --- LEGACY CODE --- 
+# def classify_events(audio_data: np.ndarray, sr: int, onsets: list[float]) -> list[dict]:
+    # 
+    #Wrapper to route detected onsets through the new Physics-First Classification Engine.
+    #Uses the unified dictionary keys: time_sec, instruments, debug_features.
+    #Natively detects and filters isolated single-beat cymbals/kicks using Peak Dominance.
+    #
+ #   classified_events = []
+    
+    # Calculate global parameters to evaluate amplitude gating for single hits
+  #  global_max = np.max(np.abs(audio_data)) if len(audio_data) > 0 else 1.0
+  #  duration = len(audio_data) / sr
+
+    # --- Peak Dominance Check (Single-Beat Detection) ---
+    # Look ahead at the volume of all detected onsets. A ringing cymbal might hallucinate 30 fake onsets due to "shimmer", but only the initial stick impact will be loud.
+    #loud_hit_count = 0
+    #for t in onsets:
+    #    s_start = int(t * sr)
+    #    s_end = s_start + int(0.1 * sr) # Look at the first 100ms of the hit
+    #    s_data = audio_data[s_start:min(s_end, len(audio_data))]
+    #    s_vol = np.max(np.abs(s_data)) if len(s_data) > 0 else 0.0
+        
+    #    if s_vol > global_max * 0.50:
+    #        loud_hit_count += 1
+
+    # If the track is short and has exactly ONE loud hit, it is a single drum sample.
+    #is_single_beat = (loud_hit_count == 1 and duration < 30.0)
+    #is_isolated_sample = (loud_hit_count == 1 and duration < 30.0)
+
+    # --- DYNAMIC ISOLATED SAMPLE DETECTION ---
+    # Cymbals ring out for 5-15 seconds, bypassing our old 'duration < 2.0' check.
+    # We use Onset Density instead. A single hit test sample is sparse (< 1.5 hits per second).
+    # A real drum track is dense (e.g., 60bpm 8th notes = 2 hits per second).
+    #onset_density = len(onsets) / duration if duration > 0 else 0
+    #is_isolated_sample = (duration < 20.0) and (onset_density < 1.5 or len(onsets) <= 5)
+
+    #for onset_time in onsets:
+    #    start_sample = int(onset_time * sr)
+        
+        # --- SHORT SLICE PADDING LOGIC (200ms) ---
+    #    duration_short_secs = constants.ONSET_SLICE_DURATION_MS / 1000.0 
+    #    end_sample_short = start_sample + int(duration_short_secs * sr)
+
+    #    if end_sample_short > len(audio_data):
+    #        slice_data = audio_data[start_sample:]
+    #        pad_length = end_sample_short - len(audio_data)
+    #        y_window_short = np.pad(slice_data, (0, pad_length), mode='constant')
+    #    else:
+    #        y_window_short = audio_data[start_sample:end_sample_short]
+    #
+    #
+    #    if len(y_window_short) == 0:
+    #        continue
+        
+    #    slice_max = np.max(np.abs(y_window_short)) if len(y_window_short) > 0 else 0.0
+
+        # Standard safety: Drop absolute dead silence to keep the noise floor clean
+    #    if slice_max < 0.02 * global_max:
+    #        continue
+
+        # --- Strict Single Beat 'Amplitude Gate' ---
+        # For full songs, we do NOT interfere. We let the onset detector do its job  so ghost notes are perfectly preserved (guaranteeing backward compatibility). We only apply the 50% max volume drop to sparse, isolated single-beat samples
+    #    if is_isolated_sample:
+            # 1. Ruthless Gate: Drop the quiet cymbal shimmers/kick sub-bass tails
+            #slice_max = np.max(np.abs(y_window_short)) if len(y_window_short) > 0 else 0.0
+    #        if slice_max < 0.5 * global_max:
+     #           continue
+
+            # 2. De-Bounce Lockout: Prevent double-triggering within 150ms of the valid hit
+    #        if len(classified_events) > 0:
+    #            last_time = classified_events[-1]["time_sec"]
+    #            if float(onset_time) - last_time < 0.15:
+    #                continue
+
+        # --- LONG SLICE PADDING LOGIC (1.5s) ---
+    #    duration_long_secs = 1.5 
+    #    end_sample_long = start_sample + int(duration_long_secs * sr)
+
+    #    if end_sample_long > len(audio_data):
+    #        slice_data = audio_data[start_sample:]
+    #        pad_length = end_sample_long - len(audio_data)
+    #        y_window_long = np.pad(slice_data, (0, pad_length), mode='constant')
+    #    else:
+    #        y_window_long = audio_data[start_sample:end_sample_long]
+
+
+        # 1. Extract the physics DNA
+    #    physics_profile = extract_features(y_window_short, y_window_long, sr)
+
+        # 2. Run the simultaneous rules
+    #    instruments = classify_event(physics_profile)
+        
+        # 3. Append with unified compatible keys
+    #    classified_events.append(
+     #       {
+     #           "time_sec": float(onset_time), 
+     #           "instruments": instruments, 
+      #          "debug_features": physics_profile 
+      #      }
+      #  )
+
+    #return classified_events
 
 #def classify_events(audio_data: np.ndarray, sr: int, onsets: list[float]) -> list[dict]:
     #

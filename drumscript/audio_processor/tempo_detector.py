@@ -11,6 +11,12 @@ import os
 import argparse
 from drumscript.notation_generator.constants import SAMPLE_RATE, HOP_LENGTH
 
+from datetime import datetime
+
+print("\n# ------------------------------------------------------------------------------------")
+datetimestamp = datetime.now()
+print(f'\ndate/time: {datetimestamp}')
+
 # --- Define function --------------------------------------------------------------------------------------------
 
 def estimate_tempo(audio_data, sr):
@@ -37,10 +43,10 @@ def estimate_tempo(audio_data, sr):
         return 120.0
     
     # oenv = librosa.onset.onset_strength(y=audio_data, sr=sr, hop_length=256)
-    oenv = librosa.onset.onset_strength(y=audio_data, sr=SAMPLE_RATE, hop_length=HOP_LENGTH)
-    tempogram = librosa.feature.tempogram(onset_envelope=oenv, sr=SAMPLE_RATE, hop_length=HOP_LENGTH)
+    oenv = librosa.onset.onset_strength(y=audio_data)
+    tempogram = librosa.feature.tempogram(onset_envelope=oenv)
     tempo_spectrum = np.sum(tempogram, axis=1)
-    tempo_freqs = librosa.tempo_frequencies(tempogram.shape[0], sr=SAMPLE_RATE, hop_length=HOP_LENGTH)
+    tempo_freqs = librosa.tempo_frequencies(tempogram.shape[0])
     
     # --- Fix for extreme BPM error ---
     # Create a mask to only consider tempos in a plausible musical range (e.g., 60-240 BPM)
@@ -63,17 +69,19 @@ def estimate_tempo(audio_data, sr):
 
 if __name__ == "__main__":
     from drumscript.audio_processor.audio_loader import load_audio, normalise_audio
+    from drumscript.notation_generator.constants import SAMPLE_RATE
     parser = argparse.ArgumentParser(description="Estimate the tempo of an audio file.")
     parser.add_argument("audio_file_path", type=str,
                         help="Path to the audio file to be processed.")
     args = parser.parse_args()
     actual_drum_recording_path = args.audio_file_path # audio_file_path, relative to ROOT, not the path of this script
+    sr = SAMPLE_RATE
 
     try:
         # Load and normalise the audio
         print(f"Attempting to load: {actual_drum_recording_path}")
         # audio, sr = load_audio(actual_drum_recording_path, sr=44100)
-        audio, sr = load_audio(actual_drum_recording_path, sr=SAMPLE_RATE)
+        audio, sr = load_audio(actual_drum_recording_path, sr=sr)
         normalised_audio = normalise_audio(audio)
         
         # Estimate the tempo

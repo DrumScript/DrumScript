@@ -2,30 +2,35 @@
 """
 This job of this script is to orchestrate the End-to-End running of DrumScript modules
 """
-import shutil
-import os
-import sys
-import json
+#import shutil
+#import os
+#import sys
+#import json
 import argparse
 from pathlib import Path
 
-from drumscript.audio_processor import audio_loader, onset_detector, feature_extractor, tempo_detector
+from drumscript.audio_processor import audio_loader, onset_detector, tempo_detector
 from drumscript.audio_processor.stem_splitter import extract_drum_stem
 from drumscript.audio_processor.stem_splitter import separate_audio
 from drumscript.drum_classifier import classify
-from drumscript.drum_classifier.classify import classify_events
+# from drumscript.drum_classifier.classify import classify_events
 from drumscript.notation_generator import score_builder
-from drumscript.notation_generator.score_builder import build_score
-from drumscript.notation_generator import constants
+# from drumscript.notation_generator.score_builder import build_score
+#from drumscript.notation_generator import constants
 from drumscript.notation_generator.constants import SAMPLE_RATE
 from datetime import datetime
+from drumscript.audio_processor.onset_detector import detect_onsets
+from drumscript.audio_processor.tempo_detector import estimate_tempo
+
 
 print("\n# ------------------------------------------------------------------------------------")
 datetimestamp = datetime.now()
 print(f'\ndate/time: {datetimestamp}')
+#print(f'start: {datetimestamp:%Y-%m-%d %H:%M:%S}')
+
 
 def main(input_audio_path: str, 
-         transcribe_full_song: bool = False, 
+         transcribe_full_song: bool = False,  
          time_signature: str = "4/4",
          drumless: bool = False,
          mute: list = None,
@@ -70,20 +75,35 @@ def main(input_audio_path: str,
 
         # 2. Analysis Pipeline
         print("...Loading & Analysing Audio...")
-        sr = SAMPLE_RATE
-        y, sr = audio_loader.load_audio(audio_path, sr=SAMPLE_RATE)
-        y = audio_loader.normalise_audio(y) 
+        #sr = SAMPLE_RATE
+        # y, sr = audio_loader.load_audio(audio_path, sr=SAMPLE_RATE)
+        y, sr = audio_loader.load_audio(audio_path) # no longer required to specify sr in arguments as now this is fed in through the load_audio function
+        y = audio_loader.normalise_audio(y)
+
+        duration_total_sec = len(y) / sr
+        mins = int(duration_total_sec // 60)
+        secs = int(duration_total_sec % 60)
         
         # Preserve core functionality: Automatic Tempo Detection
         tempo = tempo_detector.estimate_tempo(y, sr)
         onsets = onset_detector.detect_onsets(y, sr)
-        
+
+        print(f"   -> Duration: {mins}:{secs:02d} ({duration_total_sec:.2f}s)")
         print(f"   -> Detected Tempo: {tempo:.1f} BPM")
         print(f"   -> Detected Onsets: {len(onsets)}")
 
         # 3. Classification
         print("...Classifying (Fundamental Frequency Engine)...")
         # classified_events = classify.classify_drum_hits(y, sr, onsets)
+
+        # --- PREVIOUSLY BROKEN LINES (Commented out to prevent crash as y_window is undefined here) ---
+        # # 1. Extract the physics DNA
+        # physics_profile = get_physics_profile(y_window, sr)
+        # 
+        # # 2. Run the simultaneous rules
+        # instruments = classify_onset(physics_profile)
+        # ----------------------------------------------------------------------------------------------
+        
         classified_events = classify.classify_events(y, sr, onsets)
         print(f"   -> Classified {len(classified_events)} events")
 
@@ -91,25 +111,32 @@ def main(input_audio_path: str,
         detected_events = []
         for event in classified_events:
             detected_events.append({
-                'time': event['onset_time_seconds'],
-                'drums': [event['drum_type']],
-                'analysis': event['analysis'], # Contains f0, sc, width, depth
-                'midi_pitch': event['midi_pitch'],
-                'note_head_type': event['note_head_type'],
-                'staff_position': event['staff_position']
+                # --- LEGACY MAPPING ---
+                # 'time': event['time_sec'],
+                # 'drums': event['instruments'], # IMPORTANT: Now correctly maps the LIST of instruments to 'drums'
+                # 'analysis': event['debug_features'], # Adjusted to use the debug_features dict from classify.py
+                
+                # --- UNIFIED MAPPING ---
+                'time_sec': event['time_sec'],
+                'instruments': event['instruments'], 
+                'debug_features': event['debug_features'], 
+                
+                # 'midi_pitch': event['midi_pitch'], # Re-evaluating this natively inside the exporters
+                # 'note_head_type': event['note_head_type'],
+                # 'staff_position': event['staff_position']
             })
 
         # 5. Output Generation
         output_filename = f"{Path(input_audio_path).stem}_transcription"
-        final_pdf_path = f"outputs/{output_filename}.pdf" 
+        pdf_path = f"outputs/{output_filename}.pdf" 
         
-        print(f"...Building Score & JSON: {final_pdf_path}...")
+        print(f"...Building Score & JSON: {pdf_path}...")
         
         # score_builder.build_and_export_drum_score(
         score_builder.build_score(
             detected_events=detected_events, 
             tempo=tempo, 
-            output_filepath=final_pdf_path,
+            output_filepath=pdf_path,
             time_signature=time_signature
         )
 
@@ -160,11 +187,14 @@ def main(input_audio_path: str,
         y, sr = audio_loader.load_audio(audio_path)
         y = audio_loader.normalise_audio(y) 
         
+        duration_total_sec = len(y) / sr
         tempo = tempo_detector.estimate_tempo(y, sr)
         onsets = onset_detector.detect_onsets(y, sr)
         
+        print(f"   -> Duration: {mins}:{secs:02d} ({duration_total_sec:.2f}s)")
         print(f"   -> Detected Tempo: {tempo:.1f} BPM")
-        print(f"   -> Detected Onsets: {len(onsets)}")
+        print(f"   -> Detected Onsets: {len(onsets)}, type(onsets):{type}")
+
 
         # 3. Classification
         print("...Classifying (Fundamental Frequency Engine)...")
@@ -176,27 +206,35 @@ def main(input_audio_path: str,
         detected_events = []
         for event in classified_events:
             detected_events.append({
-                'time': event['onset_time_seconds'],
-                'drums': [event['drum_type']],
-                'analysis': event['analysis'], 
-                'midi_pitch': event['midi_pitch'],
-                'note_head_type': event['note_head_type'],
-                'staff_position': event['staff_position']
+                # --- MAPPING ---
+                # 'time': event['time_sec'],
+                # 'drums': event['instruments'], # Map list to 'drums'
+                # 'analysis': event['debug_features'], # NOW CONTAINS: peak_freq, centroid, lfer, hfer, hfer_2k, hfer_5k, decay
+                
+                # --- NEW UNIFIED MAPPING ---
+                'time_sec': event['time_sec'],
+                'instruments': event['instruments'], 
+                'debug_features': event['debug_features'], 
+                
+                # 'midi_pitch': event['midi_pitch'],
+                # 'note_head_type': event['note_head_type']
+                #'staff_position': event['staff_position']
             })
 
         # 5. Output Generation
-        output_filename = f"{Path(input_audio_path).stem}_transcription"
-        final_pdf_path = f"outputs/{output_filename}.pdf" 
+        pdf_path = f"{Path(input_audio_path).stem}_transcription"
+        pdf_path = f"outputs/{pdf_path}.pdf" 
         
-        print(f"...Building Score & JSON: {final_pdf_path}...")
+        print(f"...Building Score & JSON: {pdf_path}...")
         
         # score_builder.build_and_export_drum_score(
-        score_builder.build_and_export_drum_score(
+        score_builder.build_score(
             detected_events=detected_events, 
             tempo=tempo, 
-            output_filepath=final_pdf_path,
+            output_filepath=pdf_path,
             time_signature=time_signature
         )
+
 
         print("--- Done! ---\n")
         
@@ -242,5 +280,3 @@ if __name__ == '__main__':
   #  main(args.input_audio_path, args.full, args.ts)
     
 # print("# ------------------------------------------------------------------------------------")
-
-

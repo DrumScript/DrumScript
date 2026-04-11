@@ -1,7 +1,7 @@
 ## **`DrumScript`**
 
 <!--date_created: sun-15-june-2025-->
-<!--date_updated: fri-13-february-2026-->
+<!--date_updated: sun-05-apr-2026-->
 
 DrumScript is an open-source `Python` library and suite of tools intended to make music more accessible for everyone. The Python package alpha is released alongside a free-to-use engine for members of the musical and sound analysis/engineering community to use in a zero-code way.
 
@@ -21,50 +21,78 @@ DrumScript is an open-source `Python` library and suite of tools intended to mak
   - **[Contact](#contact)**
   - **[FAQs](#faqs)**
 
-> **Workflow Statuses**
+**Workflow Statuses**
 >
 > [![Run Tests](https://github.com/DrumScript/DrumScript/actions/workflows/tests.yml/badge.svg?branch=build%2Fclassification_model)](https://github.com/DrumScript/DrumScript/actions/workflows/tests.yml)
+
+**Demo Notebooks**
+>
+> [![Try `DrumScript` in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1eDVXc3d6ezmorxINOjzldRPSC3emTl2I)
+
 
 ---
 ### **Project Structure**
 
-The `DrumScript` project is organised into the following main directories. For completeness, we include folders such as `notation_generator` because they contain functionality used in `DrumScript (Lite)`; however, the alpha release **does not** contain sheet music generation functionality. This is the goal of a forthcoming release of the full `DrumScript` package (targeted for the beginning of Q2 2026). See the **full [`repository_structure.md`](repository_structure.md)**.
+The `DrumScript` project is organised into the following main directories. See **[`repository_structure.md`](repository_structure.md)** for the full repository structure. 
 
 ```
-DrumScript/
-├── drumscript/             # Main source package directory
-│   ├── __init__.py
-│   ├── audio_processor/    # Audio loading, onset detection, feature extraction, tempo detection, stem-splitter and tempo-detection
-│   ├── notation_generator/ # Constants
-│   └── utils/              # Utility functions
-├── docs/                   # Documentation for developers and contributors, as well as the `_build` artifacts for the `DrumScript` documentation website.
-├── theory/                 # Reference documents (music theory, DSP, etc.). Sources provided
-├── pyproject.toml          # Project metadata and dependencies (managed by `uv`).
-├── README.md               # Main project overview (this file)
-├── repository_structure.md # Full repository_structure.md
-├── .github/                # GitActions files
+DrumScript/                          # Project root
+├── drumscript/                      # <--- Main Source Package Directory
+│   ├── __init__.py                  # Exposes the package.
+│   ├── main.py                      # Main entry point for the application's full pipeline.
+│   ├── audio_processor/             # Handles audio loading, Digital Signal Processing (DSP), and stem-splitting (ie audio extraction).
+│   │   ├── __init__.py
+│   │   ├── audio_loader.py          # Loads and normalises audio files.
+│   │   ├── feature_extractor.py     # Extracts Digital Signal Processing (DSP) features (spectral centroid, etc.).
+│   │   ├── onset_detector.py        # Detects drum hit timestamps.
+│   │   ├── stem_splitter.py         # Splits audio into 4 stems using Demucs.
+│   │   ├── tempo_detector.py        # "Voting System" algorithm for tempo estimation.
+│   │   └── tempogram.py             # Visualization tool for analysing tempo.
+│   │
+│   ├── drum_classifier/             # Rule-based DSP classification engine.
+│   │    ├── __init__.py
+│   │    └── classify.py             # The core rule engine for deterministically classifying drum audio using `constants.py`
+│   │
+│   ├── notation_generator/          # Generates musical notation (`.json`), (`.midi`) and sheet music (`.pdf`) from audio provided.
+│   │   ├── __init__.py
+│   │   ├── score_builder.py
+│   │   ├── pdf_generator.py
+│   │   └── constants.py             # Single-source of truth for constants such as `SAMPLE_RATE`, `N_FFT` used globally through `DrumScript`
+│   └── utils/                       # Utility functions.
+├── docs/                            # Documentation for developers and contributors, as well as the `_build` artifacts for the `DrumScript` documentation website.
+│    ├── theory/                          # Reference documents (music theory, DSP, etc.). Sources provided
+├── local_tests/                     # Local test scripts (e.g., interface testing).
+├── .gitignore                       # Specifies intentionally untracked files.
+├── .github/                         # GitActions files
 │   ├── workflows/
-│   │   ├── build_test.yml  # Tests whether the package is ready to be rebuilt and pushed to PyPi
-│   │   ├── docs.yml        # Handles publishing of `DrumScript` documentation to GitHub Pages
-│   │   ├── publish.yml     # Handles publishing of the package to PyPi automatically
-│   │   └── tests.yml       # Handles tests on development branch and main to ensure they dont break when PR is merged
-└── ...                     # Other config files (.gitignore, etc.)
+│   │   ├── build_test.yml           # Tests whether the package is ready to be rebuilt and pushed to PyPi
+│   │   ├── docs.yml                 # Handles publishing of `DrumScript` documentation to GitHub Pages
+│   │   ├── publish.yml              # Handles publishing of the package to PyPi automatically
+│   │   └── tests.yml                # Handles tests on development branch and main to ensure they dont break when PR is merged
+├── LICENSE                          # Apache
+├── README.md                        # Project overview and main documentation.
+├── repository_structure.md          # This file.
+├── tree.txt                         # Tree diagram (generated using `homebrew tree`)
+├── pyproject.toml                   # Project metadata and dependencies (managed by `uv`).
+└── uv.lock                          # Pinned versions of all dependencies.
 ```
 
 ---
-#### Features
+#### Overview of `DrumScript` Features
 
-* **Audio Input:** Supports common audio formats like `.wav` and `.mp3`.
-* **Advanced Tempo Detection:** Estimates the tempo (BPM) of an audio file. A deterministic algorithm for tempo estimation. Analyses the entire audio file (not just local beats) to generate a "Tempogram." Conducts a "tempo election" to find the most consistent BPM, effectively handling complex syncopation and ghost notes where standard metronomes fail.
-* **Drum Hit Detection:** Identifies the precise timing of drum strikes using onset event detection algorithms.
-* **Audio Extractor:** We utilise the state-of-the-art [Demucs](https://github.com/adefossez/demucs) source separation model to provide high-quality drum extraction so users can separate audio files into their drum, guitar, base guitar and vocal stems. 
-* **UI Integration:** Connect the package to a free-to-use public web interface.
-* **Stem Splitting**: Automatically isolate drum tracks from full audio mixes using the `demucs` hybrid transformer model.
-* **Onset Detection**: Precise identification of drum hits using spectral analysis.
-<!--* **Classification**: Rule-based engine to classify hits (Snare, Kick, Hi-Hat) based on acoustic features.-->
-<!--* **Score Generation**: Export transcribed drums to `.pdf` sheet music and `.xml` formats.-->
+* **Audio Input:** Supports common audio formats like `.wav` and `.mp3`, both as inputs and outputs
+<!--* **Drum Hit Detection:** Identifies the precise timing of drum strikes using onset event detection algorithms.-->
+* **Onset Detection**: Onset detection method which has been tuned to the features of percussion audio physics rather than polyphnic audio physics (such as for piano, guitar etc).
+* **Audio Extraction:** We utilise the state-of-the-art [Demucs](https://github.com/adefossez/demucs) source separation model to provide high-quality drum extraction so users can separate audio files into their drum, guitar, base guitar and vocal stems.
+* **Stem-Manipulation:** We also utilise the state-of-the-art [Demucs](https://github.com/adefossez/demucs) source separation model to provide high-quality drum extraction from given audio path so users can produce **drumless backing tracks** to play along to. The method also allows users to extract bass guitar. In the future we hope to add more advanced stem extraction! [See **Contributing**](#contributing) section for more information.
+* **Drum Classification**: Rule-based engine to classify hits (Snare, Kick, Hi-Hat) based on acoustic features tested and refined on a large dataset of isolated audio samples for each drum part, over almost a year.
+* **Multiple Output Formats**: Export transcribed drums to `midi (.mid)` and `.musicXML` so you can add to your preferred DAW (ie Logic Pro, Cubase, Ableton etc)
+* **PDF Score Generation**: Generate a PDF of extracted drums/ 
+* **UI Integration:** Free-to-use public web interface for no-code users, with no persistent storage of uploaded or transformed files. 
 
 
+> `DrumScript` functionality is based on **deterministic methods** rather than probabilistic (AI/ML).
+> We cannot guarantee however that any non-native Python packages or libraries that form part of `DrumScript` build wheel will not contain probabilities methods (ie `Demucs`) or `Librosa`
 
 
 ---
@@ -73,15 +101,12 @@ DrumScript/
 > `DrumScript` manages dependencies using `uv` and `pyproject.toml`.
 
 ```bash
-pip install drumscript
-# or
 uv pip install drumscript
 ```
 
 ```bash
 # Install dependencies
-uv sync
-
+uv pip install -e .
 ```
 
 **Dependencies**
@@ -181,7 +206,7 @@ It leverages **audio signal processing** and a **rule-based classification engin
 
 
 ---
-### LilyPond Installation
+<!--### LilyPond Installation
 
 To generate high-quality PDF sheet music, `DrumScript` uses `music21`, which relies on the music engraving program **LilyPond**. You must install LilyPond separately.
 
@@ -197,7 +222,7 @@ To generate high-quality PDF sheet music, `DrumScript` uses `music21`, which rel
     lilypond --version
     ```
 
-`music21` will attempt to find LilyPond automatically. If you encounter errors, you may need to configure the path manually (see `DrumScript/notation_generator/pdf_exporter.py`).
+`music21` will attempt to find LilyPond automatically. If you encounter errors, you may need to configure the path manually (see `DrumScript/notation_generator/pdf_exporter.py`).-->
 
 > **Important note for audio playback (`sounddevice`):**
 >

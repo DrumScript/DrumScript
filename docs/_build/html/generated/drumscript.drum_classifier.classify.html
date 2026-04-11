@@ -6,7 +6,7 @@
     function setColorMode(t){let e=document.documentElement;e.setAttribute("data-color-mode",t);let a=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches,s=t;"auto"===t&&(s=a?"dark":"light"),"light"===s?(e.classList.remove("dark"),e.classList.add("light")):(e.classList.remove("light"),e.classList.add("dark"))}
     setColorMode(localStorage._theme||"auto");
   </script><link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=e1a1ceaf" />
-    <link rel="stylesheet" type="text/css" href="../_static/shibuya.css?v=d140fbf8" />
+    <link rel="stylesheet" type="text/css" href="../_static/shibuya.css?v=44020203" />
     <link media="print" rel="stylesheet" type="text/css" href="../_static/print.css?v=20ff2c19" />
     <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=5885bd2b" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -19,7 +19,7 @@
 }
 </style>
     <meta property="og:type" content="website"/><meta property="og:title" content="drumscript.drum_classifier.classify"/>
-<meta name="twitter:card" content="summary"/>
+    <meta name="twitter:card" content="summary"/>
   </head>
 <body><div class="sy-head">
   <div class="sy-head-blur"></div>
@@ -186,32 +186,69 @@ data-aria-dark="Switch to auto color mode">
     </div>
   </div>
 </div><div class="flex flex-col break-words justify-between">
-      <div class="min-w-0 max-w-6xl px-6 pb-6 pt-8 xl:px-12">
-        <article class="yue" role="main">
+      <div class="relative min-w-0 max-w-6xl px-6 pb-6 pt-8 xl:px-12">
+  <div class="copy-page-wrapper relative pb-4 lg:absolute lg:top-8 lg:right-6 xl:right-12">
+  <div id="copy-page-trigger">
+    <button
+      type="button"
+      class="js-copy px-3 py-1 inline-flex items-center gap-1"
+      data-url="https://raw.githubusercontent.com/DrumScript/DrumScript/refs/heads/main/docs/generated/drumscript.drum_classifier.classify.rst.txt"
+    >
+      <i class="i-lucide" data-icon="copy"></i>
+      <span>Copy page</span>
+    </button>
+    <button class="js-menu px-2 py-1" type="button" aria-label="More actions"
+      aria-haspopup="menu" aria-expanded="false" aria-controls="copy-page-content">
+      <i class="i-lucide chevron-down"></i>
+    </button>
+  </div>
+  <div id="copy-page-content" role="menu" aria-orientation="vertical" aria-hidden="true">
+    <div role="presentation">
+      <div class="flex flex-col" role="group">
+        <button class="js-copy" type="button" role="menuitem"
+          data-url="https://raw.githubusercontent.com/DrumScript/DrumScript/refs/heads/main/docs/generated/drumscript.drum_classifier.classify.rst.txt">
+          <span class="iconify-icon">
+            <i class="i-lucide" data-icon="copy"></i>
+          </span>
+          <span>Copy page</span>
+        </button>
+        <a role="menuitem" href="https://raw.githubusercontent.com/DrumScript/DrumScript/refs/heads/main/docs/generated/drumscript.drum_classifier.classify.rst.txt" target="_blank" rel="nofollow"><iconify-icon icon="bi:code-slash"></iconify-icon>
+            <span>View Source</span></a><a role="menuitem" href="https://chatgpt.com/?hints=search&q=Read%20https%3A//raw.githubusercontent.com/DrumScript/DrumScript/refs/heads/main/docs/generated/drumscript.drum_classifier.classify.rst.txt%20so%20I%20can%20ask%20questions%20about%20it." target="_blank" rel="nofollow">
+          <iconify-icon icon="bi:openai"></iconify-icon>
+          <span>Open in ChatGPT</span>
+        </a><a role="menuitem" href="https://claude.ai/new?q=Read%20https%3A//raw.githubusercontent.com/DrumScript/DrumScript/refs/heads/main/docs/generated/drumscript.drum_classifier.classify.rst.txt%20so%20I%20can%20ask%20questions%20about%20it." target="_blank" rel="nofollow">
+          <iconify-icon icon="bi:claude"></iconify-icon>
+          <span>Open in Claude</span>
+        </a></div>
+    </div>
+  </div>
+</div><article class="yue" role="main">
           <section id="module-drumscript.drum_classifier.classify">
 <span id="drumscript-drum-classifier-classify"></span><h1>drumscript.drum_classifier.classify<a class="headerlink" href="#module-drumscript.drum_classifier.classify" title="Link to this heading">¶</a></h1>
-<p>This script determines the classification rules by which the parameters in py are applied to audio_file_path.</p>
+<p>This script determines the classification rules by which the parameters in py are applied to audio_file_path.
+It fuses high-resolution acoustic DNA extraction with simultaneous HFER/LFER physics rules.
+Natively detects and filters isolated single-beat cymbals/kicks using Peak Dominance.</p>
 <p class="rubric">Functions</p>
 <div class="table-wrapper autosummary longtable docutils container">
 <table class="autosummary longtable docutils align-default">
 <tbody>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">analyze_event</span></code>(y, sr)</p></td>
-<td><p></p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">classify_event</span></code>(physics)</p></td>
+<td><p>Stage 1: Evaluates both Skins and Metals simultaneously.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">classify_event</span></code>(audio_segment, sr)</p></td>
-<td><p>Stage 1: Class Separation (Skin vs Metal)</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">classify_events</span></code>(audio_data, sr, onsets)</p></td>
+<td><p>Wrapper to route validated onsets through the Physics-First Classification Engine.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">classify_events</span></code>(audio_data, sr, onsets)</p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">classify_idiophone</span></code>(p)</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">classify_idiophone</span></code>(p)</p></td>
 <td><p>Stage 2B: Sorts Metals (Hats, Cymbals).</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">classify_membranophone</span></code>(p)</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">classify_membranophone</span></code>(p)</p></td>
 <td><p>Stage 2A: Sorts Skins (Kick, Snare, Toms).</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_physics_profile</span></code>(y, sr)</p></td>
-<td><p>Extracts the 'DNA' of the drum hit:  Pitch, Decay, Brightness, and Energy Ratios.</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">extract_features</span></code>(audio_slice_short, ...)</p></td>
+<td><p>Analyses the audio slice and extracts the physical DSP features.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_audio_slice</span></code>(audio_data, onset_time, sr)</p></td>
+<td><p>Cuts a specific millisecond slice of audio starting exactly at the onset time.</p></td>
 </tr>
 </tbody>
 </table>
@@ -264,5 +301,5 @@ data-aria-dark="Switch to auto color mode">
       <script src="../_static/documentation_options.js?v=01f34227"></script>
       <script src="../_static/doctools.js?v=fd6eb6e6"></script>
       <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
-      <script src="../_static/shibuya.js?v=9b0e4dde"></script></body>
+      <script src="../_static/shibuya.js?v=cac61aee"></script></body>
 </html>

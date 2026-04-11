@@ -202,8 +202,9 @@ KICK_FREQ_MIN = 40.0   # Hz
 KICK_MAX_PEAK_FREQ = 100.0  # Hz/
 KICK_FREQ_MAX = 140.0  # Hz (Safety margin above observed 129Hz)
 KICK_MAX_CENTROID = 400.0   # Hz (Generous upper bound, refined by LFER)
-KICK_MIN_LFER = 0.50        # Min 50% of energy must be below 150Hz
-KICK_LFER_MIN = 0.40   # 40% (Safety margin below observed 46.9%)
+# KICK_MIN_LFER = 0.50        # Min 50% of energy must be below 150Hz [UPDATE weds-25-mar-26: commenting out due to duplication (ie KICK_MIN_LFER)]
+# KICK_LFER_MIN = 0.40   # 40% (Safety margin below observed 46.9%)
+KICK_LFER_MIN = 0.32   # Min 32% energy must be < 150Hz [UPDATE weds-25-mar-26: added in]
 
 # 2. --- SNARE DRUM PHYSICS ---
 # Analysis Source: 20 user-provided wav files
@@ -247,7 +248,8 @@ Derived from iterative analysis of user audio samples (Feb 2026).
 # A. KICK DRUM (Sub-Bass, Short Decay)
 KICK_FREQ_MIN = 40.0    # Hz
 KICK_FREQ_MAX = 140.0   # Hz
-KICK_LFER_MIN = 0.40    # Min 40% energy must be < 150Hz
+# KICK_LFER_MIN = 0.40    # Min 40% energy must be < 150Hz  [UPDATE weds-25-mar-26: commenting out due to duplication (ie KICK_MIN_LFER)]
+# KICK_LFER_MIN = 0.32 # Min 32% energy must be < 150Hz  [UPDATE weds-25-mar-26: commenting out due to duplication (ie KICK_MIN_LFER, ~line 207 above)]
 KICK_MAX_DECAY = 0.25   # Seconds (Thud)
 
 # B. SNARE DRUM (Wire Noise + Body)

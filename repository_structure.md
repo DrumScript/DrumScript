@@ -2,7 +2,7 @@
 ## `DrumScript` Python Package Structure
 
 <!--date_created: weds-25-oct-2025-->
-<!--date_edited: tues-13-jan-2026-->
+<!--date_edited: sun-05-apr-2026-->
 
 ```markdown
 DrumScript/                          # Project root
@@ -22,17 +22,15 @@ DrumScript/                          # Project root
 │   │    ├── __init__.py
 │   │    └── classify.py             # The core rule engine for deterministically classifying drum audio using `constants.py`
 │   │
-│   ├── notation_generator/          # *[FORTHCOMING]* Generates musical notation (`.json`) and sheet music (`.pdf`).
+│   ├── notation_generator/          # Generates musical notation (`.json`), (`.midi`) and sheet music (`.pdf`) from audio provided.
 │   │   ├── __init__.py
+│   │   ├── score_builder.py
+│   │   ├── pdf_generator.py
 │   │   └── constants.py             # Single-source of truth for constants such as `SAMPLE_RATE`, `N_FFT` used globally through `DrumScript`
 │   └── utils/                       # Utility functions.
-│
 ├── docs/                            # Documentation for developers and contributors, as well as the `_build` artifacts for the `DrumScript` documentation website.
+│    ├── theory/                          # Reference documents (music theory, DSP, etc.). Sources provided
 ├── local_tests/                     # Local test scripts (e.g., interface testing).
-├── outputs/                         # Default directory for generated files (Ignored by Git).
-├── test_audio/                      # Audio files used for testing.
-├── theory/                          # Reference documents (music theory, DSP, etc.). Sources provided
-│
 ├── .gitignore                       # Specifies intentionally untracked files.
 ├── .github/                         # GitActions files
 │   ├── workflows/
@@ -40,12 +38,13 @@ DrumScript/                          # Project root
 │   │   ├── docs.yml                 # Handles publishing of `DrumScript` documentation to GitHub Pages
 │   │   ├── publish.yml              # Handles publishing of the package to PyPi automatically
 │   │   └── tests.yml                # Handles tests on development branch and main to ensure they dont break when PR is merged
-├── LICENSE                          # MIT License.
+├── LICENSE                          # Apache
 ├── README.md                        # Project overview and main documentation.
 ├── repository_structure.md          # This file.
+├── tree.txt                         # Tree diagram (generated using `homebrew tree`)
 ├── pyproject.toml                   # Project metadata and dependencies (managed by `uv`).
 └── uv.lock                          # Pinned versions of all dependencies.
-
+```
 > **PLEASE NOTE (Oct-2025 Update):** This repository structure has been updated to reflect the project's pivot to a non-ML, classification-based approach. Legacy machine learning modules have been archived.
 
 ---

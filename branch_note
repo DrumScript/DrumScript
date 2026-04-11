@@ -1,0 +1,10 @@
+Branch `backups/build/classification_model` created on Tuesday 24 February 2026 following successful building and testing of onset_detector.py (onset_detect) function using pure librosa. 
+
+Backup files are stored locally and in local .archive. 
+
+onset_detector (assuming constant of 128hop_length (sourced from drumscript.notation_generator.constants.py))
+
+ backups also saved in local .archive:
+
+ 1) .archive/drumscript__archive/audio_processor__archive/onset_detector__archive/onset_detector___v_0_1_0__BABY__mon23feb2026.py
+ 2) .archive/drumscript__archive/notation_generator__archive/constants__archive/constants___CORRESPONDING_TO_ONSET_DETECTOR__v_0_1_0__BABY__mon23feb2026.py

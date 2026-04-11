@@ -10,7 +10,7 @@
    
       draw_bar_line
       draw_clef
-      draw_note
+      draw_notehead
       draw_staff
       draw_time_signature
       export_pdf

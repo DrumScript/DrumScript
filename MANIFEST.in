@@ -1,11 +1,4 @@
 # MANIFEST.in
 
-# Exclude specific scripts from the build
-exclude drumscript/main.py
-exclude drumscript/notation_generator/helpers.py
-drumscript.notation_generator/pdf_exporter.py
-drumscript.notation_generator/score_generator.py
-
-# Ensure other junk doesn't get in (optional but recommended)
 global-exclude *.py[cod]
 global-exclude __pycache__

@@ -1,16 +1,16 @@
-## TESTING 1 - 2026-04-11
+## TESTING 2 - 2026-04-11
 
 # ------------------------------------------------------------------------------------
 
-date/time: 2026-04-11 14:44:55.792809
+date/time: 2026-04-11 20:12:08.129990
 
 # ------------------------------------------------------------------------------------
 
-date/time: 2026-04-11 14:44:57.664893
+date/time: 2026-04-11 20:12:09.361532
 
 # ------------------------------------------------------------------------------------
 
-date/time: 2026-04-11 14:44:58.291126
+date/time: 2026-04-11 20:12:09.814069
 
 --- Starting DrumScript ---
 Target: test_audio/test.wav
@@ -34,15 +34,15 @@ SUCCESS: MIDI file generated at -> outputs/test_transcription.mid
 
 # ------------------------------------------------------------------------------------
 
-date/time: 2026-04-11 14:45:08.495390
+date/time: 2026-04-11 20:12:17.517414
 
 # ------------------------------------------------------------------------------------
 
-date/time: 2026-04-11 14:45:09.033710
+date/time: 2026-04-11 20:12:18.086132
 
 # ------------------------------------------------------------------------------------
 
-date/time: 2026-04-11 14:45:09.290663
+date/time: 2026-04-11 20:12:18.358723
 
 --- Starting DrumScript ---
 Target: test_audio/65bpm_iron_man_actual.wav
@@ -54,7 +54,7 @@ Target: test_audio/65bpm_iron_man_actual.wav
    -> Detected Tempo: 64.6 BPM
    -> Detected Onsets: 1550
 ...Classifying (Fundamental Frequency Engine)...
-   -> Classified 1550 events
+   -> Classified 392 events
 ...Building Score & JSON: outputs/65bpm_iron_man_actual_transcription.pdf...
 --- Building Score for: outputs/65bpm_iron_man_actual_transcription.pdf [Time Sig: 4/4] ---
 Saving to: outputs/65bpm_iron_man_actual_transcription.json
@@ -66,15 +66,15 @@ SUCCESS: MIDI file generated at -> outputs/65bpm_iron_man_actual_transcription.m
 
 # ------------------------------------------------------------------------------------
 
-date/time: 2026-04-11 14:45:44.282932
+date/time: 2026-04-11 20:12:54.790133
 
 # ------------------------------------------------------------------------------------
 
-date/time: 2026-04-11 14:45:44.832669
+date/time: 2026-04-11 20:12:55.355905
 
 # ------------------------------------------------------------------------------------
 
-date/time: 2026-04-11 14:45:45.105521
+date/time: 2026-04-11 20:12:55.662725
 
 --- Starting DrumScript ---
 Target: outputs/stems_test/htdemucs/The Great Old Ones - My Love For The Stars (Cthulhu Fhtagn)/drums.wav
@@ -86,7 +86,7 @@ Target: outputs/stems_test/htdemucs/The Great Old Ones - My Love For The Stars (
    -> Detected Tempo: 117.5 BPM
    -> Detected Onsets: 2305
 ...Classifying (Fundamental Frequency Engine)...
-   -> Classified 2305 events
+   -> Classified 626 events
 ...Building Score & JSON: outputs/drums_transcription.pdf...
 --- Building Score for: outputs/drums_transcription.pdf [Time Sig: 4/4] ---
 Saving to: outputs/drums_transcription.json
@@ -98,15 +98,15 @@ SUCCESS: MIDI file generated at -> outputs/drums_transcription.mid
 
 # ------------------------------------------------------------------------------------
 
-date/time: 2026-04-11 14:46:36.073771
+date/time: 2026-04-11 20:13:49.929148
 
 # ------------------------------------------------------------------------------------
 
-date/time: 2026-04-11 14:46:36.622511
+date/time: 2026-04-11 20:13:50.811780
 
 # ------------------------------------------------------------------------------------
 
-date/time: 2026-04-11 14:46:36.881717
+date/time: 2026-04-11 20:13:51.224887
 
 --- Starting DrumScript ---
 Target: test_audio/high_tom_phat.wav
@@ -130,15 +130,79 @@ SUCCESS: MIDI file generated at -> outputs/high_tom_phat_transcription.mid
 
 # ------------------------------------------------------------------------------------
 
-date/time: 2026-04-11 14:46:38.740313
+date/time: 2026-04-11 20:13:54.224568
 
 # ------------------------------------------------------------------------------------
 
-date/time: 2026-04-11 14:46:39.190657
+date/time: 2026-04-11 20:13:54.775824
 
 # ------------------------------------------------------------------------------------
 
-date/time: 2026-04-11 14:46:39.360957
+date/time: 2026-04-11 20:13:54.975834
+
+--- Starting DrumScript ---
+Target: test_audio/mid_tom_phat.wav
+...Loading & Analysing Audio...
+(HOP_LENGTH: 128)
+(Wait Frames Applied: 17)
+(len_onset_times:5)
+   -> Duration: 0:01 (1.54s)
+   -> Detected Tempo: 215.3 BPM
+   -> Detected Onsets: 5
+...Classifying (Fundamental Frequency Engine)...
+   -> Classified 1 events
+...Building Score & JSON: outputs/mid_tom_phat_transcription.pdf...
+--- Building Score for: outputs/mid_tom_phat_transcription.pdf [Time Sig: 4/4] ---
+Saving to: outputs/mid_tom_phat_transcription.json
+Generating PDF: outputs/mid_tom_phat_transcription.pdf (Sig: 4/4, 215 BPM)
+PDF successfully saved to: outputs/mid_tom_phat_transcription.pdf
+SUCCESS: MIDI file generated at -> outputs/mid_tom_phat_transcription.mid
+--- Done! ---
+
+
+# ------------------------------------------------------------------------------------
+
+date/time: 2026-04-11 20:13:56.806372
+
+# ------------------------------------------------------------------------------------
+
+date/time: 2026-04-11 20:13:57.327910
+
+# ------------------------------------------------------------------------------------
+
+date/time: 2026-04-11 20:13:57.520545
+
+--- Starting DrumScript ---
+Target: test_audio/low_tom_phat.wav
+...Loading & Analysing Audio...
+(HOP_LENGTH: 128)
+(Wait Frames Applied: 17)
+(len_onset_times:2)
+   -> Duration: 0:01 (1.55s)
+   -> Detected Tempo: 78.3 BPM
+   -> Detected Onsets: 2
+...Classifying (Fundamental Frequency Engine)...
+   -> Classified 1 events
+...Building Score & JSON: outputs/low_tom_phat_transcription.pdf...
+--- Building Score for: outputs/low_tom_phat_transcription.pdf [Time Sig: 4/4] ---
+Saving to: outputs/low_tom_phat_transcription.json
+Generating PDF: outputs/low_tom_phat_transcription.pdf (Sig: 4/4, 78 BPM)
+PDF successfully saved to: outputs/low_tom_phat_transcription.pdf
+SUCCESS: MIDI file generated at -> outputs/low_tom_phat_transcription.mid
+--- Done! ---
+
+
+# ------------------------------------------------------------------------------------
+
+date/time: 2026-04-11 20:13:59.343642
+
+# ------------------------------------------------------------------------------------
+
+date/time: 2026-04-11 20:13:59.829850
+
+# ------------------------------------------------------------------------------------
+
+date/time: 2026-04-11 20:14:00.021559
 
 --- Starting DrumScript ---
 Target: test_audio/snare_0007.wav
@@ -163,15 +227,15 @@ SUCCESS: MIDI file generated at -> outputs/snare_0007_transcription.mid
 
 # ------------------------------------------------------------------------------------
 
-date/time: 2026-04-11 14:46:40.793994
+date/time: 2026-04-11 20:14:01.764533
 
 # ------------------------------------------------------------------------------------
 
-date/time: 2026-04-11 14:46:41.259548
+date/time: 2026-04-11 20:14:02.238954
 
 # ------------------------------------------------------------------------------------
 
-date/time: 2026-04-11 14:46:41.438577
+date/time: 2026-04-11 20:14:02.419030
 
 --- Starting DrumScript ---
 Target: test_audio/kick_0006.wav
@@ -184,7 +248,7 @@ Audio too short for tempo detection (0.66s). Defaulting to 120 BPM.
    -> Detected Tempo: 120.0 BPM
    -> Detected Onsets: 3
 ...Classifying (Fundamental Frequency Engine)...
-   -> Classified 3 events
+   -> Classified 1 events
 ...Building Score & JSON: outputs/kick_0006_transcription.pdf...
 --- Building Score for: outputs/kick_0006_transcription.pdf [Time Sig: 4/4] ---
 Saving to: outputs/kick_0006_transcription.json
@@ -196,15 +260,15 @@ SUCCESS: MIDI file generated at -> outputs/kick_0006_transcription.mid
 
 # ------------------------------------------------------------------------------------
 
-date/time: 2026-04-11 14:46:42.950366
+date/time: 2026-04-11 20:14:04.304713
 
 # ------------------------------------------------------------------------------------
 
-date/time: 2026-04-11 14:46:43.455383
+date/time: 2026-04-11 20:14:04.904021
 
 # ------------------------------------------------------------------------------------
 
-date/time: 2026-04-11 14:46:43.632006
+date/time: 2026-04-11 20:14:05.099984
 
 --- Starting DrumScript ---
 Target: test_audio/ride__2002__20_deep_full_ride_edge.wav
@@ -216,7 +280,7 @@ Target: test_audio/ride__2002__20_deep_full_ride_edge.wav
    -> Detected Tempo: 234.9 BPM
    -> Detected Onsets: 89
 ...Classifying (Fundamental Frequency Engine)...
-   -> Classified 89 events
+   -> Classified 2 events
 ...Building Score & JSON: outputs/ride__2002__20_deep_full_ride_edge_transcription.pdf...
 --- Building Score for: outputs/ride__2002__20_deep_full_ride_edge_transcription.pdf [Time Sig: 4/4] ---
 Saving to: outputs/ride__2002__20_deep_full_ride_edge_transcription.json
@@ -228,15 +292,15 @@ SUCCESS: MIDI file generated at -> outputs/ride__2002__20_deep_full_ride_edge_tr
 
 # ------------------------------------------------------------------------------------
 
-date/time: 2026-04-11 14:46:45.935400
+date/time: 2026-04-11 20:14:07.531934
 
 # ------------------------------------------------------------------------------------
 
-date/time: 2026-04-11 14:46:46.410852
+date/time: 2026-04-11 20:14:08.016311
 
 # ------------------------------------------------------------------------------------
 
-date/time: 2026-04-11 14:46:46.586405
+date/time: 2026-04-11 20:14:08.194201
 
 --- Starting DrumScript ---
 Target: test_audio/crash__201_bronze__16_crash_edge.wav
@@ -248,7 +312,7 @@ Target: test_audio/crash__201_bronze__16_crash_edge.wav
    -> Detected Tempo: 234.9 BPM
    -> Detected Onsets: 46
 ...Classifying (Fundamental Frequency Engine)...
-   -> Classified 46 events
+   -> Classified 1 events
 ...Building Score & JSON: outputs/crash__201_bronze__16_crash_edge_transcription.pdf...
 --- Building Score for: outputs/crash__201_bronze__16_crash_edge_transcription.pdf [Time Sig: 4/4] ---
 Saving to: outputs/crash__201_bronze__16_crash_edge_transcription.json
@@ -260,15 +324,15 @@ SUCCESS: MIDI file generated at -> outputs/crash__201_bronze__16_crash_edge_tran
 
 # ------------------------------------------------------------------------------------
 
-date/time: 2026-04-11 14:46:48.736210
+date/time: 2026-04-11 20:14:10.404996
 
 # ------------------------------------------------------------------------------------
 
-date/time: 2026-04-11 14:46:49.194058
+date/time: 2026-04-11 20:14:10.896785
 
 # ------------------------------------------------------------------------------------
 
-date/time: 2026-04-11 14:46:49.368810
+date/time: 2026-04-11 20:14:11.082084
 
 --- Starting DrumScript ---
 Target: test_audio/hatopen__201_bronze__13_hi-hat_open.wav
@@ -293,15 +357,15 @@ SUCCESS: MIDI file generated at -> outputs/hatopen__201_bronze__13_hi-hat_open_t
 
 # ------------------------------------------------------------------------------------
 
-date/time: 2026-04-11 14:46:50.839469
+date/time: 2026-04-11 20:14:12.964010
 
 # ------------------------------------------------------------------------------------
 
-date/time: 2026-04-11 14:46:51.303665
+date/time: 2026-04-11 20:14:13.680645
 
 # ------------------------------------------------------------------------------------
 
-date/time: 2026-04-11 14:46:51.476726
+date/time: 2026-04-11 20:14:13.998485
 
 --- Starting DrumScript ---
 Target: test_audio/hatclosed__201_bronze__14_hi-hat_closed.wav
@@ -321,68 +385,4 @@ Saving to: outputs/hatclosed__201_bronze__14_hi-hat_closed_transcription.json
 Generating PDF: outputs/hatclosed__201_bronze__14_hi-hat_closed_transcription.pdf (Sig: 4/4, 120 BPM)
 PDF successfully saved to: outputs/hatclosed__201_bronze__14_hi-hat_closed_transcription.pdf
 SUCCESS: MIDI file generated at -> outputs/hatclosed__201_bronze__14_hi-hat_closed_transcription.mid
---- Done! ---
-
-
-# ------------------------------------------------------------------------------------
-
-date/time: 2026-04-11 16:15:54.479349
-
-# ------------------------------------------------------------------------------------
-
-date/time: 2026-04-11 16:15:55.301300
-
-# ------------------------------------------------------------------------------------
-
-date/time: 2026-04-11 16:15:55.632978
-
---- Starting DrumScript ---
-Target: test_audio/mid_tom_phat.wav
-...Loading & Analysing Audio...
-(HOP_LENGTH: 128)
-(Wait Frames Applied: 17)
-(len_onset_times:5)
-   -> Duration: 0:01 (1.54s)
-   -> Detected Tempo: 215.3 BPM
-   -> Detected Onsets: 5
-...Classifying (Fundamental Frequency Engine)...
-   -> Classified 1 events
-...Building Score & JSON: outputs/mid_tom_phat_transcription.pdf...
---- Building Score for: outputs/mid_tom_phat_transcription.pdf [Time Sig: 4/4] ---
-Saving to: outputs/mid_tom_phat_transcription.json
-Generating PDF: outputs/mid_tom_phat_transcription.pdf (Sig: 4/4, 215 BPM)
-PDF successfully saved to: outputs/mid_tom_phat_transcription.pdf
-SUCCESS: MIDI file generated at -> outputs/mid_tom_phat_transcription.mid
---- Done! ---
-
-
-# ------------------------------------------------------------------------------------
-
-date/time: 2026-04-11 16:15:58.789946
-
-# ------------------------------------------------------------------------------------
-
-date/time: 2026-04-11 16:15:59.288372
-
-# ------------------------------------------------------------------------------------
-
-date/time: 2026-04-11 16:15:59.529819
-
---- Starting DrumScript ---
-Target: test_audio/low_tom_phat.wav
-...Loading & Analysing Audio...
-(HOP_LENGTH: 128)
-(Wait Frames Applied: 17)
-(len_onset_times:2)
-   -> Duration: 0:01 (1.55s)
-   -> Detected Tempo: 78.3 BPM
-   -> Detected Onsets: 2
-...Classifying (Fundamental Frequency Engine)...
-   -> Classified 1 events
-...Building Score & JSON: outputs/low_tom_phat_transcription.pdf...
---- Building Score for: outputs/low_tom_phat_transcription.pdf [Time Sig: 4/4] ---
-Saving to: outputs/low_tom_phat_transcription.json
-Generating PDF: outputs/low_tom_phat_transcription.pdf (Sig: 4/4, 78 BPM)
-PDF successfully saved to: outputs/low_tom_phat_transcription.pdf
-SUCCESS: MIDI file generated at -> outputs/low_tom_phat_transcription.mid
 --- Done! ---

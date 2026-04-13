@@ -35,6 +35,7 @@ def main(input_audio_path: str,
          drumless: bool = False,
          mute: list = None,
          all_stems: bool = False,
+         is_rudiment: bool = False,
          output_format: str = "wav"):
         # .wav format as default, unless --mp3 input specified as an arg in user command
     
@@ -161,6 +162,7 @@ def main(input_audio_path: str,
                 output_format=output_format,
                 drumless=drumless,
                 mute=mute,
+                is_rudiment=args.rudiment,
                 all_stems=all_stems
             )
             
@@ -199,7 +201,16 @@ def main(input_audio_path: str,
         # 3. Classification
         print("...Classifying (Fundamental Frequency Engine)...")
         # classified_events = classify.classify_drum_hits(y, sr, onsets)
-        classified_events = classify.classify_events(y, sr, onsets)
+        #classified_events = classify.classify_events(y, sr, onsets)
+        #print(f"   -> Classified {len(classified_events)} events")
+
+        if is_rudiment:
+            print("   -> Using Rudiment/Single-Beat Classification Engine")
+            classified_events = classify.classify_rudiment_events(y, sr, onsets)
+        else:
+            print("   -> Using Standard Polyphonic Classification Engine")
+            classified_events = classify.classify_events(y, sr, onsets)
+            
         print(f"   -> Classified {len(classified_events)} events")
 
         # 4. Score Formatting
@@ -211,7 +222,6 @@ def main(input_audio_path: str,
                 # 'drums': event['instruments'], # Map list to 'drums'
                 # 'analysis': event['debug_features'], # NOW CONTAINS: peak_freq, centroid, lfer, hfer, hfer_2k, hfer_5k, decay
                 
-                # --- NEW UNIFIED MAPPING ---
                 'time_sec': event['time_sec'],
                 'instruments': event['instruments'], 
                 'debug_features': event['debug_features'], 
@@ -256,10 +266,13 @@ if __name__ == '__main__':
     parser.add_argument("--mute", type=str, action='append', help="Mute specific stems (e.g. --mute bass). Can be used multiple times.")
     parser.add_argument("--all-stems", action="store_true", help="Export all individual stems")
     parser.add_argument("--format", type=str, default="wav", choices=["wav", "mp3"], help="Output format for stems (default: wav)")
-    
+
+    # Add argument for triggering simpler orchestration function in classify_rudiment_events() function
+    parser.add_argument("--rudiment", action="store_true", help="Optimise classification for isolated single beats, rudiments, or paradiddles.")
+
     # Notation arguments
     parser.add_argument("--ts", type=str, default="4/4", help="Time signature (default: 4/4)")
-    
+
     args = parser.parse_args()
     
     main(input_audio_path=args.input_audio_path, 
@@ -268,6 +281,7 @@ if __name__ == '__main__':
          drumless=args.drumless,
          mute=args.mute,
          all_stems=args.all_stems,
+         is_rudiment=args.format,
          output_format=args.format)
 
 # LEGACY: if __name__ == '__main__':

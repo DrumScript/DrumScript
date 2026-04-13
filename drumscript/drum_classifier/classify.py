@@ -226,6 +226,73 @@ def classify_event(physics):
         
     return instruments
 
+def classify_rudiment_events(audio_data: np.ndarray, sr: int, onsets: list[float]) -> list[dict]:
+    """
+    Dedicated classification engine for single beats, paradiddles, and rudiments.
+    Applies strict amplitude gating and extended lockouts to crush cymbal wobbles and prevent double-triggering in sparse audio files.
+    """
+    from drumscript.notation_generator import constants
+    classified_events = []
+    
+    global_max = np.max(np.abs(audio_data)) if len(audio_data) > 0 else 1.0
+
+    for onset_time in onsets:
+        start_sample = int(onset_time * sr)
+        
+        # --- SHORT SLICE PADDING LOGIC (200ms) ---
+        duration_short_secs = constants.ONSET_SLICE_DURATION_MS / 1000.0 
+        end_sample_short = start_sample + int(duration_short_secs * sr)
+
+        if end_sample_short > len(audio_data):
+            slice_data = audio_data[start_sample:]
+            pad_length = end_sample_short - len(audio_data)
+            y_window_short = np.pad(slice_data, (0, pad_length), mode='constant')
+        else:
+            y_window_short = audio_data[start_sample:end_sample_short]
+
+        if len(y_window_short) == 0:
+            continue
+            
+        slice_max = np.max(np.abs(y_window_short)) if len(y_window_short) > 0 else 0.0
+
+        # --- RUDIMENT GATE ---
+        # 1. Amplitude Gate: Drop any tail/wobble under 50% max volume
+        if slice_max < global_max * 0.50:
+            continue
+            
+        # 2. De-Bounce Lockout: 350ms lockout to crush high-speed cymbal wobbles
+        if len(classified_events) > 0:
+            last_time = classified_events[-1]["time_sec"]
+            if float(onset_time) - last_time < 0.35:
+                continue
+
+        # --- LONG SLICE PADDING LOGIC (1.5s) ---
+        duration_long_secs = 1.5 
+        end_sample_long = start_sample + int(duration_long_secs * sr)
+
+        if end_sample_long > len(audio_data):
+            slice_data = audio_data[start_sample:]
+            pad_length = end_sample_long - len(audio_data)
+            y_window_long = np.pad(slice_data, (0, pad_length), mode='constant')
+        else:
+            y_window_long = audio_data[start_sample:end_sample_long]
+
+        # 1. Extract the physics DNA
+        physics_profile = extract_features(y_window_short, y_window_long, sr)
+
+        # 2. Apply Classification Rules (Using your modular helper functions)
+        instruments = classify_event(physics_profile)
+        
+        # 3. Append with unified compatible keys
+        classified_events.append({
+            "time_sec": float(onset_time), 
+            "instruments": instruments, 
+            "debug_features": physics_profile
+        })
+
+    return classified_events
+
+
 def classify_events(audio_data: np.ndarray, sr: int, onsets: list[float]) -> list[dict]:
     """
     Wrapper to route validated onsets through the Physics-First Classification Engine.

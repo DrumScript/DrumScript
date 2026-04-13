@@ -91,7 +91,7 @@ def extract_features(audio_slice_short: np.ndarray, audio_slice_long: np.ndarray
     low_idx = np.where(frequencies <= 150.0)[0]
     features['lfer'] = float(np.sum(spectrum[low_idx]) / total_energy) 
     
-    # Snare Wire Energy Ratio (Energy > 2000Hz)
+    # snare Wire Energy Ratio (Energy > 2000Hz)
     high_idx = np.where(frequencies > 2000.0)[0]
     features['hfer'] = float(np.sum(spectrum[high_idx]) / total_energy) 
     
@@ -101,16 +101,18 @@ def extract_features(audio_slice_short: np.ndarray, audio_slice_long: np.ndarray
     
     return features
 
-
 def classify_membranophone(p):
     """
-    Stage 2A: Sorts Skins (Kick, Snare, Toms).
+    Stage 2A: Sorts skins (kick, snare, toms).
     """
     detected_instruments = []
     
     # RULE 1: KICK DRUM
     if p['lfer'] >= KICK_LFER_MIN and (KICK_FREQ_MIN <= p['peak_freq'] <= KICK_FREQ_MAX):
-        detected_instruments.append('kick')
+        # A kick is a short thud; a tom rings more.
+        is_pure_tom = (p['hfer'] < SNARE_HFER_MIN) and (p['decay'] >= TOM_MIN_DECAY)
+        if not is_pure_tom:
+            detected_instruments.append('kick')
             
     # RULE 2: SNARE DRUM 
     is_snare_freq = (SNARE_FREQ_MIN <= p['peak_freq'] <= SNARE_FREQ_MAX)
@@ -134,6 +136,38 @@ def classify_membranophone(p):
 
     return detected_instruments
 
+## --- LEGACY CODE --- CLASSIFY_MEMBRANOPHONE()
+#def classify_membranophone(p):
+    
+    #Stage 2A: Sorts skins (kick, snare, toms).
+    
+ #   detected_instruments = []
+    
+    # RULE 1: KICK DRUM
+  #  if p['lfer'] >= KICK_LFER_MIN and (KICK_FREQ_MIN <= p['peak_freq'] <= KICK_FREQ_MAX):
+  #      detected_instruments.append('kick')
+            
+    # RULE 2: SNARE DRUM 
+  #  is_snare_freq = (SNARE_FREQ_MIN <= p['peak_freq'] <= SNARE_FREQ_MAX)
+  #  has_snare_wire = (SNARE_HFER_MIN <= p['hfer'] < 0.85)
+    
+  #  if has_snare_wire and is_snare_freq:
+   #     detected_instruments.append('snare')
+        
+    # RULE 3: TOMS 
+   # is_pure = p['hfer'] < SNARE_HFER_MIN  
+   # is_resonant = p['decay'] >= TOM_MIN_DECAY 
+    
+    #if is_pure and is_resonant:
+    #    if p['peak_freq'] <= TOM_FREQ_LOW_MAX:
+    #        if 'kick' not in detected_instruments: 
+    #            detected_instruments.append('low_tom')
+    #    elif p['peak_freq'] <= TOM_FREQ_MID_MAX:
+    #        detected_instruments.append('mid_tom')
+    #    elif p['peak_freq'] <= 400: 
+    #        detected_instruments.append('high_tom')
+
+    #return detected_instruments
 
 def classify_idiophone(p):
     """
@@ -149,16 +183,39 @@ def classify_idiophone(p):
         elif decay <= HAT_OPEN_MAX_DECAY:
             detected_instruments.append('hi_hat_open')
         else:
-            if p['centroid'] > 2500:
+            # Raised Centroid from 2500 to 5500 to cleanly separate ride vs crash
+            if p['centroid'] > 5500:
                 detected_instruments.append('crash') 
             else:
                 detected_instruments.append('ride') 
                 
     return detected_instruments
 
+## --- LEGACY CODE --- CLASSIFY_IDIOPHONE()
+#def classify_idiophone(p):
+   
+   # Stage 2B: Sorts Metals (Hats, Cymbals).
+    
+    #detected_instruments = []
+    #decay = p['decay']
+    
+    # RULE 4: METALS (Hats / Cymbals)
+    #if p['hfer_5k'] >= IDIOPHONE_MIN_HFER_5K:
+    #    if decay <= HAT_CLOSED_MAX_DECAY:
+    #        detected_instruments.append('hi_hat_closed')
+    #    elif decay <= HAT_OPEN_MAX_DECAY:
+    #        detected_instruments.append('hi_hat_open')
+    #    else:
+    #        if p['centroid'] > 2500:
+    #            detected_instruments.append('crash') 
+    #        else:
+    #            detected_instruments.append('ride') 
+                
+    #return detected_instruments
+
 def classify_event(physics):
     """
-    Stage 1: Evaluates both Skins and Metals simultaneously.
+    Stage 1: Evaluates both skins and Metals simultaneously.
     """
     instruments = []
     instruments.extend(classify_membranophone(physics))
@@ -219,18 +276,31 @@ def classify_events(audio_data: np.ndarray, sr: int, onsets: list[float]) -> lis
         # For highly dynamic tracks like TGOO, we must trust the onset detector to 
         # find the quiet ghost notes without artificially gating them out.
 
-        # --- SEAMLESS SINGLE BEAT GATE ---
+        ## --- LEGACY CODE -- SINGLE BEAT GATE ---
+        # --- SINGLE BEAT GATE ---
+        #if is_single_beat:
+            # 1. Strict Gate for isolated cymbal/kick tails
+         #   if slice_max < global_max * 0.50:
+          #      continue
+                
+            # 2. De-Bounce Lockout
+           # if len(classified_events) > 0:
+            #    last_time = classified_events[-1]["time_sec"]
+             #   if float(onset_time) - last_time < 0.15:
+              #      continue
+
+                # --- SINGLE BEAT GATE ---
         if is_single_beat:
-            # 1. Ruthless Gate for isolated cymbal/kick tails
+            # 1. Stricter gate for isolated cymbal/kick tails
             if slice_max < global_max * 0.50:
                 continue
                 
             # 2. De-Bounce Lockout
             if len(classified_events) > 0:
                 last_time = classified_events[-1]["time_sec"]
-                if float(onset_time) - last_time < 0.15:
+                # Increased from 0.15 to 0.35 to deal with ride cymbal shimmers
+                if float(onset_time) - last_time < 0.35: 
                     continue
-
         # --- LONG SLICE PADDING LOGIC (1.5s) ---
         duration_long_secs = 1.5 
         end_sample_long = start_sample + int(duration_long_secs * sr)
@@ -248,7 +318,7 @@ def classify_events(audio_data: np.ndarray, sr: int, onsets: list[float]) -> lis
         # 2. Apply Classification Rules (Integrated Logic)
         instruments = []
         
-        # --- MEMBRANOPHONES (Skins) ---
+        # --- MEMBRANOPHONES (skins) ---
         # RULE 1: KICK DRUM
         if physics_profile['lfer'] >= KICK_LFER_MIN and (KICK_FREQ_MIN <= physics_profile['peak_freq'] <= KICK_FREQ_MAX):
             instruments.append('kick')
@@ -311,7 +381,7 @@ def classify_events(audio_data: np.ndarray, sr: int, onsets: list[float]) -> lis
     #global_max = np.max(np.abs(audio_data)) if len(audio_data) > 0 else 1.0
     #duration = len(audio_data) / sr
 
-    # --- NATIVE PEAK DOMINANCE CHECK (Seamless Single-Beat Detection) ---
+    # --- NATIVE PEAK DOMINANCE CHECK (Single-Beat Detection) ---
     #loud_hit_count = 0
     #for t in onsets:
     #    s_start = int(t * sr)
@@ -348,9 +418,9 @@ def classify_events(audio_data: np.ndarray, sr: int, onsets: list[float]) -> lis
         #if slice_max < 0.02 * global_max:
         #    continue
 
-        # --- SEAMLESS SINGLE BEAT GATE ---
+        # --- SINGLE BEAT GATE ---
         #if is_single_beat:
-            # 1. Ruthless Gate
+            # 1. Strict Gate
         #    if slice_max < global_max * 0.50:
         #        continue
                 
@@ -377,7 +447,7 @@ def classify_events(audio_data: np.ndarray, sr: int, onsets: list[float]) -> lis
         # 2. Apply Classification Rules (Integrated Logic)
         #instruments = []
         
-        # --- MEMBRANOPHONES (Skins) ---
+        # --- MEMBRANOPHONES (skins) ---
         # RULE 1: KICK DRUM
         #if physics_profile['lfer'] >= KICK_LFER_MIN and (KICK_FREQ_MIN <= physics_profile['peak_freq'] <= KICK_FREQ_MAX):
         #    instruments.append('kick')
@@ -488,10 +558,10 @@ def classify_events(audio_data: np.ndarray, sr: int, onsets: list[float]) -> lis
     #    if slice_max < 0.02 * global_max:
     #        continue
 
-        # --- Strict Single Beat 'Amplitude Gate' ---
+        # --- Single Beat 'Amplitude Gate' ---
         # For full songs, we do NOT interfere. We let the onset detector do its job  so ghost notes are perfectly preserved (guaranteeing backward compatibility). We only apply the 50% max volume drop to sparse, isolated single-beat samples
     #    if is_isolated_sample:
-            # 1. Ruthless Gate: Drop the quiet cymbal shimmers/kick sub-bass tails
+            # 1. Strict Gate: Drop the quiet cymbal shimmers/kick sub-bass tails
             #slice_max = np.max(np.abs(y_window_short)) if len(y_window_short) > 0 else 0.0
     #        if slice_max < 0.5 * global_max:
      #           continue
@@ -569,7 +639,7 @@ def classify_events(audio_data: np.ndarray, sr: int, onsets: list[float]) -> lis
         # --- STRICT SINGLE-BEAT AMPLITUDE GATE ---
         # For full songs, we do NOT interfere. We let the onset detector do its job 
         # so ghost notes are perfectly preserved (guaranteeing backward compatibility).
-        # We only apply the 50% max volume drop to sparse, isolated single-beat samples!
+        # We only apply the 50% max volume drop to sparse, isolated single-beat samples
         #if is_isolated_sample:
          #   slice_max = np.max(np.abs(y_window_short)) if len(y_window_short) > 0 else 0.0
          #   if slice_max < 0.5 * global_max:
@@ -637,7 +707,7 @@ def classify_events(audio_data: np.ndarray, sr: int, onsets: list[float]) -> lis
         # --- STRICT SINGLE-BEAT AMPLITUDE GATE ---
         # For full songs (> 2.0s), we do NOT interfere. We let the onset detector do its job 
         # so ghost notes are perfectly preserved (guaranteeing backward compatibility).
-        # We only apply the 50% max volume drop to short, isolated single-beat samples!
+        # We only apply the 50% max volume drop to short, isolated single-beat samples
         #if duration < 2.0:
          #   slice_max = np.max(np.abs(y_window_short)) if len(y_window_short) > 0 else 0.0
           #  if len(classified_events) > 0 and slice_max < 0.5 * global_max:
@@ -850,7 +920,7 @@ def classify_events(audio_data: np.ndarray, sr: int, onsets: list[float]) -> lis
     #low_idx = np.where(frequencies <= 150.0)[0]
     #features['lfer'] = float(np.sum(spectrum[low_idx]) / total_energy) # Added float() casting
     
-    # Snare Wire Energy Ratio (Energy > 2000Hz)
+    # snare Wire Energy Ratio (Energy > 2000Hz)
     #high_idx = np.where(frequencies > 2000.0)[0]
     #features['hfer'] = float(np.sum(spectrum[high_idx]) / total_energy) # Added float() casting
     
@@ -880,11 +950,11 @@ def classify_events(audio_data: np.ndarray, sr: int, onsets: list[float]) -> lis
 #     # 3. Energy Distribution Ratios
 #     total_energy = np.sum(psd) + 1e-9
 #     
-#     # Bass Energy (<150Hz) - Kick detection
+#     # Bass Energy (<150Hz) - kick detection
 #     low_energy = np.sum(psd[freqs < 150])
 #     lfer = low_energy / total_energy
 #     
-#     # Wire Energy (>2000Hz) - Snare vs High Tom detection
+#     # Wire Energy (>2000Hz) - snare vs High Tom detection
 #     mid_high_energy = np.sum(psd[freqs > 2000])
 #     hfer_2k = mid_high_energy / total_energy
 #     
@@ -918,7 +988,7 @@ def classify_events(audio_data: np.ndarray, sr: int, onsets: list[float]) -> lis
 # --- LEGACY CODE - COMMENTED OUT CLASSIFY_MEMBRANOPHONE (March 17 Interim) ---
 # def classify_membranophone(p):
 #     """
-#     Stage 2A: Sorts Skins (Kick, Snare, Toms).
+#     Stage 2A: Sorts skins (kick, snare, toms).
 #     Updated to merge Feb 9 explicit logic with simultaneous hit routing.
 #     """
 #     detected_instruments = []
@@ -931,7 +1001,7 @@ def classify_events(audio_data: np.ndarray, sr: int, onsets: list[float]) -> lis
 #     if is_kick_freq and is_thump and not_too_crisp:
 #         detected_instruments.append('kick')
 #             
-#     # RULE 2: SNARE DRUM (Standard + Fat Snare catches)
+#     # RULE 2: SNARE DRUM (Standard + Fat snare catches)
 #     is_snare_freq = (SNARE_FREQ_MIN <= p['peak_freq'] <= SNARE_FREQ_MAX)
 #     has_snare_wire = (SNARE_HFER_MIN <= p['hfer'] < 0.85)
 #     
@@ -939,8 +1009,8 @@ def classify_events(audio_data: np.ndarray, sr: int, onsets: list[float]) -> lis
 #         detected_instruments.append('snare')
 #         
 #     # RULE 3: TOMS (Integrating exact Feb 9 Purity & Resonance checks)
-#     is_pure = p['hfer'] < SNARE_HFER_MIN  # Toms have almost no 'wire' noise
-#     is_resonant = p['decay'] >= TOM_MIN_DECAY # Toms ring longer than kicks
+#     is_pure = p['hfer'] < SNARE_HFER_MIN  # toms have almost no 'wire' noise
+#     is_resonant = p['decay'] >= TOM_MIN_DECAY # toms ring longer than kicks
 #     
 #     if is_pure and is_resonant:
 #         if p['peak_freq'] <= TOM_FREQ_LOW_MAX:
@@ -956,24 +1026,24 @@ def classify_events(audio_data: np.ndarray, sr: int, onsets: list[float]) -> lis
 
 #def classify_membranophone(p):
     #
-    #Stage 2A: Sorts Skins (Kick, Snare, Toms).
-    #Fuses logic from _classifier.py (Kick/Snare) with the Tom logic from v0.1.0.
+    #Stage 2A: Sorts skins (kick, snare, toms).
+    #Fuses logic from _classifier.py (kick/snare) with the Tom logic from v0.1.0.
     #
     #detected_instruments = []
     
     # RULE 1: KICK DRUM (logic from _classifier.py)
-    # Does not rely on decay, so overlapping cymbals won't turn Kicks into Low Toms!
+    # Does not rely on decay, so overlapping cymbals won't turn kicks into Low toms
     #if p['lfer'] >= KICK_LFER_MIN and (KICK_FREQ_MIN <= p['peak_freq'] <= KICK_FREQ_MAX):
      #   detected_instruments.append('kick')
             
-    # --- LEGACY CODE - COMMENTED OUT SNARE RULE (Fat Snare catch caused Kick+Hat hallucinations) ---
+    # --- LEGACY CODE - COMMENTED OUT SNARE RULE (Fat snare catch caused kick+Hat hallucinations) ---
     # is_snare_freq = (SNARE_FREQ_MIN <= p['peak_freq'] <= SNARE_FREQ_MAX)
     # has_snare_wire = (SNARE_HFER_MIN <= p['hfer'] < 0.85)
     # 
     # if has_snare_wire and (is_snare_freq or p['peak_freq'] < SNARE_FREQ_MIN):
     #     detected_instruments.append('snare')
 
-    # RULE 2: SNARE DRUM (strict logic from _classifier.py to prevent Kick+Hat hallucinations)
+    # RULE 2: SNARE DRUM (strict logic from _classifier.py to prevent kick+Hat hallucinations)
     #is_snare_freq = (SNARE_FREQ_MIN <= p['peak_freq'] <= SNARE_FREQ_MAX)
     #has_snare_wire = (SNARE_HFER_MIN <= p['hfer'] < 0.85)
     
@@ -981,12 +1051,12 @@ def classify_events(audio_data: np.ndarray, sr: int, onsets: list[float]) -> lis
      #   detected_instruments.append('snare')
         
     # RULE 3: TOMS (From v0.1.0 - pure tone and longer decay)
-    #is_pure = p['hfer'] < SNARE_HFER_MIN  # Toms have almost no 'wire' noise
-    #is_resonant = p['decay'] >= TOM_MIN_DECAY # Toms ring longer than isolated kicks
+    #is_pure = p['hfer'] < SNARE_HFER_MIN  # toms have almost no 'wire' noise
+    #is_resonant = p['decay'] >= TOM_MIN_DECAY # toms ring longer than isolated kicks
     
     #if is_pure and is_resonant:
      #   if p['peak_freq'] <= TOM_FREQ_LOW_MAX:
-     #       if 'kick' not in detected_instruments: # Don't label a Kick as a Low Tom
+     #       if 'kick' not in detected_instruments: # Don't label a kick as a Low Tom
      #           detected_instruments.append('low_tom')
      #   elif p['peak_freq'] <= TOM_FREQ_MID_MAX:
      #       detected_instruments.append('mid_tom')
@@ -1057,8 +1127,8 @@ def classify_events(audio_data: np.ndarray, sr: int, onsets: list[float]) -> lis
 
 #def  classify_event(audio_segment, sr):
     #
-    #Stage 1: Evaluates both Skins and Metals simultaneously.
-    #Returns a list because multiple drums can hit simultaneously!
+    #Stage 1: Evaluates both skins and Metals simultaneously.
+    #Returns a list because multiple drums can hit simultaneously
     
     # LEGACY CODE - physics = get_physics_profile(audio_segment, sr)
  #   physics = extract_features(audio_segment, sr)
@@ -1266,7 +1336,7 @@ def classify_events(audio_data: np.ndarray, sr: int, onsets: list[float]) -> lis
 #         drum_type = None
 # 
 #         # --- STRICT FREQUENCY RANGE CLASSIFICATION ---
-#         # Order matters for overlaps!
+#         # Order matters for overlaps
 # 
 #         # 1. Low End
 #         if KICK_RANGE[0] <= f0 <= KICK_RANGE[1]:
@@ -1274,7 +1344,7 @@ def classify_events(audio_data: np.ndarray, sr: int, onsets: list[float]) -> lis
 #         elif LOW_TOM_RANGE[0] <= f0 <= LOW_TOM_RANGE[1]:
 #             drum_type = "low_tom"
 # 
-#         # 2. Mids (Check Tom first to catch narrow band, then Snare)
+#         # 2. Mids (Check Tom first to catch narrow band, then snare)
 #         elif MID_TOM_RANGE[0] <= f0 <= MID_TOM_RANGE[1]:
 #             drum_type = "mid_tom"
 #         elif SNARE_RANGE[0] <= f0 <= SNARE_RANGE[1]:

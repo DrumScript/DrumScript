@@ -450,7 +450,7 @@ def classify_rudiment_events(audio_data: np.ndarray, sr: int, onsets: list[float
             "debug_features": physics_profile
         })
 
-    # --- OUBLE-TRIGGER REMOVAL ---
+    # --- DOUBLE-TRIGGER REMOVAL ---
     final_events = []
     last_time = -999.0
     

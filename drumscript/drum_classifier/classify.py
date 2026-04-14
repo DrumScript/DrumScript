@@ -451,10 +451,16 @@ def classify_rudiment_events(audio_data: np.ndarray, sr: int, onsets: list[float
             "volume": slice_max
         })
 
+<<<<<<< HEAD
     # --- SINGLE BEAT LOGIC ---
     # If this is a short test sample (< 3.0 seconds), the user only wants the 
     # single main drum hit, not the cymbal tail wobbles or kick sub-bass cycles.
     duration = len(audio_data) / sr
+=======
+    # --- DOUBLE-TRIGGER REMOVAL ---
+    final_events = []
+    last_time = -999.0
+>>>>>>> 6cbacb76113213cffa84d0eeb0fbfc5a537610c8
     
     if duration < 3.0 and len(classified_events) > 0:
         # Find the absolute loudest event in the list

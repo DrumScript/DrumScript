@@ -226,11 +226,139 @@ def classify_event(physics):
         
     return instruments
 
+
+## --- LEGACY CODE --- CLASSIFY_RUDIMENT_EVENTS
+#def classify_rudiment_events(audio_data: np.ndarray, sr: int, onsets: list[float]) -> list[dict]:
+    
+    #Dedicated classification engine for single beats, paradiddles, and rudiments.
+    #Provides precise frequency cutoffs for isolated toms vs kicks, and rides vs crashes,
+    #while using smart transient gating to preserve fast ghost notes but drop cymbal tails.
+    
+    #from drumscript.notation_generator import constants
+    #classified_events = []
+    
+    #global_max = np.max(np.abs(audio_data)) if len(audio_data) > 0 else 1.0
+
+    #for onset_time in onsets:
+     #   start_sample = int(onset_time * sr)
+        
+        # 1. TIGHTER SLICE PADDING (100ms) 
+        # A 200ms slice will accidentally overlap fast 16th notes in a paradiddle.
+        # 100ms perfectly isolates individual fast stick impacts.
+      #  duration_short_secs = 0.100 
+      #  end_sample_short = start_sample + int(duration_short_secs * sr)
+
+       # if end_sample_short > len(audio_data):
+       #     slice_data = audio_data[start_sample:]
+       #     pad_length = end_sample_short - len(audio_data)
+       #     y_window_short = np.pad(slice_data, (0, pad_length), mode='constant')
+       # else:
+       #     y_window_short = audio_data[start_sample:end_sample_short]
+
+        #if len(y_window_short) == 0:
+        #    continue
+            
+        #slice_max = np.max(np.abs(y_window_short)) if len(y_window_short) > 0 else 0.0
+
+        # 2. NOISE FLOOR GATE
+        # Drops absolute dead air/reflections, but keeps light ghost notes (10% threshold)
+        #if slice_max < global_max * 0.10:
+        #    continue
+
+        # 3. FAST DE-BOUNCE LOCKOUT (80ms)
+        # Prevents the 63ms double-trigger on ride cymbals, but easily allows fast 125ms paradiddle strokes.
+        #if len(classified_events) > 0:
+        #    last_time = classified_events[-1]["time_sec"]
+        #    if float(onset_time) - last_time < 0.08:
+        #        continue
+
+        # 4. LONG SLICE PADDING (1.0s)
+        #duration_long_secs = 1.0 
+        #end_sample_long = start_sample + int(duration_long_secs * sr)
+
+        #if end_sample_long > len(audio_data):
+        #    slice_data = audio_data[start_sample:]
+        #    pad_length = end_sample_long - len(audio_data)
+        #    y_window_long = np.pad(slice_data, (0, pad_length), mode='constant')
+        #else:
+         #   y_window_long = audio_data[start_sample:end_sample_long]
+
+        # Extract the physics DNA
+        #physics_profile = extract_features(y_window_short, y_window_long, sr)
+        #p = physics_profile
+        #instruments = []
+
+        # --- DEDICATED ISOLATED PHYSICS RULES ---
+        
+        # KICK vs PHAT TOM
+        # Kicks have a fundamental below 105Hz. Phat toms sit at 107Hz - 129Hz.
+        #if p['lfer'] >= constants.KICK_LFER_MIN and p['peak_freq'] < 105.0:
+         #   instruments.append('kick')
+                
+        # SNARE
+        #is_snare_freq = (constants.SNARE_FREQ_MIN <= p['peak_freq'] <= constants.SNARE_FREQ_MAX)
+        #if (p['hfer'] >= constants.SNARE_HFER_MIN) and is_snare_freq:
+        #    instruments.append('snare')
+            
+        # TOMS
+        #is_pure = p['hfer'] < constants.SNARE_HFER_MIN  
+        #if is_pure and p['decay'] >= constants.TOM_MIN_DECAY:
+         #   if p['peak_freq'] <= constants.TOM_FREQ_LOW_MAX:
+          #      if 'kick' not in instruments: 
+           #         instruments.append('low_tom')
+            #elif p['peak_freq'] <= constants.TOM_FREQ_MID_MAX:
+             #   instruments.append('mid_tom')
+            #elif p['peak_freq'] <= 400: 
+            #    instruments.append('high_tom')
+
+        # METALS
+        #if p['hfer_5k'] >= constants.IDIOPHONE_MIN_HFER_5K:
+        #    if p['decay'] <= constants.HAT_CLOSED_MAX_DECAY:
+         #       instruments.append('hi_hat_closed')
+         #   elif p['decay'] <= constants.HAT_OPEN_MAX_DECAY:
+         #       instruments.append('hi_hat_open')
+         #   else:
+                # RIDE vs CRASH
+                # Centroid > 5500 clearly separates bright crashes from dark rides
+          #      if p['centroid'] > 5500:
+          #          instruments.append('crash') 
+           #     else:
+           #         instruments.append('ride') 
+                    
+        #if not instruments:
+         #   instruments.append('unknown')
+        #
+        #classified_events.append({
+          #  "time_sec": float(onset_time), 
+          #  "instruments": instruments, 
+          #  "debug_features": physics_profile
+        #})
+
+    # --- CYMBAL WOBBLE CULLING ---
+    # In a rudiment track, we forcefully drop all subsequent hits that are quieter 
+    # than 25% of the global max. This preserves intentional human ghost notes in a 
+    # snare loop, but kills the long, decaying tail wobbles of an isolated cymbal test.
+    #final_events = []
+    #for ev in classified_events:
+     #   time_s = ev["time_sec"]
+        
+      #  s_start = int(time_s * sr)
+       # s_end = s_start + int(0.100 * sr)
+       # s_data = audio_data[s_start:min(s_end, len(audio_data))]
+       # v_max = np.max(np.abs(s_data)) if len(s_data) > 0 else 0
+        
+        # Always keep the first strike, OR any hit that is > 25% volume
+       # if time_s < 0.2 or v_max > global_max * 0.25:
+       #     final_events.append(ev)
+
+    #return final_events
+
+
 def classify_rudiment_events(audio_data: np.ndarray, sr: int, onsets: list[float]) -> list[dict]:
     """
     Dedicated classification engine for single beats, paradiddles, and rudiments.
     Provides precise frequency cutoffs for isolated toms vs kicks, and rides vs crashes,
-    while using smart transient gating to preserve fast ghost notes but drop cymbal tails.
+    while using Dynamic Transient Gating to preserve skin ghost notes but drop cymbal tails.
     """
     from drumscript.notation_generator import constants
     classified_events = []
@@ -241,8 +369,7 @@ def classify_rudiment_events(audio_data: np.ndarray, sr: int, onsets: list[float
         start_sample = int(onset_time * sr)
         
         # 1. TIGHTER SLICE PADDING (100ms) 
-        # A 200ms slice will accidentally overlap fast 16th notes in a paradiddle.
-        # 100ms perfectly isolates individual fast stick impacts.
+        # 100ms perfectly isolates individual fast stick impacts in a paradiddle.
         duration_short_secs = 0.100 
         end_sample_short = start_sample + int(duration_short_secs * sr)
 
@@ -258,13 +385,11 @@ def classify_rudiment_events(audio_data: np.ndarray, sr: int, onsets: list[float
             
         slice_max = np.max(np.abs(y_window_short)) if len(y_window_short) > 0 else 0.0
 
-        # 2. NOISE FLOOR GATE
-        # Drops absolute dead air/reflections, but keeps light ghost notes (10% threshold)
+        # 2. NOISE FLOOR GATE (10%)
         if slice_max < global_max * 0.10:
             continue
 
         # 3. FAST DE-BOUNCE LOCKOUT (80ms)
-        # Prevents the 63ms double-trigger on ride cymbals, but easily allows fast 125ms paradiddle strokes.
         if len(classified_events) > 0:
             last_time = classified_events[-1]["time_sec"]
             if float(onset_time) - last_time < 0.08:
@@ -286,21 +411,25 @@ def classify_rudiment_events(audio_data: np.ndarray, sr: int, onsets: list[float
         p = physics_profile
         instruments = []
 
-        # --- DEDICATED ISOLATED PHYSICS RULES ---
+        # --- RUDIMENT PHYSICS RULES ---
         
         # KICK vs PHAT TOM
         # Kicks have a fundamental below 105Hz. Phat toms sit at 107Hz - 129Hz.
         if p['lfer'] >= constants.KICK_LFER_MIN and p['peak_freq'] < 105.0:
-            instruments.append('kick')
+            # Reject Kick if it is highly metallic (prevents hi-hat overlap hallucination)
+            if not (p['hfer_5k'] > 0.15 and p['lfer'] < 0.20):
+                instruments.append('kick')
                 
         # SNARE
+        # Mandate lfer > 0.01 to ensure the sound has physical body (rejects Ride stick impacts)
         is_snare_freq = (constants.SNARE_FREQ_MIN <= p['peak_freq'] <= constants.SNARE_FREQ_MAX)
-        if (p['hfer'] >= constants.SNARE_HFER_MIN) and is_snare_freq:
+        if (p['hfer'] >= constants.SNARE_HFER_MIN) and is_snare_freq and p['lfer'] > 0.01:
             instruments.append('snare')
             
         # TOMS
+        # Lowered decay requirement to 0.15s to catch tight, phat high toms
         is_pure = p['hfer'] < constants.SNARE_HFER_MIN  
-        if is_pure and p['decay'] >= constants.TOM_MIN_DECAY:
+        if is_pure and p['decay'] >= 0.15:
             if p['peak_freq'] <= constants.TOM_FREQ_LOW_MAX:
                 if 'kick' not in instruments: 
                     instruments.append('low_tom')
@@ -317,8 +446,8 @@ def classify_rudiment_events(audio_data: np.ndarray, sr: int, onsets: list[float
                 instruments.append('hi_hat_open')
             else:
                 # RIDE vs CRASH
-                # Centroid > 5500 clearly separates bright crashes from dark rides
-                if p['centroid'] > 5500:
+                # Centroid > 5800 cleanly separates bright crashes from dark rides
+                if p['centroid'] > 5800:
                     instruments.append('crash') 
                 else:
                     instruments.append('ride') 
@@ -332,24 +461,33 @@ def classify_rudiment_events(audio_data: np.ndarray, sr: int, onsets: list[float
             "debug_features": physics_profile
         })
 
-    # --- CYMBAL WOBBLE CULLING ---
-    # In a rudiment track, we forcefully drop all subsequent hits that are quieter 
-    # than 25% of the global max. This preserves intentional human ghost notes in a 
-    # snare loop, but kills the long, decaying tail wobbles of an isolated cymbal test.
+    # --- CYMBAL WOBBLE FIX ---
     final_events = []
-    for ev in classified_events:
+    for i, ev in enumerate(classified_events):
         time_s = ev["time_sec"]
         
+        # Always keep the absolute first strike
+        if i == 0:
+            final_events.append(ev)
+            continue
+            
         s_start = int(time_s * sr)
         s_end = s_start + int(0.100 * sr)
         s_data = audio_data[s_start:min(s_end, len(audio_data))]
         v_max = np.max(np.abs(s_data)) if len(s_data) > 0 else 0
         
-        # Always keep the first strike, OR any hit that is > 25% volume
-        if time_s < 0.2 or v_max > global_max * 0.25:
+        # Smart Transient Gating:
+        # Metals (Cymbals/Hats) shimmer loudly. We require a 50% spike to count as a new hit.
+        # Skins (Snares/Kicks) have quiet ghost notes. We only require a 15% spike.
+        is_metal = any(inst in ['crash', 'ride', 'hi_hat_open', 'hi_hat_closed'] for inst in ev["instruments"])
+        required_vol = global_max * 0.50 if is_metal else global_max * 0.15
+        
+        if v_max > required_vol:
             final_events.append(ev)
 
     return final_events
+
+
 def classify_events(audio_data: np.ndarray, sr: int, onsets: list[float]) -> list[dict]:
     """
     Wrapper to route validated onsets through the Physics-First Classification Engine.

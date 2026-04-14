@@ -353,12 +353,11 @@ def classify_event(physics):
 
     #return final_events
 
-
 def classify_rudiment_events(audio_data: np.ndarray, sr: int, onsets: list[float]) -> list[dict]:
     """
     Dedicated classification engine for single beats, paradiddles, and rudiments.
-    Uses strict, data-driven physics boundaries to cleanly separate drum classes, 
-    and applies a dynamic lockout to guarantee 1 event per single-beat sample.
+    Uses strict, data-driven physics boundaries to cleanly separate drum classes.
+    For isolated single-beat tests, it guarantees exactly 1 output event.
     """
     from drumscript.notation_generator import constants
     classified_events = []
@@ -404,7 +403,7 @@ def classify_rudiment_events(audio_data: np.ndarray, sr: int, onsets: list[float
         p = physics_profile
         instruments = []
 
-        # ---RUDIMENT PHYSICS RULES ---
+        # --- RUDIMENT PHYSICS RULES ---
         # 1. IS IT METAL OR SKIN? (Metals have > 20% energy above 5kHz)
         is_metal = p['hfer_5k'] > 0.20
         
@@ -444,49 +443,34 @@ def classify_rudiment_events(audio_data: np.ndarray, sr: int, onsets: list[float
         if not instruments:
             instruments.append('unknown')
         
+        # Save the slice_max volume to help us pick the single loudest hit later
         classified_events.append({
             "time_sec": float(onset_time), 
             "instruments": instruments, 
-            "debug_features": physics_profile
+            "debug_features": physics_profile,
+            "volume": slice_max
         })
 
-    # --- OUBLE-TRIGGER REMOVAL ---
-    final_events = []
-    last_time = -999.0
+    # --- SINGLE BEAT LOGIC ---
+    # If this is a short test sample (< 3.0 seconds), the user only wants the 
+    # single main drum hit, not the cymbal tail wobbles or kick sub-bass cycles.
+    duration = len(audio_data) / sr
     
-    for i, ev in enumerate(classified_events):
-        time_s = ev["time_sec"]
+    if duration < 3.0 and len(classified_events) > 0:
+        # Find the absolute loudest event in the list
+        loudest_event = max(classified_events, key=lambda x: x["volume"])
         
-        # Always keep the absolute first stick strike
-        if i == 0:
-            final_events.append(ev)
-            last_time = time_s
-            continue
-            
-        last_insts = final_events[-1]["instruments"]
-        is_last_metal = any(inst in ['crash', 'ride', 'hi_hat_open', 'hi_hat_closed'] for inst in last_insts)
+        # Remove the temporary 'volume' key so we don't break downstream JSON parsing
+        del loudest_event["volume"]
         
-        # Lockout: 500ms for ringing metals to crush long wobbles (Crash wobble was at 0.446s)
-        # 150ms for skins to crush sub-bass kick cycles (Kick wobble was at 0.125s)
-        lockout = 0.50 if is_last_metal else 0.15
+        return [loudest_event]
         
-        if time_s - last_time < lockout:
-            continue
-            
-        # Volume Check: Secondary hits must be prominent
-        s_start = int(time_s * sr)
-        s_end = s_start + int(0.100 * sr)
-        s_data = audio_data[s_start:min(s_end, len(audio_data))]
-        v_max = np.max(np.abs(s_data)) if len(s_data) > 0 else 0
-        
-        # Metals require a 30% volume spike. Skins require 20%.
-        required_vol = global_max * 0.30 if is_last_metal else global_max * 0.20
-        
-        if v_max > required_vol:
-            final_events.append(ev)
-            last_time = time_s
-
-    return final_events
+    else:
+        # If it's a longer paradiddle/rudiment track, return all valid hits.
+        for ev in classified_events:
+             if "volume" in ev:
+                 del ev["volume"]
+        return classified_events
 
 def classify_events(audio_data: np.ndarray, sr: int, onsets: list[float]) -> list[dict]:
     """

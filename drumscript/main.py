@@ -12,8 +12,9 @@ from pathlib import Path
 from drumscript.audio_processor import audio_loader, onset_detector, tempo_detector
 from drumscript.audio_processor.stem_splitter import extract_drum_stem
 from drumscript.audio_processor.stem_splitter import separate_audio
-from drumscript.drum_classifier import classify
-# from drumscript.drum_classifier.classify import classify_events
+#from drumscript.drum_classifier import classify
+from drumscript.drum_classifier.classify import classify_rudiment_events
+from drumscript.drum_classifier.classify import classify_events
 from drumscript.notation_generator import score_builder
 # from drumscript.notation_generator.score_builder import build_score
 #from drumscript.notation_generator import constants
@@ -35,8 +36,8 @@ def main(input_audio_path: str,
          drumless: bool = False,
          mute: list = None,
          all_stems: bool = False,
-         is_rudiment: bool = False,
-         output_format: str = "wav"):
+         output_format: str = "wav",
+         is_rudiment: bool = False):
         # .wav format as default, unless --mp3 input specified as an arg in user command
     
     """
@@ -105,7 +106,8 @@ def main(input_audio_path: str,
         # instruments = classify_onset(physics_profile)
         # ----------------------------------------------------------------------------------------------
         
-        classified_events = classify.classify_events(y, sr, onsets)
+        #classified_events = classify.classify_events(y, sr, onsets)
+        classified_events = classify_events(y, sr, onsets)
         print(f"   -> Classified {len(classified_events)} events")
 
         # 4. Score Formatting
@@ -162,7 +164,6 @@ def main(input_audio_path: str,
                 output_format=output_format,
                 drumless=drumless,
                 mute=mute,
-                is_rudiment=args.rudiment,
                 all_stems=all_stems
             )
             
@@ -206,10 +207,12 @@ def main(input_audio_path: str,
 
         if is_rudiment:
             print("   -> Using Rudiment/Single-Beat Classification Engine")
-            classified_events = classify.classify_rudiment_events(y, sr, onsets)
+            #classified_events = classify.classify_rudiment_events(y, sr, onsets)
+            classified_events = classify_rudiment_events(y, sr, onsets)
         else:
             print("   -> Using Standard Polyphonic Classification Engine")
-            classified_events = classify.classify_events(y, sr, onsets)
+            #classified_events = classify.classify_events(y, sr, onsets)
+            classified_events = classify_rudiment_events(y, sr, onsets)
             
         print(f"   -> Classified {len(classified_events)} events")
 
@@ -281,7 +284,7 @@ if __name__ == '__main__':
          drumless=args.drumless,
          mute=args.mute,
          all_stems=args.all_stems,
-         is_rudiment=args.format,
+         is_rudiment=args.rudiment,
          output_format=args.format)
 
 # LEGACY: if __name__ == '__main__':

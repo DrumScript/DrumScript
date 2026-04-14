@@ -229,7 +229,8 @@ def classify_event(physics):
 def classify_rudiment_events(audio_data: np.ndarray, sr: int, onsets: list[float]) -> list[dict]:
     """
     Dedicated classification engine for single beats, paradiddles, and rudiments.
-    Applies strict amplitude gating and extended lockouts to crush cymbal wobbles and prevent double-triggering in sparse audio files.
+    Provides precise frequency cutoffs for isolated toms vs kicks, and rides vs crashes,
+    while using smart transient gating to preserve fast ghost notes but drop cymbal tails.
     """
     from drumscript.notation_generator import constants
     classified_events = []
@@ -239,8 +240,10 @@ def classify_rudiment_events(audio_data: np.ndarray, sr: int, onsets: list[float
     for onset_time in onsets:
         start_sample = int(onset_time * sr)
         
-        # --- SHORT SLICE PADDING LOGIC (200ms) ---
-        duration_short_secs = constants.ONSET_SLICE_DURATION_MS / 1000.0 
+        # 1. TIGHTER SLICE PADDING (100ms) 
+        # A 200ms slice will accidentally overlap fast 16th notes in a paradiddle.
+        # 100ms perfectly isolates individual fast stick impacts.
+        duration_short_secs = 0.100 
         end_sample_short = start_sample + int(duration_short_secs * sr)
 
         if end_sample_short > len(audio_data):
@@ -255,19 +258,20 @@ def classify_rudiment_events(audio_data: np.ndarray, sr: int, onsets: list[float
             
         slice_max = np.max(np.abs(y_window_short)) if len(y_window_short) > 0 else 0.0
 
-        # --- RUDIMENT GATE ---
-        # 1. Amplitude Gate: Drop any tail/wobble under 50% max volume
-        if slice_max < global_max * 0.50:
+        # 2. NOISE FLOOR GATE
+        # Drops absolute dead air/reflections, but keeps light ghost notes (10% threshold)
+        if slice_max < global_max * 0.10:
             continue
-            
-        # 2. De-Bounce Lockout: 350ms lockout to crush high-speed cymbal wobbles
+
+        # 3. FAST DE-BOUNCE LOCKOUT (80ms)
+        # Prevents the 63ms double-trigger on ride cymbals, but easily allows fast 125ms paradiddle strokes.
         if len(classified_events) > 0:
             last_time = classified_events[-1]["time_sec"]
-            if float(onset_time) - last_time < 0.35:
+            if float(onset_time) - last_time < 0.08:
                 continue
 
-        # --- LONG SLICE PADDING LOGIC (1.5s) ---
-        duration_long_secs = 1.5 
+        # 4. LONG SLICE PADDING (1.0s)
+        duration_long_secs = 1.0 
         end_sample_long = start_sample + int(duration_long_secs * sr)
 
         if end_sample_long > len(audio_data):
@@ -277,22 +281,75 @@ def classify_rudiment_events(audio_data: np.ndarray, sr: int, onsets: list[float
         else:
             y_window_long = audio_data[start_sample:end_sample_long]
 
-        # 1. Extract the physics DNA
+        # Extract the physics DNA
         physics_profile = extract_features(y_window_short, y_window_long, sr)
+        p = physics_profile
+        instruments = []
 
-        # 2. Apply Classification Rules (Using your modular helper functions)
-        instruments = classify_event(physics_profile)
+        # --- DEDICATED ISOLATED PHYSICS RULES ---
         
-        # 3. Append with unified compatible keys
+        # KICK vs PHAT TOM
+        # Kicks have a fundamental below 105Hz. Phat toms sit at 107Hz - 129Hz.
+        if p['lfer'] >= constants.KICK_LFER_MIN and p['peak_freq'] < 105.0:
+            instruments.append('kick')
+                
+        # SNARE
+        is_snare_freq = (constants.SNARE_FREQ_MIN <= p['peak_freq'] <= constants.SNARE_FREQ_MAX)
+        if (p['hfer'] >= constants.SNARE_HFER_MIN) and is_snare_freq:
+            instruments.append('snare')
+            
+        # TOMS
+        is_pure = p['hfer'] < constants.SNARE_HFER_MIN  
+        if is_pure and p['decay'] >= constants.TOM_MIN_DECAY:
+            if p['peak_freq'] <= constants.TOM_FREQ_LOW_MAX:
+                if 'kick' not in instruments: 
+                    instruments.append('low_tom')
+            elif p['peak_freq'] <= constants.TOM_FREQ_MID_MAX:
+                instruments.append('mid_tom')
+            elif p['peak_freq'] <= 400: 
+                instruments.append('high_tom')
+
+        # METALS
+        if p['hfer_5k'] >= constants.IDIOPHONE_MIN_HFER_5K:
+            if p['decay'] <= constants.HAT_CLOSED_MAX_DECAY:
+                instruments.append('hi_hat_closed')
+            elif p['decay'] <= constants.HAT_OPEN_MAX_DECAY:
+                instruments.append('hi_hat_open')
+            else:
+                # RIDE vs CRASH
+                # Centroid > 5500 clearly separates bright crashes from dark rides
+                if p['centroid'] > 5500:
+                    instruments.append('crash') 
+                else:
+                    instruments.append('ride') 
+                    
+        if not instruments:
+            instruments.append('unknown')
+        
         classified_events.append({
             "time_sec": float(onset_time), 
             "instruments": instruments, 
             "debug_features": physics_profile
         })
 
-    return classified_events
+    # --- CYMBAL WOBBLE CULLING ---
+    # In a rudiment track, we forcefully drop all subsequent hits that are quieter 
+    # than 25% of the global max. This preserves intentional human ghost notes in a 
+    # snare loop, but kills the long, decaying tail wobbles of an isolated cymbal test.
+    final_events = []
+    for ev in classified_events:
+        time_s = ev["time_sec"]
+        
+        s_start = int(time_s * sr)
+        s_end = s_start + int(0.100 * sr)
+        s_data = audio_data[s_start:min(s_end, len(audio_data))]
+        v_max = np.max(np.abs(s_data)) if len(s_data) > 0 else 0
+        
+        # Always keep the first strike, OR any hit that is > 25% volume
+        if time_s < 0.2 or v_max > global_max * 0.25:
+            final_events.append(ev)
 
-
+    return final_events
 def classify_events(audio_data: np.ndarray, sr: int, onsets: list[float]) -> list[dict]:
     """
     Wrapper to route validated onsets through the Physics-First Classification Engine.

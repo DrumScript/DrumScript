@@ -357,8 +357,8 @@ def classify_event(physics):
 def classify_rudiment_events(audio_data: np.ndarray, sr: int, onsets: list[float]) -> list[dict]:
     """
     Dedicated classification engine for single beats, paradiddles, and rudiments.
-    Provides precise frequency cutoffs for isolated toms vs kicks, and rides vs crashes,
-    while using Dynamic Transient Gating to preserve skin ghost notes but drop cymbal tails.
+    Uses strict, data-driven physics boundaries to cleanly separate drum classes, 
+    and applies a dynamic lockout to guarantee 1 event per single-beat sample.
     """
     from drumscript.notation_generator import constants
     classified_events = []
@@ -368,8 +368,7 @@ def classify_rudiment_events(audio_data: np.ndarray, sr: int, onsets: list[float
     for onset_time in onsets:
         start_sample = int(onset_time * sr)
         
-        # 1. TIGHTER SLICE PADDING (100ms) 
-        # 100ms perfectly isolates individual fast stick impacts in a paradiddle.
+        # 1. TIGHT SLICE PADDING (100ms) 
         duration_short_secs = 0.100 
         end_sample_short = start_sample + int(duration_short_secs * sr)
 
@@ -389,13 +388,7 @@ def classify_rudiment_events(audio_data: np.ndarray, sr: int, onsets: list[float
         if slice_max < global_max * 0.10:
             continue
 
-        # 3. FAST DE-BOUNCE LOCKOUT (80ms)
-        if len(classified_events) > 0:
-            last_time = classified_events[-1]["time_sec"]
-            if float(onset_time) - last_time < 0.08:
-                continue
-
-        # 4. LONG SLICE PADDING (1.0s)
+        # 3. LONG SLICE PADDING (1.0s)
         duration_long_secs = 1.0 
         end_sample_long = start_sample + int(duration_long_secs * sr)
 
@@ -411,46 +404,42 @@ def classify_rudiment_events(audio_data: np.ndarray, sr: int, onsets: list[float
         p = physics_profile
         instruments = []
 
-        # --- RUDIMENT PHYSICS RULES ---
+        # ---RUDIMENT PHYSICS RULES ---
+        # 1. IS IT METAL OR SKIN? (Metals have > 20% energy above 5kHz)
+        is_metal = p['hfer_5k'] > 0.20
         
-        # KICK vs PHAT TOM
-        # Kicks have a fundamental below 105Hz. Phat toms sit at 107Hz - 129Hz.
-        if p['lfer'] >= constants.KICK_LFER_MIN and p['peak_freq'] < 105.0:
-            # Reject Kick if it is highly metallic (prevents hi-hat overlap hallucination)
-            if not (p['hfer_5k'] > 0.15 and p['lfer'] < 0.20):
-                instruments.append('kick')
-                
-        # SNARE
-        # Mandate lfer > 0.01 to ensure the sound has physical body (rejects Ride stick impacts)
-        is_snare_freq = (constants.SNARE_FREQ_MIN <= p['peak_freq'] <= constants.SNARE_FREQ_MAX)
-        if (p['hfer'] >= constants.SNARE_HFER_MIN) and is_snare_freq and p['lfer'] > 0.01:
-            instruments.append('snare')
-            
-        # TOMS
-        # Lowered decay requirement to 0.15s to catch tight, phat high toms
-        is_pure = p['hfer'] < constants.SNARE_HFER_MIN  
-        if is_pure and p['decay'] >= 0.15:
-            if p['peak_freq'] <= constants.TOM_FREQ_LOW_MAX:
-                if 'kick' not in instruments: 
-                    instruments.append('low_tom')
-            elif p['peak_freq'] <= constants.TOM_FREQ_MID_MAX:
-                instruments.append('mid_tom')
-            elif p['peak_freq'] <= 400: 
-                instruments.append('high_tom')
-
-        # METALS
-        if p['hfer_5k'] >= constants.IDIOPHONE_MIN_HFER_5K:
-            if p['decay'] <= constants.HAT_CLOSED_MAX_DECAY:
+        if is_metal:
+            # It's a Cymbal or Hat
+            if p['decay'] <= constants.HAT_CLOSED_MAX_DECAY: 
                 instruments.append('hi_hat_closed')
-            elif p['decay'] <= constants.HAT_OPEN_MAX_DECAY:
+            elif p['decay'] <= 0.50: 
                 instruments.append('hi_hat_open')
             else:
-                # RIDE vs CRASH
-                # Centroid > 5800 cleanly separates bright crashes from dark rides
-                if p['centroid'] > 5800:
+                # Ride vs Crash (Ride is darker < 6000Hz, Crash is brighter > 6000Hz)
+                if p['centroid'] > 6000:
                     instruments.append('crash') 
                 else:
                     instruments.append('ride') 
+        else:
+            # It's a Kick, Snare, or Tom
+            # Kick: Low frequency, high low-end energy, FAST decay (< 0.40s)
+            is_kick_freq = p['peak_freq'] < 100.0
+            is_thump = p['lfer'] > 0.35
+            if is_kick_freq and is_thump and p['decay'] < 0.40:
+                instruments.append('kick')
+                
+            # Snare: High wire energy (> 20%)
+            elif p['hfer'] > 0.20:
+                instruments.append('snare')
+                
+            # Toms: Resonant tones, separated by hard frequency boundaries
+            else:
+                if p['peak_freq'] < 90.0:
+                    instruments.append('low_tom')
+                elif p['peak_freq'] < 115.0:
+                    instruments.append('mid_tom')
+                else:
+                    instruments.append('high_tom')
                     
         if not instruments:
             instruments.append('unknown')
@@ -461,32 +450,43 @@ def classify_rudiment_events(audio_data: np.ndarray, sr: int, onsets: list[float
             "debug_features": physics_profile
         })
 
-    # --- CYMBAL WOBBLE FIX ---
+    # --- OUBLE-TRIGGER REMOVAL ---
     final_events = []
+    last_time = -999.0
+    
     for i, ev in enumerate(classified_events):
         time_s = ev["time_sec"]
         
-        # Always keep the absolute first strike
+        # Always keep the absolute first stick strike
         if i == 0:
             final_events.append(ev)
+            last_time = time_s
             continue
             
+        last_insts = final_events[-1]["instruments"]
+        is_last_metal = any(inst in ['crash', 'ride', 'hi_hat_open', 'hi_hat_closed'] for inst in last_insts)
+        
+        # Lockout: 500ms for ringing metals to crush long wobbles (Crash wobble was at 0.446s)
+        # 150ms for skins to crush sub-bass kick cycles (Kick wobble was at 0.125s)
+        lockout = 0.50 if is_last_metal else 0.15
+        
+        if time_s - last_time < lockout:
+            continue
+            
+        # Volume Check: Secondary hits must be prominent
         s_start = int(time_s * sr)
         s_end = s_start + int(0.100 * sr)
         s_data = audio_data[s_start:min(s_end, len(audio_data))]
         v_max = np.max(np.abs(s_data)) if len(s_data) > 0 else 0
         
-        # Smart Transient Gating:
-        # Metals (Cymbals/Hats) shimmer loudly. We require a 50% spike to count as a new hit.
-        # Skins (Snares/Kicks) have quiet ghost notes. We only require a 15% spike.
-        is_metal = any(inst in ['crash', 'ride', 'hi_hat_open', 'hi_hat_closed'] for inst in ev["instruments"])
-        required_vol = global_max * 0.50 if is_metal else global_max * 0.15
+        # Metals require a 30% volume spike. Skins require 20%.
+        required_vol = global_max * 0.30 if is_last_metal else global_max * 0.20
         
         if v_max > required_vol:
             final_events.append(ev)
+            last_time = time_s
 
     return final_events
-
 
 def classify_events(audio_data: np.ndarray, sr: int, onsets: list[float]) -> list[dict]:
     """

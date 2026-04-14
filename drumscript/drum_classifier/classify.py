@@ -403,7 +403,7 @@ def classify_rudiment_events(audio_data: np.ndarray, sr: int, onsets: list[float
         p = physics_profile
         instruments = []
 
-        # --- RUDIMENT PHYSICS RULES ---
+        # ---RUDIMENT PHYSICS RULES ---
         # 1. IS IT METAL OR SKIN? (Metals have > 20% energy above 5kHz)
         is_metal = p['hfer_5k'] > 0.20
         
@@ -421,17 +421,14 @@ def classify_rudiment_events(audio_data: np.ndarray, sr: int, onsets: list[float
                     instruments.append('ride') 
         else:
             # It's a Kick, Snare, or Tom
-            # Kick: Low frequency, high low-end energy, FAST decay (< 0.40s)
+            # We use an if/elif/else chain so an event can NEVER be two drums at once!
             is_kick_freq = p['peak_freq'] < 100.0
             is_thump = p['lfer'] > 0.35
+            
             if is_kick_freq and is_thump and p['decay'] < 0.40:
                 instruments.append('kick')
-                
-            # Snare: High wire energy (> 20%)
             elif p['hfer'] > 0.20:
                 instruments.append('snare')
-                
-            # Toms: Resonant tones, separated by hard frequency boundaries
             else:
                 if p['peak_freq'] < 90.0:
                     instruments.append('low_tom')
@@ -451,16 +448,10 @@ def classify_rudiment_events(audio_data: np.ndarray, sr: int, onsets: list[float
             "volume": slice_max
         })
 
-<<<<<<< HEAD
-    # --- SINGLE BEAT LOGIC ---
+    # --- SINGLE BEAT MEASURE ---
     # If this is a short test sample (< 3.0 seconds), the user only wants the 
     # single main drum hit, not the cymbal tail wobbles or kick sub-bass cycles.
     duration = len(audio_data) / sr
-=======
-    # --- DOUBLE-TRIGGER REMOVAL ---
-    final_events = []
-    last_time = -999.0
->>>>>>> 6cbacb76113213cffa84d0eeb0fbfc5a537610c8
     
     if duration < 3.0 and len(classified_events) > 0:
         # Find the absolute loudest event in the list

@@ -51,12 +51,14 @@ def main(input_audio_path: str,
     :type time_signature: str, optional
     :param drumless: If True, generates a drumless backing track.
     :type drumless: bool, optional
-    :param mute: List of stems to mute.
+    :param mute: List of stems to mute (e.g. ['bass']).
     :type mute: list, optional
     :param all_stems: If True, exports all individual stems.
     :type all_stems: bool, optional
     :param output_format: Output format ('wav' or 'mp3'), defaults to "wav".
     :type output_format: str, optional
+    :param is_rudiment: If True, optimises classification for isolated single beats, rudiments, or paradiddles by applying dynamic transient gating.
+    :type is_rudiment: bool, optional
     """
     print(f"\n--- Starting DrumScript ---")
     print(f"Target: {input_audio_path}")

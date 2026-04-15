@@ -403,7 +403,7 @@ def classify_rudiment_events(audio_data: np.ndarray, sr: int, onsets: list[float
         p = physics_profile
         instruments = []
 
-        # ---RUDIMENT PHYSICS RULES ---
+        # --- RUDIMENT PHYSICS RULES ---
         # 1. IS IT METAL OR SKIN? (Metals have > 20% energy above 5kHz)
         is_metal = p['hfer_5k'] > 0.20
         
@@ -421,7 +421,6 @@ def classify_rudiment_events(audio_data: np.ndarray, sr: int, onsets: list[float
                     instruments.append('ride') 
         else:
             # It's a Kick, Snare, or Tom
-            # We use an if/elif/else chain so an event can NEVER be two drums at once!
             is_kick_freq = p['peak_freq'] < 100.0
             is_thump = p['lfer'] > 0.35
             

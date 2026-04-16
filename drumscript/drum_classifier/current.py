@@ -69,8 +69,15 @@ def classify_rudiment_events(audio_data: np.ndarray, sr: int, onsets: list[float
             is_kick_freq = p['peak_freq'] < 105.0
             is_thump = p['lfer'] > 0.35
             
-            # Kick decay is short. Toms ring out.
-            if is_kick_freq and is_thump and p['decay'] < 0.45:
+            # --- COMMENTED OUT OLD KICK LOGIC ---
+            # # Kick decay is short. Toms ring out.
+            # if is_kick_freq and is_thump and p['decay'] < 0.45:
+            #     instruments.append('kick')
+            
+            # Kick decay is short and punchy. We add a tighter decay (< 0.40) and 
+            # a centroid check (> 1000) to ensure the beater click is present,
+            # separating real kicks from muffled low toms and stem bleed.
+            if is_kick_freq and is_thump and p['decay'] < 0.40 and p['centroid'] > 1000.0:
                 instruments.append('kick')
             elif p['hfer'] > 0.20:
                 instruments.append('snare')
@@ -107,9 +114,21 @@ def classify_rudiment_events(audio_data: np.ndarray, sr: int, onsets: list[float
             
         last_insts = final_events[-1]["instruments"]
         is_last_metal = any(inst in ['crash', 'ride', 'hi_hat_open', 'hi_hat_closed'] for inst in last_insts)
+        is_last_tom = any(inst in ['low_tom', 'mid_tom', 'high_tom'] for inst in last_insts)
+        
+        # --- COMMENTED OUT OLD LOCKOUT LOGIC ---
+        # # Lockout (Allows 150BPM 16th notes = 100ms)
+        # lockout = 0.15 if is_last_metal else 0.09
         
         # Lockout (Allows 150BPM 16th notes = 100ms)
-        lockout = 0.15 if is_last_metal else 0.09
+        # Toms are given a longer lockout (0.18s) to prevent their resonant wobble 
+        # from double-triggering as a ghost onset.
+        if is_last_metal:
+            lockout = 0.15
+        elif is_last_tom:
+            lockout = 0.18
+        else:
+            lockout = 0.09
         
         if time_s - last_time < lockout:
             continue

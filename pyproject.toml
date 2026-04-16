@@ -94,7 +94,13 @@ include-package-data = true
 # By default, setuptools finds all directories with __init__.py
 where = ["."]
 include = ["drumscript*"]
-# exclude = ["local_tests*",".development*",".archive/*","docs*", "machine-learning*", "test_audio*"] # Exclude test directories, development and archive folders from build. Commented out while testing file discovery in pre-build for pypi
+exclude = [
+    "local_tests*",
+    ".development*",
+    ".archive/*",
+    "docs*",
+    "machine-learning*",
+    "test_audio*"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 name = "DrumScript"
 version = "0.1.2"
 description = "A Python package to convert drum audio to sheet music."
-license = { file = "LICENSE" }
+license = "Apache-2.0"
 readme = "README.md"
 requires-python = ">=3.9, <=3.13"
 authors = [
@@ -16,7 +16,6 @@ keywords = ["drum", "audio", "music", "sheet-music", "notation", "dsp", "machine
 
 classifiers = [
     "Programming Language :: Python :: 3",
-    "License :: OSI Approved :: Apache Software License",
     "Operating System :: OS Independent",
     "Development Status :: 3 - Alpha",
     "Topic :: Multimedia :: Sound/Audio",

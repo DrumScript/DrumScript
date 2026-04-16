@@ -18,6 +18,7 @@ var/
 wheels/
 *.egg-info/
 .installed.cfg
+drumscript-*
 *.egg
 MANIFEST
 

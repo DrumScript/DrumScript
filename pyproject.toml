@@ -103,6 +103,7 @@ exclude = [
     "terraform/*",
     "visuals/",
     "outputs/",
+    "logs",
     ".testing"]
 
 [tool.pytest.ini_options]

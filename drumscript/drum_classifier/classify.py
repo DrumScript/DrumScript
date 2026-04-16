@@ -435,13 +435,29 @@ def classify_rudiment_events(audio_data: np.ndarray, sr: int, onsets: list[float
             # separating real kicks from muffled low toms and stem bleed.
             if is_kick_freq and is_thump and p['decay'] < 0.40 and p['centroid'] > 1000.0:
                 instruments.append('kick')
-            elif p['hfer'] > 0.20:
+
+            # --- LEGACY CODE --- OLD SNARE LOGIC --- 
+            # elif p['hfer'] > 0.20:
+             #   instruments.append('snare')
+                        
+            # Bumped the High-Frequency Energy Ratio to 0.22 to prevent punchy toms from bleeding in
+            elif p['hfer'] > 0.22:
                 instruments.append('snare')
+
             else:
+                ## --- LEGACY CODE -- OLD TOM LOGIC ---
                 # Toms have long decay and low hfer, separated by hard freq limits
-                if p['peak_freq'] < 90.0:
+                #if p['peak_freq'] < 90.0:
+                 #   instruments.append('low_tom')
+                #elif p['peak_freq'] < 115.0:
+                 #   instruments.append('mid_tom')
+                #else:
+                 #   instruments.append('high_tom')
+
+                # Toms have long decay and low hfer. Boundaries shifted up to catch higher tunings.
+                if p['peak_freq'] < 135.0:
                     instruments.append('low_tom')
-                elif p['peak_freq'] < 115.0:
+                elif p['peak_freq'] < 180.0:
                     instruments.append('mid_tom')
                 else:
                     instruments.append('high_tom')

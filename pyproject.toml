@@ -98,9 +98,12 @@ exclude = [
     "local_tests*",
     ".development*",
     ".archive/*",
-    "docs*",
     "machine-learning*",
-    "test_audio*"]
+    "test_audio*",
+    "terraform/*",
+    "visuals/",
+    "outputs/",
+    ".testing"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

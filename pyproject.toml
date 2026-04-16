@@ -7,7 +7,7 @@ version = "0.1.2"
 description = "A Python package to convert drum audio to sheet music."
 license = { file = "LICENSE" }
 readme = "README.md"
-requires-python = ">=3.9, <3.13"
+requires-python = ">=3.9, <=3.13"
 authors = [
   { name="drumscript-admin", email="hello.drumscript@gmail.com" }, 
 ]
@@ -56,7 +56,7 @@ dependencies = [
     "tqdm",
 ]
 
-  # note that torce only compatible with  Python ABI tags: `cp39`, `cp310`, `cp311`, `cp312`. Not yet compatible with 3.13
+  # note that torch only compatible with  Python ABI tags: `cp39`, `cp310`, `cp311`, `cp312`. Not yet compatible with 3.13
 
 [project.urls]
 "Repository" = "https://github.com/DrumScript/DrumScript"
@@ -95,7 +95,7 @@ include-package-data = true
 # By default, setuptools finds all directories with __init__.py
 where = ["."]
 include = ["drumscript*"]
-# exclude = ["local_tests*",".development*",".archive*","docs*", "machine-learning*", "test_audio*"] # Exclude test directories, development and archive folders from build. Commented out while testing file discovery in pre-build for pypi
+# exclude = ["local_tests*",".development*",".archive/*","docs*", "machine-learning*", "test_audio*"] # Exclude test directories, development and archive folders from build. Commented out while testing file discovery in pre-build for pypi
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

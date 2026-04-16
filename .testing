@@ -1,4 +1,4 @@
-victoriamckinney@Victoria’s MacBook Air DrumScript % uv build
+(drumscript) victoriamckinney@Victoria’s MacBook Air DrumScript % uv build
 Building source distribution...
 running egg_info
 writing DrumScript.egg-info/PKG-INFO
@@ -270,7 +270,7 @@ running install_egg_info
 Copying DrumScript.egg-info to build/bdist.macosx-11.0-arm64/wheel/./DrumScript-0.1.2-py3.12.egg-info
 running install_scripts
 creating build/bdist.macosx-11.0-arm64/wheel/drumscript-0.1.2.dist-info/WHEEL
-creating '/Users/victoriamckinney/Library/Visual Studio Projects/DrumScript/dist/.tmp-ruzdh7ba/drumscript-0.1.2-py3-none-any.whl' and adding 'build/bdist.macosx-11.0-arm64/wheel' to it
+creating '/Users/victoriamckinney/Library/Visual Studio Projects/DrumScript/dist/.tmp-9yae63de/drumscript-0.1.2-py3-none-any.whl' and adding 'build/bdist.macosx-11.0-arm64/wheel' to it
 adding 'drumscript/__init__.py'
 adding 'drumscript/main.py'
 adding 'drumscript/audio_processor/__init__.py'
@@ -315,4 +315,8 @@ adding 'drumscript-0.1.2.dist-info/RECORD'
 removing build/bdist.macosx-11.0-arm64/wheel
 Successfully built dist/drumscript-0.1.2.tar.gz
 Successfully built dist/drumscript-0.1.2-py3-none-any.whl
-victoriamckinney@Victoria’s MacBook Air DrumScript % 
+(drumscript) victoriamckinney@Victoria’s MacBook Air DrumScript % git add .
+(drumscript) victoriamckinney@Victoria’s MacBook Air DrumScript % git commit -m "adding testing file"
+[build/classification_model b7a037f] adding testing file
+ 1 file changed, 318 insertions(+), 233 deletions(-)
+(drumscript) victoriamckinney@Victoria’s MacBook Air DrumScript %  

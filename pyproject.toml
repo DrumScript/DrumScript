@@ -104,7 +104,10 @@ exclude = [
     "visuals/",
     "outputs/",
     "logs",
-    ".testing"]
+    "drumscript.logs*",
+    ".testing",
+    "drumscript.audio_processor.proofs*"
+    ]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

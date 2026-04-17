@@ -3,11 +3,11 @@ requires = ["setuptools>=61.0", "wheel"]
 build-backend = "setuptools.build_meta"
 [project]
 name = "DrumScript"
-version = "0.1.1"
+version = "0.1.2"
 description = "A Python package to convert drum audio to sheet music."
-license = { file = "LICENSE" }
+license = "Apache-2.0"
 readme = "README.md"
-requires-python = ">=3.9, <3.13"
+requires-python = ">=3.9, <=3.13"
 authors = [
   { name="drumscript-admin", email="hello.drumscript@gmail.com" }, 
 ]
@@ -16,7 +16,6 @@ keywords = ["drum", "audio", "music", "sheet-music", "notation", "dsp", "machine
 
 classifiers = [
     "Programming Language :: Python :: 3",
-    "License :: OSI Approved :: Apache Software License",
     "Operating System :: OS Independent",
     "Development Status :: 3 - Alpha",
     "Topic :: Multimedia :: Sound/Audio",
@@ -56,7 +55,7 @@ dependencies = [
     "tqdm",
 ]
 
-  # note that torce only compatible with  Python ABI tags: `cp39`, `cp310`, `cp311`, `cp312`. Not yet compatible with 3.13
+  # note that torch only compatible with  Python ABI tags: `cp39`, `cp310`, `cp311`, `cp312`. Not yet compatible with 3.13
 
 [project.urls]
 "Repository" = "https://github.com/DrumScript/DrumScript"
@@ -95,7 +94,20 @@ include-package-data = true
 # By default, setuptools finds all directories with __init__.py
 where = ["."]
 include = ["drumscript*"]
-# exclude = ["local_tests*",".development*",".archive*","docs*", "machine-learning*", "test_audio*"] # Exclude test directories, development and archive folders from build. Commented out while testing file discovery in pre-build for pypi
+exclude = [
+    "local_tests*",
+    ".development*",
+    ".archive/*",
+    "machine-learning*",
+    "test_audio*",
+    "terraform/*",
+    "visuals/",
+    "outputs/",
+    "logs",
+    "drumscript.logs*",
+    ".testing",
+    "drumscript.audio_processor.proofs*"
+    ]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

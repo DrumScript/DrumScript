@@ -233,7 +233,7 @@ Natively detects and filters isolated single-beat cymbals/kicks using Peak Domin
 <table class="autosummary longtable docutils align-default">
 <tbody>
 <tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">classify_event</span></code>(physics)</p></td>
-<td><p>Stage 1: Evaluates both Skins and Metals simultaneously.</p></td>
+<td><p>Stage 1: Evaluates both skins and Metals simultaneously.</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">classify_events</span></code>(audio_data, sr, onsets)</p></td>
 <td><p>Wrapper to route validated onsets through the Physics-First Classification Engine.</p></td>
@@ -242,12 +242,15 @@ Natively detects and filters isolated single-beat cymbals/kicks using Peak Domin
 <td><p>Stage 2B: Sorts Metals (Hats, Cymbals).</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">classify_membranophone</span></code>(p)</p></td>
-<td><p>Stage 2A: Sorts Skins (Kick, Snare, Toms).</p></td>
+<td><p>Stage 2A: Sorts skins (kick, snare, toms).</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">extract_features</span></code>(audio_slice_short, ...)</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">classify_rudiment_events</span></code>(audio_data, sr, onsets)</p></td>
+<td><p>Dedicated classification engine for single beats, paradiddles, and rudiments.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">extract_features</span></code>(audio_slice_short, ...)</p></td>
 <td><p>Analyses the audio slice and extracts the physical DSP features.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_audio_slice</span></code>(audio_data, onset_time, sr)</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_audio_slice</span></code>(audio_data, onset_time, sr)</p></td>
 <td><p>Cuts a specific millisecond slice of audio starting exactly at the onset time.</p></td>
 </tr>
 </tbody>

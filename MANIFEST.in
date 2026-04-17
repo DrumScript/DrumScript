@@ -1,4 +1,27 @@
 # MANIFEST.in
-
+# Exclude compiled Python files
 global-exclude *.py[cod]
 global-exclude __pycache__
+
+# Exclude macOS system files
+global-exclude .DS_Store
+
+# Exclude all log files anywhere in the project
+global-exclude *.log
+
+# Prune development and test directories entirely from the source distribution
+prune docs
+prune local_tests
+prune tests
+prune test_audio
+prune machine-learning
+prune labeled_datasets
+prune .archive
+prune .development
+prune logs
+prune outputs
+prune terraform
+prune visuals
+prune .testing
+prune branch_note
+prune Makefile

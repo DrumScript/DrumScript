@@ -123,8 +123,19 @@ filterwarnings = [
 ]
 addopts = "--ignore=local_tests/classification_engine --ignore=local_tests/mp3_conversion, --ignore=pdf_generation"
 
-[dependency-groups]
-dev = [
+# --- RUFF CONFIGURATION ---
+[tool.ruff]
+# Set the maximum line length
+line-length = 100
+# Target Python 3.9 as minimum supported version
+target-version = "py39"
 
-]
+[tool.ruff.lint]
+# Enable Pyflakes (F), pycodestyle (E, W), isort (I), and pyupgrade (UP)
+select = ["E", "F", "W", "I", "UP"]
+ignore = []
 
+[tool.ruff.format]
+# Enforce double quotes and standard spacing (Black-compatible)
+quote-style = "double"
+indent-style = "space"

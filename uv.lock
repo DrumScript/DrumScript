@@ -1236,9 +1236,6 @@ requires-dist = [
 ]
 provides-extras = ["dev"]
 
-[package.metadata.requires-dev]
-dev = []
-
 [[package]]
 name = "einops"
 version = "0.8.2"

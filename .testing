@@ -1,322 +1,141 @@
-(drumscript) victoriamckinney@Victoria’s MacBook Air DrumScript % uv build
-Building source distribution...
-running egg_info
-writing DrumScript.egg-info/PKG-INFO
-writing dependency_links to DrumScript.egg-info/dependency_links.txt
-writing entry points to DrumScript.egg-info/entry_points.txt
-writing requirements to DrumScript.egg-info/requires.txt
-writing top-level names to DrumScript.egg-info/top_level.txt
-reading manifest file 'DrumScript.egg-info/SOURCES.txt'
-reading manifest template 'MANIFEST.in'
-warning: no previously-included files matching '*.py[cod]' found anywhere in distribution
-warning: no previously-included files matching '__pycache__' found anywhere in distribution
-warning: no previously-included files matching '.DS_Store' found anywhere in distribution
-warning: no previously-included files matching '*.log' found anywhere in distribution
-no previously-included directories found matching 'docs'
-no previously-included directories found matching 'local_tests'
-no previously-included directories found matching 'tests'
-no previously-included directories found matching 'test_audio'
-no previously-included directories found matching 'machine-learning'
-no previously-included directories found matching 'labeled_datasets'
-no previously-included directories found matching '.archive'
-no previously-included directories found matching '.development'
-no previously-included directories found matching 'logs'
-no previously-included directories found matching 'outputs'
-no previously-included directories found matching 'terraform'
-no previously-included directories found matching 'visuals'
-no previously-included directories found matching '.testing'
-no previously-included directories found matching 'branch_note'
-no previously-included directories found matching 'Makefile'
-adding license file 'LICENSE'
-writing manifest file 'DrumScript.egg-info/SOURCES.txt'
-running sdist
-running egg_info
-writing DrumScript.egg-info/PKG-INFO
-writing dependency_links to DrumScript.egg-info/dependency_links.txt
-writing entry points to DrumScript.egg-info/entry_points.txt
-writing requirements to DrumScript.egg-info/requires.txt
-writing top-level names to DrumScript.egg-info/top_level.txt
-reading manifest file 'DrumScript.egg-info/SOURCES.txt'
-reading manifest template 'MANIFEST.in'
-warning: no previously-included files matching '*.py[cod]' found anywhere in distribution
-warning: no previously-included files matching '__pycache__' found anywhere in distribution
-warning: no previously-included files matching '.DS_Store' found anywhere in distribution
-warning: no previously-included files matching '*.log' found anywhere in distribution
-no previously-included directories found matching 'docs'
-no previously-included directories found matching 'local_tests'
-no previously-included directories found matching 'tests'
-no previously-included directories found matching 'test_audio'
-no previously-included directories found matching 'machine-learning'
-no previously-included directories found matching 'labeled_datasets'
-no previously-included directories found matching '.archive'
-no previously-included directories found matching '.development'
-no previously-included directories found matching 'logs'
-no previously-included directories found matching 'outputs'
-no previously-included directories found matching 'terraform'
-no previously-included directories found matching 'visuals'
-no previously-included directories found matching '.testing'
-no previously-included directories found matching 'branch_note'
-no previously-included directories found matching 'Makefile'
-adding license file 'LICENSE'
-writing manifest file 'DrumScript.egg-info/SOURCES.txt'
-running check
-creating drumscript-0.1.2
-creating drumscript-0.1.2/DrumScript.egg-info
-creating drumscript-0.1.2/drumscript
-creating drumscript-0.1.2/drumscript/audio_processor
-creating drumscript-0.1.2/drumscript/audio_processor/proofs
-creating drumscript-0.1.2/drumscript/drum_classifier
-creating drumscript-0.1.2/drumscript/notation_generator
-creating drumscript-0.1.2/drumscript/utils
-copying files to drumscript-0.1.2...
-copying LICENSE -> drumscript-0.1.2
-copying MANIFEST.in -> drumscript-0.1.2
-copying README.md -> drumscript-0.1.2
-copying pyproject.toml -> drumscript-0.1.2
-copying DrumScript.egg-info/PKG-INFO -> drumscript-0.1.2/DrumScript.egg-info
-copying DrumScript.egg-info/SOURCES.txt -> drumscript-0.1.2/DrumScript.egg-info
-copying DrumScript.egg-info/dependency_links.txt -> drumscript-0.1.2/DrumScript.egg-info
-copying DrumScript.egg-info/entry_points.txt -> drumscript-0.1.2/DrumScript.egg-info
-copying DrumScript.egg-info/requires.txt -> drumscript-0.1.2/DrumScript.egg-info
-copying DrumScript.egg-info/top_level.txt -> drumscript-0.1.2/DrumScript.egg-info
-copying drumscript/__init__.py -> drumscript-0.1.2/drumscript
-copying drumscript/main.py -> drumscript-0.1.2/drumscript
-copying drumscript/audio_processor/__init__.py -> drumscript-0.1.2/drumscript/audio_processor
-copying drumscript/audio_processor/audio_loader.py -> drumscript-0.1.2/drumscript/audio_processor
-copying drumscript/audio_processor/feature_extractor.py -> drumscript-0.1.2/drumscript/audio_processor
-copying drumscript/audio_processor/onset_detector.py -> drumscript-0.1.2/drumscript/audio_processor
-copying drumscript/audio_processor/stem_splitter.py -> drumscript-0.1.2/drumscript/audio_processor
-copying drumscript/audio_processor/tempo_detector.py -> drumscript-0.1.2/drumscript/audio_processor
-copying drumscript/audio_processor/tempogram.py -> drumscript-0.1.2/drumscript/audio_processor
-copying drumscript/audio_processor/proofs/_onset_detector.py -> drumscript-0.1.2/drumscript/audio_processor/proofs
-copying drumscript/drum_classifier/__init__.py -> drumscript-0.1.2/drumscript/drum_classifier
-copying drumscript/drum_classifier/classify.py -> drumscript-0.1.2/drumscript/drum_classifier
-copying drumscript/notation_generator/__init__.py -> drumscript-0.1.2/drumscript/notation_generator
-copying drumscript/notation_generator/constants.py -> drumscript-0.1.2/drumscript/notation_generator
-copying drumscript/notation_generator/helpers.py -> drumscript-0.1.2/drumscript/notation_generator
-copying drumscript/notation_generator/midi_exporter.py -> drumscript-0.1.2/drumscript/notation_generator
-copying drumscript/notation_generator/pdf_exporter.py -> drumscript-0.1.2/drumscript/notation_generator
-copying drumscript/notation_generator/score_builder.py -> drumscript-0.1.2/drumscript/notation_generator
-copying drumscript/utils/__init__.py -> drumscript-0.1.2/drumscript/utils
-copying drumscript/utils/analyze_closed_hat_physics.py -> drumscript-0.1.2/drumscript/utils
-copying drumscript/utils/analyze_crash_physics.py -> drumscript-0.1.2/drumscript/utils
-copying drumscript/utils/analyze_high_tom_physics.py -> drumscript-0.1.2/drumscript/utils
-copying drumscript/utils/analyze_kick_physics.py -> drumscript-0.1.2/drumscript/utils
-copying drumscript/utils/analyze_low_tom_physics.py -> drumscript-0.1.2/drumscript/utils
-copying drumscript/utils/analyze_mid_tom_physics.py -> drumscript-0.1.2/drumscript/utils
-copying drumscript/utils/analyze_open_hat_physics.py -> drumscript-0.1.2/drumscript/utils
-copying drumscript/utils/analyze_ride_physics.py -> drumscript-0.1.2/drumscript/utils
-copying drumscript/utils/analyze_snare_physics.py -> drumscript-0.1.2/drumscript/utils
-copying drumscript/utils/analyze_tom_physics.py -> drumscript-0.1.2/drumscript/utils
-copying drumscript/utils/config.py -> drumscript-0.1.2/drumscript/utils
-copying drumscript/utils/ffmpeg_installer.py -> drumscript-0.1.2/drumscript/utils
-copying drumscript/utils/get_event_frequencies.py -> drumscript-0.1.2/drumscript/utils
-copying drumscript/utils/measure_hat_frequency.py -> drumscript-0.1.2/drumscript/utils
-copying drumscript/utils/measure_kick_frequency.py -> drumscript-0.1.2/drumscript/utils
-copying drumscript/utils/measure_snare_frequency.py -> drumscript-0.1.2/drumscript/utils
-copying DrumScript.egg-info/SOURCES.txt -> drumscript-0.1.2/DrumScript.egg-info
-Writing drumscript-0.1.2/setup.cfg
-Creating tar archive
-removing 'drumscript-0.1.2' (and everything under it)
-Building wheel from source distribution...
-running egg_info
-writing DrumScript.egg-info/PKG-INFO
-writing dependency_links to DrumScript.egg-info/dependency_links.txt
-writing entry points to DrumScript.egg-info/entry_points.txt
-writing requirements to DrumScript.egg-info/requires.txt
-writing top-level names to DrumScript.egg-info/top_level.txt
-reading manifest file 'DrumScript.egg-info/SOURCES.txt'
-reading manifest template 'MANIFEST.in'
-warning: no previously-included files matching '*.py[cod]' found anywhere in distribution
-warning: no previously-included files matching '__pycache__' found anywhere in distribution
-warning: no previously-included files matching '.DS_Store' found anywhere in distribution
-warning: no previously-included files matching '*.log' found anywhere in distribution
-no previously-included directories found matching 'docs'
-no previously-included directories found matching 'local_tests'
-no previously-included directories found matching 'tests'
-no previously-included directories found matching 'test_audio'
-no previously-included directories found matching 'machine-learning'
-no previously-included directories found matching 'labeled_datasets'
-no previously-included directories found matching '.archive'
-no previously-included directories found matching '.development'
-no previously-included directories found matching 'logs'
-no previously-included directories found matching 'outputs'
-no previously-included directories found matching 'terraform'
-no previously-included directories found matching 'visuals'
-no previously-included directories found matching '.testing'
-no previously-included directories found matching 'branch_note'
-no previously-included directories found matching 'Makefile'
-adding license file 'LICENSE'
-writing manifest file 'DrumScript.egg-info/SOURCES.txt'
-running bdist_wheel
-running build
-running build_py
-creating build/lib/drumscript
-copying drumscript/__init__.py -> build/lib/drumscript
-copying drumscript/main.py -> build/lib/drumscript
-creating build/lib/drumscript/audio_processor
-copying drumscript/audio_processor/tempo_detector.py -> build/lib/drumscript/audio_processor
-copying drumscript/audio_processor/__init__.py -> build/lib/drumscript/audio_processor
-copying drumscript/audio_processor/onset_detector.py -> build/lib/drumscript/audio_processor
-copying drumscript/audio_processor/audio_loader.py -> build/lib/drumscript/audio_processor
-copying drumscript/audio_processor/feature_extractor.py -> build/lib/drumscript/audio_processor
-copying drumscript/audio_processor/tempogram.py -> build/lib/drumscript/audio_processor
-copying drumscript/audio_processor/stem_splitter.py -> build/lib/drumscript/audio_processor
-creating build/lib/drumscript/utils
-copying drumscript/utils/measure_hat_frequency.py -> build/lib/drumscript/utils
-copying drumscript/utils/analyze_open_hat_physics.py -> build/lib/drumscript/utils
-copying drumscript/utils/analyze_kick_physics.py -> build/lib/drumscript/utils
-copying drumscript/utils/config.py -> build/lib/drumscript/utils
-copying drumscript/utils/analyze_high_tom_physics.py -> build/lib/drumscript/utils
-copying drumscript/utils/get_event_frequencies.py -> build/lib/drumscript/utils
-copying drumscript/utils/analyze_low_tom_physics.py -> build/lib/drumscript/utils
-copying drumscript/utils/__init__.py -> build/lib/drumscript/utils
-copying drumscript/utils/analyze_closed_hat_physics.py -> build/lib/drumscript/utils
-copying drumscript/utils/analyze_mid_tom_physics.py -> build/lib/drumscript/utils
-copying drumscript/utils/analyze_ride_physics.py -> build/lib/drumscript/utils
-copying drumscript/utils/analyze_crash_physics.py -> build/lib/drumscript/utils
-copying drumscript/utils/analyze_tom_physics.py -> build/lib/drumscript/utils
-copying drumscript/utils/analyze_snare_physics.py -> build/lib/drumscript/utils
-copying drumscript/utils/ffmpeg_installer.py -> build/lib/drumscript/utils
-copying drumscript/utils/measure_snare_frequency.py -> build/lib/drumscript/utils
-copying drumscript/utils/measure_kick_frequency.py -> build/lib/drumscript/utils
-creating build/lib/drumscript/notation_generator
-copying drumscript/notation_generator/score_builder.py -> build/lib/drumscript/notation_generator
-copying drumscript/notation_generator/constants.py -> build/lib/drumscript/notation_generator
-copying drumscript/notation_generator/__init__.py -> build/lib/drumscript/notation_generator
-copying drumscript/notation_generator/midi_exporter.py -> build/lib/drumscript/notation_generator
-copying drumscript/notation_generator/pdf_exporter.py -> build/lib/drumscript/notation_generator
-copying drumscript/notation_generator/helpers.py -> build/lib/drumscript/notation_generator
-creating build/lib/drumscript/drum_classifier
-copying drumscript/drum_classifier/classify.py -> build/lib/drumscript/drum_classifier
-copying drumscript/drum_classifier/__init__.py -> build/lib/drumscript/drum_classifier
-creating build/lib/drumscript/audio_processor/proofs
-copying drumscript/audio_processor/proofs/_onset_detector.py -> build/lib/drumscript/audio_processor/proofs
-running egg_info
-writing DrumScript.egg-info/PKG-INFO
-writing dependency_links to DrumScript.egg-info/dependency_links.txt
-writing entry points to DrumScript.egg-info/entry_points.txt
-writing requirements to DrumScript.egg-info/requires.txt
-writing top-level names to DrumScript.egg-info/top_level.txt
-reading manifest file 'DrumScript.egg-info/SOURCES.txt'
-reading manifest template 'MANIFEST.in'
-warning: no previously-included files matching '*.py[cod]' found anywhere in distribution
-warning: no previously-included files matching '__pycache__' found anywhere in distribution
-warning: no previously-included files matching '.DS_Store' found anywhere in distribution
-warning: no previously-included files matching '*.log' found anywhere in distribution
-no previously-included directories found matching 'docs'
-no previously-included directories found matching 'local_tests'
-no previously-included directories found matching 'tests'
-no previously-included directories found matching 'test_audio'
-no previously-included directories found matching 'machine-learning'
-no previously-included directories found matching 'labeled_datasets'
-no previously-included directories found matching '.archive'
-no previously-included directories found matching '.development'
-no previously-included directories found matching 'logs'
-no previously-included directories found matching 'outputs'
-no previously-included directories found matching 'terraform'
-no previously-included directories found matching 'visuals'
-no previously-included directories found matching '.testing'
-no previously-included directories found matching 'branch_note'
-no previously-included directories found matching 'Makefile'
-adding license file 'LICENSE'
-writing manifest file 'DrumScript.egg-info/SOURCES.txt'
-installing to build/bdist.macosx-11.0-arm64/wheel
-running install
-running install_lib
-creating build/bdist.macosx-11.0-arm64/wheel
-creating build/bdist.macosx-11.0-arm64/wheel/drumscript
-copying build/lib/drumscript/__init__.py -> build/bdist.macosx-11.0-arm64/wheel/./drumscript
-creating build/bdist.macosx-11.0-arm64/wheel/drumscript/audio_processor
-copying build/lib/drumscript/audio_processor/tempo_detector.py -> build/bdist.macosx-11.0-arm64/wheel/./drumscript/audio_processor
-creating build/bdist.macosx-11.0-arm64/wheel/drumscript/audio_processor/proofs
-copying build/lib/drumscript/audio_processor/proofs/_onset_detector.py -> build/bdist.macosx-11.0-arm64/wheel/./drumscript/audio_processor/proofs
-copying build/lib/drumscript/audio_processor/__init__.py -> build/bdist.macosx-11.0-arm64/wheel/./drumscript/audio_processor
-copying build/lib/drumscript/audio_processor/onset_detector.py -> build/bdist.macosx-11.0-arm64/wheel/./drumscript/audio_processor
-copying build/lib/drumscript/audio_processor/audio_loader.py -> build/bdist.macosx-11.0-arm64/wheel/./drumscript/audio_processor
-copying build/lib/drumscript/audio_processor/feature_extractor.py -> build/bdist.macosx-11.0-arm64/wheel/./drumscript/audio_processor
-copying build/lib/drumscript/audio_processor/tempogram.py -> build/bdist.macosx-11.0-arm64/wheel/./drumscript/audio_processor
-copying build/lib/drumscript/audio_processor/stem_splitter.py -> build/bdist.macosx-11.0-arm64/wheel/./drumscript/audio_processor
-creating build/bdist.macosx-11.0-arm64/wheel/drumscript/utils
-copying build/lib/drumscript/utils/measure_hat_frequency.py -> build/bdist.macosx-11.0-arm64/wheel/./drumscript/utils
-copying build/lib/drumscript/utils/analyze_open_hat_physics.py -> build/bdist.macosx-11.0-arm64/wheel/./drumscript/utils
-copying build/lib/drumscript/utils/analyze_kick_physics.py -> build/bdist.macosx-11.0-arm64/wheel/./drumscript/utils
-copying build/lib/drumscript/utils/config.py -> build/bdist.macosx-11.0-arm64/wheel/./drumscript/utils
-copying build/lib/drumscript/utils/analyze_high_tom_physics.py -> build/bdist.macosx-11.0-arm64/wheel/./drumscript/utils
-copying build/lib/drumscript/utils/get_event_frequencies.py -> build/bdist.macosx-11.0-arm64/wheel/./drumscript/utils
-copying build/lib/drumscript/utils/analyze_low_tom_physics.py -> build/bdist.macosx-11.0-arm64/wheel/./drumscript/utils
-copying build/lib/drumscript/utils/__init__.py -> build/bdist.macosx-11.0-arm64/wheel/./drumscript/utils
-copying build/lib/drumscript/utils/analyze_closed_hat_physics.py -> build/bdist.macosx-11.0-arm64/wheel/./drumscript/utils
-copying build/lib/drumscript/utils/analyze_mid_tom_physics.py -> build/bdist.macosx-11.0-arm64/wheel/./drumscript/utils
-copying build/lib/drumscript/utils/analyze_ride_physics.py -> build/bdist.macosx-11.0-arm64/wheel/./drumscript/utils
-copying build/lib/drumscript/utils/analyze_crash_physics.py -> build/bdist.macosx-11.0-arm64/wheel/./drumscript/utils
-copying build/lib/drumscript/utils/analyze_tom_physics.py -> build/bdist.macosx-11.0-arm64/wheel/./drumscript/utils
-copying build/lib/drumscript/utils/analyze_snare_physics.py -> build/bdist.macosx-11.0-arm64/wheel/./drumscript/utils
-copying build/lib/drumscript/utils/ffmpeg_installer.py -> build/bdist.macosx-11.0-arm64/wheel/./drumscript/utils
-copying build/lib/drumscript/utils/measure_snare_frequency.py -> build/bdist.macosx-11.0-arm64/wheel/./drumscript/utils
-copying build/lib/drumscript/utils/measure_kick_frequency.py -> build/bdist.macosx-11.0-arm64/wheel/./drumscript/utils
-creating build/bdist.macosx-11.0-arm64/wheel/drumscript/notation_generator
-copying build/lib/drumscript/notation_generator/score_builder.py -> build/bdist.macosx-11.0-arm64/wheel/./drumscript/notation_generator
-copying build/lib/drumscript/notation_generator/constants.py -> build/bdist.macosx-11.0-arm64/wheel/./drumscript/notation_generator
-copying build/lib/drumscript/notation_generator/__init__.py -> build/bdist.macosx-11.0-arm64/wheel/./drumscript/notation_generator
-copying build/lib/drumscript/notation_generator/midi_exporter.py -> build/bdist.macosx-11.0-arm64/wheel/./drumscript/notation_generator
-copying build/lib/drumscript/notation_generator/pdf_exporter.py -> build/bdist.macosx-11.0-arm64/wheel/./drumscript/notation_generator
-copying build/lib/drumscript/notation_generator/helpers.py -> build/bdist.macosx-11.0-arm64/wheel/./drumscript/notation_generator
-copying build/lib/drumscript/main.py -> build/bdist.macosx-11.0-arm64/wheel/./drumscript
-creating build/bdist.macosx-11.0-arm64/wheel/drumscript/drum_classifier
-copying build/lib/drumscript/drum_classifier/classify.py -> build/bdist.macosx-11.0-arm64/wheel/./drumscript/drum_classifier
-copying build/lib/drumscript/drum_classifier/__init__.py -> build/bdist.macosx-11.0-arm64/wheel/./drumscript/drum_classifier
-running install_egg_info
-Copying DrumScript.egg-info to build/bdist.macosx-11.0-arm64/wheel/./DrumScript-0.1.2-py3.12.egg-info
-running install_scripts
-creating build/bdist.macosx-11.0-arm64/wheel/drumscript-0.1.2.dist-info/WHEEL
-creating '/Users/victoriamckinney/Library/Visual Studio Projects/DrumScript/dist/.tmp-9yae63de/drumscript-0.1.2-py3-none-any.whl' and adding 'build/bdist.macosx-11.0-arm64/wheel' to it
-adding 'drumscript/__init__.py'
-adding 'drumscript/main.py'
-adding 'drumscript/audio_processor/__init__.py'
-adding 'drumscript/audio_processor/audio_loader.py'
-adding 'drumscript/audio_processor/feature_extractor.py'
-adding 'drumscript/audio_processor/onset_detector.py'
-adding 'drumscript/audio_processor/stem_splitter.py'
-adding 'drumscript/audio_processor/tempo_detector.py'
-adding 'drumscript/audio_processor/tempogram.py'
-adding 'drumscript/audio_processor/proofs/_onset_detector.py'
-adding 'drumscript/drum_classifier/__init__.py'
-adding 'drumscript/drum_classifier/classify.py'
-adding 'drumscript/notation_generator/__init__.py'
-adding 'drumscript/notation_generator/constants.py'
-adding 'drumscript/notation_generator/helpers.py'
-adding 'drumscript/notation_generator/midi_exporter.py'
-adding 'drumscript/notation_generator/pdf_exporter.py'
-adding 'drumscript/notation_generator/score_builder.py'
-adding 'drumscript/utils/__init__.py'
-adding 'drumscript/utils/analyze_closed_hat_physics.py'
-adding 'drumscript/utils/analyze_crash_physics.py'
-adding 'drumscript/utils/analyze_high_tom_physics.py'
-adding 'drumscript/utils/analyze_kick_physics.py'
-adding 'drumscript/utils/analyze_low_tom_physics.py'
-adding 'drumscript/utils/analyze_mid_tom_physics.py'
-adding 'drumscript/utils/analyze_open_hat_physics.py'
-adding 'drumscript/utils/analyze_ride_physics.py'
-adding 'drumscript/utils/analyze_snare_physics.py'
-adding 'drumscript/utils/analyze_tom_physics.py'
-adding 'drumscript/utils/config.py'
-adding 'drumscript/utils/ffmpeg_installer.py'
-adding 'drumscript/utils/get_event_frequencies.py'
-adding 'drumscript/utils/measure_hat_frequency.py'
-adding 'drumscript/utils/measure_kick_frequency.py'
-adding 'drumscript/utils/measure_snare_frequency.py'
-adding 'drumscript-0.1.2.dist-info/licenses/LICENSE'
-adding 'drumscript-0.1.2.dist-info/METADATA'
-adding 'drumscript-0.1.2.dist-info/WHEEL'
-adding 'drumscript-0.1.2.dist-info/entry_points.txt'
-adding 'drumscript-0.1.2.dist-info/top_level.txt'
-adding 'drumscript-0.1.2.dist-info/RECORD'
-removing build/bdist.macosx-11.0-arm64/wheel
-Successfully built dist/drumscript-0.1.2.tar.gz
-Successfully built dist/drumscript-0.1.2-py3-none-any.whl
-(drumscript) victoriamckinney@Victoria’s MacBook Air DrumScript % git add .
-(drumscript) victoriamckinney@Victoria’s MacBook Air DrumScript % git commit -m "adding testing file"
-[build/classification_model b7a037f] adding testing file
- 1 file changed, 318 insertions(+), 233 deletions(-)
-(drumscript) victoriamckinney@Victoria’s MacBook Air DrumScript %  
+def separate_audio(input_audio_path: str, output_format: str = "wav", drumless: bool = False, mute: list = None, all_stems: bool = False) -> dict:
+    """
+    Separates a full audio track using Demucs and processes the outputs based on user-input args (optional)
+    
+    Args:
+    :param input_audio_path: Path to the source audio.
+    :type input_audio_path: str
+    :param output_format: 'wav' or 'mp3', defaults to 'wav'.
+    :type output_format: str, optional
+    :param drumless: If True, generates a track with everything EXCEPT drums, but also saves the drum only output
+    :type drumless: bool, optional
+    :param mute: List of stems to exclude (e.g., ['bass']).
+    :type mute: list, optional
+    :param all_stems: If True, saves all individual raw stems.
+    :type all_stems: bool, optional
+    :return: Dictionary of paths to generated files.
+    :rtype: dict
+    Returns:
+        dict: Paths to the generated files (e.g., {'drums': path, 'mix': path}).
+    """
+    input_path = Path(input_audio_path)
+    if not input_path.exists():
+        raise FileNotFoundError(f"Input file not found: {input_audio_path}")
+
+    # 1. Define Output Directory
+    # We save outputs to a 'processed_stems' folder in the project root/outputs for visibility
+    base_output_dir = Path("./outputs/processed_stems") / input_path.stem
+    base_output_dir.mkdir(parents=True, exist_ok=True)
+    
+    # Temp dir for raw demucs output
+    temp_demucs_dir = base_output_dir / "temp_demucs"
+    
+    print(f"Starting Demucs separation for: {input_path.name}...")
+    start_time = time.monotonic()
+
+    # 2. Run Demucs
+    # We always output FLAC or WAV from Demucs first, then convert/mix later.
+    # Using flac for intermediate speed/quality.
+    command = [
+        "demucs",
+        "-o", str(temp_demucs_dir),
+        "-n", DEMUCS_MODEL,
+        "--flac", 
+        str(input_path)
+    ]
+
+    try:
+        subprocess.run(command, check=True, capture_output=True, text=True)
+    except subprocess.CalledProcessError as e:
+        shutil.rmtree(temp_demucs_dir, ignore_errors=True)
+        raise RuntimeError(f"Demucs failed: {e.stderr}")
+    except FileNotFoundError:
+        raise FileNotFoundError("The 'demucs' command was not found. Please install it.")
+
+    print(f"Demucs raw separation finished in {((time.monotonic() - start_time)/60):.2f} minutes.")
+
+    # 3. Locate Raw Stems
+    # Demucs structure: output_dir / model_name / song_name / {stem}.flac
+    raw_stem_dir = temp_demucs_dir / DEMUCS_MODEL / input_path.stem
+    
+    available_stems = ['drums', 'bass', 'other', 'vocals']
+    stem_paths = {}
+    
+    for stem in available_stems:
+        # Demucs output is .flac because we used --flac
+        path = raw_stem_dir / f"{stem}.flac"
+        if path.exists():
+            stem_paths[stem] = path
+        else:
+            print(f"Warning: Expected stem {stem} not found.")
+
+    results = {}
+
+    # 4. Handle "Drumless" Logic (Shortcut for Mute=['drums'])
+    stems_to_exclude = set()
+    if mute:
+        stems_to_exclude.update(mute)
+    if drumless:
+        stems_to_exclude.add('drums')
+
+    # 5. Determine what to mix
+    # If the user asked to mute something (e.g. drums), we create a mix of everything else.
+    if stems_to_exclude:
+        mix_list = [s for s in available_stems if s not in stems_to_exclude]
+        
+        # Name the file based on what is missing, e.g., "song_no_drums" or "song_no_bass"
+        exclusion_tag = "_no_" + "_".join(stems_to_exclude)
+        output_filename = f"{input_path.stem}{exclusion_tag}.{output_format}"
+        output_path = base_output_dir / output_filename
+        
+        print(f"Creating mix: {output_filename} (Stems: {mix_list})...")
+        mix_stems(stem_paths, mix_list, output_path, fmt=output_format)
+        results['mix'] = str(output_path)
+
+        # The user requested: "saves the extracted element too"
+        # So if we mute 'drums', we should also save the 'drums' stem separately.
+        for excluded in stems_to_exclude:
+            if excluded in stem_paths:
+                stem_out_name = f"{input_path.stem}_only_{excluded}.{output_format}"
+                stem_out_path = base_output_dir / stem_out_name
+                # Convert/Copy the single stem
+                AudioSegment.from_file(stem_paths[excluded]).export(
+                    str(stem_out_path), format=output_format, 
+                    parameters=["-q:a", "0"] if output_format == "mp3" else None
+                )
+                results[f'{excluded}_stem'] = str(stem_out_path)
+
+    # 6. Handle "--all-stems"
+    if all_stems:
+        print("Exporting all individual stems...")
+        for stem, path in stem_paths.items():
+            # Avoid re-doing work if we already exported it in step 5
+            expected_name = f"{input_path.stem}_only_{stem}.{output_format}"
+            if (base_output_dir / expected_name).exists():
+                continue
+                
+            out_path = base_output_dir / expected_name
+            AudioSegment.from_file(path).export(
+                str(out_path), format=output_format,
+                parameters=["-q:a", "0"] if output_format == "mp3" else None
+            )
+            results[f'{stem}_stem'] = str(out_path)
+
+    # 7. Default Case: No specific mute/drumless requested, but separate_audio was called.
+    # Usually this is called for transcription (just need drums).
+    # If no results yet, implies we just want the drums for processing or all stems were requested.
+    if not results and not all_stems:
+        # Default behavior: Just extract drums (for transcription)
+        # We return the raw path (converted if necessary)
+        drum_out_name = f"{input_path.stem}_drums.{output_format}"
+        drum_out_path = base_output_dir / drum_out_name
+        AudioSegment.from_file(stem_paths['drums']).export(
+            str(drum_out_path), format=output_format
+        )
+        results['drums'] = str(drum_out_path)
+
+    # Cleanup Temp Demucs Folder
+    shutil.rmtree(temp_demucs_dir, ignore_errors=True)
+    
+    print(f"Separation complete. Outputs saved in: {base_output_dir}")
+    return results

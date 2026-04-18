@@ -15,14 +15,17 @@ from .utils.ffmpeg_installer import install_ffmpeg
 from .audio_processor.audio_loader import load_audio
 from .audio_processor.audio_loader import normalise_audio
 from .audio_processor.stem_splitter import extract_drum_stem
+# from .audio_processor import stem_splitter
 from .audio_processor.stem_splitter import separate_audio
 from .audio_processor.onset_detector import detect_onsets
 from .audio_processor.feature_extractor import extract_features
 from .audio_processor.tempo_detector import estimate_tempo as _internal_estimate
 from .drum_classifier.classify import classify_events
 from .notation_generator.score_builder import build_score
-from .notation_generator.pdf_exporter import export_pdf
-from .notation_generator.midi_exporter import export_to_midi
+#from .notation_generator.pdf_exporter import export_pdf
+#from .notation_generator.midi_exporter import export_to_midi
+from .notation_generator import pdf_exporter
+from .notation_generator import midi_exporter
 
 # 2. Create user-friendly wrappers
 

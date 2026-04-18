@@ -2,7 +2,7 @@
 ## `DrumScript` Python Package Structure
 
 <!--date_created: weds-25-oct-2025-->
-<!--date_edited: sun-05-apr-2026-->
+<!--date_edited: sat-18-apr-2026-->
 
 ```markdown
 DrumScript/                          # Project root
@@ -25,7 +25,9 @@ DrumScript/                          # Project root
 │   ├── notation_generator/          # Generates musical notation (`.json`), (`.midi`) and sheet music (`.pdf`) from audio provided.
 │   │   ├── __init__.py
 │   │   ├── score_builder.py
-│   │   ├── pdf_generator.py
+│   │   ├── pdf_exporter.py
+│   │   ├── midi_exporter.py
+│   │   ├── xml_exporter.py
 │   │   └── constants.py             # Single-source of truth for constants such as `SAMPLE_RATE`, `N_FFT` used globally through `DrumScript`
 │   └── utils/                       # Utility functions.
 ├── docs/                            # Documentation for developers and contributors, as well as the `_build` artifacts for the `DrumScript` documentation website.
@@ -64,7 +66,7 @@ This module converts the list of classified drum events from `drum_classifier/` 
 This script serves as the main entry point to run the entire transcription pipeline with a single command. It orchestrates the process:
 
 1.  Loads audio (`audio_processor`).
-2.  Detects onsets and extracts features (`audio_processor`).
+2.  Detects onsets and extracts features (`audio_processor`)
 3.  Classifies each drum hit using the rule-based engine (`drum_classifier`).
 4.  Generates the final sheet music from the classified hits (`notation_generator`).-->
 

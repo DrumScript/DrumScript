@@ -1,7 +1,7 @@
 ## **`DrumScript`**
 
 <!--date_created: sun-15-june-2025-->
-<!--date_updated: sun-05-apr-2026-->
+<!--date_updated: sat-18-apr-2026-->
 
 DrumScript is an open-source `Python` library and suite of tools intended to make music more accessible for everyone. The Python package alpha is released alongside a free-to-use engine for members of the musical and sound analysis/engineering community to use in a zero-code way.
 
@@ -56,7 +56,9 @@ DrumScript/                          # Project root
 │   ├── notation_generator/          # Generates musical notation (`.json`), (`.midi`) and sheet music (`.pdf`) from audio provided.
 │   │   ├── __init__.py
 │   │   ├── score_builder.py
-│   │   ├── pdf_generator.py
+│   │   ├── pdf_exporter.py
+│   │   ├── midi_exporter.py
+│   │   ├── xml_exporter.py
 │   │   └── constants.py             # Single-source of truth for constants such as `SAMPLE_RATE`, `N_FFT` used globally through `DrumScript`
 │   └── utils/                       # Utility functions.
 ├── docs/                            # Documentation for developers and contributors, as well as the `_build` artifacts for the `DrumScript` documentation website.

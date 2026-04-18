@@ -1,30 +1,33 @@
-def separate_audio(input_audio_path: str, output_format: str = "wav", drumless: bool = False, mute: list = None, all_stems: bool = False) -> dict:
+def separate_audio(input_audio_path: str, output_format: str = "wav", drumless: bool = False, mute: list = None, all_stems: bool = False, output_dir: str = None) -> dict:
     """
-    Separates a full audio track using Demucs and processes the outputs based on user-input args (optional)
+    Separates a full audio track using Demucs and processes the outputs based on user-input args.
     
     Args:
     :param input_audio_path: Path to the source audio.
     :type input_audio_path: str
     :param output_format: 'wav' or 'mp3', defaults to 'wav'.
     :type output_format: str, optional
-    :param drumless: If True, generates a track with everything EXCEPT drums, but also saves the drum only output
+    :param drumless: If True, generates a track with everything EXCEPT drums.
     :type drumless: bool, optional
     :param mute: List of stems to exclude (e.g., ['bass']).
     :type mute: list, optional
     :param all_stems: If True, saves all individual raw stems.
     :type all_stems: bool, optional
+    :param output_dir: Destination folder. Defaults to CWD/separated_stems.
+    :type output_dir: str, optional
     :return: Dictionary of paths to generated files.
     :rtype: dict
-    Returns:
-        dict: Paths to the generated files (e.g., {'drums': path, 'mix': path}).
     """
     input_path = Path(input_audio_path)
     if not input_path.exists():
         raise FileNotFoundError(f"Input file not found: {input_audio_path}")
 
-    # 1. Define Output Directory
-    # We save outputs to a 'processed_stems' folder in the project root/outputs for visibility
-    base_output_dir = Path("./outputs/processed_stems") / input_path.stem
+    # 1. Define Output Directory (Pandas style)
+    if output_dir is None:
+        base_output_dir = Path.cwd() / "separated_stems" / input_path.stem
+    else:
+        base_output_dir = Path(output_dir) / input_path.stem
+        
     base_output_dir.mkdir(parents=True, exist_ok=True)
     
     # Temp dir for raw demucs output
@@ -34,8 +37,6 @@ def separate_audio(input_audio_path: str, output_format: str = "wav", drumless: 
     start_time = time.monotonic()
 
     # 2. Run Demucs
-    # We always output FLAC or WAV from Demucs first, then convert/mix later.
-    # Using flac for intermediate speed/quality.
     command = [
         "demucs",
         "-o", str(temp_demucs_dir),
@@ -55,14 +56,11 @@ def separate_audio(input_audio_path: str, output_format: str = "wav", drumless: 
     print(f"Demucs raw separation finished in {((time.monotonic() - start_time)/60):.2f} minutes.")
 
     # 3. Locate Raw Stems
-    # Demucs structure: output_dir / model_name / song_name / {stem}.flac
     raw_stem_dir = temp_demucs_dir / DEMUCS_MODEL / input_path.stem
-    
     available_stems = ['drums', 'bass', 'other', 'vocals']
     stem_paths = {}
     
     for stem in available_stems:
-        # Demucs output is .flac because we used --flac
         path = raw_stem_dir / f"{stem}.flac"
         if path.exists():
             stem_paths[stem] = path
@@ -79,11 +77,8 @@ def separate_audio(input_audio_path: str, output_format: str = "wav", drumless: 
         stems_to_exclude.add('drums')
 
     # 5. Determine what to mix
-    # If the user asked to mute something (e.g. drums), we create a mix of everything else.
     if stems_to_exclude:
         mix_list = [s for s in available_stems if s not in stems_to_exclude]
-        
-        # Name the file based on what is missing, e.g., "song_no_drums" or "song_no_bass"
         exclusion_tag = "_no_" + "_".join(stems_to_exclude)
         output_filename = f"{input_path.stem}{exclusion_tag}.{output_format}"
         output_path = base_output_dir / output_filename
@@ -92,13 +87,10 @@ def separate_audio(input_audio_path: str, output_format: str = "wav", drumless: 
         mix_stems(stem_paths, mix_list, output_path, fmt=output_format)
         results['mix'] = str(output_path)
 
-        # The user requested: "saves the extracted element too"
-        # So if we mute 'drums', we should also save the 'drums' stem separately.
         for excluded in stems_to_exclude:
             if excluded in stem_paths:
                 stem_out_name = f"{input_path.stem}_only_{excluded}.{output_format}"
                 stem_out_path = base_output_dir / stem_out_name
-                # Convert/Copy the single stem
                 AudioSegment.from_file(stem_paths[excluded]).export(
                     str(stem_out_path), format=output_format, 
                     parameters=["-q:a", "0"] if output_format == "mp3" else None
@@ -109,7 +101,6 @@ def separate_audio(input_audio_path: str, output_format: str = "wav", drumless: 
     if all_stems:
         print("Exporting all individual stems...")
         for stem, path in stem_paths.items():
-            # Avoid re-doing work if we already exported it in step 5
             expected_name = f"{input_path.stem}_only_{stem}.{output_format}"
             if (base_output_dir / expected_name).exists():
                 continue
@@ -121,12 +112,8 @@ def separate_audio(input_audio_path: str, output_format: str = "wav", drumless: 
             )
             results[f'{stem}_stem'] = str(out_path)
 
-    # 7. Default Case: No specific mute/drumless requested, but separate_audio was called.
-    # Usually this is called for transcription (just need drums).
-    # If no results yet, implies we just want the drums for processing or all stems were requested.
+    # 7. Default Case
     if not results and not all_stems:
-        # Default behavior: Just extract drums (for transcription)
-        # We return the raw path (converted if necessary)
         drum_out_name = f"{input_path.stem}_drums.{output_format}"
         drum_out_path = base_output_dir / drum_out_name
         AudioSegment.from_file(stem_paths['drums']).export(
@@ -134,8 +121,7 @@ def separate_audio(input_audio_path: str, output_format: str = "wav", drumless: 
         )
         results['drums'] = str(drum_out_path)
 
-    # Cleanup Temp Demucs Folder
+    # Cleanup
     shutil.rmtree(temp_demucs_dir, ignore_errors=True)
-    
     print(f"Separation complete. Outputs saved in: {base_output_dir}")
     return results

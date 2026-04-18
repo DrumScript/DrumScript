@@ -68,18 +68,20 @@ dev = [
     #"basic-pitch[onnx]",
     #"basic-pitch[tf]",
     #"basic-pitch[coreml]",
-    "black",
-    "flake8",
+    #"black",
+    #"flake8",
     # "furo",
     "ipykernel",
     "myst-parser",
     "pytest",
     "pytest-cov",
-    "shibuya",
-    "sphinx",
-    "fastapi",
-    "streamlit",
-    "requests"
+    "shibuya>=2025.10.21",
+    "streamlit>=1.50.0",
+    "fastapi>=0.128.8",
+    "ipywidgets>=8.1.8",
+    "mangum>=0.21.0",
+    "requests>=2.32.5",
+    "ruff>=0.15.11"
 ]
 
 
@@ -123,11 +125,6 @@ addopts = "--ignore=local_tests/classification_engine --ignore=local_tests/mp3_c
 
 [dependency-groups]
 dev = [
-    "fastapi>=0.128.8",
-    "ipywidgets>=8.1.8",
-    "mangum>=0.21.0",
-    "requests>=2.32.5",
-    "shibuya>=2025.10.21",
-    "streamlit>=1.50.0",
+
 ]
 

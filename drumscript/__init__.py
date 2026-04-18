@@ -2,6 +2,9 @@
 
 """
 DrumScript: A Python-based suite of tools for drum audio analysis and transcription.
+
+This top-level module exposes the primary high-level wrappers for end-to-end 
+transcription, as well as the core low-level building blocks for custom DSP pipelines.
 """
 
 # 1. Import internal functions

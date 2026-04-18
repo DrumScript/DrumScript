@@ -105,10 +105,10 @@ exclude = [
     "terraform/*",
     "visuals/",
     "outputs/",
-    "logs",
-    "drumscript.logs*",
     ".testing",
-    "drumscript.audio_processor.proofs*"
+    "*/logs/*",
+    "*/proofs/*",
+    "*/__pycache__/*"
     ]
 
 [tool.pytest.ini_options]

@@ -7,7 +7,6 @@
 │       ├── .DS_Store
 │       ├── deploy_aws.yml
 │       ├── docs.yml
-│       ├── publish.yml
 │       ├── test_build.yml
 │       └── tests.yml
 ├── .gitignore
@@ -21,6 +20,7 @@
 │       └── cache
 │           ├── lastfailed
 │           └── nodeids
+├── .python-version
 ├── .testing
 ├── .vscode
 │   └── settings.json
@@ -37,63 +37,16 @@
 ├── Makefile
 ├── README.md
 ├── aws_api.py
+├── backup.log
+├── backup.sh
 ├── branch_note
-├── build
-│   ├── .DS_Store
-│   ├── bdist.macosx-10.9-universal2
-│   └── lib
-│       ├── .DS_Store
-│       └── drumscript
-│           ├── __init__.py
-│           ├── audio_processor
-│           │   ├── __init__.py
-│           │   ├── _classifier.py
-│           │   ├── audio_loader.py
-│           │   ├── feature_extractor.py
-│           │   ├── onset_detector.py
-│           │   ├── proofs
-│           │   │   └── _onset_detector.py
-│           │   ├── stem_splitter.py
-│           │   ├── tempo_detector.py
-│           │   └── tempogram.py
-│           ├── drum_classifier
-│           │   ├── __init__.py
-│           │   └── classify.py
-│           ├── main.py
-│           ├── notation_generator
-│           │   ├── __init__.py
-│           │   ├── _midi_exporter.py
-│           │   ├── _pdf_exporter.py
-│           │   ├── constants.py
-│           │   ├── helpers.py
-│           │   ├── midi_exporter.py
-│           │   ├── pdf_exporter.py
-│           │   └── score_builder.py
-│           └── utils
-│               ├── __init__.py
-│               ├── analyze_closed_hat_physics.py
-│               ├── analyze_crash_physics.py
-│               ├── analyze_high_tom_physics.py
-│               ├── analyze_kick_physics.py
-│               ├── analyze_low_tom_physics.py
-│               ├── analyze_mid_tom_physics.py
-│               ├── analyze_open_hat_physics.py
-│               ├── analyze_ride_physics.py
-│               ├── analyze_snare_physics.py
-│               ├── analyze_tom_physics.py
-│               ├── config.py
-│               ├── ffmpeg_installer.py
-│               ├── get_event_frequencies.py
-│               ├── measure_hat_frequency.py
-│               ├── measure_kick_frequency.py
-│               └── measure_snare_frequency.py
 ├── collect_code.log
 ├── collect_code.sh
 ├── deploy.sh
 ├── dist
-│   ├── drumscript-0.1.1-py3-none-any.whl
-│   └── logs
-│       └── dist.log
+│   ├── .gitignore
+│   ├── drumscript-0.1.2-py3-none-any.whl
+│   └── drumscript-0.1.2.tar.gz
 ├── docs
 │   ├── .DS_Store
 │   ├── FOLDER_STRUCTURE.txt
@@ -382,10 +335,6 @@
 │   │   │   ├── tempo_detector.log
 │   │   │   └── tempogram.log
 │   │   ├── onset_detector.py
-│   │   ├── proofs
-│   │   │   ├── _onset_detector.py
-│   │   │   └── logs
-│   │   │       └── _onset_detector.log
 │   │   ├── stem_splitter.py
 │   │   ├── tempo_detector.py
 │   │   └── tempogram.py
@@ -422,7 +371,8 @@
 │   │   ├── midi_exporter.py
 │   │   ├── pdf_exporter.py
 │   │   ├── proofs
-│   │   └── score_builder.py
+│   │   ├── score_builder.py
+│   │   └── xml_exporter.py
 │   └── utils
 │       ├── .DS_Store
 │       ├── __init__.py
@@ -463,12 +413,17 @@
 │   ├── .DS_Store
 │   ├── _drumscript
 │   │   └── _audio_classifier
-│   │       └── _onset_detector
-│   │           ├── onset_detection__scipy_signal_version1-1__MISSING_ONSET_EVENTS_PARAM__thurs12feb2026
-│   │           ├── onset_detection__scipy_signal_version1-2__FIXED__thurs12feb2026
-│   │           ├── onset_detection__scipy_signal_version2__with__argparse_and_amended_args__thurs12feb2026
-│   │           ├── onset_detection__scipy_signal_version3__with_coded_prominence_and_scipy-features__thurs12feb2026
-│   │           └── onset_detection__scipy_signal_version4__with_coded_prominence_and_scipy-features__thurs12feb2026
+│   │       ├── _onset_detector
+│   │       │   ├── onset_detection__scipy_signal_version1-1__MISSING_ONSET_EVENTS_PARAM__thurs12feb2026
+│   │       │   ├── onset_detection__scipy_signal_version1-2__FIXED__thurs12feb2026
+│   │       │   ├── onset_detection__scipy_signal_version2__with__argparse_and_amended_args__thurs12feb2026
+│   │       │   ├── onset_detection__scipy_signal_version3__with_coded_prominence_and_scipy-features__thurs12feb2026
+│   │       │   └── onset_detection__scipy_signal_version4__with_coded_prominence_and_scipy-features__thurs12feb2026
+│   │       └── _proofs
+│   │           └── proofs
+│   │               ├── _onset_detector.py
+│   │               └── logs
+│   │                   └── _onset_detector.log
 │   ├── basic_pitch_
 │   │   ├── .DS_Store
 │   │   ├── actual_notes.png
@@ -2819,9 +2774,14 @@
 │       ├── json_to_pdf.log
 │       └── test_pdf_generation.log
 ├── logs
-│   └── docker
-│       ├── builds.log
-│       └── docker.log
+│   ├── .DS_Store
+│   ├── docker
+│   │   ├── docker-builds.log
+│   │   └── docker.log
+│   ├── drumscript.log
+│   ├── sphinx.log
+│   └── wheel
+│       └── build.log
 ├── machine-learning
 │   ├── .DS_Store
 │   ├── data_labeller
@@ -5432,6 +5392,7 @@
 │       └── standard_non_specific_sheet_music.png
 ├── outputs
 │   ├── .DS_Store
+│   ├── Drum-music-notation.jpg
 │   ├── _classifier
 │   │   ├── .DS_Store
 │   │   ├── _classifier.py
@@ -5632,6 +5593,114 @@
 │   │   └── midi
 │   ├── orchestration_outputs
 │   │   ├── .DS_Store
+│   │   ├── Drum-music-notation.jpg
+│   │   ├── all_results__sat11apr2026__AFTER
+│   │   │   ├── .DS_Store
+│   │   │   ├── 65bpm_iron_man_actual_transcription.json
+│   │   │   ├── crash__201_bronze__16_crash_edge_transcription.json
+│   │   │   ├── drums_transcription.json
+│   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.json
+│   │   │   ├── hatopen__201_bronze__13_hi-hat_open_transcription.json
+│   │   │   ├── high_tom_phat_transcription.json
+│   │   │   ├── kick_0006_transcription.json
+│   │   │   ├── low_tom_phat_transcription.json
+│   │   │   ├── mid_tom_phat_transcription.json
+│   │   │   ├── ride__2002__20_deep_full_ride_edge_transcription.json
+│   │   │   ├── sat11apr2026__orchestration_outputs__AFTER_APPLY_ISOCHRONOUS_TEMPO_CHANGE_TO_CLASSIFY_TO_FIX_SINGLE_BEAT_ISSUE__sat11apr2026__iron_man__2
+│   │   │   │   ├── .DS_Store
+│   │   │   │   ├── 65bpm_iron_man_actual_transcription.mid
+│   │   │   │   ├── 65bpm_iron_man_actual_transcription.pdf
+│   │   │   │   └── drumscript_full_review.txt
+│   │   │   ├── sat11apr2026__orchestration_outputs__AFTER_APPLY_ISOCHRONOUS_TEMPO_CHANGE_TO_CLASSIFY_TO_FIX_SINGLE_BEAT_ISSUE__sat11apr2026__my_love_for_the_stars__2
+│   │   │   │   ├── .DS_Store
+│   │   │   │   ├── drums_transcription.mid
+│   │   │   │   ├── drums_transcription.pdf
+│   │   │   │   ├── drumscript_full_review.txt
+│   │   │   │   └── drumscript_full_review__AFTER.txt
+│   │   │   ├── sat11apr2026__orchestration_outputs__AFTER_APPLY_ISOCHRONOUS_TEMPO_CHANGE_TO_CLASSIFY_TO_FIX_SINGLE_BEAT_ISSUE__sat11apr2026__single_beats__2
+│   │   │   │   ├── crash__201_bronze__16_crash_edge_transcription.json
+│   │   │   │   ├── crash__201_bronze__16_crash_edge_transcription.mid
+│   │   │   │   ├── crash__201_bronze__16_crash_edge_transcription.pdf
+│   │   │   │   ├── drumscript_full_review.txt
+│   │   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.json
+│   │   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.mid
+│   │   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.pdf
+│   │   │   │   ├── hatopen__201_bronze__13_hi-hat_open_transcription.json
+│   │   │   │   ├── hatopen__201_bronze__13_hi-hat_open_transcription.mid
+│   │   │   │   ├── hatopen__201_bronze__13_hi-hat_open_transcription.pdf
+│   │   │   │   ├── high_tom_phat_transcription.json
+│   │   │   │   ├── high_tom_phat_transcription.mid
+│   │   │   │   ├── high_tom_phat_transcription.pdf
+│   │   │   │   ├── kick_0006_transcription.json
+│   │   │   │   ├── kick_0006_transcription.mid
+│   │   │   │   ├── kick_0006_transcription.pdf
+│   │   │   │   ├── low_tom_phat_transcription.json
+│   │   │   │   ├── low_tom_phat_transcription.mid
+│   │   │   │   ├── low_tom_phat_transcription.pdf
+│   │   │   │   ├── mid_tom_phat_transcription.json
+│   │   │   │   ├── mid_tom_phat_transcription.mid
+│   │   │   │   ├── mid_tom_phat_transcription.pdf
+│   │   │   │   ├── ride__2002__20_deep_full_ride_edge_transcription.json
+│   │   │   │   ├── ride__2002__20_deep_full_ride_edge_transcription.mid
+│   │   │   │   ├── ride__2002__20_deep_full_ride_edge_transcription.pdf
+│   │   │   │   ├── snare_0007_transcription.json
+│   │   │   │   ├── snare_0007_transcription.mid
+│   │   │   │   └── snare_0007_transcription.pdf
+│   │   │   ├── sat11apr2026__orchestration_outputs__AFTER_APPLY_ISOCHRONOUS_TEMPO_CHANGE_TO_CLASSIFY_TO_FIX_SINGLE_BEAT_ISSUE__sat11apr2026__test_wav__2
+│   │   │   │   ├── .DS_Store
+│   │   │   │   ├── drumscript_full_review.txt
+│   │   │   │   ├── test_transcription.mid
+│   │   │   │   └── test_transcription.pdf
+│   │   │   ├── snare_0007_transcription.json
+│   │   │   └── test_transcription.json
+│   │   ├── all_results__sat11apr2026__BEFORE
+│   │   │   ├── .DS_Store
+│   │   │   ├── sat11apri2026__orchestration_outputs__AFTER_FIXING_TGOO_CLASSIFICATION_ACCURACY_WHICH_DROPPED_ON_FIRST_CHANGE_09APR2026__sat11apr2026__single_beats__1
+│   │   │   │   ├── crash__201_bronze__16_crash_edge_transcription.json
+│   │   │   │   ├── crash__201_bronze__16_crash_edge_transcription.mid
+│   │   │   │   ├── crash__201_bronze__16_crash_edge_transcription.pdf
+│   │   │   │   ├── drumscript_full_review.txt
+│   │   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.json
+│   │   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.mid
+│   │   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.pdf
+│   │   │   │   ├── hatopen__201_bronze__13_hi-hat_open_transcription.json
+│   │   │   │   ├── hatopen__201_bronze__13_hi-hat_open_transcription.mid
+│   │   │   │   ├── hatopen__201_bronze__13_hi-hat_open_transcription.pdf
+│   │   │   │   ├── high_tom_phat_transcription.json
+│   │   │   │   ├── high_tom_phat_transcription.mid
+│   │   │   │   ├── high_tom_phat_transcription.pdf
+│   │   │   │   ├── kick_0006_transcription.json
+│   │   │   │   ├── kick_0006_transcription.mid
+│   │   │   │   ├── kick_0006_transcription.pdf
+│   │   │   │   ├── low_tom_phat_transcription.json
+│   │   │   │   ├── low_tom_phat_transcription.mid
+│   │   │   │   ├── low_tom_phat_transcription.pdf
+│   │   │   │   ├── mid_tom_phat_transcription.json
+│   │   │   │   ├── mid_tom_phat_transcription.mid
+│   │   │   │   ├── mid_tom_phat_transcription.pdf
+│   │   │   │   ├── ride__2002__20_deep_full_ride_edge_transcription.json
+│   │   │   │   ├── ride__2002__20_deep_full_ride_edge_transcription.mid
+│   │   │   │   ├── ride__2002__20_deep_full_ride_edge_transcription.pdf
+│   │   │   │   ├── snare_0007_transcription.json
+│   │   │   │   ├── snare_0007_transcription.mid
+│   │   │   │   └── snare_0007_transcription.pdf
+│   │   │   ├── sat11apri2026__orchestration_outputs__AFTER_FIXING_TGOO_CLASSIFICATION_ACCURACY_WHICH_DROPPED_ON_FIRST_CHANGE_09APR2026__sat11apr2026__test_wav__1
+│   │   │   │   ├── drumscript_full_review.txt
+│   │   │   │   ├── drumscript_full_review__BEFORE.txt
+│   │   │   │   ├── test_transcription.json
+│   │   │   │   ├── test_transcription.mid
+│   │   │   │   └── test_transcription.pdf
+│   │   │   ├── sat11april2026__orchestration_outputs__AFTER_FIXING_TGOO_CLASSIFICATION_ACCURACY_WHICH_DROPPED_ON_FIRST_CHANGE_09APR2026__sat11apr2026__iron_man__1
+│   │   │   │   ├── .DS_Store
+│   │   │   │   ├── 65bpm_iron_man_actual_transcription.json
+│   │   │   │   ├── 65bpm_iron_man_actual_transcription.mid
+│   │   │   │   ├── 65bpm_iron_man_actual_transcription.pdf
+│   │   │   │   └── drumscript_full_review.txt
+│   │   │   └── sat11april2026__orchestration_outputs__AFTER_FIXING_TGOO_CLASSIFICATION_ACCURACY_WHICH_DROPPED_ON_FIRST_CHANGE_09APR2026__sat11apr2026__my_love_for_the_stars__1
+│   │   │       ├── drums_transcription.json
+│   │   │       ├── drums_transcription.mid
+│   │   │       ├── drums_transcription.pdf
+│   │   │       └── drumscript_full_review.txt
 │   │   ├── archive__orchestration_outputs
 │   │   │   ├── .DS_Store
 │   │   │   ├── [EMPTY]--tues25november2025__orchestration_outputs__EtoE__UPDATED_EQUALIZER_CHEATSHEET_CONSTANTS_FEATURE_EXTRACTOR__22
@@ -5718,6 +5787,88 @@
 │   │   │   │   ├── prediction_output.json
 │   │   │   │   ├── test_transcription.json
 │   │   │   │   └── test_transcription.pdf
+│   │   │   ├── mon30march2026__orchestration_outputs__V012__AMEND_WAIT_TIMES__ONSET_DETECTOR__005_TO_003__single_beats__iron_man__1
+│   │   │   │   ├── 65bpm_iron_man_actual_transcription.json
+│   │   │   │   ├── 65bpm_iron_man_actual_transcription.mid
+│   │   │   │   ├── 65bpm_iron_man_actual_transcription.pdf
+│   │   │   │   └── drumscript_full_review.txt
+│   │   │   ├── mon30march2026__orchestration_outputs__V012__AMEND_WAIT_TIMES__ONSET_DETECTOR__005_TO_003__single_beats__iron_man__2
+│   │   │   │   ├── .DS_Store
+│   │   │   │   ├── 65bpm_iron_man_actual_transcription.json
+│   │   │   │   ├── 65bpm_iron_man_actual_transcription.mid
+│   │   │   │   ├── 65bpm_iron_man_actual_transcription.pdf
+│   │   │   │   ├── 65bpm_iron_man_actual_transcription__AFTER.json
+│   │   │   │   └── drumscript_full_review.txt
+│   │   │   ├── mon30march2026__orchestration_outputs__V012__AMEND_WAIT_TIMES__ONSET_DETECTOR__005_TO_003__single_beats__my_love_for_the_stars__1
+│   │   │   │   ├── The Great Old Ones - My Love For The Stars (Cthulhu Fhtagn)_transcription.json
+│   │   │   │   ├── The Great Old Ones - My Love For The Stars (Cthulhu Fhtagn)_transcription.mid
+│   │   │   │   ├── The Great Old Ones - My Love For The Stars (Cthulhu Fhtagn)_transcription.pdf
+│   │   │   │   └── drumscript_full_review.txt
+│   │   │   ├── mon30march2026__orchestration_outputs__V012__AMEND_WAIT_TIMES__ONSET_DETECTOR__005_TO_003__single_beats__my_love_for_the_stars__2
+│   │   │   │   ├── .DS_Store
+│   │   │   │   ├── drums_transcription.json
+│   │   │   │   ├── drums_transcription.mid
+│   │   │   │   ├── drums_transcription.pdf
+│   │   │   │   ├── drumscript_full_review.txt
+│   │   │   │   └── my_love_for_the_stars__AFTER.json
+│   │   │   ├── mon30march2026__orchestration_outputs__V012__AMEND_WAIT_TIMES__ONSET_DETECTOR__005_TO_003__single_beats__single_beats__1-1
+│   │   │   │   ├── .DS_Store
+│   │   │   │   ├── crash__201_bronze__16_crash_edge_transcription.json
+│   │   │   │   ├── crash__201_bronze__16_crash_edge_transcription.mid
+│   │   │   │   ├── crash__201_bronze__16_crash_edge_transcription.pdf
+│   │   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.json
+│   │   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.mid
+│   │   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.pdf
+│   │   │   │   ├── hatopen__201_bronze__13_hi-hat_open_transcription.json
+│   │   │   │   ├── hatopen__201_bronze__13_hi-hat_open_transcription.mid
+│   │   │   │   ├── hatopen__201_bronze__13_hi-hat_open_transcription.pdf
+│   │   │   │   ├── high_tom_phat_transcription.json
+│   │   │   │   ├── high_tom_phat_transcription.mid
+│   │   │   │   ├── high_tom_phat_transcription.pdf
+│   │   │   │   ├── kick_0006_transcription.json
+│   │   │   │   ├── kick_0006_transcription.mid
+│   │   │   │   ├── kick_0006_transcription.pdf
+│   │   │   │   ├── ride__2002__20_deep_full_ride_edge_transcription.json
+│   │   │   │   ├── ride__2002__20_deep_full_ride_edge_transcription.mid
+│   │   │   │   ├── ride__2002__20_deep_full_ride_edge_transcription.pdf
+│   │   │   │   ├── snare_0007_transcription.json
+│   │   │   │   ├── snare_0007_transcription.mid
+│   │   │   │   └── snare_0007_transcription.pdf
+│   │   │   ├── mon30march2026__orchestration_outputs__V012__AMEND_WAIT_TIMES__ONSET_DETECTOR__005_TO_003__single_beats__single_beats__1-2
+│   │   │   │   ├── crash__201_bronze__16_crash_edge_transcription.json
+│   │   │   │   ├── crash__201_bronze__16_crash_edge_transcription.mid
+│   │   │   │   ├── crash__201_bronze__16_crash_edge_transcription.pdf
+│   │   │   │   ├── drumscript_full_review.txt
+│   │   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.json
+│   │   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.mid
+│   │   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.pdf
+│   │   │   │   ├── hatopen__201_bronze__13_hi-hat_open_transcription.json
+│   │   │   │   ├── hatopen__201_bronze__13_hi-hat_open_transcription.mid
+│   │   │   │   ├── hatopen__201_bronze__13_hi-hat_open_transcription.pdf
+│   │   │   │   ├── high_tom_phat_transcription.json
+│   │   │   │   ├── high_tom_phat_transcription.mid
+│   │   │   │   ├── high_tom_phat_transcription.pdf
+│   │   │   │   ├── kick_0006_transcription.json
+│   │   │   │   ├── kick_0006_transcription.mid
+│   │   │   │   ├── kick_0006_transcription.pdf
+│   │   │   │   ├── ride__2002__20_deep_full_ride_edge_transcription.json
+│   │   │   │   ├── ride__2002__20_deep_full_ride_edge_transcription.mid
+│   │   │   │   ├── ride__2002__20_deep_full_ride_edge_transcription.pdf
+│   │   │   │   ├── snare_0007_transcription.json
+│   │   │   │   ├── snare_0007_transcription.mid
+│   │   │   │   └── snare_0007_transcription.pdf
+│   │   │   ├── mon30march2026__orchestration_outputs__V012__AMEND_WAIT_TIMES__ONSET_DETECTOR__005_TO_003__single_beats__test_wav__1
+│   │   │   │   ├── drumscript_full_review.txt
+│   │   │   │   ├── test_transcription.json
+│   │   │   │   ├── test_transcription.mid
+│   │   │   │   └── test_transcription.pdf
+│   │   │   ├── mon30march2026__orchestration_outputs__V012__AMEND_WAIT_TIMES__ONSET_DETECTOR__005_TO_003__single_beats__test_wav__2
+│   │   │   │   ├── .DS_Store
+│   │   │   │   ├── drumscript_full_review.txt
+│   │   │   │   ├── test_transcription.json
+│   │   │   │   ├── test_transcription.mid
+│   │   │   │   ├── test_transcription.pdf
+│   │   │   │   └── test_transcription__AFTER.json
 │   │   │   ├── opholiotry_on_a_hemocite_platter_transcription.json
 │   │   │   ├── opholiotry_on_a_hemocite_platter_transcription.pdf
 │   │   │   ├── ride__2002__20_cool_ride_edge_transcription.json
@@ -5856,6 +6007,37 @@
 │   │   │   │   ├── test_klangio1__sun23nov2025.png
 │   │   │   │   ├── test_transcription.json
 │   │   │   │   └── test_transcription.pdf
+│   │   │   ├── sun29march2026__orchestration_outputs__AFTER_AMENDING_WINDOWS_SNARE_AND_RIM__iron_man__1
+│   │   │   │   ├── 65bpm_iron_man_actual_transcription.json
+│   │   │   │   ├── 65bpm_iron_man_actual_transcription.mid
+│   │   │   │   ├── 65bpm_iron_man_actual_transcription.pdf
+│   │   │   │   └── 65bpm_iron_man_actual_transcription__BEFORE.json
+│   │   │   ├── sun29march2026__orchestration_outputs__AFTER_AMENDING_WINDOWS_SNARE_AND_RIM__my_love_for_the_stars__1
+│   │   │   │   ├── .DS_Store
+│   │   │   │   ├── drums_transcription copy.mid
+│   │   │   │   ├── drums_transcription copy.pdf
+│   │   │   │   ├── drums_transcription.json
+│   │   │   │   ├── drums_transcription.mid
+│   │   │   │   ├── drums_transcription.pdf
+│   │   │   │   ├── drumscript_full_review.txt
+│   │   │   │   ├── my_love_for_the_stars_transcription__BEFORE.json
+│   │   │   │   └── outputs.logicx
+│   │   │   │       ├── Alternatives
+│   │   │   │       │   └── 000
+│   │   │   │       │       ├── DisplayState.plist
+│   │   │   │       │       ├── DisplayStateArchive
+│   │   │   │       │       ├── MetaData.plist
+│   │   │   │       │       ├── Project File Backups
+│   │   │   │       │       │   └── 00
+│   │   │   │       │       │       ├── MetaData.plist
+│   │   │   │       │       │       └── ProjectData
+│   │   │   │       │       ├── ProjectData
+│   │   │   │       │       ├── Undo Data.nosync
+│   │   │   │       │       └── WindowImage.jpg
+│   │   │   │       ├── Media
+│   │   │   │       │   └── Audio Files
+│   │   │   │       └── Resources
+│   │   │   │           └── ProjectInformation.plist
 │   │   │   ├── sun29march2026__orchestration_outputs__AFTER_AMENDING_WINDOWS_SNARE_AND_RIM__single_beats__1
 │   │   │   │   ├── crash__201_bronze__14_crash_edge.wav
 │   │   │   │   ├── crash__201_bronze__16_crash_edge.wav
@@ -5890,6 +6072,15 @@
 │   │   │   │   ├── snare_0007_transcription.json
 │   │   │   │   ├── snare_0007_transcription.mid
 │   │   │   │   └── snare_0007_transcription.pdf
+│   │   │   ├── sun29march2026__orchestration_outputs__AFTER_AMENDING_WINDOWS_SNARE_AND_RIM__test_wav__1
+│   │   │   │   ├── classify.py
+│   │   │   │   ├── drumscript_full_review.txt
+│   │   │   │   ├── drumscript_full_review__BEFORE.txt
+│   │   │   │   ├── main.py
+│   │   │   │   ├── test_transcription.json
+│   │   │   │   ├── test_transcription.mid
+│   │   │   │   ├── test_transcription.pdf
+│   │   │   │   └── test_transcription__BEFORE.json
 │   │   │   ├── sun30november2025__orchestration_outputs__AFTER_COMPLETE_STRIP-DOWN_CLASSIFICATION_RULES___EtoE__30
 │   │   │   │   ├── classify.py
 │   │   │   │   ├── constants.py
@@ -6183,6 +6374,89 @@
 │   │   │   │   ├── test_klangio1__cropped__tues25nov2025.png
 │   │   │   │   ├── test_transcription.json
 │   │   │   │   └── test_transcription.pdf
+│   │   │   ├── tues31march2026__orchestration__AFTER_AMENDING_CLASSIFY_EVENTS_FUNCTION_IN_CLASSIFY__ANOTHER_ATTEMPT_AT_FIXING_SINGLE_BEATS_WITH_BACKWARD_COMPAT__iron_man__2
+│   │   │   │   ├── .DS_Store
+│   │   │   │   ├── 65bpm_iron_man_actual_transcription.json
+│   │   │   │   ├── 65bpm_iron_man_actual_transcription.mid
+│   │   │   │   ├── 65bpm_iron_man_actual_transcription.pdf
+│   │   │   │   ├── drumscript_full_review.txt
+│   │   │   │   └── drumscript_full_review___CURRENT.txt
+│   │   │   ├── tues31march2026__orchestration__AFTER_AMENDING_CLASSIFY_EVENTS_FUNCTION_IN_CLASSIFY__ANOTHER_ATTEMPT_AT_FIXING_SINGLE_BEATS_WITH_BACKWARD_COMPAT__my_love_for_the_stars__2__AFTER
+│   │   │   │   ├── .DS_Store
+│   │   │   │   ├── drums_transcription.json
+│   │   │   │   ├── drums_transcription.mid
+│   │   │   │   ├── drums_transcription.pdf
+│   │   │   │   └── drumscript_full_review.txt
+│   │   │   ├── tues31march2026__orchestration__AFTER_AMENDING_CLASSIFY_EVENTS_FUNCTION_IN_CLASSIFY__ANOTHER_ATTEMPT_AT_FIXING_SINGLE_BEATS_WITH_BACKWARD_COMPAT__single_beats__2
+│   │   │   │   ├── crash__201_bronze__16_crash_edge_transcription.json
+│   │   │   │   ├── crash__201_bronze__16_crash_edge_transcription.mid
+│   │   │   │   ├── crash__201_bronze__16_crash_edge_transcription.pdf
+│   │   │   │   ├── drumscript_full_review.txt
+│   │   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.json
+│   │   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.mid
+│   │   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.pdf
+│   │   │   │   ├── hatopen__201_bronze__13_hi-hat_open_transcription.json
+│   │   │   │   ├── hatopen__201_bronze__13_hi-hat_open_transcription.mid
+│   │   │   │   ├── hatopen__201_bronze__13_hi-hat_open_transcription.pdf
+│   │   │   │   ├── high_tom_phat_transcription.json
+│   │   │   │   ├── high_tom_phat_transcription.mid
+│   │   │   │   ├── high_tom_phat_transcription.pdf
+│   │   │   │   ├── kick_0006_transcription.json
+│   │   │   │   ├── kick_0006_transcription.mid
+│   │   │   │   ├── kick_0006_transcription.pdf
+│   │   │   │   ├── ride__2002__20_deep_full_ride_edge_transcription.json
+│   │   │   │   ├── ride__2002__20_deep_full_ride_edge_transcription.mid
+│   │   │   │   ├── ride__2002__20_deep_full_ride_edge_transcription.pdf
+│   │   │   │   ├── snare_0007_transcription.json
+│   │   │   │   ├── snare_0007_transcription.mid
+│   │   │   │   └── snare_0007_transcription.pdf
+│   │   │   ├── tues31march2026__orchestration__AFTER_AMENDING_CLASSIFY_EVENTS_FUNCTION_IN_CLASSIFY__ANOTHER_ATTEMPT_AT_FIXING_SINGLE_BEATS_WITH_BACKWARD_COMPAT__test_wav__2
+│   │   │   │   ├── drumscript_full_review.txt
+│   │   │   │   ├── test_transcription.json
+│   │   │   │   ├── test_transcription.mid
+│   │   │   │   └── test_transcription.pdf
+│   │   │   ├── tues31march2026__orchestration__AFTER_REMOVING__AUDIO_PROCESSOR__CLASSIFIER_AND_NOTATION_GENERATOR__PDF_EXPORTER__MIDI_EXPORTER_SCRIPTS_TO_OUTPUTS_CLASSIFIER_FOLDER__iron_man__1
+│   │   │   │   ├── .DS_Store
+│   │   │   │   ├── 65bpm_iron_man_actual_transcription.json
+│   │   │   │   ├── 65bpm_iron_man_actual_transcription.mid
+│   │   │   │   ├── 65bpm_iron_man_actual_transcription.pdf
+│   │   │   │   └── drumscript_full_review.txt
+│   │   │   ├── tues31march2026__orchestration__AFTER_REMOVING__AUDIO_PROCESSOR__CLASSIFIER_AND_NOTATION_GENERATOR__PDF_EXPORTER__MIDI_EXPORTER_SCRIPTS_TO_OUTPUTS_CLASSIFIER_FOLDER__my_love_for_the_stars__1__BEFORE
+│   │   │   │   ├── .DS_Store
+│   │   │   │   ├── drums_transcription.json
+│   │   │   │   ├── drums_transcription.mid
+│   │   │   │   ├── drums_transcription.pdf
+│   │   │   │   ├── drumscript_full_review.txt
+│   │   │   │   └── drumscript_full_review__BEFORE.txt
+│   │   │   ├── tues31march2026__orchestration__AFTER_REMOVING__AUDIO_PROCESSOR__CLASSIFIER_AND_NOTATION_GENERATOR__PDF_EXPORTER__MIDI_EXPORTER_SCRIPTS_TO_OUTPUTS_CLASSIFIER_FOLDER__single_beats__1
+│   │   │   │   ├── .DS_Store
+│   │   │   │   ├── crash__201_bronze__16_crash_edge_transcription.json
+│   │   │   │   ├── crash__201_bronze__16_crash_edge_transcription.mid
+│   │   │   │   ├── crash__201_bronze__16_crash_edge_transcription.pdf
+│   │   │   │   ├── drumscript_full_review.txt
+│   │   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.json
+│   │   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.mid
+│   │   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.pdf
+│   │   │   │   ├── hatopen__201_bronze__13_hi-hat_open_transcription.json
+│   │   │   │   ├── hatopen__201_bronze__13_hi-hat_open_transcription.mid
+│   │   │   │   ├── hatopen__201_bronze__13_hi-hat_open_transcription.pdf
+│   │   │   │   ├── high_tom_phat_transcription.json
+│   │   │   │   ├── high_tom_phat_transcription.mid
+│   │   │   │   ├── high_tom_phat_transcription.pdf
+│   │   │   │   ├── kick_0006_transcription.json
+│   │   │   │   ├── kick_0006_transcription.mid
+│   │   │   │   ├── kick_0006_transcription.pdf
+│   │   │   │   ├── ride__2002__20_deep_full_ride_edge_transcription.json
+│   │   │   │   ├── ride__2002__20_deep_full_ride_edge_transcription.mid
+│   │   │   │   ├── ride__2002__20_deep_full_ride_edge_transcription.pdf
+│   │   │   │   ├── snare_0007_transcription.json
+│   │   │   │   ├── snare_0007_transcription.mid
+│   │   │   │   └── snare_0007_transcription.pdf
+│   │   │   ├── tues31march2026__orchestration__AFTER_REMOVING__AUDIO_PROCESSOR__CLASSIFIER_AND_NOTATION_GENERATOR__PDF_EXPORTER__MIDI_EXPORTER_SCRIPTS_TO_OUTPUTS_CLASSIFIER_FOLDER__test_wav__1
+│   │   │   │   ├── drumscript_full_review.txt
+│   │   │   │   ├── test_transcription.json
+│   │   │   │   ├── test_transcription.mid
+│   │   │   │   └── test_transcription.pdf
 │   │   │   ├── weds18march2026__orchestration_outputs_REMOVING__COMMENTING_OUT_HALLUCINATON_SNARE_CAUSED_BY_V010_CLASSIFICATION_VS_HFER_METHOD__weds18march2026__10
 │   │   │   │   ├── _midi_exporter.py
 │   │   │   │   ├── _pdf_exporter.py
@@ -6260,128 +6534,430 @@
 │   │   │   │   └── test_transcription.pdf
 │   │   │   └── weds26november2025__orchestration_outputs__REMOVE_REFRACTORY_PERIOD_LOGIC_EtoE__22
 │   │   │       └── classify.py
-│   │   ├── mon30march2026__orchestration_outputs__V012__AMEND_WAIT_TIMES__ONSET_DETECTOR__005_TO_003__single_beats__iron_man__1
+│   │   ├── fri10april2026__orchestration_outputs__AFTER_REFACTORING_CLASSIFY_EVENTS__iron_man__1
 │   │   │   ├── 65bpm_iron_man_actual_transcription.json
 │   │   │   ├── 65bpm_iron_man_actual_transcription.mid
 │   │   │   ├── 65bpm_iron_man_actual_transcription.pdf
 │   │   │   └── drumscript_full_review.txt
-│   │   ├── mon30march2026__orchestration_outputs__V012__AMEND_WAIT_TIMES__ONSET_DETECTOR__005_TO_003__single_beats__iron_man__2
-│   │   │   ├── .DS_Store
-│   │   │   ├── 65bpm_iron_man_actual_transcription.json
-│   │   │   ├── 65bpm_iron_man_actual_transcription.mid
-│   │   │   ├── 65bpm_iron_man_actual_transcription.pdf
-│   │   │   ├── 65bpm_iron_man_actual_transcription__AFTER.json
-│   │   │   └── drumscript_full_review.txt
-│   │   ├── mon30march2026__orchestration_outputs__V012__AMEND_WAIT_TIMES__ONSET_DETECTOR__005_TO_003__single_beats__my_love_for_the_stars__1
-│   │   │   ├── The Great Old Ones - My Love For The Stars (Cthulhu Fhtagn)_transcription.json
-│   │   │   ├── The Great Old Ones - My Love For The Stars (Cthulhu Fhtagn)_transcription.mid
-│   │   │   ├── The Great Old Ones - My Love For The Stars (Cthulhu Fhtagn)_transcription.pdf
-│   │   │   └── drumscript_full_review.txt
-│   │   ├── mon30march2026__orchestration_outputs__V012__AMEND_WAIT_TIMES__ONSET_DETECTOR__005_TO_003__single_beats__my_love_for_the_stars__2
-│   │   │   ├── .DS_Store
+│   │   ├── fri10april2026__orchestration_outputs__AFTER_REFACTORING_CLASSIFY_EVENTS__my_love_for_the_stars__1
 │   │   │   ├── drums_transcription.json
 │   │   │   ├── drums_transcription.mid
 │   │   │   ├── drums_transcription.pdf
+│   │   │   ├── drums_transcription__LATEST.json
+│   │   │   ├── drums_transcription__LATEST.pdf
+│   │   │   └── drumscript_full_review.txt
+│   │   ├── fri10april2026__orchestration_outputs__AFTER_REFACTORING_CLASSIFY_EVENTS__single_beats__1
+│   │   │   ├── crash__201_bronze__16_crash_edge_transcription.json
+│   │   │   ├── crash__201_bronze__16_crash_edge_transcription.mid
+│   │   │   ├── crash__201_bronze__16_crash_edge_transcription.pdf
 │   │   │   ├── drumscript_full_review.txt
-│   │   │   └── my_love_for_the_stars__AFTER.json
-│   │   ├── mon30march2026__orchestration_outputs__V012__AMEND_WAIT_TIMES__ONSET_DETECTOR__005_TO_003__single_beats__single_beats__1-1
+│   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.json
+│   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.mid
+│   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.pdf
+│   │   │   ├── hatopen__201_bronze__13_hi-hat_open_transcription.json
+│   │   │   ├── hatopen__201_bronze__13_hi-hat_open_transcription.mid
+│   │   │   ├── hatopen__201_bronze__13_hi-hat_open_transcription.pdf
+│   │   │   ├── high_tom_phat_transcription.json
+│   │   │   ├── high_tom_phat_transcription.mid
+│   │   │   ├── high_tom_phat_transcription.pdf
+│   │   │   ├── kick_0006_transcription.json
+│   │   │   ├── kick_0006_transcription.mid
+│   │   │   ├── kick_0006_transcription.pdf
+│   │   │   ├── ride__2002__20_deep_full_ride_edge_transcription.json
+│   │   │   ├── ride__2002__20_deep_full_ride_edge_transcription.mid
+│   │   │   ├── ride__2002__20_deep_full_ride_edge_transcription.pdf
+│   │   │   ├── snare_0007_transcription.json
+│   │   │   ├── snare_0007_transcription.mid
+│   │   │   └── snare_0007_transcription.pdf
+│   │   ├── fri10april2026__orchestration_outputs__AFTER_REFACTORING_CLASSIFY_EVENTS__test_wav__1
 │   │   │   ├── .DS_Store
-│   │   │   ├── crash__201_bronze__16_crash_edge_transcription.json
-│   │   │   ├── crash__201_bronze__16_crash_edge_transcription.mid
-│   │   │   ├── crash__201_bronze__16_crash_edge_transcription.pdf
-│   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.json
-│   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.mid
-│   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.pdf
-│   │   │   ├── hatopen__201_bronze__13_hi-hat_open_transcription.json
-│   │   │   ├── hatopen__201_bronze__13_hi-hat_open_transcription.mid
-│   │   │   ├── hatopen__201_bronze__13_hi-hat_open_transcription.pdf
-│   │   │   ├── high_tom_phat_transcription.json
-│   │   │   ├── high_tom_phat_transcription.mid
-│   │   │   ├── high_tom_phat_transcription.pdf
-│   │   │   ├── kick_0006_transcription.json
-│   │   │   ├── kick_0006_transcription.mid
-│   │   │   ├── kick_0006_transcription.pdf
-│   │   │   ├── ride__2002__20_deep_full_ride_edge_transcription.json
-│   │   │   ├── ride__2002__20_deep_full_ride_edge_transcription.mid
-│   │   │   ├── ride__2002__20_deep_full_ride_edge_transcription.pdf
-│   │   │   ├── snare_0007_transcription.json
-│   │   │   ├── snare_0007_transcription.mid
-│   │   │   └── snare_0007_transcription.pdf
-│   │   ├── mon30march2026__orchestration_outputs__V012__AMEND_WAIT_TIMES__ONSET_DETECTOR__005_TO_003__single_beats__single_beats__1-2
-│   │   │   ├── crash__201_bronze__16_crash_edge_transcription.json
-│   │   │   ├── crash__201_bronze__16_crash_edge_transcription.mid
-│   │   │   ├── crash__201_bronze__16_crash_edge_transcription.pdf
-│   │   │   ├── drumscript_full_review.txt
-│   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.json
-│   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.mid
-│   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.pdf
-│   │   │   ├── hatopen__201_bronze__13_hi-hat_open_transcription.json
-│   │   │   ├── hatopen__201_bronze__13_hi-hat_open_transcription.mid
-│   │   │   ├── hatopen__201_bronze__13_hi-hat_open_transcription.pdf
-│   │   │   ├── high_tom_phat_transcription.json
-│   │   │   ├── high_tom_phat_transcription.mid
-│   │   │   ├── high_tom_phat_transcription.pdf
-│   │   │   ├── kick_0006_transcription.json
-│   │   │   ├── kick_0006_transcription.mid
-│   │   │   ├── kick_0006_transcription.pdf
-│   │   │   ├── ride__2002__20_deep_full_ride_edge_transcription.json
-│   │   │   ├── ride__2002__20_deep_full_ride_edge_transcription.mid
-│   │   │   ├── ride__2002__20_deep_full_ride_edge_transcription.pdf
-│   │   │   ├── snare_0007_transcription.json
-│   │   │   ├── snare_0007_transcription.mid
-│   │   │   └── snare_0007_transcription.pdf
-│   │   ├── mon30march2026__orchestration_outputs__V012__AMEND_WAIT_TIMES__ONSET_DETECTOR__005_TO_003__single_beats__test_wav__1
 │   │   │   ├── drumscript_full_review.txt
 │   │   │   ├── test_transcription.json
 │   │   │   ├── test_transcription.mid
 │   │   │   └── test_transcription.pdf
-│   │   ├── mon30march2026__orchestration_outputs__V012__AMEND_WAIT_TIMES__ONSET_DETECTOR__005_TO_003__single_beats__test_wav__2
-│   │   │   ├── .DS_Store
-│   │   │   ├── drumscript_full_review.txt
-│   │   │   ├── test_transcription.json
-│   │   │   ├── test_transcription.mid
-│   │   │   ├── test_transcription.pdf
-│   │   │   └── test_transcription__AFTER.json
-│   │   ├── sun29march2026__orchestration_outputs__AFTER_AMENDING_WINDOWS_SNARE_AND_RIM__iron_man__1
+│   │   ├── mon13apr2026__orchestration_outputs__AFTER_INTEGRATING_CLI_FLAG_FOR_RUDIMENTS_SINGLE_BEATS__mon13apr2026__iron_man__2
 │   │   │   ├── 65bpm_iron_man_actual_transcription.json
 │   │   │   ├── 65bpm_iron_man_actual_transcription.mid
 │   │   │   ├── 65bpm_iron_man_actual_transcription.pdf
-│   │   │   └── 65bpm_iron_man_actual_transcription__BEFORE.json
-│   │   ├── sun29march2026__orchestration_outputs__AFTER_AMENDING_WINDOWS_SNARE_AND_RIM__my_love_for_the_stars__1
+│   │   │   └── drumscript_full_review.txt
+│   │   ├── mon13apr2026__orchestration_outputs__AFTER_INTEGRATING_CLI_FLAG_FOR_RUDIMENTS_SINGLE_BEATS__mon13apr2026__my_love_for_the_stars__2
+│   │   │   ├── drums_transcription.json
+│   │   │   ├── drums_transcription.mid
+│   │   │   ├── drums_transcription.pdf
+│   │   │   └── drumscript_full_review.txt
+│   │   ├── mon13apr2026__orchestration_outputs__AFTER_INTEGRATING_CLI_FLAG_FOR_RUDIMENTS_SINGLE_BEATS__mon13apr2026__single_beats__2
+│   │   │   ├── crash__201_bronze__16_crash_edge_transcription.json
+│   │   │   ├── crash__201_bronze__16_crash_edge_transcription.mid
+│   │   │   ├── crash__201_bronze__16_crash_edge_transcription.pdf
+│   │   │   ├── drumscript_full_review.txt
+│   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.json
+│   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.mid
+│   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.pdf
+│   │   │   ├── hatopen__201_bronze__13_hi-hat_open_transcription.json
+│   │   │   ├── hatopen__201_bronze__13_hi-hat_open_transcription.mid
+│   │   │   ├── hatopen__201_bronze__13_hi-hat_open_transcription.pdf
+│   │   │   ├── high_tom_phat_transcription.json
+│   │   │   ├── high_tom_phat_transcription.mid
+│   │   │   ├── high_tom_phat_transcription.pdf
+│   │   │   ├── kick_0001_transcription.json
+│   │   │   ├── kick_0001_transcription.mid
+│   │   │   ├── kick_0001_transcription.pdf
+│   │   │   ├── kick_0006_transcription.json
+│   │   │   ├── kick_0006_transcription.mid
+│   │   │   ├── kick_0006_transcription.pdf
+│   │   │   ├── ride__2002__20_deep_full_ride_edge_transcription.json
+│   │   │   ├── ride__2002__20_deep_full_ride_edge_transcription.mid
+│   │   │   ├── ride__2002__20_deep_full_ride_edge_transcription.pdf
+│   │   │   ├── snare_0007_transcription.json
+│   │   │   ├── snare_0007_transcription.mid
+│   │   │   └── snare_0007_transcription.pdf
+│   │   ├── mon13apr2026__orchestration_outputs__AFTER_INTEGRATING_CLI_FLAG_FOR_RUDIMENTS_SINGLE_BEATS__mon13apr2026__single_beats__3
 │   │   │   ├── .DS_Store
-│   │   │   ├── drums_transcription copy.mid
-│   │   │   ├── drums_transcription copy.pdf
+│   │   │   ├── crash__201_bronze__16_crash_edge_transcription.json
+│   │   │   ├── crash__201_bronze__16_crash_edge_transcription.mid
+│   │   │   ├── crash__201_bronze__16_crash_edge_transcription.pdf
+│   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.json
+│   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.mid
+│   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.pdf
+│   │   │   ├── hatopen__201_bronze__13_hi-hat_open_transcription.json
+│   │   │   ├── hatopen__201_bronze__13_hi-hat_open_transcription.mid
+│   │   │   ├── hatopen__201_bronze__13_hi-hat_open_transcription.pdf
+│   │   │   ├── high_tom_phat_transcription.json
+│   │   │   ├── high_tom_phat_transcription.mid
+│   │   │   ├── high_tom_phat_transcription.pdf
+│   │   │   ├── kick_0006_transcription.json
+│   │   │   ├── kick_0006_transcription.mid
+│   │   │   ├── kick_0006_transcription.pdf
+│   │   │   ├── ride__2002__20_deep_full_ride_edge_transcription.json
+│   │   │   ├── ride__2002__20_deep_full_ride_edge_transcription.mid
+│   │   │   ├── ride__2002__20_deep_full_ride_edge_transcription.pdf
+│   │   │   ├── snare_0007_transcription.json
+│   │   │   ├── snare_0007_transcription.mid
+│   │   │   └── snare_0007_transcription.pdf
+│   │   ├── mon13apr2026__orchestration_outputs__AFTER_INTEGRATING_CLI_FLAG_FOR_RUDIMENTS_SINGLE_BEATS__mon13apr2026__test_wav__2
+│   │   │   ├── drumscript_full_review.txt
+│   │   │   ├── test_transcription.json
+│   │   │   ├── test_transcription.mid
+│   │   │   └── test_transcription.pdf
+│   │   ├── mon13apr2026__orchestration_outputs__AFTER_TWEAKE_MEMBRANOPHONE_IDIOPHONE_CLASSIFY_EVENTS_CANGE__mon13apr2026__iron_man__1
+│   │   │   ├── 65bpm_iron_man_actual_transcription.json
+│   │   │   ├── 65bpm_iron_man_actual_transcription.mid
+│   │   │   ├── 65bpm_iron_man_actual_transcription.pdf
+│   │   │   └── drumscript_full_review.txt
+│   │   ├── mon13apr2026__orchestration_outputs__AFTER_TWEAKE_MEMBRANOPHONE_IDIOPHONE_CLASSIFY_EVENTS_CANGE__mon13apr2026__my_love_for_the_stars__1
+│   │   │   ├── drums_transcription.json
+│   │   │   ├── drums_transcription.mid
+│   │   │   ├── drums_transcription.pdf
+│   │   │   └── drumscript_full_review.txt
+│   │   ├── mon13apr2026__orchestration_outputs__AFTER_TWEAKE_MEMBRANOPHONE_IDIOPHONE_CLASSIFY_EVENTS_CANGE__mon13apr2026__single_beats__1
+│   │   │   ├── crash__201_bronze__16_crash_edge_transcription.json
+│   │   │   ├── crash__201_bronze__16_crash_edge_transcription.mid
+│   │   │   ├── crash__201_bronze__16_crash_edge_transcription.pdf
+│   │   │   ├── drumscript_full_review.txt
+│   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.json
+│   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.mid
+│   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.pdf
+│   │   │   ├── hatopen__201_bronze__13_hi-hat_open_transcription.json
+│   │   │   ├── hatopen__201_bronze__13_hi-hat_open_transcription.mid
+│   │   │   ├── hatopen__201_bronze__13_hi-hat_open_transcription.pdf
+│   │   │   ├── high_tom_phat_transcription.json
+│   │   │   ├── high_tom_phat_transcription.mid
+│   │   │   ├── high_tom_phat_transcription.pdf
+│   │   │   ├── kick_0006_transcription.json
+│   │   │   ├── kick_0006_transcription.mid
+│   │   │   ├── kick_0006_transcription.pdf
+│   │   │   ├── low_tom_phat_transcription.json
+│   │   │   ├── low_tom_phat_transcription.mid
+│   │   │   ├── low_tom_phat_transcription.pdf
+│   │   │   ├── mid_tom_phat_transcription.json
+│   │   │   ├── mid_tom_phat_transcription.mid
+│   │   │   ├── mid_tom_phat_transcription.pdf
+│   │   │   ├── ride__2002__20_deep_full_ride_edge_transcription.json
+│   │   │   ├── ride__2002__20_deep_full_ride_edge_transcription.mid
+│   │   │   ├── ride__2002__20_deep_full_ride_edge_transcription.pdf
+│   │   │   ├── snare_0007_transcription.json
+│   │   │   ├── snare_0007_transcription.mid
+│   │   │   └── snare_0007_transcription.pdf
+│   │   ├── mon13apr2026__orchestration_outputs__AFTER_TWEAKE_MEMBRANOPHONE_IDIOPHONE_CLASSIFY_EVENTS_CANGE__mon13apr2026__test_wav__1
+│   │   │   ├── drumscript_full_review.txt
+│   │   │   ├── test_transcription.json
+│   │   │   ├── test_transcription.mid
+│   │   │   └── test_transcription.pdf
+│   │   ├── sat11apr2026__orchestration_outputs__AFTER_APPLY_ISOCHRONOUS_TEMPO_CHANGE_TO_CLASSIFY_TO_FIX_SINGLE_BEAT_ISSUE__sat11apr2026__iron_man__2
+│   │   │   ├── 65bpm_iron_man_actual_transcription.json
+│   │   │   ├── 65bpm_iron_man_actual_transcription.mid
+│   │   │   ├── 65bpm_iron_man_actual_transcription.pdf
+│   │   │   └── drumscript_full_review.txt
+│   │   ├── sat11apr2026__orchestration_outputs__AFTER_APPLY_ISOCHRONOUS_TEMPO_CHANGE_TO_CLASSIFY_TO_FIX_SINGLE_BEAT_ISSUE__sat11apr2026__iron_man__3
+│   │   │   ├── 65bpm_iron_man_actual_transcription.json
+│   │   │   ├── 65bpm_iron_man_actual_transcription.mid
+│   │   │   ├── 65bpm_iron_man_actual_transcription.pdf
+│   │   │   └── drumscript_full_review.txt
+│   │   ├── sat11apr2026__orchestration_outputs__AFTER_APPLY_ISOCHRONOUS_TEMPO_CHANGE_TO_CLASSIFY_TO_FIX_SINGLE_BEAT_ISSUE__sat11apr2026__iron_man__4
+│   │   │   ├── 65bpm_iron_man_actual_transcription.json
+│   │   │   ├── 65bpm_iron_man_actual_transcription.mid
+│   │   │   ├── 65bpm_iron_man_actual_transcription.pdf
+│   │   │   └── drumscript_full_review.txt
+│   │   ├── sat11apr2026__orchestration_outputs__AFTER_APPLY_ISOCHRONOUS_TEMPO_CHANGE_TO_CLASSIFY_TO_FIX_SINGLE_BEAT_ISSUE__sat11apr2026__iron_man__5
+│   │   │   ├── .DS_Store
+│   │   │   ├── 65bpm_iron_man_actual_transcription.json
+│   │   │   ├── 65bpm_iron_man_actual_transcription.mid
+│   │   │   ├── 65bpm_iron_man_actual_transcription.pdf
+│   │   │   └── drumscript_full_review.txt
+│   │   ├── sat11apr2026__orchestration_outputs__AFTER_APPLY_ISOCHRONOUS_TEMPO_CHANGE_TO_CLASSIFY_TO_FIX_SINGLE_BEAT_ISSUE__sat11apr2026__my_love_for_the_stars__2
 │   │   │   ├── drums_transcription.json
 │   │   │   ├── drums_transcription.mid
 │   │   │   ├── drums_transcription.pdf
 │   │   │   ├── drumscript_full_review.txt
-│   │   │   ├── my_love_for_the_stars_transcription__BEFORE.json
-│   │   │   └── outputs.logicx
-│   │   │       ├── Alternatives
-│   │   │       │   └── 000
-│   │   │       │       ├── DisplayState.plist
-│   │   │       │       ├── DisplayStateArchive
-│   │   │       │       ├── MetaData.plist
-│   │   │       │       ├── Project File Backups
-│   │   │       │       │   └── 00
-│   │   │       │       │       ├── MetaData.plist
-│   │   │       │       │       └── ProjectData
-│   │   │       │       ├── ProjectData
-│   │   │       │       ├── Undo Data.nosync
-│   │   │       │       └── WindowImage.jpg
-│   │   │       ├── Media
-│   │   │       │   └── Audio Files
-│   │   │       └── Resources
-│   │   │           └── ProjectInformation.plist
-│   │   ├── sun29march2026__orchestration_outputs__AFTER_AMENDING_WINDOWS_SNARE_AND_RIM__test_wav__1
-│   │   │   ├── classify.py
+│   │   │   └── drumscript_full_review__AFTER.txt
+│   │   ├── sat11apr2026__orchestration_outputs__AFTER_APPLY_ISOCHRONOUS_TEMPO_CHANGE_TO_CLASSIFY_TO_FIX_SINGLE_BEAT_ISSUE__sat11apr2026__my_love_for_the_stars__3
+│   │   │   ├── drums_transcription.json
+│   │   │   ├── drums_transcription.mid
+│   │   │   ├── drums_transcription.pdf
+│   │   │   └── drumscript_full_review.txt
+│   │   ├── sat11apr2026__orchestration_outputs__AFTER_APPLY_ISOCHRONOUS_TEMPO_CHANGE_TO_CLASSIFY_TO_FIX_SINGLE_BEAT_ISSUE__sat11apr2026__my_love_for_the_stars__4
+│   │   │   ├── drums_transcription.json
+│   │   │   ├── drums_transcription.mid
+│   │   │   ├── drums_transcription.pdf
+│   │   │   └── drumscript_full_review.txt
+│   │   ├── sat11apr2026__orchestration_outputs__AFTER_APPLY_ISOCHRONOUS_TEMPO_CHANGE_TO_CLASSIFY_TO_FIX_SINGLE_BEAT_ISSUE__sat11apr2026__my_love_for_the_stars__5
+│   │   │   ├── .DS_Store
+│   │   │   ├── drums_transcription.json
+│   │   │   ├── drums_transcription.mid
+│   │   │   ├── drums_transcription.pdf
+│   │   │   └── drumscript_full_review.txt
+│   │   ├── sat11apr2026__orchestration_outputs__AFTER_APPLY_ISOCHRONOUS_TEMPO_CHANGE_TO_CLASSIFY_TO_FIX_SINGLE_BEAT_ISSUE__sat11apr2026__single_beats__2
+│   │   │   ├── crash__201_bronze__16_crash_edge_transcription.json
+│   │   │   ├── crash__201_bronze__16_crash_edge_transcription.mid
+│   │   │   ├── crash__201_bronze__16_crash_edge_transcription.pdf
 │   │   │   ├── drumscript_full_review.txt
-│   │   │   ├── drumscript_full_review__BEFORE.txt
-│   │   │   ├── main.py
+│   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.json
+│   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.mid
+│   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.pdf
+│   │   │   ├── hatopen__201_bronze__13_hi-hat_open_transcription.json
+│   │   │   ├── hatopen__201_bronze__13_hi-hat_open_transcription.mid
+│   │   │   ├── hatopen__201_bronze__13_hi-hat_open_transcription.pdf
+│   │   │   ├── high_tom_phat_transcription.json
+│   │   │   ├── high_tom_phat_transcription.mid
+│   │   │   ├── high_tom_phat_transcription.pdf
+│   │   │   ├── kick_0006_transcription.json
+│   │   │   ├── kick_0006_transcription.mid
+│   │   │   ├── kick_0006_transcription.pdf
+│   │   │   ├── low_tom_phat_transcription.json
+│   │   │   ├── low_tom_phat_transcription.mid
+│   │   │   ├── low_tom_phat_transcription.pdf
+│   │   │   ├── mid_tom_phat_transcription.json
+│   │   │   ├── mid_tom_phat_transcription.mid
+│   │   │   ├── mid_tom_phat_transcription.pdf
+│   │   │   ├── ride__2002__20_deep_full_ride_edge_transcription.json
+│   │   │   ├── ride__2002__20_deep_full_ride_edge_transcription.mid
+│   │   │   ├── ride__2002__20_deep_full_ride_edge_transcription.pdf
+│   │   │   ├── snare_0007_transcription.json
+│   │   │   ├── snare_0007_transcription.mid
+│   │   │   └── snare_0007_transcription.pdf
+│   │   ├── sat11apr2026__orchestration_outputs__AFTER_APPLY_ISOCHRONOUS_TEMPO_CHANGE_TO_CLASSIFY_TO_FIX_SINGLE_BEAT_ISSUE__sat11apr2026__single_beats__3
+│   │   │   ├── crash__201_bronze__16_crash_edge_transcription.json
+│   │   │   ├── crash__201_bronze__16_crash_edge_transcription.mid
+│   │   │   ├── crash__201_bronze__16_crash_edge_transcription.pdf
+│   │   │   ├── drumscript_full_review.txt
+│   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.json
+│   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.mid
+│   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.pdf
+│   │   │   ├── hatopen__201_bronze__13_hi-hat_open_transcription.json
+│   │   │   ├── hatopen__201_bronze__13_hi-hat_open_transcription.mid
+│   │   │   ├── hatopen__201_bronze__13_hi-hat_open_transcription.pdf
+│   │   │   ├── high_tom_phat_transcription.json
+│   │   │   ├── high_tom_phat_transcription.mid
+│   │   │   ├── high_tom_phat_transcription.pdf
+│   │   │   ├── kick_0006_transcription.json
+│   │   │   ├── kick_0006_transcription.mid
+│   │   │   ├── kick_0006_transcription.pdf
+│   │   │   ├── low_tom_phat_transcription.json
+│   │   │   ├── low_tom_phat_transcription.mid
+│   │   │   ├── low_tom_phat_transcription.pdf
+│   │   │   ├── mid_tom_phat_transcription.json
+│   │   │   ├── mid_tom_phat_transcription.mid
+│   │   │   ├── mid_tom_phat_transcription.pdf
+│   │   │   ├── ride__2002__20_deep_full_ride_edge_transcription.json
+│   │   │   ├── ride__2002__20_deep_full_ride_edge_transcription.mid
+│   │   │   ├── ride__2002__20_deep_full_ride_edge_transcription.pdf
+│   │   │   ├── snare_0007_transcription.json
+│   │   │   ├── snare_0007_transcription.mid
+│   │   │   └── snare_0007_transcription.pdf
+│   │   ├── sat11apr2026__orchestration_outputs__AFTER_APPLY_ISOCHRONOUS_TEMPO_CHANGE_TO_CLASSIFY_TO_FIX_SINGLE_BEAT_ISSUE__sat11apr2026__single_beats__4
+│   │   │   ├── crash__201_bronze__16_crash_edge_transcription.json
+│   │   │   ├── crash__201_bronze__16_crash_edge_transcription.mid
+│   │   │   ├── crash__201_bronze__16_crash_edge_transcription.pdf
+│   │   │   ├── drumscript_full_review.txt
+│   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.json
+│   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.mid
+│   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.pdf
+│   │   │   ├── hatopen__201_bronze__13_hi-hat_open_transcription.json
+│   │   │   ├── hatopen__201_bronze__13_hi-hat_open_transcription.mid
+│   │   │   ├── hatopen__201_bronze__13_hi-hat_open_transcription.pdf
+│   │   │   ├── high_tom_phat_transcription.json
+│   │   │   ├── high_tom_phat_transcription.mid
+│   │   │   ├── high_tom_phat_transcription.pdf
+│   │   │   ├── kick_0006_transcription.json
+│   │   │   ├── kick_0006_transcription.mid
+│   │   │   ├── kick_0006_transcription.pdf
+│   │   │   ├── low_tom_phat_transcription.json
+│   │   │   ├── low_tom_phat_transcription.mid
+│   │   │   ├── low_tom_phat_transcription.pdf
+│   │   │   ├── mid_tom_phat_transcription.json
+│   │   │   ├── mid_tom_phat_transcription.mid
+│   │   │   ├── mid_tom_phat_transcription.pdf
+│   │   │   ├── ride__2002__20_deep_full_ride_edge_transcription.json
+│   │   │   ├── ride__2002__20_deep_full_ride_edge_transcription.mid
+│   │   │   ├── ride__2002__20_deep_full_ride_edge_transcription.pdf
+│   │   │   ├── snare_0007_transcription.json
+│   │   │   ├── snare_0007_transcription.mid
+│   │   │   └── snare_0007_transcription.pdf
+│   │   ├── sat11apr2026__orchestration_outputs__AFTER_APPLY_ISOCHRONOUS_TEMPO_CHANGE_TO_CLASSIFY_TO_FIX_SINGLE_BEAT_ISSUE__sat11apr2026__single_beats__5
+│   │   │   ├── .DS_Store
+│   │   │   ├── crash__201_bronze__16_crash_edge_transcription.json
+│   │   │   ├── crash__201_bronze__16_crash_edge_transcription.mid
+│   │   │   ├── crash__201_bronze__16_crash_edge_transcription.pdf
+│   │   │   ├── drumscript_full_review.txt
+│   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.json
+│   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.mid
+│   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.pdf
+│   │   │   ├── hatopen__201_bronze__13_hi-hat_open_transcription.json
+│   │   │   ├── hatopen__201_bronze__13_hi-hat_open_transcription.mid
+│   │   │   ├── hatopen__201_bronze__13_hi-hat_open_transcription.pdf
+│   │   │   ├── high_tom_phat_transcription.json
+│   │   │   ├── high_tom_phat_transcription.mid
+│   │   │   ├── high_tom_phat_transcription.pdf
+│   │   │   ├── kick_0006_transcription.json
+│   │   │   ├── kick_0006_transcription.mid
+│   │   │   ├── kick_0006_transcription.pdf
+│   │   │   ├── low_tom_phat_transcription.json
+│   │   │   ├── low_tom_phat_transcription.mid
+│   │   │   ├── low_tom_phat_transcription.pdf
+│   │   │   ├── mid_tom_phat_transcription.json
+│   │   │   ├── mid_tom_phat_transcription.mid
+│   │   │   ├── mid_tom_phat_transcription.pdf
+│   │   │   ├── ride__2002__20_deep_full_ride_edge_transcription.json
+│   │   │   ├── ride__2002__20_deep_full_ride_edge_transcription.mid
+│   │   │   ├── ride__2002__20_deep_full_ride_edge_transcription.pdf
+│   │   │   ├── snare_0007_transcription.json
+│   │   │   ├── snare_0007_transcription.mid
+│   │   │   └── snare_0007_transcription.pdf
+│   │   ├── sat11apr2026__orchestration_outputs__AFTER_APPLY_ISOCHRONOUS_TEMPO_CHANGE_TO_CLASSIFY_TO_FIX_SINGLE_BEAT_ISSUE__sat11apr2026__test_wav__2
+│   │   │   ├── drumscript_full_review.txt
 │   │   │   ├── test_transcription.json
 │   │   │   ├── test_transcription.mid
-│   │   │   ├── test_transcription.pdf
-│   │   │   └── test_transcription__BEFORE.json
+│   │   │   └── test_transcription.pdf
+│   │   ├── sat11apr2026__orchestration_outputs__AFTER_APPLY_ISOCHRONOUS_TEMPO_CHANGE_TO_CLASSIFY_TO_FIX_SINGLE_BEAT_ISSUE__sat11apr2026__test_wav__3
+│   │   │   ├── drumscript_full_review.txt
+│   │   │   ├── test_transcription.json
+│   │   │   ├── test_transcription.mid
+│   │   │   └── test_transcription.pdf
+│   │   ├── sat11apr2026__orchestration_outputs__AFTER_APPLY_ISOCHRONOUS_TEMPO_CHANGE_TO_CLASSIFY_TO_FIX_SINGLE_BEAT_ISSUE__sat11apr2026__test_wav__4
+│   │   │   ├── drumscript_full_review.txt
+│   │   │   ├── test_transcription.json
+│   │   │   ├── test_transcription.mid
+│   │   │   └── test_transcription.pdf
+│   │   ├── sat11apr2026__orchestration_outputs__AFTER_APPLY_ISOCHRONOUS_TEMPO_CHANGE_TO_CLASSIFY_TO_FIX_SINGLE_BEAT_ISSUE__sat11apr2026__test_wav__5
+│   │   │   ├── .DS_Store
+│   │   │   ├── drumscript_full_review.txt
+│   │   │   ├── test_transcription.json
+│   │   │   ├── test_transcription.mid
+│   │   │   └── test_transcription.pdf
+│   │   ├── sat11apri2026__orchestration_outputs__AFTER_FIXING_TGOO_CLASSIFICATION_ACCURACY_WHICH_DROPPED_ON_FIRST_CHANGE_09APR2026__sat11apr2026__single_beats__1
+│   │   │   ├── crash__201_bronze__16_crash_edge_transcription.json
+│   │   │   ├── crash__201_bronze__16_crash_edge_transcription.mid
+│   │   │   ├── crash__201_bronze__16_crash_edge_transcription.pdf
+│   │   │   ├── drumscript_full_review.txt
+│   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.json
+│   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.mid
+│   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.pdf
+│   │   │   ├── hatopen__201_bronze__13_hi-hat_open_transcription.json
+│   │   │   ├── hatopen__201_bronze__13_hi-hat_open_transcription.mid
+│   │   │   ├── hatopen__201_bronze__13_hi-hat_open_transcription.pdf
+│   │   │   ├── high_tom_phat_transcription.json
+│   │   │   ├── high_tom_phat_transcription.mid
+│   │   │   ├── high_tom_phat_transcription.pdf
+│   │   │   ├── kick_0006_transcription.json
+│   │   │   ├── kick_0006_transcription.mid
+│   │   │   ├── kick_0006_transcription.pdf
+│   │   │   ├── low_tom_phat_transcription.json
+│   │   │   ├── low_tom_phat_transcription.mid
+│   │   │   ├── low_tom_phat_transcription.pdf
+│   │   │   ├── mid_tom_phat_transcription.json
+│   │   │   ├── mid_tom_phat_transcription.mid
+│   │   │   ├── mid_tom_phat_transcription.pdf
+│   │   │   ├── ride__2002__20_deep_full_ride_edge_transcription.json
+│   │   │   ├── ride__2002__20_deep_full_ride_edge_transcription.mid
+│   │   │   ├── ride__2002__20_deep_full_ride_edge_transcription.pdf
+│   │   │   ├── snare_0007_transcription.json
+│   │   │   ├── snare_0007_transcription.mid
+│   │   │   └── snare_0007_transcription.pdf
+│   │   ├── sat11apri2026__orchestration_outputs__AFTER_FIXING_TGOO_CLASSIFICATION_ACCURACY_WHICH_DROPPED_ON_FIRST_CHANGE_09APR2026__sat11apr2026__test_wav__1
+│   │   │   ├── drumscript_full_review.txt
+│   │   │   ├── drumscript_full_review__BEFORE.txt
+│   │   │   ├── test_transcription.json
+│   │   │   ├── test_transcription.mid
+│   │   │   └── test_transcription.pdf
+│   │   ├── sat11april2026__orchestration_outputs__AFTER_FIXING_TGOO_CLASSIFICATION_ACCURACY_WHICH_DROPPED_ON_FIRST_CHANGE_09APR2026__sat11apr2026__iron_man__1
+│   │   │   ├── .DS_Store
+│   │   │   ├── 65bpm_iron_man_actual_transcription.json
+│   │   │   ├── 65bpm_iron_man_actual_transcription.mid
+│   │   │   ├── 65bpm_iron_man_actual_transcription.pdf
+│   │   │   └── drumscript_full_review.txt
+│   │   ├── sat11april2026__orchestration_outputs__AFTER_FIXING_TGOO_CLASSIFICATION_ACCURACY_WHICH_DROPPED_ON_FIRST_CHANGE_09APR2026__sat11apr2026__my_love_for_the_stars__1
+│   │   │   ├── drums_transcription.json
+│   │   │   ├── drums_transcription.mid
+│   │   │   ├── drums_transcription.pdf
+│   │   │   └── drumscript_full_review.txt
+│   │   ├── sat18apr2026__orchestration_outputs__CODE_REVIEW__PREP_FOR_RELEASE__test_wav__1
+│   │   │   ├── .DS_Store
+│   │   │   ├── Drum-music-notation.jpg
+│   │   │   └── drumscript_full_review.txt
+│   │   ├── sun05apr2026__orchestration__AFTER_ADDING_VALIDATION_STEP_ONSET_DETECTOR_ATTEMPTING_TO_FIX_SINGLE_BEATS__iron_man__1
+│   │   │   ├── 65bpm_iron_man_actual_transcription.json
+│   │   │   ├── 65bpm_iron_man_actual_transcription.mid
+│   │   │   ├── 65bpm_iron_man_actual_transcription.pdf
+│   │   │   └── drumscript_full_review.txt
+│   │   ├── sun05apr2026__orchestration__AFTER_ADDING_VALIDATION_STEP_ONSET_DETECTOR_ATTEMPTING_TO_FIX_SINGLE_BEATS__my_love_for_the_stars__1
+│   │   │   ├── drums_transcription.json
+│   │   │   ├── drums_transcription.mid
+│   │   │   ├── drums_transcription.pdf
+│   │   │   └── drumscript_full_review.txt
+│   │   ├── sun05apr2026__orchestration__AFTER_ADDING_VALIDATION_STEP_ONSET_DETECTOR_ATTEMPTING_TO_FIX_SINGLE_BEATS__single_beats__1
+│   │   │   ├── crash__201_bronze__16_crash_edge_transcription.json
+│   │   │   ├── crash__201_bronze__16_crash_edge_transcription.mid
+│   │   │   ├── crash__201_bronze__16_crash_edge_transcription.pdf
+│   │   │   ├── drumscript_full_review.txt
+│   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.json
+│   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.mid
+│   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.pdf
+│   │   │   ├── hatopen__201_bronze__13_hi-hat_open_transcription.json
+│   │   │   ├── hatopen__201_bronze__13_hi-hat_open_transcription.mid
+│   │   │   ├── hatopen__201_bronze__13_hi-hat_open_transcription.pdf
+│   │   │   ├── high_tom_phat_transcription.json
+│   │   │   ├── high_tom_phat_transcription.mid
+│   │   │   ├── high_tom_phat_transcription.pdf
+│   │   │   ├── kick_0006_transcription.json
+│   │   │   ├── kick_0006_transcription.mid
+│   │   │   ├── kick_0006_transcription.pdf
+│   │   │   ├── ride__2002__20_deep_full_ride_edge_transcription.json
+│   │   │   ├── ride__2002__20_deep_full_ride_edge_transcription.mid
+│   │   │   ├── ride__2002__20_deep_full_ride_edge_transcription.pdf
+│   │   │   ├── snare_0007_transcription.json
+│   │   │   ├── snare_0007_transcription.mid
+│   │   │   └── snare_0007_transcription.pdf
+│   │   ├── sun05apr2026__orchestration__AFTER_ADDING_VALIDATION_STEP_ONSET_DETECTOR_ATTEMPTING_TO_FIX_SINGLE_BEATS__test_wav__1
+│   │   │   ├── drumscript_full_review.txt
+│   │   │   ├── test_transcription.json
+│   │   │   ├── test_transcription.mid
+│   │   │   └── test_transcription.pdf
+│   │   ├── sun05apr2026__orchestration__AFTER_ADDING_VALIDATION_STEP_ONSET_DETECTOR_ATTEMPTING_TO_FIX_SINGLE_BEATS__test_wav__1 copy 4
+│   │   │   └── drumscript_full_review.txt
+│   │   ├── test_transcription.json
+│   │   ├── test_transcription.mid
+│   │   ├── test_transcription.pdf
+│   │   ├── testing1_v_testing2__thurs09apr2026.png
 │   │   ├── thurs02april2026__orchestration__ADDING_ONSET_DENSITY_CHECK_FOR_SINGLE_BEAT_ISSUE__iron_man__2
 │   │   │   ├── 65bpm_iron_man_actual_transcription.json
 │   │   │   ├── 65bpm_iron_man_actual_transcription.mid
@@ -6430,61 +7006,21 @@
 │   │   │   ├── test_transcription.json
 │   │   │   ├── test_transcription.mid
 │   │   │   └── test_transcription.pdf
-│   │   ├── tues31march2026__orchestration__AFTER_AMENDING_CLASSIFY_EVENTS_FUNCTION_IN_CLASSIFY__ANOTHER_ATTEMPT_AT_FIXING_SINGLE_BEATS_WITH_BACKWARD_COMPAT__iron_man__2
-│   │   │   ├── .DS_Store
-│   │   │   ├── 65bpm_iron_man_actual_transcription.json
-│   │   │   ├── 65bpm_iron_man_actual_transcription.mid
-│   │   │   ├── 65bpm_iron_man_actual_transcription.pdf
-│   │   │   ├── drumscript_full_review.txt
-│   │   │   └── drumscript_full_review___CURRENT.txt
-│   │   ├── tues31march2026__orchestration__AFTER_AMENDING_CLASSIFY_EVENTS_FUNCTION_IN_CLASSIFY__ANOTHER_ATTEMPT_AT_FIXING_SINGLE_BEATS_WITH_BACKWARD_COMPAT__my_love_for_the_stars__2__AFTER
-│   │   │   ├── .DS_Store
-│   │   │   ├── drums_transcription.json
-│   │   │   ├── drums_transcription.mid
-│   │   │   ├── drums_transcription.pdf
-│   │   │   └── drumscript_full_review.txt
-│   │   ├── tues31march2026__orchestration__AFTER_AMENDING_CLASSIFY_EVENTS_FUNCTION_IN_CLASSIFY__ANOTHER_ATTEMPT_AT_FIXING_SINGLE_BEATS_WITH_BACKWARD_COMPAT__single_beats__2
-│   │   │   ├── crash__201_bronze__16_crash_edge_transcription.json
-│   │   │   ├── crash__201_bronze__16_crash_edge_transcription.mid
-│   │   │   ├── crash__201_bronze__16_crash_edge_transcription.pdf
-│   │   │   ├── drumscript_full_review.txt
-│   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.json
-│   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.mid
-│   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.pdf
-│   │   │   ├── hatopen__201_bronze__13_hi-hat_open_transcription.json
-│   │   │   ├── hatopen__201_bronze__13_hi-hat_open_transcription.mid
-│   │   │   ├── hatopen__201_bronze__13_hi-hat_open_transcription.pdf
-│   │   │   ├── high_tom_phat_transcription.json
-│   │   │   ├── high_tom_phat_transcription.mid
-│   │   │   ├── high_tom_phat_transcription.pdf
-│   │   │   ├── kick_0006_transcription.json
-│   │   │   ├── kick_0006_transcription.mid
-│   │   │   ├── kick_0006_transcription.pdf
-│   │   │   ├── ride__2002__20_deep_full_ride_edge_transcription.json
-│   │   │   ├── ride__2002__20_deep_full_ride_edge_transcription.mid
-│   │   │   ├── ride__2002__20_deep_full_ride_edge_transcription.pdf
-│   │   │   ├── snare_0007_transcription.json
-│   │   │   ├── snare_0007_transcription.mid
-│   │   │   └── snare_0007_transcription.pdf
-│   │   ├── tues31march2026__orchestration__AFTER_AMENDING_CLASSIFY_EVENTS_FUNCTION_IN_CLASSIFY__ANOTHER_ATTEMPT_AT_FIXING_SINGLE_BEATS_WITH_BACKWARD_COMPAT__test_wav__2
-│   │   │   ├── drumscript_full_review.txt
-│   │   │   ├── test_transcription.json
-│   │   │   ├── test_transcription.mid
-│   │   │   └── test_transcription.pdf
-│   │   ├── tues31march2026__orchestration__AFTER_REMOVING__AUDIO_PROCESSOR__CLASSIFIER_AND_NOTATION_GENERATOR__PDF_EXPORTER__MIDI_EXPORTER_SCRIPTS_TO_OUTPUTS_CLASSIFIER_FOLDER__iron_man__1
+│   │   ├── thurs09april2026__orchestration__AFTER_FURTHER_ATTEMPT_TO_FIX_SINGLE_BEAT_ISSUE__thu09apr2026__iron_man__2
 │   │   │   ├── .DS_Store
 │   │   │   ├── 65bpm_iron_man_actual_transcription.json
 │   │   │   ├── 65bpm_iron_man_actual_transcription.mid
 │   │   │   ├── 65bpm_iron_man_actual_transcription.pdf
 │   │   │   └── drumscript_full_review.txt
-│   │   ├── tues31march2026__orchestration__AFTER_REMOVING__AUDIO_PROCESSOR__CLASSIFIER_AND_NOTATION_GENERATOR__PDF_EXPORTER__MIDI_EXPORTER_SCRIPTS_TO_OUTPUTS_CLASSIFIER_FOLDER__my_love_for_the_stars__1__BEFORE
+│   │   ├── thurs09april2026__orchestration__AFTER_FURTHER_ATTEMPT_TO_FIX_SINGLE_BEAT_ISSUE__thu09apr2026__my_love_for_the_stars__2
 │   │   │   ├── .DS_Store
 │   │   │   ├── drums_transcription.json
 │   │   │   ├── drums_transcription.mid
 │   │   │   ├── drums_transcription.pdf
-│   │   │   ├── drumscript_full_review.txt
-│   │   │   └── drumscript_full_review__BEFORE.txt
-│   │   ├── tues31march2026__orchestration__AFTER_REMOVING__AUDIO_PROCESSOR__CLASSIFIER_AND_NOTATION_GENERATOR__PDF_EXPORTER__MIDI_EXPORTER_SCRIPTS_TO_OUTPUTS_CLASSIFIER_FOLDER__single_beats__1
+│   │   │   ├── drums_transcription__AFTER.json
+│   │   │   ├── drums_transcription__AFTER.pdf
+│   │   │   └── drumscript_full_review.txt
+│   │   ├── thurs09april2026__orchestration__AFTER_FURTHER_ATTEMPT_TO_FIX_SINGLE_BEAT_ISSUE__thu09apr2026__single_beats__2
 │   │   │   ├── .DS_Store
 │   │   │   ├── crash__201_bronze__16_crash_edge_transcription.json
 │   │   │   ├── crash__201_bronze__16_crash_edge_transcription.mid
@@ -6508,11 +7044,388 @@
 │   │   │   ├── snare_0007_transcription.json
 │   │   │   ├── snare_0007_transcription.mid
 │   │   │   └── snare_0007_transcription.pdf
-│   │   ├── tues31march2026__orchestration__AFTER_REMOVING__AUDIO_PROCESSOR__CLASSIFIER_AND_NOTATION_GENERATOR__PDF_EXPORTER__MIDI_EXPORTER_SCRIPTS_TO_OUTPUTS_CLASSIFIER_FOLDER__test_wav__1
+│   │   ├── thurs09april2026__orchestration__AFTER_FURTHER_ATTEMPT_TO_FIX_SINGLE_BEAT_ISSUE__thu09apr2026__test_wav__2
+│   │   │   ├── .DS_Store
 │   │   │   ├── drumscript_full_review.txt
 │   │   │   ├── test_transcription.json
 │   │   │   ├── test_transcription.mid
 │   │   │   └── test_transcription.pdf
+│   │   ├── thurs09april2026__orchestration__BEFORE_FURTHER_ATTEMPT_TO_FIX_SINGLE_BEAT_ISSUE__thu09apr2026__iron_man__1
+│   │   │   ├── 65bpm_iron_man_actual_transcription.json
+│   │   │   ├── 65bpm_iron_man_actual_transcription.mid
+│   │   │   ├── 65bpm_iron_man_actual_transcription.pdf
+│   │   │   └── drumscript_full_review.txt
+│   │   ├── thurs09april2026__orchestration__BEFORE_FURTHER_ATTEMPT_TO_FIX_SINGLE_BEAT_ISSUE__thu09apr2026__my_love_for_the_stars__1
+│   │   │   ├── .DS_Store
+│   │   │   ├── drums_transcription.json
+│   │   │   ├── drums_transcription.mid
+│   │   │   ├── drums_transcription.pdf
+│   │   │   ├── drums_transcription__BEFORE.json
+│   │   │   ├── drums_transcription__BEFORE.pdf
+│   │   │   └── drumscript_full_review.txt
+│   │   ├── thurs09april2026__orchestration__BEFORE_FURTHER_ATTEMPT_TO_FIX_SINGLE_BEAT_ISSUE__thu09apr2026__single_beats__1
+│   │   │   ├── crash__201_bronze__16_crash_edge_transcription.json
+│   │   │   ├── crash__201_bronze__16_crash_edge_transcription.mid
+│   │   │   ├── crash__201_bronze__16_crash_edge_transcription.pdf
+│   │   │   ├── drumscript_full_review.txt
+│   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.json
+│   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.mid
+│   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.pdf
+│   │   │   ├── hatopen__201_bronze__13_hi-hat_open_transcription.json
+│   │   │   ├── hatopen__201_bronze__13_hi-hat_open_transcription.mid
+│   │   │   ├── hatopen__201_bronze__13_hi-hat_open_transcription.pdf
+│   │   │   ├── high_tom_phat_transcription.json
+│   │   │   ├── high_tom_phat_transcription.mid
+│   │   │   ├── high_tom_phat_transcription.pdf
+│   │   │   ├── kick_0006_transcription.json
+│   │   │   ├── kick_0006_transcription.mid
+│   │   │   ├── kick_0006_transcription.pdf
+│   │   │   ├── ride__2002__20_deep_full_ride_edge_transcription.json
+│   │   │   ├── ride__2002__20_deep_full_ride_edge_transcription.mid
+│   │   │   ├── ride__2002__20_deep_full_ride_edge_transcription.pdf
+│   │   │   ├── snare_0007_transcription.json
+│   │   │   ├── snare_0007_transcription.mid
+│   │   │   └── snare_0007_transcription.pdf
+│   │   ├── thurs09april2026__orchestration__BEFORE_FURTHER_ATTEMPT_TO_FIX_SINGLE_BEAT_ISSUE__thu09apr2026__test_wav__1
+│   │   │   ├── drumscript_full_review.txt
+│   │   │   ├── test_transcription.json
+│   │   │   ├── test_transcription.mid
+│   │   │   └── test_transcription.pdf
+│   │   ├── thurs16apr2026__orchestration_outputs__TESTING_CLI_RUDIMENTS_INTEGRATION_CLASSIFY_MAIN__SINGLE_BEATS_ONLY__13
+│   │   │   ├── .DS_Store
+│   │   │   ├── Drum-music-notation.jpg
+│   │   │   ├── crash__201_bronze__16_crash_edge_transcription.json
+│   │   │   ├── crash__201_bronze__16_crash_edge_transcription.mid
+│   │   │   ├── crash__201_bronze__16_crash_edge_transcription.pdf
+│   │   │   ├── drumscript_full_review.txt
+│   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.json
+│   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.mid
+│   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.pdf
+│   │   │   ├── hatopen__201_bronze__13_hi-hat_open_transcription.json
+│   │   │   ├── hatopen__201_bronze__13_hi-hat_open_transcription.mid
+│   │   │   ├── hatopen__201_bronze__13_hi-hat_open_transcription.pdf
+│   │   │   ├── high_tom_phat_transcription.json
+│   │   │   ├── high_tom_phat_transcription.mid
+│   │   │   ├── high_tom_phat_transcription.pdf
+│   │   │   ├── kick_0006_transcription.json
+│   │   │   ├── kick_0006_transcription.mid
+│   │   │   ├── kick_0006_transcription.pdf
+│   │   │   ├── low_tom_phat_transcription.json
+│   │   │   ├── low_tom_phat_transcription.mid
+│   │   │   ├── low_tom_phat_transcription.pdf
+│   │   │   ├── mid_tom_phat_transcription.json
+│   │   │   ├── mid_tom_phat_transcription.mid
+│   │   │   ├── mid_tom_phat_transcription.pdf
+│   │   │   ├── ride__2002__20_deep_full_ride_edge_transcription.json
+│   │   │   ├── ride__2002__20_deep_full_ride_edge_transcription.mid
+│   │   │   ├── ride__2002__20_deep_full_ride_edge_transcription.pdf
+│   │   │   ├── snare_0007_transcription.json
+│   │   │   ├── snare_0007_transcription.mid
+│   │   │   └── snare_0007_transcription.pdf
+│   │   ├── thurs16apr2026__orchestration_outputs__TESTING_CLI_RUDIMENTS_INTEGRATION_CLASSIFY_MAIN__SINGLE_BEATS_ONLY__14
+│   │   │   ├── .DS_Store
+│   │   │   ├── Drum-music-notation.jpg
+│   │   │   ├── crash__201_bronze__16_crash_edge_transcription.json
+│   │   │   ├── crash__201_bronze__16_crash_edge_transcription.mid
+│   │   │   ├── crash__201_bronze__16_crash_edge_transcription.pdf
+│   │   │   ├── drumscript_full_review.txt
+│   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.json
+│   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.mid
+│   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.pdf
+│   │   │   ├── hatopen__201_bronze__13_hi-hat_open_transcription.json
+│   │   │   ├── hatopen__201_bronze__13_hi-hat_open_transcription.mid
+│   │   │   ├── hatopen__201_bronze__13_hi-hat_open_transcription.pdf
+│   │   │   ├── high_tom_phat_transcription.json
+│   │   │   ├── high_tom_phat_transcription.mid
+│   │   │   ├── high_tom_phat_transcription.pdf
+│   │   │   ├── kick_0006_transcription.json
+│   │   │   ├── kick_0006_transcription.mid
+│   │   │   ├── kick_0006_transcription.pdf
+│   │   │   ├── low_tom_phat_transcription.json
+│   │   │   ├── low_tom_phat_transcription.mid
+│   │   │   ├── low_tom_phat_transcription.pdf
+│   │   │   ├── mid_tom_phat_transcription.json
+│   │   │   ├── mid_tom_phat_transcription.mid
+│   │   │   ├── mid_tom_phat_transcription.pdf
+│   │   │   ├── ride__2002__20_deep_full_ride_edge_transcription.json
+│   │   │   ├── ride__2002__20_deep_full_ride_edge_transcription.mid
+│   │   │   ├── ride__2002__20_deep_full_ride_edge_transcription.pdf
+│   │   │   ├── snare_0007_transcription.json
+│   │   │   ├── snare_0007_transcription.mid
+│   │   │   └── snare_0007_transcription.pdf
+│   │   ├── thurs16apr2026__orchestration_outputs__TESTING_CLI_RUDIMENTS_INTEGRATION_CLASSIFY_MAIN__SINGLE_BEATS_ONLY__15
+│   │   │   ├── .DS_Store
+│   │   │   ├── Drum-music-notation.jpg
+│   │   │   ├── crash__201_bronze__16_crash_edge_transcription.json
+│   │   │   ├── crash__201_bronze__16_crash_edge_transcription.mid
+│   │   │   ├── crash__201_bronze__16_crash_edge_transcription.pdf
+│   │   │   ├── drumscript_full_review.txt
+│   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.json
+│   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.mid
+│   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.pdf
+│   │   │   ├── hatopen__201_bronze__13_hi-hat_open_transcription.json
+│   │   │   ├── hatopen__201_bronze__13_hi-hat_open_transcription.mid
+│   │   │   ├── hatopen__201_bronze__13_hi-hat_open_transcription.pdf
+│   │   │   ├── high_tom_phat_transcription.json
+│   │   │   ├── high_tom_phat_transcription.mid
+│   │   │   ├── high_tom_phat_transcription.pdf
+│   │   │   ├── kick_0006_transcription.json
+│   │   │   ├── kick_0006_transcription.mid
+│   │   │   ├── kick_0006_transcription.pdf
+│   │   │   ├── low_tom_phat_transcription.json
+│   │   │   ├── low_tom_phat_transcription.mid
+│   │   │   ├── low_tom_phat_transcription.pdf
+│   │   │   ├── mid_tom_phat_transcription.json
+│   │   │   ├── mid_tom_phat_transcription.mid
+│   │   │   ├── mid_tom_phat_transcription.pdf
+│   │   │   ├── ride__2002__20_deep_full_ride_edge_transcription.json
+│   │   │   ├── ride__2002__20_deep_full_ride_edge_transcription.mid
+│   │   │   ├── ride__2002__20_deep_full_ride_edge_transcription.pdf
+│   │   │   ├── snare_0007_transcription.json
+│   │   │   ├── snare_0007_transcription.mid
+│   │   │   └── snare_0007_transcription.pdf
+│   │   ├── tues14apr2026__orchestration_outputs__TESTING_CLI_RUDIMENTS_INTEGRATION_CLASSIFY_MAIN__ALL__1
+│   │   │   ├── 65bpm_iron_man_actual_transcription.json
+│   │   │   ├── 65bpm_iron_man_actual_transcription.mid
+│   │   │   ├── 65bpm_iron_man_actual_transcription.pdf
+│   │   │   ├── crash__201_bronze__16_crash_edge_transcription.json
+│   │   │   ├── crash__201_bronze__16_crash_edge_transcription.mid
+│   │   │   ├── crash__201_bronze__16_crash_edge_transcription.pdf
+│   │   │   ├── drums_transcription.json
+│   │   │   ├── drums_transcription.mid
+│   │   │   ├── drums_transcription.pdf
+│   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.json
+│   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.mid
+│   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.pdf
+│   │   │   ├── hatopen__201_bronze__13_hi-hat_open_transcription.json
+│   │   │   ├── hatopen__201_bronze__13_hi-hat_open_transcription.mid
+│   │   │   ├── hatopen__201_bronze__13_hi-hat_open_transcription.pdf
+│   │   │   ├── high_tom_phat_transcription.json
+│   │   │   ├── high_tom_phat_transcription.mid
+│   │   │   ├── high_tom_phat_transcription.pdf
+│   │   │   ├── kick_0006_transcription.json
+│   │   │   ├── kick_0006_transcription.mid
+│   │   │   ├── kick_0006_transcription.pdf
+│   │   │   ├── ride__2002__20_deep_full_ride_edge_transcription.json
+│   │   │   ├── ride__2002__20_deep_full_ride_edge_transcription.mid
+│   │   │   ├── ride__2002__20_deep_full_ride_edge_transcription.pdf
+│   │   │   ├── snare_0007_transcription.json
+│   │   │   ├── snare_0007_transcription.mid
+│   │   │   ├── snare_0007_transcription.pdf
+│   │   │   ├── test_transcription.json
+│   │   │   ├── test_transcription.mid
+│   │   │   └── test_transcription.pdf
+│   │   ├── tues14apr2026__orchestration_outputs__TESTING_CLI_RUDIMENTS_INTEGRATION_CLASSIFY_MAIN__SINGLE_BEATS_ONLY__2
+│   │   │   ├── .DS_Store
+│   │   │   ├── Drum-music-notation.jpg
+│   │   │   ├── crash__201_bronze__16_crash_edge_transcription.json
+│   │   │   ├── crash__201_bronze__16_crash_edge_transcription.mid
+│   │   │   ├── crash__201_bronze__16_crash_edge_transcription.pdf
+│   │   │   ├── drumscript_full_review.txt
+│   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.json
+│   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.mid
+│   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.pdf
+│   │   │   ├── hatopen__201_bronze__13_hi-hat_open_transcription.json
+│   │   │   ├── hatopen__201_bronze__13_hi-hat_open_transcription.mid
+│   │   │   ├── hatopen__201_bronze__13_hi-hat_open_transcription.pdf
+│   │   │   ├── high_tom_phat_transcription.json
+│   │   │   ├── high_tom_phat_transcription.mid
+│   │   │   ├── high_tom_phat_transcription.pdf
+│   │   │   ├── kick_0006_transcription.json
+│   │   │   ├── kick_0006_transcription.mid
+│   │   │   ├── kick_0006_transcription.pdf
+│   │   │   ├── ride__2002__20_deep_full_ride_edge_transcription.json
+│   │   │   ├── ride__2002__20_deep_full_ride_edge_transcription.mid
+│   │   │   ├── ride__2002__20_deep_full_ride_edge_transcription.pdf
+│   │   │   ├── snare_0007_transcription.json
+│   │   │   ├── snare_0007_transcription.mid
+│   │   │   └── snare_0007_transcription.pdf
+│   │   ├── tues14apr2026__orchestration_outputs__TESTING_CLI_RUDIMENTS_INTEGRATION_CLASSIFY_MAIN__SINGLE_BEATS_ONLY__3
+│   │   │   ├── .DS_Store
+│   │   │   ├── Drum-music-notation.jpg
+│   │   │   ├── crash__201_bronze__16_crash_edge_transcription.json
+│   │   │   ├── crash__201_bronze__16_crash_edge_transcription.mid
+│   │   │   ├── crash__201_bronze__16_crash_edge_transcription.pdf
+│   │   │   ├── drumscript_full_review.txt
+│   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.json
+│   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.mid
+│   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.pdf
+│   │   │   ├── hatopen__201_bronze__13_hi-hat_open_transcription.json
+│   │   │   ├── hatopen__201_bronze__13_hi-hat_open_transcription.mid
+│   │   │   ├── hatopen__201_bronze__13_hi-hat_open_transcription.pdf
+│   │   │   ├── high_tom_phat_transcription.json
+│   │   │   ├── high_tom_phat_transcription.mid
+│   │   │   ├── high_tom_phat_transcription.pdf
+│   │   │   ├── kick_0006_transcription.json
+│   │   │   ├── kick_0006_transcription.mid
+│   │   │   ├── kick_0006_transcription.pdf
+│   │   │   ├── low_tom_phat_transcription.json
+│   │   │   ├── low_tom_phat_transcription.mid
+│   │   │   ├── low_tom_phat_transcription.pdf
+│   │   │   ├── mid_tom_phat_transcription.json
+│   │   │   ├── mid_tom_phat_transcription.mid
+│   │   │   ├── mid_tom_phat_transcription.pdf
+│   │   │   ├── ride__2002__20_deep_full_ride_edge_transcription.json
+│   │   │   ├── ride__2002__20_deep_full_ride_edge_transcription.mid
+│   │   │   ├── ride__2002__20_deep_full_ride_edge_transcription.pdf
+│   │   │   ├── snare_0007_transcription.json
+│   │   │   ├── snare_0007_transcription.mid
+│   │   │   └── snare_0007_transcription.pdf
+│   │   ├── tues14apr2026__orchestration_outputs__TESTING_CLI_RUDIMENTS_INTEGRATION_CLASSIFY_MAIN__SINGLE_BEATS_ONLY__4
+│   │   │   ├── .DS_Store
+│   │   │   ├── Drum-music-notation.jpg
+│   │   │   ├── crash__201_bronze__16_crash_edge_transcription.json
+│   │   │   ├── crash__201_bronze__16_crash_edge_transcription.mid
+│   │   │   ├── crash__201_bronze__16_crash_edge_transcription.pdf
+│   │   │   ├── drumscript_full_review.txt
+│   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.json
+│   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.mid
+│   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.pdf
+│   │   │   ├── hatopen__201_bronze__13_hi-hat_open_transcription.json
+│   │   │   ├── hatopen__201_bronze__13_hi-hat_open_transcription.mid
+│   │   │   ├── hatopen__201_bronze__13_hi-hat_open_transcription.pdf
+│   │   │   ├── high_tom_phat_transcription.json
+│   │   │   ├── high_tom_phat_transcription.mid
+│   │   │   ├── high_tom_phat_transcription.pdf
+│   │   │   ├── kick_0006_transcription.json
+│   │   │   ├── kick_0006_transcription.mid
+│   │   │   ├── kick_0006_transcription.pdf
+│   │   │   ├── low_tom_phat_transcription.json
+│   │   │   ├── low_tom_phat_transcription.mid
+│   │   │   ├── low_tom_phat_transcription.pdf
+│   │   │   ├── mid_tom_phat_transcription.json
+│   │   │   ├── mid_tom_phat_transcription.mid
+│   │   │   ├── mid_tom_phat_transcription.pdf
+│   │   │   ├── ride__2002__20_deep_full_ride_edge_transcription.json
+│   │   │   ├── ride__2002__20_deep_full_ride_edge_transcription.mid
+│   │   │   ├── ride__2002__20_deep_full_ride_edge_transcription.pdf
+│   │   │   ├── snare_0007_transcription.json
+│   │   │   ├── snare_0007_transcription.mid
+│   │   │   └── snare_0007_transcription.pdf
+│   │   ├── tues14apr2026__orchestration_outputs__TESTING_CLI_RUDIMENTS_INTEGRATION_CLASSIFY_MAIN__SINGLE_BEATS_ONLY__5
+│   │   │   ├── .DS_Store
+│   │   │   ├── Drum-music-notation.jpg
+│   │   │   ├── crash__201_bronze__16_crash_edge_transcription.json
+│   │   │   ├── crash__201_bronze__16_crash_edge_transcription.mid
+│   │   │   ├── crash__201_bronze__16_crash_edge_transcription.pdf
+│   │   │   ├── drumscript_full_review.txt
+│   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.json
+│   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.mid
+│   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.pdf
+│   │   │   ├── hatopen__201_bronze__13_hi-hat_open_transcription.json
+│   │   │   ├── hatopen__201_bronze__13_hi-hat_open_transcription.mid
+│   │   │   ├── hatopen__201_bronze__13_hi-hat_open_transcription.pdf
+│   │   │   ├── high_tom_phat_transcription.json
+│   │   │   ├── high_tom_phat_transcription.mid
+│   │   │   ├── high_tom_phat_transcription.pdf
+│   │   │   ├── kick_0006_transcription.json
+│   │   │   ├── kick_0006_transcription.mid
+│   │   │   ├── kick_0006_transcription.pdf
+│   │   │   ├── low_tom_phat_transcription.json
+│   │   │   ├── low_tom_phat_transcription.mid
+│   │   │   ├── low_tom_phat_transcription.pdf
+│   │   │   ├── mid_tom_phat_transcription.json
+│   │   │   ├── mid_tom_phat_transcription.mid
+│   │   │   ├── mid_tom_phat_transcription.pdf
+│   │   │   ├── ride__2002__20_deep_full_ride_edge_transcription.json
+│   │   │   ├── ride__2002__20_deep_full_ride_edge_transcription.mid
+│   │   │   ├── ride__2002__20_deep_full_ride_edge_transcription.pdf
+│   │   │   ├── snare_0007_transcription.json
+│   │   │   ├── snare_0007_transcription.mid
+│   │   │   └── snare_0007_transcription.pdf
+│   │   ├── tues14apr2026__orchestration_outputs__TESTING_CLI_RUDIMENTS_INTEGRATION_CLASSIFY_MAIN__SINGLE_BEATS_ONLY__6
+│   │   │   ├── .DS_Store
+│   │   │   ├── Drum-music-notation.jpg
+│   │   │   ├── crash__201_bronze__16_crash_edge_transcription.json
+│   │   │   ├── crash__201_bronze__16_crash_edge_transcription.mid
+│   │   │   ├── crash__201_bronze__16_crash_edge_transcription.pdf
+│   │   │   ├── drumscript_full_review.txt
+│   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.json
+│   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.mid
+│   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.pdf
+│   │   │   ├── hatopen__201_bronze__13_hi-hat_open_transcription.json
+│   │   │   ├── hatopen__201_bronze__13_hi-hat_open_transcription.mid
+│   │   │   ├── hatopen__201_bronze__13_hi-hat_open_transcription.pdf
+│   │   │   ├── high_tom_phat_transcription.json
+│   │   │   ├── high_tom_phat_transcription.mid
+│   │   │   ├── high_tom_phat_transcription.pdf
+│   │   │   ├── kick_0006_transcription.json
+│   │   │   ├── kick_0006_transcription.mid
+│   │   │   ├── kick_0006_transcription.pdf
+│   │   │   ├── low_tom_phat_transcription.json
+│   │   │   ├── low_tom_phat_transcription.mid
+│   │   │   ├── low_tom_phat_transcription.pdf
+│   │   │   ├── mid_tom_phat_transcription.json
+│   │   │   ├── mid_tom_phat_transcription.mid
+│   │   │   ├── mid_tom_phat_transcription.pdf
+│   │   │   ├── ride__2002__20_deep_full_ride_edge_transcription.json
+│   │   │   ├── ride__2002__20_deep_full_ride_edge_transcription.mid
+│   │   │   ├── ride__2002__20_deep_full_ride_edge_transcription.pdf
+│   │   │   ├── snare_0007_transcription.json
+│   │   │   ├── snare_0007_transcription.mid
+│   │   │   └── snare_0007_transcription.pdf
+│   │   ├── tues14apr2026__orchestration_outputs__TESTING_CLI_RUDIMENTS_INTEGRATION_CLASSIFY_MAIN__SINGLE_BEATS_ONLY__7
+│   │   │   ├── .DS_Store
+│   │   │   ├── Drum-music-notation.jpg
+│   │   │   ├── crash__201_bronze__16_crash_edge_transcription.json
+│   │   │   ├── crash__201_bronze__16_crash_edge_transcription.mid
+│   │   │   ├── crash__201_bronze__16_crash_edge_transcription.pdf
+│   │   │   ├── drumscript_full_review.txt
+│   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.json
+│   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.mid
+│   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.pdf
+│   │   │   ├── hatopen__201_bronze__13_hi-hat_open_transcription.json
+│   │   │   ├── hatopen__201_bronze__13_hi-hat_open_transcription.mid
+│   │   │   ├── hatopen__201_bronze__13_hi-hat_open_transcription.pdf
+│   │   │   ├── high_tom_phat_transcription.json
+│   │   │   ├── high_tom_phat_transcription.mid
+│   │   │   ├── high_tom_phat_transcription.pdf
+│   │   │   ├── kick_0006_transcription.json
+│   │   │   ├── kick_0006_transcription.mid
+│   │   │   ├── kick_0006_transcription.pdf
+│   │   │   ├── low_tom_phat_transcription.json
+│   │   │   ├── low_tom_phat_transcription.mid
+│   │   │   ├── low_tom_phat_transcription.pdf
+│   │   │   ├── mid_tom_phat_transcription.json
+│   │   │   ├── mid_tom_phat_transcription.mid
+│   │   │   ├── mid_tom_phat_transcription.pdf
+│   │   │   ├── ride__2002__20_deep_full_ride_edge_transcription.json
+│   │   │   ├── ride__2002__20_deep_full_ride_edge_transcription.mid
+│   │   │   ├── ride__2002__20_deep_full_ride_edge_transcription.pdf
+│   │   │   ├── snare_0007_transcription.json
+│   │   │   ├── snare_0007_transcription.mid
+│   │   │   └── snare_0007_transcription.pdf
+│   │   ├── tues14apr2026__orchestration_outputs__TESTING_CLI_RUDIMENTS_INTEGRATION_CLASSIFY_MAIN__SINGLE_BEATS_ONLY__8
+│   │   │   ├── .DS_Store
+│   │   │   ├── Drum-music-notation.jpg
+│   │   │   ├── crash__201_bronze__16_crash_edge_transcription.json
+│   │   │   ├── crash__201_bronze__16_crash_edge_transcription.mid
+│   │   │   ├── crash__201_bronze__16_crash_edge_transcription.pdf
+│   │   │   ├── drumscript_full_review.txt
+│   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.json
+│   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.mid
+│   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.pdf
+│   │   │   ├── hatopen__201_bronze__13_hi-hat_open_transcription.json
+│   │   │   ├── hatopen__201_bronze__13_hi-hat_open_transcription.mid
+│   │   │   ├── hatopen__201_bronze__13_hi-hat_open_transcription.pdf
+│   │   │   ├── high_tom_phat_transcription.json
+│   │   │   ├── high_tom_phat_transcription.mid
+│   │   │   ├── high_tom_phat_transcription.pdf
+│   │   │   ├── kick_0006_transcription.json
+│   │   │   ├── kick_0006_transcription.mid
+│   │   │   ├── kick_0006_transcription.pdf
+│   │   │   ├── low_tom_phat_transcription.json
+│   │   │   ├── low_tom_phat_transcription.mid
+│   │   │   ├── low_tom_phat_transcription.pdf
+│   │   │   ├── mid_tom_phat_transcription.json
+│   │   │   ├── mid_tom_phat_transcription.mid
+│   │   │   ├── mid_tom_phat_transcription.pdf
+│   │   │   ├── ride__2002__20_deep_full_ride_edge_transcription.json
+│   │   │   ├── ride__2002__20_deep_full_ride_edge_transcription.mid
+│   │   │   ├── ride__2002__20_deep_full_ride_edge_transcription.pdf
+│   │   │   ├── snare_0007_transcription.json
+│   │   │   ├── snare_0007_transcription.mid
+│   │   │   └── snare_0007_transcription.pdf
 │   │   ├── weds01april2026__orchestration__INTRODUCTING_BACKWARD_COMPATIBLE_AMPLITUDE_GATE__iron_man__1
 │   │   │   ├── 65bpm_iron_man_actual_transcription.json
 │   │   │   ├── 65bpm_iron_man_actual_transcription.mid
@@ -6546,11 +7459,177 @@
 │   │   │   ├── snare_0007_transcription.json
 │   │   │   ├── snare_0007_transcription.mid
 │   │   │   └── snare_0007_transcription.pdf
-│   │   └── weds01april2026__orchestration__INTRODUCTING_BACKWARD_COMPATIBLE_AMPLITUDE_GATE__test_wav__1
+│   │   ├── weds01april2026__orchestration__INTRODUCTING_BACKWARD_COMPATIBLE_AMPLITUDE_GATE__test_wav__1
+│   │   │   ├── drumscript_full_review.txt
+│   │   │   ├── test_transcription.json
+│   │   │   ├── test_transcription.mid
+│   │   │   └── test_transcription.pdf
+│   │   ├── weds08april2026__orchestration__AFTER_APPLYING_PROFILING_AND_ADDING_CLI_INPUT_FOR_SINGLE_BEATS__iron_man__1
+│   │   │   ├── .DS_Store
+│   │   │   ├── 65bpm_iron_man_actual_transcription.json
+│   │   │   ├── 65bpm_iron_man_actual_transcription.mid
+│   │   │   ├── 65bpm_iron_man_actual_transcription.pdf
+│   │   │   └── drumscript_full_review.txt
+│   │   ├── weds08april2026__orchestration__AFTER_APPLYING_PROFILING_AND_ADDING_CLI_INPUT_FOR_SINGLE_BEATS__my_love_for_the_stars__1
+│   │   │   ├── .DS_Store
+│   │   │   ├── drums_transcription.json
+│   │   │   ├── drums_transcription.mid
+│   │   │   ├── drums_transcription.pdf
+│   │   │   └── drumscript_full_review.txt
+│   │   ├── weds08april2026__orchestration__AFTER_APPLYING_PROFILING_AND_ADDING_CLI_INPUT_FOR_SINGLE_BEATS__single_beats__1
+│   │   │   ├── .DS_Store
+│   │   │   ├── crash__201_bronze__16_crash_edge_transcription.json
+│   │   │   ├── crash__201_bronze__16_crash_edge_transcription.mid
+│   │   │   ├── crash__201_bronze__16_crash_edge_transcription.pdf
+│   │   │   ├── drumscript_full_review.txt
+│   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.json
+│   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.mid
+│   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.pdf
+│   │   │   ├── hatopen__201_bronze__13_hi-hat_open_transcription.json
+│   │   │   ├── hatopen__201_bronze__13_hi-hat_open_transcription.mid
+│   │   │   ├── hatopen__201_bronze__13_hi-hat_open_transcription.pdf
+│   │   │   ├── high_tom_phat_transcription.json
+│   │   │   ├── high_tom_phat_transcription.mid
+│   │   │   ├── high_tom_phat_transcription.pdf
+│   │   │   ├── kick_0006_transcription.json
+│   │   │   ├── kick_0006_transcription.mid
+│   │   │   ├── kick_0006_transcription.pdf
+│   │   │   ├── ride__2002__20_deep_full_ride_edge_transcription.json
+│   │   │   ├── ride__2002__20_deep_full_ride_edge_transcription.mid
+│   │   │   ├── ride__2002__20_deep_full_ride_edge_transcription.pdf
+│   │   │   ├── snare_0007_transcription.json
+│   │   │   ├── snare_0007_transcription.mid
+│   │   │   └── snare_0007_transcription.pdf
+│   │   ├── weds08april2026__orchestration__AFTER_APPLYING_PROFILING_AND_ADDING_CLI_INPUT_FOR_SINGLE_BEATS__test_wav__1
+│   │   │   ├── .DS_Store
+│   │   │   ├── drumscript_full_review.txt
+│   │   │   ├── test_transcription.json
+│   │   │   ├── test_transcription.mid
+│   │   │   └── test_transcription.pdf
+│   │   ├── weds15apr2026__orchestration_outputs__TESTING_CLI_RUDIMENTS_INTEGRATION_CLASSIFY_MAIN__SINGLE_BEATS_ONLY__10
+│   │   │   ├── .DS_Store
+│   │   │   ├── Drum-music-notation.jpg
+│   │   │   ├── crash__201_bronze__16_crash_edge_transcription.json
+│   │   │   ├── crash__201_bronze__16_crash_edge_transcription.mid
+│   │   │   ├── crash__201_bronze__16_crash_edge_transcription.pdf
+│   │   │   ├── drumscript_full_review.txt
+│   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.json
+│   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.mid
+│   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.pdf
+│   │   │   ├── hatopen__201_bronze__13_hi-hat_open_transcription.json
+│   │   │   ├── hatopen__201_bronze__13_hi-hat_open_transcription.mid
+│   │   │   ├── hatopen__201_bronze__13_hi-hat_open_transcription.pdf
+│   │   │   ├── high_tom_phat_transcription.json
+│   │   │   ├── high_tom_phat_transcription.mid
+│   │   │   ├── high_tom_phat_transcription.pdf
+│   │   │   ├── kick_0006_transcription.json
+│   │   │   ├── kick_0006_transcription.mid
+│   │   │   ├── kick_0006_transcription.pdf
+│   │   │   ├── low_tom_phat_transcription.json
+│   │   │   ├── low_tom_phat_transcription.mid
+│   │   │   ├── low_tom_phat_transcription.pdf
+│   │   │   ├── mid_tom_phat_transcription.json
+│   │   │   ├── mid_tom_phat_transcription.mid
+│   │   │   ├── mid_tom_phat_transcription.pdf
+│   │   │   ├── ride__2002__20_deep_full_ride_edge_transcription.json
+│   │   │   ├── ride__2002__20_deep_full_ride_edge_transcription.mid
+│   │   │   ├── ride__2002__20_deep_full_ride_edge_transcription.pdf
+│   │   │   ├── snare_0007_transcription.json
+│   │   │   ├── snare_0007_transcription.mid
+│   │   │   └── snare_0007_transcription.pdf
+│   │   ├── weds15apr2026__orchestration_outputs__TESTING_CLI_RUDIMENTS_INTEGRATION_CLASSIFY_MAIN__SINGLE_BEATS_ONLY__11
+│   │   │   ├── .DS_Store
+│   │   │   ├── Drum-music-notation.jpg
+│   │   │   ├── crash__201_bronze__16_crash_edge_transcription.json
+│   │   │   ├── crash__201_bronze__16_crash_edge_transcription.mid
+│   │   │   ├── crash__201_bronze__16_crash_edge_transcription.pdf
+│   │   │   ├── drumscript_full_review.txt
+│   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.json
+│   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.mid
+│   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.pdf
+│   │   │   ├── hatopen__201_bronze__13_hi-hat_open_transcription.json
+│   │   │   ├── hatopen__201_bronze__13_hi-hat_open_transcription.mid
+│   │   │   ├── hatopen__201_bronze__13_hi-hat_open_transcription.pdf
+│   │   │   ├── high_tom_phat_transcription.json
+│   │   │   ├── high_tom_phat_transcription.mid
+│   │   │   ├── high_tom_phat_transcription.pdf
+│   │   │   ├── kick_0006_transcription.json
+│   │   │   ├── kick_0006_transcription.mid
+│   │   │   ├── kick_0006_transcription.pdf
+│   │   │   ├── low_tom_phat_transcription.json
+│   │   │   ├── low_tom_phat_transcription.mid
+│   │   │   ├── low_tom_phat_transcription.pdf
+│   │   │   ├── mid_tom_phat_transcription.json
+│   │   │   ├── mid_tom_phat_transcription.mid
+│   │   │   ├── mid_tom_phat_transcription.pdf
+│   │   │   ├── ride__2002__20_deep_full_ride_edge_transcription.json
+│   │   │   ├── ride__2002__20_deep_full_ride_edge_transcription.mid
+│   │   │   ├── ride__2002__20_deep_full_ride_edge_transcription.pdf
+│   │   │   ├── snare_0007_transcription.json
+│   │   │   ├── snare_0007_transcription.mid
+│   │   │   └── snare_0007_transcription.pdf
+│   │   ├── weds15apr2026__orchestration_outputs__TESTING_CLI_RUDIMENTS_INTEGRATION_CLASSIFY_MAIN__SINGLE_BEATS_ONLY__12
+│   │   │   ├── .DS_Store
+│   │   │   ├── Drum-music-notation.jpg
+│   │   │   ├── crash__201_bronze__16_crash_edge_transcription.json
+│   │   │   ├── crash__201_bronze__16_crash_edge_transcription.mid
+│   │   │   ├── crash__201_bronze__16_crash_edge_transcription.pdf
+│   │   │   ├── drumscript_full_review.txt
+│   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.json
+│   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.mid
+│   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.pdf
+│   │   │   ├── hatopen__201_bronze__13_hi-hat_open_transcription.json
+│   │   │   ├── hatopen__201_bronze__13_hi-hat_open_transcription.mid
+│   │   │   ├── hatopen__201_bronze__13_hi-hat_open_transcription.pdf
+│   │   │   ├── high_tom_phat_transcription.json
+│   │   │   ├── high_tom_phat_transcription.mid
+│   │   │   ├── high_tom_phat_transcription.pdf
+│   │   │   ├── kick_0006_transcription.json
+│   │   │   ├── kick_0006_transcription.mid
+│   │   │   ├── kick_0006_transcription.pdf
+│   │   │   ├── low_tom_phat_transcription.json
+│   │   │   ├── low_tom_phat_transcription.mid
+│   │   │   ├── low_tom_phat_transcription.pdf
+│   │   │   ├── mid_tom_phat_transcription.json
+│   │   │   ├── mid_tom_phat_transcription.mid
+│   │   │   ├── mid_tom_phat_transcription.pdf
+│   │   │   ├── ride__2002__20_deep_full_ride_edge_transcription.json
+│   │   │   ├── ride__2002__20_deep_full_ride_edge_transcription.mid
+│   │   │   ├── ride__2002__20_deep_full_ride_edge_transcription.pdf
+│   │   │   ├── snare_0007_transcription.json
+│   │   │   ├── snare_0007_transcription.mid
+│   │   │   └── snare_0007_transcription.pdf
+│   │   └── weds15apr2026__orchestration_outputs__TESTING_CLI_RUDIMENTS_INTEGRATION_CLASSIFY_MAIN__SINGLE_BEATS_ONLY__9
+│   │       ├── .DS_Store
+│   │       ├── Drum-music-notation.jpg
+│   │       ├── crash__201_bronze__16_crash_edge_transcription.json
+│   │       ├── crash__201_bronze__16_crash_edge_transcription.mid
+│   │       ├── crash__201_bronze__16_crash_edge_transcription.pdf
 │   │       ├── drumscript_full_review.txt
-│   │       ├── test_transcription.json
-│   │       ├── test_transcription.mid
-│   │       └── test_transcription.pdf
+│   │       ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.json
+│   │       ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.mid
+│   │       ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.pdf
+│   │       ├── hatopen__201_bronze__13_hi-hat_open_transcription.json
+│   │       ├── hatopen__201_bronze__13_hi-hat_open_transcription.mid
+│   │       ├── hatopen__201_bronze__13_hi-hat_open_transcription.pdf
+│   │       ├── high_tom_phat_transcription.json
+│   │       ├── high_tom_phat_transcription.mid
+│   │       ├── high_tom_phat_transcription.pdf
+│   │       ├── kick_0006_transcription.json
+│   │       ├── kick_0006_transcription.mid
+│   │       ├── kick_0006_transcription.pdf
+│   │       ├── low_tom_phat_transcription.json
+│   │       ├── low_tom_phat_transcription.mid
+│   │       ├── low_tom_phat_transcription.pdf
+│   │       ├── mid_tom_phat_transcription.json
+│   │       ├── mid_tom_phat_transcription.mid
+│   │       ├── mid_tom_phat_transcription.pdf
+│   │       ├── ride__2002__20_deep_full_ride_edge_transcription.json
+│   │       ├── ride__2002__20_deep_full_ride_edge_transcription.mid
+│   │       ├── ride__2002__20_deep_full_ride_edge_transcription.pdf
+│   │       ├── snare_0007_transcription.json
+│   │       ├── snare_0007_transcription.mid
+│   │       └── snare_0007_transcription.pdf
 │   ├── processed_stems
 │   │   ├── .DS_Store
 │   │   ├── opholiotry_on_a_hemocite_platter
@@ -10616,9 +11695,10 @@
 │       ├── V Koan Tom 2 Mid.wav
 │       └── W Koan Tom 1 Low.wav
 ├── tree.txt
+├── tree_full.txt
 ├── ui.py
 ├── uv.lock
 └── visuals
     └── tempogram.png
 
-728 directories, 9894 files
+796 directories, 10906 files

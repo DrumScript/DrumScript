@@ -47,11 +47,9 @@ dependencies = [
     "scipy",
     "setuptools",
     "sounddevice",
-    #"soundfile",
-    #"tensorflow",
+    "soundfile",
     "torch",
     "torchaudio",
-    #"torchcodec",
     "tqdm",
 ]
 

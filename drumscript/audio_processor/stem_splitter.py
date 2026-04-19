@@ -24,7 +24,7 @@ from pydub import AudioSegment
 DEMUCS_MODEL = "htdemucs" 
 
 
-## PLEASE NOTE: This is currently a test script. Original Demucs is no longer being maintained (owned by Meta/Facebook). Owners have forked and maintain occasionally: https://github.com/adefossez/demucs. THe usage of demucs is therefore subject to some uncertainty. We may decide to build our own stem_splitter model in DrumScript in order to ensure the long-term stability of the package, and to continue to make it as lightweight as possible.
+## PLEASE NOTE: Original Demucs is no longer being maintained (owned by Meta/Facebook). Owners have forked and maintain occasionally: https://github.com/adefossez/demucs. THe usage of demucs is therefore subject to some uncertainty. We may decide to build our own stem_splitter model in DrumScript in order to ensure the long-term stability of the package, and to continue to make it as lightweight as possible.
 
 # ===============================================================================================
 def separate_audio(input_audio_path: str, output_format: str = "wav", drumless: bool = False, mute: list = None, all_stems: bool = False) -> dict:

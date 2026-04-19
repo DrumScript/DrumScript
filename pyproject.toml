@@ -51,7 +51,7 @@ dependencies = [
     #"tensorflow",
     "torch",
     "torchaudio",
-    "torchcodec",
+    #"torchcodec",
     "tqdm",
 ]
 

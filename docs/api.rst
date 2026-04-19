@@ -10,7 +10,7 @@ This is the auto-generated API reference for DrumScript.
    .. code-block:: python
 
       import drumscript as ds
-      ds.notation_generator.constants
+      ds.detect_tempo()
 
 Configuration & Constants
 -------------------------
@@ -29,9 +29,9 @@ Core Functions
    :toctree: generated
    :nosignatures:
 
+   drumscript.main
    drumscript.extract_stems
    drumscript.detect_tempo
-   drumscript.main
 
 Audio Processing
 ----------------
@@ -52,10 +52,14 @@ Classification & Notation
    :recursive:
 
    drumscript.drum_classifier.classify
+   drumscript.drum_classifier.classify_rudiment_events
    drumscript.notation_generator.constants
    drumscript.notation_generator.helpers
    drumscript.notation_generator.score_builder
    drumscript.notation_generator.pdf_exporter
+   drumscript.notation_generator.midi_exporter
+   drumscript.notation_generator.xml_exporter
+
 
 Utilities
 ---------

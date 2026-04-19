@@ -24,17 +24,9 @@ from drumscript.audio_processor.onset_detector import detect_onsets
 from drumscript.audio_processor.tempo_detector import estimate_tempo
 
 
-<<<<<<< HEAD
-
-
-print("\n# ------------------------------------------------------------------------------------")
-datetimestamp = datetime.now()
-print(f'\ndate/time: {datetimestamp}')
-=======
 #print("\n# ------------------------------------------------------------------------------------")
 #datetimestamp = datetime.now()
 #print(f'\ndate/time: {datetimestamp}')
->>>>>>> ed6319bb6f016ed5980fab584f5724c5a0559ac7
 #print(f'start: {datetimestamp:%Y-%m-%d %H:%M:%S}')
 
 

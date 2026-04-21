@@ -95,7 +95,7 @@ def separate_audio(input_audio_path: str, output_format: str = "wav", drumless: 
         "-o", str(temp_demucs_dir),
         "-n", DEMUCS_MODEL,
         "--flac",
-        "--backend", DEMUCS_BACKEND,  # avoid torchcodec; see DEMUCS_BACKEND comment above
+        #"--backend", DEMUCS_BACKEND,  # avoid torchcodec; see DEMUCS_BACKEND comment above
         str(input_path)
     ]
     try:
@@ -257,7 +257,7 @@ def extract_drum_stem(input_audio_path: str, output_dir: str = None) -> str:
         "-o", str(temp_output_dir),
         "-n", DEMUCS_MODEL,
         "--flac",
-        "--backend", DEMUCS_BACKEND,  # avoid torchcodec
+        #"--backend", DEMUCS_BACKEND,  # avoid torchcodec
         str(input_audio_path)
     ]
     # 3. Run the Demucs separation process

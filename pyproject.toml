@@ -48,8 +48,8 @@ dependencies = [
     "setuptools",
     "sounddevice",
     "soundfile",
-    "torch",
-    "torchaudio",
+    "torch>=2.4,<2.9",
+    "torchaudio>=2.4,<2.9",
     "tqdm",
 ]
 

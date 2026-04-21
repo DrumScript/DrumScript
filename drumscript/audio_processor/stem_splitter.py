@@ -1,8 +1,8 @@
 # drumscript/audio_processor/stem_splitter.py
 """
-This module uses the demucs library () to extract stemms from multi-layer audio files
-Running: `python3 -m drumscript.audio_processor.stem_splitter path_to_audio_file`
-It supports generating 'drumless' tracks, isolating specific instruments, and format conversion.
+This module uses the demucs library () to extract stems from multi-layer audio files. It also contains functionality for re-mixing stems to create drumless backing tracks for user export, using the --drumless cli flag
+Running: `python3 -m drumscript.audio_processor.stem_splitter path_to_audio_file, <output_path>`
+It supports generating 'drumless' tracks, isolating specific instruments, and format conversion on demand. 
 """
 
 import subprocess
@@ -23,8 +23,16 @@ print(f'\ndate/time: {datetimestamp}')
 # Stems output by htdemucs: 'drums', 'bass', 'other', 'vocals'
 DEMUCS_MODEL = "htdemucs" 
 
-
 ## PLEASE NOTE: Original Demucs is no longer being maintained (owned by Meta/Facebook). Owners have forked and maintain occasionally: https://github.com/adefossez/demucs. THe usage of demucs is therefore subject to some uncertainty. We may decide to build our own stem_splitter model in DrumScript in order to ensure the long-term stability of the package, and to continue to make it as lightweight as possible.
+
+# Audio backend used by Demucs to LOAD input files.
+# We force 'soundfile' to avoid pulling in torchcodec, which has a nasty habit of
+# breaking on PyTorch ABI mismatches (symbol `_torch_dtype_float4_e2m1fn_x2` not
+# found) and on missing Homebrew FFmpeg dylibs (libavutil.{56..59}.dylib).
+# 'soundfile' handles WAV/FLAC natively; MP3 decoding still needs ffmpeg on PATH,
+# which pydub also requires, so no new dependency is introduced.
+# Valid values at the time of writing: "soundfile", "ffmpeg", "torchcodec".
+DEMUCS_BACKEND = "soundfile"
 
 # ===============================================================================================
 def separate_audio(input_audio_path: str, output_format: str = "wav", drumless: bool = False, mute: list = None, all_stems: bool = False, output_dir: str = None) -> dict:
@@ -72,19 +80,36 @@ def separate_audio(input_audio_path: str, output_format: str = "wav", drumless: 
     # 2. Run Demucs
     # We always output FLAC or WAV from Demucs first, then convert/mix later.
     # Using flac for intermediate speed/quality.
+    # --- LEGACY: command without explicit backend. Demucs then defaults to
+    # --- torchcodec, which crashes on PyTorch ABI mismatch / missing FFmpeg dylibs.
+    # command = [
+    #     "demucs",
+    #     "-o", str(temp_demucs_dir),
+    #     "-n", DEMUCS_MODEL,
+    #     "--flac",
+    #     str(input_path)
+    # ]
+
     command = [
         "demucs",
         "-o", str(temp_demucs_dir),
         "-n", DEMUCS_MODEL,
-        "--flac", 
+        "--flac",
+        "--backend", DEMUCS_BACKEND,  # avoid torchcodec; see DEMUCS_BACKEND comment above
         str(input_path)
     ]
-
     try:
         subprocess.run(command, check=True, capture_output=True, text=True)
     except subprocess.CalledProcessError as e:
         shutil.rmtree(temp_demucs_dir, ignore_errors=True)
-        raise RuntimeError(f"Demucs failed: {e.stderr}")
+     # Surface BOTH stdout and stderr. Demucs writes the progress bar to stderr,
+        # so the real error often sits at the END of stderr, not the start.
+        # --- LEGACY: raise RuntimeError(f"Demucs failed: {e.stderr}")
+        raise RuntimeError(
+            f"Demucs failed (exit code {e.returncode}).\n"
+            f"--- STDOUT ---\n{e.stdout}\n"
+            f"--- STDERR ---\n{e.stderr}"
+        )
     except FileNotFoundError:
         raise FileNotFoundError("The 'demucs' command was not found. Please install it.")
 
@@ -218,15 +243,23 @@ def extract_drum_stem(input_audio_path: str, output_dir: str = None) -> str:
     # Use this path as the output directory
     temp_output_dir = str(output_dir)
 
-    # 2. Build the Demucs command
+  # 2. Build the Demucs command
+    # --- LEGACY: command without explicit backend. See note on DEMUCS_BACKEND.
+    # command = [
+    #     "demucs",
+    #     "-o", str(temp_output_dir),
+    #     "-n", DEMUCS_MODEL,
+    #     "--flac",
+    #     str(input_audio_path)
+    # ]
     command = [
         "demucs",
         "-o", str(temp_output_dir),
         "-n", DEMUCS_MODEL,
         "--flac",
+        "--backend", DEMUCS_BACKEND,  # avoid torchcodec
         str(input_audio_path)
     ]
-
     # 3. Run the Demucs separation process
     # print("\n# ------------------------------------------------------------------------------------")
     # print("\n# PLEASE NOTE: This is currently a test script. Original Demucs is no longer being maintained (owned by Meta/Facebook). Owners have forked and maintain occasionally: https://github.com/adefossez/demucs. The usage of demucs is therefore subject to some uncertainty. We may decide to build our own stem_splitter model in DrumScript in order to ensure the long-term stability of the package, and to continue to make it as lightweight as possible.")
@@ -274,9 +307,16 @@ def extract_drum_stem(input_audio_path: str, output_dir: str = None) -> str:
 
         
     except subprocess.CalledProcessError as e:
-        print(f"Demucs separation failed with error: {e.stderr}")
-        shutil.rmtree(temp_output_dir) # Clean upc
-        raise RuntimeError(f"Demucs failed to process the audio. Error: {e.stderr}")
+        # --- LEGACY: print(f"Demucs separation failed with error: {e.stderr}")
+        # --- LEGACY: raise RuntimeError(f"Demucs failed to process the audio. Error: {e.stderr}")
+        print(f"Demucs separation failed (exit code {e.returncode}).")
+        print(f"--- STDOUT ---\n{e.stdout}")
+        print(f"--- STDERR ---\n{e.stderr}")
+        shutil.rmtree(temp_output_dir, ignore_errors=True)  # Clean up
+        raise RuntimeError(
+            f"Demucs failed to process the audio (exit {e.returncode}).\n"
+            f"STDERR: {e.stderr}"
+        )
         
     except FileNotFoundError:
         shutil.rmtree(temp_output_dir) # Clean up
@@ -339,6 +379,13 @@ def mix_stems(stems_dict, stems_to_mix, output_path, fmt="wav"):
 ## Expanded with more advanced functionality for stem extraction
 if __name__ == "__main__":
     import argparse
+    #import datetime
+        # Banner / timestamp (moved here from module top-level so it only fires when
+    # this file is run DIRECTLY via `python3 -m drumscript.audio_processor.stem_splitter ...`,
+    # not on every `from drumscript.audio_processor.stem_splitter import ...`)
+    #print("\n# ------------------------------------------------------------------------------------")
+    #print(f'\ndate/time: {datetimestamp}')
+    #datetimestamp = datetime.now()
     
     parser = argparse.ArgumentParser(description="Extract stems from an audio file.")
     parser.add_argument("input_file", help="Path to the input audio file.")
@@ -386,7 +433,10 @@ if __name__ == "__main__":
     #mp3 = "--mp3" in sys.argv
     #all_s = "--all" in sys.argv
     
-    fmt = "mp3" if mp3 else "wav"
+    # --- LEGACY: this line was ACCIDENTALLY at module scope (not indented into
+    # --- the commented-out __main__ block), so it would NameError on every
+    # --- `import stem_splitter` because `mp3` is undefined here. Commented out.
+    #fmt = "mp3" if mp3 else "wav"
     #separate_audio(input_file, output_format=fmt, drumless=dl, all_stems=all_s)
 
     ## The following block was for testing when the original demucs-extraction stem_splitter.py was built

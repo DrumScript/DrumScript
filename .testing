@@ -1,3 +1,5 @@
+
+## relates to stem_splitter improvements, comparing changes for ffmpeg clean workaround, decoupling from ffmpeg (weds-22-apr-2026)
 # drumscript/audio_processor/stem_splitter.py
 """
 This module uses the demucs library () to extract stems from multi-layer audio files. It also contains functionality for re-mixing stems to create drumless backing tracks for user export, using the --drumless cli flag
@@ -12,7 +14,9 @@ import tempfile
 import shutil
 import sys
 import time
-from pydub import AudioSegment
+import numpy as np
+import soundfile as sf
+from pydub import AudioSegment  # Still needed for MP3 output (pydub wraps ffmpeg/LAME)
 from datetime import datetime
 
 print("\n# ------------------------------------------------------------------------------------")
@@ -25,14 +29,84 @@ DEMUCS_MODEL = "htdemucs"
 
 ## PLEASE NOTE: Original Demucs is no longer being maintained (owned by Meta/Facebook). Owners have forked and maintain occasionally: https://github.com/adefossez/demucs. THe usage of demucs is therefore subject to some uncertainty. We may decide to build our own stem_splitter model in DrumScript in order to ensure the long-term stability of the package, and to continue to make it as lightweight as possible.
 
-# Audio backend used by Demucs to LOAD input files.
-# We force 'soundfile' to avoid pulling in torchcodec, which has a nasty habit of
-# breaking on PyTorch ABI mismatches (symbol `_torch_dtype_float4_e2m1fn_x2` not
-# found) and on missing Homebrew FFmpeg dylibs (libavutil.{56..59}.dylib).
-# 'soundfile' handles WAV/FLAC natively; MP3 decoding still needs ffmpeg on PATH,
-# which pydub also requires, so no new dependency is introduced.
-# Valid values at the time of writing: "soundfile", "ffmpeg", "torchcodec".
-DEMUCS_BACKEND = "soundfile"
+# --- LEGACY: we used to pass --backend soundfile to Demucs to avoid torchcodec.
+# --- Demucs CLI doesn't accept that flag (only Demucs-GUI does). The real fix
+# --- is pinning torch/torchaudio to <2.9 in pyproject.toml, which avoids the
+# --- torchcodec-mandatory save path entirely. Keeping the constant commented
+# --- out in case a future Demucs release adds a real backend selector.
+# DEMUCS_BACKEND = "soundfile"
+
+
+# ===============================================================================================
+# Format-aware audio I/O helpers.
+#
+# Design goal: WAV output must be completely ffmpeg-free, so users who only
+# want WAV never need ffmpeg on their system. MP3 output still requires
+# ffmpeg (via pydub), which is unavoidable.
+#
+# - WAV path: uses `soundfile` (pure Python + libsndfile wheel) for read/write.
+# - MP3 path: uses `pydub` which shells out to ffmpeg's LAME encoder.
+# ===============================================================================================
+def _read_stem_as_array(stem_path):
+    """
+    Read an audio stem (Demucs output) into a numpy array.
+
+    Demucs writes WAV when we invoke it without --flac. soundfile reads WAV
+    natively without needing ffmpeg.
+
+    :param stem_path: Path to the stem file (typically .wav).
+    :type stem_path: Path or str
+    :return: Tuple of (audio_data as float32 numpy array, sample_rate as int).
+    :rtype: tuple[np.ndarray, int]
+    """
+    data, sr = sf.read(str(stem_path), dtype='float32', always_2d=True)
+    # always_2d=True ensures shape is (n_samples, n_channels) even for mono,
+    # which keeps mixing code uniform.
+    return data, sr
+
+
+def _write_audio(audio_data, sample_rate, output_path, fmt="wav"):
+    """
+    Write a numpy audio array to disk in the requested format.
+
+    Routes WAV to soundfile (no ffmpeg) and MP3 to pydub (needs ffmpeg).
+
+    :param audio_data: Audio samples, shape (n_samples, n_channels), float32 in [-1, 1].
+    :type audio_data: np.ndarray
+    :param sample_rate: Sample rate in Hz.
+    :type sample_rate: int
+    :param output_path: Destination path.
+    :type output_path: Path or str
+    :param fmt: 'wav' or 'mp3'.
+    :type fmt: str
+    """
+    output_path = str(output_path)
+
+    if fmt == "wav":
+        # soundfile writes WAV losslessly with no ffmpeg dependency.
+        # subtype='PCM_16' matches Demucs's default output bit depth and keeps
+        # files a sensible size (float32 WAV would be 2x bigger with no benefit
+        # for end-user playback).
+        sf.write(output_path, audio_data, sample_rate, subtype='PCM_16')
+
+    elif fmt == "mp3":
+        # MP3 encoding requires an encoder (LAME). pydub shells out to ffmpeg,
+        # which brokers this for us. Convert numpy array -> pydub AudioSegment
+        # -> MP3 file.
+        # pydub expects int16 samples interleaved as bytes.
+        samples_int16 = (audio_data * 32767).astype(np.int16)
+        n_channels = samples_int16.shape[1] if samples_int16.ndim > 1 else 1
+        segment = AudioSegment(
+            samples_int16.tobytes(),
+            frame_rate=sample_rate,
+            sample_width=2,       # 2 bytes = 16 bit
+            channels=n_channels,
+        )
+        # '-q:a 0' = best quality VBR for LAME.
+        segment.export(output_path, format="mp3", parameters=["-q:a", "0"])
+
+    else:
+        raise ValueError(f"Unsupported output format: {fmt!r}. Expected 'wav' or 'mp3'.")
 
 # ===============================================================================================
 def separate_audio(input_audio_path: str, output_format: str = "wav", drumless: bool = False, mute: list = None, all_stems: bool = False, output_dir: str = None) -> dict:
@@ -78,10 +152,7 @@ def separate_audio(input_audio_path: str, output_format: str = "wav", drumless: 
     start_time = time.monotonic()
 
     # 2. Run Demucs
-    # We always output FLAC or WAV from Demucs first, then convert/mix later.
-    # Using flac for intermediate speed/quality.
-    # --- LEGACY: command without explicit backend. Demucs then defaults to
-    # --- torchcodec, which crashes on PyTorch ABI mismatch / missing FFmpeg dylibs.
+    # --- LEGACY v1: default command (no backend handling). Crashed on torchcodec ABI.
     # command = [
     #     "demucs",
     #     "-o", str(temp_demucs_dir),
@@ -89,13 +160,35 @@ def separate_audio(input_audio_path: str, output_format: str = "wav", drumless: 
     #     "--flac",
     #     str(input_path)
     # ]
-
+    #
+    # --- LEGACY v2: tried --backend soundfile. Demucs CLI doesn't support it.
+    # command = [
+    #     "demucs",
+    #     "-o", str(temp_demucs_dir),
+    #     "-n", DEMUCS_MODEL,
+    #     "--flac",
+    #     "--backend", DEMUCS_BACKEND,
+    #     str(input_path)
+    # ]
+    #
+    # --- LEGACY v3: plain invocation but with --flac. Meant decoding the
+    # --- intermediate stems required ffmpeg (even when end user wanted WAV),
+    # --- because pydub had to decode FLAC. Removed --flac so Demucs writes
+    # --- WAV directly, which soundfile can read without ffmpeg.
+    # command = [
+    #     "demucs",
+    #     "-o", str(temp_demucs_dir),
+    #     "-n", DEMUCS_MODEL,
+    #     "--flac",
+    #     str(input_path)
+    # ]
+    #
+    # Current: Demucs writes WAV (its default). soundfile reads WAV without
+    # ffmpeg, so the WAV output path through this module is now ffmpeg-free.
     command = [
         "demucs",
         "-o", str(temp_demucs_dir),
         "-n", DEMUCS_MODEL,
-        "--flac",
-        #"--backend", DEMUCS_BACKEND,  # avoid torchcodec; see DEMUCS_BACKEND comment above
         str(input_path)
     ]
     try:
@@ -121,14 +214,16 @@ def separate_audio(input_audio_path: str, output_format: str = "wav", drumless: 
     
     available_stems = ['drums', 'bass', 'other', 'vocals']
     stem_paths = {}
-    
+
     for stem in available_stems:
-        # Demucs output is .flac because we used --flac
-        path = raw_stem_dir / f"{stem}.flac"
+        # --- LEGACY: when we passed --flac to Demucs, stems were .flac.
+        # --- Demucs now writes .wav (its default) so we look for that extension.
+        # path = raw_stem_dir / f"{stem}.flac"
+        path = raw_stem_dir / f"{stem}.wav"
         if path.exists():
             stem_paths[stem] = path
         else:
-            print(f"Warning: Expected stem {stem} not found.")
+            print(f"Warning: Expected stem {stem} not found at {path}")
 
     results = {}
 
@@ -159,11 +254,14 @@ def separate_audio(input_audio_path: str, output_format: str = "wav", drumless: 
             if excluded in stem_paths:
                 stem_out_name = f"{input_path.stem}_only_{excluded}.{output_format}"
                 stem_out_path = base_output_dir / stem_out_name
-                # Convert/Copy the single stem
-                AudioSegment.from_file(stem_paths[excluded]).export(
-                    str(stem_out_path), format=output_format, 
-                    parameters=["-q:a", "0"] if output_format == "mp3" else None
-                )
+                # --- LEGACY: pydub route (needs ffmpeg even for WAV output).
+                # AudioSegment.from_file(stem_paths[excluded]).export(
+                #     str(stem_out_path), format=output_format, 
+                #     parameters=["-q:a", "0"] if output_format == "mp3" else None
+                # )
+                # New route: soundfile for WAV (no ffmpeg), pydub only for MP3.
+                audio_data, sr = _read_stem_as_array(stem_paths[excluded])
+                _write_audio(audio_data, sr, stem_out_path, fmt=output_format)
                 results[f'{excluded}_stem'] = str(stem_out_path)
 
     # 6. Handle "--all-stems"
@@ -176,23 +274,29 @@ def separate_audio(input_audio_path: str, output_format: str = "wav", drumless: 
                 continue
                 
             out_path = base_output_dir / expected_name
-            AudioSegment.from_file(path).export(
-                str(out_path), format=output_format,
-                parameters=["-q:a", "0"] if output_format == "mp3" else None
-            )
+            # --- LEGACY: pydub route.
+            # AudioSegment.from_file(path).export(
+            #     str(out_path), format=output_format,
+            #     parameters=["-q:a", "0"] if output_format == "mp3" else None
+            # )
+            audio_data, sr = _read_stem_as_array(path)
+            _write_audio(audio_data, sr, out_path, fmt=output_format)
             results[f'{stem}_stem'] = str(out_path)
 
     # 7. Default Case: No specific mute/drumless requested, but separate_audio was called.
     # Usually this is called for transcription (just need drums).
     # If no results yet, implies we just want the drums for processing or all stems were requested.
     if not results and not all_stems:
-        # Default behavior: Just extract drums (for transcription)
+        # Default behaviour: Just extract drums (for transcription)
         # We return the raw path (converted if necessary)
         drum_out_name = f"{input_path.stem}_drums.{output_format}"
         drum_out_path = base_output_dir / drum_out_name
-        AudioSegment.from_file(stem_paths['drums']).export(
-            str(drum_out_path), format=output_format
-        )
+        # --- LEGACY: pydub route.
+        # AudioSegment.from_file(stem_paths['drums']).export(
+        #     str(drum_out_path), format=output_format
+        # )
+        audio_data, sr = _read_stem_as_array(stem_paths['drums'])
+        _write_audio(audio_data, sr, drum_out_path, fmt=output_format)
         results['drums'] = str(drum_out_path)
 
     # Cleanup Temp Demucs Folder
@@ -244,7 +348,8 @@ def extract_drum_stem(input_audio_path: str, output_dir: str = None) -> str:
     temp_output_dir = str(output_dir)
 
   # 2. Build the Demucs command
-    # --- LEGACY: command without explicit backend. See note on DEMUCS_BACKEND.
+    # --- LEGACY v1: default command with --flac. Required ffmpeg to decode
+    # --- the FLAC output; also had torchcodec crash issues (fixed by torch<2.9 pin).
     # command = [
     #     "demucs",
     #     "-o", str(temp_output_dir),
@@ -252,12 +357,13 @@ def extract_drum_stem(input_audio_path: str, output_dir: str = None) -> str:
     #     "--flac",
     #     str(input_audio_path)
     # ]
+    # --- LEGACY v2: tried --backend soundfile. Demucs CLI doesn't support it.
+    # Current: plain invocation, Demucs writes WAV natively. No ffmpeg needed
+    # for the drum extraction path.
     command = [
         "demucs",
         "-o", str(temp_output_dir),
         "-n", DEMUCS_MODEL,
-        "--flac",
-        #"--backend", DEMUCS_BACKEND,  # avoid torchcodec
         str(input_audio_path)
     ]
     # 3. Run the Demucs separation process
@@ -275,34 +381,28 @@ def extract_drum_stem(input_audio_path: str, output_dir: str = None) -> str:
         duration = end_time - start_time
         print(f"Demucs separation finished in {(duration/60):.2f} minutes.")
     ## ----------------------------------------------------------------------------------------------------
-    # --- Step 3.5 - Convert FLAC files to MP3 ---
-        print("Converting stems to MP3...")
-        
-        # Find the folder where demucs saved the files
-        input_filename_stem = Path(input_audio_path).stem
-        stems_folder = Path(temp_output_dir) / DEMUCS_MODEL / input_filename_stem
-        
-        # Find all the .flac files in that folder
-        flac_files = list(stems_folder.glob("*.flac"))
-        if not flac_files:
-            print("Warning: No .flac files found to convert.")
-
-        for flac_file in flac_files:
-            mp3_file = flac_file.with_suffix(".mp3")
-            
-            # This command converts FLAC to high-quality VBR MP3
-            convert_command = [
-                "ffmpeg",
-                "-i", str(flac_file),  # Input file
-                "-q:a", "0",          # Set quality to highest VBR (0)
-                str(mp3_file),        # Output file
-                "-y",
-            ]
-            
-            # Run the conversion
-            subprocess.run(convert_command, check=True, capture_output=True, text=True)
-            
-        print(f"Successfully converted {len(flac_files)} stems to MP3.")
+    # --- LEGACY: FLAC-to-MP3 conversion block. Used to run when we passed
+    # --- --flac to Demucs; the output was FLAC and we converted to MP3 via
+    # --- a separate ffmpeg subprocess. Now Demucs outputs WAV directly, and
+    # --- format conversion (when actually wanted) is handled by the calling
+    # --- code via _write_audio(). This block is dead code kept for reference.
+    # print("Converting stems to MP3...")
+    # input_filename_stem = Path(input_audio_path).stem
+    # stems_folder = Path(temp_output_dir) / DEMUCS_MODEL / input_filename_stem
+    # flac_files = list(stems_folder.glob("*.flac"))
+    # if not flac_files:
+    #     print("Warning: No .flac files found to convert.")
+    # for flac_file in flac_files:
+    #     mp3_file = flac_file.with_suffix(".mp3")
+    #     convert_command = [
+    #         "ffmpeg",
+    #         "-i", str(flac_file),
+    #         "-q:a", "0",
+    #         str(mp3_file),
+    #         "-y",
+    #     ]
+    #     subprocess.run(convert_command, check=True, capture_output=True, text=True)
+    # print(f"Successfully converted {len(flac_files)} stems to MP3.")
     
 
         
@@ -329,8 +429,10 @@ def extract_drum_stem(input_audio_path: str, output_dir: str = None) -> str:
     # 4. Find and return the path to the drum file
     input_filename_stem = Path(input_audio_path).stem
 
-    expected_drum_path = Path(temp_output_dir) / DEMUCS_MODEL / input_filename_stem / "drums.flac"
-    # expected_drum_path = Path(temp_output_dir) / DEMUCS_MODEL / input_filename_stem / "drums.wav" # commented out in order to avoid using torchcodec
+    # --- LEGACY: Demucs used to output FLAC because we passed --flac. Now it
+    # --- writes WAV, which soundfile can read with no ffmpeg dependency.
+    # expected_drum_path = Path(temp_output_dir) / DEMUCS_MODEL / input_filename_stem / "drums.flac"
+    expected_drum_path = Path(temp_output_dir) / DEMUCS_MODEL / input_filename_stem / "drums.wav"
 
     if not expected_drum_path.exists():
         shutil.rmtree(temp_output_dir) # Clean up
@@ -347,7 +449,10 @@ def extract_drum_stem(input_audio_path: str, output_dir: str = None) -> str:
 def mix_stems(stems_dict, stems_to_mix, output_path, fmt="wav"):
     """
     Helper function to mix multiple audio files into one.
-    
+
+    Uses soundfile + numpy so the WAV output path is ffmpeg-free. MP3 output
+    still passes through pydub/ffmpeg via the _write_audio helper.
+
     :param stems_dict: Dictionary mapping stem names to file paths.
     :type stems_dict: dict
     :param stems_to_mix: List of stem names to combine.
@@ -360,18 +465,50 @@ def mix_stems(stems_dict, stems_to_mix, output_path, fmt="wav"):
     if not stems_to_mix:
         return None
 
-    # Load the first stem
-    combined = AudioSegment.from_file(stems_dict[stems_to_mix[0]])
+    # --- LEGACY v1: pydub-based mixing. Required ffmpeg to decode the .flac
+    # --- intermediates produced by Demucs (we used to pass --flac), so even
+    # --- WAV output paths were bottlenecked on ffmpeg. Now replaced by
+    # --- numpy-based summation on WAV stems.
+    # combined = AudioSegment.from_file(stems_dict[stems_to_mix[0]])
+    # for stem_name in stems_to_mix[1:]:
+    #     if stem_name in stems_dict:
+    #         track = AudioSegment.from_file(stems_dict[stem_name])
+    #         combined = combined.overlay(track)
+    # combined.export(str(output_path), format=fmt,
+    #                 parameters=["-q:a", "0"] if fmt == "mp3" else None)
+    # return output_path
 
-    # Overlay the rest
+    # New approach: read each stem as a numpy array, sum them element-wise,
+    # and clip to valid float range. Equivalent to pydub's overlay() for
+    # our use case (stems from the same source, identical length and rate).
+    first_stem_path = stems_dict[stems_to_mix[0]]
+    mixed, sample_rate = _read_stem_as_array(first_stem_path)
+
     for stem_name in stems_to_mix[1:]:
-        if stem_name in stems_dict:
-            track = AudioSegment.from_file(stems_dict[stem_name])
-            combined = combined.overlay(track)
-    
-    # Export
-    # For MP3, pydub uses ffmpeg backend. Quality '0' is best variable bit rate.
-    combined.export(str(output_path), format=fmt, parameters=["-q:a", "0"] if fmt == "mp3" else None)
+        if stem_name not in stems_dict:
+            continue
+        track, sr = _read_stem_as_array(stems_dict[stem_name])
+        # Sanity check: Demucs always outputs at the same sample rate and
+        # length for all stems of a given input, so these should match.
+        if sr != sample_rate:
+            raise ValueError(
+                f"Sample rate mismatch while mixing: {sample_rate} vs {sr} "
+                f"for stem {stem_name}. Cannot mix stems with different rates."
+            )
+        if track.shape != mixed.shape:
+            raise ValueError(
+                f"Shape mismatch while mixing: {mixed.shape} vs {track.shape} "
+                f"for stem {stem_name}."
+            )
+        mixed = mixed + track
+
+    # Clip to [-1, 1] so samples stay in valid range if the summed stems
+    # exceed full scale. (Simple clipping; for production-grade mixing you
+    # might want gain reduction or a soft limiter, but clipping is what
+    # pydub.overlay() effectively did too.)
+    np.clip(mixed, -1.0, 1.0, out=mixed)
+
+    _write_audio(mixed, sample_rate, output_path, fmt=fmt)
     return output_path
 
 # ===============================================================================================

@@ -32,6 +32,9 @@ Core Functions
    drumscript.main
    drumscript.extract_stems
    drumscript.detect_tempo
+   drumscript.export_pdf
+   drumscript.export_midi
+   drumscript.export_xml
 
 Audio Processing
 ----------------

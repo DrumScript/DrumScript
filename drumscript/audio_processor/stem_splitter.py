@@ -213,7 +213,7 @@ def extract_drum_stem(input_audio_path: str, output_dir: str = None) -> str:
     
     :param input_audio_path: The file path to the user's full song.
     :type input_audio_path: str
-    :return: The file path to the extracted 'drums.wav' stem.
+    :return: The file path to the extracted 'drums.flac' or 'drums.wav' stem.
     :rtype: str
     """
     
@@ -319,7 +319,7 @@ def extract_drum_stem(input_audio_path: str, output_dir: str = None) -> str:
         )
         
     except FileNotFoundError:
-        shutil.rmtree(temp_output_dir) # Clean up
+        shutil.rmtree(temp_output_dir, ignore_errors=True) # Clean up
         raise FileNotFoundError(
             "The 'demucs' command was not found. "
             "Is it installed correctly in your environment's PATH?"
@@ -333,7 +333,7 @@ def extract_drum_stem(input_audio_path: str, output_dir: str = None) -> str:
     # expected_drum_path = Path(temp_output_dir) / DEMUCS_MODEL / input_filename_stem / "drums.wav" # commented out in order to avoid using torchcodec
 
     if not expected_drum_path.exists():
-        shutil.rmtree(temp_output_dir) # Clean up
+        shutil.rmtree(temp_output_dir, ignore_errors=True) # Clean up
         raise FileNotFoundError(
             f"Demucs ran, but the drum output file was not found at {expected_drum_path}"
         )

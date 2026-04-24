@@ -2,33 +2,23 @@
 """
 This job of this script is to orchestrate the End-to-End running of DrumScript modules
 """
-#import shutil
-#import os
-#import sys
-#import json
 import argparse
 from pathlib import Path
-
+#from drumscript.audio_processor.onset_detector import detect_onsets
+#from drumscript.audio_processor.tempo_detector import estimate_tempo
 from drumscript.audio_processor import audio_loader, onset_detector, tempo_detector
 from drumscript.audio_processor.stem_splitter import extract_drum_stem
 from drumscript.audio_processor.stem_splitter import separate_audio
-#from drumscript.drum_classifier import classify
-from drumscript.drum_classifier.classify import classify_rudiment_events
 from drumscript.drum_classifier.classify import classify_events
+from drumscript.drum_classifier.classify import classify_rudiment_events
 from drumscript.notation_generator import score_builder
-# from drumscript.notation_generator.score_builder import build_score
-#from drumscript.notation_generator import constants
 from drumscript.notation_generator.constants import SAMPLE_RATE
-from datetime import datetime
-from drumscript.audio_processor.onset_detector import detect_onsets
-from drumscript.audio_processor.tempo_detector import estimate_tempo
 
-
+#from datetime import datetime
 #print("\n# ------------------------------------------------------------------------------------")
 #datetimestamp = datetime.now()
 #print(f'\ndate/time: {datetimestamp}')
 #print(f'start: {datetimestamp:%Y-%m-%d %H:%M:%S}')
-
 
 def main(input_audio_path: str, 
          transcribe_full_song: bool = False,  
@@ -64,11 +54,10 @@ def main(input_audio_path: str,
     print(f"Target: {input_audio_path}")
 
     try:
-        # 1. Pre-processing
-        #  Stem Separation / Pre-processing
-        # Check if user wants stem separation (either for transcription or just extracting stems)
         audio_path = input_audio_path
 
+        # 1. Stem Separation / Pre-processing
+        # Check if user wants stem separation (either for transcription or just extracting stems)
         if transcribe_full_song:
             try:
                 print("...Separating drum stem...")
@@ -213,16 +202,16 @@ def main(input_audio_path: str,
         # 3. Classification
         print("...Classifying (Fundamental Frequency Engine)...")
         # classified_events = classify.classify_drum_hits(y, sr, onsets)
-        #classified_events = classify.classify_events(y, sr, onsets)
-        #print(f"   -> Classified {len(classified_events)} events")
+        # classified_events = classify.classify_events(y, sr, onsets)
+        # print(f"   -> Classified {len(classified_events)} events")
 
         if is_rudiment:
             print("   -> Using Rudiment/Single-Beat Classification Engine")
-            #classified_events = classify.classify_rudiment_events(y, sr, onsets)
+            # classified_events = classify.classify_rudiment_events(y, sr, onsets)
             classified_events = classify_rudiment_events(y, sr, onsets)
         else:
             print("   -> Using Standard Polyphonic Classification Engine")
-            #classified_events = classify.classify_events(y, sr, onsets)
+            # classified_events = classify.classify_events(y, sr, onsets)
             classified_events = classify_rudiment_events(y, sr, onsets)
             
         print(f"   -> Classified {len(classified_events)} events")
@@ -268,6 +257,13 @@ def main(input_audio_path: str,
         traceback.print_exc()
 
 if __name__ == '__main__':
+
+    #from datetime import datetime
+    #print("\n# ------------------------------------------------------------------------------------")
+    #datetimestamp = datetime.now()
+    #print(f'\ndate/time: {datetimestamp}')
+    #print(f'start: {datetimestamp:%Y-%m-%d %H:%M:%S}')
+
     parser = argparse.ArgumentParser(description="DrumScript: Audio to Sheet Music & Stem Splitter")
     
     parser.add_argument("input_audio_path", type=str, help="Path to the audio file")
@@ -298,13 +294,13 @@ if __name__ == '__main__':
          is_rudiment=args.rudiment,
          output_format=args.format)
 
-# LEGACY: if __name__ == '__main__':
-  #  parser = argparse.ArgumentParser()
-  #  parser.add_argument("input_audio_path", type=str)
-  #  parser.add_argument("--full", action="store_true")
-  #  parser.add_argument("--ts", type=str, default="4/4")
-  #  args = parser.parse_args()
-    
-  #  main(args.input_audio_path, args.full, args.ts)
-    
-# print("# ------------------------------------------------------------------------------------")
+    # LEGACY: if __name__ == '__main__':
+    #  parser = argparse.ArgumentParser()
+    #  parser.add_argument("input_audio_path", type=str)
+    #  parser.add_argument("--full", action="store_true")
+    #  parser.add_argument("--ts", type=str, default="4/4")
+    #  args = parser.parse_args()
+        
+    #  main(args.input_audio_path, args.full, args.ts)
+        
+    # print("# ------------------------------------------------------------------------------------")

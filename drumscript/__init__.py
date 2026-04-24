@@ -1,4 +1,4 @@
-# drumscript/__init__py
+# drumscript/__init__.py
 
 """
 DrumScript: A Python-based suite of tools for drum audio analysis and transcription.
@@ -16,99 +16,17 @@ from .utils.ffmpeg_installer import install_ffmpeg
 from .audio_processor.audio_loader import load_audio
 from .audio_processor.audio_loader import normalise_audio
 from .audio_processor.stem_splitter import extract_drum_stem
-# from .audio_processor import stem_splitter
 from .audio_processor.stem_splitter import separate_audio
 from .audio_processor.onset_detector import detect_onsets
 from .audio_processor.feature_extractor import extract_features
 from .audio_processor.tempo_detector import estimate_tempo as _internal_estimate
 from .drum_classifier.classify import classify_events
 from .notation_generator.score_builder import build_score
-#from .notation_generator.pdf_exporter import export_pdf
-#from .notation_generator.midi_exporter import export_to_midi
 from .notation_generator import pdf_exporter
 from .notation_generator import midi_exporter
 from .notation_generator import xml_exporter
 
 # 2. Create user-friendly wrappers
-
-# def stem_split(audio_path, output_dir=None, full=False):
-def extract_stems(audio_path, output_format="wav", drumless=False, mute=None, all_stems=False, full=False):
-    """
-    Public wrapper for stem splitting.
-
-    :param audio_path: Path to the audio file.
-    :type audio_path: str
-    :param output_format: 'wav' or 'mp3', defaults to 'wav'.
-    :type output_format: str, optional
-    :param drumless: Extract a track with NO drums (plus the isolated drum track).
-    :type drumless: bool, optional
-    :param mute: List of stems to mute (e.g. ['bass']).
-    :type mute: list, optional
-    :param all_stems: If True, export all separated stems individually.
-    :type all_stems: bool, optional
-    :param full: Returns detailed dictionary if True.
-    :type full: bool, optional
-    :return: Path to the extracted file or a dictionary of results if full=True.
-    :rtype: str or dict
-
-    Please note: Currently, the internal engine uses a default output directory.
-    The 'output_dir' argument is kept here for future API compatibility but
-    is currently not passed to the underlying function to avoid errors.
-    """
-    # CALLING INTERNAL FUNCTION
-    # Please note: `extract_drum_stem` ONLY accepts 'input_audio_path'. ie. It returns a string (the path to the file).
-    result_path = extract_drum_stem(audio_path)
-
-    results = separate_audio(
-        input_audio_path=audio_path, 
-        output_format=output_format, 
-        drumless=drumless, 
-        mute=mute, 
-        all_stems=all_stems
-    )
-
-    if full:
-        return {
-            "status": "success",
-            "drum_stem_path": result_path,
-            "original_file": audio_path,
-        }
-
-    return result_path or results.get('drums') or results.get('drums_stem')
-
-
-def detect_tempo(audio_input, full=False):
-    """
-    Public wrapper for tempo detection.
-
-    :param audio_input: File path OR loaded audio data.
-    :type audio_input: str or np.ndarray
-    :param full: Return detailed stats if True.
-    :type full: bool, optional
-    :return: The estimated BPM (float) or a dictionary of stats.
-    :rtype: float or dict
-    
-    """
-    # Handle case where user passes a file path string
-    if isinstance(audio_input, str):
-        # Use internal drumscript loader which returns tuple (audio, sr), imported directly from drumscript/notation_generator/constants.py as single source of truth throughout package
-        y, sr = load_audio(audio_input, sr=SAMPLE_RATE)
-        y = normalise_audio(y)
-    else:
-        # Assume it's already loaded audio data (array)
-        y = audio_input
-        sr = SAMPLE_RATE # SAMPLE_RATE variable loaded from notation_generator/constants.py to maintain single source of truth
-
-    # CALLING INTERNAL FUNCTION
-    bpm = _internal_estimate(y, sr)
-
-    if full:
-        return {"bpm": bpm, "sr": sr}
-    return bpm
-
-
-
-# 2. Create high-level user-friendly wrappers
 
 def extract_stems(audio_path, output_dir=None, output_format="wav", drumless=False, mute=None, all_stems=False, full=False):
     """
@@ -138,7 +56,7 @@ def extract_stems(audio_path, output_dir=None, output_format="wav", drumless=Fal
         
     output_dir.mkdir(parents=True, exist_ok=True)
 
-    result_path = extract_drum_stem(audio_path, output_dir=output_dir)
+    result_path = extract_drum_stem(audio_path, output_dir=str(output_dir))
 
     results = separate_audio(
         input_audio_path=audio_path, 
@@ -146,7 +64,7 @@ def extract_stems(audio_path, output_dir=None, output_format="wav", drumless=Fal
         drumless=drumless, 
         mute=mute, 
         all_stems=all_stems,
-        output_dir=output_dir
+        output_dir=str(output_dir)
     )
 
     if full:
@@ -173,6 +91,7 @@ def detect_tempo(audio_input, full=False):
     """
     if isinstance(audio_input, str):
         y, sr = load_audio(audio_input, sr=SAMPLE_RATE)
+        # y, sr = load_audio(audio_input)
         y = normalise_audio(y)
     else:
         y = audio_input
@@ -191,7 +110,7 @@ def export_pdf(score, output_path=None, **kwargs):
 
     :param score: The score object generated by build_score().
     :type score: object
-    :param output_path: The exact file path to save the PDF. Defaults to 'drum_score.pdf' in CWD.
+    :param output_path: The exact file path to save the PDF. Defaults to 'drumscript.pdf' in CWD.
     :type output_path: str, optional
     :return: The path to the generated PDF.
     :rtype: str
@@ -209,7 +128,7 @@ def export_midi(score, output_path=None, **kwargs):
 
     :param score: The score object generated by build_score().
     :type score: object
-    :param output_path: The exact file path to save the MIDI. Defaults to 'drum_score.mid' in CWD.
+    :param output_path: The exact file path to save the MIDI. Defaults to 'drumscript.mid' in CWD.
     :type output_path: str, optional
     :return: The path to the generated MIDI file.
     :rtype: str
@@ -227,7 +146,7 @@ def export_xml(score, output_path=None, **kwargs):
 
     :param score: The music21.stream.Score object generated by build_score().
     :type score: object
-    :param output_path: The exact file path to save the XML. Defaults to 'drum_score.xml' in CWD.
+    :param output_path: The exact file path to save the XML. Defaults to 'drumscript.xml' in CWD.
     :type output_path: str, optional
     :return: The path to the generated XML file.
     :rtype: str
@@ -243,7 +162,7 @@ def export_xml(score, output_path=None, **kwargs):
     else:
         xml_path = Path(output_path)
         
-    return midi_exporter.export_midi(score, output_path=output_path, **kwargs)
+    return xml_exporter.export_xml(score, output_path=output_path, **kwargs)
 
 
 
@@ -262,29 +181,7 @@ __all__ = [
     "detect_onsets",
     "extract_features",
     "classify_events",
-    "build_score",
-    
-    # Utilities
-    "install_ffmpeg",
-]
-
-__version__ = "0.1.2"
-
-
-# 3. Explicitly define the Public API (Used by Sphinx and `from drumscript import *`)
-__all__ = [
-    # High-level wrappers
-    "extract_stems",
-    "detect_tempo",
-    "export_pdf",
-    "export_midi",
-    
-    # Core DSP & Classification pipeline
-    "load_audio",
-    "normalise_audio",
-    "detect_onsets",
-    "extract_features",
-    "classify_events",
+    "classify_rudiment_events",
     "build_score",
     
     # Utilities

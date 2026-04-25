@@ -22,15 +22,8 @@ drumscript-*
 *.egg
 MANIFEST
 
-# --- Sphinx Build Artifacts ---
-
-developer_docs/_build/
-
 # --- Virtual Environments ---
 .venv/
-venv/
-env/
-ENV/
 
 # --- OS Generated Files ---
 .DS_Store
@@ -130,7 +123,6 @@ docs/theory/advanced_sound_analysis101.md
 backup.sh
 drumscript_full_review.txt
 collect_code.sh
-.collect_code.log
 collect_code.log
 deploy.sh
 

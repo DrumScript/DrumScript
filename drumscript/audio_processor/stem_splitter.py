@@ -12,12 +12,14 @@ import tempfile
 import shutil
 import sys
 import time
-from pydub import AudioSegment
-from datetime import datetime
+import numpy as np
+import soundfile as sf
+#from pydub import AudioSegment
+#from datetime import datetime
 
-print("\n# ------------------------------------------------------------------------------------")
-datetimestamp = datetime.now()
-print(f'\ndate/time: {datetimestamp}')
+#print("\n# ------------------------------------------------------------------------------------")
+#datetimestamp = datetime.now()
+#print(f'\ndate/time: {datetimestamp}')
 
 # Use 'htdemucs', the default (and high-quality) 4-stem model
 # Stems output by htdemucs: 'drums', 'bass', 'other', 'vocals'
@@ -25,6 +27,8 @@ DEMUCS_MODEL = "htdemucs"
 
 ## PLEASE NOTE: Original Demucs is no longer being maintained (owned by Meta/Facebook). Owners have forked and maintain occasionally: https://github.com/adefossez/demucs. THe usage of demucs is therefore subject to some uncertainty. We may decide to build our own stem_splitter model in DrumScript in order to ensure the long-term stability of the package, and to continue to make it as lightweight as possible.
 
+
+### --- LEGACY CODE -- BEFORE FFMPEG DECOUPLING FROM STEM_SPLITTER
 # Audio backend used by Demucs to LOAD input files.
 # We force 'soundfile' to avoid pulling in torchcodec, which has a nasty habit of
 # breaking on PyTorch ABI mismatches (symbol `_torch_dtype_float4_e2m1fn_x2` not
@@ -32,7 +36,7 @@ DEMUCS_MODEL = "htdemucs"
 # 'soundfile' handles WAV/FLAC natively; MP3 decoding still needs ffmpeg on PATH,
 # which pydub also requires, so no new dependency is introduced.
 # Valid values at the time of writing: "soundfile", "ffmpeg", "torchcodec".
-DEMUCS_BACKEND = "soundfile"
+# DEMUCS_BACKEND = "soundfile"
 
 # ===============================================================================================
 def separate_audio(input_audio_path: str, output_format: str = "wav", drumless: bool = False, mute: list = None, all_stems: bool = False, output_dir: str = None) -> dict:
@@ -378,14 +382,17 @@ def mix_stems(stems_dict, stems_to_mix, output_path, fmt="wav"):
 ## Extended legacy orchestration script, ie before adding in the extraction/mute drums etc functionality, 
 ## Expanded with more advanced functionality for stem extraction
 if __name__ == "__main__":
+
     import argparse
-    #import datetime
-        # Banner / timestamp (moved here from module top-level so it only fires when
-    # this file is run DIRECTLY via `python3 -m drumscript.audio_processor.stem_splitter ...`,
-    # not on every `from drumscript.audio_processor.stem_splitter import ...`)
+    #from datetime import datetime
+
+    ## Banner / timestamp (moved here from module top-level so it only fires when this file is run 
+    ## DIRECTLY via `python3 -m drumscript.audio_processor.stem_splitter ...`, not on every `from
+    ## drumscript ## audio_processor.stem_splitter import ...`)
+
+    #datetimestamp = datetime.now()
     #print("\n# ------------------------------------------------------------------------------------")
     #print(f'\ndate/time: {datetimestamp}')
-    #datetimestamp = datetime.now()
     
     parser = argparse.ArgumentParser(description="Extract stems from an audio file.")
     parser.add_argument("input_file", help="Path to the input audio file.")

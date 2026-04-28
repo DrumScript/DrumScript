@@ -10,42 +10,70 @@ transcription, as well as the core low-level building blocks for custom DSP pipe
 import pathlib
 from pathlib import Path
 
+# 1. Import internal functions
 from .audio_processor.audio_loader import load_audio, normalise_audio
 from .audio_processor.feature_extractor import extract_features
 from .audio_processor.onset_detector import detect_onsets
 from .audio_processor.stem_splitter import extract_drum_stem, separate_audio
 from .audio_processor.tempo_detector import estimate_tempo as _internal_estimate
-from .drum_classifier.classify import classify_events
+from .drum_classifier.classify import classify_events, classify_rudiment_events
 from .notation_generator import midi_exporter, pdf_exporter, xml_exporter
-
-# 1. Import internal functions
 from .notation_generator.constants import SAMPLE_RATE
 from .notation_generator.score_builder import build_score
 from .utils.ffmpeg_installer import install_ffmpeg
 
+
 # 2. Create user-friendly wrappers
-
-
 def extract_stems(audio_path, output_dir=None, output_format="wav", drumless=False, mute=None, all_stems=False, full=False):
     """
-    Extracts drum stems and optionally separates the full track.
+    Extracts drum stems and optionally separates the full track into constituent parts.
 
-    :param audio_path: Path to the audio file.
+    This function serves as a high-level wrapper around the Demucs source separation model.
+    It allows for quick isolation of drum tracks for transcription, or the creation of
+    "drumless" backing tracks for practice.
+
+    :param audio_path: Path to the input audio file.
     :type audio_path: str
     :param output_dir: Directory to save the output files. Defaults to current working directory.
     :type output_dir: str, optional
-    :param output_format: 'wav' or 'mp3', defaults to 'wav'.
+    :param output_format: Export format, 'wav' or 'mp3'. Defaults to 'wav'.
     :type output_format: str, optional
-    :param drumless: Extract a track with NO drums (plus the isolated drum track).
+    :param drumless: If True, extracts a track with NO drums (plus the isolated drum track).
     :type drumless: bool, optional
-    :param mute: List of stems to mute (e.g., ['bass']).
+    :param mute: List of specific stems to mute (e.g., ['bass', 'vocals']).
     :type mute: list, optional
-    :param all_stems: If True, export all separated stems individually.
+    :param all_stems: If True, exports all separated stems individually.
     :type all_stems: bool, optional
-    :param full: Returns detailed dictionary if True.
+    :param full: If True, returns a detailed dictionary of all output paths.
     :type full: bool, optional
-    :return: Path to the extracted file or a dictionary of results if full=True.
+
+    :return: Path to the extracted file, or a dictionary of results if full=True.
     :rtype: str or dict
+
+    .. note::
+       Source separation is computationally heavy. On a standard CPU, extracting stems
+       from a 3-minute song may take a few minutes.
+
+    **Examples:**
+
+    Extract just the drum stem to the current directory:
+
+    .. code-block:: python
+
+       import drumscript as ds
+       drum_path = ds.extract_stems("my_song.mp3")
+
+    Create a drumless backing track in MP3 format:
+
+    .. code-block:: python
+
+       results = ds.extract_stems(
+           "my_song.mp3",
+           drumless=True,
+           output_format="mp3",
+           full=True
+       )
+       print(f"Backing track saved to: {results['mix']}")
     """
     if output_dir is None:
         output_dir = pathlib.Path.cwd() / "stems"
@@ -68,14 +96,40 @@ def extract_stems(audio_path, output_dir=None, output_format="wav", drumless=Fal
 
 def detect_tempo(audio_input, full=False):
     """
-    Estimates the tempo (BPM) of a given audio file or audio array.
+    Estimates the global tempo (BPM) of a given audio file or pre-loaded audio array.
 
-    :param audio_input: File path OR loaded audio data array.
+    This function utilizes spectral onset envelope detection to accurately
+    estimate the global tempo of a percussive track.
+
+    :param audio_input: File path (str) OR a pre-loaded audio data array (np.ndarray).
     :type audio_input: str or np.ndarray
-    :param full: Return detailed stats dictionary if True.
+    :param full: Return a detailed stats dictionary instead of just the float if True.
     :type full: bool, optional
-    :return: The estimated BPM (float) or a dictionary of stats.
+
+    :return: The estimated BPM, or a dictionary containing the BPM and sample rate.
     :rtype: float or dict
+
+    .. note::
+       Passing a pre-loaded ``np.ndarray`` is significantly faster if you are running
+       multiple analysis functions on the exact same audio file.
+
+    **Examples:**
+
+    Detect tempo directly from a file:
+
+    .. code-block:: python
+
+       import drumscript as ds
+       bpm = ds.detect_tempo("drum_loop.wav")
+       print(f"Tempo: {bpm} BPM")
+
+    Detect tempo from a pre-loaded array:
+
+    .. code-block:: python
+
+       y, sr = ds.load_audio("drum_loop.wav")
+       stats = ds.detect_tempo(y, full=True)
+       print(stats['bpm'])
     """
     if isinstance(audio_input, str):
         y, sr = load_audio(audio_input, sr=SAMPLE_RATE)
@@ -94,14 +148,30 @@ def detect_tempo(audio_input, full=False):
 
 def export_pdf(score, output_path=None, **kwargs):
     """
-    Exports a generated DrumScript score object to a PDF file.
+    Exports a generated DrumScript score object to a beautifully rendered PDF file.
 
-    :param score: The score object generated by build_score().
+    This function utilizes the ReportLab engine to generate clean, vector-based
+    sheet music optimized for standard A4 printing.
+
+    :param score: The internal score object generated by ``build_score()``.
     :type score: object
     :param output_path: The exact file path to save the PDF. Defaults to 'drumscript.pdf' in CWD.
     :type output_path: str, optional
-    :return: The path to the generated PDF.
+    :return: The absolute path to the generated PDF.
     :rtype: str
+
+    .. note::
+       Because the PDF is generated using vector graphics, it can be scaled infinitely
+       without any loss of quality or pixelation.
+
+    **Example:**
+
+    .. code-block:: python
+
+       import drumscript as ds
+
+       # Assuming `score` is a previously generated score object
+       pdf_path = ds.export_pdf(score, output_path="./transcriptions/my_song.pdf")
     """
     if output_path is None:
         # output_path = pathlib.Path.cwd() / "drum_score.pdf"
@@ -112,14 +182,28 @@ def export_pdf(score, output_path=None, **kwargs):
 
 def export_midi(score, output_path=None, **kwargs):
     """
-    Exports a generated DrumScript score object to a MIDI file.
+    Converts a DrumScript score object into a standard MIDI file for DAW integration.
 
-    :param score: The score object generated by build_score().
+    The exported MIDI file adheres to the General MIDI (GM) Level 1 Percussion Key Map,
+    ensuring immediate compatibility with virtual drum instruments like Superior Drummer,
+    EZdrummer, or standard DAW drum racks.
+
+    :param score: The internal score object generated by ``build_score()``.
     :type score: object
     :param output_path: The exact file path to save the MIDI. Defaults to 'drumscript.mid' in CWD.
     :type output_path: str, optional
-    :return: The path to the generated MIDI file.
+
+    :return: The absolute path to the generated MIDI file.
     :rtype: str
+
+    **Example:**
+
+    .. code-block:: python
+
+       import drumscript as ds
+
+       # Assuming `score` is a previously generated score object
+       midi_path = ds.export_midi(score, output_path="./midi_exports/my_song.mid")
     """
     if output_path is None:
         # output_path = pathlib.Path.cwd() / "drum_score.mid"
@@ -130,24 +214,36 @@ def export_midi(score, output_path=None, **kwargs):
 
 def export_xml(score, output_path=None, **kwargs):
     """
-    Exports a generated DrumScript score object to a MusicXML file.
+    Exports a DrumScript score object to MusicXML format.
 
-    :param score: The music21.stream.Score object generated by build_score().
+    MusicXML is the universal industry standard for sharing digital sheet music.
+    Generating an XML file allows you to seamlessly import your DrumScript
+    transcription into professional notation software like Sibelius, Finale,
+    MuseScore, or Guitar Pro for further editing.
+
+    :param score: The internal score object generated by ``build_score()``.
     :type score: object
     :param output_path: The exact file path to save the XML. Defaults to 'drumscript.xml' in CWD.
     :type output_path: str, optional
-    :return: The path to the generated XML file.
-    :rtype: str
-    """
-    # if output_path is None:
-    #   output_path = pathlib.Path.cwd() / "drum_score.xml"
 
-    # 1. Handle output routing
+    :return: The absolute path to the generated XML file.
+    :rtype: str
+
+    .. note::
+       When importing MusicXML into MuseScore, you may need to right-click the staff
+       and select "Edit Drumset" to map the custom noteheads to your preference.
+
+    **Example:**
+
+    .. code-block:: python
+
+       import drumscript as ds
+
+       # Assuming `score` is a previously generated score object
+       xml_path = ds.export_xml(score, output_path="./xml_scores/my_song.xml")
+    """
     if output_path is None:
-        # xml_path = Path.cwd() / "drum_score.xml"
-        xml_path = Path.cwd() / "drumscript.xml"
-    else:
-        xml_path = Path(output_path)
+        output_path = pathlib.Path.cwd() / "drumscript.xml"
 
     return xml_exporter.export_xml(score, output_path=output_path, **kwargs)
 

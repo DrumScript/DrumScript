@@ -7,10 +7,8 @@ This top-level module exposes the primary high-level wrappers for end-to-end
 transcription, as well as the core low-level building blocks for custom DSP pipelines.
 """
 
-import pathlib
 from pathlib import Path
 
-# 1. Import internal functions
 from .audio_processor.audio_loader import load_audio, normalise_audio
 from .audio_processor.feature_extractor import extract_features
 from .audio_processor.onset_detector import detect_onsets
@@ -18,12 +16,15 @@ from .audio_processor.stem_splitter import extract_drum_stem, separate_audio
 from .audio_processor.tempo_detector import estimate_tempo as _internal_estimate
 from .drum_classifier.classify import classify_events, classify_rudiment_events
 from .notation_generator import midi_exporter, pdf_exporter, xml_exporter
+
+# 1. Import internal functions
 from .notation_generator.constants import SAMPLE_RATE
 from .notation_generator.score_builder import build_score
 from .utils.ffmpeg_installer import install_ffmpeg
 
-
 # 2. Create user-friendly wrappers
+
+
 def extract_stems(audio_path, output_dir=None, output_format="wav", drumless=False, mute=None, all_stems=False, full=False):
     """
     Extracts drum stems and optionally separates the full track into constituent parts.
@@ -76,9 +77,9 @@ def extract_stems(audio_path, output_dir=None, output_format="wav", drumless=Fal
        print(f"Backing track saved to: {results['mix']}")
     """
     if output_dir is None:
-        output_dir = pathlib.Path.cwd() / "stems"
+        output_dir = Path.cwd() / "stems"
     else:
-        output_dir = pathlib.Path(output_dir)
+        output_dir = Path(output_dir)
 
     output_dir.mkdir(parents=True, exist_ok=True)
 
@@ -133,7 +134,6 @@ def detect_tempo(audio_input, full=False):
     """
     if isinstance(audio_input, str):
         y, sr = load_audio(audio_input, sr=SAMPLE_RATE)
-        # y, sr = load_audio(audio_input)
         y = normalise_audio(y)
     else:
         y = audio_input
@@ -157,6 +157,7 @@ def export_pdf(score, output_path=None, **kwargs):
     :type score: object
     :param output_path: The exact file path to save the PDF. Defaults to 'drumscript.pdf' in CWD.
     :type output_path: str, optional
+
     :return: The absolute path to the generated PDF.
     :rtype: str
 
@@ -174,8 +175,7 @@ def export_pdf(score, output_path=None, **kwargs):
        pdf_path = ds.export_pdf(score, output_path="./transcriptions/my_song.pdf")
     """
     if output_path is None:
-        # output_path = pathlib.Path.cwd() / "drum_score.pdf"
-        output_path = pathlib.Path.cwd() / "drumscript.pdf"
+        output_path = Path.cwd() / "drumscript.pdf"
 
     return pdf_exporter.export_pdf(score, output_path=output_path, **kwargs)
 
@@ -206,8 +206,7 @@ def export_midi(score, output_path=None, **kwargs):
        midi_path = ds.export_midi(score, output_path="./midi_exports/my_song.mid")
     """
     if output_path is None:
-        # output_path = pathlib.Path.cwd() / "drum_score.mid"
-        output_path = pathlib.Path.cwd() / "drumscript.mid"
+        output_path = Path.cwd() / "drumscript.mid"
 
     return midi_exporter.export_midi(score, output_path=output_path, **kwargs)
 
@@ -243,7 +242,7 @@ def export_xml(score, output_path=None, **kwargs):
        xml_path = ds.export_xml(score, output_path="./xml_scores/my_song.xml")
     """
     if output_path is None:
-        output_path = pathlib.Path.cwd() / "drumscript.xml"
+        output_path = Path.cwd() / "drumscript.xml"
 
     return xml_exporter.export_xml(score, output_path=output_path, **kwargs)
 

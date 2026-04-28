@@ -22,7 +22,7 @@ import scipy.signal
 
 print("\n# ------------------------------------------------------------------------------------")
 datetimestamp = datetime.now()
-print(f'\ndate/time: {datetimestamp}')
+print(f"\ndate/time: {datetimestamp}")
 
 
 def analyze_low_tom_physics(file_path):
@@ -64,13 +64,8 @@ def analyze_low_tom_physics(file_path):
     total_energy = np.sum(psd) + 1e-9
     hfer = high_energy / total_energy
 
-    return {
-        "file": os.path.basename(file_path),
-        "peak_freq": peak_freq,
-        "decay_time": decay_time,
-        "flatness": flatness,
-        "hfer": hfer
-    }
+    return {"file": os.path.basename(file_path), "peak_freq": peak_freq, "decay_time": decay_time, "flatness": flatness, "hfer": hfer}
+
 
 def main():
     # Setup path
@@ -96,16 +91,19 @@ def main():
         res = analyze_low_tom_physics(f)
         if res:
             results.append(res)
-            print(f"{res['file']:<25} | {res['peak_freq']:.1f}       | {res['decay_time']:.3f}      | {res['flatness']:.5f}    | {res['hfer']*100:.2f}%")
+            print(
+                f"{res['file']:<25} | {res['peak_freq']:.1f}       | {res['decay_time']:.3f}      | {res['flatness']:.5f}    | {res['hfer'] * 100:.2f}%"
+            )
 
     # Calculate Averages for Constants
     if results:
-        avg_decay = np.mean([r['decay_time'] for r in results])
-        avg_flat = np.mean([r['flatness'] for r in results])
+        avg_decay = np.mean([r["decay_time"] for r in results])
+        avg_flat = np.mean([r["flatness"] for r in results])
 
         print("-" * 115)
         print(f"AVERAGES                  | --         | {avg_decay:.3f}      | {avg_flat:.5f}    | --")
         print("-" * 115)
+
 
 if __name__ == "__main__":
     main()

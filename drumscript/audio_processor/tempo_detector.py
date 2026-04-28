@@ -15,9 +15,10 @@ from drumscript.notation_generator.constants import SAMPLE_RATE
 
 print("\n# ------------------------------------------------------------------------------------")
 datetimestamp = datetime.now()
-print(f'\ndate/time: {datetimestamp}')
+print(f"\ndate/time: {datetimestamp}")
 
 # --- Define function --------------------------------------------------------------------------------------------
+
 
 def estimate_tempo(audio_data, sr):
     """
@@ -35,10 +36,10 @@ def estimate_tempo(audio_data, sr):
     if audio_data.size == 0:
         return 0.0
 
-    # Check if there are enough hits in the audio
+    # Check if there are enough hits in the audio
     # Calculating tempo on clips shorter than ~1-2 seconds is unreliable and often produces artifacts (like 235 BPM for a single kick).
     duration_seconds = audio_data.shape[0] / sr
-    if duration_seconds < 1.0: # duration_seconds less than 1 second, ie anything over 1 sec duration is valid
+    if duration_seconds < 1.0:  # duration_seconds less than 1 second, ie anything over 1 sec duration is valid
         print(f"Audio too short for tempo detection ({duration_seconds:.2f}s). Defaulting to 120 BPM.")
         return 120.0
 
@@ -55,7 +56,7 @@ def estimate_tempo(audio_data, sr):
     # Find the index of the peak within the plausible range
     plausible_spectrum = tempo_spectrum[plausible_tempos_mask]
     if plausible_spectrum.size == 0:
-        return 120.0 # Return default if no energy in plausible range
+        return 120.0  # Return default if no energy in plausible range
 
     peak_idx_in_plausible_range = np.argmax(plausible_spectrum)
 
@@ -64,17 +65,19 @@ def estimate_tempo(audio_data, sr):
     estimated_bpm = plausible_tempo_freqs[peak_idx_in_plausible_range]
 
     return estimated_bpm
+
+
 # =====================================================================================================
 # MAIN BLOCK - for local testing of this function
 
 if __name__ == "__main__":
     from drumscript.audio_processor.audio_loader import load_audio, normalise_audio
     from drumscript.notation_generator.constants import SAMPLE_RATE
+
     parser = argparse.ArgumentParser(description="Estimate the tempo of an audio file.")
-    parser.add_argument("audio_file_path", type=str,
-                        help="Path to the audio file to be processed.")
+    parser.add_argument("audio_file_path", type=str, help="Path to the audio file to be processed.")
     args = parser.parse_args()
-    actual_drum_recording_path = args.audio_file_path # audio_file_path, relative to ROOT, not the path of this script
+    actual_drum_recording_path = args.audio_file_path  # audio_file_path, relative to ROOT, not the path of this script
     sr = SAMPLE_RATE
 
     try:
@@ -92,4 +95,4 @@ if __name__ == "__main__":
         print(f"\nAn unexpected error occurred: {e}")
     # print("\n#==================================================================================================")
 
-#------------------------------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------------------------------

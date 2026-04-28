@@ -4,9 +4,10 @@ This module takes classified drum events and renders them into a standard MIDI f
 
 Uses event['time'] and event['drums'].
 """
+
 import os
 
-#import argparse
+# import argparse
 import pretty_midi
 
 from drumscript.notation_generator.constants import DRUM_NOTATION_MAP
@@ -21,7 +22,7 @@ from drumscript.notation_generator.constants import DRUM_NOTATION_MAP
 def export_to_midi(classified_events: list[dict], output_filepath: str, tempo: float = 120.0):
     """
     Takes a list of event dictionaries and writes a standard .mid file.
-    
+
     :param classified_events: List of dicts containing 'time_sec' and 'instruments'.
     :param output_filepath: Where to save the file (e.g., 'output/drum_score.mid').
     :param tempo: The detected BPM of the track.
@@ -43,15 +44,15 @@ def export_to_midi(classified_events: list[dict], output_filepath: str, tempo: f
         for inst in instruments:
             # Check if our physics engine spit out an instrument we have in our map
             if inst in DRUM_NOTATION_MAP:
-                midi_pitch = DRUM_NOTATION_MAP[inst]['midi_program']
+                midi_pitch = DRUM_NOTATION_MAP[inst]["midi_program"]
 
                 # Create the MIDI Note.
                 # (Drums don't hold sustain, so a 0.1s duration is standard for sheet music)
                 note = pretty_midi.Note(
-                    velocity=100,             # Default strong hit
-                    pitch=midi_pitch,         # E.g., 36 for Kick, 38 for Snare
-                    start=time_sec,           # The exact millisecond from onset_detector
-                    end=time_sec + 0.1
+                    velocity=100,  # Default strong hit
+                    pitch=midi_pitch,  # E.g., 36 for Kick, 38 for Snare
+                    start=time_sec,  # The exact millisecond from onset_detector
+                    end=time_sec + 0.1,
                 )
 
                 drum_track.notes.append(note)

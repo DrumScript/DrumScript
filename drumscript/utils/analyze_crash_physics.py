@@ -8,7 +8,7 @@ import numpy as np
 
 print("\n# ------------------------------------------------------------------------------------")
 datetimestamp = datetime.now()
-print(f'\ndate/time: {datetimestamp}')
+print(f"\ndate/time: {datetimestamp}")
 
 
 def analyze_crash_physics(file_path):
@@ -22,7 +22,7 @@ def analyze_crash_physics(file_path):
     rms = librosa.feature.rms(y=y)[0]
     peak_idx = np.argmax(rms)
     peak_amp = rms[peak_idx]
-    threshold = peak_amp * 0.1 # -20dB
+    threshold = peak_amp * 0.1  # -20dB
 
     decay_frames = 0
     for i in range(peak_idx, len(rms)):
@@ -41,13 +41,8 @@ def analyze_crash_physics(file_path):
     # 4. Bandwidth
     bandwidth = np.mean(librosa.feature.spectral_bandwidth(y=y, sr=sr))
 
-    return {
-        "file": os.path.basename(file_path),
-        "decay_time": decay_time,
-        "centroid": centroid,
-        "flatness": flatness,
-        "bandwidth": bandwidth
-    }
+    return {"file": os.path.basename(file_path), "decay_time": decay_time, "centroid": centroid, "flatness": flatness, "bandwidth": bandwidth}
+
 
 def main():
     script_dir = Path(__file__).resolve().parent
@@ -72,16 +67,19 @@ def main():
         res = analyze_crash_physics(f)
         if res:
             results.append(res)
-            print(f"{res['file']:<40} | {res['decay_time']:.3f}      | {res['centroid']:.0f}            | {res['flatness']:.4f}     | {res['bandwidth']:.0f}")
+            print(
+                f"{res['file']:<40} | {res['decay_time']:.3f}      | {res['centroid']:.0f}            | {res['flatness']:.4f}     | {res['bandwidth']:.0f}"
+            )
 
     if results:
-        avg_decay = np.mean([r['decay_time'] for r in results])
-        avg_cent = np.mean([r['centroid'] for r in results])
-        avg_flat = np.mean([r['flatness'] for r in results])
+        avg_decay = np.mean([r["decay_time"] for r in results])
+        avg_cent = np.mean([r["centroid"] for r in results])
+        avg_flat = np.mean([r["flatness"] for r in results])
 
         print("-" * 115)
         print(f"AVERAGES                                 | {avg_decay:.3f}      | {avg_cent:.0f}            | {avg_flat:.4f}     | --")
         print("-" * 115)
+
 
 if __name__ == "__main__":
     main()

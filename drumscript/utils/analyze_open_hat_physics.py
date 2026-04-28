@@ -9,7 +9,7 @@ import scipy.signal
 
 print("\n# ------------------------------------------------------------------------------------")
 datetimestamp = datetime.now()
-print(f'\ndate/time: {datetimestamp}')
+print(f"\ndate/time: {datetimestamp}")
 
 
 def analyze_open_hat_physics(file_path):
@@ -24,7 +24,7 @@ def analyze_open_hat_physics(file_path):
     rms = librosa.feature.rms(y=y)[0]
     peak_idx = np.argmax(rms)
     peak_amp = rms[peak_idx]
-    threshold = peak_amp * 0.1 # -20dB point
+    threshold = peak_amp * 0.1  # -20dB point
 
     decay_frames = 0
     for i in range(peak_idx, len(rms)):
@@ -49,13 +49,8 @@ def analyze_open_hat_physics(file_path):
     # High ZCR indicates noisy, high-frequency content (metal).
     zcr = np.mean(librosa.feature.zero_crossing_rate(y))
 
-    return {
-        "file": os.path.basename(file_path),
-        "decay_time": decay_time,
-        "centroid": centroid,
-        "hfer_7k": hfer_7k,
-        "zcr": zcr
-    }
+    return {"file": os.path.basename(file_path), "decay_time": decay_time, "centroid": centroid, "hfer_7k": hfer_7k, "zcr": zcr}
+
 
 def main():
     script_dir = Path(__file__).resolve().parent
@@ -80,16 +75,19 @@ def main():
         res = analyze_open_hat_physics(f)
         if res:
             results.append(res)
-            print(f"{res['file']:<30} | {res['decay_time']:.3f}      | {res['centroid']:.0f}Hz      | {res['hfer_7k']*100:.1f}%        | {res['zcr']:.3f}")
+            print(
+                f"{res['file']:<30} | {res['decay_time']:.3f}      | {res['centroid']:.0f}Hz      | {res['hfer_7k'] * 100:.1f}%        | {res['zcr']:.3f}"
+            )
 
     if results:
-        avg_decay = np.mean([r['decay_time'] for r in results])
-        avg_cent = np.mean([r['centroid'] for r in results])
-        avg_hfer = np.mean([r['hfer_7k'] for r in results])
+        avg_decay = np.mean([r["decay_time"] for r in results])
+        avg_cent = np.mean([r["centroid"] for r in results])
+        avg_hfer = np.mean([r["hfer_7k"] for r in results])
 
         print("-" * 115)
-        print(f"AVERAGES                       | {avg_decay:.3f}      | {avg_cent:.0f}Hz      | {avg_hfer*100:.1f}%        | --")
+        print(f"AVERAGES                       | {avg_decay:.3f}      | {avg_cent:.0f}Hz      | {avg_hfer * 100:.1f}%        | --")
         print("-" * 115)
+
 
 if __name__ == "__main__":
     main()

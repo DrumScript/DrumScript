@@ -31,6 +31,7 @@ def round_to_nearest_subdivision(time_in_beats: float, subdivision: int) -> floa
     rounded_time = round(time_in_beats / unit_duration_in_beats) * unit_duration_in_beats
     return rounded_time
 
+
 def get_note_duration_name(duration_beats: float, tempo_bpm: int) -> str:
     """
     Converts a duration in beats to a standard musical note name (e.g., 'quarter', 'eighth').
@@ -46,21 +47,22 @@ def get_note_duration_name(duration_beats: float, tempo_bpm: int) -> str:
     # This is a simplified mapping. For real applications, you might need a more robust system
     # that considers tempo and exact beat fractions.
     if abs(duration_beats - constants.DURATION_WHOLE) < 0.001:
-        return 'whole'
+        return "whole"
     elif abs(duration_beats - constants.DURATION_HALF) < 0.001:
-        return 'half'
+        return "half"
     elif abs(duration_beats - constants.DURATION_QUARTER) < 0.001:
-        return 'quarter'
+        return "quarter"
     elif abs(duration_beats - constants.DURATION_EIGHTH) < 0.001:
-        return 'eighth'
+        return "eighth"
     elif abs(duration_beats - constants.DURATION_SIXTEENTH) < 0.001:
-        return '16th'
+        return "16th"
     elif abs(duration_beats - constants.DURATION_THIRTY_SECOND) < 0.001:
-        return '32nd'
+        return "32nd"
     else:
         # Fallback for unexpected durations, or calculate based on smallest unit
         # For simplicity, returning a generic 'note' or 'n/th' for now
-        return f"{duration_beats} beats" # Or raise an error, or round to nearest known duration
+        return f"{duration_beats} beats"  # Or raise an error, or round to nearest known duration
+
 
 def format_drum_event(drum_type: str, onset_time_seconds: float) -> Dict[str, Any]:
     """
@@ -79,17 +81,18 @@ def format_drum_event(drum_type: str, onset_time_seconds: float) -> Dict[str, An
     if not drum_info:
         print(f"Warning: No notation mapping found for drum type: {drum_type}. Using default kick properties.")
         # Fallback to a default, e.g., 'kick'
-        drum_info = constants.DRUM_NOTATION_MAP['kick']
+        drum_info = constants.DRUM_NOTATION_MAP["kick"]
 
     formatted_event = {
-        'drum_type': drum_type,
-        'onset_time_seconds': onset_time_seconds,
-        'midi_pitch': drum_info['midi_program'], # Get MIDI program from the map
-        'note_head_type': drum_info['note_head'], # Get note head from the map
-        'staff_position': drum_info['staff_position'], # Get staff position from the map
-        'display_name': drum_info['display_name'] # Get display name from the map
+        "drum_type": drum_type,
+        "onset_time_seconds": onset_time_seconds,
+        "midi_pitch": drum_info["midi_program"],  # Get MIDI program from the map
+        "note_head_type": drum_info["note_head"],  # Get note head from the map
+        "staff_position": drum_info["staff_position"],  # Get staff position from the map
+        "display_name": drum_info["display_name"],  # Get display name from the map
     }
     return formatted_event
+
 
 # Example of a simple mathematical helper (e.g., for musical interval calculations)
 # This might be overkill depending on your needs, but shows the concept.

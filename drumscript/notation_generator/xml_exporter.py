@@ -2,7 +2,7 @@
 
 """
 Module for rendering the drum score to MusicXML format.
-MusicXML is the industry standard for sharing sheet music between 
+MusicXML is the industry standard for sharing sheet music between
 applications like Sibelius, Guitar Pro, Logic, Cubase, or MuseScore.
 """
 
@@ -11,6 +11,7 @@ from pathlib import Path
 # print("\n# ------------------------------------------------------------------------------------")
 # datetimestamp = datetime.now()
 # print(f'\ndate/time: {datetimestamp}')
+
 
 def export_xml(score, output_path=None):
     """
@@ -26,7 +27,7 @@ def export_xml(score, output_path=None):
 
     # 1. Handle output routing
     if output_path is None:
-        #xml_path = Path.cwd() / "drum_score.xml"
+        # xml_path = Path.cwd() / "drum_score.xml"
         xml_path = Path.cwd() / "drumscript.xml"
     else:
         xml_path = Path(output_path)

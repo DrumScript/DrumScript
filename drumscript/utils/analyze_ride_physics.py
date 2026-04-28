@@ -8,7 +8,8 @@ import numpy as np
 
 print("\n# ------------------------------------------------------------------------------------")
 datetimestamp = datetime.now()
-print(f'\ndate/time: {datetimestamp}')
+print(f"\ndate/time: {datetimestamp}")
+
 
 def analyze_ride_physics(file_path):
     try:
@@ -22,7 +23,7 @@ def analyze_ride_physics(file_path):
     rms = librosa.feature.rms(y=y)[0]
     peak_idx = np.argmax(rms)
     peak_amp = rms[peak_idx]
-    threshold = peak_amp * 0.1 # -20dB
+    threshold = peak_amp * 0.1  # -20dB
 
     decay_frames = 0
     for i in range(peak_idx, len(rms)):
@@ -43,13 +44,8 @@ def analyze_ride_physics(file_path):
     # A ride edge hit is noisy, but might retain some 'bell' tone compared to a crash.
     flatness = np.mean(librosa.feature.spectral_flatness(y=y))
 
-    return {
-        "file": os.path.basename(file_path),
-        "decay_time": decay_time,
-        "centroid": centroid,
-        "bandwidth": bandwidth,
-        "flatness": flatness
-    }
+    return {"file": os.path.basename(file_path), "decay_time": decay_time, "centroid": centroid, "bandwidth": bandwidth, "flatness": flatness}
+
 
 def main():
     script_dir = Path(__file__).resolve().parent
@@ -74,15 +70,18 @@ def main():
         res = analyze_ride_physics(f)
         if res:
             results.append(res)
-            print(f"{res['file']:<40} | {res['decay_time']:.3f}      | {res['centroid']:.0f}            | {res['flatness']:.4f}     | {res['bandwidth']:.0f}")
+            print(
+                f"{res['file']:<40} | {res['decay_time']:.3f}      | {res['centroid']:.0f}            | {res['flatness']:.4f}     | {res['bandwidth']:.0f}"
+            )
 
     if results:
-        avg_decay = np.mean([r['decay_time'] for r in results])
-        avg_cent = np.mean([r['centroid'] for r in results])
+        avg_decay = np.mean([r["decay_time"] for r in results])
+        avg_cent = np.mean([r["centroid"] for r in results])
 
         print("-" * 130)
         print(f"AVERAGES                                 | {avg_decay:.3f}      | {avg_cent:.0f}            | --         | --")
         print("-" * 130)
+
 
 if __name__ == "__main__":
     main()

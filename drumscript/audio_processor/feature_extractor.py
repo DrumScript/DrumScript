@@ -25,7 +25,7 @@ from drumscript.notation_generator.constants import HOP_LENGTH, N_FFT, ONSET_SLI
 EXPECTED_AUDIO_LEN_SAMPLES = int(SEGMENT_LENGTH_SECONDS * SAMPLE_RATE)
 EXPECTED_N_FRAMES = 1 + (EXPECTED_AUDIO_LEN_SAMPLES - N_FFT) // HOP_LENGTH
 if EXPECTED_N_FRAMES < 1:
-    EXPECTED_N_FRAMES = 1 # Ensure at least one frame, even for very short segments
+    EXPECTED_N_FRAMES = 1  # Ensure at least one frame, even for very short segments
 
 # previous Define TOTAL_FEATURES_PER_FRAME globally so it's accessible in __main__ block
 # previous Number of MFCCs + Spectral Centroid + Spectral Rolloff + ZCR + RMS = 20 + 1 + 1 + 1 + 1 = 24
@@ -34,11 +34,12 @@ if EXPECTED_N_FRAMES < 1:
 # current TOTAL_FEATURES_PER_FRAME = 40 (MFCCs) + 1 (Zero-Crossing Rate) = 41
 N_MFCC = 41
 # UPDATED: We are adding band energy features (Low, Mid, High), so +3 more features
-TOTAL_FEATURES_PER_FRAME = N_MFCC + 3 + 3 # TOTAL_FEATURES_PER_FRAME = 47
+TOTAL_FEATURES_PER_FRAME = N_MFCC + 3 + 3  # TOTAL_FEATURES_PER_FRAME = 47
 # THE SCRIP WILL ADD FEATURES [1 (Centroid) + 1 (Rolloff) + 1 (RMS) + 3 (Band Energies)]
 
 
 # --- Main Feature Extraction Functions ---
+
 
 def extract_features(audio_segment: np.ndarray, sr: int) -> Dict[str, Any]:
     """
@@ -85,9 +86,9 @@ def extract_features(audio_segment: np.ndarray, sr: int) -> Dict[str, Any]:
 
         # Define masks for bands based on constants.py (Low < 300Hz, Mid 300-5000Hz, High > 5000Hz)
         # Note: 300Hz chosen to separate Kick/Floor Tom from Snare/Rack Tom body
-        low_band_mask = (fft_freqs <= 300)
+        low_band_mask = fft_freqs <= 300
         mid_band_mask = (fft_freqs > 300) & (fft_freqs <= 5000)
-        high_band_mask = (fft_freqs > 5000)
+        high_band_mask = fft_freqs > 5000
 
         # Sum energy in these bands (averaging over time)
         energy_low = np.mean(np.sum(S[low_band_mask, :], axis=0))
@@ -95,20 +96,21 @@ def extract_features(audio_segment: np.ndarray, sr: int) -> Dict[str, Any]:
         energy_high = np.mean(np.sum(S[high_band_mask, :], axis=0))
 
         return {
-            'spectral_centroid': spectral_centroid,
-            'spectral_rolloff': spectral_rolloff,
-            'rms': rms,
-            'zero_crossing_rate': zcr,
-            'mfccs': mfccs.tolist(),
-            'sustain_level': sustain_level,
-            'energy_low': energy_low,   # Kick/Floor Tom indicator
-            'energy_mid': energy_mid,   # Snare/Rack Tom indicator
-            'energy_high': energy_high  # Hi-Hat/Cymbal indicator
+            "spectral_centroid": spectral_centroid,
+            "spectral_rolloff": spectral_rolloff,
+            "rms": rms,
+            "zero_crossing_rate": zcr,
+            "mfccs": mfccs.tolist(),
+            "sustain_level": sustain_level,
+            "energy_low": energy_low,  # Kick/Floor Tom indicator
+            "energy_mid": energy_mid,  # Snare/Rack Tom indicator
+            "energy_high": energy_high,  # Hi-Hat/Cymbal indicator
         }
 
     except Exception as e:
         print(f"Warning: Error extracting features from a segment: {e}")
         return None
+
 
 def extract_features_for_onsets(y: np.ndarray, sr: int, onset_times: List[float]) -> List[Dict[str, Any]]:
     """
@@ -149,12 +151,13 @@ def extract_features_for_onsets(y: np.ndarray, sr: int, onset_times: List[float]
 
         if features:
             # Add the onset time to the dictionary of features
-            features['onset_time'] = time_sec
+            features["onset_time"] = time_sec
             all_features.append(features)
 
     return all_features
 
-# Uncomment to use, for clearer error logs
+
+# Uncomment to use, for clearer error logs
 # print("\n# ------------------------------------------------------------------------------------")
 
 """# ALTERNATIVE FEATURE EXTRACTION FCT WITH PADDING TO PREVENT TOO HIGH NFFT ERRORS

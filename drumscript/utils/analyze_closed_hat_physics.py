@@ -9,7 +9,8 @@ import scipy.signal
 
 print("\n# ------------------------------------------------------------------------------------")
 datetimestamp = datetime.now()
-print(f'\ndate/time: {datetimestamp}')
+print(f"\ndate/time: {datetimestamp}")
+
 
 def analyze_closed_hat_physics(file_path):
     try:
@@ -23,7 +24,7 @@ def analyze_closed_hat_physics(file_path):
     rms = librosa.feature.rms(y=y)[0]
     peak_idx = np.argmax(rms)
     peak_amp = rms[peak_idx]
-    threshold = peak_amp * 0.1 # -20dB
+    threshold = peak_amp * 0.1  # -20dB
 
     decay_frames = 0
     for i in range(peak_idx, len(rms)):
@@ -42,12 +43,8 @@ def analyze_closed_hat_physics(file_path):
     total_energy = np.sum(psd) + 1e-9
     hfer_7k = high_energy / total_energy
 
-    return {
-        "file": os.path.basename(file_path),
-        "decay_time": decay_time,
-        "centroid": centroid,
-        "hfer_7k": hfer_7k
-    }
+    return {"file": os.path.basename(file_path), "decay_time": decay_time, "centroid": centroid, "hfer_7k": hfer_7k}
+
 
 def main():
     script_dir = Path(__file__).resolve().parent
@@ -72,13 +69,14 @@ def main():
         res = analyze_closed_hat_physics(f)
         if res:
             results.append(res)
-            print(f"{res['file']:<35} | {res['decay_time']:.3f}      | {res['centroid']:.0f}Hz      | {res['hfer_7k']*100:.1f}%")
+            print(f"{res['file']:<35} | {res['decay_time']:.3f}      | {res['centroid']:.0f}Hz      | {res['hfer_7k'] * 100:.1f}%")
 
     if results:
-        avg_decay = np.mean([r['decay_time'] for r in results])
+        avg_decay = np.mean([r["decay_time"] for r in results])
         print("-" * 100)
         print(f"AVERAGES                            | {avg_decay:.3f}      | --          | --")
         print("-" * 100)
+
 
 if __name__ == "__main__":
     main()

@@ -17,11 +17,11 @@ import numpy as np
 # from drumscript.utils.config import SAMPLE_RATE, HOP_LENGTH, N_FFT
 
 # def measure_kick_frequency(audio_file_path):
-    # Load with the PROJECT'S standardized sample rate, not the file's native rate
-  #  y, sr = librosa.load(audio_file_path, sr=SAMPLE_RATE)
+# Load with the PROJECT'S standardized sample rate, not the file's native rate
+#  y, sr = librosa.load(audio_file_path, sr=SAMPLE_RATE)
 
-    # Use the project's FFT settings
-   # S = librosa.stft(y, n_fft=N_FFT, hop_length=HOP_LENGTH)
+# Use the project's FFT settings
+# S = librosa.stft(y, n_fft=N_FFT, hop_length=HOP_LENGTH)
 
 """
 # [CONTRIBUTOR UTILITY CODE]
@@ -35,17 +35,15 @@ This script measures the frequency of a snare drum using librosa, and applies th
 """
 
 
-
-
 def measure_snare_frequency(audio_file_path):
-    """     
-        #:param audio_file_path: Path to audio file.
-        #:type audio_file_path: str
-        #:returns event_data_list: list of parameters
-        #:rtype: list[float]
+    """
+    #:param audio_file_path: Path to audio file.
+    #:type audio_file_path: str
+    #:returns event_data_list: list of parameters
+    #:rtype: list[float]
     """
     # 1. Load the audio file
-    y, sr = librosa.load(audio_file_path, sr=None) # Use original sampling rate
+    y, sr = librosa.load(audio_file_path, sr=None)  # Use original sampling rate
 
     # 2. Separate harmonic and percussive components (optional, but helps isolate the snare)
     y_harmonic, y_percussive = librosa.effects.hpss(y)
@@ -76,7 +74,7 @@ def measure_snare_frequency(audio_file_path):
     # librosa.display.specshow(S_db, sr=sr, hop_length=hop_length, x_axis='time', y_axis='hz')
     # plt.colorbar(format='%+2.0f dB')
     # plt.title('Snare Drum Spectrogram (Frequency vs. Time)')
-    #.plt.show()
+    # .plt.show()
 
     # 6. Analyze the frequency bins for specific peaks
     # The actual frequency values corresponding to the STFT bins
@@ -91,6 +89,7 @@ def measure_snare_frequency(audio_file_path):
 
     return mean_frequency, peak_frequency
 
+
 # Example usage:
 # Replace 'path/to/your/snare_drum_sample.wav' with your actual file path
 # If you don't have a file, you can try using a built-in librosa example (though not a specific snare hit)
@@ -103,6 +102,7 @@ def measure_snare_frequency(audio_file_path):
 if __name__ == "__main__":
     # This allows you to run it from the command line with an argument
     import sys
+
     if len(sys.argv) < 2:
         print("Usage: uv run drumscript/utils/measure_snare_frequency.py <path_to_audio_file>")
         sys.exit(1)

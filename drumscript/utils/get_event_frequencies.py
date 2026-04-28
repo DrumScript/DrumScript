@@ -125,15 +125,11 @@ if __name__ == "__main__":
     import argparse
 
     # Setup Command Line Arguments
-    parser = argparse.ArgumentParser(
-        description="Extract frequency data from drum audio events to JSON."
-    )
+    parser = argparse.ArgumentParser(description="Extract frequency data from drum audio events to JSON.")
 
     parser.add_argument("input_audio", help="Path to the audio file (.wav, .mp3, etc.)")
 
-    parser.add_argument(
-        "-o", "--output", help="Path for the output JSON file (optional)", default=None
-    )
+    parser.add_argument("-o", "--output", help="Path for the output JSON file (optional)", default=None)
 
     args = parser.parse_args()
 

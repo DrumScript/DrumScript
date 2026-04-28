@@ -9,7 +9,7 @@ import scipy.signal
 
 print("\n# ------------------------------------------------------------------------------------")
 datetimestamp = datetime.now()
-print(f'\ndate/time: {datetimestamp}')
+print(f"\ndate/time: {datetimestamp}")
 
 
 def analyze_snare_physics(file_path):
@@ -43,13 +43,8 @@ def analyze_snare_physics(file_path):
     # Included for comparison with the Gillet model
     centroid = np.mean(librosa.feature.spectral_centroid(y=y, sr=sr))
 
-    return {
-        "file": os.path.basename(file_path),
-        "peak_freq": peak_freq,
-        "hfer": hfer,
-        "mean_flatness": mean_flatness,
-        "centroid": centroid
-    }
+    return {"file": os.path.basename(file_path), "peak_freq": peak_freq, "hfer": hfer, "mean_flatness": mean_flatness, "centroid": centroid}
+
 
 def main():
     # Robust path finding
@@ -77,17 +72,20 @@ def main():
         res = analyze_snare_physics(f)
         if res:
             results.append(res)
-            print(f"{res['file']:<15} | {res['peak_freq']:.2f}           | {res['hfer']*100:.1f}%           | {res['mean_flatness']:.4f}          | {res['centroid']:.0f}")
+            print(
+                f"{res['file']:<15} | {res['peak_freq']:.2f}           | {res['hfer'] * 100:.1f}%           | {res['mean_flatness']:.4f}          | {res['centroid']:.0f}"
+            )
 
     if results:
-        avg_peak = np.mean([r['peak_freq'] for r in results])
-        avg_hfer = np.mean([r['hfer'] for r in results])
-        avg_flat = np.mean([r['mean_flatness'] for r in results])
-        avg_cent = np.mean([r['centroid'] for r in results])
+        avg_peak = np.mean([r["peak_freq"] for r in results])
+        avg_hfer = np.mean([r["hfer"] for r in results])
+        avg_flat = np.mean([r["mean_flatness"] for r in results])
+        avg_cent = np.mean([r["centroid"] for r in results])
 
         print("-" * 115)
-        print(f"AVERAGES        | {avg_peak:.2f}           | {avg_hfer*100:.1f}%           | {avg_flat:.4f}          | {avg_cent:.0f}")
+        print(f"AVERAGES        | {avg_peak:.2f}           | {avg_hfer * 100:.1f}%           | {avg_flat:.4f}          | {avg_cent:.0f}")
         print("-" * 115)
+
 
 if __name__ == "__main__":
     main()

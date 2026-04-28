@@ -27,7 +27,8 @@ LINE_SPACING = 6
 CLEF_WIDTH = 40
 BARS_PER_SYSTEM = 4
 
-REF_PITCH_MIDDLE_LINE = music21.pitch.Pitch('B3')
+REF_PITCH_MIDDLE_LINE = music21.pitch.Pitch("B3")
+
 
 def get_vertical_position(staff_position_str: str, staff_y_base: float) -> float:
     """Calculates the Y-coordinate for a note based on its staff position."""
@@ -40,14 +41,16 @@ def get_vertical_position(staff_position_str: str, staff_y_base: float) -> float
     middle_line_y = staff_y_base + (2 * LINE_SPACING)
     return middle_line_y + y_offset
 
+
 def draw_staff(c, x, y, width):
     """Draws the 5 lines of the percussion staff."""
     # c.setLineWidth(1)
-    c.setLineWidth(0.5) # Tweak 5: Thinner staff lines for a cleaner look
+    c.setLineWidth(0.5)  # Tweak 5: Thinner staff lines for a cleaner look
     c.setStrokeColor(colors.black)
     for i in range(5):
         line_y = y + (i * LINE_SPACING)
         c.line(x, line_y, x + width, line_y)
+
 
 def draw_clef(c, x, y):
     """Draws the Percussion Clef (two vertical blocks)."""
@@ -56,6 +59,7 @@ def draw_clef(c, x, y):
     c.rect(x, clef_y, 4, clef_h, fill=1, stroke=0)
     c.rect(x + 8, clef_y, 4, clef_h, fill=1, stroke=0)
 
+
 def draw_time_signature(c, x, y, numerator, denominator):
     """Draws the time signature numbers centered in the correct staff spaces."""
     c.setFont("Helvetica-Bold", 16)
@@ -63,12 +67,14 @@ def draw_time_signature(c, x, y, numerator, denominator):
     c.drawString(text_x, y + (2 * LINE_SPACING), f"{numerator}")
     c.drawString(text_x, y, f"{denominator}")
 
+
 def draw_bar_line(c, x, y):
     """Draws a vertical bar line."""
     # c.setLineWidth(1)
-    c.setLineWidth(0.75) # Tweak 5: Cleaner bar lines
+    c.setLineWidth(0.75)  # Tweak 5: Cleaner bar lines
     staff_height = 4 * LINE_SPACING
     c.line(x, y, x, y + staff_height)
+
 
 # --- COMMENTED OUT LEGACY DRAW_NOTE (Individual Upward Stems) ---
 # def draw_note(c, x, y, note_type, staff_y_base):
@@ -130,6 +136,7 @@ def draw_bar_line(c, x, y):
 #         c.circle(0, 0, r, fill=1, stroke=0)
 #         c.restoreState()
 
+
 def draw_notehead(c, x, y, note_type, staff_y_base, accent=False):
     """Draws ONLY the notehead and ledger lines (stems are handled by beaming)."""
     r = 3.5
@@ -139,19 +146,19 @@ def draw_notehead(c, x, y, note_type, staff_y_base, accent=False):
     # Ledger lines
     if y >= top_line_y + LINE_SPACING:
         # c.setLineWidth(1)
-        c.setLineWidth(0.75) # Tweak 5: Cleaner ledger lines
+        c.setLineWidth(0.75)  # Tweak 5: Cleaner ledger lines
         c.line(x - 8, y, x + 8, y)
     elif y <= bottom_line_y - LINE_SPACING:
         # c.setLineWidth(1)
         c.setLineWidth(0.75)
         c.line(x - 8, y, x + 8, y)
 
-    if note_type == 'x' or note_type == 'circle-x':
+    if note_type == "x" or note_type == "circle-x":
         # c.setLineWidth(2)
-        c.setLineWidth(1.5) # Tweak 5: Cleaner hi-hat cross lines
+        c.setLineWidth(1.5)  # Tweak 5: Cleaner hi-hat cross lines
         c.line(x - r, y - r, x + r, y + r)
         c.line(x - r, y + r, x + r, y - r)
-        if note_type == 'circle-x':
+        if note_type == "circle-x":
             # c.setLineWidth(1)
             c.setLineWidth(0.75)
             c.circle(x, y, r + 1.5, stroke=1, fill=0)
@@ -168,6 +175,7 @@ def draw_notehead(c, x, y, note_type, staff_y_base, accent=False):
         c.line(x - 4, y + 12, x + 4, y + 9)
         c.line(x - 4, y + 6, x + 4, y + 9)
 
+
 # def generate_custom_pdf(detected_events, output_filepath, tempo, time_signature="4/4"):
 def export_pdf(detected_events, output_filepath, tempo, time_signature="4/4"):
     """
@@ -178,10 +186,9 @@ def export_pdf(detected_events, output_filepath, tempo, time_signature="4/4"):
         return
 
     try:
-        numerator, denominator = map(int, time_signature.split('/'))
+        numerator, denominator = map(int, time_signature.split("/"))
     except ValueError:
         numerator, denominator = 4, 4
-
 
     print(f"Generating PDF: {output_filepath} (Sig: {numerator}/{denominator}, {int(tempo)} BPM)")
 
@@ -201,14 +208,14 @@ def export_pdf(detected_events, output_filepath, tempo, time_signature="4/4"):
 
     # LEGACY CODE - detected_events.sort(key=lambda x: x['time'])
     # ADAPTED KEY: Using 'time_sec'
-    detected_events.sort(key=lambda x: x['time_sec'])
+    detected_events.sort(key=lambda x: x["time_sec"])
     events_by_measure = defaultdict(list)
 
     last_measure_idx = 0
     for event in detected_events:
         # LEGACY CODE - m_idx = int(event['time'] / sec_per_measure)
         # ADAPTED KEY: Using 'time_sec'
-        m_idx = int(event['time_sec'] / sec_per_measure)
+        m_idx = int(event["time_sec"] / sec_per_measure)
         events_by_measure[m_idx].append(event)
         if m_idx > last_measure_idx:
             last_measure_idx = m_idx
@@ -350,14 +357,14 @@ def export_pdf(detected_events, output_filepath, tempo, time_signature="4/4"):
             for event in events_by_measure[m]:
                 # LEGACY CODE - rel_time = event['time'] % sec_per_measure
                 # ADAPTED KEY: Using 'time_sec'
-                rel_time = event['time_sec'] % sec_per_measure
+                rel_time = event["time_sec"] % sec_per_measure
                 beat_idx = int(rel_time / seconds_per_beat)
                 beats[beat_idx].append(event)
 
             # 2. Render each beat group by separating into Voices
             for beat_idx, event_list in beats.items():
-                voice_up_notes = []   # Idiophones (Cymbals, Hats) -> Stems up
-                voice_down_notes = [] # Membranophones (Kicks, Snares, Toms) -> Stems down
+                voice_up_notes = []  # Idiophones (Cymbals, Hats) -> Stems up
+                voice_down_notes = []  # Membranophones (Kicks, Snares, Toms) -> Stems down
 
                 x_coords_up = set()
                 x_coords_down = set()
@@ -365,26 +372,26 @@ def export_pdf(detected_events, output_filepath, tempo, time_signature="4/4"):
                 for event in event_list:
                     # LEGACY CODE - rel_time = event['time'] % sec_per_measure
                     # ADAPTED KEY: Using 'time_sec'
-                    rel_time = event['time_sec'] % sec_per_measure
+                    rel_time = event["time_sec"] % sec_per_measure
                     padding = 15
                     usable_width = measure_width - (2 * padding)
                     rel_x = (rel_time / sec_per_measure) * usable_width
                     note_x = measure_start_x + padding + rel_x
 
                     # Tweak 4: Grab accent status (defaults to False if not yet implemented in classifier)
-                    is_accent = event.get('accent', False)
+                    is_accent = event.get("accent", False)
 
                     # Split instruments into voices based on physical type
                     # LEGACY CODE - for drum_type in event['drums']:
                     # ADAPTED KEY: Using 'instruments'
-                    for drum_type in event['instruments']:
-                        d_map = constants.DRUM_NOTATION_MAP.get(drum_type, constants.DRUM_NOTATION_MAP['kick'])
-                        staff_pos = d_map.get('staff_position', 'F3')
-                        note_head = d_map.get('note_head', 'normal')
+                    for drum_type in event["instruments"]:
+                        d_map = constants.DRUM_NOTATION_MAP.get(drum_type, constants.DRUM_NOTATION_MAP["kick"])
+                        staff_pos = d_map.get("staff_position", "F3")
+                        note_head = d_map.get("note_head", "normal")
                         note_y = get_vertical_position(staff_pos, current_y)
 
                         # Tweak 4: Expanded Idiophone routing list for future-proofing
-                        idiophones = ['hi_hat_closed', 'hi_hat_open', 'ride', 'crash', 'splash', 'china', 'bell']
+                        idiophones = ["hi_hat_closed", "hi_hat_open", "ride", "crash", "splash", "china", "bell"]
 
                         # Idiophones get upward stems, Membranophones get downward stems
                         if drum_type in idiophones:
@@ -395,7 +402,7 @@ def export_pdf(detected_events, output_filepath, tempo, time_signature="4/4"):
                             x_coords_down.add(note_x)
 
                 # stem_length = 25
-                stem_length = 18 # Tweak 2: Made the note tail length a bit shorter!
+                stem_length = 18  # Tweak 2: Made the note tail length a bit shorter!
                 stem_offset = 3.2
 
                 # --- DRAW VOICE 1: STEMS UP (Cymbals) ---
@@ -412,18 +419,18 @@ def export_pdf(detected_events, output_filepath, tempo, time_signature="4/4"):
                     unique_x = sorted(list(x_coords_up))
 
                     # c.setLineWidth(1)
-                    c.setLineWidth(0.75) # Tweak 5: Cleaner stems
+                    c.setLineWidth(0.75)  # Tweak 5: Cleaner stems
                     c.setStrokeColor(colors.black)
                     for nx in unique_x:
                         bot_y = lowest_y_at_x[nx]
-                        c.line(nx + stem_offset, bot_y, nx + stem_offset, beam_y) # Stem on right side
+                        c.line(nx + stem_offset, bot_y, nx + stem_offset, beam_y)  # Stem on right side
 
                     if len(unique_x) > 1:
                         first_x, last_x = unique_x[0], unique_x[-1]
                         # c.setLineWidth(3)
-                        c.setLineWidth(2.5) # Tweak 5: Slightly cleaner primary beam
+                        c.setLineWidth(2.5)  # Tweak 5: Slightly cleaner primary beam
                         c.line(first_x + stem_offset, beam_y, last_x + stem_offset, beam_y)
-                        if len(unique_x) > 2: # Draw secondary 16th beam
+                        if len(unique_x) > 2:  # Draw secondary 16th beam
                             c.setLineWidth(1.5)
                             c.line(first_x + stem_offset, beam_y - 4, last_x + stem_offset, beam_y - 4)
                     # Tweak 3: Commented out the single-note flag flick!
@@ -446,18 +453,18 @@ def export_pdf(detected_events, output_filepath, tempo, time_signature="4/4"):
                     unique_x = sorted(list(x_coords_down))
 
                     # c.setLineWidth(1)
-                    c.setLineWidth(0.75) # Tweak 5: Cleaner stems
+                    c.setLineWidth(0.75)  # Tweak 5: Cleaner stems
                     c.setStrokeColor(colors.black)
                     for nx in unique_x:
                         top_y = highest_y_at_x[nx]
-                        c.line(nx - stem_offset, top_y, nx - stem_offset, beam_y) # Stem on left side
+                        c.line(nx - stem_offset, top_y, nx - stem_offset, beam_y)  # Stem on left side
 
                     if len(unique_x) > 1:
                         first_x, last_x = unique_x[0], unique_x[-1]
                         # c.setLineWidth(3)
-                        c.setLineWidth(2.5) # Tweak 5: Slightly cleaner primary beam
+                        c.setLineWidth(2.5)  # Tweak 5: Slightly cleaner primary beam
                         c.line(first_x - stem_offset, beam_y, last_x - stem_offset, beam_y)
-                        if len(unique_x) > 2: # Draw secondary 16th beam
+                        if len(unique_x) > 2:  # Draw secondary 16th beam
                             c.setLineWidth(1.5)
                             c.line(first_x - stem_offset, beam_y + 4, last_x - stem_offset, beam_y + 4)
                     # Tweak 3: Commented out the single-note flag flick!

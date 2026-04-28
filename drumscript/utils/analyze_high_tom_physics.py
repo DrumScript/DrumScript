@@ -9,7 +9,8 @@ import scipy.signal
 
 print("\n# ------------------------------------------------------------------------------------")
 datetimestamp = datetime.now()
-print(f'\ndate/time: {datetimestamp}')
+print(f"\ndate/time: {datetimestamp}")
+
 
 def analyze_high_tom_physics(file_path):
     try:
@@ -29,7 +30,7 @@ def analyze_high_tom_physics(file_path):
     rms = librosa.feature.rms(y=y)[0]
     peak_rms_idx = np.argmax(rms)
     peak_amp = rms[peak_rms_idx]
-    threshold = peak_amp * 0.1 # -20dB
+    threshold = peak_amp * 0.1  # -20dB
 
     decay_frames = 0
     for i in range(peak_rms_idx, len(rms)):
@@ -61,8 +62,9 @@ def analyze_high_tom_physics(file_path):
         "decay_time": decay_time,
         "flatness": flatness,
         "hfer": hfer,
-        "wire_ratio": wire_ratio
+        "wire_ratio": wire_ratio,
     }
+
 
 def main():
     script_dir = Path(__file__).resolve().parent
@@ -87,15 +89,18 @@ def main():
         res = analyze_high_tom_physics(f)
         if res:
             results.append(res)
-            print(f"{res['file']:<25} | {res['peak_freq']:.1f}       | {res['decay_time']:.3f}      | {res['flatness']:.5f}    | {res['wire_ratio']*100:.2f}%       | {res['hfer']*100:.2f}%")
+            print(
+                f"{res['file']:<25} | {res['peak_freq']:.1f}       | {res['decay_time']:.3f}      | {res['flatness']:.5f}    | {res['wire_ratio'] * 100:.2f}%       | {res['hfer'] * 100:.2f}%"
+            )
 
     if results:
-        avg_freq = np.mean([r['peak_freq'] for r in results])
-        avg_decay = np.mean([r['decay_time'] for r in results])
+        avg_freq = np.mean([r["peak_freq"] for r in results])
+        avg_decay = np.mean([r["decay_time"] for r in results])
 
         print("-" * 130)
         print(f"AVERAGES                  | {avg_freq:.1f}       | {avg_decay:.3f}      | --          | --           | --")
         print("-" * 130)
+
 
 if __name__ == "__main__":
     main()

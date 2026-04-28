@@ -3,7 +3,7 @@
 """
 DrumScript: A Python-based suite of tools for drum audio analysis and transcription.
 
-This top-level module exposes the primary high-level wrappers for end-to-end 
+This top-level module exposes the primary high-level wrappers for end-to-end
 transcription, as well as the core low-level building blocks for custom DSP pipelines.
 """
 
@@ -24,6 +24,7 @@ from .notation_generator.score_builder import build_score
 from .utils.ffmpeg_installer import install_ffmpeg
 
 # 2. Create user-friendly wrappers
+
 
 def extract_stems(audio_path, output_dir=None, output_format="wav", drumless=False, mute=None, all_stems=False, full=False):
     """
@@ -56,23 +57,13 @@ def extract_stems(audio_path, output_dir=None, output_format="wav", drumless=Fal
     result_path = extract_drum_stem(audio_path, output_dir=str(output_dir))
 
     results = separate_audio(
-        input_audio_path=audio_path,
-        output_format=output_format,
-        drumless=drumless,
-        mute=mute,
-        all_stems=all_stems,
-        output_dir=str(output_dir)
+        input_audio_path=audio_path, output_format=output_format, drumless=drumless, mute=mute, all_stems=all_stems, output_dir=str(output_dir)
     )
 
     if full:
-        return {
-            "status": "success",
-            "drum_stem_path": result_path,
-            "original_file": audio_path,
-            "output_directory": str(output_dir)
-        }
+        return {"status": "success", "drum_stem_path": result_path, "original_file": audio_path, "output_directory": str(output_dir)}
 
-    return result_path or results.get('drums') or results.get('drums_stem')
+    return result_path or results.get("drums") or results.get("drums_stem")
 
 
 def detect_tempo(audio_input, full=False):
@@ -113,7 +104,7 @@ def export_pdf(score, output_path=None, **kwargs):
     :rtype: str
     """
     if output_path is None:
-        #output_path = pathlib.Path.cwd() / "drum_score.pdf"
+        # output_path = pathlib.Path.cwd() / "drum_score.pdf"
         output_path = pathlib.Path.cwd() / "drumscript.pdf"
 
     return pdf_exporter.export_pdf(score, output_path=output_path, **kwargs)
@@ -131,7 +122,7 @@ def export_midi(score, output_path=None, **kwargs):
     :rtype: str
     """
     if output_path is None:
-        #output_path = pathlib.Path.cwd() / "drum_score.mid"
+        # output_path = pathlib.Path.cwd() / "drum_score.mid"
         output_path = pathlib.Path.cwd() / "drumscript.mid"
 
     return midi_exporter.export_midi(score, output_path=output_path, **kwargs)
@@ -148,19 +139,17 @@ def export_xml(score, output_path=None, **kwargs):
     :return: The path to the generated XML file.
     :rtype: str
     """
-    #if output_path is None:
-     #   output_path = pathlib.Path.cwd() / "drum_score.xml"
-
+    # if output_path is None:
+    #   output_path = pathlib.Path.cwd() / "drum_score.xml"
 
     # 1. Handle output routing
     if output_path is None:
-        #xml_path = Path.cwd() / "drum_score.xml"
+        # xml_path = Path.cwd() / "drum_score.xml"
         xml_path = Path.cwd() / "drumscript.xml"
     else:
         xml_path = Path(output_path)
 
     return xml_exporter.export_xml(score, output_path=output_path, **kwargs)
-
 
 
 # 3. Explicitly define the Public API (Used by Sphinx and `from drumscript import *`)
@@ -171,7 +160,6 @@ __all__ = [
     "export_pdf",
     "export_midi",
     "export_xml",
-
     # Core DSP & Classification pipeline
     "load_audio",
     "normalise_audio",
@@ -180,7 +168,6 @@ __all__ = [
     "classify_events",
     "classify_rudiment_events",
     "build_score",
-
     # Utilities
     "install_ffmpeg",
 ]

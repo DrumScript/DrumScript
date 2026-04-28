@@ -119,7 +119,8 @@ filterwarnings = [
     "ignore:'audioop' is deprecated:DeprecationWarning",
     "ignore:'sunau' is deprecated:DeprecationWarning",
 ]
-addopts = "--ignore=local_tests/classification_engine --ignore=local_tests/mp3_conversion, --ignore=pdf_generation"
+
+addopts = "--ignore=local_tests/classification_engine --ignore=local_tests/mp3_conversion --ignore=pdf_generation"
 
 # --- RUFF CONFIGURATION ---
 [tool.ruff]

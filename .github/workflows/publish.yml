@@ -39,6 +39,6 @@ jobs:
         run: python -m build
 
 
-      # COMMENTED OUT FOR SAFETY UNTIL READY TO PUBLISH V0.1.O TO PYPI AND MAKE REPO PUBLIC
+      # COMMENTED OUT FOR SAFETY UNTIL READY TO PUBLISH V0.1.2 TO PYPI AND MAKE REPO PUBLIC
       # - name: Publish package distributions to PyPI
       #   uses: pypa/gh-action-pypi-publish@release/v1

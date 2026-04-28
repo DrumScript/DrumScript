@@ -124,7 +124,7 @@ addopts = "--ignore=local_tests/classification_engine --ignore=local_tests/mp3_c
 # --- RUFF CONFIGURATION ---
 [tool.ruff]
 # Set the maximum line length
-line-length = 100
+line-length = 150
 # Target Python 3.9 as minimum supported version
 target-version = "py39"
 
@@ -137,3 +137,11 @@ ignore = []
 # Enforce double quotes and standard spacing (Black-compatible)
 quote-style = "double"
 indent-style = "space"
+
+[dependency-groups]
+dev = [
+    "ruff>=0.15.11",
+]
+
+
+

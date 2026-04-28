@@ -5,9 +5,11 @@ Helper functions for musical calculations.
 """
 
 import math
-from . import constants
+
 # from drumscript.notation_generator.constants import DURATION_WHOLE, DURATION_EIGHTH, DURATION_HALF, DURATION_QUARTER, DURATION_SIXTEENTH, DURATION_THIRTY_SECOND
-from typing import Dict, Any # Added for type hinting
+from typing import Any, Dict  # Added for type hinting
+
+from . import constants
 
 
 def round_to_nearest_subdivision(time_in_beats: float, subdivision: int) -> float:
@@ -25,7 +27,7 @@ def round_to_nearest_subdivision(time_in_beats: float, subdivision: int) -> floa
         raise ValueError("Subdivision cannot be zero.")
 
     unit_duration_in_beats = 4.0 / subdivision
-        
+
     rounded_time = round(time_in_beats / unit_duration_in_beats) * unit_duration_in_beats
     return rounded_time
 
@@ -77,8 +79,8 @@ def format_drum_event(drum_type: str, onset_time_seconds: float) -> Dict[str, An
     if not drum_info:
         print(f"Warning: No notation mapping found for drum type: {drum_type}. Using default kick properties.")
         # Fallback to a default, e.g., 'kick'
-        drum_info = constants.DRUM_NOTATION_MAP['kick'] 
-    
+        drum_info = constants.DRUM_NOTATION_MAP['kick']
+
     formatted_event = {
         'drum_type': drum_type,
         'onset_time_seconds': onset_time_seconds,

@@ -1,9 +1,9 @@
 # DrumScript/utils/ffmpeg_installer.py
 
-import os
 import platform
-import subprocess
 import shutil
+import subprocess
+
 
 def is_ffmpeg_installed() -> bool:
     """

@@ -37,7 +37,7 @@ DRUM_NOTATION_MAP = {
         'note_head': 'normal',
         'staff_position': 'F3'
     },
-    
+
     # --- Snare Drums ---
     'snare': {
         'display_name': 'Snare',
@@ -45,7 +45,7 @@ DRUM_NOTATION_MAP = {
         'note_head': 'normal',
         'staff_position': 'C4' # Space 3
     },
-    
+
     # --- Hi-Hats --- # assumes edge hit
     'hi_hat_closed': {
         'display_name': 'Hi-Hat (Closed)',
@@ -56,10 +56,10 @@ DRUM_NOTATION_MAP = {
     'hi_hat_open': { # assumes edge hit
         'display_name': 'Hi-Hat (Open)',
         'midi_program': 46,
-        'note_head': 'circle-x', 
+        'note_head': 'circle-x',
         'staff_position': 'G4'
     },
-    
+
     # --- Toms ---
     'high_tom': {
         'display_name': 'High Tom',
@@ -79,7 +79,7 @@ DRUM_NOTATION_MAP = {
         'note_head': 'normal',
         'staff_position': 'A3' # Space 2 (Floor Tom Position)
     },
-    
+
     # --- Cymbals ---
     'crash': { # assumes edge hit
         'display_name': 'Crash Cymbal',
@@ -109,9 +109,9 @@ SNARE_SPECTRAL_CENTROID = (3000, 5000)  # majority of snares in this range, per
 MID_TOM_RANGE = (217, 350) # these ranges are GUESSWORK, based on snare  fundemtnal freq analysis
 HIGH_TOM_RANGE = (351, 450) # these ranges are GUESSWORK, based on snare  fundemtnal freq analysis
 OPEN_HAT_RANGE = (240, 400) # Fundamental frequency
-CLOSED_HAT_RANGE = (400, 450) 
-RIDE_RANGE = (450, 550) 
-CRASH_RANGE = (550, 8000) 
+CLOSED_HAT_RANGE = (400, 450)
+RIDE_RANGE = (450, 550)
+CRASH_RANGE = (550, 8000)
 
 
 # Overlap Handling:
@@ -119,9 +119,9 @@ CRASH_RANGE = (550, 8000)
 # The classifier will check MID_TOM first. If identified, it stops.
 
 # LEGACY BANDS (Commented out to replace with specific ranges above)
-# BAND_LOW = (20, 800)     
-# BAND_MID = (800, 5000)   
-# BAND_HIGH = (5000, 16000) 
+# BAND_LOW = (20, 800)
+# BAND_MID = (800, 5000)
+# BAND_HIGH = (5000, 16000)
 
 # --- ENERGY THRESHOLDS ---
 # If energy in a specific band exceeds this ratio of the TOTAL energy, we trigger it.
@@ -182,13 +182,13 @@ NOISE_THRESH_SNARE = 0.05
 # ... and so on for other drums
 
 #STAFF_POS_SNARE = 0 #This is the baseline (e.g., the 3rd space).
-#STAFF_POS_KICK = -2 
+#STAFF_POS_KICK = -2
 #STAFF_POS_HIHAT_OPEN = 7
-#STAFF_POS_HIHAT_CLOSED = -4 
+#STAFF_POS_HIHAT_CLOSED = -4
 #STAFF_POS_RIDE = 6
 #STAFF_POS_CRASH = 8
-#STAFF_POS_TOM1 = 3 
-#STAFF_POS_TOM2 = 4 
+#STAFF_POS_TOM1 = 3
+#STAFF_POS_TOM2 = 4
 #STAFF_POS_TOM3 = 5
 
 # Physical Constants for DrumScript Classification.
@@ -254,8 +254,8 @@ KICK_MAX_DECAY = 0.25   # Seconds (Thud)
 
 # B. SNARE DRUM (Wire Noise + Body)
 # Note: Frequency overlaps with High Toms. "Wire Energy" is the key separator.
-SNARE_FREQ_MIN = 120.0  
-SNARE_FREQ_MAX = 450.0  
+SNARE_FREQ_MIN = 120.0
+SNARE_FREQ_MAX = 450.0
 SNARE_HFER_MIN = 0.15   # Minimum 15% energy > 2000Hz (Wires)
 
 # C. TOMS (Pure Tones, Resonance)
@@ -276,7 +276,7 @@ TOM_FREQ_MID_MAX = 135.0   # Hz (Separates 118Hz Mid Tom from 140Hz High Tom)
 
 # SEPARATION FROM SKINS
 # If energy > 5000Hz is above this threshold, it is Metal.
-IDIOPHONE_MIN_HFER_5K = 0.15 
+IDIOPHONE_MIN_HFER_5K = 0.15
 
 # A. HI-HATS (Decay-Based Separation)
 # Closed Hat: Very tight. (Avg obs: 0.12s)

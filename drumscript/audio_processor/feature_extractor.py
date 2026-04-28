@@ -4,15 +4,13 @@
 This module will extract relevant features from audio segments for drum classification.
 """
 
-import os
-from typing import List, Dict, Any
-import numpy as np
+from typing import Any, Dict, List
+
 import librosa
-import soundfile
-import math # Added for math.floor to calculate EXPECTED_N_FRAMES
-import argparse # for command-line argument parsing
-from datetime import datetime
-from drumscript.notation_generator.constants import SAMPLE_RATE, SEGMENT_LENGTH_SECONDS, N_FFT, NOISE_THRESH_SNARE, DRUM_NOTATION_MAP, ONSET_SLICE_DURATION_MS, HOP_LENGTH
+import numpy as np
+
+from drumscript.notation_generator.constants import HOP_LENGTH, N_FFT, ONSET_SLICE_DURATION_MS, SAMPLE_RATE, SEGMENT_LENGTH_SECONDS
+
 # from datetime import datetime
 
 # print("\n# ------------------------------------------------------------------------------------")
@@ -73,18 +71,18 @@ def extract_features(audio_segment: np.ndarray, sr: int) -> Dict[str, Any]:
         half_point = len(audio_segment) // 2
         first_half_rms = np.mean(librosa.feature.rms(y=audio_segment[:half_point]))
         second_half_rms = np.mean(librosa.feature.rms(y=audio_segment[half_point:]))
-        
+
         # Calculate the ratio. Add a small epsilon to avoid division by zero.
         sustain_level = second_half_rms / (first_half_rms + 1e-6)
 
         # --- Band Energy Calculation (Based on Cheatsheet Logic) ---
         # Calculate Spectrogram magnitude
         S = np.abs(librosa.stft(audio_segment, n_fft=N_FFT, hop_length=HOP_LENGTH))
-        
+
         # Get frequency bins
         # fft_freqs = librosa.fft_frequencies(sr=sr, n_fft=N_FFT)
         fft_freqs = librosa.fft_frequencies(sr=SAMPLE_RATE, n_fft=N_FFT)
-        
+
         # Define masks for bands based on constants.py (Low < 300Hz, Mid 300-5000Hz, High > 5000Hz)
         # Note: 300Hz chosen to separate Kick/Floor Tom from Snare/Rack Tom body
         low_band_mask = (fft_freqs <= 300)
@@ -135,25 +133,25 @@ def extract_features_for_onsets(y: np.ndarray, sr: int, onset_times: List[float]
     for time_sec in onset_times:
         # center_sample = librosa.time_to_samples(time_sec, sr=sr)
         center_sample = librosa.time_to_samples(time_sec, sr=SAMPLE_RATE)
-        
+
         # Define start and end points, centered around the onset
         start_sample = center_sample - half_slice_samples
         end_sample = center_sample + half_slice_samples
-        
+
         # Boundary checks
         start_sample = max(0, start_sample)
         end_sample = min(len(y), end_sample)
-        
+
         audio_slice = y[start_sample:end_sample]
 
         # Extract features for the slice
         features = extract_features(audio_slice, sr)
-        
+
         if features:
             # Add the onset time to the dictionary of features
             features['onset_time'] = time_sec
             all_features.append(features)
-            
+
     return all_features
 
 # Uncomment to use, for clearer error logs

@@ -18,6 +18,7 @@ release = '0.1.2'
 # This allows Sphinx's 'autodoc' to find 'audio_processor', 'drum_classifier', etc.
 import os
 import sys
+
 sys.path.insert(0, os.path.abspath('..'))
 
 
@@ -57,13 +58,13 @@ html_css_files = [
     'custom.css',
 ]
 # Shibuya Setup
-html_theme_options = { 
+html_theme_options = {
     # Logos: Shibuya prefers the full relative path from your docs folder
     "light_logo": "_static/logo-light.svg",
     "dark_logo": "_static/logo-dark.svg",
 
     "github_url": "https://github.com/DrumScript/DrumScript",
-    
+
     "nav_links": [ # Amend groups that appear in Sphinx top navbar
         {"title": "Getting Started", "url": "index"},
         {"title": "API Reference", "url": "api"},

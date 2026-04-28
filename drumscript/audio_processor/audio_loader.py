@@ -10,15 +10,15 @@ It also contains the main execution block to demonstrate the workflow.
 """
 # Import packages: ------------------------------------------------------------------------------------------------
 
+import argparse  # for command-line argument parsing
+
 import librosa
 import numpy as np
-import os
-import sounddevice as sd
-import threading
-import argparse # for command-line argument parsing
-from drumscript.notation_generator.constants import SAMPLE_RATE # Other args avl: SEGMENT_LENGTH_SECONDS, N_FFT, NOISE_THRESH_SNARE, DRUM_NOTATION_MAP, ONSET_SLICE_DURATION_MS, HOP_LENGTH
-from drumscript.audio_processor import tempo_detector
+
 from drumscript.audio_processor.tempo_detector import estimate_tempo
+from drumscript.notation_generator.constants import (
+    SAMPLE_RATE,  # Other args avl: SEGMENT_LENGTH_SECONDS, N_FFT, NOISE_THRESH_SNARE, DRUM_NOTATION_MAP, ONSET_SLICE_DURATION_MS, HOP_LENGTH
+)
 
 # from datetime import datetime
 
@@ -119,11 +119,11 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Load and process an audio file for DrumScript.")
     parser.add_argument("audio_file_path", type=str,
                         help="Path to the audio file to be processed.")
-    
+
     # Parse the command-line arguments
     args = parser.parse_args()
     actual_drum_recording_path = args.audio_file_path
-    
+
     try:
         print(f"Attempting to load: {actual_drum_recording_path}")
         audio, sr = load_audio(actual_drum_recording_path, sr=SAMPLE_RATE)

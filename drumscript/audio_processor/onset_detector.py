@@ -2,15 +2,16 @@
 """
 This module will detect the onset (start) times of drum hits in the audio.
 """
+import argparse
 import os
-import sys
+
 import librosa
 import numpy as np
-import soundfile
-import argparse
-from drumscript.notation_generator.constants import SAMPLE_RATE, HOP_LENGTH
+
 # from drumscript.audio_processor import tempo_detector
 from drumscript.audio_processor.tempo_detector import estimate_tempo
+from drumscript.notation_generator.constants import HOP_LENGTH, SAMPLE_RATE
+
 # from datetime import datetime
 
 # print("\n# ------------------------------------------------------------------------------------")
@@ -21,7 +22,7 @@ from drumscript.audio_processor.tempo_detector import estimate_tempo
     #
     #Method B: The Pre-Classification Validator.
     #Filters out hallucinated cymbal wobbles and kick drum tails using ADSR slope analysis.
-    
+
     #if not onset_times:
      #   return []
 
@@ -36,28 +37,28 @@ from drumscript.audio_processor.tempo_detector import estimate_tempo
 
     # 2. ADSR Transient Filter for Sparse / Single-Beat Tracks
     #validated_onsets = [onset_times[0]] # Always keep the very first initial impact
-    
+
     # Calculate the RMS (volume) envelope for the whole track
     #rms = librosa.feature.rms(y=audio_data, hop_length=HOP_LENGTH)[0]
-    
+
     #for i in range(1, len(onset_times)):
      #   current_time = onset_times[i]
-        
+
         # Convert time to the exact RMS frame index
       #  frame_idx = librosa.time_to_frames(current_time, sr=sr, hop_length=HOP_LENGTH)
-        
+
         # Ensure we have enough frames to look slightly backward and forward
        # if 2 <= frame_idx < len(rms) - 2:
             # Volume just before the "hit" (approx 20-30ms prior)
         #    energy_before = rms[frame_idx - 2]
-            
+
             # Volume at the peak of the detected "hit"
         #    energy_peak = max(rms[frame_idx : frame_idx + 3])
-            
-            # TRANSIENT CHECK: 
+
+            # TRANSIENT CHECK:
             # A true stick hit creates an instantaneous spike. A ringing cymbal wobble just slowly swells.
             # If the volume instantaneously spikes by 30% (1.3) or more, it is a real hit.
-        #    if energy_peak > (energy_before * 1.30): 
+        #    if energy_peak > (energy_before * 1.30):
         #        validated_onsets.append(current_time)
         #else:
             # Keep edge cases near the very end of the file
@@ -67,7 +68,7 @@ from drumscript.audio_processor.tempo_detector import estimate_tempo
 
 
 def detect_onsets(audio_data: np.ndarray, sr: int) -> list[float]:
-    
+
     #Detects the onset (start) times of percussive events in an audio signal.
 
     #This function uses librosa's built-in onset detection algorithms, which
@@ -88,9 +89,9 @@ def detect_onsets(audio_data: np.ndarray, sr: int) -> list[float]:
 
     # --- ENFORCE PHYSICAL DRUMMING LIMITS ---
     # Because HOP_LENGTH is 128, the frames are very tiny (~2.9ms).
-    # We must explicitly tell Librosa to wait at least 50ms before triggering 
+    # We must explicitly tell Librosa to wait at least 50ms before triggering
     # a second hit, otherwise it will trigger on cymbal vibrations.
-    lockout_time_secs = 0.05 
+    lockout_time_secs = 0.05
     wait_frames = int(lockout_time_secs * (SAMPLE_RATE / HOP_LENGTH))
 
     print(f"(HOP_LENGTH: {HOP_LENGTH})")
@@ -98,31 +99,31 @@ def detect_onsets(audio_data: np.ndarray, sr: int) -> list[float]:
 
     # Pass the 'wait' and 'delta' constraints directly into the simple wrapper
     onset_frames = librosa.onset.onset_detect(
-        y=y_percussive, 
+        y=y_percussive,
         sr=SAMPLE_RATE,
         hop_length=HOP_LENGTH,
         units='frames',
         wait=wait_frames,  # Stops rapid double-triggering on cymbals
         delta=0.05         # Ignores general background noise floor
     )
-    
-    # Commenting out to test single_beat_refinement :) 
+
+    # Commenting out to test single_beat_refinement :)
     #print(f'(len_onset_frames:{len(onset_frames)})')
 
     # Convert onset frames to time in seconds
     #onset_times = librosa.frames_to_time(
-     #   onset_frames, 
+     #   onset_frames,
      #   sr=SAMPLE_RATE,
      #   hop_length=HOP_LENGTH
     #)
-    
+
     #print(f'(len_onset_times:{len(onset_times)})')
 
     #return onset_times.tolist()
 
     # Convert onset frames to time in seconds
     onset_times = librosa.frames_to_time(
-        onset_frames, 
+        onset_frames,
         sr=SAMPLE_RATE,
         hop_length=HOP_LENGTH
     ).tolist()
@@ -190,7 +191,8 @@ def calculate_tempo_from_onsets(onset_times: np.ndarray, sr: int) -> float:
 
 if __name__ == "__main__":
     from drumscript.audio_processor.audio_loader import load_audio, normalise_audio
-    # from drumscript.audio_processor import tempo_detector x 
+
+    # from drumscript.audio_processor import tempo_detector x
     from drumscript.audio_processor.tempo_detector import estimate_tempo
     print("\n#=======================================================================================")
     print("Running onset_detector.py example with provided filepath...") # FUTURE: Find way to encode this so it prints the file path provided in CLI
@@ -221,7 +223,7 @@ if __name__ == "__main__":
 
         print(f'audio_path: {audio_path}')
         print(f"Attempting to load: {audio_path}")
-        
+
         # Load and normalise audio
         # audio_data, sample_rate = load_audio(audio_path, sr=sr)
         audio_data, sample_rate = load_audio(audio_path, sr=SAMPLE_RATE)
@@ -238,7 +240,7 @@ if __name__ == "__main__":
             #for i, onset_time in enumerate(onsets[:10]):
             #if len(onsets) > 10:
              #   print(f"  ...and {len(onsets) - 10} more onsets.")
-            
+
             # Print * (ALL) detected onsets for now
             print(f"\n All {len(onsets)} detected onsets (seconds):")
             for i, onset_time in enumerate(onsets):
@@ -267,7 +269,7 @@ if __name__ == "__main__":
         traceback.print_exc() # Print full traceback for debugging
 
     print("\nonset_detector.py example finished.")
-    
+
 # Uncomment to use, for clearer error logs
 # print("\n# ------------------------------------------------------------------------------------")
     # LEGACY CODE:
@@ -275,7 +277,7 @@ if __name__ == "__main__":
     # Now, we run the same onset detection, but on the much cleaner
     # percussive signal. This allows us to get a precise detection
     # of the initial hit without interference from the sustain.
-    
+
     #  Changed units from 'frames' to 'time' to get seconds directly.
     # This removes the need for the subsequent librosa.frames_to_time conversion.
     # onset_times = librosa.onset.onset_detect(

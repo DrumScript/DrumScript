@@ -6,11 +6,12 @@ Module to build the final score from classified events.
 
 import json
 import os
-from typing import List, Dict, Any
-from drumscript.audio_processor import audio_loader, onset_detector, feature_extractor, tempo_detector
+from typing import Any, Dict, List
+
+from drumscript.notation_generator.midi_exporter import export_to_midi
+
 # from drumscript.notation_generator.pdf_exporter import generate_custom_pdf
 from drumscript.notation_generator.pdf_exporter import export_pdf
-from drumscript.notation_generator.midi_exporter import export_to_midi
 
 #from datetime import datetime
 
@@ -25,10 +26,10 @@ def build_score(
         #tempo: int, # <-- forces the caller to provide tempo
         tempo: float,
         output_filepath: str = "outputs/score.pdf",
-        quantization_subdivision: int = 16, 
-        time_signature: str = "4/4" 
+        quantization_subdivision: int = 16,
+        time_signature: str = "4/4"
 ):
-    
+
     """
     Builds a drum score by saving event data to JSON and rendering to PDF.
     # Builds a drum score by saving the event data to JSON and then 
@@ -52,12 +53,12 @@ def build_score(
 
     # --- MUSICAL INTERPRETATION LOGIC ---
     # Drum algorithms often detect the "double time" tempo (e.g. 130 BPM instead of 65 BPM).
-    # To make the sheet music readable in standard 4/4 time (giving it a "half-time feel" 
+    # To make the sheet music readable in standard 4/4 time (giving it a "half-time feel"
     # where the snare lands heavily on beat 3), we halve the raw detected tempo for notation.
     #    tempo = tempo / 2.0
     tempo = tempo
 
-    # --- QUANTIZATION LOGIC 
+    # --- QUANTIZATION LOGIC
     # Snap all raw timestamps to a perfect musical grid so notes align vertically
     if tempo > 0:
         seconds_per_beat = 60.0 / float(tempo)
@@ -72,13 +73,13 @@ def build_score(
             # Overwrite the raw time with the "snapped" perfect time
             # event['time'] = quantized_time
             event['time_sec'] = quantized_time
-            
+
     # ----------------------------------------------------
     # 1. Prepare File Paths
     # output_filepath e.g. "outputs/mysong.pdf"
     base_path = os.path.splitext(output_filepath)[0] # "outputs/mysong"
     json_path = f"{base_path}.json"
-    
+
     # NEW: Derive specific file paths from the base string
     pdf_filepath = f"{base_path}.pdf"
     midi_filepath = f"{base_path}.mid"
@@ -102,7 +103,7 @@ def build_score(
             tempo=tempo,
             time_signature=time_signature
         )
-    
+
         # Success message is handled inside generate_custom_pdf/export_pdf in pdf_exporter.py
     except Exception as e:
         print(f"PDF Export Failed: {e}")

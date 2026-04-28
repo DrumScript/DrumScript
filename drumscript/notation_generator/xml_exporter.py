@@ -7,8 +7,6 @@ applications like Sibelius, Guitar Pro, Logic, Cubase, or MuseScore.
 """
 
 from pathlib import Path
-import music21
-from datetime import datetime
 
 # print("\n# ------------------------------------------------------------------------------------")
 # datetimestamp = datetime.now()
@@ -25,14 +23,14 @@ def export_xml(score, output_path=None):
     :return: The path to the generated XML file.
     :rtype: str
     """
-    
+
     # 1. Handle output routing
     if output_path is None:
         #xml_path = Path.cwd() / "drum_score.xml"
         xml_path = Path.cwd() / "drumscript.xml"
     else:
         xml_path = Path(output_path)
-        
+
     # Ensure the parent directory of the requested file path exists
     xml_path.parent.mkdir(parents=True, exist_ok=True)
     output_filepath = str(xml_path)
@@ -45,7 +43,7 @@ def export_xml(score, output_path=None):
         score.write("musicxml", fp=output_filepath)
         print(f"MusicXML successfully saved to: {output_filepath}")
         return output_filepath
-        
+
     except Exception as e:
         print(f"Failed to generate MusicXML: {e}")
         return None

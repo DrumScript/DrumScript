@@ -1,7 +1,5 @@
 # DrumScript/utils/config.py (Updated for full application configuration)
 import os
-import argparse
-
 
 # --- Path to your actual drum recording/audio (test.wav/test.mp3) ---
 # This dynamic path calculation should correctly point to DRUMSCRIPT/test_audio/test.wav

@@ -10,21 +10,18 @@ transcription, as well as the core low-level building blocks for custom DSP pipe
 import pathlib
 from pathlib import Path
 
-# 1. Import internal functions
-from .notation_generator.constants import SAMPLE_RATE
-from .utils.ffmpeg_installer import install_ffmpeg
-from .audio_processor.audio_loader import load_audio
-from .audio_processor.audio_loader import normalise_audio
-from .audio_processor.stem_splitter import extract_drum_stem
-from .audio_processor.stem_splitter import separate_audio
-from .audio_processor.onset_detector import detect_onsets
+from .audio_processor.audio_loader import load_audio, normalise_audio
 from .audio_processor.feature_extractor import extract_features
+from .audio_processor.onset_detector import detect_onsets
+from .audio_processor.stem_splitter import extract_drum_stem, separate_audio
 from .audio_processor.tempo_detector import estimate_tempo as _internal_estimate
 from .drum_classifier.classify import classify_events
+from .notation_generator import midi_exporter, pdf_exporter, xml_exporter
+
+# 1. Import internal functions
+from .notation_generator.constants import SAMPLE_RATE
 from .notation_generator.score_builder import build_score
-from .notation_generator import pdf_exporter
-from .notation_generator import midi_exporter
-from .notation_generator import xml_exporter
+from .utils.ffmpeg_installer import install_ffmpeg
 
 # 2. Create user-friendly wrappers
 
@@ -53,16 +50,16 @@ def extract_stems(audio_path, output_dir=None, output_format="wav", drumless=Fal
         output_dir = pathlib.Path.cwd() / "stems"
     else:
         output_dir = pathlib.Path(output_dir)
-        
+
     output_dir.mkdir(parents=True, exist_ok=True)
 
     result_path = extract_drum_stem(audio_path, output_dir=str(output_dir))
 
     results = separate_audio(
-        input_audio_path=audio_path, 
-        output_format=output_format, 
-        drumless=drumless, 
-        mute=mute, 
+        input_audio_path=audio_path,
+        output_format=output_format,
+        drumless=drumless,
+        mute=mute,
         all_stems=all_stems,
         output_dir=str(output_dir)
     )
@@ -95,7 +92,7 @@ def detect_tempo(audio_input, full=False):
         y = normalise_audio(y)
     else:
         y = audio_input
-        sr = SAMPLE_RATE 
+        sr = SAMPLE_RATE
 
     bpm = _internal_estimate(y, sr)
 
@@ -118,7 +115,7 @@ def export_pdf(score, output_path=None, **kwargs):
     if output_path is None:
         #output_path = pathlib.Path.cwd() / "drum_score.pdf"
         output_path = pathlib.Path.cwd() / "drumscript.pdf"
-        
+
     return pdf_exporter.export_pdf(score, output_path=output_path, **kwargs)
 
 
@@ -136,7 +133,7 @@ def export_midi(score, output_path=None, **kwargs):
     if output_path is None:
         #output_path = pathlib.Path.cwd() / "drum_score.mid"
         output_path = pathlib.Path.cwd() / "drumscript.mid"
-        
+
     return midi_exporter.export_midi(score, output_path=output_path, **kwargs)
 
 
@@ -154,14 +151,14 @@ def export_xml(score, output_path=None, **kwargs):
     #if output_path is None:
      #   output_path = pathlib.Path.cwd() / "drum_score.xml"
 
-        
+
     # 1. Handle output routing
     if output_path is None:
         #xml_path = Path.cwd() / "drum_score.xml"
         xml_path = Path.cwd() / "drumscript.xml"
     else:
         xml_path = Path(output_path)
-        
+
     return xml_exporter.export_xml(score, output_path=output_path, **kwargs)
 
 
@@ -174,7 +171,7 @@ __all__ = [
     "export_pdf",
     "export_midi",
     "export_xml",
-    
+
     # Core DSP & Classification pipeline
     "load_audio",
     "normalise_audio",
@@ -183,7 +180,7 @@ __all__ = [
     "classify_events",
     "classify_rudiment_events",
     "build_score",
-    
+
     # Utilities
     "install_ffmpeg",
 ]

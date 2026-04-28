@@ -1170,11 +1170,6 @@ dev = [
     { name = "streamlit", version = "1.56.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.10'" },
 ]
 
-[package.dev-dependencies]
-dev = [
-    { name = "ruff" },
-]
-
 [package.metadata]
 requires-dist = [
     { name = "demucs" },
@@ -1212,9 +1207,6 @@ requires-dist = [
     { name = "tqdm" },
 ]
 provides-extras = ["dev"]
-
-[package.metadata.requires-dev]
-dev = [{ name = "ruff", specifier = ">=0.15.11" }]
 
 [[package]]
 name = "einops"

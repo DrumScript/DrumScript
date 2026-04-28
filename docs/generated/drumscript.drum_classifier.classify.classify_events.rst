@@ -1,4 +1,4 @@
-﻿drumscript.drum\_classifier.classify.classify\_events
+drumscript.drum\_classifier.classify.classify\_events
 =====================================================
 
 .. currentmodule:: drumscript.drum_classifier.classify

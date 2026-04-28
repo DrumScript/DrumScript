@@ -3,11 +3,19 @@
 
 .. automodule:: drumscript.utils.ffmpeg_installer
 
-   
-   .. rubric:: Functions
 
-   .. autosummary::
-   
-      install_ffmpeg
-      is_ffmpeg_installed
-   
+
+.. rubric:: Functions
+
+.. autosummary::
+   :toctree: .
+   :nosignatures:
+
+
+   install_ffmpeg
+   is_ffmpeg_installed
+
+
+
+
+

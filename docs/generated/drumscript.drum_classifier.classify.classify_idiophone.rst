@@ -1,4 +1,4 @@
-﻿drumscript.drum\_classifier.classify.classify\_idiophone
+drumscript.drum\_classifier.classify.classify\_idiophone
 ========================================================
 
 .. currentmodule:: drumscript.drum_classifier.classify

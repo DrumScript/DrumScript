@@ -3,10 +3,18 @@
 
 .. automodule:: drumscript.notation_generator.xml_exporter
 
-   
-   .. rubric:: Functions
 
-   .. autosummary::
-   
-      export_xml
-   
+
+.. rubric:: Functions
+
+.. autosummary::
+   :toctree: .
+   :nosignatures:
+
+
+   export_xml
+
+
+
+
+

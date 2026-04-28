@@ -14,7 +14,7 @@ import sys
 import time
 import numpy as np
 import soundfile as sf
-#from pydub import AudioSegment
+from pydub import AudioSegment
 #from datetime import datetime
 
 #print("\n# ------------------------------------------------------------------------------------")
@@ -516,7 +516,7 @@ def mix_stems(stems_dict, stems_to_mix, output_path, fmt="wav"):
     # pydub.overlay() effectively did too.)
     np.clip(mixed, -1.0, 1.0, out=mixed)
 
-    _write_audio(mixed, sample_rate, output_path, fmt=fmt) format=fmt, parameters=["-q:a", "0"] if fmt == "mp3" else None
+    _write_audio(mixed, sample_rate, output_path, fmt=fmt)
     return output_path
 
 # ===============================================================================================

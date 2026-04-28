@@ -14,7 +14,7 @@ import sys
 import time
 import numpy as np
 import soundfile as sf
-#from pydub import AudioSegment
+from pydub import AudioSegment
 #from datetime import datetime
 
 #print("\n# ------------------------------------------------------------------------------------")
@@ -493,22 +493,22 @@ def mix_stems(stems_dict, stems_to_mix, output_path, fmt="wav"):
     mixed, sample_rate = _read_stem_as_array(first_stem_path)
 
     for stem_name in stems_to_mix[1:]:
-         if stem_name not in stems_dict:
+        if stem_name not in stems_dict:
             continue
-    track, sr = _read_stem_as_array(stems_dict[stem_name])
+        track, sr = _read_stem_as_array(stems_dict[stem_name])
         # Sanity check: Demucs always outputs at the same sample rate and
         # length for all stems of a given input, so these should match.
-    if sr != sample_rate:
+        if sr != sample_rate:
             raise ValueError(
                 f"Sample rate mismatch while mixing: {sample_rate} vs {sr} "
                 f"for stem {stem_name}. Cannot mix stems with different rates."
             )
-    if track.shape != mixed.shape:
+        if track.shape != mixed.shape:
             raise ValueError(
                 f"Shape mismatch while mixing: {mixed.shape} vs {track.shape} "
                 f"for stem {stem_name}."
             )
-    mixed = mixed + track
+        mixed = mixed + track
 
     # Clip to [-1, 1] so samples stay in valid range if the summed stems
     # exceed full scale. (Simple clipping; for production-grade mixing you
@@ -516,7 +516,7 @@ def mix_stems(stems_dict, stems_to_mix, output_path, fmt="wav"):
     # pydub.overlay() effectively did too.)
     np.clip(mixed, -1.0, 1.0, out=mixed)
 
-    _write_audio(mixed, sample_rate, output_path, fmt=fmt) format=fmt, parameters=["-q:a", "0"] if fmt == "mp3" else None
+    _write_audio(mixed, sample_rate, output_path, fmt=fmt)
     return output_path
 
 # ===============================================================================================

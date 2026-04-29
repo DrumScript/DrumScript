@@ -42,6 +42,10 @@ Thumbs.db
 # --- IDE Settings ---
 .vscode/
 .idea/
+
+
+# --- Jupyter files/metadata --- 
+*.ipynb
 .ipynb_checkpoints/
 
 # --- Project Specific Output ---

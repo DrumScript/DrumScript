@@ -140,6 +140,11 @@ ignore = []
 quote-style = "double"
 indent-style = "space"
 
+[dependency-groups]
+dev = [
+    "pytest-cov>=7.1.0",
+]
+
 # [FOR FUTURE CONSIDERATION] move o [project.optional-dependencies] below to follow modern PEP 735 standards for local dev environments.
 #[dependency-groups]
 #dev = [

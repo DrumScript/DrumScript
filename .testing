@@ -1,410 +1,142 @@
-## TESTING 2 - THURS30APR2026
-
-# ------------------------------------------------------------------------------------
-
-date/time: 2026-04-30 19:14:26.685247
-
-# ------------------------------------------------------------------------------------
-
-date/time: 2026-04-30 19:14:26.736661
-
---- Starting DrumScript ---
-Target: test_audio/test.wav
-...Loading & Analysing Audio...
-(HOP_LENGTH: 128)
-(Wait Frames Applied: 17)
-(len_onset_times:158)
-   -> Duration: 1:00 (60.92s)
-   -> Detected Tempo: 64.6 BPM
-   -> Detected Onsets: 158
-...Classifying (Fundamental Frequency Engine)...
-   -> Using Standard Polyphonic Classification Engine
-   -> Classified 158 events
-...Building Score & JSON: outputs/test_transcription.pdf...
---- Building Score for: outputs/test_transcription.pdf [Time Sig: 4/4] ---
-Saving to: outputs/test_transcription.json
-Generating PDF: outputs/test_transcription.pdf (Sig: 4/4, 64 BPM)
-PDF successfully saved to: outputs/test_transcription.pdf
-SUCCESS: MIDI file generated at -> outputs/test_transcription.mid
---- Done! ---
-
-
-# ------------------------------------------------------------------------------------
-
-date/time: 2026-04-30 19:14:36.316425
-
-# ------------------------------------------------------------------------------------
-
-date/time: 2026-04-30 19:14:36.342484
-
---- Starting DrumScript ---
-Target: test_audio/65bpm_iron_man_actual.wav
-...Loading & Analysing Audio...
-(HOP_LENGTH: 128)
-(Wait Frames Applied: 17)
-(len_onset_times:1550)
-   -> Duration: 7:26 (446.59s)
-   -> Detected Tempo: 64.6 BPM
-   -> Detected Onsets: 1550
-...Classifying (Fundamental Frequency Engine)...
-   -> Using Standard Polyphonic Classification Engine
-   -> Classified 1550 events
-...Building Score & JSON: outputs/65bpm_iron_man_actual_transcription.pdf...
---- Building Score for: outputs/65bpm_iron_man_actual_transcription.pdf [Time Sig: 4/4] ---
-Saving to: outputs/65bpm_iron_man_actual_transcription.json
-Generating PDF: outputs/65bpm_iron_man_actual_transcription.pdf (Sig: 4/4, 64 BPM)
-PDF successfully saved to: outputs/65bpm_iron_man_actual_transcription.pdf
-SUCCESS: MIDI file generated at -> outputs/65bpm_iron_man_actual_transcription.mid
---- Done! ---
-
-
-# ------------------------------------------------------------------------------------
-
-date/time: 2026-04-30 19:15:16.974129
-
-# ------------------------------------------------------------------------------------
-
-date/time: 2026-04-30 19:15:16.995043
-
---- Starting DrumScript ---
-Target: outputs/stems_test/htdemucs/The Great Old Ones - My Love For The Stars (Cthulhu Fhtagn)/drums.wav
-...Loading & Analysing Audio...
-(HOP_LENGTH: 128)
-(Wait Frames Applied: 17)
-(len_onset_times:2305)
-   -> Duration: 10:19 (619.14s)
-   -> Detected Tempo: 117.5 BPM
-   -> Detected Onsets: 2305
-...Classifying (Fundamental Frequency Engine)...
-   -> Using Standard Polyphonic Classification Engine
-   -> Classified 2305 events
-...Building Score & JSON: outputs/drums_transcription.pdf...
---- Building Score for: outputs/drums_transcription.pdf [Time Sig: 4/4] ---
-Saving to: outputs/drums_transcription.json
-Generating PDF: outputs/drums_transcription.pdf (Sig: 4/4, 117 BPM)
-PDF successfully saved to: outputs/drums_transcription.pdf
-SUCCESS: MIDI file generated at -> outputs/drums_transcription.mid
---- Done! ---
-
-
-# ------------------------------------------------------------------------------------
-
-date/time: 2026-04-30 19:16:13.262016
-
-# ------------------------------------------------------------------------------------
-
-date/time: 2026-04-30 19:16:13.285659
-
---- Starting DrumScript ---
-Target: test_audio/high_tom_phat.wav
-...Loading & Analysing Audio...
-(HOP_LENGTH: 128)
-(Wait Frames Applied: 17)
-(len_onset_times:3)
-   -> Duration: 0:01 (1.54s)
-   -> Detected Tempo: 234.9 BPM
-   -> Detected Onsets: 3
-...Classifying (Fundamental Frequency Engine)...
-   -> Using Rudiment/Single-Beat Classification Engine
-   -> Classified 1 events
-...Building Score & JSON: outputs/high_tom_phat_transcription.pdf...
---- Building Score for: outputs/high_tom_phat_transcription.pdf [Time Sig: 4/4] ---
-Saving to: outputs/high_tom_phat_transcription.json
-Generating PDF: outputs/high_tom_phat_transcription.pdf (Sig: 4/4, 234 BPM)
-PDF successfully saved to: outputs/high_tom_phat_transcription.pdf
-SUCCESS: MIDI file generated at -> outputs/high_tom_phat_transcription.mid
---- Done! ---
-
-
-# ------------------------------------------------------------------------------------
-
-date/time: 2026-04-30 19:16:16.453227
-
-# ------------------------------------------------------------------------------------
-
-date/time: 2026-04-30 19:16:16.477533
-
---- Starting DrumScript ---
-Target: test_audio/test.wav
-...Loading & Analysing Audio...
-(HOP_LENGTH: 128)
-(Wait Frames Applied: 17)
-(len_onset_times:158)
-   -> Duration: 1:00 (60.92s)
-   -> Detected Tempo: 64.6 BPM
-   -> Detected Onsets: 158
-...Classifying (Fundamental Frequency Engine)...
-   -> Using Standard Polyphonic Classification Engine
-   -> Classified 158 events
-...Building Score & JSON: outputs/test_transcription.pdf...
---- Building Score for: outputs/test_transcription.pdf [Time Sig: 4/4] ---
-Saving to: outputs/test_transcription.json
-Generating PDF: outputs/test_transcription.pdf (Sig: 4/4, 64 BPM)
-PDF successfully saved to: outputs/test_transcription.pdf
-SUCCESS: MIDI file generated at -> outputs/test_transcription.mid
---- Done! ---
-
-
-# ------------------------------------------------------------------------------------
-
-date/time: 2026-04-30 19:16:22.995038
-
-# ------------------------------------------------------------------------------------
-
-date/time: 2026-04-30 19:16:23.023677
-
---- Starting DrumScript ---
-Target: test_audio/65bpm_iron_man_actual.wav
-...Loading & Analysing Audio...
-(HOP_LENGTH: 128)
-(Wait Frames Applied: 17)
-(len_onset_times:1550)
-   -> Duration: 7:26 (446.59s)
-   -> Detected Tempo: 64.6 BPM
-   -> Detected Onsets: 1550
-...Classifying (Fundamental Frequency Engine)...
-   -> Using Standard Polyphonic Classification Engine
-   -> Classified 1550 events
-...Building Score & JSON: outputs/65bpm_iron_man_actual_transcription.pdf...
---- Building Score for: outputs/65bpm_iron_man_actual_transcription.pdf [Time Sig: 4/4] ---
-Saving to: outputs/65bpm_iron_man_actual_transcription.json
-Generating PDF: outputs/65bpm_iron_man_actual_transcription.pdf (Sig: 4/4, 64 BPM)
-PDF successfully saved to: outputs/65bpm_iron_man_actual_transcription.pdf
-SUCCESS: MIDI file generated at -> outputs/65bpm_iron_man_actual_transcription.mid
---- Done! ---
-
-
-# ------------------------------------------------------------------------------------
-
-date/time: 2026-04-30 19:16:59.882968
-
-# ------------------------------------------------------------------------------------
-
-date/time: 2026-04-30 19:16:59.910520
-
---- Starting DrumScript ---
-Target: outputs/stems_test/htdemucs/The Great Old Ones - My Love For The Stars (Cthulhu Fhtagn)/drums.wav
-...Loading & Analysing Audio...
-(HOP_LENGTH: 128)
-(Wait Frames Applied: 17)
-(len_onset_times:2305)
-   -> Duration: 10:19 (619.14s)
-   -> Detected Tempo: 117.5 BPM
-   -> Detected Onsets: 2305
-...Classifying (Fundamental Frequency Engine)...
-   -> Using Standard Polyphonic Classification Engine
-   -> Classified 2305 events
-...Building Score & JSON: outputs/drums_transcription.pdf...
---- Building Score for: outputs/drums_transcription.pdf [Time Sig: 4/4] ---
-Saving to: outputs/drums_transcription.json
-Generating PDF: outputs/drums_transcription.pdf (Sig: 4/4, 117 BPM)
-PDF successfully saved to: outputs/drums_transcription.pdf
-SUCCESS: MIDI file generated at -> outputs/drums_transcription.mid
---- Done! ---
-
-
-# ------------------------------------------------------------------------------------
-
-date/time: 2026-04-30 19:17:52.077166
-
-# ------------------------------------------------------------------------------------
-
-date/time: 2026-04-30 19:17:52.093872
-
---- Starting DrumScript ---
-Target: test_audio/high_tom_phat.wav
-...Loading & Analysing Audio...
-(HOP_LENGTH: 128)
-(Wait Frames Applied: 17)
-(len_onset_times:3)
-   -> Duration: 0:01 (1.54s)
-   -> Detected Tempo: 234.9 BPM
-   -> Detected Onsets: 3
-...Classifying (Fundamental Frequency Engine)...
-   -> Using Rudiment/Single-Beat Classification Engine
-   -> Classified 1 events
-...Building Score & JSON: outputs/high_tom_phat_transcription.pdf...
---- Building Score for: outputs/high_tom_phat_transcription.pdf [Time Sig: 4/4] ---
-Saving to: outputs/high_tom_phat_transcription.json
-Generating PDF: outputs/high_tom_phat_transcription.pdf (Sig: 4/4, 234 BPM)
-PDF successfully saved to: outputs/high_tom_phat_transcription.pdf
-SUCCESS: MIDI file generated at -> outputs/high_tom_phat_transcription.mid
---- Done! ---
-
-
-# ------------------------------------------------------------------------------------
-
-date/time: 2026-04-30 19:17:54.828803
-
-# ------------------------------------------------------------------------------------
-
-date/time: 2026-04-30 19:17:54.844700
-
---- Starting DrumScript ---
-Target: test_audio/snare_0007.wav
-...Loading & Analysing Audio...
-Audio too short for tempo detection (0.21s). Defaulting to 120 BPM.
-(HOP_LENGTH: 128)
-(Wait Frames Applied: 17)
-(len_onset_times:1)
-   -> Duration: 0:00 (0.21s)
-   -> Detected Tempo: 120.0 BPM
-   -> Detected Onsets: 1
-...Classifying (Fundamental Frequency Engine)...
-   -> Using Rudiment/Single-Beat Classification Engine
-   -> Classified 1 events
-...Building Score & JSON: outputs/snare_0007_transcription.pdf...
---- Building Score for: outputs/snare_0007_transcription.pdf [Time Sig: 4/4] ---
-Saving to: outputs/snare_0007_transcription.json
-Generating PDF: outputs/snare_0007_transcription.pdf (Sig: 4/4, 120 BPM)
-PDF successfully saved to: outputs/snare_0007_transcription.pdf
-SUCCESS: MIDI file generated at -> outputs/snare_0007_transcription.mid
---- Done! ---
-
-
-# ------------------------------------------------------------------------------------
-
-date/time: 2026-04-30 19:17:57.042878
-
-# ------------------------------------------------------------------------------------
-
-date/time: 2026-04-30 19:17:57.054163
-
---- Starting DrumScript ---
-Target: test_audio/kick_0006.wav
-...Loading & Analysing Audio...
-Audio too short for tempo detection (0.66s). Defaulting to 120 BPM.
-(HOP_LENGTH: 128)
-(Wait Frames Applied: 17)
-(len_onset_times:3)
-   -> Duration: 0:00 (0.66s)
-   -> Detected Tempo: 120.0 BPM
-   -> Detected Onsets: 3
-...Classifying (Fundamental Frequency Engine)...
-   -> Using Rudiment/Single-Beat Classification Engine
-   -> Classified 1 events
-...Building Score & JSON: outputs/kick_0006_transcription.pdf...
---- Building Score for: outputs/kick_0006_transcription.pdf [Time Sig: 4/4] ---
-Saving to: outputs/kick_0006_transcription.json
-Generating PDF: outputs/kick_0006_transcription.pdf (Sig: 4/4, 120 BPM)
-PDF successfully saved to: outputs/kick_0006_transcription.pdf
-SUCCESS: MIDI file generated at -> outputs/kick_0006_transcription.mid
---- Done! ---
-
-
-# ------------------------------------------------------------------------------------
-
-date/time: 2026-04-30 19:17:59.300236
-
-# ------------------------------------------------------------------------------------
-
-date/time: 2026-04-30 19:17:59.316292
-
---- Starting DrumScript ---
-Target: test_audio/ride__2002__20_deep_full_ride_edge.wav
-...Loading & Analysing Audio...
-(HOP_LENGTH: 128)
-(Wait Frames Applied: 17)
-(len_onset_times:89)
-   -> Duration: 0:10 (10.19s)
-   -> Detected Tempo: 234.9 BPM
-   -> Detected Onsets: 89
-...Classifying (Fundamental Frequency Engine)...
-   -> Using Rudiment/Single-Beat Classification Engine
-   -> Classified 1 events
-...Building Score & JSON: outputs/ride__2002__20_deep_full_ride_edge_transcription.pdf...
---- Building Score for: outputs/ride__2002__20_deep_full_ride_edge_transcription.pdf [Time Sig: 4/4] ---
-Saving to: outputs/ride__2002__20_deep_full_ride_edge_transcription.json
-Generating PDF: outputs/ride__2002__20_deep_full_ride_edge_transcription.pdf (Sig: 4/4, 234 BPM)
-PDF successfully saved to: outputs/ride__2002__20_deep_full_ride_edge_transcription.pdf
-SUCCESS: MIDI file generated at -> outputs/ride__2002__20_deep_full_ride_edge_transcription.mid
---- Done! ---
-
-
-# ------------------------------------------------------------------------------------
-
-date/time: 2026-04-30 19:18:02.283917
-
-# ------------------------------------------------------------------------------------
-
-date/time: 2026-04-30 19:18:02.295579
-
---- Starting DrumScript ---
-Target: test_audio/crash__201_bronze__16_crash_edge.wav
-...Loading & Analysing Audio...
-(HOP_LENGTH: 128)
-(Wait Frames Applied: 17)
-(len_onset_times:46)
-   -> Duration: 0:07 (7.36s)
-   -> Detected Tempo: 234.9 BPM
-   -> Detected Onsets: 46
-...Classifying (Fundamental Frequency Engine)...
-   -> Using Rudiment/Single-Beat Classification Engine
-   -> Classified 1 events
-...Building Score & JSON: outputs/crash__201_bronze__16_crash_edge_transcription.pdf...
---- Building Score for: outputs/crash__201_bronze__16_crash_edge_transcription.pdf [Time Sig: 4/4] ---
-Saving to: outputs/crash__201_bronze__16_crash_edge_transcription.json
-Generating PDF: outputs/crash__201_bronze__16_crash_edge_transcription.pdf (Sig: 4/4, 234 BPM)
-PDF successfully saved to: outputs/crash__201_bronze__16_crash_edge_transcription.pdf
-SUCCESS: MIDI file generated at -> outputs/crash__201_bronze__16_crash_edge_transcription.mid
---- Done! ---
-
-
-# ------------------------------------------------------------------------------------
-
-date/time: 2026-04-30 19:18:05.045954
-
-# ------------------------------------------------------------------------------------
-
-date/time: 2026-04-30 19:18:05.056748
-
---- Starting DrumScript ---
-Target: test_audio/hatopen__201_bronze__13_hi-hat_open.wav
-...Loading & Analysing Audio...
-Audio too short for tempo detection (0.58s). Defaulting to 120 BPM.
-(HOP_LENGTH: 128)
-(Wait Frames Applied: 17)
-(len_onset_times:2)
-   -> Duration: 0:00 (0.58s)
-   -> Detected Tempo: 120.0 BPM
-   -> Detected Onsets: 2
-...Classifying (Fundamental Frequency Engine)...
-   -> Using Rudiment/Single-Beat Classification Engine
-   -> Classified 1 events
-...Building Score & JSON: outputs/hatopen__201_bronze__13_hi-hat_open_transcription.pdf...
---- Building Score for: outputs/hatopen__201_bronze__13_hi-hat_open_transcription.pdf [Time Sig: 4/4] ---
-Saving to: outputs/hatopen__201_bronze__13_hi-hat_open_transcription.json
-Generating PDF: outputs/hatopen__201_bronze__13_hi-hat_open_transcription.pdf (Sig: 4/4, 120 BPM)
-PDF successfully saved to: outputs/hatopen__201_bronze__13_hi-hat_open_transcription.pdf
-SUCCESS: MIDI file generated at -> outputs/hatopen__201_bronze__13_hi-hat_open_transcription.mid
---- Done! ---
-
-
-# ------------------------------------------------------------------------------------
-
-date/time: 2026-04-30 19:18:07.269072
-
-# ------------------------------------------------------------------------------------
-
-date/time: 2026-04-30 19:18:07.282222
-
---- Starting DrumScript ---
-Target: test_audio/hatclosed__201_bronze__14_hi-hat_closed.wav
-...Loading & Analysing Audio...
-Audio too short for tempo detection (0.41s). Defaulting to 120 BPM.
-(HOP_LENGTH: 128)
-(Wait Frames Applied: 17)
-(len_onset_times:2)
-   -> Duration: 0:00 (0.41s)
-   -> Detected Tempo: 120.0 BPM
-   -> Detected Onsets: 2
-...Classifying (Fundamental Frequency Engine)...
-   -> Using Rudiment/Single-Beat Classification Engine
-   -> Classified 1 events
-...Building Score & JSON: outputs/hatclosed__201_bronze__14_hi-hat_closed_transcription.pdf...
---- Building Score for: outputs/hatclosed__201_bronze__14_hi-hat_closed_transcription.pdf [Time Sig: 4/4] ---
-Saving to: outputs/hatclosed__201_bronze__14_hi-hat_closed_transcription.json
-Generating PDF: outputs/hatclosed__201_bronze__14_hi-hat_closed_transcription.pdf (Sig: 4/4, 120 BPM)
-PDF successfully saved to: outputs/hatclosed__201_bronze__14_hi-hat_closed_transcription.pdf
-SUCCESS: MIDI file generated at -> outputs/hatclosed__201_bronze__14_hi-hat_closed_transcription.mid
---- Done! ---
+# DrumScript Tests
+
+<!--date_added:weds-29-apr-2026-->
+<!--date_updated:weds-29-apr-2026-->
+
+This directory contains the pytest test suite for `DrumScript`.
+
+---
+## Repository Tree (Testing)
+
+```zsh
+DrumScript/
+├── pytest.ini                              ← project root
+└── tests/
+    ├── __init__.py                         ← empty
+    ├── README.md                           ← orientation guide
+    ├── conftest.py                         ← shared fixtures
+    ├── fixtures/audio/                     ← (empty for now)
+    └── unit/
+        ├── __init__.py                     ← empty
+        ├── test_audio_loader.py            ← ~14 tests
+        ├── test_helpers.py                 ← ~16 tests
+        └── test_stem_splitter_helpers.py   ← ~14 tests, includes regression
+```
+
+--
+## Intro
+
+`DrumScript` uses **[`uv`](https://docs.astral.sh/uv/)** for managing dependencies. You can install this using either:
+- **[`brew install uv` (for Homebrew users)](https://formulae.brew.sh/formula/uv)**
+- **[`curl -LsSf https://astral.sh/uv/install.sh | sh`](https://docs.astral.sh/uv/getting-started/installation/)** (MacOS/Linux)
+- **[`curl -LsSf https://astral.sh/uv/install.sh | sh`](https://docs.astral.sh/uv/getting-started/installation/#__tabbed_1_2)** (Windows)
+
+The project does not use a `requirements.txt` file. All dependencies are declared in **[`pyproject.toml`](../pyproject.toml)**. For efficiency all `dev` dependencies are stored in the **same dependency group**. 
+
+This simplifies contributing because it means you only need to run `uv venv && source .venv/bin/activate && uv sync --extra dev` to a) create a virtual env through uv, activate the venv, install dev dependencies. Check which dependencies have actually been installed: `uv pip list`
+
+> **Note:** You can also use `uv pip install -e ".[dev]"` (ie using the `-e: editable` flag) but experience shows that this can be problematic with cacheing.  It is recommended to use `uv sync...` version
+
+The [`dev`] installs the following packages for contributing to `DrumScript`
+
+1) Technical documentation (`shibuya`, `myst-parser`) <!--TO DO: Add in links to actual pages once first release is done-->
+2) Complete unit testing suite (`pytest`, `pytest-cov`)
+3) Jupyter notebooks (for those who would like to use) (`ipykernel`)
+
+> **Note**: `ipykernel`/`Jupyter` is added as a **courtesy package**, however  **`.ipynb` files should never be committed**. Any PR requests raised that contain either Jupyter/`.ipynb` files, or metadata files, will **not be reviewed until they have been removed**
+
+--
+## Quick start
+
+* Install [`dev`] dependencies: 
+
+`uv sync --extra dev`
+
+> **Note**: You can also use `uv pip install -e ".[dev]"` (ie using the `-e: editable` flag) but experience shows that this can be problematic with cacheing.  It is recommended to use `uv sync...` version
+
+* Check which dependencies have actually been installed:
+
+`uv pip list`
+
+
+```zsh
+
+# Run everything (fast tests only):
+pytest -m "not slow"
+
+# Run a single test file:
+pytest tests/unit/test_audio_loader.py
+
+# Run a single test:
+pytest tests/unit/test_audio_loader.py::TestNormaliseAudio::test_normalises_to_unit_peak
+
+# Show output even from passing tests (handy for debugging fixtures):
+pytest -s
+
+# Generate a coverage report (requires pytest-cov):
+uv pip install pytest-cov
+pytest --cov=drumscript --cov-report=term-missing
+```
+
+## Layout
+
+```
+tests/
+├── conftest.py              ← shared fixtures (auto-discovered)
+├── fixtures/audio/          ← real audio files (currently empty;
+│                              everything is synthesised in conftest)
+├── unit/                    ← fast, no I/O, no subprocess
+│   ├── test_audio_loader.py
+│   ├── test_helpers.py
+│   └── test_stem_splitter_helpers.py
+└── integration/             ← real Demucs / ffmpeg / files
+    └── (to be added)
+```
+
+## Markers
+
+Tests can be tagged with custom markers (defined in `pytest.ini`):
+
+- `@pytest.mark.slow` — skip by default during development
+- `@pytest.mark.integration` — requires Demucs/ffmpeg installed
+
+Run only fast tests:
+
+```zsh
+pytest -m "not slow"
+```
+
+Run only integration tests:
+
+```zsh
+pytest -m integration
+```
+
+## Adding a new test file
+
+1. Put it under `tests/unit/` (or `tests/integration/` if it's slow).
+2. Name the file `test_*.py`.
+3. Inside, group related tests in a `Test*` class with `test_*` methods.
+4. Reuse fixtures from `conftest.py` where possible. Add new ones to
+   `conftest.py` only if multiple files will use them.
+
+## Style conventions
+
+- Each test does one thing. Many small tests > one mega-test.
+- Use the **Arrange / Act / Assert** structure inside each test.
+- Use `tmp_path` for any file output. **Never** write to the working
+  directory or hardcoded paths.
+- Use `pytest.approx(...)` for float comparisons. Direct `==` on floats
+  is unreliable.
+- Use `pytest.raises(...)` for expected exceptions.
+
+## Known issues
+
+- `test_helpers.py::TestGetNoteDurationName` will fail until the
+  `DURATION_*` constants are uncommented in
+  `drumscript/notation_generator/constants.py`. See that file's
+  docstring for the fix.
+
+---
+
+<!--END-->

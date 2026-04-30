@@ -12,15 +12,29 @@ This directory contains the pytest test suite for `DrumScript`.
 DrumScript/
 ├── pytest.ini                              ← project root
 └── tests/
-    ├── __init__.py                         ← empty
-    ├── README.md                           ← orientation guide
-    ├── conftest.py                         ← shared fixtures
-    ├── fixtures/audio/                     ← (empty for now)
-    └── unit/
-        ├── __init__.py                     ← empty
-        ├── test_audio_loader.py            ← ~14 tests
-        ├── test_helpers.py                 ← ~16 tests
-        └── test_stem_splitter_helpers.py   ← ~14 tests, includes regression
+    ├── __init__.py
+    ├── README.md                           ← you are here
+    ├── conftest.py                         ← shared fixtures (auto-discovered)
+    ├── fixtures/
+    │   └── audio/                          ← real audio files
+    │                                         (empty; synthesised in conftest)
+    ├── unit/                               ← fast, no I/O, no subprocess
+    │   ├── __init__.py
+    │   ├── test_audio_loader.py            ← 11 tests
+    │   ├── test_helpers.py                 ← 14 tests
+    │   ├── test_stem_splitter_helpers.py   ← 17 tests, includes regression
+    │   ├── test_tempo_detector.py          ←  6 tests
+    │   ├── test_onset_detector.py          ←  7 tests
+    │   └── test_classify.py                ← 20 tests
+    └── integration/                        ← real Demucs / ffmpeg / files (slow)
+        ├── __init__.py
+        └── test_stem_splitter_real.py      ←  8 tests
+```
+
+> **Note:** Counts above reflect the number of `test_*` functions/methods.
+> Parametrized tests count as one entry here but expand into multiple cases
+> at runtime — pytest's collected total is higher (~95 cases).
+egression
 ```
 
 --

@@ -1,7 +1,7 @@
 # DrumScript Tests
 
 <!--date_added:weds-29-apr-2026-->
-<!--date_updated:weds-29-apr-2026-->
+<!--date_updated:thurs-30-apr-2026-->
 
 This directory contains the pytest test suite for `DrumScript`.
 
@@ -58,6 +58,7 @@ The [`dev`] installs the following packages for contributing to `DrumScript`
 
 `uv pip list`
 
+**Quick Start Commands**
 
 ```zsh
 
@@ -88,9 +89,12 @@ tests/
 ├── unit/                    ← fast, no I/O, no subprocess
 │   ├── test_audio_loader.py
 │   ├── test_helpers.py
-│   └── test_stem_splitter_helpers.py
-└── integration/             ← real Demucs / ffmpeg / files
-    └── (to be added)
+│   ├── test_stem_splitter_helpers.py
+│   ├── test_tempo_detector.py
+│   ├── test_onset_detector.py
+│   └── test_classify.py
+└── integration/             ← real Demucs / ffmpeg / files (slow)
+    └── test_stem_splitter_real.py
 ```
 
 ## Markers
@@ -130,12 +134,10 @@ pytest -m integration
   is unreliable.
 - Use `pytest.raises(...)` for expected exceptions.
 
+
 ## Known issues
 
-- `test_helpers.py::TestGetNoteDurationName` will fail until the
-  `DURATION_*` constants are uncommented in
-  `drumscript/notation_generator/constants.py`. See that file's
-  docstring for the fix.
+None
 
 ---
 

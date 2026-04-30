@@ -20,7 +20,6 @@ import soundfile as sf
 
 from drumscript.audio_processor.audio_loader import load_audio, normalise_audio
 
-
 # =============================================================================
 # normalise_audio
 # =============================================================================

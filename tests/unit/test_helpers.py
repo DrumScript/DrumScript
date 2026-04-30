@@ -38,7 +38,6 @@ from drumscript.notation_generator.helpers import (
     round_to_nearest_subdivision,
 )
 
-
 # =============================================================================
 # round_to_nearest_subdivision
 # =============================================================================

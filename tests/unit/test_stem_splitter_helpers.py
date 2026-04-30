@@ -22,8 +22,6 @@ fallen out of the loop). This test would have caught it on the first
 ``pytest`` run — please don't delete it, even if it looks "obvious".
 """
 
-from pathlib import Path
-
 import numpy as np
 import pytest
 import soundfile as sf
@@ -33,7 +31,6 @@ from drumscript.audio_processor.stem_splitter import (
     _write_audio,
     mix_stems,
 )
-
 
 # =============================================================================
 # _read_stem_as_array
@@ -109,9 +106,7 @@ class TestWriteAudioWav:
 
         assert loaded_sr == sr
 
-    def test_round_trip_preserves_amplitude_approximately(
-        self, tmp_path, stereo_constant_audio
-    ):
+    def test_round_trip_preserves_amplitude_approximately(self, tmp_path, stereo_constant_audio):
         """
         Round-trip should preserve sample values to within 16-bit quantisation.
 

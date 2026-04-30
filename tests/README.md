@@ -24,45 +24,50 @@ DrumScript/
 ```
 
 --
-## Intro
 
-`DrumScript` uses **[`uv`](https://docs.astral.sh/uv/)** for managing dependencies. You can install this using either:
-- **[`brew install uv` (for Homebrew users)](https://formulae.brew.sh/formula/uv)**
-- **[`curl -LsSf https://astral.sh/uv/install.sh | sh`](https://docs.astral.sh/uv/getting-started/installation/)** (MacOS/Linux)
-- **[`curl -LsSf https://astral.sh/uv/install.sh | sh`](https://docs.astral.sh/uv/getting-started/installation/#__tabbed_1_2)** (Windows)
+## Setup
 
-The project does not use a `requirements.txt` file. All dependencies are declared in **[`pyproject.toml`](../pyproject.toml)**. For efficiency all `dev` dependencies are stored in the **same dependency group**. 
+`DrumScript` uses **[`uv`](https://docs.astral.sh/uv/)** to manage dependencies. Install it via:
 
-This simplifies contributing because it means you only need to run `uv venv && source .venv/bin/activate && uv sync --extra dev` to a) create a virtual env through uv, activate the venv, install dev dependencies. Check which dependencies have actually been installed: `uv pip list`
+- **macOS (Homebrew):** [`brew install uv`](https://formulae.brew.sh/formula/uv)
+- **macOS / Linux:** [`curl -LsSf https://astral.sh/uv/install.sh | sh`](https://docs.astral.sh/uv/getting-started/installation/)
+- **Windows:** [`curl -LsSf https://astral.sh/uv/install.sh | sh`](https://docs.astral.sh/uv/getting-started/installation/#__tabbed_1_2)
 
-> **Note:** You can also use `uv pip install -e ".[dev]"` (ie using the `-e: editable` flag) but experience shows that this can be problematic with cacheing.  It is recommended to use `uv sync...` version
+There is no `requirements.txt`. All dependencies are declared in **[`pyproject.toml`](../pyproject.toml)**, with all `dev` dependencies in a single group.
 
-The [`dev`] installs the following packages for contributing to `DrumScript`
+To get set up:
 
-1) Technical documentation (`shibuya`, `myst-parser`) <!--TO DO: Add in links to actual pages once first release is done-->
-2) Complete unit testing suite (`pytest`, `pytest-cov`)
-3) Jupyter notebooks (for those who would like to use) (`ipykernel`)
+```zsh
+uv venv && source .venv/bin/activate && uv sync --extra dev
+```
 
-> **Note**: `ipykernel`/`Jupyter` is added as a **courtesy package**, however  **`.ipynb` files should never be committed**. Any PR requests raised that contain either Jupyter/`.ipynb` files, or metadata files, will **not be reviewed until they have been removed**
+That creates the virtual environment, activates it, and installs all dev dependencies. To verify what's installed:
+
+```zsh
+uv pip list
+```
+
+> **Note:** `uv pip install -e ".[dev]"` (with the `-e` editable flag) also works but has shown caching issues in practice. The `uv sync` form above is recommended.
+
+The `[dev]` group installs:
+
+1. Documentation tooling (`shibuya`, `myst-parser`)
+2. Testing suite (`pytest`, `pytest-cov`)
+3. Jupyter support (`ipykernel`) — convenience only
+
+> **Note:** `ipykernel`/Jupyter is a convenience package; **`.ipynb` files must never be committed**. PRs containing `.ipynb` files (or their metadata) will not be reviewed until they are removed.
 
 --
 ## Quick start
 
-* Install [`dev`] dependencies: 
-
-`uv sync --extra dev`
-
+> * Install [`dev`] dependencies:  `uv sync --extra dev`
 > **Note**: You can also use `uv pip install -e ".[dev]"` (ie using the `-e: editable` flag) but experience shows that this can be problematic with cacheing.  It is recommended to use `uv sync...` version
 
-* Check which dependencies have actually been installed:
+> * Check which dependencies have actually been installed: `uv pip list`
 
-`uv pip list`
-
-**Quick Start Commands**
-
+**
 ```zsh
-
-# Run everything (fast tests only):
+# Run all fast tests (default development loop):
 pytest -m "not slow"
 
 # Run a single test file:
@@ -71,30 +76,37 @@ pytest tests/unit/test_audio_loader.py
 # Run a single test:
 pytest tests/unit/test_audio_loader.py::TestNormaliseAudio::test_normalises_to_unit_peak
 
-# Show output even from passing tests (handy for debugging fixtures):
+# Show stdout from passing tests (handy for debugging fixtures):
 pytest -s
 
-# Generate a coverage report (requires pytest-cov):
-uv pip install pytest-cov
+# Run with a coverage report:
 pytest --cov=drumscript --cov-report=term-missing
 ```
+
 
 ## Layout
 
 ```
-tests/
-├── conftest.py              ← shared fixtures (auto-discovered)
-├── fixtures/audio/          ← real audio files (currently empty;
-│                              everything is synthesised in conftest)
-├── unit/                    ← fast, no I/O, no subprocess
-│   ├── test_audio_loader.py
-│   ├── test_helpers.py
-│   ├── test_stem_splitter_helpers.py
-│   ├── test_tempo_detector.py
-│   ├── test_onset_detector.py
-│   └── test_classify.py
-└── integration/             ← real Demucs / ffmpeg / files (slow)
-    └── test_stem_splitter_real.py
+DrumScript/
+├── pytest.ini                              ← project root
+└── tests/
+    ├── __init__.py
+    ├── README.md                           ← you are here
+    ├── conftest.py                         ← shared fixtures (auto-discovered)
+    ├── fixtures/
+    │   └── audio/                          ← real audio files
+    │                                         (empty; synthesised in conftest)
+    ├── unit/                               ← fast, no I/O, no subprocess
+    │   ├── __init__.py
+    │   ├── test_audio_loader.py
+    │   ├── test_helpers.py
+    │   ├── test_stem_splitter_helpers.py
+    │   ├── test_tempo_detector.py
+    │   ├── test_onset_detector.py
+    │   └── test_classify.py
+    └── integration/                        ← real Demucs / ffmpeg / files (slow)
+        ├── __init__.py
+        └── test_stem_splitter_real.py
 ```
 
 ## Markers
@@ -118,22 +130,23 @@ pytest -m integration
 
 ## Adding a new test file
 
-1. Put it under `tests/unit/` (or `tests/integration/` if it's slow).
+
+1. Place it under `tests/unit/` (or `tests/integration/` if it's slow).
 2. Name the file `test_*.py`.
-3. Inside, group related tests in a `Test*` class with `test_*` methods.
-4. Reuse fixtures from `conftest.py` where possible. Add new ones to
-   `conftest.py` only if multiple files will use them.
+3. Group related tests in a `Test*` class with `test_*` methods.
+4. Reuse fixtures from `conftest.py` where possible. Only add new ones to
+   `conftest.py` if multiple files will use them.
+
 
 ## Style conventions
 
-- Each test does one thing. Many small tests > one mega-test.
+- One concept per test. Many small tests > one mega-test.
 - Use the **Arrange / Act / Assert** structure inside each test.
-- Use `tmp_path` for any file output. **Never** write to the working
-  directory or hardcoded paths.
+- Use the `tmp_path` fixture for any file output. **Never** write to the
+  working directory or hardcoded paths.
 - Use `pytest.approx(...)` for float comparisons. Direct `==` on floats
   is unreliable.
 - Use `pytest.raises(...)` for expected exceptions.
-
 
 ## Known issues
 

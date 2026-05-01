@@ -1,140 +1,90 @@
-# DrumScript Tests
+.. _api:
 
-<!--date_added:weds-29-apr-2026-->
-<!--date_updated:thurs-30-apr-2026-->
+API Reference
+=============
 
-This directory contains the pytest test suite for `DrumScript`.
+This is the auto-generated API reference for DrumScript.
 
----
+   The examples below can also be used as:
+   
+   .. code-block:: python
 
-## Layout
+      import drumscript as ds
+      ds.detect_tempo()
 
-```
-DrumScript/
-├── pytest.ini                              ← project root
-└── tests/
-    ├── __init__.py
-    ├── README.md                           ← you are here
-    ├── conftest.py                         ← shared fixtures (auto-discovered)
-    ├── fixtures/
-    │   └── audio/                          ← real audio files
-    │                                         (empty; synthesised in conftest)
-    ├── unit/                               ← fast, no I/O, no subprocess
-    │   ├── __init__.py
-    │   ├── test_audio_loader.py
-    │   ├── test_helpers.py
-    │   ├── test_stem_splitter_helpers.py
-    │   ├── test_tempo_detector.py
-    │   ├── test_onset_detector.py
-    │   └── test_classify.py
-    └── integration/                        ← real Demucs / ffmpeg / files (slow)
-        ├── __init__.py
-        └── test_stem_splitter_real.py
-```
+Configuration & Constants
+-------------------------
+DrumScript uses a set of global constants to ensure audio processing consistency. 
+These are **not** hidden magic numbers; they are exposed here for transparency.
 
----
+.. autosummary::
+   :toctree: generated
+   :recursive:
 
-## Setup
+   drumscript.notation_generator.constants
 
-`DrumScript` uses **[`uv`](https://docs.astral.sh/uv/)** to manage dependencies. Install it via:
+Core Functions
+--------------
+.. autosummary::
+   :toctree: generated
+   :nosignatures:
 
-- **macOS (Homebrew):** [`brew install uv`](https://formulae.brew.sh/formula/uv)
-- **macOS / Linux:** [`curl -LsSf https://astral.sh/uv/install.sh | sh`](https://docs.astral.sh/uv/getting-started/installation/)
-- **Windows:** [`curl -LsSf https://astral.sh/uv/install.sh | sh`](https://docs.astral.sh/uv/getting-started/installation/#__tabbed_1_2)
+   drumscript.main
+   drumscript.extract_stems
+   drumscript.detect_tempo
+   drumscript.export_pdf
+   drumscript.export_midi
+   drumscript.export_xml
 
-There is no `requirements.txt`. All dependencies are declared in **[`pyproject.toml`](../pyproject.toml)**, with all `dev` dependencies in a single group.
+Audio Processing
+----------------
+.. autosummary::
+   :toctree: generated
+   :recursive:
 
-To get set up:
+   drumscript.audio_processor.audio_loader
+   drumscript.audio_processor.stem_splitter
+   drumscript.audio_processor.stem_splitter.extract_stems
+   drumscript.audio_processor.stem_splitter.extract_drum_stem
+   drumscript.audio_processor.stem_splitter.mix_stems
+   drumscript.audio_processor.stem_splitter.separate_stems
+   drumscript.audio_processor.tempo_detector
+   drumscript.audio_processor.onset_detector
+   drumscript.audio_processor.feature_extractor
 
-```zsh
-uv venv && source .venv/bin/activate && uv sync --extra dev
-```
+Classification 
+-----------------
+.. autosummary::
+   :toctree: generated
+   :recursive:
 
-That creates the virtual environment, activates it, and installs all dev dependencies. To verify what's installed:
+   drumscript.drum_classifier.classify
+   drumscript.drum_classifier.classify.classify_rudiment_events
+   drumscript.drum_classifier.classify.classify_event
+   drumscript.drum_classifier.classify.classify_events
+   drumscript.drum_classifier.classify.classify_idiophone
+   drumscript.drum_classifier.classify.classify_membranophone
+   drumscript.drum_classifier.classify.extract_features
+   drumscript.drum_classifier.classify.get_audio_slice
 
-```zsh
-uv pip list
-```
 
-> **Note:** `uv pip install -e ".[dev]"` (with the `-e` editable flag) also works but has shown caching issues in practice. The `uv sync` form above is recommended.
+Score Builders
+-----------------
+.. autosummary::
+   :toctree: generated
+   :recursive:
 
-The `[dev]` group installs:
+   drumscript.notation_generator.constants
+   drumscript.notation_generator.helpers
+   drumscript.notation_generator.score_builder
+   drumscript.notation_generator.pdf_exporter
+   drumscript.notation_generator.midi_exporter
+   drumscript.notation_generator.xml_exporter
 
-1. Documentation tooling (`shibuya`, `myst-parser`)
-2. Testing suite (`pytest`, `pytest-cov`)
-3. Jupyter support (`ipykernel`) — convenience only
+Utilities
+---------
+.. autosummary::
+   :toctree: generated
+   :recursive:
 
-> **Note:** `ipykernel`/Jupyter is a convenience package; **`.ipynb` files must never be committed**. PRs containing `.ipynb` files (or their metadata) will not be reviewed until they are removed.
-
----
-
-## Quick start
-
-```zsh
-# Run all fast tests (default development loop):
-pytest -m "not slow"
-
-# Run a single test file:
-pytest tests/unit/test_audio_loader.py
-
-# Run a single test:
-pytest tests/unit/test_audio_loader.py::TestNormaliseAudio::test_normalises_to_unit_peak
-
-# Show stdout from passing tests (handy for debugging fixtures):
-pytest -s
-
-# Run with a coverage report:
-pytest --cov=drumscript --cov-report=term-missing
-```
-
----
-
-## Markers
-
-Tests can be tagged with custom markers (defined in `pytest.ini`):
-
-- `@pytest.mark.slow` — skipped by default during development
-- `@pytest.mark.integration` — requires Demucs/ffmpeg installed
-
-```zsh
-# Fast tests only (default):
-pytest -m "not slow"
-
-# Integration tests only:
-pytest -m integration
-
-# Everything (e.g. before a release):
-pytest
-```
-
----
-
-## Adding a new test file
-
-1. Place it under `tests/unit/` (or `tests/integration/` if it's slow).
-2. Name the file `test_*.py`.
-3. Group related tests in a `Test*` class with `test_*` methods.
-4. Reuse fixtures from `conftest.py` where possible. Only add new ones to
-   `conftest.py` if multiple files will use them.
-
----
-
-## Style conventions
-
-- One concept per test. Many small tests > one mega-test.
-- Use the **Arrange / Act / Assert** structure inside each test.
-- Use the `tmp_path` fixture for any file output. **Never** write to the
-  working directory or hardcoded paths.
-- Use `pytest.approx(...)` for float comparisons. Direct `==` on floats
-  is unreliable.
-- Use `pytest.raises(...)` for expected exceptions.
-
----
-
-## Known issues
-
-None.
-
----
-
-<!--END-->
+   drumscript.utils.ffmpeg_installer

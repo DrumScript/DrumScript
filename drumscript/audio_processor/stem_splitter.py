@@ -1,7 +1,7 @@
 # drumscript/audio_processor/stem_splitter.py
 """
-This module uses the demucs library () to extract stems from multi-layer audio files. 
-It also contains functionality for re-mixing stems to create drumless backing tracks for user export.
+This module uses the demucs library () to extract stems from multi-layer audio files. It also contains functionality for re-mixing stems
+to create drumless backing tracks for user export.
 Running: `python3 -m drumscript.audio_processor.stem_splitter path_to_audio_file, <output_path>`
 It supports generating 'drumless' tracks, isolating specific instruments, and format conversion on demand.
 """
@@ -27,8 +27,8 @@ from pydub import AudioSegment
 DEMUCS_MODEL = "htdemucs"
 
 ## PLEASE NOTE: Original Demucs is no longer being maintained (owned by Meta/Facebook). Owners have forked and maintain occasionally:
-# https://github.com/adefossez/demucs. THe usage of demucs is therefore subject to some uncertainty. We may decide to build our own stem_splitter model
-#  in DrumScript in order to ensure the long-term stability of the package, and to continue to make it as lightweight as possible.
+# https://github.com/adefossez/demucs. THe usage of demucs is therefore subject to some uncertainty. We may decide to build our own stem_splitter
+#  model in DrumScript in order to ensure the long-term stability of the package, and to continue to make it as lightweight as possible.
 
 
 ### --- LEGACY CODE -- BEFORE FFMPEG DECOUPLING FROM STEM_SPLITTER

@@ -33,7 +33,7 @@ extensions = [
 ]
 
 ## -- MyST configuration ------------------------------------------------------
-myst_heading_anchors = 3   # auto-generate anchors for H1-H3, anchor IDs for H1 through H3 headings, slugified from the heading text.
+myst_heading_anchors = 3  # auto-generate anchors for H1-H3, anchor IDs for H1 through H3 headings, slugified from the heading text.
 
 # Generate the stub pages automatically
 autosummary_generate = True

@@ -98,13 +98,8 @@ def format_drum_event(drum_type: str, onset_time_seconds: float) -> Dict[str, An
 # This might be overkill depending on your needs, but shows the concept.
 def calculate_cents_difference(freq1: float, freq2: float) -> float:
     """
-    Formats a classified drum event into a dictionary containing notation-specific information. Calculates the difference between two frequencies in cents.
-    Useful for tuning or pitch analysis:
-     - freq1 (float): First frequency in Hz.
-     - freq2 (float): Second frequency in Hz.
-     - returns float: Difference in cents. Positive if freq2 is higher, negative if lower.
-
     Calculates the difference between two frequencies in cents.
+    
     Useful for tuning or pitch analysis.
 
     :param freq1: First frequency in Hz.

@@ -1,7 +1,7 @@
 # drumscript/audio_processor/stem_splitter.py
 """
-This module uses the demucs library () to extract stems from multi-layer audio files. It also contains functionality for re-mixing stems to create 
-drumless backing tracks for user export (using the --drumless cli flag)
+This module uses the demucs library () to extract stems from multi-layer audio files. 
+It also contains functionality for re-mixing stems to create drumless backing tracks for user export.
 Running: `python3 -m drumscript.audio_processor.stem_splitter path_to_audio_file, <output_path>`
 It supports generating 'drumless' tracks, isolating specific instruments, and format conversion on demand.
 """
@@ -26,7 +26,7 @@ from pydub import AudioSegment
 # Stems output by htdemucs: 'drums', 'bass', 'other', 'vocals'
 DEMUCS_MODEL = "htdemucs"
 
-## PLEASE NOTE: Original Demucs is no longer being maintained (owned by Meta/Facebook). Owners have forked and maintain occasionally: 
+## PLEASE NOTE: Original Demucs is no longer being maintained (owned by Meta/Facebook). Owners have forked and maintain occasionally:
 # https://github.com/adefossez/demucs. THe usage of demucs is therefore subject to some uncertainty. We may decide to build our own stem_splitter model
 #  in DrumScript in order to ensure the long-term stability of the package, and to continue to make it as lightweight as possible.
 
@@ -365,9 +365,9 @@ def extract_drum_stem(input_audio_path: str, output_dir: str = None) -> str:
     command = ["demucs", "-o", str(temp_output_dir), "-n", DEMUCS_MODEL, str(input_audio_path)]
     # 3. Run the Demucs separation process
     # print("\n# ------------------------------------------------------------------------------------")
-    # print("\n# PLEASE NOTE: This is currently a test script. Original Demucs is no longer being maintained (owned by Meta/Facebook). 
+    # print("\n# PLEASE NOTE: This is currently a test script. Original Demucs is no longer being maintained (owned by Meta/Facebook).
     # Owners have forked and maintain occasionally: https://github.com/adefossez/demucs. The usage of demucs is therefore subject to some uncertainty.
-    #  We may decide to build our own stem_splitter model in DrumScript in order to ensure the long-term stability of the package, and to continue to 
+    #  We may decide to build our own stem_splitter model in DrumScript in order to ensure the long-term stability of the package, and to continue to
     # make it as lightweight as possible.")
 
     print(f"Starting Demucs separation for: {input_audio_path}...")

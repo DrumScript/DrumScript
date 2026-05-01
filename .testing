@@ -44,10 +44,9 @@ Audio Processing
 
    drumscript.audio_processor.audio_loader
    drumscript.audio_processor.stem_splitter
-   drumscript.audio_processor.stem_splitter.extract_stems
    drumscript.audio_processor.stem_splitter.extract_drum_stem
    drumscript.audio_processor.stem_splitter.mix_stems
-   drumscript.audio_processor.stem_splitter.separate_stems
+   drumscript.audio_processor.stem_splitter.separate_audio
    drumscript.audio_processor.tempo_detector
    drumscript.audio_processor.onset_detector
    drumscript.audio_processor.feature_extractor
@@ -87,10 +86,7 @@ Utilities
    :toctree: generated
    :recursive:
 
-   drumscript.utils.ffmpeg_installer
-
-
-# DrumScript/notation_generator/helpers.py
+   drumscript.utils.ffmpeg_installer# DrumScript/notation_generator/helpers.py
 
 """
 Helper functions for musical calculations.
@@ -190,13 +186,8 @@ def format_drum_event(drum_type: str, onset_time_seconds: float) -> Dict[str, An
 # This might be overkill depending on your needs, but shows the concept.
 def calculate_cents_difference(freq1: float, freq2: float) -> float:
     """
-    Formats a classified drum event into a dictionary containing notation-specific information. Calculates the difference between two frequencies in cents.
-    Useful for tuning or pitch analysis:
-     - freq1 (float): First frequency in Hz.
-     - freq2 (float): Second frequency in Hz.
-     - returns float: Difference in cents. Positive if freq2 is higher, negative if lower.
-
     Calculates the difference between two frequencies in cents.
+
     Useful for tuning or pitch analysis.
 
     :param freq1: First frequency in Hz.
@@ -330,7 +321,6 @@ def separate_audio(
     """
     Separates a full audio track using Demucs and processes the outputs based on user-input args (optional)
 
-    Args:
     :param input_audio_path: Path to the source audio.
     :type input_audio_path: str
     :param output_format: 'wav' or 'mp3', defaults to 'wav'.
@@ -343,10 +333,8 @@ def separate_audio(
     :type all_stems: bool, optional
     :param output_dir: Destination folder. Defaults to CWD/separated_stems, unless specified by user
     :type output_dir: str, optional
-    :return: Dictionary of paths to generated files.
+    :return: Dictionary of paths to generated files (e.g., ``{'drums': path, 'mix': path}``).
     :rtype: dict
-    Returns:
-        dict: Paths to the generated files (e.g., {'drums': path, 'mix': path}).
     """
     input_path = Path(input_audio_path)
     if not input_path.exists():

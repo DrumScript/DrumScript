@@ -1,292 +1,380 @@
-# DrumScript/audio_processor/onset_detector.py
-"""
-This module will detect the onset (start) times of drum hits in the audio.
-"""
+## TESTING 2 - THURS30APR2026
 
-import argparse
-import os
+# ------------------------------------------------------------------------------------
 
-import librosa
-import numpy as np
+date/time: 2026-04-30 19:16:16.453227
 
-# from drumscript.audio_processor import tempo_detector
-from drumscript.audio_processor.tempo_detector import estimate_tempo
-from drumscript.notation_generator.constants import HOP_LENGTH, SAMPLE_RATE
+# ------------------------------------------------------------------------------------
 
-# from datetime import datetime
+date/time: 2026-04-30 19:16:16.477533
 
-# print("\n# ------------------------------------------------------------------------------------")
-# datetimestamp = datetime.now()
-# print(f'\ndate/time: {datetimestamp}')
-
-# def validate_onsets(audio_data: np.ndarray, sr: int, onset_times: list[float]) -> list[float]:
-#
-# Method B: The Pre-Classification Validator.
-# Filters out hallucinated cymbal wobbles and kick drum tails using ADSR slope analysis.
-
-# if not onset_times:
-#   return []
-
-# 1. Backward Compatibility Gate
-# duration = len(audio_data) / sr
-# onset_density = len(onset_times) / duration if duration > 0 else 0
-
-# If it's a dense full song, trust Librosa so we don't accidentally filter out fast ghost notes.
-# This guarantees 100% backward compatibility for 'Iron Man' and 'The Great Old Ones'.
-# if duration >= 15.0 and onset_density >= 1.5:
-#    return onset_times
-
-# 2. ADSR Transient Filter for Sparse / Single-Beat Tracks
-# validated_onsets = [onset_times[0]] # Always keep the very first initial impact
-
-# Calculate the RMS (volume) envelope for the whole track
-# rms = librosa.feature.rms(y=audio_data, hop_length=HOP_LENGTH)[0]
-
-# for i in range(1, len(onset_times)):
-#   current_time = onset_times[i]
-
-# Convert time to the exact RMS frame index
-#  frame_idx = librosa.time_to_frames(current_time, sr=sr, hop_length=HOP_LENGTH)
-
-# Ensure we have enough frames to look slightly backward and forward
-# if 2 <= frame_idx < len(rms) - 2:
-# Volume just before the "hit" (approx 20-30ms prior)
-#    energy_before = rms[frame_idx - 2]
-
-# Volume at the peak of the detected "hit"
-#    energy_peak = max(rms[frame_idx : frame_idx + 3])
-
-# TRANSIENT CHECK:
-# A true stick hit creates an instantaneous spike. A ringing cymbal wobble just slowly swells.
-# If the volume instantaneously spikes by 30% (1.3) or more, it is a real hit.
-#    if energy_peak > (energy_before * 1.30):
-#        validated_onsets.append(current_time)
-# else:
-# Keep edge cases near the very end of the file
-#   validated_onsets.append(current_time)
-
-# return validated_onsets
+--- Starting DrumScript ---
+Target: test_audio/test.wav
+...Loading & Analysing Audio...
+(HOP_LENGTH: 128)
+(Wait Frames Applied: 17)
+(len_onset_times:158)
+   -> Duration: 1:00 (60.92s)
+   -> Detected Tempo: 64.6 BPM
+   -> Detected Onsets: 158
+...Classifying (Fundamental Frequency Engine)...
+   -> Using Standard Polyphonic Classification Engine
+   -> Classified 158 events
+...Building Score & JSON: outputs/test_transcription.pdf...
+--- Building Score for: outputs/test_transcription.pdf [Time Sig: 4/4] ---
+Saving to: outputs/test_transcription.json
+Generating PDF: outputs/test_transcription.pdf (Sig: 4/4, 64 BPM)
+PDF successfully saved to: outputs/test_transcription.pdf
+SUCCESS: MIDI file generated at -> outputs/test_transcription.mid
+--- Done! ---
 
 
-def detect_onsets(audio_data: np.ndarray, sr: int) -> list[float]:
+# ------------------------------------------------------------------------------------
 
-    # Detects the onset (start) times of percussive events in an audio signal.
+date/time: 2026-04-30 19:16:22.995038
 
-    # This function uses librosa's built-in onset detection algorithms, which
-    # typically rely on spectral flux or other energy-based methods to identify
-    # sudden changes in the audio signal characteristic of percussive hits.
+# ------------------------------------------------------------------------------------
 
-    # Args:
-    #   audio_data (np.ndarray): The input audio time series.
-    #   sr (int): The sample rate of the audio data.
+date/time: 2026-04-30 19:16:23.023677
 
-    # Returns:
-    #   list[float]: A list of detected onset times in seconds.
-
-    if audio_data.size == 0:
-        return []
-
-    y_percussive = librosa.effects.percussive(y=audio_data)
-
-    # --- ENFORCE PHYSICAL DRUMMING LIMITS ---
-    # Because HOP_LENGTH is 128, the frames are very tiny (~2.9ms).
-    # We must explicitly tell Librosa to wait at least 50ms before triggering
-    # a second hit, otherwise it will trigger on cymbal vibrations.
-    lockout_time_secs = 0.05
-    wait_frames = int(lockout_time_secs * (SAMPLE_RATE / HOP_LENGTH))
-
-    print(f"(HOP_LENGTH: {HOP_LENGTH})")
-    print(f"(Wait Frames Applied: {wait_frames})")
-
-    # Pass the 'wait' and 'delta' constraints directly into the simple wrapper
-    onset_frames = librosa.onset.onset_detect(
-        y=y_percussive,
-        sr=SAMPLE_RATE,
-        hop_length=HOP_LENGTH,
-        units="frames",
-        wait=wait_frames,  # Stops rapid double-triggering on cymbals
-        delta=0.05,  # Ignores general background noise floor
-    )
-
-    # Commenting out to test single_beat_refinement :)
-    # print(f'(len_onset_frames:{len(onset_frames)})')
-
-    # Convert onset frames to time in seconds
-    # onset_times = librosa.frames_to_time(
-    #   onset_frames,
-    #   sr=SAMPLE_RATE,
-    #   hop_length=HOP_LENGTH
-    # )
-
-    # print(f'(len_onset_times:{len(onset_times)})')
-
-    # return onset_times.tolist()
-
-    # Convert onset frames to time in seconds
-    onset_times = librosa.frames_to_time(onset_frames, sr=SAMPLE_RATE, hop_length=HOP_LENGTH).tolist()
-
-    # --- SINGLE-BEAT REFINEMENT ---
-    # If the total duration is very short (< 2.0s), it's likely a single hit sample.
-    # We apply a stricter "De-bounce" to prevent room reflections from triggering events.
-    duration = len(audio_data) / sr
-    # if duration < 1.0 and len(onset_times) > 1:
-    if duration < 2.0 and len(onset_times) > 1:
-        # We only keep the FIRST onset if others follow too closely (within 150ms)
-        # This fixes the 'single hit showing multiple events' issue in your orchestration folder.
-        refined_onsets = [onset_times[0]]
-        for i in range(1, len(onset_times)):
-            if onset_times[i] - refined_onsets[-1] > 0.150:  # 150ms threshold
-                refined_onsets.append(onset_times[i])
-        onset_times = refined_onsets
-
-    print(f"(len_onset_times:{len(onset_times)})")
-    return onset_times
+--- Starting DrumScript ---
+Target: test_audio/65bpm_iron_man_actual.wav
+...Loading & Analysing Audio...
+(HOP_LENGTH: 128)
+(Wait Frames Applied: 17)
+(len_onset_times:1550)
+   -> Duration: 7:26 (446.59s)
+   -> Detected Tempo: 64.6 BPM
+   -> Detected Onsets: 1550
+...Classifying (Fundamental Frequency Engine)...
+   -> Using Standard Polyphonic Classification Engine
+   -> Classified 1550 events
+...Building Score & JSON: outputs/65bpm_iron_man_actual_transcription.pdf...
+--- Building Score for: outputs/65bpm_iron_man_actual_transcription.pdf [Time Sig: 4/4] ---
+Saving to: outputs/65bpm_iron_man_actual_transcription.json
+Generating PDF: outputs/65bpm_iron_man_actual_transcription.pdf (Sig: 4/4, 64 BPM)
+PDF successfully saved to: outputs/65bpm_iron_man_actual_transcription.pdf
+SUCCESS: MIDI file generated at -> outputs/65bpm_iron_man_actual_transcription.mid
+--- Done! ---
 
 
-# ------- AUTOMATIC TEMPO DETECTION------------------------------------
-# REPLACED THE FUNCTION THAT WAS HARDCODED TO DETECT TEMPO FROM ONSETS WITH IMPORTED FCT FROM THE TEMPO_DETECTOR SCRIPT
+# ------------------------------------------------------------------------------------
 
-"""
-def calculate_tempo_from_onsets(onset_times: np.ndarray, sr: int) -> float:
-    #
-    #Estimates the tempo (BPM) from a list of onset timestamps.
+date/time: 2026-04-30 19:16:59.882968
 
-   # :param onset_times: Array of onset timestamps in seconds.
-    #:type onset_times: np.ndarray
-    #:param sr: The sampling rate.
-    #:type sr: int
-    #:return: The estimated tempo in BPM.
-    #:rtype: float
-    #
-    if len(onset_times) < 2:
-        return 120.0 # Return a default tempo if not enough onsets are found
+# ------------------------------------------------------------------------------------
 
-    # FIX: librosa.beat.tempo does NOT accept 'onset_events' without audio/envelope.
-    # We calculate tempo using Inter-Onset Intervals (IOI).
-    
-    # 1. Calculate the time difference between consecutive hits
-    ioi = np.diff(onset_times)
-    
-    # 2. Filter out extremely short or long gaps (e.g., fast rolls or long pauses)
-    # 0.2s = 300 BPM, 1.5s = 40 BPM
-    valid_ioi = ioi[(ioi > 0.2) & (ioi < 1.5)]
-    
-    if len(valid_ioi) > 0:
-        # 3. Take the median interval (median is better than average as it ignores outliers)
-        avg_interval = np.median(valid_ioi)
-        tempo = 60.0 / avg_interval
-    else:
-        tempo = 120.0 # Default if pattern is weird or too sparse
+date/time: 2026-04-30 19:16:59.910520
 
-    return float(tempo)
-
-"""
+--- Starting DrumScript ---
+Target: outputs/stems_test/htdemucs/The Great Old Ones - My Love For The Stars (Cthulhu Fhtagn)/drums.wav
+...Loading & Analysing Audio...
+(HOP_LENGTH: 128)
+(Wait Frames Applied: 17)
+(len_onset_times:2305)
+   -> Duration: 10:19 (619.14s)
+   -> Detected Tempo: 117.5 BPM
+   -> Detected Onsets: 2305
+...Classifying (Fundamental Frequency Engine)...
+   -> Using Standard Polyphonic Classification Engine
+   -> Classified 2305 events
+...Building Score & JSON: outputs/drums_transcription.pdf...
+--- Building Score for: outputs/drums_transcription.pdf [Time Sig: 4/4] ---
+Saving to: outputs/drums_transcription.json
+Generating PDF: outputs/drums_transcription.pdf (Sig: 4/4, 117 BPM)
+PDF successfully saved to: outputs/drums_transcription.pdf
+SUCCESS: MIDI file generated at -> outputs/drums_transcription.mid
+--- Done! ---
 
 
-# ----------------------------------------------------------------------
+# ------------------------------------------------------------------------------------
+
+date/time: 2026-04-30 19:54:44.853182
+
+# ------------------------------------------------------------------------------------
+
+date/time: 2026-04-30 19:54:44.877961
+
+--- Starting DrumScript ---
+Target: test_audio/high_tom_phat.wav
+...Loading & Analysing Audio...
+(HOP_LENGTH: 128)
+(Wait Frames Applied: 17)
+(len_onset_times:3)
+   -> Duration: 0:01 (1.54s)
+   -> Detected Tempo: 234.9 BPM
+   -> Detected Onsets: 3
+...Classifying (Fundamental Frequency Engine)...
+   -> Using Rudiment/Single-Beat Classification Engine
+   -> Classified 1 events
+...Building Score & JSON: outputs/high_tom_phat_transcription.pdf...
+--- Building Score for: outputs/high_tom_phat_transcription.pdf [Time Sig: 4/4] ---
+Saving to: outputs/high_tom_phat_transcription.json
+Generating PDF: outputs/high_tom_phat_transcription.pdf (Sig: 4/4, 234 BPM)
+PDF successfully saved to: outputs/high_tom_phat_transcription.pdf
+SUCCESS: MIDI file generated at -> outputs/high_tom_phat_transcription.mid
+--- Done! ---
 
 
-if __name__ == "__main__":
-    from drumscript.audio_processor.audio_loader import load_audio, normalise_audio
+# ------------------------------------------------------------------------------------
 
-    # from drumscript.audio_processor import tempo_detector x
-    from drumscript.audio_processor.tempo_detector import estimate_tempo
+date/time: 2026-04-30 19:54:48.183771
 
-    print("\n#=======================================================================================")
-    print("Running onset_detector.py example with provided filepath...")  # FUTURE: Find way to encode this so it prints the file path provided in CLI
-    try:
-        # Import necessary modules from your package
-        # Note: You might need 'from DrumScript.audio_processor.audio_loader import ...'
-        # if running this script directly and 'audio_processor' is not in the Python path.
-        # However, for 'python -m' style execution, 'from audio_processor.audio_loader import ...' is usually correct.
+# ------------------------------------------------------------------------------------
 
-        # Required for CLI argparsing
-        parser = argparse.ArgumentParser(description="Detect onsets in drum audio.")
-        parser.add_argument("input_audio", help="Path to the input audio file")
-        args = parser.parse_args()
+date/time: 2026-04-30 19:54:48.202226
 
-        # sr = 44100 # Target sample rate for processing
-        # sr = 44100*1.5 # Target sample rate for processing
-        sr = SAMPLE_RATE
-        print(f"sample_rate=sr={sr}")  # Print current sample rate applied
+--- Starting DrumScript ---
+Target: test_audio/snare_0007.wav
+...Loading & Analysing Audio...
+Audio too short for tempo detection (0.21s). Defaulting to 120 BPM.
+(HOP_LENGTH: 128)
+(Wait Frames Applied: 17)
+(len_onset_times:1)
+   -> Duration: 0:00 (0.21s)
+   -> Detected Tempo: 120.0 BPM
+   -> Detected Onsets: 1
+...Classifying (Fundamental Frequency Engine)...
+   -> Using Rudiment/Single-Beat Classification Engine
+   -> Classified 1 events
+...Building Score & JSON: outputs/snare_0007_transcription.pdf...
+--- Building Score for: outputs/snare_0007_transcription.pdf [Time Sig: 4/4] ---
+Saving to: outputs/snare_0007_transcription.json
+Generating PDF: outputs/snare_0007_transcription.pdf (Sig: 4/4, 120 BPM)
+PDF successfully saved to: outputs/snare_0007_transcription.pdf
+SUCCESS: MIDI file generated at -> outputs/snare_0007_transcription.mid
+--- Done! ---
 
-        # --- Get path to audio (cli or import from sister module)
-        current_script_dir = os.path.dirname(os.path.abspath(__file__))
-        print(f"current_script_dir: {current_script_dir}")
-        # Go up one level from audio_processor/onset_detector.py to the outer DRUMSCRIPT/ folder
-        project_root = os.path.abspath(os.path.join(current_script_dir, "..", ".."))
-        print(f"project_root: {project_root}")
-        audio_path = os.path.abspath(args.input_audio)
 
-        print(f"audio_path: {audio_path}")
-        print(f"Attempting to load: {audio_path}")
+# ------------------------------------------------------------------------------------
 
-        # Load and normalise audio
-        # audio_data, sample_rate = load_audio(audio_path, sr=sr)
-        audio_data, sample_rate = load_audio(audio_path, sr=SAMPLE_RATE)
-        normalised_audio = normalise_audio(audio_data)
+date/time: 2026-04-30 19:54:50.260018
 
-        # Detect onsets
-        print(f"Detecting onsets in : {audio_path}")
-        onsets = detect_onsets(normalised_audio, SAMPLE_RATE)
-        print(f"Detected {len(onsets)} onsets.")
+# ------------------------------------------------------------------------------------
 
-        if onsets:
-            # Print the first few detected onsets for verification
-            # print("\nFirst 10 detected onsets (seconds):")
-            # for i, onset_time in enumerate(onsets[:10]):
-            # if len(onsets) > 10:
-            #   print(f"  ...and {len(onsets) - 10} more onsets.")
+date/time: 2026-04-30 19:54:50.271292
 
-            # Print * (ALL) detected onsets for now
-            print(f"\n All {len(onsets)} detected onsets (seconds):")
-            for i, onset_time in enumerate(onsets):
-                print(f"  Onset {i + 1}: {onset_time:.4f}s")
-            # for i, onset_time in enumerate(onsets):
-            # print(f"  Onset {i+1}: {onsets:.4f}s")
-        else:
-            print(f"No onsets detected in audio_path: {audio_path}")
-        # global_tempo = estimate_tempo(audio_data, SAMPLE_RATE, HOP_LENGTH)
-        # tempo = estimate_tempo(audio_data, SAMPLE_RATE, HOP_LENGTH)
-        tempo = estimate_tempo(audio_data, SAMPLE_RATE)
-        # tempo = estimate_tempo(audio_data, SAMPLE_RATE)/2 # temporary fix
-        # tempo = estimate_tempo(audio_data, SAMPLE_RATE)/4 # temporary fix
-        # print(f"Loaded audio: Shape={normalised_audio.shape}, Sample Rate={sample_rate}, Duration={len(normalised_audio)/sample_rate:.2f} seconds, Tempo={calculate_tempo_from_onsets(onsets, sr=SAMPLE_RATE):2f}")
-        print(
-            f"Loaded audio: Shape={normalised_audio.shape}, Sample Rate={sample_rate} (Hz), Hop Length={HOP_LENGTH} (Hz), Duration={len(normalised_audio) / sample_rate:.2f} seconds, Tempo={tempo:.2f} BPM"
-        )
-    except FileNotFoundError:
-        print(f"\nERROR: The audio file '{audio_path}' was not found.")
-        print(f"\nPlease ensure you have provided the correct path to your audio file: {audio_path}")
-    except ImportError as e:
-        print(f"\nERROR: Required modules/libraries might be missing or imports are incorrect: {e}")
-        print("Ensure 'soundfile', 'librosa', 'numpy', and your DrumScript modules are correctly installed and structured.")
-        print("For MP3, 'ffmpeg' must also be installed on your system and accessible in PATH.")
-    except Exception as e:
-        print(f"\nAn unexpected error occurred during the example execution: {e}")
-        import traceback
+--- Starting DrumScript ---
+Target: test_audio/kick_0006.wav
+...Loading & Analysing Audio...
+Audio too short for tempo detection (0.66s). Defaulting to 120 BPM.
+(HOP_LENGTH: 128)
+(Wait Frames Applied: 17)
+(len_onset_times:3)
+   -> Duration: 0:00 (0.66s)
+   -> Detected Tempo: 120.0 BPM
+   -> Detected Onsets: 3
+...Classifying (Fundamental Frequency Engine)...
+   -> Using Rudiment/Single-Beat Classification Engine
+   -> Classified 1 events
+...Building Score & JSON: outputs/kick_0006_transcription.pdf...
+--- Building Score for: outputs/kick_0006_transcription.pdf [Time Sig: 4/4] ---
+Saving to: outputs/kick_0006_transcription.json
+Generating PDF: outputs/kick_0006_transcription.pdf (Sig: 4/4, 120 BPM)
+PDF successfully saved to: outputs/kick_0006_transcription.pdf
+SUCCESS: MIDI file generated at -> outputs/kick_0006_transcription.mid
+--- Done! ---
 
-        traceback.print_exc()  # Print full traceback for debugging
 
-    print("\nonset_detector.py example finished.")
+# ------------------------------------------------------------------------------------
 
-# Uncomment to use, for clearer error logs
-# print("\n# ------------------------------------------------------------------------------------")
-# LEGACY CODE:
-# --- 2. Onset detection
-# Now, we run the same onset detection, but on the much cleaner
-# percussive signal. This allows us to get a precise detection
-# of the initial hit without interference from the sustain.
+date/time: 2026-04-30 19:54:52.419155
 
-#  Changed units from 'frames' to 'time' to get seconds directly.
-# This removes the need for the subsequent librosa.frames_to_time conversion.
-# onset_times = librosa.onset.onset_detect(
-#   y=y_percussive,  # Use the percussive-only signal
-#  sr=SAMPLE_RATE,
-#  units='time',       # Request output directly in seconds (float)
-# delta=0.0095,       # The sensitive delta is now effective and safe to use
-# wait=1,
-#  pre_avg=8,
-#  post_avg=8,
-#  backtrack=True
-# )
+# ------------------------------------------------------------------------------------
+
+date/time: 2026-04-30 19:54:52.429928
+
+--- Starting DrumScript ---
+Target: test_audio/ride__2002__20_deep_full_ride_edge.wav
+...Loading & Analysing Audio...
+(HOP_LENGTH: 128)
+(Wait Frames Applied: 17)
+(len_onset_times:89)
+   -> Duration: 0:10 (10.19s)
+   -> Detected Tempo: 234.9 BPM
+   -> Detected Onsets: 89
+...Classifying (Fundamental Frequency Engine)...
+   -> Using Rudiment/Single-Beat Classification Engine
+   -> Classified 1 events
+...Building Score & JSON: outputs/ride__2002__20_deep_full_ride_edge_transcription.pdf...
+--- Building Score for: outputs/ride__2002__20_deep_full_ride_edge_transcription.pdf [Time Sig: 4/4] ---
+Saving to: outputs/ride__2002__20_deep_full_ride_edge_transcription.json
+Generating PDF: outputs/ride__2002__20_deep_full_ride_edge_transcription.pdf (Sig: 4/4, 234 BPM)
+PDF successfully saved to: outputs/ride__2002__20_deep_full_ride_edge_transcription.pdf
+SUCCESS: MIDI file generated at -> outputs/ride__2002__20_deep_full_ride_edge_transcription.mid
+--- Done! ---
+
+
+# ------------------------------------------------------------------------------------
+
+date/time: 2026-04-30 19:54:55.317113
+
+# ------------------------------------------------------------------------------------
+
+date/time: 2026-04-30 19:54:55.329785
+
+--- Starting DrumScript ---
+Target: test_audio/crash__201_bronze__16_crash_edge.wav
+...Loading & Analysing Audio...
+(HOP_LENGTH: 128)
+(Wait Frames Applied: 17)
+(len_onset_times:46)
+   -> Duration: 0:07 (7.36s)
+   -> Detected Tempo: 234.9 BPM
+   -> Detected Onsets: 46
+...Classifying (Fundamental Frequency Engine)...
+   -> Using Rudiment/Single-Beat Classification Engine
+   -> Classified 1 events
+...Building Score & JSON: outputs/crash__201_bronze__16_crash_edge_transcription.pdf...
+--- Building Score for: outputs/crash__201_bronze__16_crash_edge_transcription.pdf [Time Sig: 4/4] ---
+Saving to: outputs/crash__201_bronze__16_crash_edge_transcription.json
+Generating PDF: outputs/crash__201_bronze__16_crash_edge_transcription.pdf (Sig: 4/4, 234 BPM)
+PDF successfully saved to: outputs/crash__201_bronze__16_crash_edge_transcription.pdf
+SUCCESS: MIDI file generated at -> outputs/crash__201_bronze__16_crash_edge_transcription.mid
+--- Done! ---
+
+
+# ------------------------------------------------------------------------------------
+
+date/time: 2026-04-30 19:54:57.995056
+
+# ------------------------------------------------------------------------------------
+
+date/time: 2026-04-30 19:54:58.011074
+
+--- Starting DrumScript ---
+Target: test_audio/hatopen__201_bronze__13_hi-hat_open.wav
+...Loading & Analysing Audio...
+Audio too short for tempo detection (0.58s). Defaulting to 120 BPM.
+(HOP_LENGTH: 128)
+(Wait Frames Applied: 17)
+(len_onset_times:2)
+   -> Duration: 0:00 (0.58s)
+   -> Detected Tempo: 120.0 BPM
+   -> Detected Onsets: 2
+...Classifying (Fundamental Frequency Engine)...
+   -> Using Rudiment/Single-Beat Classification Engine
+   -> Classified 1 events
+...Building Score & JSON: outputs/hatopen__201_bronze__13_hi-hat_open_transcription.pdf...
+--- Building Score for: outputs/hatopen__201_bronze__13_hi-hat_open_transcription.pdf [Time Sig: 4/4] ---
+Saving to: outputs/hatopen__201_bronze__13_hi-hat_open_transcription.json
+Generating PDF: outputs/hatopen__201_bronze__13_hi-hat_open_transcription.pdf (Sig: 4/4, 120 BPM)
+PDF successfully saved to: outputs/hatopen__201_bronze__13_hi-hat_open_transcription.pdf
+SUCCESS: MIDI file generated at -> outputs/hatopen__201_bronze__13_hi-hat_open_transcription.mid
+--- Done! ---
+
+
+# ------------------------------------------------------------------------------------
+
+date/time: 2026-04-30 19:55:00.113127
+
+# ------------------------------------------------------------------------------------
+
+date/time: 2026-04-30 19:55:00.135546
+
+--- Starting DrumScript ---
+Target: test_audio/hatclosed__201_bronze__14_hi-hat_closed.wav
+...Loading & Analysing Audio...
+Audio too short for tempo detection (0.41s). Defaulting to 120 BPM.
+(HOP_LENGTH: 128)
+(Wait Frames Applied: 17)
+(len_onset_times:2)
+   -> Duration: 0:00 (0.41s)
+   -> Detected Tempo: 120.0 BPM
+   -> Detected Onsets: 2
+...Classifying (Fundamental Frequency Engine)...
+   -> Using Rudiment/Single-Beat Classification Engine
+   -> Classified 1 events
+...Building Score & JSON: outputs/hatclosed__201_bronze__14_hi-hat_closed_transcription.pdf...
+--- Building Score for: outputs/hatclosed__201_bronze__14_hi-hat_closed_transcription.pdf [Time Sig: 4/4] ---
+Saving to: outputs/hatclosed__201_bronze__14_hi-hat_closed_transcription.json
+Generating PDF: outputs/hatclosed__201_bronze__14_hi-hat_closed_transcription.pdf (Sig: 4/4, 120 BPM)
+PDF successfully saved to: outputs/hatclosed__201_bronze__14_hi-hat_closed_transcription.pdf
+SUCCESS: MIDI file generated at -> outputs/hatclosed__201_bronze__14_hi-hat_closed_transcription.mid
+--- Done! ---
+
+
+# ------------------------------------------------------------------------------------
+
+date/time: 2026-04-30 20:01:43.213189
+
+# ------------------------------------------------------------------------------------
+
+date/time: 2026-04-30 20:01:43.233047
+
+--- Starting DrumScript ---
+Target: test_audio/high_tom_phat.wav
+...Loading & Analysing Audio...
+(HOP_LENGTH: 128)
+(Wait Frames Applied: 17)
+(len_onset_times:3)
+   -> Duration: 0:01 (1.54s)
+   -> Detected Tempo: 234.9 BPM
+   -> Detected Onsets: 3
+...Classifying (Fundamental Frequency Engine)...
+   -> Using Rudiment/Single-Beat Classification Engine
+   -> Classified 1 events
+...Building Score & JSON: outputs/high_tom_phat_transcription.pdf...
+--- Building Score for: outputs/high_tom_phat_transcription.pdf [Time Sig: 4/4] ---
+Saving to: outputs/high_tom_phat_transcription.json
+Generating PDF: outputs/high_tom_phat_transcription.pdf (Sig: 4/4, 234 BPM)
+PDF successfully saved to: outputs/high_tom_phat_transcription.pdf
+SUCCESS: MIDI file generated at -> outputs/high_tom_phat_transcription.mid
+--- Done! ---
+
+# ------------------------------------------------------------------------------------
+
+date/time: 2026-04-30 19:55:02.461244
+
+# ------------------------------------------------------------------------------------
+
+date/time: 2026-04-30 19:55:02.488043
+
+--- Starting DrumScript ---
+Target: test_audio/mid_tom_phat.wav
+...Loading & Analysing Audio...
+(HOP_LENGTH: 128)
+(Wait Frames Applied: 17)
+(len_onset_times:5)
+   -> Duration: 0:01 (1.54s)
+   -> Detected Tempo: 215.3 BPM
+   -> Detected Onsets: 5
+...Classifying (Fundamental Frequency Engine)...
+   -> Using Rudiment/Single-Beat Classification Engine
+   -> Classified 1 events
+...Building Score & JSON: outputs/mid_tom_phat_transcription.pdf...
+--- Building Score for: outputs/mid_tom_phat_transcription.pdf [Time Sig: 4/4] ---
+Saving to: outputs/mid_tom_phat_transcription.json
+Generating PDF: outputs/mid_tom_phat_transcription.pdf (Sig: 4/4, 215 BPM)
+PDF successfully saved to: outputs/mid_tom_phat_transcription.pdf
+SUCCESS: MIDI file generated at -> outputs/mid_tom_phat_transcription.mid
+--- Done! ---
+
+
+# ------------------------------------------------------------------------------------
+
+date/time: 2026-04-30 19:55:04.863871
+
+# ------------------------------------------------------------------------------------
+
+date/time: 2026-04-30 19:55:04.876994
+
+--- Starting DrumScript ---
+Target: test_audio/low_tom_phat.wav
+...Loading & Analysing Audio...
+(HOP_LENGTH: 128)
+(Wait Frames Applied: 17)
+(len_onset_times:2)
+   -> Duration: 0:01 (1.55s)
+   -> Detected Tempo: 78.3 BPM
+   -> Detected Onsets: 2
+...Classifying (Fundamental Frequency Engine)...
+   -> Using Rudiment/Single-Beat Classification Engine
+   -> Classified 1 events
+...Building Score & JSON: outputs/low_tom_phat_transcription.pdf...
+--- Building Score for: outputs/low_tom_phat_transcription.pdf [Time Sig: 4/4] ---
+Saving to: outputs/low_tom_phat_transcription.json
+Generating PDF: outputs/low_tom_phat_transcription.pdf (Sig: 4/4, 78 BPM)
+PDF successfully saved to: outputs/low_tom_phat_transcription.pdf
+SUCCESS: MIDI file generated at -> outputs/low_tom_phat_transcription.mid
+--- Done! ---

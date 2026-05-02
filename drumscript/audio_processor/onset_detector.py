@@ -93,7 +93,8 @@ def detect_onsets(audio_data: np.ndarray, sr: int) -> list[float]:
     # We must explicitly tell Librosa to wait at least 50ms before triggering
     # a second hit, otherwise it will trigger on cymbal vibrations.
     lockout_time_secs = 0.05
-    wait_frames = int(lockout_time_secs * (SAMPLE_RATE / HOP_LENGTH))
+    # wait_frames = int(lockout_time_secs * (SAMPLE_RATE / HOP_LENGTH))
+    wait_frames = int(lockout_time_secs * (sr / HOP_LENGTH))
 
     print(f"(HOP_LENGTH: {HOP_LENGTH})")
     print(f"(Wait Frames Applied: {wait_frames})")
@@ -101,7 +102,8 @@ def detect_onsets(audio_data: np.ndarray, sr: int) -> list[float]:
     # Pass the 'wait' and 'delta' constraints directly into the simple wrapper
     onset_frames = librosa.onset.onset_detect(
         y=y_percussive,
-        sr=SAMPLE_RATE,
+        # sr=SAMPLE_RATE,
+        sr=sr,
         hop_length=HOP_LENGTH,
         units="frames",
         wait=wait_frames,  # Stops rapid double-triggering on cymbals
@@ -123,7 +125,8 @@ def detect_onsets(audio_data: np.ndarray, sr: int) -> list[float]:
     # return onset_times.tolist()
 
     # Convert onset frames to time in seconds
-    onset_times = librosa.frames_to_time(onset_frames, sr=SAMPLE_RATE, hop_length=HOP_LENGTH).tolist()
+    # onset_times = librosa.frames_to_time(onset_frames, sr=SAMPLE_RATE, hop_length=HOP_LENGTH).tolist()
+    onset_times = librosa.frames_to_time(onset_frames, sr=sr, hop_length=HOP_LENGTH).tolist()
 
     # --- SINGLE-BEAT REFINEMENT ---
     # If the total duration is very short (< 2.0s), it's likely a single hit sample.

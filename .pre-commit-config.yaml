@@ -1,6 +1,7 @@
 repos:
+    ## add ruff hook
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    # Match the version you specified in your pyproject.toml
+    # Match the version you specified in the pyproject.toml
     rev: v0.15.11 
     hooks:
       # Run the linter and sort imports
@@ -8,3 +9,14 @@ repos:
         args: [ --fix ]
       # Run the formatter
       - id: ruff-format
+
+
+    ## shellcheck hook
+  - repo: https://github.com/koalaman/shellcheck-precommit
+    rev: v0.10.0
+    hooks:
+      - id: shellcheck
+        # Optional: tell shellcheck which shell dialect you're using.
+        # Defaults to detecting from the shebang line, which is fine
+        # for our scripts (they use #!/usr/bin/env bash or #!/bin/bash).
+        # args: ["--shell=bash"]

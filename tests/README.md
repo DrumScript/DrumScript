@@ -1,7 +1,7 @@
 # DrumScript Tests
 
 <!--date_added:weds-29-apr-2026-->
-<!--date_updated:thurs-30-apr-2026-->
+<!--date_updated:sat-02-may-2026-->
 
 This directory contains the pytest test suite for `DrumScript`.
 
@@ -122,6 +122,21 @@ DrumScript/
         ├── __init__.py
         └── test_stem_splitter_real.py
 ```
+
+## Running the suite
+
+The recommended way is via the runner script:
+
+```zsh
+./scripts/run_tests.sh                  # All unit tests, one file at a time
+./scripts/run_tests.sh --all-at-once    # Single pytest invocation
+./scripts/run_tests.sh --integration    # Include integration tests
+./scripts/run_tests.sh --help           # Show all options
+```
+
+Logs are written to `logs/tests/<timestamp>/`.
+
+For one-off direct pytest runs, see [Quick start](#quick-start).
 
 ## Markers
 

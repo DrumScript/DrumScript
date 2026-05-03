@@ -139,7 +139,7 @@ KICK_FREQ_MAX = 140.0  # Hz (Safety margin above observed 129Hz)
 KICK_MAX_CENTROID = 400.0  # Hz (Generous upper bound, refined by LFER)
 # KICK_MIN_LFER = 0.50        # Min 50% of energy must be below 150Hz [UPDATE weds-25-mar-26: commenting out due to duplication (ie KICK_MIN_LFER)]
 # KICK_LFER_MIN = 0.40   # 40% (Safety margin below observed 46.9%)
-KICK_LFER_MIN = 0.32  # Min 32% energy must be < 150Hz [UPDATE weds-25-mar-26: added in]
+# KICK_LFER_MIN = 0.32  # Min 32% energy must be < 150Hz [UPDATE weds-25-mar-26: added in]
 
 # 2. --- SNARE DRUM PHYSICS ---
 # Analysis Source: 20 user-provided wav files
@@ -184,7 +184,7 @@ Derived from iterative analysis of user audio samples (Feb 2026).
 KICK_FREQ_MIN = 40.0  # Hz
 KICK_FREQ_MAX = 140.0  # Hz
 # KICK_LFER_MIN = 0.40    # Min 40% energy must be < 150Hz  [UPDATE weds-25-mar-26: commenting out due to duplication (ie KICK_MIN_LFER)]
-# KICK_LFER_MIN = 0.32 # Min 32% energy must be < 150Hz [UPDATE weds-25-mar-26: commenting out due to duplication (ie KICK_MIN_LFER, ~line 207 above)]
+KICK_LFER_MIN = 0.32  # Min 32% energy must be < 150Hz [UPDATE weds-25-mar-26: commenting out due to duplication (ie KICK_MIN_LFER, ~line 207 above)]
 KICK_MAX_DECAY = 0.25  # Seconds (Thud)
 
 # B. SNARE DRUM (Wire Noise + Body)
@@ -299,6 +299,8 @@ DRUM_NOTATION_MAP = {
     },
 }"""
 
+"""
+LEGACY MAPPING (KEEP FOR NOW)
 # ==============================================================================
 # NOTATION MAPPING (Used by Score Builder)
 # ==============================================================================
@@ -312,4 +314,70 @@ DRUM_NOTATION_MAP = {
     "hi_hat_open": {"midi_program": 46, "note_head": "circle-x", "staff_position": "G4"},  # assumes edge hit
     "crash": {"midi_program": 49, "note_head": "x", "staff_position": "A4"},  # assumes edge hit
     "ride": {"midi_program": 51, "note_head": "x", "staff_position": "F4"},  # assumes edge hit
+}
+"""
+
+# ==============================================================================
+# NOTATION MAPPING (Used by Score Builder)
+# ==============================================================================
+DRUM_NOTATION_MAP = {
+    # --- Bass Drums ---
+    "kick": {
+        "display_name": "Kick Drum",
+        "midi_program": 36,
+        "note_head": "normal",
+        "staff_position": "F3",  # Bottom Space
+    },
+    # --- Snare Drums ---
+    "snare": {
+        "display_name": "Snare",
+        "midi_program": 38,
+        "note_head": "normal",
+        "staff_position": "C4",  # Space 3
+    },
+    # --- Toms ---
+    "low_tom": {
+        "display_name": "Low Tom",
+        "midi_program": 41,
+        "note_head": "normal",
+        "staff_position": "A3",  # Space 2 (Floor Tom Position)
+    },
+    "mid_tom": {
+        "display_name": "Mid Tom",
+        "midi_program": 45,
+        "note_head": "normal",
+        "staff_position": "D4",  # Line 4
+    },
+    "high_tom": {
+        "display_name": "High Tom",
+        "midi_program": 48,
+        "note_head": "normal",
+        "staff_position": "E4",  # Top Space
+    },
+    # --- Hi-Hats --- # assumes edge hit
+    "hi_hat_closed": {
+        "display_name": "Hi-Hat (Closed)",
+        "midi_program": 42,
+        "note_head": "x",
+        "staff_position": "G4",  # Above Top Line
+    },
+    "hi_hat_open": {
+        "display_name": "Hi-Hat (Open)",
+        "midi_program": 46,
+        "note_head": "circle-x",
+        "staff_position": "G4",
+    },
+    # --- Cymbals --- # assumes edge hit
+    "crash": {
+        "display_name": "Crash Cymbal",
+        "midi_program": 49,
+        "note_head": "x",
+        "staff_position": "A4",  # Ledger Line Above
+    },
+    "ride": {
+        "display_name": "Ride Cymbal",
+        "midi_program": 51,
+        "note_head": "x",
+        "staff_position": "F4",  # Top Line
+    },
 }

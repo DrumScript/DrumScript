@@ -2,7 +2,7 @@
 ## `DrumScript` Python Package Structure
 
 <!--date_created: weds-25-oct-2025-->
-<!--date_edited: sat-18-apr-2026-->
+<!--date_edited: sun-03-apr-2026-->
 
 ```markdown
 DrumScript/                          # Project root
@@ -30,9 +30,15 @@ DrumScript/                          # Project root
 │   │   ├── xml_exporter.py
 │   │   └── constants.py             # Single-source of truth for constants such as `SAMPLE_RATE`, `N_FFT` used globally through `DrumScript`
 │   └── utils/                       # Utility functions.
-├── docs/                            # Documentation for developers and contributors, as well as the `_build` artifacts for the `DrumScript` documentation website.
-│    ├── theory/                          # Reference documents (music theory, DSP, etc.). Sources provided
-├── local_tests/                     # Local test scripts (e.g., interface testing).
+├── docs/                            # Documentation for developers and contributors, as well as the `_build` artifacts for the `DrumScript` 
+│    ├── theory/                     # Reference documents (music theory, DSP, etc.). Sources provided
+└── tests/
+    ├── __init__.py
+    ├── README.md                    # Testing README.md
+    ├── conftest.py                  # Shared fixtures (auto-discovered)
+    ├── fixtures/
+    ├── unit/                        # Unit tests for `DrumScript`
+    └── integration/                 # E2E integration tests for `DrumScript`
 ├── .gitignore                       # Specifies intentionally untracked files.
 ├── .github/                         # GitActions files
 │   ├── workflows/
@@ -44,7 +50,7 @@ DrumScript/                          # Project root
 ├── README.md                        # Project overview and main documentation.
 ├── repository_structure.md          # This file.
 ├── tree.txt                         # Tree diagram (generated using `homebrew tree`)
-├── pyproject.toml                   # Project metadata and dependencies (managed by `uv`).
+├── pyproject.toml                   # Project metadata and dependencies (managed by `uv`). Also sets pytest.ini config
 └── uv.lock                          # Pinned versions of all dependencies.
 ```
 > **PLEASE NOTE (Oct-2025 Update):** This repository structure has been updated to reflect the project's pivot to a non-ML, classification-based approach. Legacy machine learning modules have been archived.

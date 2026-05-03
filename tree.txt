@@ -5,22 +5,41 @@
 │   ├── CODEOWNERS
 │   └── workflows
 │       ├── .DS_Store
-│       ├── deploy_aws.yml
 │       ├── docs.yml
+│       ├── publish.yml
 │       ├── test_build.yml
 │       └── tests.yml
 ├── .gitignore
+├── .pre-commit-config.yaml
 ├── .pytest_cache
 │   ├── .DS_Store
 │   ├── .gitignore
 │   ├── CACHEDIR.TAG
 │   ├── README.md
 │   └── v
-│       ├── .DS_Store
 │       └── cache
 │           ├── lastfailed
 │           └── nodeids
 ├── .python-version
+├── .ruff_cache
+│   ├── .DS_Store
+│   ├── .gitignore
+│   ├── 0.15.11
+│   │   ├── 1227543316970955484
+│   │   ├── 12544346663191673561
+│   │   ├── 12789719255757863526
+│   │   ├── 13390221068629753940
+│   │   ├── 1631286398151038350
+│   │   ├── 16371128362364916346
+│   │   ├── 16380520722816598564
+│   │   ├── 17982872754672411458
+│   │   ├── 2730758063515179771
+│   │   ├── 4941991829229966719
+│   │   ├── 5125684219689246144
+│   │   ├── 8246735935786112192
+│   │   ├── 8295789144744896170
+│   │   └── 8770800195375340765
+│   └── CACHEDIR.TAG
 ├── .testing
 ├── .vscode
 │   └── settings.json
@@ -37,12 +56,52 @@
 ├── Makefile
 ├── README.md
 ├── aws_api.py
-├── backup.log
-├── backup.sh
-├── branch_note
+├── build
+│   ├── .DS_Store
+│   ├── bdist.macosx-11.0-arm64
+│   └── lib
+│       ├── .DS_Store
+│       └── drumscript
+│           ├── __init__.py
+│           ├── audio_processor
+│           │   ├── __init__.py
+│           │   ├── audio_loader.py
+│           │   ├── feature_extractor.py
+│           │   ├── onset_detector.py
+│           │   ├── stem_splitter.py
+│           │   ├── tempo_detector.py
+│           │   └── tempogram.py
+│           ├── drum_classifier
+│           │   ├── __init__.py
+│           │   └── classify.py
+│           ├── main.py
+│           ├── notation_generator
+│           │   ├── __init__.py
+│           │   ├── constants.py
+│           │   ├── helpers.py
+│           │   ├── midi_exporter.py
+│           │   ├── pdf_exporter.py
+│           │   ├── score_builder.py
+│           │   └── xml_exporter.py
+│           └── utils
+│               ├── __init__.py
+│               ├── analyze_closed_hat_physics.py
+│               ├── analyze_crash_physics.py
+│               ├── analyze_high_tom_physics.py
+│               ├── analyze_kick_physics.py
+│               ├── analyze_low_tom_physics.py
+│               ├── analyze_mid_tom_physics.py
+│               ├── analyze_open_hat_physics.py
+│               ├── analyze_ride_physics.py
+│               ├── analyze_snare_physics.py
+│               ├── analyze_tom_physics.py
+│               ├── config.py
+│               ├── ffmpeg_installer.py
+│               ├── get_event_frequencies.py
+│               ├── measure_hat_frequency.py
+│               ├── measure_kick_frequency.py
+│               └── measure_snare_frequency.py
 ├── collect_code.log
-├── collect_code.sh
-├── deploy.sh
 ├── dist
 │   ├── .gitignore
 │   ├── drumscript-0.1.2-py3-none-any.whl
@@ -64,19 +123,57 @@
 │   │   │   ├── environment.pickle
 │   │   │   ├── generated
 │   │   │   │   ├── drumscript.audio_processor.audio_loader.doctree
+│   │   │   │   ├── drumscript.audio_processor.audio_loader.load_audio.doctree
+│   │   │   │   ├── drumscript.audio_processor.audio_loader.normalise_audio.doctree
 │   │   │   │   ├── drumscript.audio_processor.feature_extractor.doctree
+│   │   │   │   ├── drumscript.audio_processor.feature_extractor.extract_features.doctree
+│   │   │   │   ├── drumscript.audio_processor.feature_extractor.extract_features_for_onsets.doctree
+│   │   │   │   ├── drumscript.audio_processor.onset_detector.detect_onsets.doctree
 │   │   │   │   ├── drumscript.audio_processor.onset_detector.doctree
 │   │   │   │   ├── drumscript.audio_processor.stem_splitter.doctree
+│   │   │   │   ├── drumscript.audio_processor.stem_splitter.extract_drum_stem.doctree
+│   │   │   │   ├── drumscript.audio_processor.stem_splitter.mix_stems.doctree
+│   │   │   │   ├── drumscript.audio_processor.stem_splitter.separate_audio.doctree
 │   │   │   │   ├── drumscript.audio_processor.tempo_detector.doctree
+│   │   │   │   ├── drumscript.audio_processor.tempo_detector.estimate_tempo.doctree
 │   │   │   │   ├── drumscript.detect_tempo.doctree
+│   │   │   │   ├── drumscript.drum_classifier.classify.classify_event.doctree
+│   │   │   │   ├── drumscript.drum_classifier.classify.classify_events.doctree
+│   │   │   │   ├── drumscript.drum_classifier.classify.classify_idiophone.doctree
+│   │   │   │   ├── drumscript.drum_classifier.classify.classify_membranophone.doctree
+│   │   │   │   ├── drumscript.drum_classifier.classify.classify_rudiment_events.doctree
 │   │   │   │   ├── drumscript.drum_classifier.classify.doctree
+│   │   │   │   ├── drumscript.drum_classifier.classify.extract_features.doctree
+│   │   │   │   ├── drumscript.drum_classifier.classify.get_audio_slice.doctree
+│   │   │   │   ├── drumscript.export_midi.doctree
+│   │   │   │   ├── drumscript.export_pdf.doctree
+│   │   │   │   ├── drumscript.export_xml.doctree
 │   │   │   │   ├── drumscript.extract_stems.doctree
 │   │   │   │   ├── drumscript.main.doctree
+│   │   │   │   ├── drumscript.main.main.doctree
 │   │   │   │   ├── drumscript.notation_generator.constants.doctree
+│   │   │   │   ├── drumscript.notation_generator.helpers.calculate_cents_difference.doctree
 │   │   │   │   ├── drumscript.notation_generator.helpers.doctree
+│   │   │   │   ├── drumscript.notation_generator.helpers.format_drum_event.doctree
+│   │   │   │   ├── drumscript.notation_generator.helpers.get_note_duration_name.doctree
+│   │   │   │   ├── drumscript.notation_generator.helpers.round_to_nearest_subdivision.doctree
+│   │   │   │   ├── drumscript.notation_generator.midi_exporter.doctree
+│   │   │   │   ├── drumscript.notation_generator.midi_exporter.export_to_midi.doctree
 │   │   │   │   ├── drumscript.notation_generator.pdf_exporter.doctree
+│   │   │   │   ├── drumscript.notation_generator.pdf_exporter.draw_bar_line.doctree
+│   │   │   │   ├── drumscript.notation_generator.pdf_exporter.draw_clef.doctree
+│   │   │   │   ├── drumscript.notation_generator.pdf_exporter.draw_notehead.doctree
+│   │   │   │   ├── drumscript.notation_generator.pdf_exporter.draw_staff.doctree
+│   │   │   │   ├── drumscript.notation_generator.pdf_exporter.draw_time_signature.doctree
+│   │   │   │   ├── drumscript.notation_generator.pdf_exporter.export_pdf.doctree
+│   │   │   │   ├── drumscript.notation_generator.pdf_exporter.get_vertical_position.doctree
+│   │   │   │   ├── drumscript.notation_generator.score_builder.build_score.doctree
 │   │   │   │   ├── drumscript.notation_generator.score_builder.doctree
-│   │   │   │   └── drumscript.utils.ffmpeg_installer.doctree
+│   │   │   │   ├── drumscript.notation_generator.xml_exporter.doctree
+│   │   │   │   ├── drumscript.notation_generator.xml_exporter.export_xml.doctree
+│   │   │   │   ├── drumscript.utils.ffmpeg_installer.doctree
+│   │   │   │   ├── drumscript.utils.ffmpeg_installer.install_ffmpeg.doctree
+│   │   │   │   └── drumscript.utils.ffmpeg_installer.is_ffmpeg_installed.doctree
 │   │   │   ├── guide
 │   │   │   │   ├── cli_reference.doctree
 │   │   │   │   ├── configuration.doctree
@@ -86,6 +183,7 @@
 │   │   │   ├── index.doctree
 │   │   │   ├── release_notes
 │   │   │   │   ├── 0.1.0.doctree
+│   │   │   │   ├── 0.1.2.doctree
 │   │   │   │   └── index.doctree
 │   │   │   └── theory
 │   │   │       ├── bibliography.doctree
@@ -114,6 +212,24 @@
 │   │       │   ├── infographic_g4m__time_sigs_and_note_values.png
 │   │       │   └── notating_pitch.png
 │   │       ├── _modules
+│   │       │   ├── drumscript
+│   │       │   │   ├── audio_processor
+│   │       │   │   │   ├── audio_loader.html
+│   │       │   │   │   ├── feature_extractor.html
+│   │       │   │   │   ├── onset_detector.html
+│   │       │   │   │   ├── stem_splitter.html
+│   │       │   │   │   └── tempo_detector.html
+│   │       │   │   ├── drum_classifier
+│   │       │   │   │   └── classify.html
+│   │       │   │   ├── main.html
+│   │       │   │   ├── notation_generator
+│   │       │   │   │   ├── helpers.html
+│   │       │   │   │   ├── midi_exporter.html
+│   │       │   │   │   ├── pdf_exporter.html
+│   │       │   │   │   ├── score_builder.html
+│   │       │   │   │   └── xml_exporter.html
+│   │       │   │   └── utils
+│   │       │   │       └── ffmpeg_installer.html
 │   │       │   ├── drumscript.html
 │   │       │   └── index.html
 │   │       ├── _sources
@@ -125,19 +241,57 @@
 │   │       │   │   ├── documentation.md.txt
 │   │       │   │   └── testing_guidance.md.txt
 │   │       │   ├── generated
+│   │       │   │   ├── drumscript.audio_processor.audio_loader.load_audio.rst.txt
+│   │       │   │   ├── drumscript.audio_processor.audio_loader.normalise_audio.rst.txt
 │   │       │   │   ├── drumscript.audio_processor.audio_loader.rst.txt
+│   │       │   │   ├── drumscript.audio_processor.feature_extractor.extract_features.rst.txt
+│   │       │   │   ├── drumscript.audio_processor.feature_extractor.extract_features_for_onsets.rst.txt
 │   │       │   │   ├── drumscript.audio_processor.feature_extractor.rst.txt
+│   │       │   │   ├── drumscript.audio_processor.onset_detector.detect_onsets.rst.txt
 │   │       │   │   ├── drumscript.audio_processor.onset_detector.rst.txt
+│   │       │   │   ├── drumscript.audio_processor.stem_splitter.extract_drum_stem.rst.txt
+│   │       │   │   ├── drumscript.audio_processor.stem_splitter.mix_stems.rst.txt
 │   │       │   │   ├── drumscript.audio_processor.stem_splitter.rst.txt
+│   │       │   │   ├── drumscript.audio_processor.stem_splitter.separate_audio.rst.txt
+│   │       │   │   ├── drumscript.audio_processor.tempo_detector.estimate_tempo.rst.txt
 │   │       │   │   ├── drumscript.audio_processor.tempo_detector.rst.txt
 │   │       │   │   ├── drumscript.detect_tempo.rst.txt
+│   │       │   │   ├── drumscript.drum_classifier.classify.classify_event.rst.txt
+│   │       │   │   ├── drumscript.drum_classifier.classify.classify_events.rst.txt
+│   │       │   │   ├── drumscript.drum_classifier.classify.classify_idiophone.rst.txt
+│   │       │   │   ├── drumscript.drum_classifier.classify.classify_membranophone.rst.txt
+│   │       │   │   ├── drumscript.drum_classifier.classify.classify_rudiment_events.rst.txt
+│   │       │   │   ├── drumscript.drum_classifier.classify.extract_features.rst.txt
+│   │       │   │   ├── drumscript.drum_classifier.classify.get_audio_slice.rst.txt
 │   │       │   │   ├── drumscript.drum_classifier.classify.rst.txt
+│   │       │   │   ├── drumscript.export_midi.rst.txt
+│   │       │   │   ├── drumscript.export_pdf.rst.txt
+│   │       │   │   ├── drumscript.export_xml.rst.txt
 │   │       │   │   ├── drumscript.extract_stems.rst.txt
+│   │       │   │   ├── drumscript.main.main.rst.txt
 │   │       │   │   ├── drumscript.main.rst.txt
 │   │       │   │   ├── drumscript.notation_generator.constants.rst.txt
+│   │       │   │   ├── drumscript.notation_generator.helpers.calculate_cents_difference.rst.txt
+│   │       │   │   ├── drumscript.notation_generator.helpers.format_drum_event.rst.txt
+│   │       │   │   ├── drumscript.notation_generator.helpers.get_note_duration_name.rst.txt
+│   │       │   │   ├── drumscript.notation_generator.helpers.round_to_nearest_subdivision.rst.txt
 │   │       │   │   ├── drumscript.notation_generator.helpers.rst.txt
+│   │       │   │   ├── drumscript.notation_generator.midi_exporter.export_to_midi.rst.txt
+│   │       │   │   ├── drumscript.notation_generator.midi_exporter.rst.txt
+│   │       │   │   ├── drumscript.notation_generator.pdf_exporter.draw_bar_line.rst.txt
+│   │       │   │   ├── drumscript.notation_generator.pdf_exporter.draw_clef.rst.txt
+│   │       │   │   ├── drumscript.notation_generator.pdf_exporter.draw_notehead.rst.txt
+│   │       │   │   ├── drumscript.notation_generator.pdf_exporter.draw_staff.rst.txt
+│   │       │   │   ├── drumscript.notation_generator.pdf_exporter.draw_time_signature.rst.txt
+│   │       │   │   ├── drumscript.notation_generator.pdf_exporter.export_pdf.rst.txt
+│   │       │   │   ├── drumscript.notation_generator.pdf_exporter.get_vertical_position.rst.txt
 │   │       │   │   ├── drumscript.notation_generator.pdf_exporter.rst.txt
+│   │       │   │   ├── drumscript.notation_generator.score_builder.build_score.rst.txt
 │   │       │   │   ├── drumscript.notation_generator.score_builder.rst.txt
+│   │       │   │   ├── drumscript.notation_generator.xml_exporter.export_xml.rst.txt
+│   │       │   │   ├── drumscript.notation_generator.xml_exporter.rst.txt
+│   │       │   │   ├── drumscript.utils.ffmpeg_installer.install_ffmpeg.rst.txt
+│   │       │   │   ├── drumscript.utils.ffmpeg_installer.is_ffmpeg_installed.rst.txt
 │   │       │   │   └── drumscript.utils.ffmpeg_installer.rst.txt
 │   │       │   ├── guide
 │   │       │   │   ├── cli_reference.md.txt
@@ -148,6 +302,7 @@
 │   │       │   ├── index.md.txt
 │   │       │   ├── release_notes
 │   │       │   │   ├── 0.1.0.md.txt
+│   │       │   │   ├── 0.1.2.md.txt
 │   │       │   │   └── index.md.txt
 │   │       │   └── theory
 │   │       │       ├── bibliography.md.txt
@@ -188,19 +343,57 @@
 │   │       │   └── testing_guidance.html
 │   │       ├── generated
 │   │       │   ├── drumscript.audio_processor.audio_loader.html
+│   │       │   ├── drumscript.audio_processor.audio_loader.load_audio.html
+│   │       │   ├── drumscript.audio_processor.audio_loader.normalise_audio.html
+│   │       │   ├── drumscript.audio_processor.feature_extractor.extract_features.html
+│   │       │   ├── drumscript.audio_processor.feature_extractor.extract_features_for_onsets.html
 │   │       │   ├── drumscript.audio_processor.feature_extractor.html
+│   │       │   ├── drumscript.audio_processor.onset_detector.detect_onsets.html
 │   │       │   ├── drumscript.audio_processor.onset_detector.html
+│   │       │   ├── drumscript.audio_processor.stem_splitter.extract_drum_stem.html
 │   │       │   ├── drumscript.audio_processor.stem_splitter.html
+│   │       │   ├── drumscript.audio_processor.stem_splitter.mix_stems.html
+│   │       │   ├── drumscript.audio_processor.stem_splitter.separate_audio.html
+│   │       │   ├── drumscript.audio_processor.tempo_detector.estimate_tempo.html
 │   │       │   ├── drumscript.audio_processor.tempo_detector.html
 │   │       │   ├── drumscript.detect_tempo.html
+│   │       │   ├── drumscript.drum_classifier.classify.classify_event.html
+│   │       │   ├── drumscript.drum_classifier.classify.classify_events.html
+│   │       │   ├── drumscript.drum_classifier.classify.classify_idiophone.html
+│   │       │   ├── drumscript.drum_classifier.classify.classify_membranophone.html
+│   │       │   ├── drumscript.drum_classifier.classify.classify_rudiment_events.html
+│   │       │   ├── drumscript.drum_classifier.classify.extract_features.html
+│   │       │   ├── drumscript.drum_classifier.classify.get_audio_slice.html
 │   │       │   ├── drumscript.drum_classifier.classify.html
+│   │       │   ├── drumscript.export_midi.html
+│   │       │   ├── drumscript.export_pdf.html
+│   │       │   ├── drumscript.export_xml.html
 │   │       │   ├── drumscript.extract_stems.html
 │   │       │   ├── drumscript.main.html
+│   │       │   ├── drumscript.main.main.html
 │   │       │   ├── drumscript.notation_generator.constants.html
+│   │       │   ├── drumscript.notation_generator.helpers.calculate_cents_difference.html
+│   │       │   ├── drumscript.notation_generator.helpers.format_drum_event.html
+│   │       │   ├── drumscript.notation_generator.helpers.get_note_duration_name.html
 │   │       │   ├── drumscript.notation_generator.helpers.html
+│   │       │   ├── drumscript.notation_generator.helpers.round_to_nearest_subdivision.html
+│   │       │   ├── drumscript.notation_generator.midi_exporter.export_to_midi.html
+│   │       │   ├── drumscript.notation_generator.midi_exporter.html
+│   │       │   ├── drumscript.notation_generator.pdf_exporter.draw_bar_line.html
+│   │       │   ├── drumscript.notation_generator.pdf_exporter.draw_clef.html
+│   │       │   ├── drumscript.notation_generator.pdf_exporter.draw_notehead.html
+│   │       │   ├── drumscript.notation_generator.pdf_exporter.draw_staff.html
+│   │       │   ├── drumscript.notation_generator.pdf_exporter.draw_time_signature.html
+│   │       │   ├── drumscript.notation_generator.pdf_exporter.export_pdf.html
+│   │       │   ├── drumscript.notation_generator.pdf_exporter.get_vertical_position.html
 │   │       │   ├── drumscript.notation_generator.pdf_exporter.html
+│   │       │   ├── drumscript.notation_generator.score_builder.build_score.html
 │   │       │   ├── drumscript.notation_generator.score_builder.html
-│   │       │   └── drumscript.utils.ffmpeg_installer.html
+│   │       │   ├── drumscript.notation_generator.xml_exporter.export_xml.html
+│   │       │   ├── drumscript.notation_generator.xml_exporter.html
+│   │       │   ├── drumscript.utils.ffmpeg_installer.html
+│   │       │   ├── drumscript.utils.ffmpeg_installer.install_ffmpeg.html
+│   │       │   └── drumscript.utils.ffmpeg_installer.is_ffmpeg_installed.html
 │   │       ├── genindex.html
 │   │       ├── guide
 │   │       │   ├── cli_reference.html
@@ -213,6 +406,7 @@
 │   │       ├── py-modindex.html
 │   │       ├── release_notes
 │   │       │   ├── 0.1.0.html
+│   │       │   ├── 0.1.2.html
 │   │       │   └── index.html
 │   │       ├── search.html
 │   │       ├── searchindex.js
@@ -231,6 +425,9 @@
 │   │   ├── logo-dark.svg
 │   │   ├── logo-light.png
 │   │   └── logo-light.svg
+│   ├── _templates
+│   │   └── autosummary
+│   │       └── module.rst
 │   ├── about.md
 │   ├── api.rst
 │   ├── conf.py
@@ -240,19 +437,57 @@
 │   │   ├── documentation.md
 │   │   └── testing_guidance.md
 │   ├── generated
+│   │   ├── drumscript.audio_processor.audio_loader.load_audio.rst
+│   │   ├── drumscript.audio_processor.audio_loader.normalise_audio.rst
 │   │   ├── drumscript.audio_processor.audio_loader.rst
+│   │   ├── drumscript.audio_processor.feature_extractor.extract_features.rst
+│   │   ├── drumscript.audio_processor.feature_extractor.extract_features_for_onsets.rst
 │   │   ├── drumscript.audio_processor.feature_extractor.rst
+│   │   ├── drumscript.audio_processor.onset_detector.detect_onsets.rst
 │   │   ├── drumscript.audio_processor.onset_detector.rst
+│   │   ├── drumscript.audio_processor.stem_splitter.extract_drum_stem.rst
+│   │   ├── drumscript.audio_processor.stem_splitter.mix_stems.rst
 │   │   ├── drumscript.audio_processor.stem_splitter.rst
+│   │   ├── drumscript.audio_processor.stem_splitter.separate_audio.rst
+│   │   ├── drumscript.audio_processor.tempo_detector.estimate_tempo.rst
 │   │   ├── drumscript.audio_processor.tempo_detector.rst
 │   │   ├── drumscript.detect_tempo.rst
+│   │   ├── drumscript.drum_classifier.classify.classify_event.rst
+│   │   ├── drumscript.drum_classifier.classify.classify_events.rst
+│   │   ├── drumscript.drum_classifier.classify.classify_idiophone.rst
+│   │   ├── drumscript.drum_classifier.classify.classify_membranophone.rst
+│   │   ├── drumscript.drum_classifier.classify.classify_rudiment_events.rst
+│   │   ├── drumscript.drum_classifier.classify.extract_features.rst
+│   │   ├── drumscript.drum_classifier.classify.get_audio_slice.rst
 │   │   ├── drumscript.drum_classifier.classify.rst
+│   │   ├── drumscript.export_midi.rst
+│   │   ├── drumscript.export_pdf.rst
+│   │   ├── drumscript.export_xml.rst
 │   │   ├── drumscript.extract_stems.rst
+│   │   ├── drumscript.main.main.rst
 │   │   ├── drumscript.main.rst
 │   │   ├── drumscript.notation_generator.constants.rst
+│   │   ├── drumscript.notation_generator.helpers.calculate_cents_difference.rst
+│   │   ├── drumscript.notation_generator.helpers.format_drum_event.rst
+│   │   ├── drumscript.notation_generator.helpers.get_note_duration_name.rst
+│   │   ├── drumscript.notation_generator.helpers.round_to_nearest_subdivision.rst
 │   │   ├── drumscript.notation_generator.helpers.rst
+│   │   ├── drumscript.notation_generator.midi_exporter.export_to_midi.rst
+│   │   ├── drumscript.notation_generator.midi_exporter.rst
+│   │   ├── drumscript.notation_generator.pdf_exporter.draw_bar_line.rst
+│   │   ├── drumscript.notation_generator.pdf_exporter.draw_clef.rst
+│   │   ├── drumscript.notation_generator.pdf_exporter.draw_notehead.rst
+│   │   ├── drumscript.notation_generator.pdf_exporter.draw_staff.rst
+│   │   ├── drumscript.notation_generator.pdf_exporter.draw_time_signature.rst
+│   │   ├── drumscript.notation_generator.pdf_exporter.export_pdf.rst
+│   │   ├── drumscript.notation_generator.pdf_exporter.get_vertical_position.rst
 │   │   ├── drumscript.notation_generator.pdf_exporter.rst
+│   │   ├── drumscript.notation_generator.score_builder.build_score.rst
 │   │   ├── drumscript.notation_generator.score_builder.rst
+│   │   ├── drumscript.notation_generator.xml_exporter.export_xml.rst
+│   │   ├── drumscript.notation_generator.xml_exporter.rst
+│   │   ├── drumscript.utils.ffmpeg_installer.install_ffmpeg.rst
+│   │   ├── drumscript.utils.ffmpeg_installer.is_ffmpeg_installed.rst
 │   │   └── drumscript.utils.ffmpeg_installer.rst
 │   ├── github_pages.sh
 │   ├── guide
@@ -274,6 +509,7 @@
 │   │   ├── .DS_Store
 │   │   ├── 0.1.0
 │   │   ├── 0.1.0.md
+│   │   ├── 0.1.2.md
 │   │   ├── _template.md
 │   │   └── index.md
 │   ├── theory
@@ -326,9 +562,11 @@
 │   │   ├── audio_loader.py
 │   │   ├── feature_extractor.py
 │   │   ├── logs
+│   │   │   ├── .DS_Store
 │   │   │   ├── _classifier.log
 │   │   │   ├── audio_processor.log
 │   │   │   ├── audio_processor_classifier.log
+│   │   │   ├── errors
 │   │   │   ├── feature_extractor.log
 │   │   │   ├── onset_detector.log
 │   │   │   ├── stem_splitter.log
@@ -2773,15 +3011,6 @@
 │   └── pdf_generation
 │       ├── json_to_pdf.log
 │       └── test_pdf_generation.log
-├── logs
-│   ├── .DS_Store
-│   ├── docker
-│   │   ├── docker-builds.log
-│   │   └── docker.log
-│   ├── drumscript.log
-│   ├── sphinx.log
-│   └── wheel
-│       └── build.log
 ├── machine-learning
 │   ├── .DS_Store
 │   ├── data_labeller
@@ -5562,6 +5791,110 @@
 │   │   ├── test.wav
 │   │   └── test__score__59secs copy.png
 │   ├── audio_processor
+│   │   ├── .DS_Store
+│   │   └── stem_splitter
+│   │       ├── .DS_Store
+│   │       ├── fri24apr2026__CLAUDE_AMENDMENT__DEMUCS_CODE_REVIEW___1
+│   │       │   ├── .DS_Store
+│   │       │   ├── The Great Old Ones - My Love For The Stars (Cthulhu Fhtagn) [FULL AUDIO]
+│   │       │   │   ├── .DS_Store
+│   │       │   │   └── The Great Old Ones - My Love For The Stars (Cthulhu Fhtagn) [FULL AUDIO]_drums.mp3
+│   │       │   └── drumscript_full_review.txt
+│   │       ├── fri24apr2026__CLAUDE_AMENDMENT__DEMUCS_CODE_REVIEW___2
+│   │       │   ├── .DS_Store
+│   │       │   ├── The Great Old Ones - My Love For The Stars (Cthulhu Fhtagn) [FULL AUDIO] 
+│   │       │   │   ├── .DS_Store
+│   │       │   │   ├── The Great Old Ones - My Love For The Stars (Cthulhu Fhtagn) [FULL AUDIO] _drums.wav
+│   │       │   │   ├── The Great Old Ones - My Love For The Stars (Cthulhu Fhtagn) [FULL AUDIO] _no_drums.wav
+│   │       │   │   └── The Great Old Ones - My Love For The Stars (Cthulhu Fhtagn) [FULL AUDIO] _only_drums.wav
+│   │       │   └── drumscript_full_review.txt
+│   │       ├── fri24apr2026__CLAUDE_AMENDMENT__DEMUCS_CODE_REVIEW___3
+│   │       │   ├── .DS_Store
+│   │       │   ├── The Great Old Ones - My Love For The Stars (Cthulhu Fhtagn) [FULL AUDIO] [WAV][--DRUMLESS][OUTPUT_DIR]
+│   │       │   │   ├── .DS_Store
+│   │       │   │   ├── The Great Old Ones - My Love For The Stars (Cthulhu Fhtagn) [FULL AUDIO] _no_drums.wav
+│   │       │   │   └── The Great Old Ones - My Love For The Stars (Cthulhu Fhtagn) [FULL AUDIO] _only_drums.wav
+│   │       │   └── drumscript_full_review.txt
+│   │       ├── fri24apr2026__CLAUDE_AMENDMENT__DEMUCS_CODE_REVIEW___4
+│   │       │   ├── .DS_Store
+│   │       │   ├── The Great Old Ones - My Love For The Stars (Cthulhu Fhtagn) [FULL AUDIO]
+│   │       │   │   ├── .DS_Store
+│   │       │   │   ├── The Great Old Ones - My Love For The Stars (Cthulhu Fhtagn) [FULL AUDIO]_no_drums.mp3
+│   │       │   │   └── The Great Old Ones - My Love For The Stars (Cthulhu Fhtagn) [FULL AUDIO]_only_drums.mp3
+│   │       │   └── drumscript_full_review.txt
+│   │       ├── sat25apr2026__STEM_SPLITTER_E2E_CLEAN__WITHOUT_OUTPUT_DIR_SPECIFIED__AFTER_CACHE_CLEAR__CODE_REVIEW___4
+│   │       │   ├── .DS_Store
+│   │       │   ├── The Great Old Ones - My Love For The Stars (Cthulhu Fhtagn) [FULL AUDIO]
+│   │       │   │   ├── .DS_Store
+│   │       │   │   ├── The Great Old Ones - My Love For The Stars (Cthulhu Fhtagn) [FULL AUDIO]_drums.mp3
+│   │       │   │   ├── The Great Old Ones - My Love For The Stars (Cthulhu Fhtagn) [FULL AUDIO]_no_drums.mp3
+│   │       │   │   └── The Great Old Ones - My Love For The Stars (Cthulhu Fhtagn) [FULL AUDIO]_only_drums.mp3
+│   │       │   ├── The Great Old Ones - My Love For The Stars (Cthulhu Fhtagn) [FULL AUDIO] 
+│   │       │   │   ├── .DS_Store
+│   │       │   │   ├── The Great Old Ones - My Love For The Stars (Cthulhu Fhtagn) [FULL AUDIO] _drums.wav
+│   │       │   │   ├── The Great Old Ones - My Love For The Stars (Cthulhu Fhtagn) [FULL AUDIO] _no_drums.wav
+│   │       │   │   └── The Great Old Ones - My Love For The Stars (Cthulhu Fhtagn) [FULL AUDIO] _only_drums.wav
+│   │       │   ├── activity_monitor--4async_demucs_command_1.png
+│   │       │   ├── activity_monitor--4async_demucs_command_2.png
+│   │       │   ├── activity_monitor2--4async_demucs_command_3.png
+│   │       │   ├── drumscript_full_review.txt
+│   │       │   └── output_view__files__drumscript_root.png
+│   │       ├── sat25apr2026__STEM_SPLITTER_E2E_CLEAN__WITHOUT_OUTPUT_DIR_SPECIFIED__CODE_REVIEW___2
+│   │       │   ├── .DS_Store
+│   │       │   ├── The Great Old Ones - My Love For The Stars (Cthulhu Fhtagn) [FULL AUDIO]
+│   │       │   │   ├── .DS_Store
+│   │       │   │   ├── The Great Old Ones - My Love For The Stars (Cthulhu Fhtagn) [FULL AUDIO]_drums.mp3
+│   │       │   │   └── temp_demucs
+│   │       │   │       ├── .DS_Store
+│   │       │   │       └── htdemucs
+│   │       │   │           ├── .DS_Store
+│   │       │   │           └── The Great Old Ones - My Love For The Stars (Cthulhu Fhtagn) [FULL AUDIO]
+│   │       │   │               └── vocals.flac
+│   │       │   ├── The Great Old Ones - My Love For The Stars (Cthulhu Fhtagn) [FULL AUDIO] 
+│   │       │   │   ├── .DS_Store
+│   │       │   │   ├── The Great Old Ones - My Love For The Stars (Cthulhu Fhtagn) [FULL AUDIO] _drums.wav
+│   │       │   │   ├── The Great Old Ones - My Love For The Stars (Cthulhu Fhtagn) [FULL AUDIO] _no_drums.wav
+│   │       │   │   ├── The Great Old Ones - My Love For The Stars (Cthulhu Fhtagn) [FULL AUDIO] _only_drums.wav
+│   │       │   │   └── temp_demucs
+│   │       │   │       └── htdemucs
+│   │       │   └── drumscript_full_review.txt
+│   │       ├── sat25apr2026__STEM_SPLITTER_E2E_CLEAN__WITHOUT_OUTPUT_DIR_SPECIFIED__CODE_REVIEW___3
+│   │       │   ├── .DS_Store
+│   │       │   └── drumscript_full_review.txt
+│   │       ├── sat25apr2026__STEM_SPLITTER_E2E_CLEAN__WITH_OUTPUT_DIR_SPECIFIED__CODE_REVIEW___1
+│   │       │   ├── .DS_Store
+│   │       │   ├── The Great Old Ones - My Love For The Stars (Cthulhu Fhtagn) [FULL AUDIO]
+│   │       │   │   ├── The Great Old Ones - My Love For The Stars (Cthulhu Fhtagn) [FULL AUDIO]_drums.mp3
+│   │       │   │   ├── The Great Old Ones - My Love For The Stars (Cthulhu Fhtagn) [FULL AUDIO]_no_drums.mp3
+│   │       │   │   └── The Great Old Ones - My Love For The Stars (Cthulhu Fhtagn) [FULL AUDIO]_only_drums.mp3
+│   │       │   ├── The Great Old Ones - My Love For The Stars (Cthulhu Fhtagn) [FULL AUDIO] 
+│   │       │   │   ├── The Great Old Ones - My Love For The Stars (Cthulhu Fhtagn) [FULL AUDIO] _drums.wav
+│   │       │   │   ├── The Great Old Ones - My Love For The Stars (Cthulhu Fhtagn) [FULL AUDIO] _no_drums.wav
+│   │       │   │   └── The Great Old Ones - My Love For The Stars (Cthulhu Fhtagn) [FULL AUDIO] _only_drums.wav
+│   │       │   └── drumscript_full_review.txt
+│   │       ├── tues22apr2026__CLAUDE_AMENDMENT__DEMUCS_CODE_REVIEW___1
+│   │       │   ├── .DS_Store
+│   │       │   └── The Great Old Ones - My Love For The Stars (Cthulhu Fhtagn) [FULL AUDIO]
+│   │       │       └── The Great Old Ones - My Love For The Stars (Cthulhu Fhtagn) [FULL AUDIO]_drums.wav
+│   │       ├── tues28apr2026__STEM_SPLITTER_E2E_CLEAN__WITHOUT_OUTPUT_DIR_SPECIFIED__FIXED__CODE_REVIEW___1
+│   │       │   ├── .DS_Store
+│   │       │   ├── The Great Old Ones - My Love For The Stars (Cthulhu Fhtagn) [FULL AUDIO]
+│   │       │   │   ├── .DS_Store
+│   │       │   │   ├── The Great Old Ones - My Love For The Stars (Cthulhu Fhtagn) [FULL AUDIO]_drums.mp3
+│   │       │   │   ├── The Great Old Ones - My Love For The Stars (Cthulhu Fhtagn) [FULL AUDIO]_no_drums.mp3
+│   │       │   │   └── The Great Old Ones - My Love For The Stars (Cthulhu Fhtagn) [FULL AUDIO]_only_drums.mp3
+│   │       │   ├── The Great Old Ones - My Love For The Stars (Cthulhu Fhtagn) [FULL AUDIO] 
+│   │       │   │   ├── .DS_Store
+│   │       │   │   ├── The Great Old Ones - My Love For The Stars (Cthulhu Fhtagn) [FULL AUDIO] _drums.wav
+│   │       │   │   ├── The Great Old Ones - My Love For The Stars (Cthulhu Fhtagn) [FULL AUDIO] _no_drums.wav
+│   │       │   │   └── The Great Old Ones - My Love For The Stars (Cthulhu Fhtagn) [FULL AUDIO] _only_drums.wav
+│   │       │   └── drumscript_full_review.txt
+│   │       └── weds23apr2026__CLAUDE_AMENDMENT__DEMUCS_CODE_REVIEW___1
+│   │           ├── .DS_Store
+│   │           ├── The Great Old Ones - My Love For The Stars (Cthulhu Fhtagn) [FULL AUDIO]
+│   │           │   ├── .DS_Store
+│   │           │   └── The Great Old Ones - My Love For The Stars (Cthulhu Fhtagn) [FULL AUDIO]_drums.mp3
+│   │           └── mp3_run.log
 │   ├── drum_classifier
 │   │   ├── .DS_Store
 │   │   ├── midi
@@ -6683,6 +7016,46 @@
 │   │   │   ├── test_transcription.json
 │   │   │   ├── test_transcription.mid
 │   │   │   └── test_transcription.pdf
+│   │   ├── sat01may2026____orchestration__AFTER_ONSET_DETECTOR_SAMPLE_RATE_SR_VARIABLE_MISPLACEMENT__TEST_SUITE_FLAGGED__FIXING_BUGS__CODE_REVIEW__all_files__1
+│   │   │   ├── .DS_Store
+│   │   │   ├── 65bpm_iron_man_actual_transcription.json
+│   │   │   ├── 65bpm_iron_man_actual_transcription.mid
+│   │   │   ├── 65bpm_iron_man_actual_transcription.pdf
+│   │   │   ├── Drum-music-notation.jpg
+│   │   │   ├── crash__201_bronze__16_crash_edge_transcription.json
+│   │   │   ├── crash__201_bronze__16_crash_edge_transcription.mid
+│   │   │   ├── crash__201_bronze__16_crash_edge_transcription.pdf
+│   │   │   ├── drums_transcription.json
+│   │   │   ├── drums_transcription.mid
+│   │   │   ├── drums_transcription.pdf
+│   │   │   ├── drumscript_full_review.txt
+│   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.json
+│   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.mid
+│   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.pdf
+│   │   │   ├── hatopen__201_bronze__13_hi-hat_open_transcription.json
+│   │   │   ├── hatopen__201_bronze__13_hi-hat_open_transcription.mid
+│   │   │   ├── hatopen__201_bronze__13_hi-hat_open_transcription.pdf
+│   │   │   ├── high_tom_phat_transcription.json
+│   │   │   ├── high_tom_phat_transcription.mid
+│   │   │   ├── high_tom_phat_transcription.pdf
+│   │   │   ├── kick_0006_transcription.json
+│   │   │   ├── kick_0006_transcription.mid
+│   │   │   ├── kick_0006_transcription.pdf
+│   │   │   ├── low_tom_phat_transcription.json
+│   │   │   ├── low_tom_phat_transcription.mid
+│   │   │   ├── low_tom_phat_transcription.pdf
+│   │   │   ├── mid_tom_phat_transcription.json
+│   │   │   ├── mid_tom_phat_transcription.mid
+│   │   │   ├── mid_tom_phat_transcription.pdf
+│   │   │   ├── ride__2002__20_deep_full_ride_edge_transcription.json
+│   │   │   ├── ride__2002__20_deep_full_ride_edge_transcription.mid
+│   │   │   ├── ride__2002__20_deep_full_ride_edge_transcription.pdf
+│   │   │   ├── snare_0007_transcription.json
+│   │   │   ├── snare_0007_transcription.mid
+│   │   │   ├── snare_0007_transcription.pdf
+│   │   │   ├── test_transcription.json
+│   │   │   ├── test_transcription.mid
+│   │   │   └── test_transcription.pdf
 │   │   ├── sat11apr2026__orchestration_outputs__AFTER_APPLY_ISOCHRONOUS_TEMPO_CHANGE_TO_CLASSIFY_TO_FIX_SINGLE_BEAT_ISSUE__sat11apr2026__iron_man__2
 │   │   │   ├── 65bpm_iron_man_actual_transcription.json
 │   │   │   ├── 65bpm_iron_man_actual_transcription.mid
@@ -6913,7 +7286,90 @@
 │   │   ├── sat18apr2026__orchestration_outputs__CODE_REVIEW__PREP_FOR_RELEASE__test_wav__1
 │   │   │   ├── .DS_Store
 │   │   │   ├── Drum-music-notation.jpg
-│   │   │   └── drumscript_full_review.txt
+│   │   │   ├── drumscript_full_review.txt
+│   │   │   ├── test_transcription.json
+│   │   │   ├── test_transcription.mid
+│   │   │   └── test_transcription.pdf
+│   │   ├── sun03may2026__orchestration__AFTER_FIXING_DRUM_NOTATION_MAPPINGS__CODE_REVIEW__all_files__2
+│   │   │   ├── .DS_Store
+│   │   │   ├── 65bpm_iron_man_actual_transcription.json
+│   │   │   ├── 65bpm_iron_man_actual_transcription.mid
+│   │   │   ├── 65bpm_iron_man_actual_transcription.pdf
+│   │   │   ├── Drum-music-notation.jpg
+│   │   │   ├── crash__201_bronze__16_crash_edge_transcription.json
+│   │   │   ├── crash__201_bronze__16_crash_edge_transcription.mid
+│   │   │   ├── crash__201_bronze__16_crash_edge_transcription.pdf
+│   │   │   ├── drums_transcription.json
+│   │   │   ├── drums_transcription.mid
+│   │   │   ├── drums_transcription.pdf
+│   │   │   ├── drumscript_full_review.txt
+│   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.json
+│   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.mid
+│   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.pdf
+│   │   │   ├── hatopen__201_bronze__13_hi-hat_open_transcription.json
+│   │   │   ├── hatopen__201_bronze__13_hi-hat_open_transcription.mid
+│   │   │   ├── hatopen__201_bronze__13_hi-hat_open_transcription.pdf
+│   │   │   ├── high_tom_phat_transcription.json
+│   │   │   ├── high_tom_phat_transcription.mid
+│   │   │   ├── high_tom_phat_transcription.pdf
+│   │   │   ├── kick_0006_transcription.json
+│   │   │   ├── kick_0006_transcription.mid
+│   │   │   ├── kick_0006_transcription.pdf
+│   │   │   ├── low_tom_phat_transcription.json
+│   │   │   ├── low_tom_phat_transcription.mid
+│   │   │   ├── low_tom_phat_transcription.pdf
+│   │   │   ├── mid_tom_phat_transcription.json
+│   │   │   ├── mid_tom_phat_transcription.mid
+│   │   │   ├── mid_tom_phat_transcription.pdf
+│   │   │   ├── ride__2002__20_deep_full_ride_edge_transcription.json
+│   │   │   ├── ride__2002__20_deep_full_ride_edge_transcription.mid
+│   │   │   ├── ride__2002__20_deep_full_ride_edge_transcription.pdf
+│   │   │   ├── snare_0007_transcription.json
+│   │   │   ├── snare_0007_transcription.mid
+│   │   │   ├── snare_0007_transcription.pdf
+│   │   │   ├── test_transcription.json
+│   │   │   ├── test_transcription.mid
+│   │   │   └── test_transcription.pdf
+│   │   ├── sun03may2026__orchestration__BEFORE_FIXING_DRUM_NOTATION_MAPPINGS__CODE_REVIEW__all_files__1
+│   │   │   ├── .DS_Store
+│   │   │   ├── 65bpm_iron_man_actual_transcription.json
+│   │   │   ├── 65bpm_iron_man_actual_transcription.mid
+│   │   │   ├── 65bpm_iron_man_actual_transcription.pdf
+│   │   │   ├── Drum-music-notation.jpg
+│   │   │   ├── crash__201_bronze__16_crash_edge_transcription.json
+│   │   │   ├── crash__201_bronze__16_crash_edge_transcription.mid
+│   │   │   ├── crash__201_bronze__16_crash_edge_transcription.pdf
+│   │   │   ├── drums_transcription.json
+│   │   │   ├── drums_transcription.mid
+│   │   │   ├── drums_transcription.pdf
+│   │   │   ├── drumscript_full_review.txt
+│   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.json
+│   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.mid
+│   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.pdf
+│   │   │   ├── hatopen__201_bronze__13_hi-hat_open_transcription.json
+│   │   │   ├── hatopen__201_bronze__13_hi-hat_open_transcription.mid
+│   │   │   ├── hatopen__201_bronze__13_hi-hat_open_transcription.pdf
+│   │   │   ├── high_tom_phat_transcription.json
+│   │   │   ├── high_tom_phat_transcription.mid
+│   │   │   ├── high_tom_phat_transcription.pdf
+│   │   │   ├── kick_0006_transcription.json
+│   │   │   ├── kick_0006_transcription.mid
+│   │   │   ├── kick_0006_transcription.pdf
+│   │   │   ├── low_tom_phat_transcription.json
+│   │   │   ├── low_tom_phat_transcription.mid
+│   │   │   ├── low_tom_phat_transcription.pdf
+│   │   │   ├── mid_tom_phat_transcription.json
+│   │   │   ├── mid_tom_phat_transcription.mid
+│   │   │   ├── mid_tom_phat_transcription.pdf
+│   │   │   ├── ride__2002__20_deep_full_ride_edge_transcription.json
+│   │   │   ├── ride__2002__20_deep_full_ride_edge_transcription.mid
+│   │   │   ├── ride__2002__20_deep_full_ride_edge_transcription.pdf
+│   │   │   ├── snare_0007_transcription.json
+│   │   │   ├── snare_0007_transcription.mid
+│   │   │   ├── snare_0007_transcription.pdf
+│   │   │   ├── test_transcription.json
+│   │   │   ├── test_transcription.mid
+│   │   │   └── test_transcription.pdf
 │   │   ├── sun05apr2026__orchestration__AFTER_ADDING_VALIDATION_STEP_ONSET_DETECTOR_ATTEMPTING_TO_FIX_SINGLE_BEATS__iron_man__1
 │   │   │   ├── 65bpm_iron_man_actual_transcription.json
 │   │   │   ├── 65bpm_iron_man_actual_transcription.mid
@@ -6954,9 +7410,6 @@
 │   │   │   └── test_transcription.pdf
 │   │   ├── sun05apr2026__orchestration__AFTER_ADDING_VALIDATION_STEP_ONSET_DETECTOR_ATTEMPTING_TO_FIX_SINGLE_BEATS__test_wav__1 copy 4
 │   │   │   └── drumscript_full_review.txt
-│   │   ├── test_transcription.json
-│   │   ├── test_transcription.mid
-│   │   ├── test_transcription.pdf
 │   │   ├── testing1_v_testing2__thurs09apr2026.png
 │   │   ├── thurs02april2026__orchestration__ADDING_ONSET_DENSITY_CHECK_FOR_SINGLE_BEAT_ISSUE__iron_man__2
 │   │   │   ├── 65bpm_iron_man_actual_transcription.json
@@ -7184,6 +7637,124 @@
 │   │   │   ├── snare_0007_transcription.json
 │   │   │   ├── snare_0007_transcription.mid
 │   │   │   └── snare_0007_transcription.pdf
+│   │   ├── thurs23apr2026__orchestration_outputs__CODE_REVIEW__PREP_FOR_RELEASE__all_test_audio__1
+│   │   │   ├── 65bpm_iron_man_actual_transcription.json
+│   │   │   ├── 65bpm_iron_man_actual_transcription.mid
+│   │   │   ├── 65bpm_iron_man_actual_transcription.pdf
+│   │   │   ├── crash__201_bronze__16_crash_edge_transcription.json
+│   │   │   ├── crash__201_bronze__16_crash_edge_transcription.mid
+│   │   │   ├── crash__201_bronze__16_crash_edge_transcription.pdf
+│   │   │   ├── drums_transcription.json
+│   │   │   ├── drums_transcription.mid
+│   │   │   ├── drums_transcription.pdf
+│   │   │   ├── drumscript_full_review.txt
+│   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.json
+│   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.mid
+│   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.pdf
+│   │   │   ├── hatopen__201_bronze__13_hi-hat_open_transcription.json
+│   │   │   ├── hatopen__201_bronze__13_hi-hat_open_transcription.mid
+│   │   │   ├── hatopen__201_bronze__13_hi-hat_open_transcription.pdf
+│   │   │   ├── high_tom_phat_transcription.json
+│   │   │   ├── high_tom_phat_transcription.mid
+│   │   │   ├── high_tom_phat_transcription.pdf
+│   │   │   ├── kick_0006_transcription.json
+│   │   │   ├── kick_0006_transcription.mid
+│   │   │   ├── kick_0006_transcription.pdf
+│   │   │   ├── low_tom_phat_transcription.json
+│   │   │   ├── low_tom_phat_transcription.mid
+│   │   │   ├── low_tom_phat_transcription.pdf
+│   │   │   ├── mid_tom_phat_transcription.json
+│   │   │   ├── mid_tom_phat_transcription.mid
+│   │   │   ├── mid_tom_phat_transcription.pdf
+│   │   │   ├── ride__2002__20_deep_full_ride_edge_transcription.json
+│   │   │   ├── ride__2002__20_deep_full_ride_edge_transcription.mid
+│   │   │   ├── ride__2002__20_deep_full_ride_edge_transcription.pdf
+│   │   │   ├── snare_0007_transcription.json
+│   │   │   ├── snare_0007_transcription.mid
+│   │   │   ├── snare_0007_transcription.pdf
+│   │   │   ├── test_transcription.json
+│   │   │   ├── test_transcription.mid
+│   │   │   └── test_transcription.pdf
+│   │   ├── thurs30april2026____orchestration__AFTER_AMENDING_CONSTANTS__FIXING_BUGS__CODE_REVIEW__all_files__1
+│   │   │   ├── .DS_Store
+│   │   │   ├── 65bpm_iron_man_actual_transcription.json
+│   │   │   ├── 65bpm_iron_man_actual_transcription.mid
+│   │   │   ├── 65bpm_iron_man_actual_transcription.pdf
+│   │   │   ├── Drum-music-notation.jpg
+│   │   │   ├── crash__201_bronze__16_crash_edge_transcription.json
+│   │   │   ├── crash__201_bronze__16_crash_edge_transcription.mid
+│   │   │   ├── crash__201_bronze__16_crash_edge_transcription.pdf
+│   │   │   ├── drums_transcription.json
+│   │   │   ├── drums_transcription.mid
+│   │   │   ├── drums_transcription.pdf
+│   │   │   ├── drumscript_full_review.txt
+│   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.json
+│   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.mid
+│   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.pdf
+│   │   │   ├── hatopen__201_bronze__13_hi-hat_open_transcription.json
+│   │   │   ├── hatopen__201_bronze__13_hi-hat_open_transcription.mid
+│   │   │   ├── hatopen__201_bronze__13_hi-hat_open_transcription.pdf
+│   │   │   ├── high_tom_phat_transcription.json
+│   │   │   ├── high_tom_phat_transcription.mid
+│   │   │   ├── high_tom_phat_transcription.pdf
+│   │   │   ├── kick_0006_transcription.json
+│   │   │   ├── kick_0006_transcription.mid
+│   │   │   ├── kick_0006_transcription.pdf
+│   │   │   ├── low_tom_phat_transcription.json
+│   │   │   ├── low_tom_phat_transcription.mid
+│   │   │   ├── low_tom_phat_transcription.pdf
+│   │   │   ├── mid_tom_phat_transcription.json
+│   │   │   ├── mid_tom_phat_transcription.mid
+│   │   │   ├── mid_tom_phat_transcription.pdf
+│   │   │   ├── ride__2002__20_deep_full_ride_edge_transcription.json
+│   │   │   ├── ride__2002__20_deep_full_ride_edge_transcription.mid
+│   │   │   ├── ride__2002__20_deep_full_ride_edge_transcription.pdf
+│   │   │   ├── snare_0007_transcription.json
+│   │   │   ├── snare_0007_transcription.mid
+│   │   │   ├── snare_0007_transcription.pdf
+│   │   │   ├── test_transcription.json
+│   │   │   ├── test_transcription.mid
+│   │   │   └── test_transcription.pdf
+│   │   ├── thurs30april2026____orchestration__BEFORE_AMENDING_CONSTANTS__FIXING_BUGS__CODE_REVIEW__all_files__1
+│   │   │   ├── .DS_Store
+│   │   │   ├── 65bpm_iron_man_actual_transcription.json
+│   │   │   ├── 65bpm_iron_man_actual_transcription.mid
+│   │   │   ├── 65bpm_iron_man_actual_transcription.pdf
+│   │   │   ├── Drum-music-notation.jpg
+│   │   │   ├── crash__201_bronze__16_crash_edge_transcription.json
+│   │   │   ├── crash__201_bronze__16_crash_edge_transcription.mid
+│   │   │   ├── crash__201_bronze__16_crash_edge_transcription.pdf
+│   │   │   ├── drums_transcription.json
+│   │   │   ├── drums_transcription.mid
+│   │   │   ├── drums_transcription.pdf
+│   │   │   ├── drumscript_full_review.txt
+│   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.json
+│   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.mid
+│   │   │   ├── hatclosed__201_bronze__14_hi-hat_closed_transcription.pdf
+│   │   │   ├── hatopen__201_bronze__13_hi-hat_open_transcription.json
+│   │   │   ├── hatopen__201_bronze__13_hi-hat_open_transcription.mid
+│   │   │   ├── hatopen__201_bronze__13_hi-hat_open_transcription.pdf
+│   │   │   ├── high_tom_phat_transcription.json
+│   │   │   ├── high_tom_phat_transcription.mid
+│   │   │   ├── high_tom_phat_transcription.pdf
+│   │   │   ├── kick_0006_transcription.json
+│   │   │   ├── kick_0006_transcription.mid
+│   │   │   ├── kick_0006_transcription.pdf
+│   │   │   ├── low_tom_phat_transcription.json
+│   │   │   ├── low_tom_phat_transcription.mid
+│   │   │   ├── low_tom_phat_transcription.pdf
+│   │   │   ├── mid_tom_phat_transcription.json
+│   │   │   ├── mid_tom_phat_transcription.mid
+│   │   │   ├── mid_tom_phat_transcription.pdf
+│   │   │   ├── ride__2002__20_deep_full_ride_edge_transcription.json
+│   │   │   ├── ride__2002__20_deep_full_ride_edge_transcription.mid
+│   │   │   ├── ride__2002__20_deep_full_ride_edge_transcription.pdf
+│   │   │   ├── snare_0007_transcription.json
+│   │   │   ├── snare_0007_transcription.mid
+│   │   │   ├── snare_0007_transcription.pdf
+│   │   │   ├── test_transcription.json
+│   │   │   ├── test_transcription.mid
+│   │   │   └── test_transcription.pdf
 │   │   ├── tues14apr2026__orchestration_outputs__TESTING_CLI_RUDIMENTS_INTEGRATION_CLASSIFY_MAIN__ALL__1
 │   │   │   ├── 65bpm_iron_man_actual_transcription.json
 │   │   │   ├── 65bpm_iron_man_actual_transcription.mid
@@ -7632,15 +8203,25 @@
 │   │       └── snare_0007_transcription.pdf
 │   ├── processed_stems
 │   │   ├── .DS_Store
+│   │   ├── fri01may2026__opholiotry_on_a_hemocite_platter__stem_splitter_test__1
+│   │   │   ├── .DS_Store
+│   │   │   └── test
+│   │   │       └── test_drums.wav
 │   │   ├── opholiotry_on_a_hemocite_platter
-│   │   │   ├── opholiotry_on_a_hemocite_platter_drums.wav
-│   │   │   ├── opholiotry_on_a_hemocite_platter_no_drums.wav
-│   │   │   └── opholiotry_on_a_hemocite_platter_only_drums.wav
+│   │   │   ├── .DS_Store
+│   │   │   ├── fri01may2026__opholiotry_on_a_hemocite_platter__stem_splitter_test__1
+│   │   │   │   └── opholiotry_on_a_hemocite_platter_drums.wav
+│   │   │   └── tues20jan2026__opholiotry_on_a_hemocite_platter__stem_splitter_test__0
+│   │   │       ├── opholiotry_on_a_hemocite_platter_drums.wav
+│   │   │       ├── opholiotry_on_a_hemocite_platter_no_drums.wav
+│   │   │       └── opholiotry_on_a_hemocite_platter_only_drums.wav
 │   │   ├── sunday
 │   │   │   ├── .DS_Store
 │   │   │   └── sunday_no_drums.wav
 │   │   └── test
-│   │       └── test_drums.wav
+│   │       ├── .DS_Store
+│   │       └── tues06feb2026__opholiotry_on_a_hemocite_platter__stem_splitter_test__1
+│   │           └── test_drums.wav
 │   ├── stems_test
 │   │   ├── .DS_Store
 │   │   └── htdemucs
@@ -7675,10 +8256,109 @@
 │   │           └── vocals.mp3
 │   └── test__score__59secs copy.png
 ├── public
-│   ├── drumscript-0.1.1-py3-none-any.whl
+│   ├── drumscript-0.1.2-py3-none-any.whl
+│   ├── drumscript-0.1.2.tar.gz
 │   └── pyodideWorker.js
 ├── pyproject.toml
+├── pytest.ini
 ├── repository_structure.md
+├── scripts
+│   ├── .DS_Store
+│   ├── backup.log
+│   ├── backup.sh
+│   ├── collect_code.sh
+│   ├── deploy.sh
+│   ├── logs
+│   │   ├── .DS_Store
+│   │   ├── backup.log
+│   │   ├── collect_code.log
+│   │   ├── docker
+│   │   │   ├── docker-builds.log
+│   │   │   └── docker.log
+│   │   ├── ruff
+│   │   │   ├── pre-commit.log
+│   │   │   └── ruff.log
+│   │   ├── shellcheck
+│   │   │   └── shellcheck.log
+│   │   ├── tests
+│   │   │   ├── .DS_Store
+│   │   │   ├── 2026-05-02_19-03-28
+│   │   │   │   ├── 2026-05-02_19-11-39
+│   │   │   │   │   ├── _summary.txt
+│   │   │   │   │   ├── test_audio_loader.txt
+│   │   │   │   │   ├── test_classify.txt
+│   │   │   │   │   ├── test_helpers.txt
+│   │   │   │   │   ├── test_onset_detector.txt
+│   │   │   │   │   ├── test_stem_splitter_helpers.txt
+│   │   │   │   │   └── test_tempo_detector.txt
+│   │   │   │   ├── _summary.txt
+│   │   │   │   ├── drumscript.log
+│   │   │   │   ├── test_audio_loader.txt
+│   │   │   │   ├── test_classify.txt
+│   │   │   │   ├── test_helpers.txt
+│   │   │   │   ├── test_onset_detector.txt
+│   │   │   │   ├── test_stem_splitter_helpers.txt
+│   │   │   │   └── test_tempo_detector.txt
+│   │   │   ├── 2026-05-02_19-15-59
+│   │   │   │   ├── _summary.txt
+│   │   │   │   ├── test_audio_loader.txt
+│   │   │   │   ├── test_classify.txt
+│   │   │   │   ├── test_helpers.txt
+│   │   │   │   ├── test_onset_detector.txt
+│   │   │   │   ├── test_stem_splitter_helpers.txt
+│   │   │   │   └── test_tempo_detector.txt
+│   │   │   ├── 2026-05-02_19-23-26
+│   │   │   │   ├── _summary.txt
+│   │   │   │   ├── test_audio_loader.txt
+│   │   │   │   ├── test_classify.txt
+│   │   │   │   ├── test_helpers.txt
+│   │   │   │   ├── test_onset_detector.txt
+│   │   │   │   ├── test_stem_splitter_helpers.txt
+│   │   │   │   └── test_tempo_detector.txt
+│   │   │   ├── 2026-05-02_19-30-16
+│   │   │   │   ├── _summary.txt
+│   │   │   │   ├── test_audio_loader.txt
+│   │   │   │   ├── test_classify.txt
+│   │   │   │   ├── test_helpers.txt
+│   │   │   │   ├── test_onset_detector.txt
+│   │   │   │   ├── test_stem_splitter_helpers.txt
+│   │   │   │   └── test_tempo_detector.txt
+│   │   │   ├── 2026-05-03_20-06-58
+│   │   │   │   ├── _summary.txt
+│   │   │   │   ├── test_audio_loader.txt
+│   │   │   │   ├── test_classify.txt
+│   │   │   │   ├── test_helpers.txt
+│   │   │   │   ├── test_onset_detector.txt
+│   │   │   │   ├── test_stem_splitter_helpers.txt
+│   │   │   │   └── test_tempo_detector.txt
+│   │   │   ├── 2026-05-03_20-09-04
+│   │   │   │   ├── _summary.txt
+│   │   │   │   ├── test_audio_loader.txt
+│   │   │   │   ├── test_classify.txt
+│   │   │   │   ├── test_helpers.txt
+│   │   │   │   ├── test_onset_detector.txt
+│   │   │   │   ├── test_stem_splitter_helpers.txt
+│   │   │   │   └── test_tempo_detector.txt
+│   │   │   ├── 2026-05-03_20-56-13
+│   │   │   │   ├── _summary.txt
+│   │   │   │   ├── test_audio_loader.txt
+│   │   │   │   ├── test_classify.txt
+│   │   │   │   ├── test_helpers.txt
+│   │   │   │   ├── test_onset_detector.txt
+│   │   │   │   ├── test_stem_splitter_helpers.txt
+│   │   │   │   └── test_tempo_detector.txt
+│   │   │   ├── 2026-05-03_20-58-18
+│   │   │   │   ├── _summary.txt
+│   │   │   │   ├── test_audio_loader.txt
+│   │   │   │   ├── test_classify.txt
+│   │   │   │   ├── test_helpers.txt
+│   │   │   │   ├── test_onset_detector.txt
+│   │   │   │   ├── test_stem_splitter_helpers.txt
+│   │   │   │   └── test_tempo_detector.txt
+│   │   │   └── pytest_collect.log
+│   │   └── wheel
+│   │       └── build.log
+│   └── run_tests.sh
 ├── terraform
 │   ├── .DS_Store
 │   ├── .terraform
@@ -11694,6 +12374,24 @@
 │       ├── U DW Walnut Low Tom.wav
 │       ├── V Koan Tom 2 Mid.wav
 │       └── W Koan Tom 1 Low.wav
+├── tests
+│   ├── .DS_Store
+│   ├── README.md
+│   ├── conftest.py
+│   ├── fixtures
+│   │   └── audio
+│   ├── integration
+│   │   └── test_stem_splitter_real.py
+│   ├── logs
+│   │   └── run_tests.log
+│   └── unit
+│       ├── __init__.py
+│       ├── test_audio_loader.py
+│       ├── test_classify.py
+│       ├── test_helpers.py
+│       ├── test_onset_detector.py
+│       ├── test_stem_splitter_helpers.py
+│       └── test_tempo_detector.py
 ├── tree.txt
 ├── tree_full.txt
 ├── ui.py
@@ -11701,4 +12399,4 @@
 └── visuals
     └── tempogram.png
 
-796 directories, 10906 files
+874 directories, 11526 files

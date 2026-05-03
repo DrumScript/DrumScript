@@ -10,7 +10,10 @@ This script defines ALL parameters used throughout modules in DrumScript
 # TO DO: Move these all to constants
 # but for now, we'll keep them consistent by defining them here.
 SAMPLE_RATE = 44100
-SEGMENT_LENGTH_SECONDS = 0.2  # SEGMENT_LENGTH_SECONDS is the duration of the audio snapshot the script analyses at one time. To give two extremes. If you increase it (e.g., to 1.0): You would capture several drum hits in one fingerprint, making it impossible for the model to know which sound happened when, if you decrease it (e.g., to 0.05): You might only capture the initial "click" of the drum hit and miss the sound's body, losing important information. 0.2 is (seconds) is usually good-enough for drum events, ie kick+snare
+SEGMENT_LENGTH_SECONDS = 0.2  # SEGMENT_LENGTH_SECONDS is the duration of the audio snapshot the script analyses at one time. To give two extremes.
+# If you increase it (e.g., to 1.0): You would capture several drum hits in one fingerprint, making it impossible for the model to know which sound
+# happened when, if you decrease it (e.g., to 0.05): You might only capture the initial "click" of the drum hit and miss the sound's body, losing
+# important information. 0.2 is (seconds) is usually good-enough for drum events, ie kick+snare
 # HOP_LENGTH = 512
 # HOP_LENGTH = 256
 HOP_LENGTH = 128
@@ -20,76 +23,12 @@ ONSET_SLICE_DURATION_MS = 200  # 200 milliseconds
 
 # n_fft = 2048
 # N_FFT = 1024 # N_FFT is the 'size of the window for the fourier transform" N_FFT = 1024 (Frequency Resolution)
-# N_FFT = 512 # This is the size of the analysis window for the Fourier Transform, which breaks the sound down into its constituent frequencies. A larger N_FFT gives you a more detailed picture of which frequencies are present but a less precise idea of exactly when they happened. If you increase it (e.g., to 2048): You get a very precise frequency analysis, which could help distinguish two very similar-sounding cymbals. If you decrease it (e.g., to 512): You get better timing precision but a "blurrier" picture of the frequencies.
-N_FFT = 2048
+# N_FFT = 512 # This is the size of the analysis window for the Fourier Transform, which breaks the sound down into its constituent frequencies.
+# A larger N_FFT gives you a more detailed picture of which frequencies are present but a less precise idea of exactly when they happened.
+# If you increase it (e.g., to 2048): You get a very precise frequency analysis, which could help distinguish two very similar-sounding cymbals.
+# If you decrease it (e.g., to 512): You get better timing precision but a "blurrier" picture of the frequencies.
 
-DRUM_NOTATION_MAP = {
-    # --- Bass Drums ---
-    "kick": {
-        "display_name": "Kick Drum",
-        "midi_program": 36,
-        "note_head": "normal",
-        "staff_position": "F3",  # Bottom Space
-    },
-    "kick_clicky": {  # TO DO: MIGHT DELETE IN FUTURE IF TEMPORAL MODEL IS BETTER, THEN THE 'CLICKY KICK' WULD JUST BECOME A VERY FAST KICK
-        "display_name": "Kick (Clicky)",
-        "midi_program": 36,
-        "note_head": "normal",
-        "staff_position": "F3",
-    },
-    # --- Snare Drums ---
-    "snare": {
-        "display_name": "Snare",
-        "midi_program": 38,
-        "note_head": "normal",
-        "staff_position": "C4",  # Space 3
-    },
-    # --- Hi-Hats --- # assumes edge hit
-    "hi_hat_closed": {
-        "display_name": "Hi-Hat (Closed)",
-        "midi_program": 42,
-        "note_head": "x",
-        "staff_position": "G4",  # Above Top Line
-    },
-    "hi_hat_open": {  # assumes edge hit
-        "display_name": "Hi-Hat (Open)",
-        "midi_program": 46,
-        "note_head": "circle-x",
-        "staff_position": "G4",
-    },
-    # --- Toms ---
-    "high_tom": {
-        "display_name": "High Tom",
-        "midi_program": 48,
-        "note_head": "normal",
-        "staff_position": "E4",  # Top Space
-    },
-    "mid_tom": {
-        "display_name": "Mid Tom",
-        "midi_program": 45,
-        "note_head": "normal",
-        "staff_position": "D4",  # Line 4
-    },
-    "low_tom": {
-        "display_name": "Low Tom",
-        "midi_program": 41,
-        "note_head": "normal",
-        "staff_position": "A3",  # Space 2 (Floor Tom Position)
-    },
-    # --- Cymbals ---
-    "crash": {  # assumes edge hit
-        "display_name": "Crash Cymbal",
-        "midi_program": 49,
-        "note_head": "x",
-        "staff_position": "A4",  # Ledger Line Above
-    },
-    "ride": {  # assumes edge hit
-        "display_name": "Ride Cymbal",
-        "midi_program": 51,
-        "note_head": "x",
-        "staff_position": "F4",  # Top Line
-    },
-}
+N_FFT = 2048
 
 # --- CLASSIFICATION ZONES (Refined based on Fundamental Frequencies) ---
 
@@ -245,7 +184,7 @@ Derived from iterative analysis of user audio samples (Feb 2026).
 KICK_FREQ_MIN = 40.0  # Hz
 KICK_FREQ_MAX = 140.0  # Hz
 # KICK_LFER_MIN = 0.40    # Min 40% energy must be < 150Hz  [UPDATE weds-25-mar-26: commenting out due to duplication (ie KICK_MIN_LFER)]
-# KICK_LFER_MIN = 0.32 # Min 32% energy must be < 150Hz  [UPDATE weds-25-mar-26: commenting out due to duplication (ie KICK_MIN_LFER, ~line 207 above)]
+# KICK_LFER_MIN = 0.32 # Min 32% energy must be < 150Hz [UPDATE weds-25-mar-26: commenting out due to duplication (ie KICK_MIN_LFER, ~line 207 above)]
 KICK_MAX_DECAY = 0.25  # Seconds (Thud)
 
 # B. SNARE DRUM (Wire Noise + Body)
@@ -290,6 +229,75 @@ CYMBAL_MIN_DECAY = 0.60
 # Rides are "Dark" (Gong-like, ~3000Hz). Crashes are "Bright" (Explosive, ~4800Hz).
 CYMBAL_CENTROID_THRESHOLD = 4000.0  # Hz
 
+
+""" LEGACY MAPPING (KEEP FOR NOW)
+DRUM_NOTATION_MAP = {
+    # --- Bass Drums ---
+    "kick": {
+        "display_name": "Kick Drum",
+        "midi_program": 36,
+        "note_head": "normal",
+        "staff_position": "F3",  # Bottom Space
+    },
+    "kick_clicky": {  # TO DO: MIGHT DELETE IN FUTURE IF TEMPORAL MODEL IS BETTER, THEN THE 'CLICKY KICK' WULD JUST BECOME A VERY FAST KICK
+        "display_name": "Kick (Clicky)",
+        "midi_program": 36,
+        "note_head": "normal",
+        "staff_position": "F3",
+    },
+    # --- Snare Drums ---
+    "snare": {
+        "display_name": "Snare",
+        "midi_program": 38,
+        "note_head": "normal",
+        "staff_position": "C4",  # Space 3
+    },
+    # --- Hi-Hats --- # assumes edge hit
+    "hi_hat_closed": {
+        "display_name": "Hi-Hat (Closed)",
+        "midi_program": 42,
+        "note_head": "x",
+        "staff_position": "G4",  # Above Top Line
+    },
+    "hi_hat_open": {  # assumes edge hit
+        "display_name": "Hi-Hat (Open)",
+        "midi_program": 46,
+        "note_head": "circle-x",
+        "staff_position": "G4",
+    },
+    # --- Toms ---
+    "high_tom": {
+        "display_name": "High Tom",
+        "midi_program": 48,
+        "note_head": "normal",
+        "staff_position": "E4",  # Top Space
+    },
+    "mid_tom": {
+        "display_name": "Mid Tom",
+        "midi_program": 45,
+        "note_head": "normal",
+        "staff_position": "D4",  # Line 4
+    },
+    "low_tom": {
+        "display_name": "Low Tom",
+        "midi_program": 41,
+        "note_head": "normal",
+        "staff_position": "A3",  # Space 2 (Floor Tom Position)
+    },
+    # --- Cymbals ---
+    "crash": {  # assumes edge hit
+        "display_name": "Crash Cymbal",
+        "midi_program": 49,
+        "note_head": "x",
+        "staff_position": "A4",  # Ledger Line Above
+    },
+    "ride": {  # assumes edge hit
+        "display_name": "Ride Cymbal",
+        "midi_program": 51,
+        "note_head": "x",
+        "staff_position": "F4",  # Top Line
+    },
+}"""
 
 # ==============================================================================
 # NOTATION MAPPING (Used by Score Builder)

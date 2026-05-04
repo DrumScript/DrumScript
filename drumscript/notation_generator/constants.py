@@ -201,7 +201,8 @@ TOM_MAX_WIRE_ENERGY = 0.05  # Max 5% energy > 2kHz (Toms are not buzzy)
 
 # Tom Frequency Buckets
 TOM_FREQ_LOW_MAX = 92.0  # Hz (Separates 86Hz Low Tom from 96Hz Mid Tom)
-TOM_FREQ_MID_MAX = 135.0  # Hz (Separates 118Hz Mid Tom from 140Hz High Tom)
+TOM_FREQ_MID_MAX = 120.0  # Hz (Separates 118Hz Mid Tom from 140Hz High Tom)
+# TOM_FREQ_MID_MAX = 135.0  # Hz (Separates 118Hz Mid Tom from 140Hz High Tom)
 # Anything > 135Hz (and not a snare) is a High Tom.
 
 

@@ -1,69 +1,12 @@
-
-## TESTING 2 2026-05-04
-# ------------------------------------------------------------------------------------
-
-date/time: 2026-05-04 21:43:31.331249
+## TESTING 3 2026-05-04
 
 # ------------------------------------------------------------------------------------
 
-date/time: 2026-05-04 21:43:31.341073
-
---- Starting DrumScript ---
-Target: test_audio/mid_tom_phat.wav
-...Loading & Analysing Audio...
-(HOP_LENGTH: 128)
-(Wait Frames Applied: 17)
-(len_onset_times:5)
-   -> Duration: 0:01 (1.54s)
-   -> Detected Tempo: 215.3 BPM
-   -> Detected Onsets: 5
-...Classifying (Fundamental Frequency Engine)...
-   -> Using Rudiment/Single-Beat Classification Engine
-   -> Classified 1 events
-...Building Score & JSON: outputs/mid_tom_phat_transcription.pdf...
---- Building Score for: outputs/mid_tom_phat_transcription.pdf [Time Sig: 4/4] ---
-Saving to: outputs/mid_tom_phat_transcription.json
-Generating PDF: outputs/mid_tom_phat_transcription.pdf (Sig: 4/4, 215 BPM)
-PDF successfully saved to: outputs/mid_tom_phat_transcription.pdf
-SUCCESS: MIDI file generated at -> outputs/mid_tom_phat_transcription.mid
---- Done! ---
-
+date/time: 2026-05-04 21:53:05.756714
 
 # ------------------------------------------------------------------------------------
 
-date/time: 2026-05-04 21:43:33.552547
-
-# ------------------------------------------------------------------------------------
-
-date/time: 2026-05-04 21:43:33.568510
-
---- Starting DrumScript ---
-Target: test_audio/low_tom_phat.wav
-...Loading & Analysing Audio...
-(HOP_LENGTH: 128)
-(Wait Frames Applied: 17)
-(len_onset_times:2)
-   -> Duration: 0:01 (1.55s)
-   -> Detected Tempo: 78.3 BPM
-   -> Detected Onsets: 2
-...Classifying (Fundamental Frequency Engine)...
-   -> Using Rudiment/Single-Beat Classification Engine
-   -> Classified 1 events
-...Building Score & JSON: outputs/low_tom_phat_transcription.pdf...
---- Building Score for: outputs/low_tom_phat_transcription.pdf [Time Sig: 4/4] ---
-Saving to: outputs/low_tom_phat_transcription.json
-Generating PDF: outputs/low_tom_phat_transcription.pdf (Sig: 4/4, 78 BPM)
-PDF successfully saved to: outputs/low_tom_phat_transcription.pdf
-SUCCESS: MIDI file generated at -> outputs/low_tom_phat_transcription.mid
---- Done! ---
-
-# ------------------------------------------------------------------------------------
-
-date/time: 2026-05-04 21:45:02.644397
-
-# ------------------------------------------------------------------------------------
-
-date/time: 2026-05-04 21:45:02.654212
+date/time: 2026-05-04 21:53:05.783640
 
 --- Starting DrumScript ---
 Target: test_audio/test.wav
@@ -88,11 +31,11 @@ SUCCESS: MIDI file generated at -> outputs/test_transcription.mid
 
 # ------------------------------------------------------------------------------------
 
-date/time: 2026-05-04 21:45:09.079134
+date/time: 2026-05-04 21:53:12.309029
 
 # ------------------------------------------------------------------------------------
 
-date/time: 2026-05-04 21:45:09.089474
+date/time: 2026-05-04 21:53:12.325544
 
 --- Starting DrumScript ---
 Target: test_audio/65bpm_iron_man_actual.wav
@@ -117,11 +60,11 @@ SUCCESS: MIDI file generated at -> outputs/65bpm_iron_man_actual_transcription.m
 
 # ------------------------------------------------------------------------------------
 
-date/time: 2026-05-04 21:45:44.959029
+date/time: 2026-05-04 21:53:48.632030
 
 # ------------------------------------------------------------------------------------
 
-date/time: 2026-05-04 21:45:44.975615
+date/time: 2026-05-04 21:53:48.648307
 
 --- Starting DrumScript ---
 Target: outputs/stems_test/htdemucs/The Great Old Ones - My Love For The Stars (Cthulhu Fhtagn)/drums.wav
@@ -146,11 +89,11 @@ SUCCESS: MIDI file generated at -> outputs/drums_transcription.mid
 
 # ------------------------------------------------------------------------------------
 
-date/time: 2026-05-04 21:46:35.692899
+date/time: 2026-05-04 21:54:42.774252
 
 # ------------------------------------------------------------------------------------
 
-date/time: 2026-05-04 21:46:35.708526
+date/time: 2026-05-04 21:54:42.793951
 
 --- Starting DrumScript ---
 Target: test_audio/high_tom_phat.wav
@@ -175,11 +118,11 @@ SUCCESS: MIDI file generated at -> outputs/high_tom_phat_transcription.mid
 
 # ------------------------------------------------------------------------------------
 
-date/time: 2026-05-04 21:46:38.115173
+date/time: 2026-05-04 21:54:45.334590
 
 # ------------------------------------------------------------------------------------
 
-date/time: 2026-05-04 21:46:38.132715
+date/time: 2026-05-04 21:54:45.349235
 
 --- Starting DrumScript ---
 Target: test_audio/snare_0007.wav
@@ -205,11 +148,11 @@ SUCCESS: MIDI file generated at -> outputs/snare_0007_transcription.mid
 
 # ------------------------------------------------------------------------------------
 
-date/time: 2026-05-04 21:46:40.100427
+date/time: 2026-05-04 21:54:47.389164
 
 # ------------------------------------------------------------------------------------
 
-date/time: 2026-05-04 21:46:40.113882
+date/time: 2026-05-04 21:54:47.403375
 
 --- Starting DrumScript ---
 Target: test_audio/kick_0006.wav
@@ -235,11 +178,11 @@ SUCCESS: MIDI file generated at -> outputs/kick_0006_transcription.mid
 
 # ------------------------------------------------------------------------------------
 
-date/time: 2026-05-04 21:46:42.280014
+date/time: 2026-05-04 21:54:49.502793
 
 # ------------------------------------------------------------------------------------
 
-date/time: 2026-05-04 21:46:42.301981
+date/time: 2026-05-04 21:54:49.512786
 
 --- Starting DrumScript ---
 Target: test_audio/ride__2002__20_deep_full_ride_edge.wav
@@ -264,11 +207,11 @@ SUCCESS: MIDI file generated at -> outputs/ride__2002__20_deep_full_ride_edge_tr
 
 # ------------------------------------------------------------------------------------
 
-date/time: 2026-05-04 21:46:45.042739
+date/time: 2026-05-04 21:54:52.362729
 
 # ------------------------------------------------------------------------------------
 
-date/time: 2026-05-04 21:46:45.059450
+date/time: 2026-05-04 21:54:52.377800
 
 --- Starting DrumScript ---
 Target: test_audio/crash__201_bronze__16_crash_edge.wav
@@ -293,11 +236,11 @@ SUCCESS: MIDI file generated at -> outputs/crash__201_bronze__16_crash_edge_tran
 
 # ------------------------------------------------------------------------------------
 
-date/time: 2026-05-04 21:46:47.569191
+date/time: 2026-05-04 21:54:54.979992
 
 # ------------------------------------------------------------------------------------
 
-date/time: 2026-05-04 21:46:47.588144
+date/time: 2026-05-04 21:54:54.996296
 
 --- Starting DrumScript ---
 Target: test_audio/hatopen__201_bronze__13_hi-hat_open.wav
@@ -323,11 +266,11 @@ SUCCESS: MIDI file generated at -> outputs/hatopen__201_bronze__13_hi-hat_open_t
 
 # ------------------------------------------------------------------------------------
 
-date/time: 2026-05-04 21:46:49.609015
+date/time: 2026-05-04 21:54:57.111206
 
 # ------------------------------------------------------------------------------------
 
-date/time: 2026-05-04 21:46:49.618826
+date/time: 2026-05-04 21:54:57.129241
 
 --- Starting DrumScript ---
 Target: test_audio/hatclosed__201_bronze__14_hi-hat_closed.wav
@@ -353,11 +296,11 @@ SUCCESS: MIDI file generated at -> outputs/hatclosed__201_bronze__14_hi-hat_clos
 
 # ------------------------------------------------------------------------------------
 
-date/time: 2026-05-04 21:46:51.664330
+date/time: 2026-05-04 21:54:59.228537
 
 # ------------------------------------------------------------------------------------
 
-date/time: 2026-05-04 21:46:51.690955
+date/time: 2026-05-04 21:54:59.248330
 
 --- Starting DrumScript ---
 Target: test_audio/mid_tom_phat.wav
@@ -382,11 +325,11 @@ SUCCESS: MIDI file generated at -> outputs/mid_tom_phat_transcription.mid
 
 # ------------------------------------------------------------------------------------
 
-date/time: 2026-05-04 21:46:53.910174
+date/time: 2026-05-04 21:55:01.496970
 
 # ------------------------------------------------------------------------------------
 
-date/time: 2026-05-04 21:46:53.947252
+date/time: 2026-05-04 21:55:01.506745
 
 --- Starting DrumScript ---
 Target: test_audio/low_tom_phat.wav

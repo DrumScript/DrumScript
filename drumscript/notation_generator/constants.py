@@ -162,7 +162,8 @@ KICK_MAX_CENTROID = 400.0  # Hz (Generous upper bound, refined by LFER)
 
 # Frequency Buckets (for classification)
 # TOM_FREQ_LOW_MAX = 95.0  # Hz (Below this is Low Tom)
-TOM_FREQ_MID_MAX = 135.0  # Hz (95-135 is Mid Tom, above is High)
+# TOM_FREQ_MID_MAX = 135.0  # Hz (95-135 is Mid Tom, above is High)
+TOM_FREQ_MID_MAX = 120.0
 
 # Physics Rules
 TOM_HFER_MAX = 0.05  # Max 5% high freq energy (Toms are not "hisssy")

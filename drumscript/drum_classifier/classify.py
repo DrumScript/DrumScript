@@ -834,7 +834,8 @@ def classify_events(audio_data: np.ndarray, sr: int, onsets: list[float]) -> lis
 #  duration = len(audio_data) / sr
 
 # --- Peak Dominance Check (Single-Beat Detection) ---
-# Look ahead at the volume of all detected onsets. A ringing cymbal might hallucinate 30 fake onsets due to "shimmer", but only the initial stick impact will be loud.
+# Look ahead at the volume of all detected onsets. A ringing cymbal might hallucinate 30 fake onsets due to "shimmer", but only the initial stick
+# impact will be loud.
 # loud_hit_count = 0
 # for t in onsets:
 #    s_start = int(t * sr)
@@ -881,7 +882,8 @@ def classify_events(audio_data: np.ndarray, sr: int, onsets: list[float]) -> lis
 #        continue
 
 # --- Single Beat 'Amplitude Gate' ---
-# For full songs, we do NOT interfere. We let the onset detector do its job  so ghost notes are perfectly preserved (guaranteeing backward compatibility). We only apply the 50% max volume drop to sparse, isolated single-beat samples
+# For full songs, we do NOT interfere. We let the onset detector do its job  so ghost notes are perfectly preserved (guaranteeing backward
+# compatibility). We only apply the 50% max volume drop to sparse, isolated single-beat samples
 #    if is_isolated_sample:
 # 1. Strict Gate: Drop the quiet cymbal shimmers/kick sub-bass tails
 # slice_max = np.max(np.abs(y_window_short)) if len(y_window_short) > 0 else 0.0
@@ -1063,10 +1065,12 @@ def classify_events(audio_data: np.ndarray, sr: int, onsets: list[float]) -> lis
 
 # return classified_events
 
-# Reasoning: Restricted the amplitude gate strictly to files under 2.0 seconds. This stops double-triggering on single beats while completely bypassing full songs, ensuring 100% backward compatibility for tracks like "My Love for the Stars".
+# Reasoning: Restricted the amplitude gate strictly to files under 2.0 seconds. This stops double-triggering on single beats while completely
+# bypassing full songs, ensuring 100% backward compatibility for tracks like "My Love for the Stars".
 
 # --- LEGACY CODE ---
-# Reasoning: Added a volume-based amplitude gate within the `classify_events` loop to discard quiet room reflections in short audio clips, thereby stopping double-triggering without affecting full-song transcriptions.
+# Reasoning: Added a volume-based amplitude gate within the `classify_events` loop to discard quiet room reflections in short audio clips,
+# thereby stopping double-triggering without affecting full-song transcriptions.
 # def classify_events(audio_data: np.ndarray, sr: int, onsets: list[float]) -> list[dict]:
 #     """
 #     Wrapper to route detected onsets through the new Physics-First Classification Engine.
@@ -1584,7 +1588,9 @@ def classify_events(audio_data: np.ndarray, sr: int, onsets: list[float]) -> lis
 #     #:type y: np.ndarray
 #     #:param sr: Sampling rate.
 #     #:type sr: int
-#     #:return: Dictionary of features [f0: (Fundamental Frequency (Peak Magnitude)), sc: Spectral Centroid (Brightness), width: Spectral Bandwidth], depth: Decay Ratio (Sustain)]
+#     #:return: Dictionary of features [f0: (Fundamental Frequency (Peak Magnitude)),
+#           sc: Spectral Centroid (Brightness), width: Spectral Bandwidth],
+#       depth: Decay Ratio (Sustain)]
 #     #:rtype: dict
 #
 #     # 1. FFT for Frequency Analysis

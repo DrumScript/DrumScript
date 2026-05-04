@@ -479,9 +479,17 @@ def classify_rudiment_events(audio_data: np.ndarray, sr: int, onsets: list[float
                 # Toms have long decay and low hfer.
                 # We use decay as the primary separator for low toms because floor toms
                 # physically sustain much longer than rack toms.
-                if p["decay"] > 0.75 or p["peak_freq"] < 95.0:
+                # --- COMMENTED OUT OLD TOM LOGIC ---
+                #                if p['decay'] > 0.75 or p['peak_freq'] < 95.0:
+                #                    instruments.append('low_tom')
+                #                elif p['peak_freq'] < 180.0:
+                #                    instruments.append('mid_tom')
+                #                else:
+                #                    instruments.append('high_tom')
+
+                if p["decay"] > 0.75 or p["peak_freq"] < TOM_FREQ_LOW_MAX:
                     instruments.append("low_tom")
-                elif p["peak_freq"] < 180.0:
+                elif p["peak_freq"] <= TOM_FREQ_MID_MAX:
                     instruments.append("mid_tom")
                 else:
                     instruments.append("high_tom")

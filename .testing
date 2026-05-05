@@ -37,7 +37,8 @@ jobs:
     - name: Install dependencies
       run: |
         # Use uv sync to install the package and all [dependency-groups] simultaneously
-        uv sync
+        # uv sync
+        uv sync --all-extras
 
     - name: Lint and Format with Ruff
       run: |

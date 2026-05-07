@@ -166,14 +166,14 @@ def calculate_tempo_from_onsets(onset_times: np.ndarray, sr: int) -> float:
 
     # FIX: librosa.beat.tempo does NOT accept 'onset_events' without audio/envelope.
     # We calculate tempo using Inter-Onset Intervals (IOI).
-    
+
     # 1. Calculate the time difference between consecutive hits
     ioi = np.diff(onset_times)
-    
+
     # 2. Filter out extremely short or long gaps (e.g., fast rolls or long pauses)
     # 0.2s = 300 BPM, 1.5s = 40 BPM
     valid_ioi = ioi[(ioi > 0.2) & (ioi < 1.5)]
-    
+
     if len(valid_ioi) > 0:
         # 3. Take the median interval (median is better than average as it ignores outliers)
         avg_interval = np.median(valid_ioi)
@@ -254,9 +254,12 @@ if __name__ == "__main__":
         tempo = estimate_tempo(audio_data, SAMPLE_RATE)
         # tempo = estimate_tempo(audio_data, SAMPLE_RATE)/2 # temporary fix
         # tempo = estimate_tempo(audio_data, SAMPLE_RATE)/4 # temporary fix
-        # print(f"Loaded audio: Shape={normalised_audio.shape}, Sample Rate={sample_rate}, Duration={len(normalised_audio)/sample_rate:.2f} seconds, Tempo={calculate_tempo_from_onsets(onsets, sr=SAMPLE_RATE):2f}")
+        # print(f"Loaded audio: Shape={normalised_audio.shape}, Sample Rate={sample_rate}, Duration={len(normalised_audio)/sample_rate:.2f} seconds,
+        # Tempo={calculate_tempo_from_onsets(onsets, sr=SAMPLE_RATE):2f}")
+        duration = len(normalised_audio) / sample_rate
         print(
-            f"Loaded audio: Shape={normalised_audio.shape}, Sample Rate={sample_rate} (Hz), Hop Length={HOP_LENGTH} (Hz), Duration={len(normalised_audio) / sample_rate:.2f} seconds, Tempo={tempo:.2f} BPM"
+            f"Loaded audio: Shape=[{normalised_audio.shape}, Sample Rate={sample_rate} (Hz), "
+            f"Hop Length={HOP_LENGTH} (Hz), Duration={duration:.2f} seconds, Tempo={tempo:.2f} BPM]"
         )
     except FileNotFoundError:
         print(f"\nERROR: The audio file '{audio_path}' was not found.")

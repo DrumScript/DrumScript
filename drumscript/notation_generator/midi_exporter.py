@@ -70,7 +70,7 @@ def export_to_midi(classified_events: list[dict], output_filepath: str, tempo: f
     print(f"SUCCESS: MIDI file generated at -> {output_filepath}")
 
 
-# --------------------------------------
+"""# --------------------------------------
 
 # --- COMMENTED OUT THE __main__ BLOCK AS IT USED LEGACY LOGIC ---
 # if __name__ == "__main__":
@@ -80,7 +80,8 @@ def export_to_midi(classified_events: list[dict], output_filepath: str, tempo: f
 #     from drumscript.notation_generator.constants import DRUM_NOTATION_MAP
 #
 #     print("\n#=======================================================================================")
-#     print("Running onset_detector.py example with provided filepath...") # FUTURE: Find way to encode this so it prints the file path provided in CLI
+#     print("Running onset_detector.py example with provided filepath...")
+# # FUTURE: Find way to encode this so it prints the file # path provided in CLI
 #     try:
 #
 #         # Import necessary modules from your package
@@ -139,8 +140,14 @@ def export_to_midi(classified_events: list[dict], output_filepath: str, tempo: f
 #         tempo = estimate_tempo(audio_data, SAMPLE_RATE)
 #         # tempo = estimate_tempo(audio_data, SAMPLE_RATE)/2 # temporary fix
 #         #tempo = estimate_tempo(audio_data, SAMPLE_RATE)/4 # temporary fix
-#         #print(f"Loaded audio: Shape={normalised_audio.shape}, Sample Rate={sample_rate}, Duration={len(normalised_audio)/sample_rate:.2f} seconds, Tempo={calculate_tempo_from_onsets(onsets, sr=SAMPLE_RATE):2f}")
-#         print(f"Loaded audio: Shape={normalised_audio.shape}, Sample Rate={sample_rate} (Hz), Hop Length={HOP_LENGTH} (Hz), Duration={len(normalised_audio)/sample_rate:.2f} seconds, Tempo={tempo:.2f} BPM")
+        duration = len(normalised_audio) / sample_rate
+        print(
+            f"Loaded audio: Shape=[{normalised_audio.shape}, Sample Rate={sample_rate} (Hz), "
+            f"Hop Length={HOP_LENGTH} (Hz), Duration={duration:.2f} seconds, Tempo={tempo:.2f} BPM]"
+        )
+#        print(
+#           f"Loaded audio: Shape={normalised_audio.shape}, Sample Rate={sample_rate} (Hz),
+#       Duration={duration:.2f}  seconds, Tempo={calculate_tempo_from_onsets(onsets, sr=SAMPLE_RATE):2f}")
 #     except FileNotFoundError:
 #         print(f"\nERROR: The audio file '{audio_path}' was not found.")
 #         print(f"\nPlease ensure you have provided the correct path to your audio file: {audio_path}")
@@ -154,3 +161,5 @@ def export_to_midi(classified_events: list[dict], output_filepath: str, tempo: f
 #         traceback.print_exc() # Print full traceback for debugging
 #
 #     print("\nonset_detector.py example finished.")
+"""
+

@@ -1,14 +1,9 @@
 # DrumScript/audio_processor/audio_loader.py
-"""
-This module handles loading and basic normalisation of audio files.
-"""
-# ------------------------------------------------------------------------------------------------------
 
 """
 This module handles loading and basic normalisation of audio files.
 It also contains the main execution block to demonstrate the workflow.
 """
-# Import packages: ------------------------------------------------------------------------------------------------
 
 import argparse  # for command-line argument parsing
 
@@ -16,9 +11,7 @@ import librosa
 import numpy as np
 
 from drumscript.audio_processor.tempo_detector import estimate_tempo
-from drumscript.notation_generator.constants import (
-    SAMPLE_RATE,  # Other args avl: SEGMENT_LENGTH_SECONDS, N_FFT, NOISE_THRESH_SNARE, DRUM_NOTATION_MAP, ONSET_SLICE_DURATION_MS, HOP_LENGTH
-)
+from drumscript.notation_generator.constants import SAMPLE_RATE
 
 # from datetime import datetime
 

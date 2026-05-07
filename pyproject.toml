@@ -16,16 +16,26 @@ keywords = ["drum", "audio", "music", "sheet-music", "notation", "dsp", "machine
 
 classifiers = [
     "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
     "Operating System :: OS Independent",
     "Development Status :: 3 - Alpha",
+    "Intended Audience :: End Users/Desktop",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "Intended Audience :: Other Audience",
     "Topic :: Multimedia :: Sound/Audio",
-    "Topic :: Music Theory",
-    "Topic :: Drums",
-    "Topic :: DrumScript",
     "Topic :: Multimedia :: Sound/Audio :: Analysis",
-    "Topic :: Music :: DSP",
-    "Topic :: Music :: Digital Signal Processing"
-
+    "Topic :: Multimedia :: Sound/Audio :: Conversion",
+    "Topic :: Multimedia :: Sound/Audio :: MIDI",
+    "Topic :: Multimedia :: Sound/Audio :: Players",
+    "Topic :: Multimedia :: Sound/Audio :: Players :: MP3",
+    "Topic :: Multimedia :: Sound/Audio :: Sound Synthesis",
+    "Topic :: Scientific/Engineering",
+    "Topic :: Scientific/Engineering :: Mathematics",
+    "Topic :: Scientific/Engineering :: Physics"
 ]
 
 dependencies = [

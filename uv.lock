@@ -1121,7 +1121,6 @@ dependencies = [
     { name = "matplotlib", version = "3.9.4", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
     { name = "matplotlib", version = "3.10.8", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.10'" },
     { name = "mido" },
-    { name = "musescore" },
     { name = "music21", version = "8.3.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
     { name = "music21", version = "9.9.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.10'" },
     { name = "numba", version = "0.60.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
@@ -1186,7 +1185,6 @@ requires-dist = [
     { name = "mangum", marker = "extra == 'dev'", specifier = ">=0.21.0" },
     { name = "matplotlib" },
     { name = "mido" },
-    { name = "musescore" },
     { name = "music21" },
     { name = "myst-parser", marker = "extra == 'dev'" },
     { name = "numba" },
@@ -2816,15 +2814,6 @@ wheels = [
     { url = "https://files.pythonhosted.org/packages/49/6a/07f3e10ed4503045b882ef7bf8512d01d8a9e25056950a977bd5f50df1c2/msgpack-1.1.2-cp39-cp39-musllinux_1_2_x86_64.whl", hash = "sha256:6bde749afe671dc44893f8d08e83bf475a1a14570d67c4bb5cec5573463c8833", size = 397516, upload-time = "2025-10-08T09:15:51.646Z" },
     { url = "https://files.pythonhosted.org/packages/76/9b/a86828e75986c12a3809c1e5062f5eba8e0cae3dfa2bf724ed2b1bb72b4c/msgpack-1.1.2-cp39-cp39-win32.whl", hash = "sha256:ad09b984828d6b7bb52d1d1d0c9be68ad781fa004ca39216c8a1e63c0f34ba3c", size = 64863, upload-time = "2025-10-08T09:15:53.118Z" },
     { url = "https://files.pythonhosted.org/packages/14/a7/b1992b4fb3da3b413f5fb78a63bad42f256c3be2352eb69273c3789c2c96/msgpack-1.1.2-cp39-cp39-win_amd64.whl", hash = "sha256:67016ae8c8965124fdede9d3769528ad8284f14d635337ffa6a713a580f6c030", size = 71540, upload-time = "2025-10-08T09:15:55.573Z" },
-]
-
-[[package]]
-name = "musescore"
-version = "0.0.2"
-source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/f6/f1/5e12863500c55e355462e133100b2a45bbf32570e9fddee4eb16aa73261c/musescore-0.0.2.tar.gz", hash = "sha256:a6fe431cf219a5dcec32759aa78e1146014dbf22d83f1f091e415bfa51a4c3c1", size = 3642, upload-time = "2023-12-25T20:13:09.912Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/96/7f/76c3ee7a2f7ac255f9653fd2611719dc232a56cd470297116b515fdebbe8/musescore-0.0.2-py3-none-any.whl", hash = "sha256:70699b5f0cc96e50a40c0b86969928237b8d1e3ff60f06cebf6e2e0f9cd864f6", size = 3943, upload-time = "2023-12-25T20:13:08.568Z" },
 ]
 
 [[package]]

@@ -34,7 +34,6 @@ dependencies = [
     "librosa",
     "matplotlib",
     "mido",
-    "musescore",
     "music21",
     "numba",
     "numpy<2",

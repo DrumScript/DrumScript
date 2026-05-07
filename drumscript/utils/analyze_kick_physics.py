@@ -84,9 +84,7 @@ def main():
         res = analyze_kick_physics(f)
         if res:
             results.append(res)
-            print(
-                f"{res['file']:<15} | {res['mean_centroid']:.2f}           | {res['peak_freq']:.2f}           | {res['lfer'] * 100:.1f}%           | {res['decay_time']:.3f}"
-            )
+            print(f"{res['file']:<15} | {res['mean_centroid']:.2f}| {res['peak_freq']:.2f}| {res['lfer'] * 100:.1f}%| {res['decay_time']:.3f}")
 
     # Calculate Averages for your Constants
     if results:

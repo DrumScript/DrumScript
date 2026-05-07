@@ -67,9 +67,7 @@ def main():
         res = analyze_crash_physics(f)
         if res:
             results.append(res)
-            print(
-                f"{res['file']:<40} | {res['decay_time']:.3f}      | {res['centroid']:.0f}            | {res['flatness']:.4f}     | {res['bandwidth']:.0f}"
-            )
+            print(f"{res['file']:<40} | {res['decay_time']:.3f}|{res['centroid']:.0f} | {res['flatness']:.4f}| {res['bandwidth']:.0f}")
 
     if results:
         avg_decay = np.mean([r["decay_time"] for r in results])

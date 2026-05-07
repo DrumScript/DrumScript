@@ -2,7 +2,9 @@
 
 
 # [CONTRIBUTOR SCRIPT]
-# To measure the frequency characteristics of open and closed hi-hat drums using librosa, you can load the audio, perform a Short-Time Fourier Transform (STFT) to analyze the frequency content over time, and then examine the spectral features.
+# To measure the frequency characteristics of open and closed hi-hat drums using librosa,
+# you can load the audio, perform a Short-Time Fourier Transform (STFT) to analyze the frequency content over time
+# and then examine the spectral features.
 
 """
 Utility script to measure the fundamental frequency of a drum sample.
@@ -26,7 +28,8 @@ import numpy as np
 
 def measure_hat_frequency(audio_file_path):
     """
-    # To measure the frequency characteristics of open and closed hi-hat drums using librosa, you can load the audio, perform a Short-Time Fourier Transform (STFT) to analyze the frequency content over time, and then examine the spectral features.
+    # To measure the frequency characteristics of open and closed hi-hat drums using librosa, you can load the audio, perform a
+    # Short-Time Fourier Transform (STFT) to analyze the frequency content over time, and then examine the spectral features.
 
     Extracts key frequency metrics for a single audio event.
 
@@ -69,8 +72,10 @@ S_dB = librosa.amplitude_to_db(np.abs(D), ref=np.max)
 # 4. Analyse and Differentiate Frequencies
 ## Hi-hats generally have dominant frequencies between 300 Hz and 3000 Hz, with energy extending up to 17 kHz for crispness.
 ## Closed Hi-hats: Tend to be a tight, snappy sound (a "chick" or "tssk") with a shorter decay, concentrated in the mid-to-high frequency range.
-## Open Hi-hats: Have a looser, more sibilant "shhhhhh" or "clash" sound with a longer sustain, which involves a broader spectrum of frequencies, particularly the presence range around 2-3 kHz and higher "air" frequencies (5kHz-17kHz).
-## You can extract specific time segments corresponding to individual hits (perhaps by using librosa.onset.onset_detect first) and analyze their average spectral features.
+## Open Hi-hats: Have a looser, more sibilant "shhhhhh" or "clash" sound with a longer sustain, which involves a broader spectrum of frequencies,
+# particularly the presence range around 2-3 kHz and higher "air" frequencies (5kHz-17kHz).
+## You can extract specific time segments corresponding to individual hits (perhaps by using librosa.onset.onset_detect first)
+#  and analyze their average spectral features.
 
 # Example of extracting spectral features for a time segment
 # Assuming a closed hi-hat is at the start (e.g., first 0.5s) and an open hi-hat later
@@ -88,8 +93,10 @@ magnitudes_closed = np.abs(D[:, frame_index_closed])
 
 # 5. Use Spectral Features for Differentiation
 # For a more automated approach, use features that capture the spectral characteristics, such as:
-## Spectral Centroid: Measures the "average" frequency, weighted by magnitude. Open hi-hats might have a slightly higher or more varied spectral centroid due to the extra high-frequency "sizzle."
-## Spectral Flatness: Quantifies how noise-like the sound is. Open hi-hats typically sound more "noisy" and may have a higher spectral flatness value compared to the tighter, more tone-like (though still complex) closed hi-hat sound.
+## Spectral Centroid: Measures the "average" frequency, weighted by magnitude.
+# Open hi-hats might have a slightly higher or more varied spectral centroid due to the extra high-frequency "sizzle."
+## Spectral Flatness: Quantifies how noise-like the sound is. Open hi-hats typically sound more "noisy" and may have a higher spectral flatness value
+# compared to the tighter, more tone-like (though still complex) closed hi-hat sound.
 # By comparing these features between segments of closed and open hi-hats, you can observe the differences in their frequency distribution.
 
 

@@ -162,4 +162,3 @@ def export_to_midi(classified_events: list[dict], output_filepath: str, tempo: f
 #
 #     print("\nonset_detector.py example finished.")
 """
-

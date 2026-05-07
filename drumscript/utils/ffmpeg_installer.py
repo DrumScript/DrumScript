@@ -31,7 +31,7 @@ def is_ffmpeg_installed() -> bool:
     # Optional: Verify FFmpeg version by running it
     try:
         # Run ffmpeg -version and check for non-zero exit code
-        subprocess.run(["ffmpeg", "-version"], check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        subprocess.run(["ffmpeg", "-version"], check=True, capture_output=True)
         print("FFmpeg seems to be working correctly.")
         return True
     except (subprocess.CalledProcessError, FileNotFoundError):

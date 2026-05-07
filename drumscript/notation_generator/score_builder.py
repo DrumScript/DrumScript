@@ -6,7 +6,7 @@ Module to build the final score from classified events.
 
 import json
 import os
-from typing import Any, Dict, List
+from typing import Any
 
 from drumscript.notation_generator.midi_exporter import export_to_midi
 
@@ -21,7 +21,7 @@ from drumscript.notation_generator.pdf_exporter import export_pdf
 
 
 def build_score(
-    detected_events: List[Dict[str, Any]],
+    detected_events: list[dict[str, Any]],
     # tempo: int = 120,
     # tempo: int, # <-- forces the caller to provide tempo
     tempo: float,

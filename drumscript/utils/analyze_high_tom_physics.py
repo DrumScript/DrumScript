@@ -90,7 +90,8 @@ def main():
         if res:
             results.append(res)
             print(
-                f"{res['file']:<25} | {res['peak_freq']:.1f}       | {res['decay_time']:.3f}      | {res['flatness']:.5f}    | {res['wire_ratio'] * 100:.2f}%       | {res['hfer'] * 100:.2f}%"
+                f"{res['file']:<25} | {res['peak_freq']:.1f}|"
+                f"{res['decay_time']:.3f} | {res['flatness']:.5f} | {res['wire_ratio'] * 100:.2f} | {res['hfer'] * 100:.2f}%"
             )
 
     if results:

@@ -72,9 +72,7 @@ def main():
         res = analyze_snare_physics(f)
         if res:
             results.append(res)
-            print(
-                f"{res['file']:<15} | {res['peak_freq']:.2f}           | {res['hfer'] * 100:.1f}%           | {res['mean_flatness']:.4f}          | {res['centroid']:.0f}"
-            )
+            print(f"{res['file']:<15} | {res['peak_freq']:.2f}| {res['hfer'] * 100:.1f}%| {res['mean_flatness']:.4f} | {res['centroid']:.0f}")
 
     if results:
         avg_peak = np.mean([r["peak_freq"] for r in results])

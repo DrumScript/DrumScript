@@ -75,9 +75,7 @@ def main():
         res = analyze_open_hat_physics(f)
         if res:
             results.append(res)
-            print(
-                f"{res['file']:<30} | {res['decay_time']:.3f}      | {res['centroid']:.0f}Hz      | {res['hfer_7k'] * 100:.1f}%        | {res['zcr']:.3f}"
-            )
+            print(f"{res['file']:<30} | {res['decay_time']:.3f}| {res['centroid']:.0f}Hz| {res['hfer_7k'] * 100:.1f}%| {res['zcr']:.3f}")
 
     if results:
         avg_decay = np.mean([r["decay_time"] for r in results])

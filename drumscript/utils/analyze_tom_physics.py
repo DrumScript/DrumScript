@@ -78,9 +78,7 @@ def main():
         res = analyze_tom_physics(f)
         if res:
             results.append(res)
-            print(
-                f"{res['file']:<25} | {res['peak_freq']:.1f}       | {res['hfer'] * 100:.1f}%       | {res['flatness']:.4f}     | {res['decay_time']:.3f}"
-            )
+            print(f"{res['file']:<25} | {res['peak_freq']:.1f}| {res['hfer'] * 100:.1f}% | {res['flatness']:.4f}     | {res['decay_time']:.3f}")
 
     print("-" * 110)
 

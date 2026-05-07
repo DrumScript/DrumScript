@@ -26,11 +26,17 @@ import numpy as np
 """
 # [CONTRIBUTOR UTILITY CODE]
 # Example code for calculating the frequency of a drum part
-# To measure the frequency of a snare drum using Librosa, you can apply a Short-Time Fourier Transform (STFT) to convert the audio into the time-frequency domain and then identify the dominant frequency within the typical snare drum range.
-# This script uses librosa and numpy to find the `fundamental` frequency of a snare drum sample. This analysis can then be used to tweak/fine-tune the classification model used in DrumScript.
-# It assumes that a specific isolated audio snippet of the part being tested is supplied as user input, ie. you need to give it an audio file to analyse.
+# To measure the frequency of a snare drum using Librosa, you can apply a Short-Time Fourier Transform (STFT)
+# to convert the audio into the time-frequency domain and then identify the dominant frequency within the typical snare drum range.
+# This script uses librosa and numpy to find the `fundamental` frequency of a snare drum sample. This analysis can then be used to tweak/fine-tune the
+#  classification model used in DrumScript.
+# It assumes that a specific isolated audio snippet of the part being tested is supplied as user input,
+#  ie. you need to give it an audio file to analyse.
 
-This script measures the frequency of a snare drum using librosa, and applies the Short-Time Fourier Transform (STFT) to analyse its frequency content over time. The primary frequencies will appear as peaks in the resulting spectrogram (optional).  The code loads an audio file, separates the percussive components (useful for isolating the snare in a full mix), computes the STFT, and finds the dominant frequency. You need to have librosa and numpy installed.
+# This script measures the frequency of a snare drum using librosa, and applies the Short-Time Fourier Transform (STFT) to analyse its frequency
+# content over time. The primary frequencies will appear as peaks in the resulting spectrogram (optional).  The code loads an audio file, separates
+# the percussive components (useful for isolating the snare in a full mix), computes the STFT, and finds the dominant frequency. You need to have
+#  librosa and numpy installed.
 
 """
 
@@ -56,7 +62,7 @@ def measure_snare_frequency(audio_file_path):
     n_fft = 2048
     hop_length = 512
     S = librosa.stft(y_snare, n_fft=n_fft, hop_length=hop_length)
-    S_db = librosa.amplitude_to_db(abs(S), ref=np.max)
+    librosa.amplitude_to_db(abs(S), ref=np.max)
 
     # 4. Find the dominant frequency (e.g., using spectral centroid or peak analysis)
     # Spectral centroid gives the "center of mass" of the frequencies

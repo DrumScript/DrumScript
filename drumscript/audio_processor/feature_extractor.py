@@ -4,7 +4,7 @@
 This module will extract relevant features from audio segments for drum classification.
 """
 
-from typing import Any, Dict, List
+from typing import Any
 
 import librosa
 import numpy as np
@@ -41,7 +41,7 @@ TOTAL_FEATURES_PER_FRAME = N_MFCC + 3 + 3  # TOTAL_FEATURES_PER_FRAME = 47
 # --- Main Feature Extraction Functions ---
 
 
-def extract_features(audio_segment: np.ndarray, sr: int) -> Dict[str, Any]:
+def extract_features(audio_segment: np.ndarray, sr: int) -> dict[str, Any]:
     """
     Extracts a dictionary of features from a single audio segment.
     Features are returned as mean values over the segment's duration.
@@ -112,7 +112,7 @@ def extract_features(audio_segment: np.ndarray, sr: int) -> Dict[str, Any]:
         return None
 
 
-def extract_features_for_onsets(y: np.ndarray, sr: int, onset_times: List[float]) -> List[Dict[str, Any]]:
+def extract_features_for_onsets(y: np.ndarray, sr: int, onset_times: list[float]) -> list[dict[str, Any]]:
     """
     Slices an audio array around each onset time and extracts features for each slice.
 
@@ -163,17 +163,17 @@ def extract_features_for_onsets(y: np.ndarray, sr: int, onset_times: List[float]
 """# ALTERNATIVE FEATURE EXTRACTION FCT WITH PADDING TO PREVENT TOO HIGH NFFT ERRORS
 
 def extract_features(audio_segment: np.ndarray, sr: int = SAMPLE_RATE) -> dict:
-    
+
     #Extracts spectral features from a short audio segment (slice).
     #Includes safety padding for very short segments to prevent crashes.
-    
-    
+
+
     # --- SAFETY PADDING (The Fix) ---
     # Ensure the segment is at least as long as N_FFT
     if len(audio_segment) < N_FFT:
         # Calculate how much silence we need to add
         padding_needed = N_FFT - len(audio_segment)
-        
+
         # Pad with zeros (silence) on the right side only
         # (mode='constant' defaults to 0)
         audio_segment = np.pad(audio_segment, (0, padding_needed), mode='constant')
@@ -185,12 +185,12 @@ def extract_features(audio_segment: np.ndarray, sr: int = SAMPLE_RATE) -> dict:
         spectral_centroid = librosa.feature.spectral_centroid(
             y=audio_segment, sr=sr, n_fft=N_FFT, hop_length=HOP_LENGTH
         )[0]
-        
+
         # Spectral Bandwidth (Width)
         spectral_bandwidth = librosa.feature.spectral_bandwidth(
             y=audio_segment, sr=sr, n_fft=N_FFT, hop_length=HOP_LENGTH
         )[0]
-        
+
         # Zero Crossing Rate (Noisiness)
         # Note: ZCR usually doesn't strictly depend on N_FFT but good to keep standard
         zcr = librosa.feature.zero_crossing_rate(

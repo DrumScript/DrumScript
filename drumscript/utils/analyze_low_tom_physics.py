@@ -1,15 +1,11 @@
-"""To determine the Frequency Floor (separating them from Kicks) and the Membranophone Signature (separating them from Cymbals), we need to analyze their physics.
-
-Phase 1: The Analysis Script (Low Tom)
-This script will extract the critical metrics:
-
-Peak Frequency: Where does the fundamental note sit? (Likely 60-100Hz).
-
-Decay Time: How long does it ring? (Toms usually sustain longer than Kicks).
-
-Spectral Flatness: Is it a tone (low flatness) or noise (high flatness)?
-
-High Frequency Energy: Verifying it lacks the "shimmer" of a cymbal."""
+# To determine the Frequency Floor (separating them from Kicks) and the Membranophone Signature
+# (separating them from Cymbals) we need to analyse their physics.
+# Phase 1: The Analysis Script (Low Tom)
+# This script will extract the critical metrics:
+# Peak Frequency: Where does the fundamental note sit? (Likely 60-100Hz).
+# Decay Time: How long does it ring? (Toms usually sustain longer than Kicks).
+# Spectral Flatness: Is it a tone (low flatness) or noise (high flatness)?
+# High Frequency Energy: Verifying it lacks the "shimmer" of a cymbal.
 
 import glob
 import os
@@ -91,9 +87,7 @@ def main():
         res = analyze_low_tom_physics(f)
         if res:
             results.append(res)
-            print(
-                f"{res['file']:<25} | {res['peak_freq']:.1f}       | {res['decay_time']:.3f}      | {res['flatness']:.5f}    | {res['hfer'] * 100:.2f}%"
-            )
+            print(f"{res['file']:<25} | {res['peak_freq']:.1f}| {res['decay_time']:.3f}| {res['flatness']:.5f}| {res['hfer'] * 100:.2f}%")
 
     # Calculate Averages for Constants
     if results:
@@ -101,7 +95,7 @@ def main():
         avg_flat = np.mean([r["flatness"] for r in results])
 
         print("-" * 115)
-        print(f"AVERAGES                  | --         | {avg_decay:.3f}      | {avg_flat:.5f}    | --")
+        print(f"AVERAGES | -- | {avg_decay:.3f}  | {avg_flat:.5f}| --")
         print("-" * 115)
 
 

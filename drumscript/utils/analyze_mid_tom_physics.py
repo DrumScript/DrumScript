@@ -1,12 +1,3 @@
-"""I have received the 5 Mid Tom audio files (mid_tom_phat.wav to mid_tom_yamaha_maple.wav).
-
-Now we will determine exactly where the "Mid Tom" sits in the frequency spectrum. This is critical because, as we saw with the Low Toms, the boundaries between "Low", "Mid", and "High" can be subjective. We will use your data to make them objective.
-
-Phase 1: The Analysis Script (Mid Tom)
-This script is tuned to look at the 100Hz - 200Hz range where Mid Toms typically live. It will also double-check the "Membranophone Signature" (Decay & Purity) to ensure they match the Low Toms.
-
-Action: Save this as drumscript/utils/analyze_mid_tom_physics.py."""
-
 import glob
 import os
 from datetime import datetime
@@ -83,9 +74,7 @@ def main():
         res = analyze_mid_tom_physics(f)
         if res:
             results.append(res)
-            print(
-                f"{res['file']:<25} | {res['peak_freq']:.1f}       | {res['decay_time']:.3f}      | {res['flatness']:.5f}    | {res['hfer'] * 100:.2f}%"
-            )
+            print(f"{res['file']:<25} | {res['peak_freq']:.1f}| {res['decay_time']:.3f}| {res['flatness']:.5f}| {res['hfer'] * 100:.2f}%")
 
     if results:
         avg_freq = np.mean([r["peak_freq"] for r in results])

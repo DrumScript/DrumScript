@@ -41,7 +41,6 @@ classifiers = [
 
 dependencies = [
     "demucs",
-    "ipykernel",
     "librosa",
     "matplotlib",
     "mido",

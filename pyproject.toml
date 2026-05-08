@@ -70,12 +70,6 @@ dependencies = [
 [project.optional-dependencies]
 # COMMENTED OUT: Moved to [dependency-groups] below to follow modern PEP 735 standards for local dev environments.
 dev = [
-  #"basic-pitch",
-  #"basic-pitch[onnx]",
-  #"basic-pitch[tf]",
-  #"basic-pitch[coreml]",
-  #"black",
-  #"flake8",
   # "furo",
   "ipykernel",
   "myst-parser",

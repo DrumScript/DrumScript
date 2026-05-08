@@ -10,7 +10,11 @@ This is the auto-generated API reference for DrumScript.
    .. code-block:: python
 
       import drumscript as ds
+      ds.transcribe()
+      ds.extract_drum_stem()
+      ds.extract_stems()
       ds.detect_tempo()
+
 
 Configuration & Constants
 -------------------------
@@ -29,7 +33,7 @@ Core Functions
    :toctree: generated
    :nosignatures:
 
-   drumscript.main
+   drumscript.transcribe
    drumscript.extract_stems
    drumscript.detect_tempo
    drumscript.export_pdf

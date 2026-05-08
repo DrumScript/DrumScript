@@ -17,7 +17,7 @@ from .audio_processor.onset_detector import detect_onsets
 from .audio_processor.stem_splitter import extract_drum_stem, separate_audio
 from .audio_processor.tempo_detector import estimate_tempo as _internal_estimate
 from .drum_classifier.classify import classify_events, classify_rudiment_events
-from .notation_generator import midi_exporter, pdf_exporter, xml_exporter
+from .notation_generator import midi_exporter, pdf_exporter, score_builder, xml_exporter
 from .notation_generator.constants import SAMPLE_RATE
 from .notation_generator.score_builder import build_score
 from .utils.ffmpeg_installer import install_ffmpeg
@@ -146,6 +146,137 @@ def detect_tempo(audio_input, full=False):
     return bpm
 
 
+def transcribe(
+    audio_path,
+    *,
+    full_song=False,
+    time_signature="4/4",
+    is_rudiment=False,
+    output_dir="outputs",
+    output_filename=None,
+    full=False,
+):
+    """
+    Run the full DrumScript transcription pipeline end-to-end.
+
+    Loads audio → optionally extracts the drum stem → detects tempo and onsets →
+    classifies hits → builds the score → writes PDF output.
+
+    :param audio_path: Path to the input audio file (full song or isolated drum stem).
+    :type audio_path: str
+    :param full_song: If True, run Demucs stem separation first to isolate the drum
+        track. Set to False if your input is already an isolated drum stem.
+    :type full_song: bool, optional
+    :param time_signature: Time signature string in 'N/D' form (e.g. '4/4', '6/8').
+    :type time_signature: str, optional
+    :param is_rudiment: If True, use the simpler classifier optimised for isolated
+        single beats and rudiments rather than full polyphonic drum patterns.
+    :type is_rudiment: bool, optional
+    :param output_dir: Directory to save the PDF output. Created if it doesn't exist.
+        Defaults to 'outputs/'.
+    :type output_dir: str, optional
+    :param output_filename: Output filename without extension. Defaults to
+        '<input_stem>_transcription'.
+    :type output_filename: str, optional
+    :param full: If True, return a dict with all intermediate results (tempo, onsets,
+        events, paths) instead of just the PDF path.
+    :type full: bool, optional
+
+    :return: Path to the generated PDF, or a dict of full results if full=True.
+    :rtype: str or dict
+
+    **Examples:**
+
+    Quick transcription of an isolated drum stem:
+
+    .. code-block:: python
+
+       import drumscript as ds
+       pdf = ds.transcribe("drum_loop.wav")
+
+    Full song with stem separation, custom output, full results:
+
+    .. code-block:: python
+
+       result = ds.transcribe(
+           "full_song.mp3",
+           full_song=True,
+           time_signature="6/8",
+           output_dir="./my_transcriptions",
+           full=True,
+       )
+       print(f"PDF: {result['pdf_path']}")
+       print(f"Detected tempo: {result['tempo']:.1f} BPM")
+       print(f"Onsets: {len(result['onsets'])}")
+    """
+    audio_path = str(audio_path)
+    input_stem = pathlib.Path(audio_path).stem
+
+    # 1. Stem separation (optional)
+    working_path = audio_path
+    if full_song:
+        print("...Separating drum stem...")
+        working_path = extract_drum_stem(audio_path)
+
+    # 2. Load + normalise
+    print("...Loading & analysing audio...")
+    y, sr = load_audio(working_path)
+    y = normalise_audio(y)
+
+    # 3. Tempo + onsets
+    # tempo = estimate_tempo(y, sr)
+    tempo = _internal_estimate(y, sr)
+    onsets = detect_onsets(y, sr)
+    print(f"   -> Tempo: {tempo:.1f} BPM | Onsets: {len(onsets)}")
+
+    # 4. Classify
+    if is_rudiment:
+        print("   -> Classifier: rudiment / single-beat engine")
+        classified_events = classify_rudiment_events(y, sr, onsets)
+    else:
+        print("   -> Classifier: standard polyphonic engine")
+        classified_events = classify_events(y, sr, onsets)
+    print(f"   -> Classified {len(classified_events)} events")
+
+    # 5. Re-shape events for the score builder
+    detected_events = [
+        {
+            "time_sec": ev["time_sec"],
+            "instruments": ev["instruments"],
+            "debug_features": ev["debug_features"],
+        }
+        for ev in classified_events
+    ]
+
+    # 6. Build & export
+    out_dir = pathlib.Path(output_dir)
+    out_dir.mkdir(parents=True, exist_ok=True)
+    fname = output_filename or f"{input_stem}_transcription"
+    pdf_path = out_dir / f"{fname}.pdf"
+
+    print(f"...Building score: {pdf_path}")
+    score_builder.build_score(
+        detected_events=detected_events,
+        tempo=tempo,
+        output_filepath=str(pdf_path),
+        time_signature=time_signature,
+    )
+    print("--- Done ---")
+
+    if full:
+        return {
+            "pdf_path": str(pdf_path),
+            "input_path": audio_path,
+            "drum_stem_path": working_path if full_song else None,
+            "tempo": tempo,
+            "onsets": onsets,
+            "events": detected_events,
+            "time_signature": time_signature,
+            "sample_rate": sr,
+        }
+    return str(pdf_path)
+
+
 def export_pdf(score, output_path=None, **kwargs):
     """
     Exports a generated DrumScript score object to a beautifully rendered PDF file.
@@ -251,6 +382,7 @@ def export_xml(score, output_path=None, **kwargs):
 # 3. Explicitly define the Public API (Used by Sphinx and `from drumscript import *`)
 __all__ = [
     # High-level wrappers
+    "transcribe",
     "extract_stems",
     "detect_tempo",
     "export_pdf",

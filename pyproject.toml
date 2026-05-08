@@ -67,7 +67,7 @@ dependencies = [
 
 [project.urls]
 "Repository" = "https://github.com/DrumScript/DrumScript"
-"Issues" = "https://github.com//DrumScript/DrumScript/issues"
+"Issues" = "https://github.com/DrumScript/DrumScript/issues"
 
 [project.optional-dependencies]
 # COMMENTED OUT: Moved to [dependency-groups] below to follow modern PEP 735 standards for local dev environments.

@@ -1,5 +1,15 @@
 # docs/conf.py
 # Configuration file for the Sphinx documentation builder.
+
+
+# -- Path setup --------------------------------------------------------------
+# Add the project root directory (one level up) to Python's path
+# This allows Sphinx's 'autodoc' to find 'audio_processor', 'drum_classifier', etc.
+import os
+import sys
+
+sys.path.insert(0, os.path.abspath(".."))
+
 #
 # For the full list of built-in configuration values, see the documentation:
 # https://www.sphinx-doc.org/en/master/usage/configuration.html
@@ -11,15 +21,6 @@ project = "DrumScript"
 copyright = "© 2026, DrumScript"
 author = "DrumScript"
 release = "0.1.2"
-
-# -- Path setup --------------------------------------------------------------
-# Add the project root directory (one level up) to Python's path
-# This allows Sphinx's 'autodoc' to find 'audio_processor', 'drum_classifier', etc.
-import os
-import sys
-
-sys.path.insert(0, os.path.abspath(".."))
-
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration

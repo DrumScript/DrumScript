@@ -159,3 +159,5 @@ terraform/.terraform.tfstate.lock.info
 tree_full.txt
 ! .github/workflows/publish.yml
 ! .github/workflows/publish.yml
+
+Makefile

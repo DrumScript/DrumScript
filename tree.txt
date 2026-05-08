@@ -1,10 +1,11 @@
-drumscript
-├── .DS_Store
+.
 ├── .github
-│   ├── .DS_Store
 │   ├── CODEOWNERS
+│   ├── ISSUE_TEMPLATE
+│   │   ├── bug_report.md
+│   │   └── feature_request.md
+│   ├── PULL_REQUEST_TEMPLATE.md
 │   └── workflows
-│       ├── .DS_Store
 │       ├── docs.yml
 │       ├── publish.yml
 │       ├── test_build.yml
@@ -12,17 +13,10 @@ drumscript
 ├── .gitignore
 ├── .pre-commit-config.yaml
 ├── .python-version
-├── DRUM_NOTATION_MAPPING_SCRATCH__sat02may2026
-├── Dockerfile
-├── LICENSE
-├── MANIFEST.in
-├── Makefile
-├── README.md
-├── aws_api.py
+├── CHANGELOG.md
+├── CODE_OF_CONDUCT.md
+├── CONTRIBUTING.md
 ├── docs
-│   ├── .DS_Store
-│   ├── FOLDER_STRUCTURE.txt
-│   ├── Makefile
 │   ├── _templates
 │   │   └── autosummary
 │   │       └── module.rst
@@ -34,34 +28,15 @@ drumscript
 │   │   ├── contributor_guidance.md
 │   │   ├── documentation.md
 │   │   └── testing_guidance.md
+│   ├── FOLDER_STRUCTURE.txt
 │   ├── github_pages.sh
-│   ├── guide
-│   │   ├── .DS_Store
-│   │   ├── cli_reference.md
-│   │   ├── configuration.md
-│   │   ├── glossary.md
-│   │   ├── installation.md
-│   │   ├── interactive
-│   │   │   ├── .DS_Store
-│   │   │   ├── drumscript_interactive_notebook.ipynb
-│   │   │   └── extract_stems.ipynb
-│   │   └── usage.md
 │   ├── index.md
 │   ├── make.bat
-│   ├── release_notes
-│   │   ├── .DS_Store
-│   │   ├── 0.1.0
-│   │   ├── 0.1.0.md
-│   │   ├── 0.1.2.md
-│   │   ├── _template.md
-│   │   └── index.md
 │   ├── theory
 │   └── versions.json
 ├── drumscript
-│   ├── .DS_Store
 │   ├── __init__.py
 │   ├── audio_processor
-│   │   ├── .DS_Store
 │   │   ├── __init__.py
 │   │   ├── audio_loader.py
 │   │   ├── feature_extractor.py
@@ -70,13 +45,11 @@ drumscript
 │   │   ├── tempo_detector.py
 │   │   └── tempogram.py
 │   ├── drum_classifier
-│   │   ├── .DS_Store
 │   │   ├── __init__.py
 │   │   ├── classify.py
 │   │   └── proofs
 │   ├── main.py
 │   ├── notation_generator
-│   │   ├── .DS_Store
 │   │   ├── __init__.py
 │   │   ├── constants.py
 │   │   ├── helpers.py
@@ -86,7 +59,6 @@ drumscript
 │   │   ├── score_builder.py
 │   │   └── xml_exporter.py
 │   └── utils
-│       ├── .DS_Store
 │       ├── __init__.py
 │       ├── analyze_closed_hat_physics.py
 │       ├── analyze_crash_physics.py
@@ -97,35 +69,30 @@ drumscript
 │       ├── analyze_open_hat_physics.py
 │       ├── analyze_ride_physics.py
 │       ├── analyze_snare_physics.py
-│       ├── analyze_tom_physics.log
 │       ├── analyze_tom_physics.py
 │       ├── config.py
 │       ├── ffmpeg_installer.py
 │       ├── get_event_frequencies.py
 │       ├── measure_hat_frequency.py
 │       ├── measure_kick_frequency.py
-│       ├── measure_snare_frequency.py
-│       └── proofs
-├── drumscript_full_review.txt
-├── outputs
+│       └── measure_snare_frequency.py
+├── LICENSE
+├── MANIFEST.in
 ├── public
-│   ├── drumscript-0.1.2-py3-none-any.whl
-│   ├── drumscript-0.1.2.tar.gz
+│   ├── drumscript-0.1.3-py3-none-any.whl
+│   ├── drumscript-0.1.3.tar.gz
 │   └── pyodideWorker.js
 ├── pyproject.toml
 ├── pytest.ini
+├── README.md
 ├── repository_structure.md
 ├── scripts
-│   ├── .DS_Store
-│   ├── backup.log
-│   ├── backup.sh
-│   ├── collect_code.sh
-│   ├── deploy.sh
 │   └── run_tests.sh
+├── SECURITY.md
 ├── tree.txt
 ├── ui.py
 ├── uv.lock
 └── visuals
     └── tempogram.png
 
-23 directories, 106 files
+19 directories, 77 files

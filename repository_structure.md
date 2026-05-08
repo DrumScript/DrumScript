@@ -41,7 +41,27 @@ DrumScript/                          # Project root
 │   │   ├── midi_exporter.py
 │   │   ├── xml_exporter.py
 │   │   └── constants.py             # Single-source of truth for constants such as `SAMPLE_RATE`, `N_FFT` used globally through `DrumScript`
-│   └── utils/                       # Utility functions.
+│   └── utils
+│       ├── __init__.py
+│       ├── config.py
+│       ├── ffmpeg_installer.py
+│       └── research                 # A set of utility scripts very useful for testing the deterministic parameters on richer drum sample data. Excluded from binaries
+│           ├── __init__.py
+│           ├── analyze_closed_hat_physics.py
+│           ├── analyze_crash_physics.py
+│           ├── analyze_high_tom_physics.py
+│           ├── analyze_kick_physics.py
+│           ├── analyze_low_tom_physics.py
+│           ├── analyze_mid_tom_physics.py
+│           ├── analyze_open_hat_physics.py
+│           ├── analyze_ride_physics.py
+│           ├── analyze_snare_physics.py
+│           ├── analyze_tom_physics.py
+│           ├── get_event_frequencies.py
+│           ├── measure_hat_frequency.py
+│           ├── measure_kick_frequency.py
+│           └── measure_snare_frequency.py
+├── LICENSE
 ├── docs/                            # Documentation for developers and contributors, as well as the `_build` artifacts for the `DrumScript` 
 └── tests/
 │   ├── __init__.py

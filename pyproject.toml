@@ -109,7 +109,8 @@ exclude = [
     ".testing",
     "*/logs/*",
     "*/proofs/*",
-    "*/__pycache__/*"
+    "*/__pycache__/*",
+    "drumscript.utils.research*",
     ]
 
 [tool.pytest.ini_options]

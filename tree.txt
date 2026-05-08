@@ -60,22 +60,24 @@
 │   │   └── xml_exporter.py
 │   └── utils
 │       ├── __init__.py
-│       ├── analyze_closed_hat_physics.py
-│       ├── analyze_crash_physics.py
-│       ├── analyze_high_tom_physics.py
-│       ├── analyze_kick_physics.py
-│       ├── analyze_low_tom_physics.py
-│       ├── analyze_mid_tom_physics.py
-│       ├── analyze_open_hat_physics.py
-│       ├── analyze_ride_physics.py
-│       ├── analyze_snare_physics.py
-│       ├── analyze_tom_physics.py
 │       ├── config.py
 │       ├── ffmpeg_installer.py
-│       ├── get_event_frequencies.py
-│       ├── measure_hat_frequency.py
-│       ├── measure_kick_frequency.py
-│       └── measure_snare_frequency.py
+│       └── research
+│           ├── __init__.py
+│           ├── analyze_closed_hat_physics.py
+│           ├── analyze_crash_physics.py
+│           ├── analyze_high_tom_physics.py
+│           ├── analyze_kick_physics.py
+│           ├── analyze_low_tom_physics.py
+│           ├── analyze_mid_tom_physics.py
+│           ├── analyze_open_hat_physics.py
+│           ├── analyze_ride_physics.py
+│           ├── analyze_snare_physics.py
+│           ├── analyze_tom_physics.py
+│           ├── get_event_frequencies.py
+│           ├── measure_hat_frequency.py
+│           ├── measure_kick_frequency.py
+│           └── measure_snare_frequency.py
 ├── LICENSE
 ├── MANIFEST.in
 ├── public
@@ -95,4 +97,4 @@
 └── visuals
     └── tempogram.png
 
-19 directories, 77 files
+20 directories, 78 files

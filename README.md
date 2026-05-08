@@ -1,11 +1,11 @@
-## **`DrumScript`**
+# **`DrumScript`**
 
 <!--date_created: sun-15-june-2025-->
 <!--date_edited: fri-08-may-2026-->
 
 DrumScript is an open-source `Python` library and suite of tools intended to make music more accessible for everyone. The Python package alpha is released alongside a free-to-use engine for members of the musical and sound analysis/engineering community to use in a zero-code way.
 
-> #### **[hello.drumscript@gmail.com](hello.drumscript@gmail.com)**
+>**[hello.drumscript@gmail.com](hello.drumscript@gmail.com)**
 
 > **Python>=3.9**
 
@@ -31,7 +31,7 @@ DrumScript is an open-source `Python` library and suite of tools intended to mak
 
 
 ---
-### **Project Structure**
+## **Project Structure**
 
 The `DrumScript` project is organised into the following main directories. See **[`repository_structure.md`](repository_structure.md)** for the full repository structure. 
 
@@ -93,10 +93,9 @@ DrumScript/                          # Project root
 ```
 
 ---
-#### Overview of `DrumScript` Features
+## Overview of `DrumScript` Features
 
 * **Audio Input:** Supports common audio formats like `.wav` and `.mp3`, both as inputs and outputs
-<!--* **Drum Hit Detection:** Identifies the precise timing of drum strikes using onset event detection algorithms.-->
 * **Onset Detection**: Onset detection method which has been tuned to the features of percussion audio physics rather than polyphnic audio physics (such as for piano, guitar etc).
 * **Audio Extraction:** We utilise the state-of-the-art [Demucs](https://github.com/adefossez/demucs) source separation model to provide high-quality drum extraction so users can separate audio files into their drum, guitar, base guitar and vocal stems.
 * **Stem-Manipulation:** We also utilise the state-of-the-art [Demucs](https://github.com/adefossez/demucs) source separation model to provide high-quality drum extraction from given audio path so users can produce **drumless backing tracks** to play along to. The method also allows users to extract bass guitar. In the future we hope to add more advanced stem extraction! [See **Contributing**](#contributing) section for more information.
@@ -111,7 +110,7 @@ DrumScript/                          # Project root
 
 
 ---
-### Installation
+## Installation
 
 > `DrumScript` manages dependencies using `uv` and `pyproject.toml`.
 
@@ -134,7 +133,7 @@ A full list of project- and optional dependencies can be found in the **[`pyproj
 
 ---
 
-### Usage
+## Usage
 
 > **Simple**
 
@@ -153,7 +152,7 @@ stems = ds.separate_stems("test.wav", output_dir="./my_stems")
 
 > **Full commands**
 
-#### **Basic Transcription**
+### **Basic Transcription**
 
 To run the full transcription pipeline on an audio file, use the main entry point. This will load the audio, separate the drums (if needed), classify hits, and generate a PDF score.
 
@@ -166,7 +165,7 @@ main()
 
 ```
 
-#### **Stem Splitting**
+### **Stem Splitting**
 
 Isolate the drum track from a full music mix using the `StemSplitter` class. This is useful if you want to process the drum audio separately.
 
@@ -186,7 +185,7 @@ print(f"Drum stem saved at: {drum_track_path}")
 
 ```
 
-#### **Audio Loading**
+### **Audio Loading**
 
 Load and normalise audio files for analysis. The `AudioLoader` handles mono conversion and peak normalisation automatically.
 
@@ -201,7 +200,7 @@ y, sr = loader.load_audio("path/to/drum_stem.wav")
 ```
 ---
 
-### Contributing
+## Contributing to `DrumScript`
 
 We welcome contributions! `DrumScript` is intended to be a community-owned project. If you have ideas, bug fixes, or new features, please **[open an issue](https://github.com/DrumScript/DrumScript/issues/new)** or submit a **[pull request](https://github.com/DrumScript/DrumScript/pulls)**.
 
@@ -215,7 +214,7 @@ It leverages **audio signal processing** and a **rule-based classification engin
 
 ---
 
-### Contact
+## Contact
 
 > All bug reports and feature requests must be filed as [GitHub Issues](https://github.com/DrumScript/DrumScript/issues). All code changes must be submitted as [Pull Requests](https://github.com/DrumScript/DrumScript/pulls). 
 
@@ -291,17 +290,17 @@ To process `.mp3` files, you must first install **`FFmpeg`**, a command-line too
 
 ### FAQs
 
-  * #### Why don't you include `FFmpeg` as a dependency?
+  * ## Why don't you include `FFmpeg` as a dependency?
     `FFmpeg` is a system-level program, not a Python library, so it cannot be bundled directly into the package's dependencies via `requirements.txt` or `pyproject.toml`. It must be installed on the operating system itself.
-  * #### Is it safe to use the `install_ffmpeg()` helper script?
+  * ## Is it safe to use the `install_ffmpeg()` helper script?
     Yes. The script is a simple wrapper that runs standard, trusted ¢¢ commands for each OS. However, you are always welcome to follow the manual ¢¢ instructions instead.
-  * #### What normalisation is applied to loaded audio?
+  * ## What normalisation is applied to loaded audio?
     The `audio_loader.py` script applies **peak normalisation** after loading an audio file. It first converts the audio to mono and then normalises it using `librosa.util.normalize()`.
-  * #### What is `peak normalisation`? 
+  * ## What is `peak normalisation`? 
     Peak normalisation adjusts an audio file's volume so that its loudest point (the "peak") is set to a maximum level (1.0) without distortion. This standardises the volume across different recordings, ensuring the classification engine receives a consistent signal. This allows the classification rules to work reliably across different recordings, focusing on the sonic **character** of each drum, not just its loudness.
-  * #### Does `normalisation` remove audio detail?
+  * ## Does `normalisation` remove audio detail?
     No. Peak normalisation is a **linear process**—it multiplies every audio sample by the same constant value, like turning a volume knob. The "shape" of the sound wave, which contains all the sonic details and rhythmic information, is perfectly preserved.
-  * #### What is `hop_length`?
+  * ## What is `hop_length`?
     When analysing audio, `librosa` slides a small window across the audio file. The **`hop_length`** is the number of audio samples the window "hops" forward for each step. A smaller `hop_length` results in more analysis windows and a more detailed, time-accurate analysis, which is crucial for capturing fast musical passages. For example, with a sample rate of 44100 Hz and a `hop_length` of 256 samples, the analysis resolution is:
     $$
     $$$$\\frac{256 \\text{ samples}}{44100 \\text{ samples per second}} \\approx 0.0058 \\text{ seconds (or 5.8 milliseconds)}

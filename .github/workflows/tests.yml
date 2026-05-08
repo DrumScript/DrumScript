@@ -3,9 +3,9 @@ name: Run Tests
 # Trigger the workflow on push or pull request to main
 on:
   push:
-    branches: [ "main", "build/pypi_assets" ]
+    branches: [ "main", "build/prep_for_release" ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ "main", "build/prep_for_release" ]
 
 jobs:
   test:

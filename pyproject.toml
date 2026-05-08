@@ -74,7 +74,7 @@ dev = [
   "ipykernel",
   "myst-parser",
   "pytest",
-  "pytest-cov",
+  "pytest-cov>=7.1.0",
   "shibuya>=2025.10.21",
   "streamlit>=1.50.0",
   "fastapi>=0.128.8",
@@ -141,26 +141,3 @@ ignore = []
 # Enforce double quotes and standard spacing (Black-compatible)
 quote-style = "double"
 indent-style = "space"
-
-[dependency-groups]
-dev = [
-    "pytest-cov>=7.1.0",
-]
-
-# [FOR FUTURE CONSIDERATION] move o [project.optional-dependencies] below to follow modern PEP 735 standards for local dev environments.
-#[dependency-groups]
-#dev = [
- #   "ruff>=0.15.11",
- #   "ipykernel",
- #   "myst-parser",
- #   "pytest",
- #   "pytest-cov",
- #   "shibuya>=2025.10.21",
- #   "streamlit>=1.50.0",
- #   "fastapi>=0.128.8",
- #   "ipywidgets>=8.1.8",
- #   "mangum>=0.21.0",
- #   "requests>=2.32.5",
-#]
-
-

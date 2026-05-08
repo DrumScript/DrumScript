@@ -54,7 +54,6 @@ dependencies = [
     "reportlab",
     "scikit-learn",
     "scipy",
-    "setuptools",
     "sounddevice",
     "soundfile",
     "torch>=2.4,<2.9",

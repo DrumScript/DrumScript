@@ -1,7 +1,7 @@
 ## **`DrumScript`**
 
 <!--date_created: sun-15-june-2025-->
-<!--date_updated: sat-18-apr-2026-->
+<!--date_edited: fri-08-may-2026-->
 
 DrumScript is an open-source `Python` library and suite of tools intended to make music more accessible for everyone. The Python package alpha is released alongside a free-to-use engine for members of the musical and sound analysis/engineering community to use in a zero-code way.
 
@@ -37,6 +37,19 @@ The `DrumScript` project is organised into the following main directories. See *
 
 ```
 DrumScript/                          # Project root
+DrumScript/                          # Project root
+├── .github/                         # GitActions files
+│   ├── workflows/
+│   │   ├── build_test.yml           # Tests whether the package is ready to be rebuilt and pushed to PyPi
+│   │   ├── docs.yml                 # Handles publishing of `DrumScript` documentation to GitHub Pages
+│   │   ├── publish.yml              # Handles publishing of the package to PyPi automatically
+│   │   └── tests.yml                # Handles tests on development branch and main to ensure they dont break when PR is merged
+│   ├── CODEOWNERS
+│   ├── ISSUE_TEMPLATE
+│   │   ├── bug_report.md
+│   │   └── feature_request.md
+│   └── PULL_REQUEST_TEMPLATE.md
+│
 ├── drumscript/                      # <--- Main Source Package Directory
 │   ├── __init__.py                  # Exposes the package.
 │   ├── main.py                      # Main entry point for the application's full pipeline.
@@ -61,21 +74,21 @@ DrumScript/                          # Project root
 │   │   ├── xml_exporter.py
 │   │   └── constants.py             # Single-source of truth for constants such as `SAMPLE_RATE`, `N_FFT` used globally through `DrumScript`
 │   └── utils/                       # Utility functions.
-├── docs/                            # Documentation for developers and contributors, as well as the `_build` artifacts for the `DrumScript` documentation website.
-│    ├── theory/                          # Reference documents (music theory, DSP, etc.). Sources provided
-├── local_tests/                     # Local test scripts (e.g., interface testing).
+├── docs/                            # Documentation for developers and contributors, as well as the `_build` artifacts for the `DrumScript` 
+└── tests/
+│   ├── __init__.py
+    ├── README.md                    # Testing README.md
+    ├── conftest.py                  # Shared fixtures (auto-discovered)
+    ├── fixtures/
+    ├── unit/                        # Unit tests for `DrumScript`
+    └── integration/                 # E2E integration tests for `DrumScript`
 ├── .gitignore                       # Specifies intentionally untracked files.
-├── .github/                         # GitActions files
-│   ├── workflows/
-│   │   ├── build_test.yml           # Tests whether the package is ready to be rebuilt and pushed to PyPi
-│   │   ├── docs.yml                 # Handles publishing of `DrumScript` documentation to GitHub Pages
-│   │   ├── publish.yml              # Handles publishing of the package to PyPi automatically
-│   │   └── tests.yml                # Handles tests on development branch and main to ensure they dont break when PR is merged
-├── LICENSE                          # Apache
+├── LICENSE                          # Apache 2.0
+├── MANIFEST.in                      
 ├── README.md                        # Project overview and main documentation.
-├── repository_structure.md          # This file.
+├── repository_structure.md          
 ├── tree.txt                         # Tree diagram (generated using `homebrew tree`)
-├── pyproject.toml                   # Project metadata and dependencies (managed by `uv`).
+├── pyproject.toml                   # Project metadata and dependencies (managed by `uv`). Also sets `pytest.ini` config
 └── uv.lock                          # Pinned versions of all dependencies.
 ```
 

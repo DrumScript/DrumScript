@@ -2,9 +2,9 @@ name: Test Build (Dry Run)
 
 on:
   push:
-    branches: [ "build/pypi_assets", "main" ]
+    branches: ["main", "build/prep_for_release"]
   pull_request:
-    branches: [ "main" ]
+    branches: [ "main" , "build/prep_for_release"]
 
 jobs:
   build_dry_run:

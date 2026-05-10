@@ -1,7 +1,7 @@
 # **`DrumScript`**
 
 <!--date_created: sun-15-june-2025-->
-<!--date_edited: fri-08-may-2026-->
+<!--date_edited: sun-10-may-2026-->
 
 DrumScript is an open-source `Python` library and suite of tools intended to make music more accessible for everyone. The Python package alpha is released alongside a free-to-use engine for members of the musical and sound analysis/engineering community to use in a zero-code way.
 
@@ -36,7 +36,6 @@ DrumScript is an open-source `Python` library and suite of tools intended to mak
 The `DrumScript` project is organised into the following main directories. See **[`repository_structure.md`](repository_structure.md)** for the full repository structure. 
 
 ```
-DrumScript/                          # Project root
 DrumScript/                          # Project root
 ├── .github/                         # GitActions files
 │   ├── workflows/
@@ -100,6 +99,13 @@ DrumScript/                          # Project root
 ├── LICENSE                          # Apache 2.0
 ├── MANIFEST.in                      
 ├── README.md                        # Project overview and main documentation.
+├── README.md                        # Project overview and main documentation.
+├── CODE_OF_CONDUCT.md
+├── CONTRIBUTING.md
+├── LICENSE
+├── MANIFEST.in
+├── README.md
+├── SECURITY.md
 ├── repository_structure.md          
 ├── tree.txt                         # Tree diagram (generated using `homebrew tree`)
 ├── pyproject.toml                   # Project metadata and dependencies (managed by `uv`). Also sets `pytest.ini` config

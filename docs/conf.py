@@ -20,7 +20,7 @@ sys.path.insert(0, os.path.abspath(".."))
 project = "DrumScript"
 copyright = "© 2026, DrumScript"
 author = "DrumScript"
-release = "0.1.2"
+release = "0.1.3"
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
@@ -69,9 +69,11 @@ html_theme_options = {
     "nav_links": [  # Amend groups that appear in Sphinx top navbar
         {"title": "Getting Started", "url": "index"},
         {"title": "API Reference", "url": "api"},
-        {"title": "Development", "url": "development/contributor_guidance"},
-        {"title": "Theory", "url": "theory/drum_notation_guide"},
+        {"title": "Guide", "url": "guide"},
+        {"title": "Runbooks", "url": "guide/interactive"},
+        {"title": "Contributing", "url": "development/contributor_guidance"},
         {"title": "Release Notes", "url": "release_notes/index"},
+        {"title": "Fun Theory", "url": "theory/drum_notation_guide"},
     ],
 }
 

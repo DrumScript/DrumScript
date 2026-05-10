@@ -2,7 +2,7 @@
 ## `DrumScript` Python Package Structure
 
 <!--date_created: weds-25-oct-2025-->
-<!--date_edited: fri-08-may-2026-->
+<!--date_edited: sun-10-may-2026-->
 
 ```markdown
 DrumScript/                          # Project root
@@ -74,6 +74,12 @@ DrumScript/                          # Project root
 ├── LICENSE                          # Apache 2.0
 ├── MANIFEST.in                      
 ├── README.md                        # Project overview and main documentation.
+├── CODE_OF_CONDUCT.md
+├── CONTRIBUTING.md
+├── LICENSE
+├── MANIFEST.in
+├── README.md
+├── SECURITY.md
 ├── repository_structure.md          
 ├── tree.txt                         # Tree diagram (generated using `homebrew tree`)
 ├── pyproject.toml                   # Project metadata and dependencies (managed by `uv`). Also sets `pytest.ini` config

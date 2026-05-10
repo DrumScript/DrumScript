@@ -192,7 +192,8 @@ def main(
 
         print(f"   -> Duration: {mins}:{secs:02d} ({duration_total_sec:.2f}s)")
         print(f"   -> Detected Tempo: {tempo:.1f} BPM")
-        print(f"   -> Detected Onsets: {len(onsets)}, type(onsets):{type}")
+        # print(f"   -> Detected Onsets: {len(onsets)}, type(onsets):{type}")
+        print(f"   -> Detected Onsets: {len(onsets)}, type(onsets):{type(onsets)}")
 
         # 3. Classification
         print("...Classifying (Fundamental Frequency Engine)...")

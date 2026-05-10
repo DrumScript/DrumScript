@@ -207,7 +207,7 @@ def main(
         else:
             print("   -> Using Standard Polyphonic Classification Engine")
             # classified_events = classify.classify_events(y, sr, onsets)
-            classified_events = classify_rudiment_events(y, sr, onsets)
+            classified_events = classify_events(y, sr, onsets)
 
         print(f"   -> Classified {len(classified_events)} events")
 

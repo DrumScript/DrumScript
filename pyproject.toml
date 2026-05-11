@@ -76,7 +76,6 @@ dev = [
   "pytest",
   "pytest-cov>=7.1.0",
   "shibuya>=2025.10.21",
-  "streamlit>=1.50.0",
   "fastapi>=0.128.8",
   "ipywidgets>=8.1.8",
   "mangum>=0.21.0",
@@ -115,9 +114,15 @@ exclude = [
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
 norecursedirs = ["local_tests", "outputs", "docs"]
+markers = [
+    "slow: marks tests as slow (deselect with '-m \"not slow\"')",
+    "integration: requires real Demucs / ffmpeg / network access",
+]
 filterwarnings = [
-    # Suppress specific deprecation warnings from audioread/librosa dependencies
     "ignore::DeprecationWarning:audioread.rawread",
     "ignore:'aifc' is deprecated:DeprecationWarning",
     "ignore:'audioop' is deprecated:DeprecationWarning",

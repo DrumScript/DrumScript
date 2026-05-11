@@ -1,7 +1,7 @@
 # **`DrumScript`**
 
 <!--date_created: sun-15-june-2025-->
-<!--date_edited: sun-10-may-2026-->
+<!--date_edited: mon-11-may-2026-->
 
 DrumScript is an open-source `Python` library and suite of tools intended to make music more accessible for everyone. The Python package alpha is released alongside a free-to-use engine for members of the musical and sound analysis/engineering community to use in a zero-code way.
 
@@ -42,6 +42,7 @@ DrumScript/                          # Project root
 │   │   ├── build_test.yml           # Tests whether the package is ready to be rebuilt and pushed to PyPi
 │   │   ├── docs.yml                 # Handles publishing of `DrumScript` documentation to GitHub Pages
 │   │   ├── publish.yml              # Handles publishing of the package to PyPi automatically
+│   │   ├── release.yml              # Manual dispatch from GitHub Actions UI (Actions → "Create Release" → Run workflow). You enter the version number, release type (Alpha/Beta/Stable), and an optional summary.
 │   │   └── tests.yml                # Handles tests on development branch and main to ensure they dont break when PR is merged
 │   ├── CODEOWNERS
 │   ├── ISSUE_TEMPLATE

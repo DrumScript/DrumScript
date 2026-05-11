@@ -186,7 +186,10 @@ def main(
         y, sr = audio_loader.load_audio(audio_path)
         y = audio_loader.normalise_audio(y)
 
-        duration_total_sec = len(y) / sr
+        duration_total_sec = len(y) / sr  # duplicate of calc in try block ~line80-83, but required inside except block too, TO DO: make original vars
+        # in try block global vars for mins, secs (and duration_total_sec?)
+        mins = int(duration_total_sec // 60)  # duplicate of calc in try block ~line80-83, but required inside except block too
+        secs = int(duration_total_sec % 60)  # duplicate of calc in try block ~line80-83, but required inside except block too
         tempo = tempo_detector.estimate_tempo(y, sr)
         onsets = onset_detector.detect_onsets(y, sr)
 

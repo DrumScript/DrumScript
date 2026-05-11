@@ -1,0 +1,180 @@
+# .github/workflows/release.yml
+#
+# Automates the release process for DrumScript.
+#
+# HOW TO USE:
+#   1. Go to Actions → "Create Release" → Run workflow
+#   2. Enter the new version (e.g. "0.2.0") and release type
+#   3. The workflow will:
+#      - Bump version in pyproject.toml, drumscript/__init__.py, docs/versions.json
+#      - Create docs/release_notes/<version>.md from the template
+#      - Update docs/release_notes/index.md to include the new version
+#      - Commit, tag, push, and create a GitHub Release
+#      - The publish.yml workflow (triggered by the release) handles PyPI upload
+#
+# VERSIONING STRATEGY:
+#   0.x.y  = Alpha (current phase) — breaking changes between minors are OK
+#   1.0.0  = First stable release — public API is locked
+#   See: https://semver.org
+
+name: Create Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "New version (e.g. 0.2.0, 1.0.0)"
+        required: true
+        type: string
+      release_type:
+        description: "Release type label"
+        required: true
+        type: choice
+        options:
+          - Alpha
+          - Beta
+          - Stable
+      summary:
+        description: "One-line release summary (used in GitHub Release title)"
+        required: false
+        type: string
+        default: ""
+
+permissions:
+  contents: write
+
+jobs:
+  bump-and-release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # full history for changelog generation
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Validate version format
+        run: |
+          VERSION="${{ inputs.version }}"
+          if [[ ! "$VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "::error::Version must be in X.Y.Z format (got: $VERSION)"
+            exit 1
+          fi
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+          echo "TAG=v$VERSION" >> $GITHUB_ENV
+
+      - name: Check tag doesn't already exist
+        run: |
+          if git rev-parse "${{ env.TAG }}" >/dev/null 2>&1; then
+            echo "::error::Tag ${{ env.TAG }} already exists"
+            exit 1
+          fi
+
+      # ── Bump version in all files ──────────────────────────────
+
+      - name: Bump pyproject.toml
+        run: |
+          sed -i "s/^version = \".*\"/version = \"${{ env.VERSION }}\"/" pyproject.toml
+
+      - name: Bump drumscript/__init__.py
+        run: |
+          sed -i "s/^__version__ = \".*\"/__version__ = \"${{ env.VERSION }}\"/" drumscript/__init__.py
+
+      - name: Bump docs/versions.json
+        run: |
+          if [ -f docs/versions.json ]; then
+            # Add the new version to the JSON array if not already present
+            python3 -c "
+          import json
+          with open('docs/versions.json') as f:
+              data = json.load(f)
+          versions = [v['version'] if isinstance(v, dict) else v for v in data]
+          if '${{ env.VERSION }}' not in versions:
+              entry = {'version': '${{ env.VERSION }}', 'url': '/DrumScript/'}
+              data.insert(0, entry)
+              with open('docs/versions.json', 'w') as f:
+                  json.dump(data, f, indent=2)
+              print(f'Added ${{ env.VERSION }} to versions.json')
+          else:
+              print(f'${{ env.VERSION }} already in versions.json')
+          "
+          fi
+
+      # ── Create release notes page ─────────────────────────────
+
+      - name: Create docs/release_notes/<version>.md
+        run: |
+          NOTES_FILE="docs/release_notes/${{ env.VERSION }}.md"
+          DATE=$(date +%Y-%m-%d)
+
+          if [ -f "$NOTES_FILE" ]; then
+            echo "Release notes file already exists: $NOTES_FILE"
+          else
+            cat > "$NOTES_FILE" << NOTES_EOF
+          # v${{ env.VERSION }} (${{ inputs.release_type }})
+
+          *Release Date: ${DATE}*
+
+          ## Highlights
+          * **TODO:** Add highlights before publishing.
+
+          ## New Features
+          * TODO
+
+          ## Fixes & Improvements
+          * TODO
+
+          ## Contributors
+          * @drumscript-admin
+          NOTES_EOF
+            echo "Created $NOTES_FILE"
+          fi
+
+      - name: Update docs/release_notes/index.md
+        run: |
+          INDEX="docs/release_notes/index.md"
+          if [ -f "$INDEX" ]; then
+            # Add the version to the toctree if not already there
+            if ! grep -q "^${{ env.VERSION }}$" "$INDEX"; then
+              # Insert after the last version line (before the closing ```)
+              sed -i "/^\`\`\`/i ${{ env.VERSION }}" "$INDEX"
+              echo "Added ${{ env.VERSION }} to release notes index"
+            fi
+          fi
+
+      # ── Commit, tag, release ───────────────────────────────────
+
+      - name: Commit version bump
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git diff --cached --quiet && echo "No changes to commit" && exit 0
+          git commit -m "release: bump version to ${{ env.VERSION }}"
+          git tag "${{ env.TAG }}"
+          git push origin HEAD --tags
+
+      - name: Generate changelog from commits
+        id: changelog
+        run: |
+          # Get the previous tag
+          PREV_TAG=$(git tag --sort=-version:refname | head -2 | tail -1)
+          if [ -z "$PREV_TAG" ]; then
+            RANGE="HEAD"
+          else
+            RANGE="${PREV_TAG}..HEAD"
+          fi
+
+          echo "## Changes since ${PREV_TAG:-beginning}" > /tmp/changelog.md
+          echo "" >> /tmp/changelog.md
+          git log "$RANGE" --pretty=format:"- %s (%h)" --no-merges >> /tmp/changelog.md
+          echo "" >> /tmp/changelog.md
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ env.TAG }}
+          name: "DrumScript ${{ env.TAG }}${{ inputs.summary && format(' — {0}', inputs.summary) || '' }}"
+          body_path: /tmp/changelog.md
+          prerelease: ${{ inputs.release_type != 'Stable' }}
+          generate_release_notes: true

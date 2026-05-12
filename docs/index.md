@@ -101,7 +101,6 @@ development/testing_guidance
 
 ```{toctree}
 :maxdepth: 2
-:hidden:
 :caption: Runbooks
 
 guide/interactive/index

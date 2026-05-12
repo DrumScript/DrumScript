@@ -1,11 +1,12 @@
-# RunBooks
+# Interactive Runbooks
 
-This page provides some custom runbooks for you to try `DrumScript`
+Welcome to the `DrumScript` interactive runbooks! You can view the code and outputs right here in your browser. 
 
-```{toctree}
-:maxdepth: 1
-:caption: Runbooks
+If you want to run these locally, download the notebooks and run them via Jupyter.
 
-drumscript_interactive_notebook.ipynb
-extract_stems.ipynb
-```
+    ```{toctree}
+    :maxdepth: 1
+
+    drumscript_interactive_notebook.ipynb
+    extract_stems.ipynb
+    ```

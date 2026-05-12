@@ -100,11 +100,11 @@ development/testing_guidance
 ## Runbooks
 
 ```{toctree}
-:maxdepth: 1
+:maxdepth: 2
+:hidden:
 :caption: Runbooks
 
-guide/interactive/drumscript_interactive_notebook.ipynb
-guide/interactive/extract_stems.ipynb
+guide/interactive/index
 ```
 ## About
 

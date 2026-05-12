@@ -30,7 +30,7 @@ extensions = [
     "sphinx.ext.autodoc",  # Pull documentation from docstrings
     "sphinx.ext.viewcode",
     "sphinx.ext.autosummary",  # Required for API tables
-    "myst_parser",  # Read .md files
+    # "myst_parser",  # Read .md files
     "myst_nb",  # Read .ipynb files
 ]
 

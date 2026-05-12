@@ -70,8 +70,8 @@ html_theme_options = {
     "nav_links": [  # Amend groups that appear in Sphinx top navbar
         {"title": "Getting Started", "url": "index"},
         {"title": "API Reference", "url": "api"},
-        {"title": "Guide", "url": "guide"},
-        {"title": "Runbooks", "url": "guide/interactive"},
+        {"title": "Guide", "url": "guide/installation"},
+        {"title": "Runbooks", "url": "guide/interactive/index"},
         {"title": "Contributing", "url": "development/contributor_guidance"},
         {"title": "Release Notes", "url": "release_notes/index"},
         {"title": "Fun Theory", "url": "theory/drum_notation_guide"},

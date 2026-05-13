@@ -7,6 +7,5 @@ If you want to run these locally, download the notebooks and run them via Jupyte
 ```{toctree}
 :maxdepth: 1
 
-drumscript_interactive_notebook.ipynb
 extract_stems.ipynb
 ```

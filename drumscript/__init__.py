@@ -212,6 +212,12 @@ def transcribe(
     audio_path = str(audio_path)
     input_stem = pathlib.Path(audio_path).stem
 
+    # Validate input exists before doing anything
+    if not pathlib.Path(audio_path).exists():
+        raise FileNotFoundError(f"Audio file not found: {audio_path}")
+
+    # 1. Stem separation (optional)
+    working_path = audio_path
     # 1. Stem separation (optional)
     working_path = audio_path
     if full_song:

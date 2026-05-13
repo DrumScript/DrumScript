@@ -218,8 +218,6 @@ def transcribe(
 
     # 1. Stem separation (optional)
     working_path = audio_path
-    # 1. Stem separation (optional)
-    working_path = audio_path
     if full_song:
         print("...Separating drum stem...")
         working_path = extract_drum_stem(audio_path)

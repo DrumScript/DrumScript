@@ -129,7 +129,7 @@ filterwarnings = [
     "ignore:'sunau' is deprecated:DeprecationWarning",
 ]
 
-addopts = "--ignore=local_tests/classification_engine --ignore=local_tests/mp3_conversion --ignore=pdf_generation"
+addopts = "-v --tb=short --strict-markers --ignore=local_tests/classification_engine --ignore=local_tests/mp3_conversion --ignore=pdf_generation"
 
 # --- RUFF CONFIGURATION ---
 [tool.ruff]

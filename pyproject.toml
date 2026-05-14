@@ -1,13 +1,14 @@
 [build-system]
-requires = ["setuptools>=61.0", "wheel"]
+requires = ["setuptools>=77.0", "wheel"]
 build-backend = "setuptools.build_meta"
+
 [project]
-name = "DrumScript"
-version = "0.1.2"
+name = "drumscript"
+version = "0.1.3"
 description = "A Python package to convert drum audio to sheet music."
 license = "Apache-2.0"
 readme = "README.md"
-requires-python = ">=3.9, <=3.13"
+requires-python = ">=3.9,<3.14"
 authors = [
   { name="drumscript-admin", email="hello.drumscript@gmail.com" }, 
 ]
@@ -16,25 +17,33 @@ keywords = ["drum", "audio", "music", "sheet-music", "notation", "dsp", "machine
 
 classifiers = [
     "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
     "Operating System :: OS Independent",
     "Development Status :: 3 - Alpha",
+    "Intended Audience :: End Users/Desktop",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "Intended Audience :: Other Audience",
     "Topic :: Multimedia :: Sound/Audio",
-    "Topic :: Music Theory",
-    "Topic :: Drums",
-    "Topic :: DrumScript",
     "Topic :: Multimedia :: Sound/Audio :: Analysis",
-    "Topic :: Music :: DSP",
-    "Topic :: Music :: Digital Signal Processing"
-
+    "Topic :: Multimedia :: Sound/Audio :: Conversion",
+    "Topic :: Multimedia :: Sound/Audio :: MIDI",
+    "Topic :: Multimedia :: Sound/Audio :: Players",
+    "Topic :: Multimedia :: Sound/Audio :: Players :: MP3",
+    "Topic :: Multimedia :: Sound/Audio :: Sound Synthesis",
+    "Topic :: Scientific/Engineering",
+    "Topic :: Scientific/Engineering :: Mathematics",
+    "Topic :: Scientific/Engineering :: Physics"
 ]
 
 dependencies = [
     "demucs",
-    "ipykernel",
     "librosa",
     "matplotlib",
     "mido",
-    "musescore",
     "music21",
     "numba",
     "numpy<2",
@@ -45,13 +54,10 @@ dependencies = [
     "reportlab",
     "scikit-learn",
     "scipy",
-    "setuptools",
     "sounddevice",
-    #"soundfile",
-    #"tensorflow",
-    "torch",
-    "torchaudio",
-    "torchcodec",
+    "soundfile",
+    "torch>=2.4,<2.9",
+    "torchaudio>=2.4,<2.9",
     "tqdm",
 ]
 
@@ -59,28 +65,24 @@ dependencies = [
 
 [project.urls]
 "Repository" = "https://github.com/DrumScript/DrumScript"
-"Issues" = "https://github.com//DrumScript/DrumScript/issues"
+"Issues" = "https://github.com/DrumScript/DrumScript/issues"
 
 [project.optional-dependencies]
-# Install if a contributor or maintainer, using: uv pip install -e ".[dev]"
+# COMMENTED OUT: Moved to [dependency-groups] below to follow modern PEP 735 standards for local dev environments.
 dev = [
-    #"basic-pitch",
-    #"basic-pitch[onnx]",
-    #"basic-pitch[tf]",
-    #"basic-pitch[coreml]",
-    "black",
-    "flake8",
-    # "furo",
-    "ipykernel",
-    "myst-parser",
-    "pytest",
-    "pytest-cov",
-    "shibuya",
-    "sphinx",
-    "fastapi",
-    "streamlit",
-    "requests"
+  # "furo",
+  "ipykernel",
+  "myst-parser",
+  "myst-nb>=1.3.0",
+  "pytest",
+  "pytest-cov>=7.1.0",
+  "shibuya>=2025.10.21",
+  "fastapi>=0.128.8",
+  "ipywidgets>=8.1.8",
+  "requests>=2.32.5",
+  "ruff>=0.15.11"
 ]
+
 
 
 
@@ -103,31 +105,45 @@ exclude = [
     "terraform/*",
     "visuals/",
     "outputs/",
-    "logs",
-    "drumscript.logs*",
     ".testing",
-    "drumscript.audio_processor.proofs*"
+    "*/logs/*",
+    "*/proofs/*",
+    "*/__pycache__/*",
+    "drumscript.utils.research*",
     ]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
 norecursedirs = ["local_tests", "outputs", "docs"]
+markers = [
+    "slow: marks tests as slow (deselect with '-m \"not slow\"')",
+    "integration: requires real Demucs / ffmpeg / network access",
+]
 filterwarnings = [
-    # Suppress specific deprecation warnings from audioread/librosa dependencies
     "ignore::DeprecationWarning:audioread.rawread",
     "ignore:'aifc' is deprecated:DeprecationWarning",
     "ignore:'audioop' is deprecated:DeprecationWarning",
     "ignore:'sunau' is deprecated:DeprecationWarning",
 ]
-addopts = "--ignore=local_tests/classification_engine --ignore=local_tests/mp3_conversion, --ignore=pdf_generation"
 
-[dependency-groups]
-dev = [
-    "fastapi>=0.128.8",
-    "ipywidgets>=8.1.8",
-    "mangum>=0.21.0",
-    "requests>=2.32.5",
-    "shibuya>=2025.10.21",
-    "streamlit>=1.50.0",
-]
+addopts = "-v --tb=short --strict-markers --ignore=local_tests/classification_engine --ignore=local_tests/mp3_conversion --ignore=pdf_generation"
 
+# --- RUFF CONFIGURATION ---
+[tool.ruff]
+# Set the maximum line length
+line-length = 150
+# Target Python 3.9 as minimum supported version
+target-version = "py39"
+
+[tool.ruff.lint]
+# Enable Pyflakes (F), pycodestyle (E, W), isort (I), and pyupgrade (UP)
+select = ["E", "F", "W", "I", "UP"]
+ignore = []
+
+[tool.ruff.format]
+# Enforce double quotes and standard spacing (Black-compatible)
+quote-style = "double"
+indent-style = "space"

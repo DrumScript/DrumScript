@@ -3,10 +3,18 @@
 
 .. automodule:: drumscript.audio_processor.onset_detector
 
-   
-   .. rubric:: Functions
 
-   .. autosummary::
-   
-      detect_onsets
-   
+
+.. rubric:: Functions
+
+.. autosummary::
+   :toctree: .
+   :nosignatures:
+
+
+   detect_onsets
+
+
+
+
+

@@ -2,7 +2,7 @@
 ## `DrumScript` Python Package Structure
 
 <!--date_created: weds-25-oct-2025-->
-<!--date_edited: mon-11-may-2026-->
+<!--date_edited: thurs-14-may-2026-->
 
 ```markdown
 DrumScript/                          # Project root
@@ -65,7 +65,7 @@ DrumScript/                          # Project root
 ├── LICENSE
 ├── docs/                            # Documentation for developers and contributors, as well as the `_build` artifacts for the `DrumScript` 
 └── tests/
-│   ├── __init__.py
+    ├── __init__.py
     ├── README.md                    # Testing README.md
     ├── conftest.py                  # Shared fixtures (auto-discovered)
     ├── fixtures/

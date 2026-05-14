@@ -88,7 +88,6 @@ machine-learning/models/*.joblib
 visuals/tempogram.png
 local_tests/
 local_tests/**
-*github/workflows/docs.yml
 
 
 # Python
@@ -115,7 +114,7 @@ local_tests/
 test_audio/
 drumscript_outputs/
 docs/github_pages.sh
-#docs/_build/
+docs/_build/
 
 # IDEs
 .vscode/
@@ -162,3 +161,5 @@ tree_full.txt
 
 Makefile
 public/
+.DS_Store # if not already there
+docs/logs/

@@ -3,10 +3,18 @@
 
 .. automodule:: drumscript.main
 
-   
-   .. rubric:: Functions
 
-   .. autosummary::
-   
-      main
-   
+
+.. rubric:: Functions
+
+.. autosummary::
+   :toctree: .
+   :nosignatures:
+
+
+   main
+
+
+
+
+

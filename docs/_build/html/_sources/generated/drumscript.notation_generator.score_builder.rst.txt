@@ -3,10 +3,18 @@
 
 .. automodule:: drumscript.notation_generator.score_builder
 
-   
-   .. rubric:: Functions
 
-   .. autosummary::
-   
-      build_score
-   
+
+.. rubric:: Functions
+
+.. autosummary::
+   :toctree: .
+   :nosignatures:
+
+
+   build_score
+
+
+
+
+

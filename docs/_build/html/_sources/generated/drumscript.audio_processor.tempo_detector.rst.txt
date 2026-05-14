@@ -3,10 +3,18 @@
 
 .. automodule:: drumscript.audio_processor.tempo_detector
 
-   
-   .. rubric:: Functions
 
-   .. autosummary::
-   
-      estimate_tempo
-   
+
+.. rubric:: Functions
+
+.. autosummary::
+   :toctree: .
+   :nosignatures:
+
+
+   estimate_tempo
+
+
+
+
+

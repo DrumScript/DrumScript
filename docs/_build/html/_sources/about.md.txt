@@ -24,7 +24,7 @@ DrumScript bridges the gap between **Signal Processing (DSP)** and **Music Theor
 * It uses a custom **Rule-Based Classification Engine** to determine *what* was hit (Kick vs. Snare vs. Hi-Hat) based on frequency analysis.
 
 ## Join the Project
-DrumScript is currently in **Alpha (v0.1.0)**. We are looking for contributors who are passionate about audio, music, or Python.
+DrumScript is currently in **Alpha (v0.1.2)**. We are looking for contributors who are passionate about audio, music, or Python.
 
 * Check out the [GitHub Repository](https://github.com/DrumScript/DrumScript)
 * Read the [Contribution Guide](development/contributor_guidance)

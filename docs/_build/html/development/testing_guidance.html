@@ -2,11 +2,12 @@
 <html lang="en" data-accent-color="violet" data-content_root="../">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Testing Documentation - DrumScript 0.1.0 documentation</title><link rel="author" title="About these documents" href="../about.html" /><link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="About DrumScript" href="../about.html" /><link rel="prev" title="Documentation" href="documentation.html" /><script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Testing Guidance - DrumScript 0.1.3 documentation</title><link rel="author" title="About these documents" href="../about.html" /><link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Interactive Runbooks" href="../guide/interactive/index.html" /><link rel="prev" title="Documentation" href="documentation.html" /><script>
     function setColorMode(t){let e=document.documentElement;e.setAttribute("data-color-mode",t);let a=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches,s=t;"auto"===t&&(s=a?"dark":"light"),"light"===s?(e.classList.remove("dark"),e.classList.add("light")):(e.classList.remove("light"),e.classList.add("dark"))}
     setColorMode(localStorage._theme||"auto");
   </script><link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=e1a1ceaf" />
     <link rel="stylesheet" type="text/css" href="../_static/shibuya.css?v=44020203" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
     <link media="print" rel="stylesheet" type="text/css" href="../_static/print.css?v=20ff2c19" />
     <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=5885bd2b" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -18,7 +19,7 @@
   --sy-f-heading: "Inter", var(--sy-f-sys), var(--sy-f-cjk), sans-serif;
 }
 </style>
-    <meta property="og:type" content="website"/><meta property="og:title" content="Testing Documentation"/>
+    <meta property="og:type" content="website"/><meta property="og:title" content="Testing Guidance"/>
     <meta name="twitter:card" content="summary"/>
   </head>
 <body><div class="sy-head">
@@ -30,7 +31,7 @@
       <strong>DrumScript</strong>
     </a>
     <div class="sy-head-nav" id="head-nav">
-      <nav class="sy-head-links"><ul><li class="link"><a href="../index.html">Getting Started</a></li><li class="link"><a href="../api.html">API Reference</a></li><li class="link"><a href="contributor_guidance.html">Development</a></li><li class="link"><a href="../theory/drum_notation_guide.html">Theory</a></li><li class="link"><a href="../release_notes/index.html">Release Notes</a></li></ul></nav>
+      <nav class="sy-head-links"><ul><li class="link"><a href="../index.html">Getting Started</a></li><li class="link"><a href="../api.html">API Reference</a></li><li class="link"><a href="../guide/installation.html">Guide</a></li><li class="link"><a href="../guide/interactive/index.html">Runbooks</a></li><li class="link"><a href="contributor_guidance.html">Contributing</a></li><li class="link"><a href="../release_notes/index.html">Release Notes</a></li><li class="link"><a href="../theory/drum_notation_guide.html">Fun Theory</a></li></ul></nav>
       <div class="sy-head-extra flex items-center print:hidden"><form class="searchbox flex items-center" action="../search.html" method="get">
   <input type="text" name="q" placeholder="Search" />
   <kbd>/</kbd>
@@ -87,20 +88,91 @@ data-aria-dark="Switch to auto color mode">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../api.html">API Reference</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../generated/drumscript.notation_generator.constants.html">drumscript.notation_generator.constants</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../generated/drumscript.transcribe.html">drumscript.transcribe</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../generated/drumscript.extract_stems.html">drumscript.extract_stems</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../generated/drumscript.detect_tempo.html">drumscript.detect_tempo</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../generated/drumscript.main.html">drumscript.main</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../generated/drumscript.audio_processor.audio_loader.html">drumscript.audio_processor.audio_loader</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../generated/drumscript.audio_processor.stem_splitter.html">drumscript.audio_processor.stem_splitter</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../generated/drumscript.audio_processor.tempo_detector.html">drumscript.audio_processor.tempo_detector</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../generated/drumscript.audio_processor.onset_detector.html">drumscript.audio_processor.onset_detector</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../generated/drumscript.audio_processor.feature_extractor.html">drumscript.audio_processor.feature_extractor</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../generated/drumscript.drum_classifier.classify.html">drumscript.drum_classifier.classify</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../generated/drumscript.export_pdf.html">drumscript.export_pdf</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../generated/drumscript.export_midi.html">drumscript.export_midi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../generated/drumscript.export_xml.html">drumscript.export_xml</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../generated/drumscript.audio_processor.audio_loader.html">drumscript.audio_processor.audio_loader</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../generated/drumscript.audio_processor.audio_loader.load_audio.html">drumscript.audio_processor.audio_loader.load_audio</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../generated/drumscript.audio_processor.audio_loader.normalise_audio.html">drumscript.audio_processor.audio_loader.normalise_audio</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../generated/drumscript.audio_processor.stem_splitter.html">drumscript.audio_processor.stem_splitter</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../generated/drumscript.audio_processor.stem_splitter.extract_drum_stem.html">drumscript.audio_processor.stem_splitter.extract_drum_stem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../generated/drumscript.audio_processor.stem_splitter.mix_stems.html">drumscript.audio_processor.stem_splitter.mix_stems</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../generated/drumscript.audio_processor.stem_splitter.separate_audio.html">drumscript.audio_processor.stem_splitter.separate_audio</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../generated/drumscript.audio_processor.stem_splitter.extract_drum_stem.html">drumscript.audio_processor.stem_splitter.extract_drum_stem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../generated/drumscript.audio_processor.stem_splitter.mix_stems.html">drumscript.audio_processor.stem_splitter.mix_stems</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../generated/drumscript.audio_processor.stem_splitter.separate_audio.html">drumscript.audio_processor.stem_splitter.separate_audio</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../generated/drumscript.audio_processor.tempo_detector.html">drumscript.audio_processor.tempo_detector</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../generated/drumscript.audio_processor.tempo_detector.estimate_tempo.html">drumscript.audio_processor.tempo_detector.estimate_tempo</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../generated/drumscript.audio_processor.onset_detector.html">drumscript.audio_processor.onset_detector</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../generated/drumscript.audio_processor.onset_detector.detect_onsets.html">drumscript.audio_processor.onset_detector.detect_onsets</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../generated/drumscript.audio_processor.feature_extractor.html">drumscript.audio_processor.feature_extractor</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../generated/drumscript.audio_processor.feature_extractor.extract_features.html">drumscript.audio_processor.feature_extractor.extract_features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../generated/drumscript.audio_processor.feature_extractor.extract_features_for_onsets.html">drumscript.audio_processor.feature_extractor.extract_features_for_onsets</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../generated/drumscript.drum_classifier.classify.html">drumscript.drum_classifier.classify</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../generated/drumscript.drum_classifier.classify.classify_event.html">drumscript.drum_classifier.classify.classify_event</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../generated/drumscript.drum_classifier.classify.classify_events.html">drumscript.drum_classifier.classify.classify_events</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../generated/drumscript.drum_classifier.classify.classify_idiophone.html">drumscript.drum_classifier.classify.classify_idiophone</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../generated/drumscript.drum_classifier.classify.classify_membranophone.html">drumscript.drum_classifier.classify.classify_membranophone</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../generated/drumscript.drum_classifier.classify.classify_rudiment_events.html">drumscript.drum_classifier.classify.classify_rudiment_events</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../generated/drumscript.drum_classifier.classify.extract_features.html">drumscript.drum_classifier.classify.extract_features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../generated/drumscript.drum_classifier.classify.get_audio_slice.html">drumscript.drum_classifier.classify.get_audio_slice</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../generated/drumscript.drum_classifier.classify.classify_rudiment_events.html">drumscript.drum_classifier.classify.classify_rudiment_events</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../generated/drumscript.drum_classifier.classify.classify_event.html">drumscript.drum_classifier.classify.classify_event</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../generated/drumscript.drum_classifier.classify.classify_events.html">drumscript.drum_classifier.classify.classify_events</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../generated/drumscript.drum_classifier.classify.classify_idiophone.html">drumscript.drum_classifier.classify.classify_idiophone</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../generated/drumscript.drum_classifier.classify.classify_membranophone.html">drumscript.drum_classifier.classify.classify_membranophone</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../generated/drumscript.drum_classifier.classify.extract_features.html">drumscript.drum_classifier.classify.extract_features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../generated/drumscript.drum_classifier.classify.get_audio_slice.html">drumscript.drum_classifier.classify.get_audio_slice</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../generated/drumscript.notation_generator.constants.html">drumscript.notation_generator.constants</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../generated/drumscript.notation_generator.helpers.html">drumscript.notation_generator.helpers</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../generated/drumscript.notation_generator.score_builder.html">drumscript.notation_generator.score_builder</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../generated/drumscript.notation_generator.pdf_exporter.html">drumscript.notation_generator.pdf_exporter</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../generated/drumscript.utils.ffmpeg_installer.html">drumscript.utils.ffmpeg_installer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../generated/drumscript.notation_generator.helpers.html">drumscript.notation_generator.helpers</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../generated/drumscript.notation_generator.helpers.calculate_cents_difference.html">drumscript.notation_generator.helpers.calculate_cents_difference</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../generated/drumscript.notation_generator.helpers.format_drum_event.html">drumscript.notation_generator.helpers.format_drum_event</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../generated/drumscript.notation_generator.helpers.get_note_duration_name.html">drumscript.notation_generator.helpers.get_note_duration_name</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../generated/drumscript.notation_generator.helpers.round_to_nearest_subdivision.html">drumscript.notation_generator.helpers.round_to_nearest_subdivision</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../generated/drumscript.notation_generator.score_builder.html">drumscript.notation_generator.score_builder</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../generated/drumscript.notation_generator.score_builder.build_score.html">drumscript.notation_generator.score_builder.build_score</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../generated/drumscript.notation_generator.pdf_exporter.html">drumscript.notation_generator.pdf_exporter</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../generated/drumscript.notation_generator.pdf_exporter.draw_bar_line.html">drumscript.notation_generator.pdf_exporter.draw_bar_line</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../generated/drumscript.notation_generator.pdf_exporter.draw_clef.html">drumscript.notation_generator.pdf_exporter.draw_clef</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../generated/drumscript.notation_generator.pdf_exporter.draw_notehead.html">drumscript.notation_generator.pdf_exporter.draw_notehead</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../generated/drumscript.notation_generator.pdf_exporter.draw_staff.html">drumscript.notation_generator.pdf_exporter.draw_staff</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../generated/drumscript.notation_generator.pdf_exporter.draw_time_signature.html">drumscript.notation_generator.pdf_exporter.draw_time_signature</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../generated/drumscript.notation_generator.pdf_exporter.export_pdf.html">drumscript.notation_generator.pdf_exporter.export_pdf</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../generated/drumscript.notation_generator.pdf_exporter.get_vertical_position.html">drumscript.notation_generator.pdf_exporter.get_vertical_position</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../generated/drumscript.notation_generator.midi_exporter.html">drumscript.notation_generator.midi_exporter</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../generated/drumscript.notation_generator.midi_exporter.export_to_midi.html">drumscript.notation_generator.midi_exporter.export_to_midi</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../generated/drumscript.notation_generator.xml_exporter.html">drumscript.notation_generator.xml_exporter</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../generated/drumscript.notation_generator.xml_exporter.export_xml.html">drumscript.notation_generator.xml_exporter.export_xml</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../generated/drumscript.utils.ffmpeg_installer.html">drumscript.utils.ffmpeg_installer</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../generated/drumscript.utils.ffmpeg_installer.install_ffmpeg.html">drumscript.utils.ffmpeg_installer.install_ffmpeg</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../generated/drumscript.utils.ffmpeg_installer.is_ffmpeg_installed.html">drumscript.utils.ffmpeg_installer.is_ffmpeg_installed</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -109,7 +181,14 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l1"><a class="reference internal" href="code_of_conduct.html">Code of Conduct for <code class="docutils literal notranslate"><span class="pre">DrumScript</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="contributor_guidance.html">Contributing to <code class="docutils literal notranslate"><span class="pre">DrumScript</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="documentation.html">Documentation</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#"><strong>Testing Documentation</strong></a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Testing Guidance</a></li>
+</ul>
+<p class="caption" role="heading" aria-level="3"><span class="caption-text">Runbooks</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../guide/interactive/index.html">Interactive Runbooks</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../guide/interactive/extract_stems.html">Extract Stems</a></li>
+</ul>
+</li>
 </ul>
 <p class="caption" role="heading" aria-level="3"><span class="caption-text">Project Info</span></p>
 <ul>
@@ -118,7 +197,10 @@ data-aria-dark="Switch to auto color mode">
 <p class="caption" role="heading" aria-level="3"><span class="caption-text">Versions</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../release_notes/index.html">Release Notes</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../release_notes/0.1.0.html">0.1.0 (Alpha)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes/0.1.0.html">v0.1.0 (Planning)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes/0.1.1.html">v0.1.1 (Planning)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes/0.1.2.html">v0.1.2 (Pre-Alpha)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes/0.1.3.html">v0.1.3 (Pre-Alpha)</a></li>
 </ul>
 </li>
 </ul>
@@ -133,18 +215,27 @@ data-aria-dark="Switch to auto color mode">
       <i class="i-lucide close"></i>
     </button>
     <div class="sy-scrollbar sy-rside-inner px-6 xl:top-16 xl:sticky xl:pl-0 pt-6 pb-4"><div class="localtoc"><h3>On this page</h3><ul>
-<li><a class="reference internal" href="#modules">Modules</a><ul>
-<li><a class="reference internal" href="#audio-processor"><strong><code class="docutils literal notranslate"><span class="pre">audio_processor/</span></code></strong></a><ul>
-<li><a class="reference internal" href="#audio-loader-py"><code class="docutils literal notranslate">py</span></code></a></li>
-<li><a class="reference internal" href="#feature-extractor-py"><code class="docutils literal notranslate">py</span></code></a></li>
-<li><a class="reference internal" href="#onset-detector-py"><code class="docutils literal notranslate">py</span></code></a></li>
-<li><a class="reference internal" href="#tempo-detector-py"><code class="docutils literal notranslate">py</span></code></a></li>
-<li><a class="reference internal" href="#tempogram-py"><code class="docutils literal notranslate">py</span></code></a></li>
-<li><a class="reference internal" href="#drum-classifier"><strong><code class="docutils literal notranslate"><span class="pre">drum_classifier/</span></code></strong></a></li>
+<li><a class="reference internal" href="#the-test-pyramid">The Test Pyramid</a></li>
+<li><a class="reference internal" href="#suite-layout">Suite Layout</a></li>
+<li><a class="reference internal" href="#markers">Markers</a></li>
+<li><a class="reference internal" href="#writing-a-new-test">Writing a New Test</a><ul>
+<li><a class="reference internal" href="#pick-the-right-layer">1. Pick the right layer</a></li>
+<li><a class="reference internal" href="#follow-the-file-conventions">2. Follow the file conventions</a></li>
+<li><a class="reference internal" href="#use-arrange-act-assert">3. Use Arrange / Act / Assert</a></li>
+<li><a class="reference internal" href="#use-tmp-path-for-file-output">4. Use <code class="docutils literal notranslate"><span class="pre">tmp_path</span></code> for file output</a></li>
+<li><a class="reference internal" href="#reuse-fixtures-from-conftest-py">5. Reuse fixtures from <code class="docutils literal notranslate">py</span></code></a></li>
 </ul>
 </li>
+<li><a class="reference internal" href="#patterns-you-ll-use-often">Patterns You&#8217;ll Use Often</a><ul>
+<li><a class="reference internal" href="#parametrised-tests">Parametrised tests</a></li>
+<li><a class="reference internal" href="#approximate-snapshot-tests-for-dsp-code">Approximate snapshot tests for DSP code</a></li>
+<li><a class="reference internal" href="#mocking-subprocess-calls">Mocking subprocess calls</a></li>
 </ul>
 </li>
+<li><a class="reference internal" href="#coverage-reports">Coverage Reports</a></li>
+<li><a class="reference internal" href="#common-pitfalls">Common Pitfalls</a></li>
+<li><a class="reference internal" href="#continuous-integration">Continuous Integration</a></li>
+<li><a class="reference internal" href="#see-also">See Also</a></li>
 </ul>
 </div><a class="js-repo-stats repo-stats flex items-center" href="https://github.com/DrumScript/DrumScript"
   data-type="github" data-user="DrumScript" data-repo="DrumScript">
@@ -185,7 +276,7 @@ data-aria-dark="Switch to auto color mode">
         <span>/</span>
         <meta itemprop="position" content="1" />
       </li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-        <strong itemprop="name"><strong>Testing Documentation</strong></strong>
+        <strong itemprop="name">Testing Guidance</strong>
         <meta itemprop="position" content="2" />
       </li></ol>
     <div class="xl:hidden ml-1">
@@ -233,157 +324,471 @@ data-aria-dark="Switch to auto color mode">
     </div>
   </div>
 </div><article class="yue" role="main">
-          <section id="testing-documentation">
-<h1><strong>Testing Documentation</strong><a class="headerlink" href="#testing-documentation" title="Link to this heading">¶</a></h1>
+          <section id="testing-guidance">
+<h1>Testing Guidance<a class="headerlink" href="#testing-guidance" title="Link to this heading">¶</a></h1>
 <!--date_created: sat-21-june-2025-->
-<!--date_updated: fri-12-dec-2025-->
-<p><code class="docutils literal notranslate"><span class="pre">DrumScript</span></code> is a <code class="docutils literal notranslate"><span class="pre">Python</span> <span class="pre">package</span></code> that <strong>converts drum audio recordings into sheet music (drum notation) in PDF format</strong>.</p>
-<p>It leverages <strong>advanced audio signal processing</strong> and <strong>machine learning</strong> to detect individual drum hits (kick, snare, hi-hat, etc.) and translate them into a musical score.</p>
-<p><strong><a class="reference internal" href="#repository_structure.md"><span class="xref myst">Package Structure</span></a></strong> <strong><a class="reference internal" href="#README.md"><span class="xref myst">README.md</span></a></strong></p>
+<!--date_updated: thurs-30-apr-2026-->
+<p>DrumScript ships with a <a class="reference external" href="https://docs.pytest.org/">pytest</a> test suite organised
+around a clear separation between <strong>fast unit tests</strong> and <strong>slower integration
+tests</strong>. This page covers the <em>philosophy</em> and <em>contribution conventions</em> for
+the suite. For a copy-pasteable command reference, see the
+<a class="reference external" href="https://github.com/DrumScript/DrumScript/tree/main/tests#readme">tests README on GitHub</a>.</p>
+<ul class="simple">
+<li><p><strong><a class="reference internal" href="#the-test-pyramid">The Test Pyramid</a></strong></p></li>
+<li><p><strong><a class="reference internal" href="#modules"><span class="xref myst">Modules</span></a></strong></p></li>
+<li><p><strong><a class="reference internal" href="#suite-layout">Suite layout</a></strong></p></li>
+<li><p><strong><a class="reference internal" href="#markers">Markers</a></strong></p></li>
+<li><p><strong><a class="reference internal" href="#writing-a-new-test">Writing a new test</a></strong></p></li>
+<li><p><strong><a class="reference internal" href="#patterns-you-ll-use-often">Patterns you’ll use often</a></strong></p></li>
+<li><p><strong><a class="reference internal" href="#coverage-reports">Coverage reports</a></strong></p></li>
+<li><p><strong><a class="reference internal" href="#common-pitfalls">Common pitfalls</a></strong></p></li>
+<li><p><strong><a class="reference internal" href="#continuous-integration">Continuous integration</a></strong></p></li>
+<li><p><strong><a class="reference internal" href="#see-also">See also</a></strong></p></li>
+</ul>
+<!--- - **[]()**-->
 <hr class="docutils" />
-<section id="modules">
-<h2>Modules<a class="headerlink" href="#modules" title="Link to this heading">¶</a></h2>
-<section id="audio-processor">
-<h3><strong><code class="docutils literal notranslate"><span class="pre">audio_processor/</span></code></strong><a class="headerlink" href="#audio-processor" title="Link to this heading">¶</a></h3>
-<section id="audio-loader-py">
-<h4><code class="docutils literal notranslate"><span class="pre">audio_loader.py</span></code><a class="headerlink" href="#audio-loader-py" title="Link to this heading">¶</a></h4>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="n">python3</span> <span class="n">audio_processor</span><span class="o">/</span><span class="n">audio_loader</span><span class="o">.</span><span class="n">py</span> <span class="o">&lt;</span><span class="n">path_to_audio_file</span><span class="o">.</span><span class="n">mp3</span><span class="o">&gt;</span>
+<section id="the-test-pyramid">
+<h2>The Test Pyramid<a class="headerlink" href="#the-test-pyramid" title="Link to this heading">¶</a></h2>
+<p><a class="reference internal" href="#testing-guidance"><em>back to top</em></a></p>
+<p>DrumScript follows the classic <a class="reference external" href="https://martinfowler.com/articles/practical-test-pyramid.html">test pyramid</a>:</p>
+<div class="table-wrapper colwidths-auto docutils container">
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Layer</p></th>
+<th class="head"><p>Speed</p></th>
+<th class="head"><p>Volume</p></th>
+<th class="head"><p>What it covers</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>Unit</strong></p></td>
+<td><p>milliseconds</p></td>
+<td><p>many (~75 tests)</p></td>
+<td><p>Pure functions, helper logic, no I/O</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Integration</strong></p></td>
+<td><p>seconds–minutes</p></td>
+<td><p>few (~8 tests)</p></td>
+<td><p>Real Demucs runs, real ffmpeg, real files</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>End-to-end</strong></p></td>
+<td><p>minutes</p></td>
+<td><p>very few</p></td>
+<td><p>Full pipeline: audio → MIDI/PDF/XML</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>The dev loop (<code class="docutils literal notranslate"><span class="pre">pytest</span> <span class="pre">-m</span> <span class="pre">&quot;not</span> <span class="pre">slow&quot;</span></code>) runs only the unit layer, which finishes
+in well under 5 seconds. Integration tests are opt-in, so they don’t slow down
+day-to-day development but can be triggered before a release with a plain
+<code class="docutils literal notranslate"><span class="pre">pytest</span></code>.</p>
+<div class="tip admonition">
+<p class="admonition-title">Why this matters</p>
+<p>Trying to test everything end-to-end is the most common testing mistake. It
+gives you a suite that takes 20 minutes to run and tells you nothing useful
+when something fails. Unit tests catch <em>most</em> bugs <em>much</em> faster.</p>
+</div>
+</section>
+<hr class="docutils" />
+<section id="suite-layout">
+<h2>Suite Layout<a class="headerlink" href="#suite-layout" title="Link to this heading">¶</a></h2>
+<p><a class="reference internal" href="#testing-guidance"><em>back to top</em></a></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span data-line="1">tests/
+</span><span data-line="2">├── conftest.py              ← shared fixtures (auto-discovered)
+</span><span data-line="3">├── fixtures/audio/          ← real audio files (empty; synthesised in conftest)
+</span><span data-line="4">├── unit/                    ← fast, no I/O, no subprocess
+</span><span data-line="5">│   ├── test_audio_loader.py
+</span><span data-line="6">│   ├── test_helpers.py
+</span><span data-line="7">│   ├── test_stem_splitter_helpers.py
+</span><span data-line="8">│   ├── test_tempo_detector.py
+</span><span data-line="9">│   ├── test_onset_detector.py
+</span><span data-line="10">│   └── test_classify.py
+</span><span data-line="11">└── integration/             ← real Demucs / ffmpeg / files (slow)
+</span><span data-line="12">    └── test_stem_splitter_real.py
 </span></pre></div>
 </div>
-<p><strong>expected output:</strong></p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="n">Running</span> <span class="n">audio_loader</span><span class="o">.</span><span class="n">py</span> <span class="n">example</span> <span class="k">with</span> <span class="n">actual</span> <span class="n">MP3</span><span class="o">/</span><span class="n">WAV</span><span class="o">...</span>
-</span><span data-line="2"><span class="n">Attempting</span> <span class="n">to</span> <span class="n">load</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">path_to_audio_file</span><span class="o">.</span><span class="n">mp3</span><span class="o">&gt;</span>
-</span><span data-line="3"><span class="n">Loaded</span> <span class="n">audio</span><span class="p">:</span> <span class="n">Shape</span><span class="o">=</span><span class="p">(</span><span class="mi">324288</span><span class="p">,),</span> <span class="n">Sample</span> <span class="n">Rate</span><span class="o">=</span><span class="mi">22050</span><span class="p">,</span> <span class="n">Duration</span><span class="o">=</span><span class="mf">14.71</span> <span class="n">seconds</span>
-</span><span data-line="4"><span class="n">Original</span> <span class="nb">max</span> <span class="n">amplitude</span><span class="p">:</span> <span class="mf">0.9660</span>
-</span><span data-line="5"><span class="n">Normalised</span> <span class="nb">max</span> <span class="n">amplitude</span><span class="p">:</span> <span class="mf">1.0000</span>
+<p>Tests are auto-discovered by pytest — any file matching <code class="docutils literal notranslate"><span class="pre">test_*.py</span></code> under
+<code class="docutils literal notranslate"><span class="pre">tests/</span></code> is picked up automatically. There is no central registry to update
+when adding new files.</p>
+</section>
+<hr class="docutils" />
+<section id="markers">
+<h2>Markers<a class="headerlink" href="#markers" title="Link to this heading">¶</a></h2>
+<p>Two custom markers are defined in <code class="docutils literal notranslate"><span class="pre">pytest.ini</span></code>:</p>
+<p><code class="docutils literal notranslate"><span class="pre">&#64;pytest.mark.slow</span></code>
+: Tests that take more than a second or two. Skipped by default during
+development.</p>
+<p><code class="docutils literal notranslate"><span class="pre">&#64;pytest.mark.integration</span></code>
+: Tests that require external dependencies — Demucs, ffmpeg, real audio
+files. Always combined with <code class="docutils literal notranslate"><span class="pre">slow</span></code>.</p>
+<div class="highlight-zsh notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="c1"># Fast loop (default)</span>
+</span><span data-line="2">pytest<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;not slow&quot;</span>
+</span><span data-line="3">
+</span><span data-line="4"><span class="c1"># Integration tests only</span>
+</span><span data-line="5">pytest<span class="w"> </span>-m<span class="w"> </span>integration
 </span><span data-line="6">
-</span><span data-line="7"><span class="n">Playing</span> <span class="n">loaded</span> <span class="p">(</span><span class="ow">and</span> <span class="n">normalised</span><span class="p">)</span> <span class="n">audio</span><span class="o">...</span>
-</span><span data-line="8">
-</span><span data-line="9"><span class="c1"># my_test_file.mp3 will play</span>
-</span><span data-line="10">
-</span><span data-line="11"><span class="n">Audio</span> <span class="n">playback</span> <span class="n">finished</span><span class="o">.</span>
-</span><span data-line="12"><span class="n">audio_loader</span><span class="o">.</span><span class="n">py</span> <span class="n">example</span> <span class="n">finished</span><span class="o">.</span>
+</span><span data-line="7"><span class="c1"># Everything (e.g. before a release)</span>
+</span><span data-line="8">pytest
+</span></pre></div>
+</div>
+<div class="note admonition">
+<p class="admonition-title">Strict markers</p>
+<p><code class="docutils literal notranslate"><span class="pre">pytest.ini</span></code> enables <code class="docutils literal notranslate"><span class="pre">--strict-markers</span></code>, which means typos like
+<code class="docutils literal notranslate"><span class="pre">&#64;pytest.mark.slwo</span></code> will fail loudly instead of silently applying to nothing.
+If you add a new marker category, register it in <code class="docutils literal notranslate"><span class="pre">pytest.ini</span></code> first.</p>
+</div>
+</section>
+<hr class="docutils" />
+<section id="writing-a-new-test">
+<h2>Writing a New Test<a class="headerlink" href="#writing-a-new-test" title="Link to this heading">¶</a></h2>
+<section id="pick-the-right-layer">
+<h3>1. Pick the right layer<a class="headerlink" href="#pick-the-right-layer" title="Link to this heading">¶</a></h3>
+<p>Ask yourself: <em>does my test need to touch the filesystem, run a subprocess, or
+load audio that takes more than 100ms?</em></p>
+<ul class="simple">
+<li><p><strong>No</strong> → put it in <code class="docutils literal notranslate"><span class="pre">tests/unit/</span></code>. No marker needed.</p></li>
+<li><p><strong>Yes</strong> → put it in <code class="docutils literal notranslate"><span class="pre">tests/integration/</span></code> and decorate with both
+<code class="docutils literal notranslate"><span class="pre">&#64;pytest.mark.slow</span></code> and <code class="docutils literal notranslate"><span class="pre">&#64;pytest.mark.integration</span></code>.</p></li>
+</ul>
+</section>
+<section id="follow-the-file-conventions">
+<h3>2. Follow the file conventions<a class="headerlink" href="#follow-the-file-conventions" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>Filename: <code class="docutils literal notranslate"><span class="pre">test_*.py</span></code></p></li>
+<li><p>Class names: <code class="docutils literal notranslate"><span class="pre">Test*</span></code></p></li>
+<li><p>Function names: <code class="docutils literal notranslate"><span class="pre">test_*</span></code></p></li>
+<li><p>Group related assertions inside a <code class="docutils literal notranslate"><span class="pre">Test*</span></code> class for readability — pytest
+treats each method as a separate test.</p></li>
+</ul>
+</section>
+<section id="use-arrange-act-assert">
+<h3>3. Use Arrange / Act / Assert<a class="headerlink" href="#use-arrange-act-assert" title="Link to this heading">¶</a></h3>
+<p>Every test should follow this shape:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="k">def</span><span class="w"> </span><span class="nf">test_normalises_to_unit_peak</span><span class="p">():</span>
+</span><span data-line="2">    <span class="c1"># Arrange — set up inputs</span>
+</span><span data-line="3">    <span class="n">audio</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.25</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+</span><span data-line="4">
+</span><span data-line="5">    <span class="c1"># Act — do the thing</span>
+</span><span data-line="6">    <span class="n">result</span> <span class="o">=</span> <span class="n">normalise_audio</span><span class="p">(</span><span class="n">audio</span><span class="p">)</span>
+</span><span data-line="7">
+</span><span data-line="8">    <span class="c1"># Assert — verify the outcome</span>
+</span><span data-line="9">    <span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">result</span><span class="p">)),</span> <span class="mf">1.0</span><span class="p">)</span>
+</span></pre></div>
+</div>
+<p>One test = one act = one (or a few related) asserts. If you find yourself
+writing more than one <em>act</em> in a single test, split it into two.</p>
+</section>
+<section id="use-tmp-path-for-file-output">
+<h3>4. Use <code class="docutils literal notranslate"><span class="pre">tmp_path</span></code> for file output<a class="headerlink" href="#use-tmp-path-for-file-output" title="Link to this heading">¶</a></h3>
+<p>Pytest gives you a fresh temp directory per test, automatically cleaned up.
+<strong>Always use it</strong> instead of writing to the working directory or hardcoded
+paths.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="k">def</span><span class="w"> </span><span class="nf">test_writes_output_file</span><span class="p">(</span><span class="n">tmp_path</span><span class="p">):</span>
+</span><span data-line="2">    <span class="n">output</span> <span class="o">=</span> <span class="n">tmp_path</span> <span class="o">/</span> <span class="s2">&quot;out.wav&quot;</span>
+</span><span data-line="3">    <span class="c1"># ... do stuff that writes to output ...</span>
+</span><span data-line="4">    <span class="k">assert</span> <span class="n">output</span><span class="o">.</span><span class="n">exists</span><span class="p">()</span>
+</span><span data-line="5">    <span class="k">assert</span> <span class="n">output</span><span class="o">.</span><span class="n">stat</span><span class="p">()</span><span class="o">.</span><span class="n">st_size</span> <span class="o">&gt;</span> <span class="mi">0</span>
 </span></pre></div>
 </div>
 </section>
-<section id="feature-extractor-py">
-<h4><code class="docutils literal notranslate"><span class="pre">feature_extractor.py</span></code><a class="headerlink" href="#feature-extractor-py" title="Link to this heading">¶</a></h4>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="n">python3</span> <span class="n">audio_processor</span><span class="o">/</span><span class="n">feature_extractor</span><span class="o">.</span><span class="n">py</span>
+<section id="reuse-fixtures-from-conftest-py">
+<h3>5. Reuse fixtures from <code class="docutils literal notranslate"><span class="pre">conftest.py</span></code><a class="headerlink" href="#reuse-fixtures-from-conftest-py" title="Link to this heading">¶</a></h3>
+<p>The shared fixtures already cover most needs:</p>
+<div class="table-wrapper colwidths-auto docutils container">
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Fixture</p></th>
+<th class="head"><p>What it gives you</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">sine_wave</span></code></p></td>
+<td><p>1-second 440 Hz sine, mono float32</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">silent_audio</span></code></p></td>
+<td><p>5 seconds of silence</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">click_track_120bpm</span></code></p></td>
+<td><p>Deterministic click track for tempo tests</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">stereo_constant_audio</span></code></p></td>
+<td><p>1 second of stereo audio with known amplitudes</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">small_wav_file</span></code></p></td>
+<td><p>Sine wave written to disk in <code class="docutils literal notranslate"><span class="pre">tmp_path</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">stem_files</span></code></p></td>
+<td><p>Three distinct stems written to disk for mixing tests</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Add new fixtures to <code class="docutils literal notranslate"><span class="pre">conftest.py</span></code> only if more than one file will use them.
+Single-use fixtures belong in the test file itself.</p>
+</section>
+</section>
+<hr class="docutils" />
+<section id="patterns-you-ll-use-often">
+<h2>Patterns You’ll Use Often<a class="headerlink" href="#patterns-you-ll-use-often" title="Link to this heading">¶</a></h2>
+<section id="parametrised-tests">
+<h3>Parametrised tests<a class="headerlink" href="#parametrised-tests" title="Link to this heading">¶</a></h3>
+<p>When the same logic needs to be checked against many inputs, use
+<code class="docutils literal notranslate"><span class="pre">&#64;pytest.mark.parametrize</span></code> rather than copying the test:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">parametrize</span><span class="p">(</span><span class="s2">&quot;input_beats,subdivision,expected&quot;</span><span class="p">,</span> <span class="p">[</span>
+</span><span data-line="2">    <span class="p">(</span><span class="mf">0.24</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">),</span>
+</span><span data-line="3">    <span class="p">(</span><span class="mf">0.51</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mf">0.50</span><span class="p">),</span>
+</span><span data-line="4">    <span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">),</span>
+</span><span data-line="5">    <span class="p">(</span><span class="mf">1.99</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">),</span>
+</span><span data-line="6"><span class="p">])</span>
+</span><span data-line="7"><span class="k">def</span><span class="w"> </span><span class="nf">test_round_to_nearest_subdivision</span><span class="p">(</span><span class="n">input_beats</span><span class="p">,</span> <span class="n">subdivision</span><span class="p">,</span> <span class="n">expected</span><span class="p">):</span>
+</span><span data-line="8">    <span class="k">assert</span> <span class="n">round_to_nearest_subdivision</span><span class="p">(</span><span class="n">input_beats</span><span class="p">,</span> <span class="n">subdivision</span><span class="p">)</span> <span class="o">==</span> <span class="n">pytest</span><span class="o">.</span><span class="n">approx</span><span class="p">(</span><span class="n">expected</span><span class="p">)</span>
 </span></pre></div>
 </div>
-<p><strong>expected output:</strong></p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span data-line="1">    <span class="n">Running</span> <span class="n">feature_extractor</span><span class="o">.</span><span class="n">py</span> <span class="n">example</span><span class="o">...</span>
-</span><span data-line="2">    <span class="n">Install</span> <span class="s1">&#39;soundfile&#39;</span> <span class="p">(</span><span class="n">pip</span> <span class="n">install</span> <span class="n">soundfile</span><span class="p">)</span> <span class="n">to</span> <span class="n">run</span> <span class="n">this</span> <span class="n">example</span> <span class="n">fully</span><span class="o">.</span>
-</span><span data-line="3">    <span class="n">Skipping</span> <span class="n">dummy</span> <span class="n">file</span> <span class="n">creation</span><span class="o">/</span><span class="n">deletion</span><span class="o">.</span>
-</span><span data-line="4">    <span class="n">feature_extractor</span><span class="o">.</span><span class="n">py</span> <span class="n">example</span> <span class="n">finished</span><span class="o">.</span>
-</span><span data-line="5">    <span class="n">DrumScript</span> <span class="o">%</span>
-</span></pre></div>
-</div>
-<p>or, to run <code class="docutils literal notranslate"><span class="pre">feature_extractor.py</span></code> as a <strong>module</strong></p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">audio_processor</span><span class="o">.</span><span class="n">feature_extractor</span>
-</span></pre></div>
-</div>
-<p><strong>expected output:</strong></p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="n">DrumScript</span> <span class="o">%</span> <span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">audio_processor</span><span class="o">.</span><span class="n">feature_extractor</span>
-</span><span data-line="2"><span class="n">Running</span> <span class="n">feature_extractor</span><span class="o">.</span><span class="n">py</span> <span class="n">example</span> <span class="k">with</span> <span class="n">test</span><span class="o">.</span><span class="n">mp3</span><span class="o">...</span>
-</span><span data-line="3"><span class="n">Attempting</span> <span class="n">to</span> <span class="n">load</span><span class="p">:</span> <span class="n">DrumScript</span><span class="o">/</span><span class="n">tests</span><span class="o">/</span><span class="n">test</span><span class="o">.</span><span class="n">mp3</span>
-</span><span data-line="4"><span class="n">Loaded</span> <span class="n">audio</span><span class="p">:</span> <span class="n">Shape</span><span class="o">=</span><span class="p">(</span><span class="mi">324288</span><span class="p">,),</span> <span class="n">Sample</span> <span class="n">Rate</span><span class="o">=</span><span class="mi">22050</span><span class="p">,</span> <span class="n">Duration</span><span class="o">=</span><span class="mf">14.71</span> <span class="n">seconds</span>
-</span><span data-line="5">
-</span><span data-line="6"><span class="n">Detecting</span> <span class="n">onsets</span><span class="o">...</span>
-</span><span data-line="7"><span class="n">Detected</span> <span class="mi">68</span> <span class="n">onsets</span><span class="o">.</span>
-</span><span data-line="8">
-</span><span data-line="9"><span class="o">---</span> <span class="n">Features</span> <span class="k">for</span> <span class="n">Onset</span> <span class="mi">1</span> <span class="p">(</span><span class="n">at</span> <span class="mf">0.07</span><span class="n">s</span><span class="p">)</span> <span class="o">---</span>
-</span><span data-line="10">  <span class="n">mfccs</span><span class="p">:</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">180</span><span class="p">,),</span> <span class="n">mean</span><span class="o">=</span><span class="mf">8.2517</span>
-</span><span data-line="11">  <span class="n">spectral_centroid</span><span class="p">:</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">9</span><span class="p">,),</span> <span class="n">mean</span><span class="o">=</span><span class="mf">2826.1621</span>
-</span><span data-line="12">  <span class="n">spectral_rolloff</span><span class="p">:</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">9</span><span class="p">,),</span> <span class="n">mean</span><span class="o">=</span><span class="mf">6810.4736</span>
-</span><span data-line="13">  <span class="n">zero_crossing_rate</span><span class="p">:</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">9</span><span class="p">,),</span> <span class="n">mean</span><span class="o">=</span><span class="mf">0.1527</span>
-</span><span data-line="14">  <span class="n">rms</span><span class="p">:</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">9</span><span class="p">,),</span> <span class="n">mean</span><span class="o">=</span><span class="mf">0.2310</span>
-</span><span data-line="15">
-</span><span data-line="16"><span class="o">---</span> <span class="n">Features</span> <span class="k">for</span> <span class="n">Onset</span> <span class="mi">2</span> <span class="p">(</span><span class="n">at</span> <span class="mf">0.28</span><span class="n">s</span><span class="p">)</span> <span class="o">---</span>
-</span><span data-line="17">  <span class="n">mfccs</span><span class="p">:</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">180</span><span class="p">,),</span> <span class="n">mean</span><span class="o">=</span><span class="mf">7.4435</span>
-</span><span data-line="18">  <span class="n">spectral_centroid</span><span class="p">:</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">9</span><span class="p">,),</span> <span class="n">mean</span><span class="o">=</span><span class="mf">2350.6134</span>
-</span><span data-line="19">  <span class="n">spectral_rolloff</span><span class="p">:</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">9</span><span class="p">,),</span> <span class="n">mean</span><span class="o">=</span><span class="mf">6206.3477</span>
-</span><span data-line="20">  <span class="n">zero_crossing_rate</span><span class="p">:</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">9</span><span class="p">,),</span> <span class="n">mean</span><span class="o">=</span><span class="mf">0.0832</span>
-</span><span data-line="21">  <span class="n">rms</span><span class="p">:</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">9</span><span class="p">,),</span> <span class="n">mean</span><span class="o">=</span><span class="mf">0.2055</span>
-</span><span data-line="22">
-</span><span data-line="23"><span class="o">...</span>
-</span><span data-line="24">
-</span><span data-line="25"><span class="n">feature_extractor</span><span class="o">.</span><span class="n">py</span> <span class="n">example</span> <span class="n">finished</span><span class="o">.</span>
-</span><span data-line="26"><span class="n">DrumScript</span> <span class="o">%</span>
+<p>Each tuple becomes a separate test in pytest’s output, so you get clear
+per-case pass/fail reporting.</p>
+</section>
+<section id="approximate-snapshot-tests-for-dsp-code">
+<h3>Approximate snapshot tests for DSP code<a class="headerlink" href="#approximate-snapshot-tests-for-dsp-code" title="Link to this heading">¶</a></h3>
+<p>DSP algorithms (tempo detection, onset detection, etc.) produce <em>approximate</em>
+results. Direct equality assertions are too brittle. Use tolerance bands
+instead:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="k">def</span><span class="w"> </span><span class="nf">test_tempo_detection_on_120bpm_click</span><span class="p">(</span><span class="n">click_track_120bpm</span><span class="p">):</span>
+</span><span data-line="2">    <span class="n">audio</span><span class="p">,</span> <span class="n">sr</span> <span class="o">=</span> <span class="n">click_track_120bpm</span>
+</span><span data-line="3">    <span class="n">bpm</span> <span class="o">=</span> <span class="n">estimate_tempo</span><span class="p">(</span><span class="n">audio</span><span class="p">,</span> <span class="n">sr</span><span class="p">)</span>
+</span><span data-line="4">    <span class="c1"># ±10% — accepts 108-132 BPM. Wide enough for librosa&#39;s variance,</span>
+</span><span data-line="5">    <span class="c1"># narrow enough to catch real regressions.</span>
+</span><span data-line="6">    <span class="k">assert</span> <span class="mi">108</span> <span class="o">&lt;=</span> <span class="n">bpm</span> <span class="o">&lt;=</span> <span class="mi">132</span>
 </span></pre></div>
 </div>
 </section>
-<section id="onset-detector-py">
-<h4><code class="docutils literal notranslate"><span class="pre">onset_detector.py</span></code><a class="headerlink" href="#onset-detector-py" title="Link to this heading">¶</a></h4>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="n">python3</span> <span class="n">audio_processor</span><span class="o">/</span><span class="n">onset_detector</span><span class="o">.</span><span class="n">py</span>
+<section id="mocking-subprocess-calls">
+<h3>Mocking subprocess calls<a class="headerlink" href="#mocking-subprocess-calls" title="Link to this heading">¶</a></h3>
+<p>The unit tests for <code class="docutils literal notranslate"><span class="pre">stem_splitter</span></code> don’t actually run Demucs — that would be
+too slow. Instead, they mock <code class="docutils literal notranslate"><span class="pre">subprocess.run</span></code> and verify the <em>command being
+constructed</em>. The real Demucs run lives in
+<code class="docutils literal notranslate"><span class="pre">tests/integration/test_stem_splitter_real.py</span></code>.</p>
+</section>
+</section>
+<hr class="docutils" />
+<section id="coverage-reports">
+<h2>Coverage Reports<a class="headerlink" href="#coverage-reports" title="Link to this heading">¶</a></h2>
+<p>Once <code class="docutils literal notranslate"><span class="pre">pytest-cov</span></code> is installed (it’s part of the <code class="docutils literal notranslate"><span class="pre">dev</span></code> group), you can see
+which lines of source code your tests are exercising:</p>
+<div class="highlight-zsh notranslate"><div class="highlight"><pre><span></span><span data-line="1">pytest<span class="w"> </span>--cov<span class="o">=</span>drumscript<span class="w"> </span>--cov-report<span class="o">=</span>term-missing
 </span></pre></div>
 </div>
-<p><strong>expected output:</strong></p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="n">Running</span> <span class="n">onset_detector</span><span class="o">.</span><span class="n">py</span> <span class="n">example</span><span class="o">...</span>
-</span><span data-line="2"><span class="n">Created</span> <span class="n">dummy</span> <span class="n">audio</span> <span class="n">file</span> <span class="k">with</span> <span class="n">hits</span><span class="p">:</span> <span class="n">dummy_audio_with_hits</span><span class="o">.</span><span class="n">wav</span>
-</span><span data-line="3"><span class="n">Original</span> <span class="n">hit</span> <span class="n">times</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">1.2</span><span class="p">,</span> <span class="mf">1.8</span><span class="p">,</span> <span class="mf">2.5</span><span class="p">,</span> <span class="mf">3.1</span><span class="p">,</span> <span class="mf">3.8</span><span class="p">,</span> <span class="mf">4.4</span><span class="p">]</span>
-</span><span data-line="4"><span class="n">Detected</span> <span class="n">onsets</span> <span class="p">(</span><span class="n">seconds</span><span class="p">):</span> <span class="p">[</span><span class="s1">&#39;0.51&#39;</span><span class="p">,</span> <span class="s1">&#39;1.21&#39;</span><span class="p">,</span> <span class="s1">&#39;1.81&#39;</span><span class="p">,</span> <span class="s1">&#39;2.51&#39;</span><span class="p">,</span> <span class="s1">&#39;3.11&#39;</span><span class="p">,</span> <span class="s1">&#39;3.81&#39;</span><span class="p">,</span> <span class="s1">&#39;4.41&#39;</span><span class="p">]</span>
-</span><span data-line="5"><span class="n">Cleaned</span> <span class="n">up</span> <span class="n">dummy</span> <span class="n">audio</span> <span class="n">file</span><span class="p">:</span> <span class="n">dummy_audio_with_hits</span><span class="o">.</span><span class="n">wav</span>
-</span><span data-line="6"><span class="n">onset_detector</span><span class="o">.</span><span class="n">py</span> <span class="n">example</span> <span class="n">finished</span><span class="o">.</span>
-</span></pre></div>
-</div>
-<p>or, to run <code class="docutils literal notranslate"><span class="pre">onset_detector.py</span></code> as a <strong>module</strong></p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="n">python3</span> <span class="o">-</span><span class="n">m</span> <span class="n">audio_processor</span><span class="o">.</span><span class="n">onset_detector</span>
-</span></pre></div>
-</div>
-<p><strong>expected output:</strong></p>
-<div class="highlight-zsh notranslate"><div class="highlight"><pre><span></span><span data-line="1">DrumScript<span class="w"> </span>%<span class="w"> </span>python3<span class="w"> </span>-m<span class="w"> </span>audio_processor.onset_detector
-</span><span data-line="2">Running<span class="w"> </span>onset_detector.py<span class="w"> </span>example<span class="w"> </span>with<span class="w"> </span>test.mp3...
-</span><span data-line="3">Attempting<span class="w"> </span>to<span class="w"> </span>load:<span class="w"> </span>~/DrumScript/tests/test.mp3
-</span><span data-line="4">Loaded<span class="w"> </span>audio:<span class="w"> </span><span class="nv">Shape</span><span class="o">=(</span><span class="m">324288</span>,<span class="o">)</span>,<span class="w"> </span>Sample<span class="w"> </span><span class="nv">Rate</span><span class="o">=</span><span class="m">22050</span>,<span class="w"> </span><span class="nv">Duration</span><span class="o">=</span><span class="m">14</span>.71<span class="w"> </span>seconds
-</span><span data-line="5">
-</span><span data-line="6">Detecting<span class="w"> </span>onsets<span class="w"> </span>from<span class="w"> </span>test.mp3...
-</span><span data-line="7">Detected<span class="w"> </span><span class="m">68</span><span class="w"> </span>onsets.
-</span><span data-line="8">
-</span><span data-line="9">First<span class="w"> </span><span class="m">10</span><span class="w"> </span>detected<span class="w"> </span>onsets<span class="w"> </span><span class="o">(</span>seconds<span class="o">)</span>:
-</span><span data-line="10"><span class="w">  </span>Onset<span class="w"> </span><span class="m">1</span>:<span class="w"> </span><span class="m">0</span>.07s
-</span><span data-line="11"><span class="w">  </span>Onset<span class="w"> </span><span class="m">2</span>:<span class="w"> </span><span class="m">0</span>.28s
-</span><span data-line="12"><span class="w">  </span>Onset<span class="w"> </span><span class="m">3</span>:<span class="w"> </span><span class="m">0</span>.49s
-</span><span data-line="13"><span class="w">  </span>...and<span class="w"> </span><span class="m">58</span><span class="w"> </span>more<span class="w"> </span>onsets.
-</span><span data-line="14">
-</span><span data-line="15">onset_detector.py<span class="w"> </span>example<span class="w"> </span>finished.
-</span><span data-line="16">DrumScript<span class="w"> </span>%<span class="w">  </span>-
-</span></pre></div>
+<p><code class="docutils literal notranslate"><span class="pre">term-missing</span></code> adds a column listing the line numbers that <em>aren’t</em> covered.
+That’s the column to look at when deciding what to test next.</p>
+<div class="warning admonition">
+<p class="admonition-title">Aim for value, not 100%</p>
+<p>Don’t chase 100% coverage. The classification logic deserves rigorous tests;
+the <code class="docutils literal notranslate"><span class="pre">__main__</span></code> blocks at the bottom of files don’t. High-value coverage is
+better than total coverage.</p>
 </div>
 </section>
-<section id="tempo-detector-py">
-<h4><code class="docutils literal notranslate"><span class="pre">tempo_detector.py</span></code><a class="headerlink" href="#tempo-detector-py" title="Link to this heading">¶</a></h4>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="n">python3</span> <span class="n">audio_processor</span><span class="o">/</span><span class="n">tempo_detector</span><span class="o">.</span><span class="n">py</span> <span class="o">&lt;</span><span class="n">path_to_audio_file</span><span class="o">.</span><span class="n">mp3</span><span class="o">&gt;</span>
-</span></pre></div>
-</div>
-<p><strong>expected output:</strong></p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="n">Attempting</span> <span class="n">to</span> <span class="n">load</span><span class="p">:</span> <span class="n">my_test_file</span><span class="o">.</span><span class="n">mp3</span>
-</span><span data-line="2"><span class="n">Loaded</span> <span class="n">audio</span><span class="p">:</span> <span class="n">Shape</span><span class="o">=</span><span class="p">(</span><span class="mi">324288</span><span class="p">,),</span> <span class="n">Sample</span> <span class="n">Rate</span><span class="o">=</span><span class="mi">44100</span><span class="p">,</span> <span class="n">Duration</span><span class="o">=</span><span class="mf">14.71</span> <span class="n">seconds</span>
-</span><span data-line="3"><span class="n">Estimated</span> <span class="n">Tempo</span><span class="p">:</span> <span class="mi">177</span> <span class="n">BPM</span>
-</span></pre></div>
-</div>
+<hr class="docutils" />
+<section id="common-pitfalls">
+<h2>Common Pitfalls<a class="headerlink" href="#common-pitfalls" title="Link to this heading">¶</a></h2>
+<ol class="arabic simple">
+<li><p><strong>Don’t test third-party libraries.</strong> Test how <em>your code uses them</em>. An
+assertion like <code class="docutils literal notranslate"><span class="pre">assert</span> <span class="pre">librosa.load(&quot;x.wav&quot;)</span></code> is testing librosa, not
+DrumScript.</p></li>
+<li><p><strong>Don’t test private implementation details.</strong> Test public behaviour. If
+you rename <code class="docutils literal notranslate"><span class="pre">_read_stem_as_array</span></code> to <code class="docutils literal notranslate"><span class="pre">_load_stem</span></code>, your tests for
+<code class="docutils literal notranslate"><span class="pre">mix_stems</span></code> should still pass.</p></li>
+<li><p><strong>Don’t put real audio files larger than ~100KB in the repo.</strong> Use small
+fixtures and synthesise the rest in <code class="docutils literal notranslate"><span class="pre">conftest.py</span></code>.</p></li>
+<li><p><strong>Don’t write the test only after the bug.</strong> When you fix a bug, write the
+test that <em>would have caught it</em>. This is the single most valuable kind of
+test you can add.</p></li>
+</ol>
 </section>
-<section id="tempogram-py">
-<h4><code class="docutils literal notranslate"><span class="pre">tempogram.py</span></code><a class="headerlink" href="#tempogram-py" title="Link to this heading">¶</a></h4>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="n">python3</span> <span class="n">audio_processor</span><span class="o">/</span><span class="n">tempogram</span><span class="o">.</span><span class="n">py</span> <span class="o">&lt;</span><span class="n">path_to_audio_file</span><span class="o">.</span><span class="n">mp3</span><span class="o">&gt;</span>
-</span></pre></div>
-</div>
-<p><strong>expected output:</strong></p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span data-line="1">Attempting to load: my_test_file.mp3
-</span><span data-line="2">Loaded audio: Shape=(324288,), Sample Rate=44100, Duration=14.71 seconds
-</span><span data-line="3">Estimated Tempo: 177 BPM
-</span><span data-line="4">Tempogram saved to: `DrumScript/visuals/tempogram.png`
-</span></pre></div>
-</div>
+<hr class="docutils" />
+<section id="continuous-integration">
+<h2>Continuous Integration<a class="headerlink" href="#continuous-integration" title="Link to this heading">¶</a></h2>
+<p>CI configuration is on the roadmap. The intended setup is:</p>
+<ul class="simple">
+<li><p>Run <code class="docutils literal notranslate"><span class="pre">pytest</span> <span class="pre">-m</span> <span class="pre">&quot;not</span> <span class="pre">slow&quot;</span></code> on every push and pull request</p></li>
+<li><p>Run the full suite (<code class="docutils literal notranslate"><span class="pre">pytest</span></code>) on tagged release commits</p></li>
+<li><p>Publish coverage reports as a build artifact</p></li>
+</ul>
+<p>Until CI is in place, contributors are expected to run <code class="docutils literal notranslate"><span class="pre">pytest</span> <span class="pre">-m</span> <span class="pre">&quot;not</span> <span class="pre">slow&quot;</span></code>
+locally before opening a pull request.</p>
 </section>
-<section id="drum-classifier">
-<h4><strong><code class="docutils literal notranslate"><span class="pre">drum_classifier/</span></code></strong><a class="headerlink" href="#drum-classifier" title="Link to this heading">¶</a></h4>
-<p><strong>PLEASE NOTE:</strong>[Testing instructions to be added for the new rule-based classifier scripts: <code class="docutils literal notranslate"><span class="pre">classify.py</span></code> and <code class="docutils literal notranslate"><span class="pre">generate_score.py</span></code>]</p>
+<hr class="docutils" />
+<section id="see-also">
+<h2>See Also<a class="headerlink" href="#see-also" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/DrumScript/DrumScript/tree/main/tests#readme">Tests README</a> — copy-pasteable command reference</p></li>
+<li><p><a class="reference internal" href="contributor_guidance.html"><span class="std std-doc">Contributor Guidance</span></a></p></li>
+<li><p><a class="reference internal" href="documentation.html"><span class="std std-doc">Documentation Guide</span></a></p></li>
+<li><p><a class="reference external" href="https://docs.pytest.org/">Pytest documentation</a> — official reference</p></li>
+</ul>
+<hr class="docutils" />
+<!-- LEGACY_CODE: KEEP FOR NOW
+## Modules
+[*back to top*](#testing-guidance)
+
+### **`audio_processor/`**
+
+#### `audio_loader.py`
+
+```
+python3 audio_processor/audio_loader.py <path_to_audio_file.mp3>
+```
+
+**expected output:**
+
+```
+Running audio_loader.py example with actual MP3/WAV...
+Attempting to load: <path_to_audio_file.mp3>
+Loaded audio: Shape=(324288,), Sample Rate=22050, Duration=14.71 seconds
+Original max amplitude: 0.9660
+Normalised max amplitude: 1.0000
+
+Playing loaded (and normalised) audio...
+
+# my_test_file.mp3 will play
+
+Audio playback finished.
+audio_loader.py example finished.
+```
+
+#### `feature_extractor.py`
+
+```
+python3 audio_processor/feature_extractor.py
+```
+
+**expected output:**
+
+```
+    Running feature_extractor.py example...
+    Install 'soundfile' (pip install soundfile) to run this example fully.
+    Skipping dummy file creation/deletion.
+    feature_extractor.py example finished.
+    DrumScript %
+```
+
+or, to run `feature_extractor.py` as a **module**
+
+```
+python -m audio_processor.feature_extractor
+```
+
+**expected output:**
+
+```
+DrumScript % python -m audio_processor.feature_extractor
+Running feature_extractor.py example with test.mp3...
+Attempting to load: DrumScript/tests/test.mp3
+Loaded audio: Shape=(324288,), Sample Rate=22050, Duration=14.71 seconds
+
+Detecting onsets...
+Detected 68 onsets.
+
+--- Features for Onset 1 (at 0.07s) ---
+  mfccs: shape=(180,), mean=8.2517
+  spectral_centroid: shape=(9,), mean=2826.1621
+  spectral_rolloff: shape=(9,), mean=6810.4736
+  zero_crossing_rate: shape=(9,), mean=0.1527
+  rms: shape=(9,), mean=0.2310
+
+--- Features for Onset 2 (at 0.28s) ---
+  mfccs: shape=(180,), mean=7.4435
+  spectral_centroid: shape=(9,), mean=2350.6134
+  spectral_rolloff: shape=(9,), mean=6206.3477
+  zero_crossing_rate: shape=(9,), mean=0.0832
+  rms: shape=(9,), mean=0.2055
+
+...
+
+feature_extractor.py example finished.
+DrumScript %
+```
+
+#### `onset_detector.py`
+
+```
+python3 audio_processor/onset_detector.py
+```
+
+**expected output:**
+
+```
+Running onset_detector.py example...
+Created dummy audio file with hits: dummy_audio_with_hits.wav
+Original hit times: [0.5, 1.2, 1.8, 2.5, 3.1, 3.8, 4.4]
+Detected onsets (seconds): ['0.51', '1.21', '1.81', '2.51', '3.11', '3.81', '4.41']
+Cleaned up dummy audio file: dummy_audio_with_hits.wav
+onset_detector.py example finished.
+```
+
+or, to run `onset_detector.py` as a **module**
+
+```
+python3 -m audio_processor.onset_detector
+```
+
+**expected output:**
+
+```zsh
+DrumScript % python3 -m audio_processor.onset_detector
+Running onset_detector.py example with test.mp3...
+Attempting to load: ~/DrumScript/tests/test.mp3
+Loaded audio: Shape=(324288,), Sample Rate=22050, Duration=14.71 seconds
+
+Detecting onsets from test.mp3...
+Detected 68 onsets.
+
+First 10 detected onsets (seconds):
+  Onset 1: 0.07s
+  Onset 2: 0.28s
+  Onset 3: 0.49s
+  ...and 58 more onsets.
+
+onset_detector.py example finished.
+DrumScript %  -
+```
+
+#### `tempo_detector.py`
+
+```
+python3 audio_processor/tempo_detector.py <path_to_audio_file.mp3>
+```
+
+**expected output:**
+
+```
+Attempting to load: my_test_file.mp3
+Loaded audio: Shape=(324288,), Sample Rate=44100, Duration=14.71 seconds
+Estimated Tempo: 177 BPM
+```
+
+#### `tempogram.py`
+
+```
+python3 audio_processor/tempogram.py <path_to_audio_file.mp3>
+```
+
+**expected output:**
+
+```
+Attempting to load: my_test_file.mp3
+Loaded audio: Shape=(324288,), Sample Rate=44100, Duration=14.71 seconds
+Estimated Tempo: 177 BPM
+Tempogram saved to: `DrumScript/visuals/tempogram.png`
+```
+
+#### **`drum_classifier/`**
+
+**PLEASE NOTE:**[Testing instructions to be added for the new rule-based classifier scripts: `classify.py` and `generate_score.py`]
+
 <!--TO DO: Add in (any) missing fcts and modules-->
+<p>–&gt;</p>
 <hr class="docutils" />
 <!--END--></section>
-</section>
-</section>
 </section>
 
         </article><button class="back-to-top" type="button">
@@ -398,10 +803,10 @@ data-aria-dark="Switch to auto color mode">
         <span>Previous</span><div class="title">Documentation</div></div>
     </a>
   </div><div class="navigation-next">
-    <a href="../about.html">
+    <a href="../guide/interactive/index.html">
       <div class="page-info">
         <span>Next</span>
-        <div class="title">About DrumScript</div>
+        <div class="title">Interactive Runbooks</div>
       </div>
       <i class="i-lucide chevron-right"></i>
     </a>
@@ -429,7 +834,7 @@ data-aria-dark="Switch to auto color mode">
     </div>
   </div>
 </footer>
-      <script src="../_static/documentation_options.js?v=01f34227"></script>
+      <script src="../_static/documentation_options.js?v=360bc84d"></script>
       <script src="../_static/doctools.js?v=fd6eb6e6"></script>
       <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script src="../_static/shibuya.js?v=cac61aee"></script></body>

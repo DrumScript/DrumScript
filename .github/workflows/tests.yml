@@ -3,9 +3,9 @@ name: Run Tests
 # Trigger the workflow on push or pull request to main
 on:
   push:
-    branches: [ "main", "build/pypi_assets" ]
+    branches: [ "main", "build/prep_for_release" ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ "main", "build/prep_for_release" ]
 
 jobs:
   test:
@@ -13,7 +13,7 @@ jobs:
     strategy:
       matrix:
         # Test across multiple Python versions to ensure the package is robust
-        python-version: ["3.9", "3.10", "3.11", "3.12","3.13"] # consistent with versions in uv.lock. Removed 3.14 from list given its infancy (ie bleeding-edge status)
+        python-version: ["3.9", "3.10", "3.11", "3.12","3.13"] # consistent with versions in uv.lock. Removed 3.14 from list given its infancy
 
     steps:
     - name: Checkout code
@@ -36,17 +36,16 @@ jobs:
 
     - name: Install dependencies
       run: |
-        # Installs package in editable mode plus the 'test' optional dependencies
-        uv pip install --system -e ".[test]"
+        # Use uv sync to install the package and all [dependency-groups] simultaneously
+        uv sync --all-extras
 
-    #- name: Lint with Flake8
-     # run: |
-        # Stop the build if there are Python syntax errors or undefined names
-      #  uv pip install --system flake8
-       # flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
-        # treat all errors as warnings for now (exit-zero)
-        #flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+    - name: Lint and Format with Ruff
+      run: |
+        # Run ruff using the environment managed by uv
+        uv run ruff format --check .
+        uv run ruff check .
 
-    #- name: Run tests with pytest
-     # run: |
-      #  pytest
+    - name: Run tests with pytest
+      run: |
+        # Run pytest using the environment managed by uv
+        uv run pytest

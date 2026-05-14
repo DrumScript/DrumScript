@@ -96,6 +96,15 @@ development/documentation
 development/testing_guidance
 ```
 
+
+## Runbooks
+
+```{toctree}
+:maxdepth: 2
+:caption: Runbooks
+
+guide/interactive/index
+```
 ## About
 
 ```{toctree}

@@ -3,11 +3,19 @@
 
 .. automodule:: drumscript.audio_processor.audio_loader
 
-   
-   .. rubric:: Functions
 
-   .. autosummary::
-   
-      load_audio
-      normalise_audio
-   
+
+.. rubric:: Functions
+
+.. autosummary::
+   :toctree: .
+   :nosignatures:
+
+
+   load_audio
+   normalise_audio
+
+
+
+
+

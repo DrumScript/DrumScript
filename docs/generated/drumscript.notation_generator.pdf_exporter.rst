@@ -3,16 +3,24 @@
 
 .. automodule:: drumscript.notation_generator.pdf_exporter
 
-   
-   .. rubric:: Functions
 
-   .. autosummary::
-   
-      draw_bar_line
-      draw_clef
-      draw_notehead
-      draw_staff
-      draw_time_signature
-      export_pdf
-      get_vertical_position
-   
+
+.. rubric:: Functions
+
+.. autosummary::
+   :toctree: .
+   :nosignatures:
+
+
+   draw_bar_line
+   draw_clef
+   draw_notehead
+   draw_staff
+   draw_time_signature
+   export_pdf
+   get_vertical_position
+
+
+
+
+

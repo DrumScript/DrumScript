@@ -24,4 +24,4 @@ prune terraform
 prune visuals
 prune .testing
 prune branch_note
-prune Makefile
+exclude Makefile

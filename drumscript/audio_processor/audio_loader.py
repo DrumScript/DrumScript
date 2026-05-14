@@ -27,15 +27,30 @@ from drumscript.notation_generator.constants import SAMPLE_RATE
 # def load_audio(file_path: str, sr: int = SAMPLE_RATE) -> tuple[np.ndarray, int]:
 def load_audio(file_path: str, sr: int = None) -> tuple[np.ndarray, int]:
     """
-    Loads an audio file and optionally resamples it.
+    Load an audio file and optionally resample it.
 
-    :param file_path: The path to the audio file.
+    :param file_path: Path to the audio file (.wav, .mp3, .flac, .ogg, etc.).
     :type file_path: str
-    :param sr: The target sample rate.
-    :type sr: int
-    :return: A tuple containing (audio_data, sample_rate).
+    :param sr: Target sample rate in Hz.
+        - ``None`` (default): load at the file's native sample rate (no resampling).
+        - An integer (e.g. ``44100``): resample to that rate.
+    :type sr: int or None
+    :return: Tuple of (audio_data, sample_rate).
     :rtype: tuple[np.ndarray, int]
     :raises FileNotFoundError: If the file does not exist.
+
+    **Examples:**
+
+    Load at native sample rate (for exploration / notebooks)::
+
+        import drumscript as ds
+        audio, sr = ds.load_audio("my_drum_loop.wav")
+        print(f"Native rate: {sr} Hz")
+
+    Load and resample to 44100 Hz (for the transcription pipeline)::
+
+        from drumscript.notation_generator.constants import SAMPLE_RATE
+        audio, sr = ds.load_audio("my_drum_loop.wav", sr=SAMPLE_RATE)
     """
     # sample_rate = SAMPLE_RATE
     try:

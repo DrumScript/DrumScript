@@ -42,6 +42,27 @@
 
 ---
 
+## Project Structure
+
+See [`repository_structure.md`](repository_structure.md) for the full project layout.
+
+```
+DrumScript/
+├── drumscript/                 # Main source package
+│   ├── __init__.py             # Public API (transcribe, load_audio, etc.)
+│   ├── main.py                 # CLI entry point
+│   ├── audio_processor/        # Audio loading, DSP, stem splitting
+│   ├── drum_classifier/        # Rule-based classification engine
+│   ├── notation_generator/     # Score building, PDF/MIDI/XML export
+│   └── utils/                  # Helpers (ffmpeg installer, research scripts)
+├── docs/                       # Sphinx documentation
+├── tests/                      # pytest test suite
+├── .github/workflows/          # CI/CD (tests, build, publish, docs)
+├── pyproject.toml              # Package metadata and dependencies
+└── uv.lock                     # Pinned dependency versions
+```
+
+
 ## Installation
 
 **For users:**
@@ -178,29 +199,6 @@ drumscript full_song.mp3 --all-stems --format mp3
 # Classify a single rudiment hit
 drumscript snare_hit.wav --rudiment
 ```
-
----
-
-## Project Structure
-
-See [`repository_structure.md`](repository_structure.md) for the full project layout.
-
-```
-DrumScript/
-├── drumscript/                 # Main source package
-│   ├── __init__.py             # Public API (transcribe, load_audio, etc.)
-│   ├── main.py                 # CLI entry point
-│   ├── audio_processor/        # Audio loading, DSP, stem splitting
-│   ├── drum_classifier/        # Rule-based classification engine
-│   ├── notation_generator/     # Score building, PDF/MIDI/XML export
-│   └── utils/                  # Helpers (ffmpeg installer, research scripts)
-├── docs/                       # Sphinx documentation
-├── tests/                      # pytest test suite
-├── .github/workflows/          # CI/CD (tests, build, publish, docs)
-├── pyproject.toml              # Package metadata and dependencies
-└── uv.lock                     # Pinned dependency versions
-```
-
 ---
 
 ## Contributing

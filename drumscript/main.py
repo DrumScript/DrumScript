@@ -12,6 +12,7 @@ from drumscript.audio_processor import audio_loader, onset_detector, tempo_detec
 from drumscript.audio_processor.stem_splitter import extract_drum_stem, separate_audio
 from drumscript.drum_classifier.classify import classify_events, classify_rudiment_events
 from drumscript.notation_generator import score_builder
+from drumscript.notation_generator.constants import SAMPLE_RATE
 
 # from datetime import datetime
 # print("\n# ------------------------------------------------------------------------------------")
@@ -71,10 +72,10 @@ def main(
         # 2. Analysis Pipeline
         print("...Loading & Analysing Audio...")
         # sr = SAMPLE_RATE
-        # y, sr = audio_loader.load_audio(audio_path, sr=SAMPLE_RATE)
-        y, sr = audio_loader.load_audio(
-            audio_path
-        )  # no longer required to specify sr in arguments as now this is fed in through the load_audio function
+        y, sr = audio_loader.load_audio(audio_path, sr=SAMPLE_RATE)
+        # y, sr = audio_loader.load_audio(
+        #  audio_path
+        # )  # no longer required to specify sr in arguments as now this is fed in through the load_audio function
         y = audio_loader.normalise_audio(y)
 
         duration_total_sec = len(y) / sr
@@ -183,7 +184,9 @@ def main(
 
         # 2. Analysis Pipeline
         print(f"...Loading & Analysing Audio ({Path(audio_path).name})...")
-        y, sr = audio_loader.load_audio(audio_path)
+        # y, sr = audio_loader.load_audio(audio_path)
+        # y, sr = audio_loader.load_audio(audio_path, sr=sr)
+        y, sr = audio_loader.load_audio(audio_path, sr=SAMPLE_RATE)
         y = audio_loader.normalise_audio(y)
 
         duration_total_sec = len(y) / sr  # duplicate of calc in try block ~line80-83, but required inside except block too, TO DO: make original vars

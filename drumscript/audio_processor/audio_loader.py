@@ -24,7 +24,8 @@ from drumscript.notation_generator.constants import SAMPLE_RATE
 # 1. Load audio file : -------------------------------------------------------------------------------
 
 
-def load_audio(file_path: str, sr: int = SAMPLE_RATE) -> tuple[np.ndarray, int]:
+# def load_audio(file_path: str, sr: int = SAMPLE_RATE) -> tuple[np.ndarray, int]:
+def load_audio(file_path: str, sr: int = None) -> tuple[np.ndarray, int]:
     """
     Loads an audio file and optionally resamples it.
 
@@ -42,6 +43,7 @@ def load_audio(file_path: str, sr: int = SAMPLE_RATE) -> tuple[np.ndarray, int]:
             file_path, sr=sr
         )  # The librosa.load_audio() fct handles wide variety of audio formats, including .mp3, .wav, .flac, .ogg, etc.
         return audio_data, sr
+        # return audio_data, sample_rate
     except FileNotFoundError:
         print(f"Error: Audio file not found at {file_path}")
         raise

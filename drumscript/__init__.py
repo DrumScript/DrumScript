@@ -224,7 +224,8 @@ def transcribe(
 
     # 2. Load + normalise
     print("...Loading & analysing audio...")
-    y, sr = load_audio(working_path)
+    # y, sr = load_audio(working_path)
+    y, sr = load_audio(working_path, sr=SAMPLE_RATE)
     y = normalise_audio(y)
 
     # 3. Tempo + onsets

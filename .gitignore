@@ -161,3 +161,4 @@ tree_full.txt
 ! .github/workflows/publish.yml
 
 Makefile
+public/

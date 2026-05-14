@@ -41,8 +41,8 @@ KICK_RANGE = (64, 87)  # majority of kick drum fundaemtals either 64.60 or 86.13
 LOW_TOM_RANGE = (88, 118)  # ie between snare and kick??
 SNARE_RANGE = (119, 216)  # majority of snares in this range, per my analysis
 SNARE_SPECTRAL_CENTROID = (3000, 5000)  # majority of snares in this range, per my analysis. Could also be MAX 6000
-MID_TOM_RANGE = (217, 350)  # these ranges are GUESSWORK, based on snare  fundemtnal freq analysis
-HIGH_TOM_RANGE = (351, 450)  # these ranges are GUESSWORK, based on snare  fundemtnal freq analysis
+MID_TOM_RANGE = (217, 350)  # these ranges are GUESSWORK, based on snare fundamental freq analysis
+HIGH_TOM_RANGE = (351, 450)  # these ranges are GUESSWORK, based on snare fundamental freq analysis
 OPEN_HAT_RANGE = (240, 400)  # Fundamental frequency
 CLOSED_HAT_RANGE = (400, 450)
 RIDE_RANGE = (450, 550)
@@ -241,7 +241,7 @@ DRUM_NOTATION_MAP = {
         "note_head": "normal",
         "staff_position": "F3",  # Bottom Space
     },
-    "kick_clicky": {  # TO DO: MIGHT DELETE IN FUTURE IF TEMPORAL MODEL IS BETTER, THEN THE 'CLICKY KICK' WULD JUST BECOME A VERY FAST KICK
+    "kick_clicky": {  # TO DO: MIGHT DELETE IN FUTURE IF TEMPORAL MODEL IS BETTER, THEN THE 'CLICKY KICK' WOULD JUST BECOME A VERY FAST KICK
         "display_name": "Kick (Clicky)",
         "midi_program": 36,
         "note_head": "normal",

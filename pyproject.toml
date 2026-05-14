@@ -64,11 +64,12 @@ dependencies = [
   # note that torch only compatible with  Python ABI tags: `cp39`, `cp310`, `cp311`, `cp312`. Not yet compatible with 3.13
 
 [project.urls]
+"Homepage" = "https://drumscript.github.io/DrumScript/"
+"Documentation" = "https://drumscript.github.io/DrumScript/"
 "Repository" = "https://github.com/DrumScript/DrumScript"
 "Issues" = "https://github.com/DrumScript/DrumScript/issues"
 
 [project.optional-dependencies]
-# COMMENTED OUT: Moved to [dependency-groups] below to follow modern PEP 735 standards for local dev environments.
 dev = [
   # "furo",
   "ipykernel",

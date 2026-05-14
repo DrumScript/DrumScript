@@ -162,3 +162,5 @@ tree_full.txt
 
 Makefile
 public/
+.DS_Store # if not already there
+docs/logs/

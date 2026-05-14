@@ -5,6 +5,8 @@ This module handles loading and basic normalisation of audio files.
 It also contains the main execution block to demonstrate the workflow.
 """
 
+from __future__ import annotations
+
 import argparse  # for command-line argument parsing
 
 import librosa
@@ -25,7 +27,8 @@ from drumscript.notation_generator.constants import SAMPLE_RATE
 
 
 # def load_audio(file_path: str, sr: int = SAMPLE_RATE) -> tuple[np.ndarray, int]:
-def load_audio(file_path: str, sr: int = None) -> tuple[np.ndarray, int]:
+# def load_audio(file_path: str, sr: int = None) -> tuple[np.ndarray, int]:
+def load_audio(file_path: str, sr: int | None = None) -> tuple[np.ndarray, int]:
     """
     Load an audio file and optionally resample it.
 
@@ -57,8 +60,8 @@ def load_audio(file_path: str, sr: int = None) -> tuple[np.ndarray, int]:
         audio_data, sample_rate = librosa.load(
             file_path, sr=sr
         )  # The librosa.load_audio() fct handles wide variety of audio formats, including .mp3, .wav, .flac, .ogg, etc.
-        return audio_data, sr
-        # return audio_data, sample_rate
+        # return audio_data, sr
+        return audio_data, sample_rate
     except FileNotFoundError:
         print(f"Error: Audio file not found at {file_path}")
         raise

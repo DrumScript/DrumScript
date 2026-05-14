@@ -33,7 +33,7 @@ def build_score(
     Builds a drum score by saving event data to JSON and rendering to PDF.
     # Builds a drum score by saving the event data to JSON and then
     # rendering it directly to PDF using the custom engine.
-    # This bypasses MusicXML entirely to ensure WYSWYG (What You See Is What You Get) results.
+    # This bypasses MusicXML entirely to ensure WYSIWYG (What You See Is What You Get) results.
     # Builds a drum score PDF, respecting the provided Time Signature, or assuming default 4/4 if not provided
 
     :param detected_events: List of classified drum events.

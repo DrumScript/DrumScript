@@ -5,7 +5,6 @@
 
 While its core mission is **Automatic Drum Transcription (ADT)** (converting drum recordings into sheet music), it also functions as a powerful **Audio Toolbox** for isolating instruments, creating backing tracks, and analysing rhythm.
 
-
 ## What can DrumScript do?
 
 ### 1. Audio-to-Sheet Music (Transcription)
@@ -34,7 +33,6 @@ Want to play along to your favorite song but the drums are in the way?
 > In the meantime, if you would like to be involved, get in touch! 🥁🚀 
 
 `DrumScript` was built for drummers, by drummers. It is - and always will be - a community-owned tool. 
-
 
 ---
 

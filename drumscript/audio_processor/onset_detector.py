@@ -135,7 +135,7 @@ def detect_onsets(audio_data: np.ndarray, sr: int) -> list[float]:
     # if duration < 1.0 and len(onset_times) > 1:
     if duration < 2.0 and len(onset_times) > 1:
         # We only keep the FIRST onset if others follow too closely (within 150ms)
-        # This fixes the 'single hit showing multiple events' issue in your orchestration folder.
+        # This fixes the 'single hit showing multiple events' issue in orchestration folder.
         refined_onsets = [onset_times[0]]
         for i in range(1, len(onset_times)):
             if onset_times[i] - refined_onsets[-1] > 0.150:  # 150ms threshold
@@ -198,7 +198,7 @@ if __name__ == "__main__":
     print("\n#=======================================================================================")
     print("Running onset_detector.py example with provided filepath...")  # FUTURE: Find way to encode this so it prints the file path provided in CLI
     try:
-        # Import necessary modules from your package
+        # Import necessary modules from package
         # Note: You might need 'from DrumScript.audio_processor.audio_loader import ...'
         # if running this script directly and 'audio_processor' is not in the Python path.
         # However, for 'python -m' style execution, 'from audio_processor.audio_loader import ...' is usually correct.
@@ -263,11 +263,11 @@ if __name__ == "__main__":
         )
     except FileNotFoundError:
         print(f"\nERROR: The audio file '{audio_path}' was not found.")
-        print(f"\nPlease ensure you have provided the correct path to your audio file: {audio_path}")
+        print(f"\nPlease ensure you have provided the correct path to audio file: {audio_path}")
     except ImportError as e:
         print(f"\nERROR: Required modules/libraries might be missing or imports are incorrect: {e}")
-        print("Ensure 'soundfile', 'librosa', 'numpy', and your DrumScript modules are correctly installed and structured.")
-        print("For MP3, 'ffmpeg' must also be installed on your system and accessible in PATH.")
+        print("Ensure 'soundfile', 'librosa', 'numpy', and DrumScript modules are correctly installed and structured.")
+        print("For MP3, 'ffmpeg' must also be installed on system and accessible in PATH.")
     except Exception as e:
         print(f"\nAn unexpected error occurred during the example execution: {e}")
         import traceback
@@ -275,24 +275,3 @@ if __name__ == "__main__":
         traceback.print_exc()  # Print full traceback for debugging
 
     print("\nonset_detector.py example finished.")
-
-# Uncomment to use, for clearer error logs
-# print("\n# ------------------------------------------------------------------------------------")
-# LEGACY CODE:
-# --- 2. Onset detection
-# Now, we run the same onset detection, but on the much cleaner
-# percussive signal. This allows us to get a precise detection
-# of the initial hit without interference from the sustain.
-
-#  Changed units from 'frames' to 'time' to get seconds directly.
-# This removes the need for the subsequent librosa.frames_to_time conversion.
-# onset_times = librosa.onset.onset_detect(
-#   y=y_percussive,  # Use the percussive-only signal
-#  sr=SAMPLE_RATE,
-#  units='time',       # Request output directly in seconds (float)
-# delta=0.0095,       # The sensitive delta is now effective and safe to use
-# wait=1,
-#  pre_avg=8,
-#  post_avg=8,
-#  backtrack=True
-# )

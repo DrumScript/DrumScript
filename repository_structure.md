@@ -2,10 +2,23 @@
 ## `DrumScript` Python Package Structure
 
 <!--date_created: weds-25-oct-2025-->
-<!--date_edited: sun-05-apr-2026-->
+<!--date_edited: mon-11-may-2026-->
 
 ```markdown
 DrumScript/                          # Project root
+├── .github/                         # GitActions files
+│   ├── workflows/
+│   │   ├── build_test.yml           # Tests whether the package is ready to be rebuilt and pushed to PyPi
+│   │   ├── docs.yml                 # Handles publishing of `DrumScript` documentation to GitHub Pages
+│   │   ├── publish.yml              # Handles publishing of the package to PyPi automatically
+│   │   ├── release.yml              # Manual dispatch from GitHub Actions UI (Actions → "Create Release" → Run workflow). You enter the version number, release type (Alpha/Beta/Stable), and an optional summary.
+│   │   └── tests.yml                # Handles tests on development branch and main to ensure they dont break when PR is merged
+│   ├── CODEOWNERS
+│   ├── ISSUE_TEMPLATE
+│   │   ├── bug_report.md
+│   │   └── feature_request.md
+│   └── PULL_REQUEST_TEMPLATE.md
+│
 ├── drumscript/                      # <--- Main Source Package Directory
 │   ├── __init__.py                  # Exposes the package.
 │   ├── main.py                      # Main entry point for the application's full pipeline.
@@ -25,49 +38,55 @@ DrumScript/                          # Project root
 │   ├── notation_generator/          # Generates musical notation (`.json`), (`.midi`) and sheet music (`.pdf`) from audio provided.
 │   │   ├── __init__.py
 │   │   ├── score_builder.py
-│   │   ├── pdf_generator.py
+│   │   ├── pdf_exporter.py
+│   │   ├── midi_exporter.py
+│   │   ├── xml_exporter.py
 │   │   └── constants.py             # Single-source of truth for constants such as `SAMPLE_RATE`, `N_FFT` used globally through `DrumScript`
-│   └── utils/                       # Utility functions.
-├── docs/                            # Documentation for developers and contributors, as well as the `_build` artifacts for the `DrumScript` documentation website.
-│    ├── theory/                          # Reference documents (music theory, DSP, etc.). Sources provided
-├── local_tests/                     # Local test scripts (e.g., interface testing).
+│   └── utils
+│       ├── __init__.py
+│       ├── config.py
+│       ├── ffmpeg_installer.py
+│       └── research                 # A set of utility scripts very useful for testing the deterministic parameters on richer drum sample data. Excluded from binaries
+│           ├── __init__.py
+│           ├── analyze_closed_hat_physics.py
+│           ├── analyze_crash_physics.py
+│           ├── analyze_high_tom_physics.py
+│           ├── analyze_kick_physics.py
+│           ├── analyze_low_tom_physics.py
+│           ├── analyze_mid_tom_physics.py
+│           ├── analyze_open_hat_physics.py
+│           ├── analyze_ride_physics.py
+│           ├── analyze_snare_physics.py
+│           ├── analyze_tom_physics.py
+│           ├── get_event_frequencies.py
+│           ├── measure_hat_frequency.py
+│           ├── measure_kick_frequency.py
+│           └── measure_snare_frequency.py
+├── LICENSE
+├── docs/                            # Documentation for developers and contributors, as well as the `_build` artifacts for the `DrumScript` 
+└── tests/
+│   ├── __init__.py
+    ├── README.md                    # Testing README.md
+    ├── conftest.py                  # Shared fixtures (auto-discovered)
+    ├── fixtures/
+    ├── unit/                        # Unit tests for `DrumScript`
+    └── integration/                 # E2E integration tests for `DrumScript`
 ├── .gitignore                       # Specifies intentionally untracked files.
-├── .github/                         # GitActions files
-│   ├── workflows/
-│   │   ├── build_test.yml           # Tests whether the package is ready to be rebuilt and pushed to PyPi
-│   │   ├── docs.yml                 # Handles publishing of `DrumScript` documentation to GitHub Pages
-│   │   ├── publish.yml              # Handles publishing of the package to PyPi automatically
-│   │   └── tests.yml                # Handles tests on development branch and main to ensure they dont break when PR is merged
-├── LICENSE                          # Apache
+├── LICENSE                          # Apache 2.0
+├── MANIFEST.in                      
 ├── README.md                        # Project overview and main documentation.
-├── repository_structure.md          # This file.
+├── CODE_OF_CONDUCT.md
+├── CONTRIBUTING.md
+├── LICENSE
+├── MANIFEST.in
+├── README.md
+├── SECURITY.md
+├── repository_structure.md          
 ├── tree.txt                         # Tree diagram (generated using `homebrew tree`)
-├── pyproject.toml                   # Project metadata and dependencies (managed by `uv`).
+├── pyproject.toml                   # Project metadata and dependencies (managed by `uv`). Also sets `pytest.ini` config
 └── uv.lock                          # Pinned versions of all dependencies.
+
 ```
-> **PLEASE NOTE (Oct-2025 Update):** This repository structure has been updated to reflect the project's pivot to a non-ML, classification-based approach. Legacy machine learning modules have been archived.
-
----
-
-<!--### **Modular Descriptions**
-
-#### `audio_processor/`
-
-This module handles all the raw audio manipulation. It is responsible for loading an audio file, detecting the precise timestamps of drum hits (onsets), and extracting a set of descriptive acoustic features (like spectral centroid, zero-crossing rate, etc.) for each hit. Its output is the foundational data used for classification.
-
-#### `notation_generator/`
-
-This module converts the list of classified drum events from `drum_classifier/` into a visual score. The `score_builder.py` script maps each event to its correct notehead and position on a drum staff, and the `pdf_exporter.py` script renders this information into the final `.pdf` and `.xml` sheet music files.
-
-#### `main.py` (*The Orchestrator*)
-
-This script serves as the main entry point to run the entire transcription pipeline with a single command. It orchestrates the process:
-
-1.  Loads audio (`audio_processor`).
-2.  Detects onsets and extracts features (`audio_processor`).
-3.  Classifies each drum hit using the rule-based engine (`drum_classifier`).
-4.  Generates the final sheet music from the classified hits (`notation_generator`).-->
-
 
 --- 
 <!--END-->

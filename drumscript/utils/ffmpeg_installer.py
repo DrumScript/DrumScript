@@ -1,9 +1,9 @@
 # DrumScript/utils/ffmpeg_installer.py
 
-import os
 import platform
-import subprocess
 import shutil
+import subprocess
+
 
 def is_ffmpeg_installed() -> bool:
     """
@@ -31,12 +31,13 @@ def is_ffmpeg_installed() -> bool:
     # Optional: Verify FFmpeg version by running it
     try:
         # Run ffmpeg -version and check for non-zero exit code
-        subprocess.run(["ffmpeg", "-version"], check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        subprocess.run(["ffmpeg", "-version"], check=True, capture_output=True)
         print("FFmpeg seems to be working correctly.")
         return True
     except (subprocess.CalledProcessError, FileNotFoundError):
         print("FFmpeg found but is not runnable or encountered an error. It might be corrupted or improperly installed.")
         return False
+
 
 def install_ffmpeg() -> None:
     """
@@ -67,7 +68,7 @@ def install_ffmpeg() -> None:
         print("2. Install FFmpeg:")
         print("   sudo apt install ffmpeg")
         user_choice = input("Attempt to install FFmpeg using 'sudo apt install ffmpeg' now? (y/N): ").lower()
-        if user_choice == 'y':
+        if user_choice == "y":
             try:
                 print("Attempting to run: sudo apt install ffmpeg...")
                 # Use shell=True for sudo commands to work as expected, but be cautious
@@ -83,14 +84,14 @@ def install_ffmpeg() -> None:
         else:
             print("Please install FFmpeg manually using the instructions above.")
 
-    elif system == "Darwin": # macOS
+    elif system == "Darwin":  # macOS
         print("\n--- Installation instructions for macOS (using Homebrew) ---")
         print("1. Install Homebrew (if you don't have it):")
-        print("   /bin/bash -c \"$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)\"")
+        print('   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"')
         print("2. Install FFmpeg using Homebrew:")
         print("   brew install ffmpeg")
         user_choice = input("Attempt to install FFmpeg using 'brew install ffmpeg' now? (y/N): ").lower()
-        if user_choice == 'y':
+        if user_choice == "y":
             try:
                 print("Attempting to run: brew install ffmpeg...")
                 subprocess.run(["brew", "install", "ffmpeg"], check=True)
@@ -129,6 +130,7 @@ def install_ffmpeg() -> None:
         print("Ensure FFmpeg executables (ffmpeg, ffprobe) are added to your system's PATH.")
 
     print("\n--- FFmpeg check complete ---")
+
 
 # You would ideally put this function in DrumScript/utils/ffmpeg_installer.py
 # and then expose it via DrumScript/__init__.py for easy import.

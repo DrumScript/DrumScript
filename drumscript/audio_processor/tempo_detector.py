@@ -5,19 +5,20 @@ This module contains functions for automatic tempo detection from audio data.
 """
 # Import packages: ------------------------------------------------------------------------------------------------
 
+import argparse
+from datetime import datetime
+
 import librosa
 import numpy as np
-import os
-import argparse
-from drumscript.notation_generator.constants import SAMPLE_RATE, HOP_LENGTH
 
-from datetime import datetime
+from drumscript.notation_generator.constants import SAMPLE_RATE
 
 print("\n# ------------------------------------------------------------------------------------")
 datetimestamp = datetime.now()
-print(f'\ndate/time: {datetimestamp}')
+print(f"\ndate/time: {datetimestamp}")
 
 # --- Define function --------------------------------------------------------------------------------------------
+
 
 def estimate_tempo(audio_data, sr):
     """
@@ -34,47 +35,49 @@ def estimate_tempo(audio_data, sr):
     """
     if audio_data.size == 0:
         return 0.0
-    
-    # Check if there are enough hits in the audio
+
+    # Check if there are enough hits in the audio
     # Calculating tempo on clips shorter than ~1-2 seconds is unreliable and often produces artifacts (like 235 BPM for a single kick).
     duration_seconds = audio_data.shape[0] / sr
-    if duration_seconds < 1.0: # duration_seconds less than 1 second, ie anything over 1 sec duration is valid
+    if duration_seconds < 1.0:  # duration_seconds less than 1 second, ie anything over 1 sec duration is valid
         print(f"Audio too short for tempo detection ({duration_seconds:.2f}s). Defaulting to 120 BPM.")
         return 120.0
-    
+
     # oenv = librosa.onset.onset_strength(y=audio_data, sr=sr, hop_length=256)
     oenv = librosa.onset.onset_strength(y=audio_data)
     tempogram = librosa.feature.tempogram(onset_envelope=oenv)
     tempo_spectrum = np.sum(tempogram, axis=1)
     tempo_freqs = librosa.tempo_frequencies(tempogram.shape[0])
-    
+
     # --- Fix for extreme BPM error ---
     # Create a mask to only consider tempos in a plausible musical range (e.g., 60-240 BPM)
     plausible_tempos_mask = (tempo_freqs >= 60) & (tempo_freqs <= 240)
-    
+
     # Find the index of the peak within the plausible range
     plausible_spectrum = tempo_spectrum[plausible_tempos_mask]
     if plausible_spectrum.size == 0:
-        return 120.0 # Return default if no energy in plausible range
-        
+        return 120.0  # Return default if no energy in plausible range
+
     peak_idx_in_plausible_range = np.argmax(plausible_spectrum)
-    
+
     # Convert that index back to a BPM value
     plausible_tempo_freqs = tempo_freqs[plausible_tempos_mask]
     estimated_bpm = plausible_tempo_freqs[peak_idx_in_plausible_range]
-    
+
     return estimated_bpm
+
+
 # =====================================================================================================
 # MAIN BLOCK - for local testing of this function
 
 if __name__ == "__main__":
     from drumscript.audio_processor.audio_loader import load_audio, normalise_audio
     from drumscript.notation_generator.constants import SAMPLE_RATE
+
     parser = argparse.ArgumentParser(description="Estimate the tempo of an audio file.")
-    parser.add_argument("audio_file_path", type=str,
-                        help="Path to the audio file to be processed.")
+    parser.add_argument("audio_file_path", type=str, help="Path to the audio file to be processed.")
     args = parser.parse_args()
-    actual_drum_recording_path = args.audio_file_path # audio_file_path, relative to ROOT, not the path of this script
+    actual_drum_recording_path = args.audio_file_path  # audio_file_path, relative to ROOT, not the path of this script
     sr = SAMPLE_RATE
 
     try:
@@ -83,7 +86,7 @@ if __name__ == "__main__":
         # audio, sr = load_audio(actual_drum_recording_path, sr=44100)
         audio, sr = load_audio(actual_drum_recording_path, sr=sr)
         normalised_audio = normalise_audio(audio)
-        
+
         # Estimate the tempo
         bpm = estimate_tempo(normalised_audio, sr)
         print(f"Estimated Tempo: {int(round(bpm))} BPM")
@@ -91,6 +94,5 @@ if __name__ == "__main__":
     except Exception as e:
         print(f"\nAn unexpected error occurred: {e}")
     # print("\n#==================================================================================================")
-        
-#------------------------------------------------------------------------------------------------------
-    
+
+# ------------------------------------------------------------------------------------------------------

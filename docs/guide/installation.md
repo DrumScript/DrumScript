@@ -1,8 +1,10 @@
 # Installation
 
+<!--date_updated:tues-12-may-2026-->
+
 ## Prerequisites
 * **Python:** 3.9 or higher
-* **System Tools:** `FFmpeg` (for `.mp3` users only)
+* **System Tools:** `FFmpeg` (for users uploading `.mp3`)
 
 ```bash
 uv pip install drumscript
@@ -35,11 +37,12 @@ The easiest way to install DrumScript is via pip:
 
 ## Installing External Dependencies
 
-**DrumScript requires `FFmpeg` for audio processing**
+**DrumScript requires `FFmpeg` for audio processing `.mp3`**
 
-### macOS Installation of `FFmpeg`
+### Installation of `FFmpeg`
 
-The standard way to install FFmpeg on macOS is using **Homebrew**, which automatically sets up the system path for you.
+**macOS/Linux**
+The standard way to install FFmpeg on macOS/Linux is using **Homebrew**, which automatically sets up the system path for you.
 
 1.  Open your **Terminal**.
 2.  Run the following command:
@@ -48,11 +51,8 @@ The standard way to install FFmpeg on macOS is using **Homebrew**, which automat
     ```
 3.  *Note: If you do not have Homebrew installed, visit [brew.sh](https://brew.sh) to install it first.*
 
-**Windows:**
-[Download FFmpeg here](https://ffmpeg.org) and add it to your PATH.
+**Windows**
 
-
-### Windows Installation of `FFmpeg`
 
 1.  **Download:** Visit the [official `FFmpeg` website](https://ffmpeg.org/download.html) (hover over the Windows logo and select a build link, like **gyan.dev**). Download the "full" or "essentials" build.
 2.  **Extract:** Unzip the downloaded folder and move it to a simple location, like `C:\ffmpeg`.
@@ -70,3 +70,5 @@ To confirm `FFmpeg` is correctly added to your system path, open a new Terminal 
 ```bash
 ffmpeg -version
 ```
+
+> You can also visit **https://www.ffmpeg.org/download.html** to download the specific executable for your system

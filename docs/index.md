@@ -34,7 +34,6 @@ Want to play along to your favorite song but the drums are in the way?
 
 `DrumScript` was built for drummers, by drummers. It is - and always will be - a community-owned tool. 
 
-
 ---
 
 ## Getting Started

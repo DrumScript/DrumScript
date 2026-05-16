@@ -1,4 +1,5 @@
 # drumscript/audio_processor/stem_splitter.py
+
 """
 This module uses the demucs library () to extract stems from multi-layer audio files. It also contains functionality for re-mixing stems
 to create drumless backing tracks for user export.
@@ -479,11 +480,12 @@ def mix_stems(stems_dict, stems_to_mix, output_path, fmt="wav"):
 if __name__ == "__main__":
     import argparse
 
-    # uncomment during testing
+    # --------------------------------------------------------------------------uncomment during testing
     # from datetime import datetime
     # print("\n# ------------------------------------------------------------------------------------")
     # datetimestamp = datetime.now()
     # print(f'\ndate/time: {datetimestamp}')
+    # --------------------------------------------------------------------------------------------------
 
     ## Banner / timestamp (moved here from module top-level so it only fires when this file is run
     ## DIRECTLY via `python3 -m drumscript.audio_processor.stem_splitter ...`, not on every `from
@@ -505,7 +507,8 @@ if __name__ == "__main__":
     fmt = "mp3" if args.mp3 else "wav"
 
     separate_audio(input_audio_path=args.input_file, output_format=fmt, drumless=args.drumless, all_stems=args.all, output_dir=args.output_dir)
-### --- LEGACY_CODE --- MAIN BLOCK
+
+""" LEGACY CODE (KEEP FOR NOW)
 # if __name__ == "__main__":
 #
 # Allows the script to be run directly for testing.
@@ -568,3 +571,4 @@ if __name__ == "__main__":
 #   print("No temporary directory to clean up.")
 
 # ===============================================================================================
+"""

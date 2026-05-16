@@ -1,5 +1,8 @@
+# drumscript/utils/research/analyze_low_tom_physics.py
+
 # To determine the Frequency Floor (separating them from Kicks) and the Membranophone Signature
 # (separating them from Cymbals) we need to analyse their physics.
+
 # Phase 1: The Analysis Script (Low Tom)
 # This script will extract the critical metrics:
 # Peak Frequency: Where does the fundamental note sit? (Likely 60-100Hz).
@@ -9,16 +12,11 @@
 
 import glob
 import os
-from datetime import datetime
 from pathlib import Path
 
 import librosa
 import numpy as np
 import scipy.signal
-
-print("\n# ------------------------------------------------------------------------------------")
-datetimestamp = datetime.now()
-print(f"\ndate/time: {datetimestamp}")
 
 
 def analyze_low_tom_physics(file_path):
@@ -64,6 +62,12 @@ def analyze_low_tom_physics(file_path):
 
 
 def main():
+    # --------------------------------------------------------------------------uncomment during testing
+    # from datetime import datetime
+    # print("\n# ------------------------------------------------------------------------------------")
+    # datetimestamp = datetime.now()
+    # print(f'\ndate/time: {datetimestamp}')
+    # --------------------------------------------------------------------------------------------------
     # Setup path
     script_dir = Path(__file__).resolve().parent
     project_root = script_dir.parent.parent
@@ -89,7 +93,7 @@ def main():
             results.append(res)
             print(f"{res['file']:<25} | {res['peak_freq']:.1f}| {res['decay_time']:.3f}| {res['flatness']:.5f}| {res['hfer'] * 100:.2f}%")
 
-    # Calculate Averages for Constants
+    # Calculate averages
     if results:
         avg_decay = np.mean([r["decay_time"] for r in results])
         avg_flat = np.mean([r["flatness"] for r in results])
@@ -100,4 +104,10 @@ def main():
 
 
 if __name__ == "__main__":
+    # --------------------------------------------------------------------------uncomment during testing
+    # from datetime import datetime
+    # print("\n# ------------------------------------------------------------------------------------")
+    # datetimestamp = datetime.now()
+    # print(f'\ndate/time: {datetimestamp}')
+    # --------------------------------------------------------------------------------------------------
     main()

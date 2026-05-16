@@ -7,16 +7,9 @@ Uses event['time'] and event['drums'].
 
 import os
 
-# import argparse
 import pretty_midi
 
 from drumscript.notation_generator.constants import DRUM_NOTATION_MAP
-
-# from datetime import datetime
-
-# print("\n# ------------------------------------------------------------------------------------")
-# datetimestamp = datetime.now()
-# print(f'\ndate/time: {datetimestamp}')
 
 
 def export_to_midi(classified_events: list[dict], output_filepath: str, tempo: float = 120.0):
@@ -70,95 +63,9 @@ def export_to_midi(classified_events: list[dict], output_filepath: str, tempo: f
     print(f"SUCCESS: MIDI file generated at -> {output_filepath}")
 
 
-"""# --------------------------------------
-
-# --- COMMENTED OUT THE __main__ BLOCK AS IT USED LEGACY LOGIC ---
-# if __name__ == "__main__":
-#     from drumscript.audio_processor.audio_loader import load_audio, normalise_audio
-#     # from drumscript.audio_processor import tempo_detector
-#     from drumscript.audio_processor.tempo_detector import estimate_tempo
-#     from drumscript.notation_generator.constants import DRUM_NOTATION_MAP
-#
-#     print("\n#=======================================================================================")
-#     print("Running onset_detector.py example with provided filepath...")
-# # FUTURE: Find way to encode this so it prints the file # path provided in CLI
-#     try:
-#
-#         # Import necessary modules from your package
-#         # Note: You might need 'from DrumScript.audio_processor.audio_loader import ...'
-#         # if running this script directly and 'audio_processor' is not in the Python path.
-#         # However, for 'python -m' style execution, 'from audio_processor.audio_loader import ...' is usually correct.
-#
-#         # Required for CLI argparsing
-#         parser = argparse.ArgumentParser(description="Detect onsets in drum audio.")
-#         parser.add_argument("input_audio", help="Path to the input audio file")
-#         args = parser.parse_args()
-#
-#         # sr = 44100 # Target sample rate for processing
-#         #sr = 44100*1.5 # Target sample rate for processing
-#         sr = SAMPLE_RATE
-#         print(f'sample_rate=sr={sr}') # Print current sample rate applied
-#
-#         # --- Get path to audio (cli or import from sister module)
-#         current_script_dir = os.path.dirname(os.path.abspath(__file__))
-#         print(f'current_script_dir: {current_script_dir}')
-#         # Go up one level from audio_processor/onset_detector.py to the outer DRUMSCRIPT/ folder
-#         project_root = os.path.abspath(os.path.join(current_script_dir, '..', '..'))
-#         print(f'project_root: {project_root}')
-#         audio_path = os.path.abspath(args.input_audio)
-#
-#         print(f'audio_path: {audio_path}')
-#         print(f"Attempting to load: {audio_path}")
-#
-#         # Load and normalise audio
-#         # audio_data, sample_rate = load_audio(audio_path, sr=sr)
-#         audio_data, sample_rate = load_audio(audio_path, sr=SAMPLE_RATE)
-#         normalised_audio = normalise_audio(audio_data)
-#
-#         # Detect onsets
-#         print(f"Detecting onsets in : {audio_path}")
-#         onsets = detect_onsets(normalised_audio, SAMPLE_RATE)
-#         print(f"Detected {len(onsets)} onsets.")
-#
-#         if onsets:
-#             # Print the first few detected onsets for verification
-#             #print("\nFirst 10 detected onsets (seconds):")
-#             #for i, onset_time in enumerate(onsets[:10]):
-#             #if len(onsets) > 10:
-#              #   print(f"  ...and {len(onsets) - 10} more onsets.")
-#
-#             # Print * (ALL) detected onsets for now
-#             print(f"\n All {len(onsets)} detected onsets (seconds):")
-#             for i, onset_time in enumerate(onsets):
-#              print(f"  Onset {i+1}: {onset_time:.4f}s")
-#             #for i, onset_time in enumerate(onsets):
-#             #print(f"  Onset {i+1}: {onsets:.4f}s")
-#         else:
-#             print(f"No onsets detected in audio_path: {audio_path}")
-#        #global_tempo = estimate_tempo(audio_data, SAMPLE_RATE, HOP_LENGTH)
-#         #tempo = estimate_tempo(audio_data, SAMPLE_RATE, HOP_LENGTH)
-#         tempo = estimate_tempo(audio_data, SAMPLE_RATE)
-#         # tempo = estimate_tempo(audio_data, SAMPLE_RATE)/2 # temporary fix
-#         #tempo = estimate_tempo(audio_data, SAMPLE_RATE)/4 # temporary fix
-        duration = len(normalised_audio) / sample_rate
-        print(
-            f"Loaded audio: Shape=[{normalised_audio.shape}, Sample Rate={sample_rate} (Hz), "
-            f"Hop Length={HOP_LENGTH} (Hz), Duration={duration:.2f} seconds, Tempo={tempo:.2f} BPM]"
-        )
-#        print(
-#           f"Loaded audio: Shape={normalised_audio.shape}, Sample Rate={sample_rate} (Hz),
-#       Duration={duration:.2f}  seconds, Tempo={calculate_tempo_from_onsets(onsets, sr=SAMPLE_RATE):2f}")
-#     except FileNotFoundError:
-#         print(f"\nERROR: The audio file '{audio_path}' was not found.")
-#         print(f"\nPlease ensure you have provided the correct path to your audio file: {audio_path}")
-#     except ImportError as e:
-#         print(f"\nERROR: Required modules/libraries might be missing or imports are incorrect: {e}")
-#         print("Ensure 'soundfile', 'librosa', 'numpy', and your DrumScript modules are correctly installed and structured.")
-#         print("For MP3, 'ffmpeg' must also be installed on your system and accessible in PATH.")
-#     except Exception as e:
-#         print(f"\nAn unexpected error occurred during the example execution: {e}")
-#         import traceback
-#         traceback.print_exc() # Print full traceback for debugging
-#
-#     print("\nonset_detector.py example finished.")
-"""
+# --------------------------------------------------------------------------uncomment during testing
+# from datetime import datetime
+# print("\n# ------------------------------------------------------------------------------------")
+# datetimestamp = datetime.now()
+# print(f'\ndate/time: {datetimestamp}')
+# --------------------------------------------------------------------------------------------------

@@ -15,19 +15,10 @@ import numpy as np
 from drumscript.audio_processor.tempo_detector import estimate_tempo
 from drumscript.notation_generator.constants import SAMPLE_RATE
 
-# from datetime import datetime
-
-# print("\n# ------------------------------------------------------------------------------------")
-# datetimestamp = datetime.now()
-# print(f'\ndate/time: {datetimestamp}')
-
-
 # --- Define functions --------------------------------------------------------------------------------------------
 # 1. Load audio file : -------------------------------------------------------------------------------
 
 
-# def load_audio(file_path: str, sr: int = SAMPLE_RATE) -> tuple[np.ndarray, int]:
-# def load_audio(file_path: str, sr: int = None) -> tuple[np.ndarray, int]:
 def load_audio(file_path: str, sr: int | None = None) -> tuple[np.ndarray, int]:
     """
     Load an audio file and optionally resample it.
@@ -131,7 +122,13 @@ def normalise_audio(audio_data: np.ndarray) -> np.ndarray:
 if __name__ == "__main__":
     from drumscript.audio_processor.tempo_detector import estimate_tempo
 
-    # print("\n#=============================================================================================")
+    # --------------------------------------------------------------------------uncomment during testing
+    # from datetime import datetime
+    # print("\n# ------------------------------------------------------------------------------------")
+    # datetimestamp = datetime.now()
+    # print(f'\ndate/time: {datetimestamp}')
+    # --------------------------------------------------------------------------------------------------
+
     print("Running audio_loader.py example with actual MP3/WAV...")  # FUTURE: Find way to encode this so it prints the file path provided in CLI
 
     # Set up argument parser

@@ -114,7 +114,7 @@ local_tests/
 test_audio/
 drumscript_outputs/
 docs/github_pages.sh
-docs/_build/
+! docs/_build/
 
 # IDEs
 .vscode/
@@ -163,3 +163,4 @@ Makefile
 public/
 .DS_Store # if not already there
 docs/logs/
+docs/guide/interactive/_templates

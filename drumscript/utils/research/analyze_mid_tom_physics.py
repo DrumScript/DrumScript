@@ -1,15 +1,12 @@
+# drumscript/utils/research/analyze_mid_tom_physics.py
+
 import glob
 import os
-from datetime import datetime
 from pathlib import Path
 
 import librosa
 import numpy as np
 import scipy.signal
-
-print("\n# ------------------------------------------------------------------------------------")
-datetimestamp = datetime.now()
-print(f"\ndate/time: {datetimestamp}")
 
 
 def analyze_mid_tom_physics(file_path):
@@ -81,9 +78,15 @@ def main():
         avg_decay = np.mean([r["decay_time"] for r in results])
 
         print("-" * 115)
-        print(f"AVERAGES                  | {avg_freq:.1f}       | {avg_decay:.3f}      | --          | --")
+        print(f"AVERAGES | {avg_freq:.1f} | {avg_decay:.3f} | -- | --")
         print("-" * 115)
 
 
 if __name__ == "__main__":
+    # --------------------------------------------------------------------------uncomment during testing
+    # from datetime import datetime
+    # print("\n# ------------------------------------------------------------------------------------")
+    # datetimestamp = datetime.now()
+    # print(f'\ndate/time: {datetimestamp}')
+    # --------------------------------------------------------------------------------------------------
     main()

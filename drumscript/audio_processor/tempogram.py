@@ -19,16 +19,7 @@ import matplotlib.pyplot as plt
 
 from drumscript.audio_processor.audio_loader import load_audio, normalise_audio
 from drumscript.audio_processor.tempo_detector import estimate_tempo
-from drumscript.notation_generator.constants import (
-    HOP_LENGTH,
-    SAMPLE_RATE,
-)
-
-# from datetime import datetime
-
-# print("\n# ------------------------------------------------------------------------------------")
-# datetimestamp = datetime.now()
-# print(f'\ndate/time: {datetimestamp}')
+from drumscript.notation_generator.constants import HOP_LENGTH, SAMPLE_RATE
 
 
 # --- Define function --------------------------------------------------------------------------------------------
@@ -70,6 +61,13 @@ def visualise_tempogram(audio_data, sr, hop_length=HOP_LENGTH, output_path="temp
 # MAIN BLOCK - for local testing of this function
 
 if __name__ == "__main__":
+    # --------------------------------------------------------------------------uncomment during testing
+    # from datetime import datetime
+    # print("\n# ------------------------------------------------------------------------------------")
+    # datetimestamp = datetime.now()
+    # print(f'\ndate/time: {datetimestamp}')
+    # --------------------------------------------------------------------------------------------------
+
     from drumscript.audio_processor.audio_loader import load_audio, normalise_audio
 
     parser = argparse.ArgumentParser(description="Generate a tempogram visualization for a given audio file.")

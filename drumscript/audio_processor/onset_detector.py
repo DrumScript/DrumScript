@@ -221,3 +221,10 @@ if __name__ == "__main__":
         traceback.print_exc()  # Print full traceback for debugging
 
     print("\nonset_detector.py example finished.")
+
+    # --------------------------------------------------------------------------uncomment during testing
+    # from datetime import datetime
+    # print("\n# ------------------------------------------------------------------------------------")
+    # datetimestamp = datetime.now()
+    # print(f'\ndate/time: {datetimestamp}')
+    # --------------------------------------------------------------------------------------------------

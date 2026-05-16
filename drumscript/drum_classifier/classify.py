@@ -1,7 +1,5 @@
 # DrumScript/drum_classifier/classify.py
-# Requires path to audio file in cli command, ie:
-# `python3 -m drumscript.drum_classifier.classify path_to_audio_file
-# ------------------------------------------------------------------------------------------------------------
+
 """
 This script determines the classification rules by which the parameters in py are applied to audio_file_path.
 It fuses high-resolution acoustic DNA extraction with simultaneous HFER/LFER physics rules.

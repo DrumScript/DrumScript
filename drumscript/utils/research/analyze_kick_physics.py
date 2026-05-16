@@ -1,19 +1,13 @@
-#
-# # uv run python drumscript/utils/analyze_kick_physics.py
+# drumscript/utils/analyze_kick_physics.py
 
 import glob
 import os
-from datetime import datetime
 from pathlib import Path
 
 import librosa
 import numpy as np
 import scipy.signal
 import scipy.stats
-
-print("\n# ------------------------------------------------------------------------------------")
-datetimestamp = datetime.now()
-print(f"\ndate/time: {datetimestamp}")
 
 
 def analyze_kick_physics(file_path):
@@ -56,8 +50,12 @@ def analyze_kick_physics(file_path):
 
 
 def main():
-    # Robust path finding using pathlib
-    # This finds the directory where THIS script lives
+    # --------------------------------------------------------------------------uncomment during testing
+    # from datetime import datetime
+    # print("\n# ------------------------------------------------------------------------------------")
+    # datetimestamp = datetime.now()
+    # print(f'\ndate/time: {datetimestamp}')
+    # --------------------------------------------------------------------------------------------------
     script_dir = Path(__file__).resolve().parent
 
     # Go up two levels: drumscript/utils/ -> drumscript/ -> Root
@@ -86,16 +84,22 @@ def main():
             results.append(res)
             print(f"{res['file']:<15} | {res['mean_centroid']:.2f}| {res['peak_freq']:.2f}| {res['lfer'] * 100:.1f}%| {res['decay_time']:.3f}")
 
-    # Calculate Averages for your Constants
+    # Calculate averages
     if results:
         avg_centroid = np.mean([r["mean_centroid"] for r in results])
         avg_peak = np.mean([r["peak_freq"] for r in results])
         avg_lfer = np.mean([r["lfer"] for r in results])
 
         print("-" * 100)
-        print(f"AVERAGES        | {avg_centroid:.2f}           | {avg_peak:.2f}           | {avg_lfer * 100:.1f}%           | --")
+        print(f"AVERAGES | {avg_centroid:.2f}| {avg_peak:.2f} | {avg_lfer * 100:.1f}%| --")
         print("-" * 100)
 
 
 if __name__ == "__main__":
+    # --------------------------------------------------------------------------uncomment during testing
+    # from datetime import datetime
+    # print("\n# ------------------------------------------------------------------------------------")
+    # datetimestamp = datetime.now()
+    # print(f'\ndate/time: {datetimestamp}')
+    # --------------------------------------------------------------------------------------------------
     main()

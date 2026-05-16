@@ -1,7 +1,7 @@
 # **`DrumScript`**
 
 <!--date_created: sun-15-june-2025-->
-<!--date_edited: weds-14-may-2026-->
+<!--date_edited: sat-16-may-2026-->
 
 **DrumScript** is an open-source Python library and CLI tool for drum audio analysis and transcription. Give it a recording — a full mix or an isolated drum stem — and it will generate PDF sheet music, MIDI files, and MusicXML output.
 
@@ -105,13 +105,13 @@ DrumScript manages all dependencies via [`pyproject.toml`](pyproject.toml) using
 import drumscript as ds
 
 # Transcribe an isolated drum stem → PDF
-pdf_path = ds.transcribe("drum_loop.wav")
+pdf_path = ds.transcribe("drum_audio.wav")
 
 # Transcribe a full song (separates drums automatically)
 pdf_path = ds.transcribe("full_song.mp3", full_song=True)
 
 # Get all intermediate results
-result = ds.transcribe("drum_loop.wav", full=True)
+result = ds.transcribe("drum_audio.wav", full=True)
 print(f"Tempo: {result['tempo']:.1f} BPM")
 print(f"Events: {len(result['events'])}")
 ```
@@ -122,11 +122,11 @@ print(f"Events: {len(result['events'])}")
 import drumscript as ds
 
 # Load at native sample rate (for notebooks / exploration)
-audio, sr = ds.load_audio("drum_loop.wav")
+audio_file = ds.load_audio("drum_audio.wav")
 print(f"Sample rate: {sr} Hz, Duration: {len(audio)/sr:.1f}s")
 
 # Detect tempo
-bpm = ds.detect_tempo("drum_loop.wav")
+bpm = ds.detect_tempo("drum_audio.wav")
 print(f"Tempo: {bpm:.1f} BPM")
 ```
 
@@ -157,7 +157,7 @@ DrumScript also provides a command-line interface.
 ### Basic transcription (isolated drum stem)
 
 ```bash
-drumscript drum_loop.wav
+drumscript drum_audio.wav
 ```
 
 ### Full song transcription (auto-separates drums)
@@ -182,7 +182,7 @@ Options:
   --drumless      Extract a drumless backing track
   --mute STEM     Mute a specific stem (e.g. --mute bass). Repeatable.
   --all-stems     Export all individual stems (drums, bass, vocals, other)
-  --format FORMAT Output format for stems: wav (default) or mp3
+  --format FORMAT Output format for stems: wav (default) or mp3 (requires ffmpeg to be installed)
   --rudiment      Optimise classification for isolated single beats
   --ts SIG        Time signature (default: 4/4)
 ```
@@ -191,12 +191,12 @@ Options:
 
 ```bash
 # Transcribe with 6/8 time signature
-drumscript drum_solo.wav --ts 6/8
+drumscript drum_audio.wav --ts 6/8
 
 # Extract all stems as MP3
 drumscript full_song.mp3 --all-stems --format mp3
 
-# Classify a single rudiment hit
+# Classify rudiments
 drumscript snare_hit.wav --rudiment
 ```
 ---
@@ -215,9 +215,9 @@ We welcome contributions! DrumScript is intended to be a community-owned project
 
 ## FAQs
 
-### Why doesn't DrumScript include ffmpeg as a dependency?
+### Why doesn't DrumScript include `ffmpeg` as a dependency?
 
-ffmpeg is a system-level program, not a Python library, so it cannot be declared in `pyproject.toml`. It must be installed on the operating system. DrumScript provides an `install_ffmpeg()` helper to make this easier.
+ffmpeg is a system-level program, not a Python library, so it cannot be declared in `pyproject.toml`. It must be installed on the operating system. DrumScript provides an `install_ffmpeg()` helper to make this easier. 
 
 ### What normalisation is applied to loaded audio?
 

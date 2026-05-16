@@ -6,18 +6,11 @@ This module contains functions for automatic tempo detection from audio data.
 # Import packages: ------------------------------------------------------------------------------------------------
 
 import argparse
-from datetime import datetime
 
 import librosa
 import numpy as np
 
 from drumscript.notation_generator.constants import SAMPLE_RATE
-
-print("\n# ------------------------------------------------------------------------------------")
-datetimestamp = datetime.now()
-print(f"\ndate/time: {datetimestamp}")
-
-# --- Define function --------------------------------------------------------------------------------------------
 
 
 def estimate_tempo(audio_data, sr):
@@ -71,6 +64,12 @@ def estimate_tempo(audio_data, sr):
 # MAIN BLOCK - for local testing of this function
 
 if __name__ == "__main__":
+    # uncomment during testing
+    # from datetime import datetime
+    # print("\n# ------------------------------------------------------------------------------------")
+    # datetimestamp = datetime.now()
+    # print(f'\ndate/time: {datetimestamp}')
+
     from drumscript.audio_processor.audio_loader import load_audio, normalise_audio
     from drumscript.notation_generator.constants import SAMPLE_RATE
 

@@ -1,14 +1,11 @@
+# drumscript/utils/research/analyze_crash_physics.py
+
 import glob
 import os
-from datetime import datetime
 from pathlib import Path
 
 import librosa
 import numpy as np
-
-print("\n# ------------------------------------------------------------------------------------")
-datetimestamp = datetime.now()
-print(f"\ndate/time: {datetimestamp}")
 
 
 def analyze_crash_physics(file_path):
@@ -75,9 +72,15 @@ def main():
         avg_flat = np.mean([r["flatness"] for r in results])
 
         print("-" * 115)
-        print(f"AVERAGES                                 | {avg_decay:.3f}      | {avg_cent:.0f}            | {avg_flat:.4f}     | --")
+        print(f"AVERAGES | {avg_decay:.3f} | {avg_cent:.0f} | {avg_flat:.4f} | --")
         print("-" * 115)
 
 
 if __name__ == "__main__":
+    # --------------------------------------------------------------------------uncomment during testing
+    # from datetime import datetime
+    # print("\n# ------------------------------------------------------------------------------------")
+    # datetimestamp = datetime.now()
+    # print(f'\ndate/time: {datetimestamp}')
+    # --------------------------------------------------------------------------------------------------
     main()

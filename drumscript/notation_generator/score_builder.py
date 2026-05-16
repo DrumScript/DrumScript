@@ -13,12 +13,6 @@ from drumscript.notation_generator.midi_exporter import export_to_midi
 # from drumscript.notation_generator.pdf_exporter import generate_custom_pdf
 from drumscript.notation_generator.pdf_exporter import export_pdf
 
-# from datetime import datetime
-
-# print("\n# ------------------------------------------------------------------------------------")
-# datetimestamp = datetime.now()
-# print(f'\ndate/time: {datetimestamp}')
-
 
 def build_score(
     detected_events: list[dict[str, Any]],
@@ -124,4 +118,9 @@ def build_score(
         traceback.print_exc()
 
 
+# --------------------------------------------------------------------------uncomment during testing
+# from datetime import datetime
 # print("\n# ------------------------------------------------------------------------------------")
+# datetimestamp = datetime.now()
+# print(f'\ndate/time: {datetimestamp}')
+# --------------------------------------------------------------------------------------------------

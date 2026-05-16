@@ -6,19 +6,11 @@ This job of this script is to orchestrate the End-to-End running of DrumScript m
 import argparse
 from pathlib import Path
 
-# from drumscript.audio_processor.onset_detector import detect_onsets
-# from drumscript.audio_processor.tempo_detector import estimate_tempo
 from drumscript.audio_processor import audio_loader, onset_detector, tempo_detector
 from drumscript.audio_processor.stem_splitter import extract_drum_stem, separate_audio
 from drumscript.drum_classifier.classify import classify_events, classify_rudiment_events
 from drumscript.notation_generator import score_builder
 from drumscript.notation_generator.constants import SAMPLE_RATE
-
-# from datetime import datetime
-# print("\n# ------------------------------------------------------------------------------------")
-# datetimestamp = datetime.now()
-# print(f'\ndate/time: {datetimestamp}')
-# print(f'start: {datetimestamp:%Y-%m-%d %H:%M:%S}')
 
 
 def main(

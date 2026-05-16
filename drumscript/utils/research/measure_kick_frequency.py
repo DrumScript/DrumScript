@@ -1,52 +1,18 @@
+# drumscript/utils/research/measure_kick_frequency.py
+
 import librosa
 import numpy as np
-
-# from datetime import datetime
-
-# Uncomment to use for logging/tests
-
-# print("\n# ------------------------------------------------------------------------------------")
-# datetimestamp = datetime.now()
-# print(f'\ndatetimestamp: {datetimestamp}')
-
-
-# from drumscript.utils.config import SAMPLE_RATE, HOP_LENGTH, N_FFT
-
-# def measure_kick_frequency(audio_file_path):
-# Load with the PROJECT'S standardized sample rate, not the file's native rate
-#  y, sr = librosa.load(audio_file_path, sr=SAMPLE_RATE)
-
-# Use the project's FFT settings
-# S = librosa.stft(y, n_fft=N_FFT, hop_length=HOP_LENGTH)
-
-# """
-# Example code for calculating the frequency of a drum part
-# To measure the frequency of a kick drum using Librosa, you can apply a
-# Short-Time Fourier Transform (STFT) to convert the audio into the time-frequency domain and then identify the dominant frequency within the
-# typical kick drum range (around 50-100 Hz).
-# This script uses librosa and numpy to find the `fundamental` frequency of a kick drum sample. This analysis can then be used to tweak/fine-tune the
-# classification model used in DrumScript.
-# It assumes that a specific isolated audio snippet of the part being tested is supplied as user input,
-#  ie. you need to give it an audio file to analyse.
-# Extracts key frequency metrics for a single audio event.
-
-#:param audio_file_path: Path to audio file.
-#:type audio_file_path: str
-#:returns event_data_list: list of parameters
-#:rtype: list[float]
-
-# """
 
 
 def measure_kick_frequency(audio_file_path):
     """
     # Example code for calculating the frequency of a drum part
-        # To measure the frequency of a kick drum using Librosa, you can apply a Short-Time Fourier Transform (STFT)
-        #  to convert the audio into the time-frequency domain and then identify the dominant frequency
+        # To measure the frequency of a kick drum using Librosa, we can apply a Short-Time Fourier Transform (STFT)
+        # to convert the audio into the time-frequency domain and then identify the dominant frequency
         # within the typical kick drum range (around 50-100 Hz).
         # This script uses librosa and numpy to find the `fundamental` frequency of a kick drum sample. This analysis can then be used to
         # tweak/fine-tune the classification model used in DrumScript.
-        # It assumes that a specific isolated audio snippet of the part being tested is supplied as user input, ie. you need to give it
+        # It assumes that a specific isolated audio snippet of the part being tested is supplied as user input, ie. we need  to give it
         # an audio file to analyse.
         # Extracts key frequency metrics for a single audio event.
 
@@ -109,8 +75,8 @@ def measure_kick_frequency(audio_file_path):
         print("Could not find a prominent frequency in the 50-200 Hz range.")
 
 
-# Usage example (replace 'your_kick_drum_sample.wav' with your file path):
-# measure_kick_frequency('your_kick_drum_sample.wav')
+# Usage example (replace 'kick_drum_sample.wav' with file path):
+# measure_kick_frequency('kick_drum_sample.wav')
 
 if __name__ == "__main__":
     # This allows you to run it from the command line with an argument
@@ -122,3 +88,30 @@ if __name__ == "__main__":
 
     input_file = sys.argv[1]
     measure_kick_frequency(input_file)
+
+
+""" LEGACY CODE/NOTES (KEEP FOR ALPHA)
+# from drumscript.utils.config import SAMPLE_RATE, HOP_LENGTH, N_FFT
+
+# def measure_kick_frequency(audio_file_path):
+# Load with the PROJECT'S standardized sample rate, not the file's native rate
+#  y, sr = librosa.load(audio_file_path, sr=SAMPLE_RATE)
+
+# Use the project's FFT settings
+# S = librosa.stft(y, n_fft=N_FFT, hop_length=HOP_LENGTH)
+
+# Example code for calculating the frequency of a drum part
+# To measure the frequency of a kick drum using Librosa, we can apply a
+# Short-Time Fourier Transform (STFT) to convert the audio into the time-frequency domain and then identify the dominant frequency within the
+# typical kick drum range (around 50-100 Hz).
+# This script uses librosa and numpy to find the `fundamental` frequency of a kick drum sample. This analysis can then be used to tweak/fine-tune the
+# classification model used in DrumScript.
+# It assumes that a specific isolated audio snippet of the part being tested is supplied as user input,
+#  ie. we need  to give it an audio file to analyse.
+# Extracts key frequency metrics for a single audio event.
+
+#:param audio_file_path: Path to audio file.
+#:type audio_file_path: str
+#:returns event_data_list: list of parameters
+#:rtype: list[float]
+"""

@@ -8,10 +8,6 @@ applications like Sibelius, Guitar Pro, Logic, Cubase, or MuseScore.
 
 from pathlib import Path
 
-# print("\n# ------------------------------------------------------------------------------------")
-# datetimestamp = datetime.now()
-# print(f'\ndate/time: {datetimestamp}')
-
 
 def export_xml(score, output_path=None):
     """
@@ -48,3 +44,11 @@ def export_xml(score, output_path=None):
     except Exception as e:
         print(f"Failed to generate MusicXML: {e}")
         return None
+
+
+# --------------------------------------------------------------------------uncomment during testing
+# from datetime import datetime
+# print("\n# ------------------------------------------------------------------------------------")
+# datetimestamp = datetime.now()
+# print(f'\ndate/time: {datetimestamp}')
+# --------------------------------------------------------------------------------------------------

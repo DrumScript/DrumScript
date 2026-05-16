@@ -8,7 +8,7 @@ It fuses high-resolution acoustic DNA extraction with simultaneous HFER/LFER phy
 Natively detects and filters isolated single-beat cymbals/kicks using Peak Dominance.
 """
 
-#=from datetime import datetime
+# from datetime import datetime
 
 import librosa
 import numpy as np
@@ -32,9 +32,9 @@ from drumscript.notation_generator.constants import (
     TOM_MIN_DECAY,
 )
 
-#print("\n# ------------------------------------------------------------------------------------")
-#datetimestamp = datetime.now()
-#print(f"\ndate/time: {datetimestamp}")
+# print("\n# ------------------------------------------------------------------------------------")
+# datetimestamp = datetime.now()
+# print(f"\ndate/time: {datetimestamp}")
 
 
 def get_audio_slice(audio_data: np.ndarray, onset_time: float, sr: int) -> np.ndarray:

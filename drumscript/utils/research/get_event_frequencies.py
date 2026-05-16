@@ -1,4 +1,5 @@
 # drumscript/utils/get_event_frequencies.py
+
 """
 Utility script to measure the fundamental frequency of a kick drum sample.
 Uses hardcoded file path to test (see TEST_AUDIO ~line101)
@@ -122,6 +123,12 @@ def process_audio_to_frequency_json(audio_path, output_path="event_frequencies.j
 
 
 if __name__ == "__main__":
+    # --------------------------------------------------------------------------uncomment during testing
+    # from datetime import datetime
+    # print("\n# ------------------------------------------------------------------------------------")
+    # datetimestamp = datetime.now()
+    # print(f'\ndate/time: {datetimestamp}')
+    # --------------------------------------------------------------------------------------------------
     import argparse
 
     # Setup Command Line Arguments

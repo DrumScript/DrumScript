@@ -163,3 +163,4 @@ Makefile
 public/
 .DS_Store # if not already there
 docs/logs/
+docs/guide/interactive/_templates

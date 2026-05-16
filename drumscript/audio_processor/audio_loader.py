@@ -19,8 +19,6 @@ from drumscript.notation_generator.constants import SAMPLE_RATE
 # 1. Load audio file : -------------------------------------------------------------------------------
 
 
-# def load_audio(file_path: str, sr: int = SAMPLE_RATE) -> tuple[np.ndarray, int]:
-# def load_audio(file_path: str, sr: int = None) -> tuple[np.ndarray, int]:
 def load_audio(file_path: str, sr: int | None = None) -> tuple[np.ndarray, int]:
     """
     Load an audio file and optionally resample it.

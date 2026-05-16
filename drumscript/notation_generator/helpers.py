@@ -108,3 +108,11 @@ def calculate_cents_difference(freq1: float, freq2: float) -> float:
     if freq1 <= 0 or freq2 <= 0:
         raise ValueError("Frequencies must be positive.")
     return 1200 * math.log2(freq2 / freq1)
+
+
+# --------------------------------------------------------------------------uncomment during testing
+# from datetime import datetime
+# print("\n# ------------------------------------------------------------------------------------")
+# datetimestamp = datetime.now()
+# print(f'\ndate/time: {datetimestamp}')
+# --------------------------------------------------------------------------------------------------

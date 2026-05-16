@@ -9,63 +9,8 @@ import os
 import librosa
 import numpy as np
 
-# from drumscript.audio_processor import tempo_detector
 from drumscript.audio_processor.tempo_detector import estimate_tempo
 from drumscript.notation_generator.constants import HOP_LENGTH, SAMPLE_RATE
-
-# from datetime import datetime
-
-# print("\n# ------------------------------------------------------------------------------------")
-# datetimestamp = datetime.now()
-# print(f'\ndate/time: {datetimestamp}')
-
-# def validate_onsets(audio_data: np.ndarray, sr: int, onset_times: list[float]) -> list[float]:
-#
-# Method B: The Pre-Classification Validator.
-# Filters out hallucinated cymbal wobbles and kick drum tails using ADSR slope analysis.
-
-# if not onset_times:
-#   return []
-
-# 1. Backward Compatibility Gate
-# duration = len(audio_data) / sr
-# onset_density = len(onset_times) / duration if duration > 0 else 0
-
-# If it's a dense full song, trust Librosa so we don't accidentally filter out fast ghost notes.
-# This guarantees 100% backward compatibility for 'Iron Man' and 'The Great Old Ones'.
-# if duration >= 15.0 and onset_density >= 1.5:
-#    return onset_times
-
-# 2. ADSR Transient Filter for Sparse / Single-Beat Tracks
-# validated_onsets = [onset_times[0]] # Always keep the very first initial impact
-
-# Calculate the RMS (volume) envelope for the whole track
-# rms = librosa.feature.rms(y=audio_data, hop_length=HOP_LENGTH)[0]
-
-# for i in range(1, len(onset_times)):
-#   current_time = onset_times[i]
-
-# Convert time to the exact RMS frame index
-#  frame_idx = librosa.time_to_frames(current_time, sr=sr, hop_length=HOP_LENGTH)
-
-# Ensure we have enough frames to look slightly backward and forward
-# if 2 <= frame_idx < len(rms) - 2:
-# Volume just before the "hit" (approx 20-30ms prior)
-#    energy_before = rms[frame_idx - 2]
-
-# Volume at the peak of the detected "hit"
-#    energy_peak = max(rms[frame_idx : frame_idx + 3])
-
-# TRANSIENT CHECK:
-# A true stick hit creates an instantaneous spike. A ringing cymbal wobble just slowly swells.
-# If the volume instantaneously spikes by 30% (1.3) or more, it is a real hit.
-#    if energy_peak > (energy_before * 1.30):
-#        validated_onsets.append(current_time)
-# else:
-# Keep edge cases near the very end of the file
-#   validated_onsets.append(current_time)
-
-# return validated_onsets
 
 
 def detect_onsets(audio_data: np.ndarray, sr: int) -> list[float]:
@@ -186,16 +131,17 @@ def calculate_tempo_from_onsets(onset_times: np.ndarray, sr: int) -> float:
 """
 
 
-# ----------------------------------------------------------------------
-
-
 if __name__ == "__main__":
     from drumscript.audio_processor.audio_loader import load_audio, normalise_audio
-
-    # from drumscript.audio_processor import tempo_detector x
     from drumscript.audio_processor.tempo_detector import estimate_tempo
 
-    print("\n#=======================================================================================")
+    # --------------------------------------------------------------------------uncomment during testing
+    # from datetime import datetime
+    # print("\n# ------------------------------------------------------------------------------------")
+    # datetimestamp = datetime.now()
+    # print(f'\ndate/time: {datetimestamp}')
+    # --------------------------------------------------------------------------------------------------
+
     print("Running onset_detector.py example with provided filepath...")  # FUTURE: Find way to encode this so it prints the file path provided in CLI
     try:
         # Import necessary modules from package

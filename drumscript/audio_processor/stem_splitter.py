@@ -16,12 +16,6 @@ import numpy as np
 import soundfile as sf
 from pydub import AudioSegment
 
-# from datetime import datetime
-
-# print("\n# ------------------------------------------------------------------------------------")
-# datetimestamp = datetime.now()
-# print(f'\ndate/time: {datetimestamp}')
-
 # Use 'htdemucs', the default (and high-quality) 4-stem model
 # Stems output by htdemucs: 'drums', 'bass', 'other', 'vocals'
 DEMUCS_MODEL = "htdemucs"
@@ -454,22 +448,6 @@ def mix_stems(stems_dict, stems_to_mix, output_path, fmt="wav"):
     :param fmt: Output format ('wav' or 'mp3').
     :type fmt: str
     """
-    # --- LEGACY v1: pydub-based mixing. Required ffmpeg to decode the .flac
-    # --- intermediates produced by Demucs (we used to pass --flac), so even
-    # --- WAV output paths were bottlenecked on ffmpeg. Now replaced by
-    # --- numpy-based summation on WAV stems.
-    # combined = AudioSegment.from_file(stems_dict[stems_to_mix[0]])
-    # for stem_name in stems_to_mix[1:]:
-    #     if stem_name in stems_dict:
-    #         track = AudioSegment.from_file(stems_dict[stem_name])
-    #         combined = combined.overlay(track)
-    # combined.export(str(output_path), format=fmt,
-    #                 parameters=["-q:a", "0"] if fmt == "mp3" else None)
-    # return output_path
-
-    # New approach: read each stem as a numpy array, sum them element-wise,
-    # and clip to valid float range. Equivalent to pydub's overlay() for
-    # our use case (stems from the same source, identical length and rate).
     first_stem_path = stems_dict[stems_to_mix[0]]
     mixed, sample_rate = _read_stem_as_array(first_stem_path)
 
@@ -500,15 +478,16 @@ def mix_stems(stems_dict, stems_to_mix, output_path, fmt="wav"):
 ## Expanded with more advanced functionality for stem extraction
 if __name__ == "__main__":
     import argparse
+
+    # uncomment during testing
     # from datetime import datetime
+    # print("\n# ------------------------------------------------------------------------------------")
+    # datetimestamp = datetime.now()
+    # print(f'\ndate/time: {datetimestamp}')
 
     ## Banner / timestamp (moved here from module top-level so it only fires when this file is run
     ## DIRECTLY via `python3 -m drumscript.audio_processor.stem_splitter ...`, not on every `from
     ## drumscript ## audio_processor.stem_splitter import ...`)
-
-    # datetimestamp = datetime.now()
-    # print("\n# ------------------------------------------------------------------------------------")
-    # print(f'\ndate/time: {datetimestamp}')
 
     parser = argparse.ArgumentParser(description="Extract stems from an audio file.")
     parser.add_argument("input_file", help="Path to the input audio file.")

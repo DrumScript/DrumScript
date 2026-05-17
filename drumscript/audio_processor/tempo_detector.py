@@ -13,31 +13,31 @@ import numpy as np
 from drumscript.notation_generator.constants import SAMPLE_RATE
 
 
-def estimate_tempo(audio_data, sr):
+def estimate_tempo(audio_path, sr):
     """
     Estimates tempo from the tempogram, but restricted to a plausible range.
     (Corrected to avoid INF and extreme BPM errors, ie 10500 BPM).
     Returns a default 120.0 BPM if the audio is too short to analyze.
 
-    :param audio_data: The input audio time series.
-    :type audio_data: np.ndarray
+    :param audio_path: The input audio time series.
+    :type audio_path: np.ndarray
     :param sr: Sampling rate of the audio.
     :type sr: int
     :return: The estimated tempo in Beats Per Minute (BPM).
     :rtype: float
     """
-    if audio_data.size == 0:
+    if audio_path.size == 0:
         return 0.0
 
     # Check if there are enough hits in the audio
     # Calculating tempo on clips shorter than ~1-2 seconds is unreliable and often produces artifacts (like 235 BPM for a single kick).
-    duration_seconds = audio_data.shape[0] / sr
+    duration_seconds = audio_path.shape[0] / sr
     if duration_seconds < 1.0:  # duration_seconds less than 1 second, ie anything over 1 sec duration is valid
         print(f"Audio too short for tempo detection ({duration_seconds:.2f}s). Defaulting to 120 BPM.")
         return 120.0
 
-    # oenv = librosa.onset.onset_strength(y=audio_data, sr=sr, hop_length=256)
-    oenv = librosa.onset.onset_strength(y=audio_data)
+    # oenv = librosa.onset.onset_strength(y=audio_path, sr=sr, hop_length=256)
+    oenv = librosa.onset.onset_strength(y=audio_path)
     tempogram = librosa.feature.tempogram(onset_envelope=oenv)
     tempo_spectrum = np.sum(tempogram, axis=1)
     tempo_freqs = librosa.tempo_frequencies(tempogram.shape[0])
@@ -76,14 +76,17 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Estimate the tempo of an audio file.")
     parser.add_argument("audio_file_path", type=str, help="Path to the audio file to be processed.")
     args = parser.parse_args()
-    actual_drum_recording_path = args.audio_file_path  # audio_file_path, relative to ROOT, not the path of this script
+    # actual_drum_recording_path = args.audio_file_path  # audio_file_path, relative to ROOT, not the path of this script
+    input_audio_path = args.audio_file_path  # audio_file_path, relative to ROOT, not the path of this script
     sr = SAMPLE_RATE
 
     try:
         # Load and normalise the audio
-        print(f"Attempting to load: {actual_drum_recording_path}")
+        # print(f"Attempting to load: {actual_drum_recording_path}")
+        print(f"Attempting to load: {input_audio_path}")
         # audio, sr = load_audio(actual_drum_recording_path, sr=44100)
-        audio, sr = load_audio(actual_drum_recording_path, sr=sr)
+        # audio, sr = load_audio(actual_drum_recording_path, sr=sr)
+        audio, sr = load_audio(input_audio_path, sr=sr)
         normalised_audio = normalise_audio(audio)
 
         # Estimate the tempo

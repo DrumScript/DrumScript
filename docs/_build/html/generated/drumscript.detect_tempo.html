@@ -188,7 +188,6 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l1"><a class="reference internal" href="../guide/interactive/index.html">Interactive Runbooks</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../guide/interactive/create_backing_track.html">Create backing track</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../guide/interactive/extract_drums.html">Extract drums from a song</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../guide/interactive/extract_stems.html">Extract vocal, bass and guitar stems from an audio track</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../guide/interactive/measure_tempo.html">Measure Tempo</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../guide/interactive/transcribe.html">Transcribe a song using DrumScript</a></li>
 </ul>
@@ -316,14 +315,14 @@ data-aria-dark="Switch to auto color mode">
 <h1>drumscript.detect_tempo<a class="headerlink" href="#drumscript-detect-tempo" title="Link to this heading">¶</a></h1>
 <dl class="py function">
 <dt class="sig sig-object py" id="drumscript.detect_tempo">
-<span class="sig-name descname"><span class="pre">detect_tempo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">audio_input</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">full</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/drumscript.html#detect_tempo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drumscript.detect_tempo" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">detect_tempo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">audio_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">full</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/drumscript.html#detect_tempo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drumscript.detect_tempo" title="Link to this definition">¶</a></dt>
 <dd><p>Estimates the global tempo (BPM) of a given audio file or pre-loaded audio array.</p>
 <p>This function utilizes spectral onset envelope detection to accurately
 estimate the global tempo of a percussive track.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>audio_input</strong> (<em>str</em><em> or </em><em>np.ndarray</em>) – File path (str) OR a pre-loaded audio data array (np.ndarray).</p></li>
+<li><p><strong>audio_path</strong> (<em>str</em><em> or </em><em>np.ndarray</em>) – File path (str) OR a pre-loaded audio data array (np.ndarray).</p></li>
 <li><p><strong>full</strong> (<em>bool</em><em>, </em><em>optional</em>) – Return a detailed stats dictionary instead of just the float if True.</p></li>
 </ul>
 </dd>

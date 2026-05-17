@@ -188,7 +188,6 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l1"><a class="reference internal" href="../guide/interactive/index.html">Interactive Runbooks</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../guide/interactive/create_backing_track.html">Create backing track</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../guide/interactive/extract_drums.html">Extract drums from a song</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../guide/interactive/extract_stems.html">Extract vocal, bass and guitar stems from an audio track</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../guide/interactive/measure_tempo.html">Measure Tempo</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../guide/interactive/transcribe.html">Transcribe a song using DrumScript</a></li>
 </ul>
@@ -374,15 +373,15 @@ data-aria-dark="Switch to auto color mode">
 </span><span data-line="96">
 <div class="viewcode-block" id="detect_tempo">
 <a class="viewcode-back" href="../generated/drumscript.detect_tempo.html#drumscript.detect_tempo">[docs]</a>
-</span><span data-line="97"><span class="k">def</span><span class="w"> </span><span class="nf">detect_tempo</span><span class="p">(</span><span class="n">audio_input</span><span class="p">,</span> <span class="n">full</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+</span><span data-line="97"><span class="k">def</span><span class="w"> </span><span class="nf">detect_tempo</span><span class="p">(</span><span class="n">audio_path</span><span class="p">,</span> <span class="n">full</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 </span><span data-line="98"><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span data-line="99"><span class="sd">    Estimates the global tempo (BPM) of a given audio file or pre-loaded audio array.</span>
 </span><span data-line="100">
 </span><span data-line="101"><span class="sd">    This function utilizes spectral onset envelope detection to accurately</span>
 </span><span data-line="102"><span class="sd">    estimate the global tempo of a percussive track.</span>
 </span><span data-line="103">
-</span><span data-line="104"><span class="sd">    :param audio_input: File path (str) OR a pre-loaded audio data array (np.ndarray).</span>
-</span><span data-line="105"><span class="sd">    :type audio_input: str or np.ndarray</span>
+</span><span data-line="104"><span class="sd">    :param audio_path: File path (str) OR a pre-loaded audio data array (np.ndarray).</span>
+</span><span data-line="105"><span class="sd">    :type audio_path: str or np.ndarray</span>
 </span><span data-line="106"><span class="sd">    :param full: Return a detailed stats dictionary instead of just the float if True.</span>
 </span><span data-line="107"><span class="sd">    :type full: bool, optional</span>
 </span><span data-line="108">
@@ -411,12 +410,12 @@ data-aria-dark="Switch to auto color mode">
 </span><span data-line="131"><span class="sd">       stats = ds.detect_tempo(y, full=True)</span>
 </span><span data-line="132"><span class="sd">       print(stats[&#39;bpm&#39;])</span>
 </span><span data-line="133"><span class="sd">    &quot;&quot;&quot;</span>
-</span><span data-line="134">    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">audio_input</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
-</span><span data-line="135">        <span class="n">y</span><span class="p">,</span> <span class="n">sr</span> <span class="o">=</span> <span class="n">load_audio</span><span class="p">(</span><span class="n">audio_input</span><span class="p">,</span> <span class="n">sr</span><span class="o">=</span><span class="n">SAMPLE_RATE</span><span class="p">)</span>
-</span><span data-line="136">        <span class="c1"># y, sr = load_audio(audio_input)</span>
+</span><span data-line="134">    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">audio_path</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+</span><span data-line="135">        <span class="n">y</span><span class="p">,</span> <span class="n">sr</span> <span class="o">=</span> <span class="n">load_audio</span><span class="p">(</span><span class="n">audio_path</span><span class="p">,</span> <span class="n">sr</span><span class="o">=</span><span class="n">SAMPLE_RATE</span><span class="p">)</span>
+</span><span data-line="136">        <span class="c1"># y, sr = load_audio(audio_path)</span>
 </span><span data-line="137">        <span class="n">y</span> <span class="o">=</span> <span class="n">normalise_audio</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
 </span><span data-line="138">    <span class="k">else</span><span class="p">:</span>
-</span><span data-line="139">        <span class="n">y</span> <span class="o">=</span> <span class="n">audio_input</span>
+</span><span data-line="139">        <span class="n">y</span> <span class="o">=</span> <span class="n">audio_path</span>
 </span><span data-line="140">        <span class="n">sr</span> <span class="o">=</span> <span class="n">SAMPLE_RATE</span>
 </span><span data-line="141">
 </span><span data-line="142">    <span class="n">bpm</span> <span class="o">=</span> <span class="n">_internal_estimate</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">sr</span><span class="p">)</span>
@@ -628,13 +627,13 @@ data-aria-dark="Switch to auto color mode">
 </span><span data-line="339"><span class="sd">       import drumscript as ds</span>
 </span><span data-line="340">
 </span><span data-line="341"><span class="sd">       # Assuming `score` is a previously generated score object</span>
-</span><span data-line="342"><span class="sd">       midi_path = ds.export_midi(score, output_path=&quot;./midi_exports/my_song.mid&quot;)</span>
+</span><span data-line="342"><span class="sd">       midi_path = ds.export_to_midi(score, output_path=&quot;./midi_exports/my_song.mid&quot;)</span>
 </span><span data-line="343"><span class="sd">    &quot;&quot;&quot;</span>
 </span><span data-line="344">    <span class="k">if</span> <span class="n">output_path</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
 </span><span data-line="345">        <span class="c1"># output_path = pathlib.Path.cwd() / &quot;drum_score.mid&quot;</span>
 </span><span data-line="346">        <span class="n">output_path</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="o">.</span><span class="n">cwd</span><span class="p">()</span> <span class="o">/</span> <span class="s2">&quot;drumscript.mid&quot;</span>
 </span><span data-line="347">
-</span><span data-line="348">    <span class="k">return</span> <span class="n">midi_exporter</span><span class="o">.</span><span class="n">export_midi</span><span class="p">(</span><span class="n">score</span><span class="p">,</span> <span class="n">output_path</span><span class="o">=</span><span class="n">output_path</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+</span><span data-line="348">    <span class="k">return</span> <span class="n">midi_exporter</span><span class="o">.</span><span class="n">export_to_midi</span><span class="p">(</span><span class="n">score</span><span class="p">,</span> <span class="n">output_path</span><span class="o">=</span><span class="n">output_path</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
 
 </span><span data-line="349">
 </span><span data-line="350">

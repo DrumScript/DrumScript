@@ -94,15 +94,15 @@ def extract_stems(audio_path, output_dir=None, output_format="wav", drumless=Fal
     return result_path or results.get("drums") or results.get("drums_stem")
 
 
-def detect_tempo(audio_input, full=False):
+def detect_tempo(audio_path, full=False):
     """
     Estimates the global tempo (BPM) of a given audio file or pre-loaded audio array.
 
     This function utilizes spectral onset envelope detection to accurately
     estimate the global tempo of a percussive track.
 
-    :param audio_input: File path (str) OR a pre-loaded audio data array (np.ndarray).
-    :type audio_input: str or np.ndarray
+    :param audio_path: File path (str) OR a pre-loaded audio data array (np.ndarray).
+    :type audio_path: str or np.ndarray
     :param full: Return a detailed stats dictionary instead of just the float if True.
     :type full: bool, optional
 
@@ -131,12 +131,12 @@ def detect_tempo(audio_input, full=False):
        stats = ds.detect_tempo(y, full=True)
        print(stats['bpm'])
     """
-    if isinstance(audio_input, str):
-        y, sr = load_audio(audio_input, sr=SAMPLE_RATE)
-        # y, sr = load_audio(audio_input)
+    if isinstance(audio_path, str):
+        y, sr = load_audio(audio_path, sr=SAMPLE_RATE)
+        # y, sr = load_audio(audio_path)
         y = normalise_audio(y)
     else:
-        y = audio_input
+        y = audio_path
         sr = SAMPLE_RATE
 
     bpm = _internal_estimate(y, sr)
@@ -339,13 +339,13 @@ def export_midi(score, output_path=None, **kwargs):
        import drumscript as ds
 
        # Assuming `score` is a previously generated score object
-       midi_path = ds.export_midi(score, output_path="./midi_exports/my_song.mid")
+       midi_path = ds.export_to_midi(score, output_path="./midi_exports/my_song.mid")
     """
     if output_path is None:
         # output_path = pathlib.Path.cwd() / "drum_score.mid"
         output_path = pathlib.Path.cwd() / "drumscript.mid"
 
-    return midi_exporter.export_midi(score, output_path=output_path, **kwargs)
+    return midi_exporter.export_to_midi(score, output_path=output_path, **kwargs)
 
 
 def export_xml(score, output_path=None, **kwargs):

@@ -188,7 +188,6 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l1"><a class="reference internal" href="../guide/interactive/index.html">Interactive Runbooks</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../guide/interactive/create_backing_track.html">Create backing track</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../guide/interactive/extract_drums.html">Extract drums from a song</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../guide/interactive/extract_stems.html">Extract vocal, bass and guitar stems from an audio track</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../guide/interactive/measure_tempo.html">Measure Tempo</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../guide/interactive/transcribe.html">Transcribe a song using DrumScript</a></li>
 </ul>
@@ -339,7 +338,7 @@ EZdrummer, or standard DAW drum racks.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="kn">import</span><span class="w"> </span><span class="nn">drumscript</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">ds</span>
 </span><span data-line="2">
 </span><span data-line="3"><span class="c1"># Assuming `score` is a previously generated score object</span>
-</span><span data-line="4"><span class="n">midi_path</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">export_midi</span><span class="p">(</span><span class="n">score</span><span class="p">,</span> <span class="n">output_path</span><span class="o">=</span><span class="s2">&quot;./midi_exports/my_song.mid&quot;</span><span class="p">)</span>
+</span><span data-line="4"><span class="n">midi_path</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">export_to_midi</span><span class="p">(</span><span class="n">score</span><span class="p">,</span> <span class="n">output_path</span><span class="o">=</span><span class="s2">&quot;./midi_exports/my_song.mid&quot;</span><span class="p">)</span>
 </span></pre></div>
 </div>
 </dd></dl>

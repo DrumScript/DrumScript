@@ -748,6 +748,1023 @@ data-aria-dark="Switch to auto color mode">
 </span><span data-line="453">    <span class="c1"># datetimestamp = datetime.now()</span>
 </span><span data-line="454">    <span class="c1"># print(f&#39;\ndate/time: {datetimestamp}&#39;)</span>
 </span><span data-line="455">    <span class="c1"># --------------------------------------------------------------------------------------------------</span>
+</span><span data-line="456">
+</span><span data-line="457">
+</span><span data-line="458"><span class="sd">&quot;&quot;&quot; LEGACY CODE (KEEP FOR ALPHA)</span>
+</span><span data-line="459"><span class="sd"># def classify_events(audio_data: np.ndarray, sr: int, onsets: list[float]) -&gt; list[dict]:</span>
+</span><span data-line="460">
+</span><span data-line="461"><span class="sd"># Restored the explicit `physics_profile` variable name throughout the consolidated rule block for clarity and strict consistency with JSON exports.</span>
+</span><span data-line="462">
+</span><span data-line="463"><span class="sd"># Wrapper to route validated onsets through the Physics-First Classification Engine.</span>
+</span><span data-line="464"><span class="sd"># Natively detects and filters isolated single-beat cymbals/kicks using Peak Dominance.</span>
+</span><span data-line="465"><span class="sd"># All classification rules (membranophone/idiophone) are integrated natively.</span>
+</span><span data-line="466">
+</span><span data-line="467"><span class="sd"># from drumscript.notation_generator import constants</span>
+</span><span data-line="468"><span class="sd"># classified_events = []</span>
+</span><span data-line="469">
+</span><span data-line="470"><span class="sd"># global_max = np.max(np.abs(audio_data)) if len(audio_data) &gt; 0 else 1.0</span>
+</span><span data-line="471"><span class="sd"># duration = len(audio_data) / sr</span>
+</span><span data-line="472">
+</span><span data-line="473"><span class="sd"># --- NATIVE PEAK DOMINANCE CHECK (Single-Beat Detection) ---</span>
+</span><span data-line="474"><span class="sd"># loud_hit_count = 0</span>
+</span><span data-line="475"><span class="sd"># for t in onsets:</span>
+</span><span data-line="476"><span class="sd">#    s_start = int(t * sr)</span>
+</span><span data-line="477"><span class="sd">#    s_end = s_start + int(0.1 * sr)</span>
+</span><span data-line="478"><span class="sd">#    s_data = audio_data[s_start:min(s_end, len(audio_data))]</span>
+</span><span data-line="479"><span class="sd">#    s_vol = np.max(np.abs(s_data)) if len(s_data) &gt; 0 else 0.0</span>
+</span><span data-line="480">
+</span><span data-line="481"><span class="sd">#    if s_vol &gt; global_max * 0.50:</span>
+</span><span data-line="482"><span class="sd">#        loud_hit_count += 1</span>
+</span><span data-line="483">
+</span><span data-line="484"><span class="sd"># If the track is short and has exactly ONE loud hit, it is a single drum sample.</span>
+</span><span data-line="485"><span class="sd"># is_single_beat = (loud_hit_count == 1 and duration &lt; 30.0)</span>
+</span><span data-line="486">
+</span><span data-line="487"><span class="sd"># for onset_time in onsets:</span>
+</span><span data-line="488"><span class="sd">#    start_sample = int(onset_time * sr)</span>
+</span><span data-line="489">
+</span><span data-line="490"><span class="sd"># --- SHORT SLICE PADDING LOGIC (200ms) ---</span>
+</span><span data-line="491"><span class="sd">#    duration_short_secs = constants.ONSET_SLICE_DURATION_MS / 1000.0</span>
+</span><span data-line="492"><span class="sd">#    end_sample_short = start_sample + int(duration_short_secs * sr)</span>
+</span><span data-line="493">
+</span><span data-line="494"><span class="sd">#    if end_sample_short &gt; len(audio_data):</span>
+</span><span data-line="495"><span class="sd">#        slice_data = audio_data[start_sample:]</span>
+</span><span data-line="496"><span class="sd">#        pad_length = end_sample_short - len(audio_data)</span>
+</span><span data-line="497"><span class="sd">#        y_window_short = np.pad(slice_data, (0, pad_length), mode=&#39;constant&#39;)</span>
+</span><span data-line="498"><span class="sd">#    else:</span>
+</span><span data-line="499"><span class="sd">#        y_window_short = audio_data[start_sample:end_sample_short]</span>
+</span><span data-line="500">
+</span><span data-line="501"><span class="sd"># if len(y_window_short) == 0:</span>
+</span><span data-line="502"><span class="sd">#   continue</span>
+</span><span data-line="503">
+</span><span data-line="504"><span class="sd"># slice_max = np.max(np.abs(y_window_short)) if len(y_window_short) &gt; 0 else 0.0</span>
+</span><span data-line="505">
+</span><span data-line="506"><span class="sd"># Standard safety: Drop absolute dead silence</span>
+</span><span data-line="507"><span class="sd"># if slice_max &lt; 0.02 * global_max:</span>
+</span><span data-line="508"><span class="sd">#    continue</span>
+</span><span data-line="509">
+</span><span data-line="510"><span class="sd"># --- SINGLE BEAT GATE ---</span>
+</span><span data-line="511"><span class="sd"># if is_single_beat:</span>
+</span><span data-line="512"><span class="sd"># 1. Strict Gate</span>
+</span><span data-line="513"><span class="sd">#    if slice_max &lt; global_max * 0.50:</span>
+</span><span data-line="514"><span class="sd">#        continue</span>
+</span><span data-line="515">
+</span><span data-line="516"><span class="sd"># 2. De-Bounce Lockout</span>
+</span><span data-line="517"><span class="sd">#    if len(classified_events) &gt; 0:</span>
+</span><span data-line="518"><span class="sd">#        last_time = classified_events[-1][&quot;time_sec&quot;]</span>
+</span><span data-line="519"><span class="sd">#        if float(onset_time) - last_time &lt; 0.15:</span>
+</span><span data-line="520"><span class="sd">#            continue</span>
+</span><span data-line="521">
+</span><span data-line="522"><span class="sd"># --- LONG SLICE PADDING LOGIC (1.5s) ---</span>
+</span><span data-line="523"><span class="sd"># duration_long_secs = 1.5</span>
+</span><span data-line="524"><span class="sd"># end_sample_long = start_sample + int(duration_long_secs * sr)</span>
+</span><span data-line="525">
+</span><span data-line="526"><span class="sd"># if end_sample_long &gt; len(audio_data):</span>
+</span><span data-line="527"><span class="sd">#    slice_data = audio_data[start_sample:]</span>
+</span><span data-line="528"><span class="sd">#    pad_length = end_sample_long - len(audio_data)</span>
+</span><span data-line="529"><span class="sd">#    y_window_long = np.pad(slice_data, (0, pad_length), mode=&#39;constant&#39;)</span>
+</span><span data-line="530"><span class="sd"># else:</span>
+</span><span data-line="531"><span class="sd">#    y_window_long = audio_data[start_sample:end_sample_long]</span>
+</span><span data-line="532">
+</span><span data-line="533"><span class="sd"># 1. Extract the physics DNA</span>
+</span><span data-line="534"><span class="sd"># physics_profile = extract_features(y_window_short, y_window_long, sr)</span>
+</span><span data-line="535">
+</span><span data-line="536"><span class="sd"># 2. Apply Classification Rules (Integrated Logic)</span>
+</span><span data-line="537"><span class="sd"># instruments = []</span>
+</span><span data-line="538">
+</span><span data-line="539"><span class="sd"># --- MEMBRANOPHONES (skins) ---</span>
+</span><span data-line="540"><span class="sd"># RULE 1: KICK DRUM</span>
+</span><span data-line="541"><span class="sd"># if physics_profile[&#39;lfer&#39;] &gt;= KICK_LFER_MIN and (KICK_FREQ_MIN &lt;= physics_profile[&#39;peak_freq&#39;] &lt;= KICK_FREQ_MAX):</span>
+</span><span data-line="542"><span class="sd">#    instruments.append(&#39;kick&#39;)</span>
+</span><span data-line="543">
+</span><span data-line="544"><span class="sd"># RULE 2: SNARE DRUM</span>
+</span><span data-line="545"><span class="sd"># is_snare_freq = (SNARE_FREQ_MIN &lt;= physics_profile[&#39;peak_freq&#39;] &lt;= SNARE_FREQ_MAX)</span>
+</span><span data-line="546"><span class="sd"># has_snare_wire = (SNARE_HFER_MIN &lt;= physics_profile[&#39;hfer&#39;] &lt; 0.85)</span>
+</span><span data-line="547"><span class="sd"># if has_snare_wire and is_snare_freq:</span>
+</span><span data-line="548"><span class="sd">#    instruments.append(&#39;snare&#39;)</span>
+</span><span data-line="549">
+</span><span data-line="550"><span class="sd"># RULE 3: TOMS</span>
+</span><span data-line="551"><span class="sd"># is_pure = physics_profile[&#39;hfer&#39;] &lt; SNARE_HFER_MIN</span>
+</span><span data-line="552"><span class="sd"># is_resonant = physics_profile[&#39;decay&#39;] &gt;= TOM_MIN_DECAY</span>
+</span><span data-line="553"><span class="sd"># if is_pure and is_resonant:</span>
+</span><span data-line="554"><span class="sd">#    if physics_profile[&#39;peak_freq&#39;] &lt;= TOM_FREQ_LOW_MAX:</span>
+</span><span data-line="555"><span class="sd">#        if &#39;kick&#39; not in instruments:</span>
+</span><span data-line="556"><span class="sd">#            instruments.append(&#39;low_tom&#39;)</span>
+</span><span data-line="557"><span class="sd">#    elif physics_profile[&#39;peak_freq&#39;] &lt;= TOM_FREQ_MID_MAX:</span>
+</span><span data-line="558"><span class="sd">#        instruments.append(&#39;mid_tom&#39;)</span>
+</span><span data-line="559"><span class="sd">#    elif physics_profile[&#39;peak_freq&#39;] &lt;= 400:</span>
+</span><span data-line="560"><span class="sd">#        instruments.append(&#39;high_tom&#39;)</span>
+</span><span data-line="561">
+</span><span data-line="562"><span class="sd"># --- IDIOPHONES (Metals) ---</span>
+</span><span data-line="563"><span class="sd"># RULE 4: METALS (Hats / Cymbals)</span>
+</span><span data-line="564"><span class="sd"># if physics_profile[&#39;hfer_5k&#39;] &gt;= IDIOPHONE_MIN_HFER_5K:</span>
+</span><span data-line="565"><span class="sd">#    if physics_profile[&#39;decay&#39;] &lt;= HAT_CLOSED_MAX_DECAY:</span>
+</span><span data-line="566"><span class="sd">#        instruments.append(&#39;hi_hat_closed&#39;)</span>
+</span><span data-line="567"><span class="sd">#    elif physics_profile[&#39;decay&#39;] &lt;= HAT_OPEN_MAX_DECAY:</span>
+</span><span data-line="568"><span class="sd">#        instruments.append(&#39;hi_hat_open&#39;)</span>
+</span><span data-line="569"><span class="sd">#    else:</span>
+</span><span data-line="570"><span class="sd">#        if physics_profile[&#39;centroid&#39;] &gt; 2500:</span>
+</span><span data-line="571"><span class="sd">#            instruments.append(&#39;crash&#39;)</span>
+</span><span data-line="572"><span class="sd">#        else:</span>
+</span><span data-line="573"><span class="sd">#            instruments.append(&#39;ride&#39;)</span>
+</span><span data-line="574">
+</span><span data-line="575"><span class="sd"># Fallback for undetected sounds</span>
+</span><span data-line="576"><span class="sd"># if not instruments:</span>
+</span><span data-line="577"><span class="sd">#    instruments.append(&#39;unknown&#39;)</span>
+</span><span data-line="578">
+</span><span data-line="579"><span class="sd"># 3. Append with unified compatible keys</span>
+</span><span data-line="580"><span class="sd"># classified_events.append({</span>
+</span><span data-line="581"><span class="sd">#    &quot;time_sec&quot;: float(onset_time),</span>
+</span><span data-line="582"><span class="sd">#    &quot;instruments&quot;: instruments,</span>
+</span><span data-line="583"><span class="sd">#    &quot;debug_features&quot;: physics_profile</span>
+</span><span data-line="584"><span class="sd"># })</span>
+</span><span data-line="585">
+</span><span data-line="586"><span class="sd"># return classified_events</span>
+</span><span data-line="587">
+</span><span data-line="588">
+</span><span data-line="589"><span class="sd">## --- LEGACY CODE ---</span>
+</span><span data-line="590"><span class="sd"># def classify_events(audio_data: np.ndarray, sr: int, onsets: list[float]) -&gt; list[dict]:</span>
+</span><span data-line="591"><span class="sd">#</span>
+</span><span data-line="592"><span class="sd"># Wrapper to route detected onsets through the new Physics-First Classification Engine.</span>
+</span><span data-line="593"><span class="sd"># Uses the unified dictionary keys: time_sec, instruments, debug_features.</span>
+</span><span data-line="594"><span class="sd"># Natively detects and filters isolated single-beat cymbals/kicks using Peak Dominance.</span>
+</span><span data-line="595"><span class="sd">#</span>
+</span><span data-line="596"><span class="sd">#   classified_events = []</span>
+</span><span data-line="597">
+</span><span data-line="598"><span class="sd"># Calculate global parameters to evaluate amplitude gating for single hits</span>
+</span><span data-line="599"><span class="sd">#  global_max = np.max(np.abs(audio_data)) if len(audio_data) &gt; 0 else 1.0</span>
+</span><span data-line="600"><span class="sd">#  duration = len(audio_data) / sr</span>
+</span><span data-line="601">
+</span><span data-line="602"><span class="sd"># --- Peak Dominance Check (Single-Beat Detection) ---</span>
+</span><span data-line="603"><span class="sd"># Look ahead at the volume of all detected onsets. A ringing cymbal might hallucinate 30 fake onsets due to &quot;shimmer&quot;, but only the initial stick</span>
+</span><span data-line="604"><span class="sd"># impact will be loud.</span>
+</span><span data-line="605"><span class="sd"># loud_hit_count = 0</span>
+</span><span data-line="606"><span class="sd"># for t in onsets:</span>
+</span><span data-line="607"><span class="sd">#    s_start = int(t * sr)</span>
+</span><span data-line="608"><span class="sd">#    s_end = s_start + int(0.1 * sr) # Look at the first 100ms of the hit</span>
+</span><span data-line="609"><span class="sd">#    s_data = audio_data[s_start:min(s_end, len(audio_data))]</span>
+</span><span data-line="610"><span class="sd">#    s_vol = np.max(np.abs(s_data)) if len(s_data) &gt; 0 else 0.0</span>
+</span><span data-line="611">
+</span><span data-line="612"><span class="sd">#    if s_vol &gt; global_max * 0.50:</span>
+</span><span data-line="613"><span class="sd">#        loud_hit_count += 1</span>
+</span><span data-line="614">
+</span><span data-line="615"><span class="sd"># If the track is short and has exactly ONE loud hit, it is a single drum sample.</span>
+</span><span data-line="616"><span class="sd"># is_single_beat = (loud_hit_count == 1 and duration &lt; 30.0)</span>
+</span><span data-line="617"><span class="sd"># is_isolated_sample = (loud_hit_count == 1 and duration &lt; 30.0)</span>
+</span><span data-line="618">
+</span><span data-line="619"><span class="sd"># --- DYNAMIC ISOLATED SAMPLE DETECTION ---</span>
+</span><span data-line="620"><span class="sd"># Cymbals ring out for 5-15 seconds, bypassing our old &#39;duration &lt; 2.0&#39; check.</span>
+</span><span data-line="621"><span class="sd"># We use Onset Density instead. A single hit test sample is sparse (&lt; 1.5 hits per second).</span>
+</span><span data-line="622"><span class="sd"># A real drum track is dense (e.g., 60bpm 8th notes = 2 hits per second).</span>
+</span><span data-line="623"><span class="sd"># onset_density = len(onsets) / duration if duration &gt; 0 else 0</span>
+</span><span data-line="624"><span class="sd"># is_isolated_sample = (duration &lt; 20.0) and (onset_density &lt; 1.5 or len(onsets) &lt;= 5)</span>
+</span><span data-line="625">
+</span><span data-line="626"><span class="sd"># for onset_time in onsets:</span>
+</span><span data-line="627"><span class="sd">#    start_sample = int(onset_time * sr)</span>
+</span><span data-line="628">
+</span><span data-line="629"><span class="sd"># --- SHORT SLICE PADDING LOGIC (200ms) ---</span>
+</span><span data-line="630"><span class="sd">#    duration_short_secs = constants.ONSET_SLICE_DURATION_MS / 1000.0</span>
+</span><span data-line="631"><span class="sd">#    end_sample_short = start_sample + int(duration_short_secs * sr)</span>
+</span><span data-line="632">
+</span><span data-line="633"><span class="sd">#    if end_sample_short &gt; len(audio_data):</span>
+</span><span data-line="634"><span class="sd">#        slice_data = audio_data[start_sample:]</span>
+</span><span data-line="635"><span class="sd">#        pad_length = end_sample_short - len(audio_data)</span>
+</span><span data-line="636"><span class="sd">#        y_window_short = np.pad(slice_data, (0, pad_length), mode=&#39;constant&#39;)</span>
+</span><span data-line="637"><span class="sd">#    else:</span>
+</span><span data-line="638"><span class="sd">#        y_window_short = audio_data[start_sample:end_sample_short]</span>
+</span><span data-line="639"><span class="sd">#</span>
+</span><span data-line="640"><span class="sd">#</span>
+</span><span data-line="641"><span class="sd">#    if len(y_window_short) == 0:</span>
+</span><span data-line="642"><span class="sd">#        continue</span>
+</span><span data-line="643">
+</span><span data-line="644"><span class="sd">#    slice_max = np.max(np.abs(y_window_short)) if len(y_window_short) &gt; 0 else 0.0</span>
+</span><span data-line="645">
+</span><span data-line="646"><span class="sd"># Standard safety: Drop absolute dead silence to keep the noise floor clean</span>
+</span><span data-line="647"><span class="sd">#    if slice_max &lt; 0.02 * global_max:</span>
+</span><span data-line="648"><span class="sd">#        continue</span>
+</span><span data-line="649">
+</span><span data-line="650"><span class="sd"># --- Single Beat &#39;Amplitude Gate&#39; ---</span>
+</span><span data-line="651"><span class="sd"># For full songs, we do NOT interfere. We let the onset detector do its job  so ghost notes are perfectly preserved (guaranteeing backward</span>
+</span><span data-line="652"><span class="sd"># compatibility). We only apply the 50% max volume drop to sparse, isolated single-beat samples</span>
+</span><span data-line="653"><span class="sd">#    if is_isolated_sample:</span>
+</span><span data-line="654"><span class="sd"># 1. Strict Gate: Drop the quiet cymbal shimmers/kick sub-bass tails</span>
+</span><span data-line="655"><span class="sd"># slice_max = np.max(np.abs(y_window_short)) if len(y_window_short) &gt; 0 else 0.0</span>
+</span><span data-line="656"><span class="sd">#        if slice_max &lt; 0.5 * global_max:</span>
+</span><span data-line="657"><span class="sd">#           continue</span>
+</span><span data-line="658">
+</span><span data-line="659"><span class="sd"># 2. De-Bounce Lockout: Prevent double-triggering within 150ms of the valid hit</span>
+</span><span data-line="660"><span class="sd">#        if len(classified_events) &gt; 0:</span>
+</span><span data-line="661"><span class="sd">#            last_time = classified_events[-1][&quot;time_sec&quot;]</span>
+</span><span data-line="662"><span class="sd">#            if float(onset_time) - last_time &lt; 0.15:</span>
+</span><span data-line="663"><span class="sd">#                continue</span>
+</span><span data-line="664">
+</span><span data-line="665"><span class="sd"># --- LONG SLICE PADDING LOGIC (1.5s) ---</span>
+</span><span data-line="666"><span class="sd">#    duration_long_secs = 1.5</span>
+</span><span data-line="667"><span class="sd">#    end_sample_long = start_sample + int(duration_long_secs * sr)</span>
+</span><span data-line="668">
+</span><span data-line="669"><span class="sd">#    if end_sample_long &gt; len(audio_data):</span>
+</span><span data-line="670"><span class="sd">#        slice_data = audio_data[start_sample:]</span>
+</span><span data-line="671"><span class="sd">#        pad_length = end_sample_long - len(audio_data)</span>
+</span><span data-line="672"><span class="sd">#        y_window_long = np.pad(slice_data, (0, pad_length), mode=&#39;constant&#39;)</span>
+</span><span data-line="673"><span class="sd">#    else:</span>
+</span><span data-line="674"><span class="sd">#        y_window_long = audio_data[start_sample:end_sample_long]</span>
+</span><span data-line="675">
+</span><span data-line="676">
+</span><span data-line="677"><span class="sd"># 1. Extract the physics DNA</span>
+</span><span data-line="678"><span class="sd">#    physics_profile = extract_features(y_window_short, y_window_long, sr)</span>
+</span><span data-line="679">
+</span><span data-line="680"><span class="sd"># 2. Run the simultaneous rules</span>
+</span><span data-line="681"><span class="sd">#    instruments = classify_event(physics_profile)</span>
+</span><span data-line="682">
+</span><span data-line="683"><span class="sd"># 3. Append with unified compatible keys</span>
+</span><span data-line="684"><span class="sd">#    classified_events.append(</span>
+</span><span data-line="685"><span class="sd">#       {</span>
+</span><span data-line="686"><span class="sd">#           &quot;time_sec&quot;: float(onset_time),</span>
+</span><span data-line="687"><span class="sd">#           &quot;instruments&quot;: instruments,</span>
+</span><span data-line="688"><span class="sd">#          &quot;debug_features&quot;: physics_profile</span>
+</span><span data-line="689"><span class="sd">#      }</span>
+</span><span data-line="690"><span class="sd">#  )</span>
+</span><span data-line="691">
+</span><span data-line="692"><span class="sd"># return classified_events</span>
+</span><span data-line="693">
+</span><span data-line="694"><span class="sd"># def classify_events(audio_data: np.ndarray, sr: int, onsets: list[float]) -&gt; list[dict]:</span>
+</span><span data-line="695"><span class="sd">#</span>
+</span><span data-line="696"><span class="sd"># Wrapper to route detected onsets through the new Physics-First Classification Engine.</span>
+</span><span data-line="697"><span class="sd"># Uses the unified dictionary keys: time_sec, instruments, debug_features.</span>
+</span><span data-line="698"><span class="sd">#</span>
+</span><span data-line="699"><span class="sd"># classified_events = []</span>
+</span><span data-line="700">
+</span><span data-line="701"><span class="sd"># Calculate global parameters to evaluate amplitude gating for single hits</span>
+</span><span data-line="702"><span class="sd"># global_max = np.max(np.abs(audio_data)) if len(audio_data) &gt; 0 else 1.0</span>
+</span><span data-line="703"><span class="sd"># duration = len(audio_data) / sr</span>
+</span><span data-line="704">
+</span><span data-line="705"><span class="sd"># --- DYNAMIC ISOLATED SAMPLE DETECTION ---</span>
+</span><span data-line="706"><span class="sd"># Cymbals ring out for 5-15 seconds, bypassing our old &#39;duration &lt; 2.0&#39; check.</span>
+</span><span data-line="707"><span class="sd"># We use Onset Density instead. A single hit test sample is sparse (&lt; 1.5 hits per second).</span>
+</span><span data-line="708"><span class="sd"># A real drum track is dense (e.g., 60bpm 8th notes = 2 hits per second).</span>
+</span><span data-line="709"><span class="sd"># onset_density = len(onsets) / duration if duration &gt; 0 else 0</span>
+</span><span data-line="710"><span class="sd"># is_isolated_sample = (duration &lt; 20.0) and (onset_density &lt; 1.5 or len(onsets) &lt;= 5)</span>
+</span><span data-line="711">
+</span><span data-line="712"><span class="sd"># for onset_time in onsets:</span>
+</span><span data-line="713"><span class="sd">#    start_sample = int(onset_time * sr)</span>
+</span><span data-line="714">
+</span><span data-line="715"><span class="sd"># --- SHORT SLICE PADDING LOGIC (200ms) ---</span>
+</span><span data-line="716"><span class="sd">#   duration_short_secs = ONSET_SLICE_DURATION_MS / 1000.0</span>
+</span><span data-line="717"><span class="sd">#   end_sample_short = start_sample + int(duration_short_secs * sr)</span>
+</span><span data-line="718">
+</span><span data-line="719"><span class="sd"># if end_sample_short &gt; len(audio_data):</span>
+</span><span data-line="720"><span class="sd">#  slice_data = audio_data[start_sample:]</span>
+</span><span data-line="721"><span class="sd">#  pad_length = end_sample_short - len(audio_data)</span>
+</span><span data-line="722"><span class="sd">#  y_window_short = np.pad(slice_data, (0, pad_length), mode=&#39;constant&#39;)</span>
+</span><span data-line="723"><span class="sd"># else:</span>
+</span><span data-line="724"><span class="sd">#   y_window_short = audio_data[start_sample:end_sample_short]</span>
+</span><span data-line="725">
+</span><span data-line="726"><span class="sd"># if len(y_window_short) == 0:</span>
+</span><span data-line="727"><span class="sd">#   continue</span>
+</span><span data-line="728">
+</span><span data-line="729"><span class="sd"># --- STRICT SINGLE-BEAT AMPLITUDE GATE ---</span>
+</span><span data-line="730"><span class="sd"># For full songs, we do NOT interfere. We let the onset detector do its job</span>
+</span><span data-line="731"><span class="sd"># so ghost notes are perfectly preserved (guaranteeing backward compatibility).</span>
+</span><span data-line="732"><span class="sd"># We only apply the 50% max volume drop to sparse, isolated single-beat samples</span>
+</span><span data-line="733"><span class="sd"># if is_isolated_sample:</span>
+</span><span data-line="734"><span class="sd">#   slice_max = np.max(np.abs(y_window_short)) if len(y_window_short) &gt; 0 else 0.0</span>
+</span><span data-line="735"><span class="sd">#   if slice_max &lt; 0.5 * global_max:</span>
+</span><span data-line="736"><span class="sd">#       continue</span>
+</span><span data-line="737">
+</span><span data-line="738"><span class="sd"># --- LONG SLICE PADDING LOGIC (1.5s) ---</span>
+</span><span data-line="739"><span class="sd"># duration_long_secs = 1.5</span>
+</span><span data-line="740"><span class="sd"># end_sample_long = start_sample + int(duration_long_secs * sr)</span>
+</span><span data-line="741">
+</span><span data-line="742"><span class="sd"># if end_sample_long &gt; len(audio_data):</span>
+</span><span data-line="743"><span class="sd">#    slice_data = audio_data[start_sample:]</span>
+</span><span data-line="744"><span class="sd">#    pad_length = end_sample_long - len(audio_data)</span>
+</span><span data-line="745"><span class="sd">#    y_window_long = np.pad(slice_data, (0, pad_length), mode=&#39;constant&#39;)</span>
+</span><span data-line="746"><span class="sd"># else:</span>
+</span><span data-line="747"><span class="sd">#    y_window_long = audio_data[start_sample:end_sample_long]</span>
+</span><span data-line="748">
+</span><span data-line="749"><span class="sd"># 1. Extract the physics DNA</span>
+</span><span data-line="750"><span class="sd"># physics_profile = extract_features(y_window_short, y_window_long, sr)</span>
+</span><span data-line="751">
+</span><span data-line="752"><span class="sd"># 2. Run the simultaneous rules</span>
+</span><span data-line="753"><span class="sd"># instruments = classify_event(physics_profile)</span>
+</span><span data-line="754">
+</span><span data-line="755"><span class="sd"># 3. Append with unified compatible keys</span>
+</span><span data-line="756"><span class="sd"># classified_events.append(</span>
+</span><span data-line="757"><span class="sd">#   {</span>
+</span><span data-line="758"><span class="sd">#       &quot;time_sec&quot;: float(onset_time),</span>
+</span><span data-line="759"><span class="sd">#       &quot;instruments&quot;: instruments,</span>
+</span><span data-line="760"><span class="sd">#       &quot;debug_features&quot;: physics_profile</span>
+</span><span data-line="761"><span class="sd">#  }</span>
+</span><span data-line="762"><span class="sd"># )</span>
+</span><span data-line="763">
+</span><span data-line="764"><span class="sd"># return classified_events</span>
+</span><span data-line="765">
+</span><span data-line="766"><span class="sd"># Reasoning: Replaced the static 2.0s duration check with an Onset Density check to safely gate long-ringing cymbals whilst protecting full songs.</span>
+</span><span data-line="767">
+</span><span data-line="768"><span class="sd"># --- LEGACY CODE --</span>
+</span><span data-line="769"><span class="sd"># def classify_events(audio_data: np.ndarray, sr: int, onsets: list[float]) -&gt; list[dict]:</span>
+</span><span data-line="770">
+</span><span data-line="771"><span class="sd"># Wrapper to route detected onsets through the new Physics-First Classification Engine.</span>
+</span><span data-line="772"><span class="sd"># Uses the unified dictionary keys: time_sec, instruments, debug_features.</span>
+</span><span data-line="773">
+</span><span data-line="774"><span class="sd"># classified_events = []</span>
+</span><span data-line="775">
+</span><span data-line="776"><span class="sd"># Calculate global parameters to evaluate amplitude gating for single hits</span>
+</span><span data-line="777"><span class="sd"># global_max = np.max(np.abs(audio_data)) if len(audio_data) &gt; 0 else 1.0</span>
+</span><span data-line="778"><span class="sd"># duration = len(audio_data) / sr</span>
+</span><span data-line="779">
+</span><span data-line="780"><span class="sd"># for onset_time in onsets:</span>
+</span><span data-line="781"><span class="sd">#    start_sample = int(onset_time * sr)</span>
+</span><span data-line="782">
+</span><span data-line="783"><span class="sd"># --- SHORT SLICE PADDING LOGIC (200ms) ---</span>
+</span><span data-line="784"><span class="sd">#   duration_short_secs = ONSET_SLICE_DURATION_MS / 1000.0</span>
+</span><span data-line="785"><span class="sd">#   end_sample_short = start_sample + int(duration_short_secs * sr)</span>
+</span><span data-line="786">
+</span><span data-line="787"><span class="sd">#  if end_sample_short &gt; len(audio_data):</span>
+</span><span data-line="788"><span class="sd">#      slice_data = audio_data[start_sample:]</span>
+</span><span data-line="789"><span class="sd">#      pad_length = end_sample_short - len(audio_data)</span>
+</span><span data-line="790"><span class="sd">#      y_window_short = np.pad(slice_data, (0, pad_length), mode=&#39;constant&#39;)</span>
+</span><span data-line="791"><span class="sd">#  else:</span>
+</span><span data-line="792"><span class="sd">#      y_window_short = audio_data[start_sample:end_sample_short]</span>
+</span><span data-line="793">
+</span><span data-line="794"><span class="sd"># if len(y_window_short) == 0:</span>
+</span><span data-line="795"><span class="sd">#     continue</span>
+</span><span data-line="796">
+</span><span data-line="797"><span class="sd"># --- STRICT SINGLE-BEAT AMPLITUDE GATE ---</span>
+</span><span data-line="798"><span class="sd"># For full songs (&gt; 2.0s), we do NOT interfere. We let the onset detector do its job</span>
+</span><span data-line="799"><span class="sd"># so ghost notes are perfectly preserved (guaranteeing backward compatibility).</span>
+</span><span data-line="800"><span class="sd"># We only apply the 50% max volume drop to short, isolated single-beat samples</span>
+</span><span data-line="801"><span class="sd"># if duration &lt; 2.0:</span>
+</span><span data-line="802"><span class="sd">#   slice_max = np.max(np.abs(y_window_short)) if len(y_window_short) &gt; 0 else 0.0</span>
+</span><span data-line="803"><span class="sd">#  if len(classified_events) &gt; 0 and slice_max &lt; 0.5 * global_max:</span>
+</span><span data-line="804"><span class="sd">#     continue</span>
+</span><span data-line="805">
+</span><span data-line="806"><span class="sd"># --- LONG SLICE PADDING LOGIC (1.5s) ---</span>
+</span><span data-line="807"><span class="sd"># duration_long_secs = 1.5</span>
+</span><span data-line="808"><span class="sd"># end_sample_long = start_sample + int(duration_long_secs * sr)</span>
+</span><span data-line="809">
+</span><span data-line="810"><span class="sd"># if end_sample_long &gt; len(audio_data):</span>
+</span><span data-line="811"><span class="sd">#    slice_data = audio_data[start_sample:]</span>
+</span><span data-line="812"><span class="sd">#    pad_length = end_sample_long - len(audio_data)</span>
+</span><span data-line="813"><span class="sd">#    y_window_long = np.pad(slice_data, (0, pad_length), mode=&#39;constant&#39;)</span>
+</span><span data-line="814"><span class="sd"># else:</span>
+</span><span data-line="815"><span class="sd">#    y_window_long = audio_data[start_sample:end_sample_long]</span>
+</span><span data-line="816">
+</span><span data-line="817"><span class="sd"># 1. Extract the physics DNA</span>
+</span><span data-line="818"><span class="sd"># physics_profile = extract_features(y_window_short, y_window_long, sr)</span>
+</span><span data-line="819">
+</span><span data-line="820"><span class="sd"># 2. Run the simultaneous rules</span>
+</span><span data-line="821"><span class="sd"># instruments = classify_event(physics_profile)</span>
+</span><span data-line="822">
+</span><span data-line="823"><span class="sd"># 3. Append with unified compatible keys</span>
+</span><span data-line="824"><span class="sd"># classified_events.append(</span>
+</span><span data-line="825"><span class="sd">#   {</span>
+</span><span data-line="826"><span class="sd">#      &quot;time_sec&quot;: float(onset_time),</span>
+</span><span data-line="827"><span class="sd">#      &quot;instruments&quot;: instruments,</span>
+</span><span data-line="828"><span class="sd">#      &quot;debug_features&quot;: physics_profile</span>
+</span><span data-line="829"><span class="sd"># }</span>
+</span><span data-line="830"><span class="sd"># )</span>
+</span><span data-line="831">
+</span><span data-line="832"><span class="sd"># return classified_events</span>
+</span><span data-line="833">
+</span><span data-line="834"><span class="sd"># Reasoning: Restricted the amplitude gate strictly to files under 2.0 seconds. This stops double-triggering on single beats while completely</span>
+</span><span data-line="835"><span class="sd"># bypassing full songs, ensuring 100% backward compatibility for tracks like &quot;My Love for the Stars&quot;.</span>
+</span><span data-line="836">
+</span><span data-line="837"><span class="sd"># --- LEGACY CODE ---</span>
+</span><span data-line="838"><span class="sd"># Reasoning: Added a volume-based amplitude gate within the `classify_events` loop to discard quiet room reflections in short audio clips,</span>
+</span><span data-line="839"><span class="sd"># thereby stopping double-triggering without affecting full-song transcriptions.</span>
+</span><span data-line="840"><span class="sd"># def classify_events(audio_data: np.ndarray, sr: int, onsets: list[float]) -&gt; list[dict]:</span>
+</span><span data-line="841"><span class="sd">#     #</span>
+</span><span data-line="842"><span class="sd">#     Wrapper to route detected onsets through the new Physics-First Classification Engine.</span>
+</span><span data-line="843"><span class="sd">#     Uses the unified dictionary keys: time_sec, instruments, debug_features.</span>
+</span><span data-line="844"><span class="sd">#     #</span>
+</span><span data-line="845"><span class="sd">#     classified_events = []</span>
+</span><span data-line="846"><span class="sd">#</span>
+</span><span data-line="847"><span class="sd">#     for onset_time in onsets:</span>
+</span><span data-line="848"><span class="sd">#         start_sample = int(onset_time * sr)</span>
+</span><span data-line="849"><span class="sd">#</span>
+</span><span data-line="850"><span class="sd">#         # --- SHORT SLICE PADDING LOGIC (200ms) ---</span>
+</span><span data-line="851"><span class="sd">#         duration_short_secs = ONSET_SLICE_DURATION_MS / 1000.0</span>
+</span><span data-line="852"><span class="sd">#         end_sample_short = start_sample + int(duration_short_secs * sr)</span>
+</span><span data-line="853"><span class="sd">#</span>
+</span><span data-line="854"><span class="sd">#         if end_sample_short &gt; len(audio_data):</span>
+</span><span data-line="855"><span class="sd">#             slice_data = audio_data[start_sample:]</span>
+</span><span data-line="856"><span class="sd">#             pad_length = end_sample_short - len(audio_data)</span>
+</span><span data-line="857"><span class="sd">#             y_window_short = np.pad(slice_data, (0, pad_length), mode=&#39;constant&#39;)</span>
+</span><span data-line="858"><span class="sd">#         else:</span>
+</span><span data-line="859"><span class="sd">#             y_window_short = audio_data[start_sample:end_sample_short]</span>
+</span><span data-line="860"><span class="sd">#</span>
+</span><span data-line="861"><span class="sd">#         if len(y_window_short) == 0:</span>
+</span><span data-line="862"><span class="sd">#             continue</span>
+</span><span data-line="863"><span class="sd">#</span>
+</span><span data-line="864"><span class="sd">#         # --- LONG SLICE PADDING LOGIC (1.5s) ---</span>
+</span><span data-line="865"><span class="sd">#         duration_long_secs = 1.5</span>
+</span><span data-line="866"><span class="sd">#         end_sample_long = start_sample + int(duration_long_secs * sr)</span>
+</span><span data-line="867"><span class="sd">#</span>
+</span><span data-line="868"><span class="sd">#         if end_sample_long &gt; len(audio_data):</span>
+</span><span data-line="869"><span class="sd">#             slice_data = audio_data[start_sample:]</span>
+</span><span data-line="870"><span class="sd">#             pad_length = end_sample_long - len(audio_data)</span>
+</span><span data-line="871"><span class="sd">#             y_window_long = np.pad(slice_data, (0, pad_length), mode=&#39;constant&#39;)</span>
+</span><span data-line="872"><span class="sd">#         else:</span>
+</span><span data-line="873"><span class="sd">#             y_window_long = audio_data[start_sample:end_sample_long]</span>
+</span><span data-line="874"><span class="sd">#</span>
+</span><span data-line="875"><span class="sd">#</span>
+</span><span data-line="876"><span class="sd">#         # 1. Extract the physics DNA</span>
+</span><span data-line="877"><span class="sd">#         physics_profile = extract_features(y_window_short, y_window_long, sr)</span>
+</span><span data-line="878"><span class="sd">#</span>
+</span><span data-line="879"><span class="sd">#         # 2. Run the simultaneous rules</span>
+</span><span data-line="880"><span class="sd">#         instruments = classify_event(physics_profile)</span>
+</span><span data-line="881"><span class="sd">#</span>
+</span><span data-line="882"><span class="sd">#         # 3. Append with unified compatible keys</span>
+</span><span data-line="883"><span class="sd">#         classified_events.append(</span>
+</span><span data-line="884"><span class="sd">#             {</span>
+</span><span data-line="885"><span class="sd">#                 &quot;time_sec&quot;: float(onset_time),</span>
+</span><span data-line="886"><span class="sd">#                 &quot;instruments&quot;: instruments,</span>
+</span><span data-line="887"><span class="sd">#                 &quot;debug_features&quot;: physics_profile</span>
+</span><span data-line="888"><span class="sd">#             }</span>
+</span><span data-line="889"><span class="sd">#         )</span>
+</span><span data-line="890"><span class="sd">#</span>
+</span><span data-line="891"><span class="sd">#     return classified_events</span>
+</span><span data-line="892">
+</span><span data-line="893">
+</span><span data-line="894"><span class="sd"># --- LEGACY CODE ---</span>
+</span><span data-line="895"><span class="sd"># def classify_events(audio_data: np.ndarray, sr: int, onsets: list[float]) -&gt; list[dict]:</span>
+</span><span data-line="896"><span class="sd"># Wrapper to route detected onsets through the new Physics-First Classification Engine.</span>
+</span><span data-line="897"><span class="sd"># Uses the unified dictionary keys: time_sec, instruments, debug_features.</span>
+</span><span data-line="898">
+</span><span data-line="899"><span class="sd">#  classified_events = []</span>
+</span><span data-line="900">
+</span><span data-line="901"><span class="sd"># Calculate global parameters to evaluate amplitude gating</span>
+</span><span data-line="902"><span class="sd"># global_max = np.max(np.abs(audio_data)) if len(audio_data) &gt; 0 else 1.0</span>
+</span><span data-line="903"><span class="sd"># duration = len(audio_data) / sr</span>
+</span><span data-line="904">
+</span><span data-line="905"><span class="sd"># for onset_time in onsets:</span>
+</span><span data-line="906"><span class="sd">#  start_sample = int(onset_time * sr)</span>
+</span><span data-line="907">
+</span><span data-line="908"><span class="sd"># --- SHORT SLICE PADDING LOGIC (200ms) ---</span>
+</span><span data-line="909"><span class="sd"># duration_short_secs = ONSET_SLICE_DURATION_MS / 1000.0</span>
+</span><span data-line="910"><span class="sd"># end_sample_short = start_sample + int(duration_short_secs * sr)</span>
+</span><span data-line="911">
+</span><span data-line="912"><span class="sd">#        if end_sample_short &gt; len(audio_data):</span>
+</span><span data-line="913"><span class="sd">#           slice_data = audio_data[start_sample:]</span>
+</span><span data-line="914"><span class="sd">#           pad_length = end_sample_short - len(audio_data)</span>
+</span><span data-line="915"><span class="sd">#           y_window_short = np.pad(slice_data, (0, pad_length), mode=&#39;constant&#39;)</span>
+</span><span data-line="916"><span class="sd">#       else:</span>
+</span><span data-line="917"><span class="sd">#           y_window_short = audio_data[start_sample:end_sample_short]</span>
+</span><span data-line="918"><span class="sd">#</span>
+</span><span data-line="919"><span class="sd">#</span>
+</span><span data-line="920"><span class="sd">#        if len(y_window_short) == 0:</span>
+</span><span data-line="921"><span class="sd">#            continue</span>
+</span><span data-line="922"><span class="sd">#</span>
+</span><span data-line="923"><span class="sd"># --- AMPLITUDE GATING FILTER ---</span>
+</span><span data-line="924"><span class="sd">#        slice_max = np.max(np.abs(y_window_short)) if len(y_window_short) &gt; 0 else 0.0</span>
+</span><span data-line="925"><span class="sd">#</span>
+</span><span data-line="926"><span class="sd">#        # Drop absolute silence (&lt; 2% of max)</span>
+</span><span data-line="927"><span class="sd">#        if slice_max &lt; 0.02 * global_max:</span>
+</span><span data-line="928"><span class="sd">#            continue</span>
+</span><span data-line="929"><span class="sd">#</span>
+</span><span data-line="930"><span class="sd">#        # For isolated drum samples (&lt; 2.0s), drop secondary quiet room reflections/tails (&lt; 50% max)</span>
+</span><span data-line="931"><span class="sd">#        if duration &lt; 2.0 and len(classified_events) &gt; 0:</span>
+</span><span data-line="932"><span class="sd">#            if slice_max &lt; 0.5 * global_max:</span>
+</span><span data-line="933"><span class="sd">#                continue</span>
+</span><span data-line="934">
+</span><span data-line="935"><span class="sd">#        # --- LONG SLICE PADDING LOGIC (1.5s) ---</span>
+</span><span data-line="936"><span class="sd">#        duration_long_secs = 1.5</span>
+</span><span data-line="937"><span class="sd">#        end_sample_long = start_sample + int(duration_long_secs * sr)</span>
+</span><span data-line="938">
+</span><span data-line="939"><span class="sd">#        if end_sample_long &gt; len(audio_data):</span>
+</span><span data-line="940"><span class="sd"># slice_data = audio_data[start_sample:]</span>
+</span><span data-line="941"><span class="sd"># pad_length = end_sample_long - len(audio_data)</span>
+</span><span data-line="942"><span class="sd"># y_window_long = np.pad(slice_data, (0, pad_length), mode=&#39;constant&#39;)</span>
+</span><span data-line="943"><span class="sd"># else:</span>
+</span><span data-line="944"><span class="sd">#   y_window_long = audio_data[start_sample:end_sample_long]</span>
+</span><span data-line="945">
+</span><span data-line="946">
+</span><span data-line="947"><span class="sd"># 1. Extract the physics DNA</span>
+</span><span data-line="948"><span class="sd"># physics_profile = extract_features(y_window_short, y_window_long, sr)</span>
+</span><span data-line="949">
+</span><span data-line="950"><span class="sd"># 2. Run the simultaneous rules</span>
+</span><span data-line="951"><span class="sd"># instruments = classify_event(physics_profile)</span>
+</span><span data-line="952">
+</span><span data-line="953"><span class="sd"># 3. Append with unified compatible keys</span>
+</span><span data-line="954"><span class="sd"># classified_events.append(</span>
+</span><span data-line="955"><span class="sd">#    {</span>
+</span><span data-line="956"><span class="sd">#        &quot;time_sec&quot;: float(onset_time),</span>
+</span><span data-line="957"><span class="sd">#        &quot;instruments&quot;: instruments,</span>
+</span><span data-line="958"><span class="sd">#        &quot;debug_features&quot;: physics_profile</span>
+</span><span data-line="959"><span class="sd">#    }</span>
+</span><span data-line="960"><span class="sd"># )</span>
+</span><span data-line="961">
+</span><span data-line="962"><span class="sd"># return classified_events</span>
+</span><span data-line="963">
+</span><span data-line="964">
+</span><span data-line="965"><span class="sd"># --- EXTRACT_FEATURES ---</span>
+</span><span data-line="966"><span class="sd"># This restores the linear magnitude scale from _classifier.py so the thresholds</span>
+</span><span data-line="967"><span class="sd"># (like KICK_LFER_MIN and SNARE_HFER_MIN) work flawlessly again.</span>
+</span><span data-line="968"><span class="sd"># def extract_features(audio_slice: np.ndarray, sr: int) -&gt; dict:</span>
+</span><span data-line="969">
+</span><span data-line="970"><span class="sd"># Analyses the audio slice and extracts the physical DSP features.</span>
+</span><span data-line="971"><span class="sd"># Wraps numpy outputs in float() to ensure JSON serialization.</span>
+</span><span data-line="972">
+</span><span data-line="973"><span class="sd"># features = {}</span>
+</span><span data-line="974">
+</span><span data-line="975"><span class="sd"># 1. Compute the Frequency Spectrum (FFT)</span>
+</span><span data-line="976"><span class="sd"># We use magnitude (abs) of the Short-Time Fourier Transform</span>
+</span><span data-line="977"><span class="sd"># stft = np.abs(librosa.stft(audio_slice, n_fft=N_FFT, hop_length=HOP_LENGTH))</span>
+</span><span data-line="978">
+</span><span data-line="979"><span class="sd"># Average the spectrum across the tiny time slice to get one master frequency profile</span>
+</span><span data-line="980"><span class="sd"># spectrum = np.mean(stft, axis=1)</span>
+</span><span data-line="981"><span class="sd"># frequencies = librosa.fft_frequencies(sr=sr, n_fft=N_FFT)</span>
+</span><span data-line="982">
+</span><span data-line="983"><span class="sd"># 2. Find the Peak Frequency (The strongest fundamental tone)</span>
+</span><span data-line="984"><span class="sd"># peak_idx = np.argmax(spectrum)</span>
+</span><span data-line="985"><span class="sd"># features[&#39;peak_freq&#39;] = float(frequencies[peak_idx]) # Added float() casting</span>
+</span><span data-line="986">
+</span><span data-line="987"><span class="sd"># 3. Calculate Spectral Centroid (The &quot;Center of Mass&quot; or Brightness)</span>
+</span><span data-line="988"><span class="sd"># centroid = librosa.feature.spectral_centroid(S=stft, sr=sr, n_fft=N_FFT, hop_length=HOP_LENGTH)</span>
+</span><span data-line="989"><span class="sd"># features[&#39;centroid&#39;] = float(np.mean(centroid)) # Added float() casting</span>
+</span><span data-line="990">
+</span><span data-line="991"><span class="sd"># 4. Resonance (Decay Time) - IMPORTED SO TOMS AND HATS CAN BE CLASSIFIED</span>
+</span><span data-line="992"><span class="sd"># rms = librosa.feature.rms(y=audio_slice)[0]</span>
+</span><span data-line="993"><span class="sd"># peak_rms_idx = np.argmax(rms)</span>
+</span><span data-line="994"><span class="sd"># threshold = np.max(rms) * 0.1 # -20dB point</span>
+</span><span data-line="995">
+</span><span data-line="996"><span class="sd"># decay_frames = 0</span>
+</span><span data-line="997"><span class="sd"># for i in range(peak_rms_idx, len(rms)):</span>
+</span><span data-line="998"><span class="sd">#   if rms[i] &lt; threshold:</span>
+</span><span data-line="999"><span class="sd">#       break</span>
+</span><span data-line="1000"><span class="sd">#   decay_frames += 1</span>
+</span><span data-line="1001"><span class="sd"># features[&#39;decay&#39;] = float(librosa.frames_to_time(decay_frames, sr=sr)) # Added float() casting</span>
+</span><span data-line="1002">
+</span><span data-line="1003"><span class="sd"># 5. Calculate Energy Ratios (LFER &amp; HFER)</span>
+</span><span data-line="1004"><span class="sd"># total_energy = np.sum(spectrum)</span>
+</span><span data-line="1005"><span class="sd"># if total_energy == 0: # Prevent division by zero on silent slices</span>
+</span><span data-line="1006"><span class="sd">#    features[&#39;lfer&#39;] = 0.0</span>
+</span><span data-line="1007"><span class="sd">#    features[&#39;hfer&#39;] = 0.0</span>
+</span><span data-line="1008"><span class="sd">#    features[&#39;hfer_5k&#39;] = 0.0</span>
+</span><span data-line="1009"><span class="sd">#    return features</span>
+</span><span data-line="1010">
+</span><span data-line="1011"><span class="sd"># Low Frequency Energy Ratio (Energy below 150Hz)</span>
+</span><span data-line="1012"><span class="sd"># low_idx = np.where(frequencies &lt;= 150.0)[0]</span>
+</span><span data-line="1013"><span class="sd"># features[&#39;lfer&#39;] = float(np.sum(spectrum[low_idx]) / total_energy) # Added float() casting</span>
+</span><span data-line="1014">
+</span><span data-line="1015"><span class="sd"># snare Wire Energy Ratio (Energy &gt; 2000Hz)</span>
+</span><span data-line="1016"><span class="sd"># high_idx = np.where(frequencies &gt; 2000.0)[0]</span>
+</span><span data-line="1017"><span class="sd"># features[&#39;hfer&#39;] = float(np.sum(spectrum[high_idx]) / total_energy) # Added float() casting</span>
+</span><span data-line="1018">
+</span><span data-line="1019"><span class="sd"># Cymbal/Hat Energy Ratio (Energy &gt; 5000Hz)</span>
+</span><span data-line="1020"><span class="sd"># metal_idx = np.where(frequencies &gt; 5000.0)[0]</span>
+</span><span data-line="1021"><span class="sd"># features[&#39;hfer_5k&#39;] = float(np.sum(spectrum[metal_idx]) / total_energy) # Added float() casting</span>
+</span><span data-line="1022">
+</span><span data-line="1023"><span class="sd"># return features</span>
+</span><span data-line="1024">
+</span><span data-line="1025">
+</span><span data-line="1026"><span class="sd"># --- COMMENTED OUT GET_PHYSICS_PROFILE ---</span>
+</span><span data-line="1027"><span class="sd"># REASON: The Welch method calculates Power (amplitude squared), which breaks</span>
+</span><span data-line="1028"><span class="sd"># the LFER/HFER percentage thresholds. STFT magnitude (extract_features) restores accuracy.</span>
+</span><span data-line="1029"><span class="sd"># def get_physics_profile(y, sr):</span>
+</span><span data-line="1030"><span class="sd">#     #</span>
+</span><span data-line="1031"><span class="sd">#     Extracts the &#39;DNA&#39; of the drum hit:</span>
+</span><span data-line="1032"><span class="sd">#     Pitch, Decay, Brightness, and Energy Ratios.</span>
+</span><span data-line="1033"><span class="sd">#     #</span>
+</span><span data-line="1034"><span class="sd">#     # 1. Frequency Analysis (High Resolution)</span>
+</span><span data-line="1035"><span class="sd">#     freqs, psd = scipy.signal.welch(y, sr, nperseg=4096)</span>
+</span><span data-line="1036"><span class="sd">#     peak_idx = np.argmax(psd)</span>
+</span><span data-line="1037"><span class="sd">#     peak_freq = freqs[peak_idx]</span>
+</span><span data-line="1038"><span class="sd">#</span>
+</span><span data-line="1039"><span class="sd">#     # 2. Spectral Centroid (Brightness - Critical for Cymbals)</span>
+</span><span data-line="1040"><span class="sd">#     centroid = np.mean(librosa.feature.spectral_centroid(y=y, sr=sr))</span>
+</span><span data-line="1041"><span class="sd">#</span>
+</span><span data-line="1042"><span class="sd">#     # 3. Energy Distribution Ratios</span>
+</span><span data-line="1043"><span class="sd">#     total_energy = np.sum(psd) + 1e-9</span>
+</span><span data-line="1044"><span class="sd">#</span>
+</span><span data-line="1045"><span class="sd">#     # Bass Energy (&lt;150Hz) - kick detection</span>
+</span><span data-line="1046"><span class="sd">#     low_energy = np.sum(psd[freqs &lt; 150])</span>
+</span><span data-line="1047"><span class="sd">#     lfer = low_energy / total_energy</span>
+</span><span data-line="1048"><span class="sd">#</span>
+</span><span data-line="1049"><span class="sd">#     # Wire Energy (&gt;2000Hz) - snare vs High Tom detection</span>
+</span><span data-line="1050"><span class="sd">#     mid_high_energy = np.sum(psd[freqs &gt; 2000])</span>
+</span><span data-line="1051"><span class="sd">#     hfer_2k = mid_high_energy / total_energy</span>
+</span><span data-line="1052"><span class="sd">#</span>
+</span><span data-line="1053"><span class="sd">#     # Shimmer Energy (&gt;5000Hz) - Skin vs Metal detection</span>
+</span><span data-line="1054"><span class="sd">#     high_energy = np.sum(psd[freqs &gt; 5000])</span>
+</span><span data-line="1055"><span class="sd">#     hfer_5k = high_energy / total_energy</span>
+</span><span data-line="1056"><span class="sd">#</span>
+</span><span data-line="1057"><span class="sd">#     # 4. Resonance (Decay Time)</span>
+</span><span data-line="1058"><span class="sd">#     rms = librosa.feature.rms(y=y)[0]</span>
+</span><span data-line="1059"><span class="sd">#     peak_rms_idx = np.argmax(rms)</span>
+</span><span data-line="1060"><span class="sd">#     threshold = np.max(rms) * 0.1 # -20dB point</span>
+</span><span data-line="1061"><span class="sd">#</span>
+</span><span data-line="1062"><span class="sd">#     decay_frames = 0</span>
+</span><span data-line="1063"><span class="sd">#     for i in range(peak_rms_idx, len(rms)):</span>
+</span><span data-line="1064"><span class="sd">#         if rms[i] &lt; threshold:</span>
+</span><span data-line="1065"><span class="sd">#             break</span>
+</span><span data-line="1066"><span class="sd">#         decay_frames += 1</span>
+</span><span data-line="1067"><span class="sd">#     decay_time = librosa.frames_to_time(decay_frames, sr=sr)</span>
+</span><span data-line="1068"><span class="sd">#</span>
+</span><span data-line="1069"><span class="sd">#     return {</span>
+</span><span data-line="1070"><span class="sd">#         &quot;peak_freq&quot;: peak_freq,</span>
+</span><span data-line="1071"><span class="sd">#         &quot;centroid&quot;: centroid,</span>
+</span><span data-line="1072"><span class="sd">#         &quot;lfer&quot;: lfer,</span>
+</span><span data-line="1073"><span class="sd">#         &quot;hfer_2k&quot;: hfer_2k,</span>
+</span><span data-line="1074"><span class="sd">#         &quot;hfer&quot;: hfer_2k,      # Mapped to &#39;hfer&#39; to ensure compatibility with classify_onset</span>
+</span><span data-line="1075"><span class="sd">#         &quot;hfer_5k&quot;: hfer_5k,</span>
+</span><span data-line="1076"><span class="sd">#         &quot;decay&quot;: decay_time</span>
+</span><span data-line="1077"><span class="sd">#     }</span>
+</span><span data-line="1078">
+</span><span data-line="1079">
+</span><span data-line="1080"><span class="sd"># --- LEGACY CODE - COMMENTED OUT CLASSIFY_MEMBRANOPHONE (March 17 Interim) ---</span>
+</span><span data-line="1081"><span class="sd"># def classify_membranophone(p):</span>
+</span><span data-line="1082"><span class="sd">#     #</span>
+</span><span data-line="1083"><span class="sd">#     Stage 2A: Sorts skins (kick, snare, toms).</span>
+</span><span data-line="1084"><span class="sd">#     Updated to merge Feb 9 explicit logic with simultaneous hit routing.</span>
+</span><span data-line="1085"><span class="sd">#     #</span>
+</span><span data-line="1086"><span class="sd">#     detected_instruments = []</span>
+</span><span data-line="1087"><span class="sd">#</span>
+</span><span data-line="1088"><span class="sd">#     # RULE 1: KICK DRUM (Using exact Feb 9 explicit logic)</span>
+</span><span data-line="1089"><span class="sd">#     is_kick_freq = KICK_FREQ_MIN &lt;= p[&#39;peak_freq&#39;] &lt;= KICK_FREQ_MAX</span>
+</span><span data-line="1090"><span class="sd">#     is_thump = p[&#39;lfer&#39;] &gt;= KICK_LFER_MIN</span>
+</span><span data-line="1091"><span class="sd">#     not_too_crisp = p[&#39;hfer&#39;] &lt; SNARE_HFER_MIN # Excludes fat snares</span>
+</span><span data-line="1092"><span class="sd">#</span>
+</span><span data-line="1093"><span class="sd">#     if is_kick_freq and is_thump and not_too_crisp:</span>
+</span><span data-line="1094"><span class="sd">#         detected_instruments.append(&#39;kick&#39;)</span>
+</span><span data-line="1095"><span class="sd">#</span>
+</span><span data-line="1096"><span class="sd">#     # RULE 2: SNARE DRUM (Standard + Fat snare catches)</span>
+</span><span data-line="1097"><span class="sd">#     is_snare_freq = (SNARE_FREQ_MIN &lt;= p[&#39;peak_freq&#39;] &lt;= SNARE_FREQ_MAX)</span>
+</span><span data-line="1098"><span class="sd">#     has_snare_wire = (SNARE_HFER_MIN &lt;= p[&#39;hfer&#39;] &lt; 0.85)</span>
+</span><span data-line="1099"><span class="sd">#</span>
+</span><span data-line="1100"><span class="sd">#     if has_snare_wire and (is_snare_freq or p[&#39;peak_freq&#39;] &lt; SNARE_FREQ_MIN):</span>
+</span><span data-line="1101"><span class="sd">#         detected_instruments.append(&#39;snare&#39;)</span>
+</span><span data-line="1102"><span class="sd">#</span>
+</span><span data-line="1103"><span class="sd">#     # RULE 3: TOMS (Integrating exact Feb 9 Purity &amp; Resonance checks)</span>
+</span><span data-line="1104"><span class="sd">#     is_pure = p[&#39;hfer&#39;] &lt; SNARE_HFER_MIN  # toms have almost no &#39;wire&#39; noise</span>
+</span><span data-line="1105"><span class="sd">#     is_resonant = p[&#39;decay&#39;] &gt;= TOM_MIN_DECAY # toms ring longer than kicks</span>
+</span><span data-line="1106"><span class="sd">#</span>
+</span><span data-line="1107"><span class="sd">#     if is_pure and is_resonant:</span>
+</span><span data-line="1108"><span class="sd">#         if p[&#39;peak_freq&#39;] &lt;= TOM_FREQ_LOW_MAX:</span>
+</span><span data-line="1109"><span class="sd">#             # Prevent duplicate tagging if decay pushed it into Low Tom territory</span>
+</span><span data-line="1110"><span class="sd">#             if &#39;low_tom&#39; not in detected_instruments:</span>
+</span><span data-line="1111"><span class="sd">#                 detected_instruments.append(&#39;low_tom&#39;)</span>
+</span><span data-line="1112"><span class="sd">#         elif p[&#39;peak_freq&#39;] &lt;= TOM_FREQ_MID_MAX:</span>
+</span><span data-line="1113"><span class="sd">#             detected_instruments.append(&#39;mid_tom&#39;)</span>
+</span><span data-line="1114"><span class="sd">#         elif p[&#39;peak_freq&#39;] &lt;= 400: # Upper safety bound</span>
+</span><span data-line="1115"><span class="sd">#             detected_instruments.append(&#39;high_tom&#39;)</span>
+</span><span data-line="1116"><span class="sd">#</span>
+</span><span data-line="1117"><span class="sd">#     return detected_instruments</span>
+</span><span data-line="1118">
+</span><span data-line="1119"><span class="sd"># def classify_membranophone(p):</span>
+</span><span data-line="1120"><span class="sd">#</span>
+</span><span data-line="1121"><span class="sd"># Stage 2A: Sorts skins (kick, snare, toms).</span>
+</span><span data-line="1122"><span class="sd"># Fuses logic from _classifier.py (kick/snare) with the Tom logic from v0.1.0.</span>
+</span><span data-line="1123"><span class="sd">#</span>
+</span><span data-line="1124"><span class="sd"># detected_instruments = []</span>
+</span><span data-line="1125">
+</span><span data-line="1126"><span class="sd"># RULE 1: KICK DRUM (logic from _classifier.py)</span>
+</span><span data-line="1127"><span class="sd"># Does not rely on decay, so overlapping cymbals won&#39;t turn kicks into Low toms</span>
+</span><span data-line="1128"><span class="sd"># if p[&#39;lfer&#39;] &gt;= KICK_LFER_MIN and (KICK_FREQ_MIN &lt;= p[&#39;peak_freq&#39;] &lt;= KICK_FREQ_MAX):</span>
+</span><span data-line="1129"><span class="sd">#   detected_instruments.append(&#39;kick&#39;)</span>
+</span><span data-line="1130">
+</span><span data-line="1131"><span class="sd"># --- LEGACY CODE - COMMENTED OUT SNARE RULE (Fat snare catch caused kick+Hat hallucinations) ---</span>
+</span><span data-line="1132"><span class="sd"># is_snare_freq = (SNARE_FREQ_MIN &lt;= p[&#39;peak_freq&#39;] &lt;= SNARE_FREQ_MAX)</span>
+</span><span data-line="1133"><span class="sd"># has_snare_wire = (SNARE_HFER_MIN &lt;= p[&#39;hfer&#39;] &lt; 0.85)</span>
+</span><span data-line="1134"><span class="sd">#</span>
+</span><span data-line="1135"><span class="sd"># if has_snare_wire and (is_snare_freq or p[&#39;peak_freq&#39;] &lt; SNARE_FREQ_MIN):</span>
+</span><span data-line="1136"><span class="sd">#     detected_instruments.append(&#39;snare&#39;)</span>
+</span><span data-line="1137">
+</span><span data-line="1138"><span class="sd"># RULE 2: SNARE DRUM (strict logic from _classifier.py to prevent kick+Hat hallucinations)</span>
+</span><span data-line="1139"><span class="sd"># is_snare_freq = (SNARE_FREQ_MIN &lt;= p[&#39;peak_freq&#39;] &lt;= SNARE_FREQ_MAX)</span>
+</span><span data-line="1140"><span class="sd"># has_snare_wire = (SNARE_HFER_MIN &lt;= p[&#39;hfer&#39;] &lt; 0.85)</span>
+</span><span data-line="1141">
+</span><span data-line="1142"><span class="sd"># if has_snare_wire and is_snare_freq:</span>
+</span><span data-line="1143"><span class="sd">#   detected_instruments.append(&#39;snare&#39;)</span>
+</span><span data-line="1144">
+</span><span data-line="1145"><span class="sd"># RULE 3: TOMS (From v0.1.0 - pure tone and longer decay)</span>
+</span><span data-line="1146"><span class="sd"># is_pure = p[&#39;hfer&#39;] &lt; SNARE_HFER_MIN  # toms have almost no &#39;wire&#39; noise</span>
+</span><span data-line="1147"><span class="sd"># is_resonant = p[&#39;decay&#39;] &gt;= TOM_MIN_DECAY # toms ring longer than isolated kicks</span>
+</span><span data-line="1148">
+</span><span data-line="1149"><span class="sd"># if is_pure and is_resonant:</span>
+</span><span data-line="1150"><span class="sd">#   if p[&#39;peak_freq&#39;] &lt;= TOM_FREQ_LOW_MAX:</span>
+</span><span data-line="1151"><span class="sd">#       if &#39;kick&#39; not in detected_instruments: # Don&#39;t label a kick as a Low Tom</span>
+</span><span data-line="1152"><span class="sd">#           detected_instruments.append(&#39;low_tom&#39;)</span>
+</span><span data-line="1153"><span class="sd">#   elif p[&#39;peak_freq&#39;] &lt;= TOM_FREQ_MID_MAX:</span>
+</span><span data-line="1154"><span class="sd">#       detected_instruments.append(&#39;mid_tom&#39;)</span>
+</span><span data-line="1155"><span class="sd">#   elif p[&#39;peak_freq&#39;] &lt;= 400: # Upper safety bound</span>
+</span><span data-line="1156"><span class="sd">#       detected_instruments.append(&#39;high_tom&#39;)</span>
+</span><span data-line="1157">
+</span><span data-line="1158"><span class="sd"># return detected_instruments</span>
+</span><span data-line="1159">
+</span><span data-line="1160">
+</span><span data-line="1161"><span class="sd"># --- LEGACY CODE - COMMENTED OUT CLASSIFY_IDIOPHONE (March 17 Interim) ---</span>
+</span><span data-line="1162"><span class="sd"># def classify_idiophone(p):</span>
+</span><span data-line="1163"><span class="sd">#     #</span>
+</span><span data-line="1164"><span class="sd">#     Stage 2B: Sorts Metals (Hats, Cymbals).</span>
+</span><span data-line="1165"><span class="sd">#     Updated to return a list of simultaneous hits.</span>
+</span><span data-line="1166"><span class="sd">#     #</span>
+</span><span data-line="1167"><span class="sd">#     detected_instruments = []</span>
+</span><span data-line="1168"><span class="sd">#     decay = p[&#39;decay&#39;]</span>
+</span><span data-line="1169"><span class="sd">#</span>
+</span><span data-line="1170"><span class="sd">#     # RULE 4: METALS (Hats / Cymbals)</span>
+</span><span data-line="1171"><span class="sd">#     if p[&#39;hfer_5k&#39;] &gt;= IDIOPHONE_MIN_HFER_5K:</span>
+</span><span data-line="1172"><span class="sd">#         if decay &lt;= HAT_CLOSED_MAX_DECAY:</span>
+</span><span data-line="1173"><span class="sd">#             detected_instruments.append(&#39;hi_hat_closed&#39;)</span>
+</span><span data-line="1174"><span class="sd">#         elif decay &lt;= HAT_OPEN_MAX_DECAY:</span>
+</span><span data-line="1175"><span class="sd">#             detected_instruments.append(&#39;hi_hat_open&#39;)</span>
+</span><span data-line="1176"><span class="sd">#         else:</span>
+</span><span data-line="1177"><span class="sd">#             if p[&#39;centroid&#39;] &gt; 2500:</span>
+</span><span data-line="1178"><span class="sd">#                 detected_instruments.append(&#39;crash&#39;)</span>
+</span><span data-line="1179"><span class="sd">#             else:</span>
+</span><span data-line="1180"><span class="sd">#                 detected_instruments.append(&#39;ride&#39;)</span>
+</span><span data-line="1181"><span class="sd">#</span>
+</span><span data-line="1182"><span class="sd">#     return detected_instruments</span>
+</span><span data-line="1183">
+</span><span data-line="1184"><span class="sd"># def classify_idiophone(p):</span>
+</span><span data-line="1185">
+</span><span data-line="1186"><span class="sd"># Stage 2B: Sorts Metals (Hats, Cymbals).</span>
+</span><span data-line="1187"><span class="sd"># Uses Feb 9 Decay logic + _classifier.py Centroid thresholds.</span>
+</span><span data-line="1188">
+</span><span data-line="1189"><span class="sd"># detected_instruments = []</span>
+</span><span data-line="1190"><span class="sd"># decay = p[&#39;decay&#39;]</span>
+</span><span data-line="1191">
+</span><span data-line="1192"><span class="sd"># RULE 4: METALS (Hats / Cymbals)</span>
+</span><span data-line="1193"><span class="sd"># if p[&#39;hfer_5k&#39;] &gt;= IDIOPHONE_MIN_HFER_5K:</span>
+</span><span data-line="1194"><span class="sd">#    if decay &lt;= HAT_CLOSED_MAX_DECAY:</span>
+</span><span data-line="1195"><span class="sd">#        detected_instruments.append(&#39;hi_hat_closed&#39;)</span>
+</span><span data-line="1196"><span class="sd">#    elif decay &lt;= HAT_OPEN_MAX_DECAY:</span>
+</span><span data-line="1197"><span class="sd">#        detected_instruments.append(&#39;hi_hat_open&#39;)</span>
+</span><span data-line="1198"><span class="sd">#    else:</span>
+</span><span data-line="1199"><span class="sd"># Merged logic: use 2500 from _classifier to prevent kick overlaps looking like rides</span>
+</span><span data-line="1200"><span class="sd">#        if p[&#39;centroid&#39;] &gt; 2500:</span>
+</span><span data-line="1201"><span class="sd">#            detected_instruments.append(&#39;crash&#39;)</span>
+</span><span data-line="1202"><span class="sd">#        else:</span>
+</span><span data-line="1203"><span class="sd">#            detected_instruments.append(&#39;ride&#39;)</span>
+</span><span data-line="1204"><span class="sd">#</span>
+</span><span data-line="1205"><span class="sd"># return detected_instruments</span>
+</span><span data-line="1206">
+</span><span data-line="1207"><span class="sd"># --- LEGACY CODE - COMMENTED OUT CLASSIFY_EVENT ---</span>
+</span><span data-line="1208"><span class="sd"># def classify_event(audio_segment, sr):</span>
+</span><span data-line="1209"><span class="sd">#     #</span>
+</span><span data-line="1210"><span class="sd">#     Stage 1: Class Separation (Skin vs Metal)</span>
+</span><span data-line="1211"><span class="sd">#     #</span>
+</span><span data-line="1212"><span class="sd">#     # physics = get_physics_profile(audio_segment, sr)</span>
+</span><span data-line="1213"><span class="sd">#     #</span>
+</span><span data-line="1214"><span class="sd">#     # # Is it Metal? (High energy &gt; 5kHz)</span>
+</span><span data-line="1215"><span class="sd">#     # if physics[&#39;hfer_5k&#39;] &gt;= IDIOPHONE_MIN_HFER_5K:</span>
+</span><span data-line="1216"><span class="sd">#     #     return classify_idiophone(physics)</span>
+</span><span data-line="1217"><span class="sd">#     # else:</span>
+</span><span data-line="1218"><span class="sd">#     #     return classify_membranophone(physics)</span>
+</span><span data-line="1219">
+</span><span data-line="1220"><span class="sd"># def  classify_event(audio_segment, sr):</span>
+</span><span data-line="1221"><span class="sd">#</span>
+</span><span data-line="1222"><span class="sd"># Stage 1: Evaluates both skins and Metals simultaneously.</span>
+</span><span data-line="1223"><span class="sd"># Returns a list because multiple drums can hit simultaneously</span>
+</span><span data-line="1224">
+</span><span data-line="1225"><span class="sd"># LEGACY CODE - physics = get_physics_profile(audio_segment, sr)</span>
+</span><span data-line="1226"><span class="sd">#   physics = extract_features(audio_segment, sr)</span>
+</span><span data-line="1227"><span class="sd">#   instruments = []</span>
+</span><span data-line="1228">
+</span><span data-line="1229"><span class="sd"># Check skins</span>
+</span><span data-line="1230"><span class="sd">#  instruments.extend(classify_membranophone(physics))</span>
+</span><span data-line="1231">
+</span><span data-line="1232"><span class="sd"># Check metals</span>
+</span><span data-line="1233"><span class="sd">#  instruments.extend(classify_idiophone(physics))</span>
+</span><span data-line="1234">
+</span><span data-line="1235"><span class="sd"># Fallback</span>
+</span><span data-line="1236"><span class="sd"># if not instruments:</span>
+</span><span data-line="1237"><span class="sd">#        instruments.append(&#39;unknown&#39;)</span>
+</span><span data-line="1238">
+</span><span data-line="1239"><span class="sd">#   return instruments</span>
+</span><span data-line="1240">
+</span><span data-line="1241"><span class="sd"># --- LEGACY CODE - COMMENTED OUT CLASSIFY_EVENTS ---</span>
+</span><span data-line="1242"><span class="sd"># def classify_events(audio_data: np.ndarray, sr: int, onsets: list[float]) -&gt; list[dict]:</span>
+</span><span data-line="1243"><span class="sd">#     #</span>
+</span><span data-line="1244"><span class="sd">#     Wrapper to route detected onsets through the Physics-First Classification Engine.</span>
+</span><span data-line="1245"><span class="sd">#     Uses the unified dictionary keys: time_sec, instruments, debug_features.</span>
+</span><span data-line="1246"><span class="sd">#     #</span>
+</span><span data-line="1247"><span class="sd">#     classified_events = []</span>
+</span><span data-line="1248"><span class="sd">#</span>
+</span><span data-line="1249"><span class="sd">#     for onset_time in onsets:</span>
+</span><span data-line="1250"><span class="sd">#         start_sample = int(onset_time * sr)</span>
+</span><span data-line="1251"><span class="sd">#</span>
+</span><span data-line="1252"><span class="sd">#         # --- LEGACY CODE -  TRUNCATING LOGIC ---</span>
+</span><span data-line="1253"><span class="sd">#         # end_sample = int((onset_time + 0.2) * sr)</span>
+</span><span data-line="1254"><span class="sd">#         # #duration_secs = ONSET_SLICE_DURATION_MS / 1000.0</span>
+</span><span data-line="1255"><span class="sd">#         # #end_sample = start_sample + int(duration_secs * sr)</span>
+</span><span data-line="1256"><span class="sd">#         #</span>
+</span><span data-line="1257"><span class="sd">#         # if end_sample &gt; len(audio_data):</span>
+</span><span data-line="1258"><span class="sd">#         #     end_sample = len(audio_data)</span>
+</span><span data-line="1259"><span class="sd">#         # if start_sample &gt;= end_sample:</span>
+</span><span data-line="1260"><span class="sd">#         #     continue</span>
+</span><span data-line="1261"><span class="sd">#         #</span>
+</span><span data-line="1262"><span class="sd">#         # y_window = audio_data[start_sample:end_sample]</span>
+</span><span data-line="1263"><span class="sd">#         # if len(y_window) == 0:</span>
+</span><span data-line="1264"><span class="sd">#         #     continue</span>
+</span><span data-line="1265"><span class="sd">#</span>
+</span><span data-line="1266"><span class="sd">#         # --- PADDING LOGIC (Prevents SciPy/Librosa STFT Warnings at End of File) ---</span>
+</span><span data-line="1267"><span class="sd">#         duration_secs = ONSET_SLICE_DURATION_MS / 1000.0</span>
+</span><span data-line="1268"><span class="sd">#         end_sample = start_sample + int(duration_secs * sr)</span>
+</span><span data-line="1269"><span class="sd">#</span>
+</span><span data-line="1270"><span class="sd">#         if end_sample &gt; len(audio_data):</span>
+</span><span data-line="1271"><span class="sd">#             slice_data = audio_data[start_sample:]</span>
+</span><span data-line="1272"><span class="sd">#             pad_length = end_sample - len(audio_data)</span>
+</span><span data-line="1273"><span class="sd">#             y_window = np.pad(slice_data, (0, pad_length), mode=&#39;constant&#39;)</span>
+</span><span data-line="1274"><span class="sd">#         else:</span>
+</span><span data-line="1275"><span class="sd">#             y_window = audio_data[start_sample:end_sample]</span>
+</span><span data-line="1276"><span class="sd">#</span>
+</span><span data-line="1277"><span class="sd">#         if len(y_window) == 0:</span>
+</span><span data-line="1278"><span class="sd">#             continue</span>
+</span><span data-line="1279"><span class="sd">#</span>
+</span><span data-line="1280"><span class="sd">#         # 1. Extract the physics DNA</span>
+</span><span data-line="1281"><span class="sd">#         physics_profile = get_physics_profile(y_window, sr)</span>
+</span><span data-line="1282"><span class="sd">#</span>
+</span><span data-line="1283"><span class="sd">#         # 2. Run the simultaneous rules</span>
+</span><span data-line="1284"><span class="sd">#         instruments = classify_event(y_window, sr)</span>
+</span><span data-line="1285"><span class="sd">#</span>
+</span><span data-line="1286"><span class="sd">#         # 3. Append with unified compatible keys</span>
+</span><span data-line="1287"><span class="sd">#         classified_events.append(</span>
+</span><span data-line="1288"><span class="sd">#             {</span>
+</span><span data-line="1289"><span class="sd">#                 &quot;time_sec&quot;: float(onset_time),</span>
+</span><span data-line="1290"><span class="sd">#                 &quot;instruments&quot;: instruments,</span>
+</span><span data-line="1291"><span class="sd">#                 &quot;debug_features&quot;: physics_profile</span>
+</span><span data-line="1292"><span class="sd">#             }</span>
+</span><span data-line="1293"><span class="sd">#         )</span>
+</span><span data-line="1294"><span class="sd">#</span>
+</span><span data-line="1295"><span class="sd">#     return classified_events</span>
+</span><span data-line="1296">
+</span><span data-line="1297">
+</span><span data-line="1298"><span class="sd"># LEGACY CODE</span>
+</span><span data-line="1299"><span class="sd"># def classify_events(audio_data: np.ndarray, sr: int, onsets: list[float]) -&gt; list[dict]:</span>
+</span><span data-line="1300"><span class="sd">#</span>
+</span><span data-line="1301"><span class="sd">#  Wrapper to route detected onsets through the Physics-First Classification Engine.</span>
+</span><span data-line="1302"><span class="sd">#  Uses the unified dictionary keys: time_sec, instruments, debug_features.</span>
+</span><span data-line="1303"><span class="sd">#</span>
+</span><span data-line="1304"><span class="sd"># classified_events = []</span>
+</span><span data-line="1305">
+</span><span data-line="1306"><span class="sd"># for onset_time in onsets:</span>
+</span><span data-line="1307"><span class="sd">#   start_sample = int(onset_time * sr)</span>
+</span><span data-line="1308">
+</span><span data-line="1309"><span class="sd"># --- PADDING LOGIC (Prevents SciPy/Librosa STFT Warnings at End of File) ---</span>
+</span><span data-line="1310"><span class="sd">#  duration_secs = ONSET_SLICE_DURATION_MS / 1000.0</span>
+</span><span data-line="1311"><span class="sd"># end_sample = start_sample + int(duration_secs * sr)</span>
+</span><span data-line="1312">
+</span><span data-line="1313"><span class="sd"># if end_sample &gt; len(audio_data):</span>
+</span><span data-line="1314"><span class="sd">#    slice_data = audio_data[start_sample:]</span>
+</span><span data-line="1315"><span class="sd">#        pad_length = end_sample - len(audio_data)</span>
+</span><span data-line="1316"><span class="sd">#        y_window = np.pad(slice_data, (0, pad_length), mode=&#39;constant&#39;)</span>
+</span><span data-line="1317"><span class="sd">#    else:</span>
+</span><span data-line="1318"><span class="sd">#        y_window = audio_data[start_sample:end_sample]</span>
+</span><span data-line="1319">
+</span><span data-line="1320"><span class="sd">#    if len(y_window) == 0:</span>
+</span><span data-line="1321"><span class="sd">#        continue</span>
+</span><span data-line="1322">
+</span><span data-line="1323"><span class="sd"># 1. Extract the physics DNA</span>
+</span><span data-line="1324"><span class="sd"># LEGACY CODE - physics_profile = get_physics_profile(y_window, sr)</span>
+</span><span data-line="1325"><span class="sd">#    physics_profile = extract_features(y_window, sr)</span>
+</span><span data-line="1326">
+</span><span data-line="1327"><span class="sd"># 2. Run the simultaneous rules</span>
+</span><span data-line="1328"><span class="sd">#    instruments = classify_event(y_window, sr)</span>
+</span><span data-line="1329">
+</span><span data-line="1330"><span class="sd"># 3. Append with unified compatible keys</span>
+</span><span data-line="1331"><span class="sd">#    classified_events.append(</span>
+</span><span data-line="1332"><span class="sd">#        {</span>
+</span><span data-line="1333"><span class="sd">#            &quot;time_sec&quot;: float(onset_time),</span>
+</span><span data-line="1334"><span class="sd">#            &quot;instruments&quot;: instruments,</span>
+</span><span data-line="1335"><span class="sd">#            &quot;debug_features&quot;: physics_profile</span>
+</span><span data-line="1336"><span class="sd">#        }</span>
+</span><span data-line="1337"><span class="sd">#    )</span>
+</span><span data-line="1338">
+</span><span data-line="1339"><span class="sd"># return classified_events</span>
+</span><span data-line="1340">
+</span><span data-line="1341">
+</span><span data-line="1342"><span class="sd"># print(&quot;\n# ------------------------------------------------------------------------------------&quot;)</span>
+</span><span data-line="1343"><span class="sd"># LEGACY CODE (PRESERVING FOR EASE)</span>
+</span><span data-line="1344"><span class="sd"># Leave these uncommented so not to break orchestration and docs</span>
+</span><span data-line="1345"><span class="sd"># def analyze_event(y, sr):</span>
+</span><span data-line="1346"><span class="sd">#</span>
+</span><span data-line="1347"><span class="sd">#     # Calculates specific acoustic features:</span>
+</span><span data-line="1348"><span class="sd">#     # - f0: Fundamental Frequency (Peak Magnitude)</span>
+</span><span data-line="1349"><span class="sd">#     #- sc: Spectral Centroid (Brightness)</span>
+</span><span data-line="1350"><span class="sd">#     # - width: Spectral Bandwidth</span>
+</span><span data-line="1351"><span class="sd">#     # - depth: Decay Ratio (Sustain)</span>
+</span><span data-line="1352"><span class="sd">#</span>
+</span><span data-line="1353"><span class="sd">#     #:param y: Audio segment.</span>
+</span><span data-line="1354"><span class="sd">#     #:type y: np.ndarray</span>
+</span><span data-line="1355"><span class="sd">#     #:param sr: Sampling rate.</span>
+</span><span data-line="1356"><span class="sd">#     #:type sr: int</span>
+</span><span data-line="1357"><span class="sd">#     #:return: Dictionary of features [f0: (Fundamental Frequency (Peak Magnitude)),</span>
+</span><span data-line="1358"><span class="sd">#           sc: Spectral Centroid (Brightness), width: Spectral Bandwidth],</span>
+</span><span data-line="1359"><span class="sd">#       depth: Decay Ratio (Sustain)]</span>
+</span><span data-line="1360"><span class="sd">#     #:rtype: dict</span>
+</span><span data-line="1361"><span class="sd">#</span>
+</span><span data-line="1362"><span class="sd">#     # 1. FFT for Frequency Analysis</span>
+</span><span data-line="1363"><span class="sd">#     # High resolution (n_fft=2048) to see low frequencies clearly</span>
+</span><span data-line="1364"><span class="sd">#     # n_fft = 2048</span>
+</span><span data-line="1365"><span class="sd">#     # spec = np.abs(librosa.stft(y, n_fft=n_fft))</span>
+</span><span data-line="1366"><span class="sd">#     # freqs = librosa.fft_frequencies(sr=sr, n_fft=n_fft)</span>
+</span><span data-line="1367"><span class="sd">#     # n_fft = N_FFT</span>
+</span><span data-line="1368"><span class="sd">#     spec = np.abs(librosa.stft(y, n_fft=N_FFT))</span>
+</span><span data-line="1369"><span class="sd">#     freqs = librosa.fft_frequencies(sr=sr, n_fft=N_FFT)</span>
+</span><span data-line="1370"><span class="sd">#</span>
+</span><span data-line="1371"><span class="sd">#     # Sum magnitudes to find the strongest frequency (Fundamental)</span>
+</span><span data-line="1372"><span class="sd">#     sum_spec = np.sum(spec, axis=1)</span>
+</span><span data-line="1373"><span class="sd">#     peak_idx = np.argmax(sum_spec)</span>
+</span><span data-line="1374"><span class="sd">#     f0 = freqs[peak_idx]</span>
+</span><span data-line="1375"><span class="sd">#</span>
+</span><span data-line="1376"><span class="sd">#     # 2. Spectral Features</span>
+</span><span data-line="1377"><span class="sd">#     # sc = float(np.mean(librosa.feature.spectral_centroid(S=spec, sr=sr)))</span>
+</span><span data-line="1378"><span class="sd">#     # width = float(np.mean(librosa.feature.spectral_bandwidth(S=spec, sr=sr)))</span>
+</span><span data-line="1379"><span class="sd">#</span>
+</span><span data-line="1380"><span class="sd">#     sc = float(np.mean(librosa.feature.spectral_centroid(S=spec, sr=SAMPLE_RATE)))</span>
+</span><span data-line="1381"><span class="sd">#     width = float(np.mean(librosa.feature.spectral_bandwidth(S=spec, sr=SAMPLE_RATE)))</span>
+</span><span data-line="1382"><span class="sd">#     # 3. Depth / Decay (Sustain)</span>
+</span><span data-line="1383"><span class="sd">#     rms = librosa.feature.rms(y=y)[0]</span>
+</span><span data-line="1384"><span class="sd">#     split = len(rms) // 2</span>
+</span><span data-line="1385"><span class="sd">#     if np.mean(rms[:split]) &lt; 1e-5:</span>
+</span><span data-line="1386"><span class="sd">#         decay = 0.0</span>
+</span><span data-line="1387"><span class="sd">#     else:</span>
+</span><span data-line="1388"><span class="sd">#         decay = np.mean(rms[split:]) / np.mean(rms[:split])</span>
+</span><span data-line="1389"><span class="sd">#</span>
+</span><span data-line="1390"><span class="sd">#     return {</span>
+</span><span data-line="1391"><span class="sd">#         &quot;f0&quot;: float(f0),</span>
+</span><span data-line="1392"><span class="sd">#         &quot;sc&quot;: float(round(sc, 2)),</span>
+</span><span data-line="1393"><span class="sd">#         &quot;width&quot;: float(round(width, 2)),</span>
+</span><span data-line="1394"><span class="sd">#         &quot;depth&quot;: float(round(decay, 2)),</span>
+</span><span data-line="1395"><span class="sd">#     }</span>
+</span><span data-line="1396"><span class="sd">#</span>
+</span><span data-line="1397"><span class="sd">#</span>
+</span><span data-line="1398"><span class="sd"># # Leave these uncommented so not to break orchestration and docs</span>
+</span><span data-line="1399"><span class="sd"># def classify_events_legacy (audio_data, sr, onsets) -&gt; List[Dict[str, Any]]:</span>
+</span><span data-line="1400"><span class="sd">#     # Classifies hits strictly based on Fundamental Frequency ($f_0$) ranges.</span>
+</span><span data-line="1401"><span class="sd">#     # :param audio_data: Full audio array.</span>
+</span><span data-line="1402"><span class="sd">#     # :type audio_data: np.ndarray</span>
+</span><span data-line="1403"><span class="sd">#     # :param sr: Sampling rate.</span>
+</span><span data-line="1404"><span class="sd">#     # :type sr: int</span>
+</span><span data-line="1405"><span class="sd">#     # :param onsets: List of onset times.</span>
+</span><span data-line="1406"><span class="sd">#     # :type onsets: list</span>
+</span><span data-line="1407"><span class="sd">#     # :return: List of classified event dictionaries.</span>
+</span><span data-line="1408"><span class="sd">#     # :rtype: List[Dict[str, Any]]</span>
+</span><span data-line="1409"><span class="sd">#</span>
+</span><span data-line="1410"><span class="sd">#     classified_events = []</span>
+</span><span data-line="1411"><span class="sd">#</span>
+</span><span data-line="1412"><span class="sd">#     for onset_time in onsets:</span>
+</span><span data-line="1413"><span class="sd">#         # Extract 150ms window for analysis</span>
+</span><span data-line="1414"><span class="sd">#         start_sample = int(onset_time * sr)</span>
+</span><span data-line="1415"><span class="sd">#         end_sample = int((onset_time + 0.15) * sr)</span>
+</span><span data-line="1416"><span class="sd">#</span>
+</span><span data-line="1417"><span class="sd">#         if end_sample &gt; len(audio_data):</span>
+</span><span data-line="1418"><span class="sd">#             end_sample = len(audio_data)</span>
+</span><span data-line="1419"><span class="sd">#         if start_sample &gt;= end_sample:</span>
+</span><span data-line="1420"><span class="sd">#             continue</span>
+</span><span data-line="1421"><span class="sd">#</span>
+</span><span data-line="1422"><span class="sd">#         y_window = audio_data[start_sample:end_sample]</span>
+</span><span data-line="1423"><span class="sd">#         if len(y_window) == 0:</span>
+</span><span data-line="1424"><span class="sd">#             continue</span>
+</span><span data-line="1425"><span class="sd">#</span>
+</span><span data-line="1426"><span class="sd">#         # Analyze</span>
+</span><span data-line="1427"><span class="sd">#         features = analyze_event(y_window, sr)</span>
+</span><span data-line="1428"><span class="sd">#         f0 = features[&quot;f0&quot;]</span>
+</span><span data-line="1429"><span class="sd">#</span>
+</span><span data-line="1430"><span class="sd">#         drum_type = None</span>
+</span><span data-line="1431"><span class="sd">#</span>
+</span><span data-line="1432"><span class="sd">#         # --- STRICT FREQUENCY RANGE CLASSIFICATION ---</span>
+</span><span data-line="1433"><span class="sd">#         # Order matters for overlaps</span>
+</span><span data-line="1434"><span class="sd">#</span>
+</span><span data-line="1435"><span class="sd">#         # 1. Low End</span>
+</span><span data-line="1436"><span class="sd">#         if KICK_RANGE[0] &lt;= f0 &lt;= KICK_RANGE[1]:</span>
+</span><span data-line="1437"><span class="sd">#             drum_type = &quot;kick&quot;</span>
+</span><span data-line="1438"><span class="sd">#         elif LOW_TOM_RANGE[0] &lt;= f0 &lt;= LOW_TOM_RANGE[1]:</span>
+</span><span data-line="1439"><span class="sd">#             drum_type = &quot;low_tom&quot;</span>
+</span><span data-line="1440"><span class="sd">#</span>
+</span><span data-line="1441"><span class="sd">#         # 2. Mids (Check Tom first to catch narrow band, then snare)</span>
+</span><span data-line="1442"><span class="sd">#         elif MID_TOM_RANGE[0] &lt;= f0 &lt;= MID_TOM_RANGE[1]:</span>
+</span><span data-line="1443"><span class="sd">#             drum_type = &quot;mid_tom&quot;</span>
+</span><span data-line="1444"><span class="sd">#         elif SNARE_RANGE[0] &lt;= f0 &lt;= SNARE_RANGE[1]:</span>
+</span><span data-line="1445"><span class="sd">#             drum_type = &quot;snare&quot;</span>
+</span><span data-line="1446"><span class="sd">#</span>
+</span><span data-line="1447"><span class="sd">#         # 3. Highs</span>
+</span><span data-line="1448"><span class="sd">#         elif OPEN_HAT_RANGE[0] &lt;= f0 &lt;= OPEN_HAT_RANGE[1]:</span>
+</span><span data-line="1449"><span class="sd">#             drum_type = &quot;hi_hat_open&quot;</span>
+</span><span data-line="1450"><span class="sd">#         elif CLOSED_HAT_RANGE[0] &lt;= f0 &lt;= CLOSED_HAT_RANGE[1]:</span>
+</span><span data-line="1451"><span class="sd">#             drum_type = &quot;hi_hat_closed&quot;</span>
+</span><span data-line="1452"><span class="sd">#         elif RIDE_RANGE[0] &lt;= f0 &lt;= RIDE_RANGE[1]:</span>
+</span><span data-line="1453"><span class="sd">#             drum_type = &quot;ride&quot;</span>
+</span><span data-line="1454"><span class="sd">#         elif CRASH_RANGE[0] &lt;= f0 &lt;= CRASH_RANGE[1]:</span>
+</span><span data-line="1455"><span class="sd">#             drum_type = &quot;crash&quot;</span>
+</span><span data-line="1456"><span class="sd">#</span>
+</span><span data-line="1457"><span class="sd">#         # If detected, append</span>
+</span><span data-line="1458"><span class="sd">#         if drum_type:</span>
+</span><span data-line="1459"><span class="sd">#             meta = DRUM_NOTATION_MAP[drum_type]</span>
+</span><span data-line="1460"><span class="sd">#             classified_events.append(</span>
+</span><span data-line="1461"><span class="sd">#                 {</span>
+</span><span data-line="1462"><span class="sd">#                     &quot;drum_type&quot;: drum_type,</span>
+</span><span data-line="1463"><span class="sd">#                     &quot;onset_time_seconds&quot;: round(onset_time, 2),</span>
+</span><span data-line="1464"><span class="sd">#                     &quot;midi_pitch&quot;: meta[&quot;midi_program&quot;],</span>
+</span><span data-line="1465"><span class="sd">#                     &quot;note_head_type&quot;: meta[&quot;note_head&quot;],</span>
+</span><span data-line="1466"><span class="sd">#                     &quot;staff_position&quot;: meta[&quot;staff_position&quot;],</span>
+</span><span data-line="1467"><span class="sd">#                     &quot;analysis&quot;: features,</span>
+</span><span data-line="1468"><span class="sd">#                 }</span>
+</span><span data-line="1469"><span class="sd">#             )</span>
+</span><span data-line="1470"><span class="sd">#</span>
+</span><span data-line="1471"><span class="sd">#     return classified_events</span>
+</span><span data-line="1472"><span class="sd">&quot;&quot;&quot;</span>
 </span></pre></div>
         </article><button class="back-to-top" type="button">
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">

@@ -1,4 +1,4 @@
-.
+.DrumScript
 ├── .github
 │   ├── CODEOWNERS
 │   ├── ISSUE_TEMPLATE
@@ -66,7 +66,6 @@
 │   │   └── xml_exporter.py
 │   └── utils
 │       ├── __init__.py
-│       ├── config.py
 │       ├── ffmpeg_installer.py
 │       └── research
 │           ├── __init__.py
@@ -84,6 +83,7 @@
 │           ├── measure_hat_frequency.py
 │           ├── measure_kick_frequency.py
 │           └── measure_snare_frequency.py
+├── drumscript.zip
 ├── public
 │   └── pyodideWorker.js
 ├── pyproject.toml

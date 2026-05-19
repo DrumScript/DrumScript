@@ -15,7 +15,7 @@ from drumscript.notation_generator.constants import SAMPLE_RATE
 
 def main(
     input_audio_path: str,
-    transcribe_full_song: bool = False,
+    full_song: bool = False,
     time_signature: str = "4/4",
     drumless: bool = False,
     mute: list = None,
@@ -30,8 +30,8 @@ def main(
 
     :param input_audio_path: Path to the input audio file.
     :type input_audio_path: str
-    :param transcribe_full_song: If True, separates drums and generates score.
-    :type transcribe_full_song: bool, optional
+    :param full_song: If True, separates drums and generates score.
+    :type full_song: bool, optional
     :param time_signature: Time signature for notation, defaults to "4/4".
     :type time_signature: str, optional
     :param drumless: If True, generates a drumless backing track.
@@ -53,7 +53,7 @@ def main(
 
         # 1. Stem Separation / Pre-processing
         # Check if user wants stem separation (either for transcription or just extracting stems)
-        if transcribe_full_song:
+        if full_song:
             try:
                 print("...Separating drum stem...")
                 audio_path = extract_drum_stem(input_audio_path)
@@ -144,7 +144,7 @@ def main(
         traceback.print_exc()
 
         # If any stem splitting flag is active
-        if transcribe_full_song or drumless or mute or all_stems:
+        if full_song or drumless or mute or all_stems:
             print("...Processing Stems...")
 
             # If transcription is requested (--full), we assume the user wants the stems separated
@@ -157,7 +157,7 @@ def main(
             )
 
             # If we are transcribing, we need the isolated drum track
-            if transcribe_full_song:
+            if full_song:
                 if "drums" in results:
                     audio_path = results["drums"]
                 elif "drums_stem" in results:
@@ -170,7 +170,7 @@ def main(
             # For now, I will allow it to proceed to transcription unless the user didn't ask for it.
             # However, the current main() structure is built around "Do Transcription".
             # Let's check if the user actually wants to stop.
-            if not transcribe_full_song:
+            if not full_song:
                 print("Stem processing complete. Exiting (Transcription not requested).")
                 return
 
@@ -278,7 +278,7 @@ if __name__ == "__main__":
 
     main(
         input_audio_path=args.input_audio_path,
-        transcribe_full_song=args.full,
+        full_song=args.full,
         time_signature=args.ts,
         drumless=args.drumless,
         mute=args.mute,

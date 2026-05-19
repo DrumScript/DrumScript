@@ -133,7 +133,7 @@ def main(
         print(f"...Building Score & JSON: {pdf_path}...")
 
         # score_builder.build_and_export_drum_score(
-        score_builder.build_score(detected_events=detected_events, tempo=tempo, output_filepath=pdf_path, time_signature=time_signature)
+        score_builder.build_score(detected_events=detected_events, tempo=tempo, output_path=pdf_path, time_signature=time_signature)
 
         print("--- Done! ---\n")
 
@@ -235,7 +235,7 @@ def main(
         print(f"...Building Score & JSON: {pdf_path}...")
 
         # score_builder.build_and_export_drum_score(
-        score_builder.build_score(detected_events=detected_events, tempo=tempo, output_filepath=pdf_path, time_signature=time_signature)
+        score_builder.build_score(detected_events=detected_events, tempo=tempo, output_path=pdf_path, time_signature=time_signature)
 
         print("--- Done! ---\n")
 

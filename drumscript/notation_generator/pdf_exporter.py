@@ -125,8 +125,8 @@ def draw_notehead(c, x, y, note_type, staff_y_base, accent=False):
         c.line(x - 4, y + 6, x + 4, y + 9)
 
 
-# def generate_custom_pdf(detected_events, output_filepath, tempo, time_signature="4/4"):
-def export_pdf(detected_events, output_filepath, tempo, time_signature="4/4"):
+# def generate_custom_pdf(detected_events, output_path, tempo, time_signature="4/4"):
+def export_pdf(detected_events, output_path, tempo, time_signature="4/4"):
     """
     Generates a PDF drum score using ReportLab engine.
     """
@@ -139,9 +139,9 @@ def export_pdf(detected_events, output_filepath, tempo, time_signature="4/4"):
     except ValueError:
         numerator, denominator = 4, 4
 
-    print(f"Generating PDF: {output_filepath} (Sig: {numerator}/{denominator}, {int(tempo)} BPM)")
+    print(f"Generating PDF: {output_path} (Sig: {numerator}/{denominator}, {int(tempo)} BPM)")
 
-    c = canvas.Canvas(output_filepath, pagesize=A4)
+    c = canvas.Canvas(output_path, pagesize=A4)
     c.setTitle("DrumScript Transcription")
 
     system_width = PAGE_WIDTH - (2 * MARGIN_X)
@@ -328,7 +328,7 @@ def export_pdf(detected_events, output_filepath, tempo, time_signature="4/4"):
 
     c.save()
     # print("\n# ------------------------------------------------------------------------------------")
-    print(f"PDF successfully saved to: {output_filepath}")
+    print(f"PDF successfully saved to: {output_path}")
 
 
 """ LEGACY (KEEP FOR ALPHA)

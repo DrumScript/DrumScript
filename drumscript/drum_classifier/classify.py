@@ -29,7 +29,7 @@ from drumscript.notation_generator.constants import (
 )
 
 
-def get_audio_slice(audio_data: np.ndarray, onset_time: float, sr: int) -> np.ndarray:
+def get_audio_slice(audio_path: np.ndarray, onset_time: float, sr: int) -> np.ndarray:
     """
     Cuts a specific millisecond slice of audio starting exactly at the onset time.
     """
@@ -39,13 +39,13 @@ def get_audio_slice(audio_data: np.ndarray, onset_time: float, sr: int) -> np.nd
     end_sample = start_sample + int(duration_secs * sr)
 
     # Pad with zeros if the slice goes past the end of the audio file
-    if end_sample > len(audio_data):
-        slice_data = audio_data[start_sample:]
-        pad_length = end_sample - len(audio_data)
+    if end_sample > len(audio_path):
+        slice_data = audio_path[start_sample:]
+        pad_length = end_sample - len(audio_path)
         slice_data = np.pad(slice_data, (0, pad_length), mode="constant")
         return slice_data
 
-    return audio_data[start_sample:end_sample]
+    return audio_path[start_sample:end_sample]
 
 
 def extract_features(audio_slice_short: np.ndarray, audio_slice_long: np.ndarray, sr: int) -> dict:
@@ -178,7 +178,7 @@ def classify_event(physics):
     return instruments
 
 
-def classify_rudiment_events(audio_data: np.ndarray, sr: int, onsets: list[float]) -> list[dict]:
+def classify_rudiment_events(audio_path: np.ndarray, sr: int, onsets: list[float]) -> list[dict]:
     """
     Dedicated classification engine for single beats, paradiddles, and rudiments.
     Uses strict, data-driven physics boundaries and ADSR Transient Gating
@@ -186,7 +186,7 @@ def classify_rudiment_events(audio_data: np.ndarray, sr: int, onsets: list[float
     """
     classified_events = []
 
-    global_max = np.max(np.abs(audio_data)) if len(audio_data) > 0 else 1.0
+    global_max = np.max(np.abs(audio_path)) if len(audio_path) > 0 else 1.0
 
     for onset_time in onsets:
         start_sample = int(onset_time * sr)
@@ -195,12 +195,12 @@ def classify_rudiment_events(audio_data: np.ndarray, sr: int, onsets: list[float
         duration_short_secs = 0.100
         end_sample_short = start_sample + int(duration_short_secs * sr)
 
-        if end_sample_short > len(audio_data):
-            slice_data = audio_data[start_sample:]
-            pad_length = end_sample_short - len(audio_data)
+        if end_sample_short > len(audio_path):
+            slice_data = audio_path[start_sample:]
+            pad_length = end_sample_short - len(audio_path)
             y_window_short = np.pad(slice_data, (0, pad_length), mode="constant")
         else:
-            y_window_short = audio_data[start_sample:end_sample_short]
+            y_window_short = audio_path[start_sample:end_sample_short]
 
         if len(y_window_short) == 0:
             continue
@@ -215,12 +215,12 @@ def classify_rudiment_events(audio_data: np.ndarray, sr: int, onsets: list[float
         duration_long_secs = 1.5
         end_sample_long = start_sample + int(duration_long_secs * sr)
 
-        if end_sample_long > len(audio_data):
-            slice_data = audio_data[start_sample:]
-            pad_length = end_sample_long - len(audio_data)
+        if end_sample_long > len(audio_path):
+            slice_data = audio_path[start_sample:]
+            pad_length = end_sample_long - len(audio_path)
             y_window_long = np.pad(slice_data, (0, pad_length), mode="constant")
         else:
-            y_window_long = audio_data[start_sample:end_sample_long]
+            y_window_long = audio_path[start_sample:end_sample_long]
 
         # Extract the physics DNA
         physics_profile = extract_features(y_window_short, y_window_long, sr)
@@ -306,10 +306,10 @@ def classify_rudiment_events(audio_data: np.ndarray, sr: int, onsets: list[float
         # A stick hit explodes in volume. A wobble/reverb just sustains smoothly.
         pre_start = max(0, int((time_s - 0.030) * sr))
         pre_end = int(time_s * sr)
-        post_end = min(len(audio_data), int((time_s + 0.050) * sr))
+        post_end = min(len(audio_path), int((time_s + 0.050) * sr))
 
-        pre_data = audio_data[pre_start:pre_end]
-        post_data = audio_data[pre_end:post_end]
+        pre_data = audio_path[pre_start:pre_end]
+        post_data = audio_path[pre_end:post_end]
 
         pre_vol = np.max(np.abs(pre_data)) if len(pre_data) > 0 else 0.0
         post_vol = np.max(np.abs(post_data)) if len(post_data) > 0 else 0.0
@@ -329,7 +329,7 @@ def classify_rudiment_events(audio_data: np.ndarray, sr: int, onsets: list[float
     return final_events
 
 
-def classify_events(audio_data: np.ndarray, sr: int, onsets: list[float]) -> list[dict]:
+def classify_events(audio_path: np.ndarray, sr: int, onsets: list[float]) -> list[dict]:
     """
     Wrapper to route validated onsets through the Physics-First Classification Engine.
     Natively detects and filters isolated single-beat cymbals/kicks using Peak Dominance.
@@ -337,15 +337,15 @@ def classify_events(audio_data: np.ndarray, sr: int, onsets: list[float]) -> lis
     """
     classified_events = []
 
-    global_max = np.max(np.abs(audio_data)) if len(audio_data) > 0 else 1.0
-    duration = len(audio_data) / sr
+    global_max = np.max(np.abs(audio_path)) if len(audio_path) > 0 else 1.0
+    duration = len(audio_path) / sr
 
     # --- NATIVE PEAK DOMINANCE CHECK (Single-Beat Detection) ---
     loud_hit_count = 0
     for t in onsets:
         s_start = int(t * sr)
         s_end = s_start + int(0.1 * sr)
-        s_data = audio_data[s_start : min(s_end, len(audio_data))]
+        s_data = audio_path[s_start : min(s_end, len(audio_path))]
         s_vol = np.max(np.abs(s_data)) if len(s_data) > 0 else 0.0
 
         if s_vol > global_max * 0.50:
@@ -361,12 +361,12 @@ def classify_events(audio_data: np.ndarray, sr: int, onsets: list[float]) -> lis
         duration_short_secs = constants.ONSET_SLICE_DURATION_MS / 1000.0
         end_sample_short = start_sample + int(duration_short_secs * sr)
 
-        if end_sample_short > len(audio_data):
-            slice_data = audio_data[start_sample:]
-            pad_length = end_sample_short - len(audio_data)
+        if end_sample_short > len(audio_path):
+            slice_data = audio_path[start_sample:]
+            pad_length = end_sample_short - len(audio_path)
             y_window_short = np.pad(slice_data, (0, pad_length), mode="constant")
         else:
-            y_window_short = audio_data[start_sample:end_sample_short]
+            y_window_short = audio_path[start_sample:end_sample_short]
 
         if len(y_window_short) == 0:
             continue
@@ -389,12 +389,12 @@ def classify_events(audio_data: np.ndarray, sr: int, onsets: list[float]) -> lis
         duration_long_secs = 1.5
         end_sample_long = start_sample + int(duration_long_secs * sr)
 
-        if end_sample_long > len(audio_data):
-            slice_data = audio_data[start_sample:]
-            pad_length = end_sample_long - len(audio_data)
+        if end_sample_long > len(audio_path):
+            slice_data = audio_path[start_sample:]
+            pad_length = end_sample_long - len(audio_path)
             y_window_long = np.pad(slice_data, (0, pad_length), mode="constant")
         else:
-            y_window_long = audio_data[start_sample:end_sample_long]
+            y_window_long = audio_path[start_sample:end_sample_long]
 
         # 1. Extract the physics DNA
         physics_profile = extract_features(y_window_short, y_window_long, sr)
@@ -456,7 +456,7 @@ def classify_events(audio_data: np.ndarray, sr: int, onsets: list[float]) -> lis
 
 
 """ LEGACY CODE (KEEP FOR ALPHA)
-# def classify_events(audio_data: np.ndarray, sr: int, onsets: list[float]) -> list[dict]:
+# def classify_events(audio_path: np.ndarray, sr: int, onsets: list[float]) -> list[dict]:
 
 # Restored the explicit `physics_profile` variable name throughout the consolidated rule block for clarity and strict consistency with JSON exports.
 
@@ -467,15 +467,15 @@ def classify_events(audio_data: np.ndarray, sr: int, onsets: list[float]) -> lis
 # from drumscript.notation_generator import constants
 # classified_events = []
 
-# global_max = np.max(np.abs(audio_data)) if len(audio_data) > 0 else 1.0
-# duration = len(audio_data) / sr
+# global_max = np.max(np.abs(audio_path)) if len(audio_path) > 0 else 1.0
+# duration = len(audio_path) / sr
 
 # --- NATIVE PEAK DOMINANCE CHECK (Single-Beat Detection) ---
 # loud_hit_count = 0
 # for t in onsets:
 #    s_start = int(t * sr)
 #    s_end = s_start + int(0.1 * sr)
-#    s_data = audio_data[s_start:min(s_end, len(audio_data))]
+#    s_data = audio_path[s_start:min(s_end, len(audio_path))]
 #    s_vol = np.max(np.abs(s_data)) if len(s_data) > 0 else 0.0
 
 #    if s_vol > global_max * 0.50:
@@ -491,12 +491,12 @@ def classify_events(audio_data: np.ndarray, sr: int, onsets: list[float]) -> lis
 #    duration_short_secs = constants.ONSET_SLICE_DURATION_MS / 1000.0
 #    end_sample_short = start_sample + int(duration_short_secs * sr)
 
-#    if end_sample_short > len(audio_data):
-#        slice_data = audio_data[start_sample:]
-#        pad_length = end_sample_short - len(audio_data)
+#    if end_sample_short > len(audio_path):
+#        slice_data = audio_path[start_sample:]
+#        pad_length = end_sample_short - len(audio_path)
 #        y_window_short = np.pad(slice_data, (0, pad_length), mode='constant')
 #    else:
-#        y_window_short = audio_data[start_sample:end_sample_short]
+#        y_window_short = audio_path[start_sample:end_sample_short]
 
 # if len(y_window_short) == 0:
 #   continue
@@ -523,12 +523,12 @@ def classify_events(audio_data: np.ndarray, sr: int, onsets: list[float]) -> lis
 # duration_long_secs = 1.5
 # end_sample_long = start_sample + int(duration_long_secs * sr)
 
-# if end_sample_long > len(audio_data):
-#    slice_data = audio_data[start_sample:]
-#    pad_length = end_sample_long - len(audio_data)
+# if end_sample_long > len(audio_path):
+#    slice_data = audio_path[start_sample:]
+#    pad_length = end_sample_long - len(audio_path)
 #    y_window_long = np.pad(slice_data, (0, pad_length), mode='constant')
 # else:
-#    y_window_long = audio_data[start_sample:end_sample_long]
+#    y_window_long = audio_path[start_sample:end_sample_long]
 
 # 1. Extract the physics DNA
 # physics_profile = extract_features(y_window_short, y_window_long, sr)
@@ -587,7 +587,7 @@ def classify_events(audio_data: np.ndarray, sr: int, onsets: list[float]) -> lis
 
 
 ## --- LEGACY CODE ---
-# def classify_events(audio_data: np.ndarray, sr: int, onsets: list[float]) -> list[dict]:
+# def classify_events(audio_path: np.ndarray, sr: int, onsets: list[float]) -> list[dict]:
 #
 # Wrapper to route detected onsets through the new Physics-First Classification Engine.
 # Uses the unified dictionary keys: time_sec, instruments, debug_features.
@@ -596,8 +596,8 @@ def classify_events(audio_data: np.ndarray, sr: int, onsets: list[float]) -> lis
 #   classified_events = []
 
 # Calculate global parameters to evaluate amplitude gating for single hits
-#  global_max = np.max(np.abs(audio_data)) if len(audio_data) > 0 else 1.0
-#  duration = len(audio_data) / sr
+#  global_max = np.max(np.abs(audio_path)) if len(audio_path) > 0 else 1.0
+#  duration = len(audio_path) / sr
 
 # --- Peak Dominance Check (Single-Beat Detection) ---
 # Look ahead at the volume of all detected onsets. A ringing cymbal might hallucinate 30 fake onsets due to "shimmer", but only the initial stick
@@ -606,7 +606,7 @@ def classify_events(audio_data: np.ndarray, sr: int, onsets: list[float]) -> lis
 # for t in onsets:
 #    s_start = int(t * sr)
 #    s_end = s_start + int(0.1 * sr) # Look at the first 100ms of the hit
-#    s_data = audio_data[s_start:min(s_end, len(audio_data))]
+#    s_data = audio_path[s_start:min(s_end, len(audio_path))]
 #    s_vol = np.max(np.abs(s_data)) if len(s_data) > 0 else 0.0
 
 #    if s_vol > global_max * 0.50:
@@ -630,12 +630,12 @@ def classify_events(audio_data: np.ndarray, sr: int, onsets: list[float]) -> lis
 #    duration_short_secs = constants.ONSET_SLICE_DURATION_MS / 1000.0
 #    end_sample_short = start_sample + int(duration_short_secs * sr)
 
-#    if end_sample_short > len(audio_data):
-#        slice_data = audio_data[start_sample:]
-#        pad_length = end_sample_short - len(audio_data)
+#    if end_sample_short > len(audio_path):
+#        slice_data = audio_path[start_sample:]
+#        pad_length = end_sample_short - len(audio_path)
 #        y_window_short = np.pad(slice_data, (0, pad_length), mode='constant')
 #    else:
-#        y_window_short = audio_data[start_sample:end_sample_short]
+#        y_window_short = audio_path[start_sample:end_sample_short]
 #
 #
 #    if len(y_window_short) == 0:
@@ -666,12 +666,12 @@ def classify_events(audio_data: np.ndarray, sr: int, onsets: list[float]) -> lis
 #    duration_long_secs = 1.5
 #    end_sample_long = start_sample + int(duration_long_secs * sr)
 
-#    if end_sample_long > len(audio_data):
-#        slice_data = audio_data[start_sample:]
-#        pad_length = end_sample_long - len(audio_data)
+#    if end_sample_long > len(audio_path):
+#        slice_data = audio_path[start_sample:]
+#        pad_length = end_sample_long - len(audio_path)
 #        y_window_long = np.pad(slice_data, (0, pad_length), mode='constant')
 #    else:
-#        y_window_long = audio_data[start_sample:end_sample_long]
+#        y_window_long = audio_path[start_sample:end_sample_long]
 
 
 # 1. Extract the physics DNA
@@ -691,7 +691,7 @@ def classify_events(audio_data: np.ndarray, sr: int, onsets: list[float]) -> lis
 
 # return classified_events
 
-# def classify_events(audio_data: np.ndarray, sr: int, onsets: list[float]) -> list[dict]:
+# def classify_events(audio_path: np.ndarray, sr: int, onsets: list[float]) -> list[dict]:
 #
 # Wrapper to route detected onsets through the new Physics-First Classification Engine.
 # Uses the unified dictionary keys: time_sec, instruments, debug_features.
@@ -699,8 +699,8 @@ def classify_events(audio_data: np.ndarray, sr: int, onsets: list[float]) -> lis
 # classified_events = []
 
 # Calculate global parameters to evaluate amplitude gating for single hits
-# global_max = np.max(np.abs(audio_data)) if len(audio_data) > 0 else 1.0
-# duration = len(audio_data) / sr
+# global_max = np.max(np.abs(audio_path)) if len(audio_path) > 0 else 1.0
+# duration = len(audio_path) / sr
 
 # --- DYNAMIC ISOLATED SAMPLE DETECTION ---
 # Cymbals ring out for 5-15 seconds, bypassing our old 'duration < 2.0' check.
@@ -716,12 +716,12 @@ def classify_events(audio_data: np.ndarray, sr: int, onsets: list[float]) -> lis
 #   duration_short_secs = ONSET_SLICE_DURATION_MS / 1000.0
 #   end_sample_short = start_sample + int(duration_short_secs * sr)
 
-# if end_sample_short > len(audio_data):
-#  slice_data = audio_data[start_sample:]
-#  pad_length = end_sample_short - len(audio_data)
+# if end_sample_short > len(audio_path):
+#  slice_data = audio_path[start_sample:]
+#  pad_length = end_sample_short - len(audio_path)
 #  y_window_short = np.pad(slice_data, (0, pad_length), mode='constant')
 # else:
-#   y_window_short = audio_data[start_sample:end_sample_short]
+#   y_window_short = audio_path[start_sample:end_sample_short]
 
 # if len(y_window_short) == 0:
 #   continue
@@ -739,12 +739,12 @@ def classify_events(audio_data: np.ndarray, sr: int, onsets: list[float]) -> lis
 # duration_long_secs = 1.5
 # end_sample_long = start_sample + int(duration_long_secs * sr)
 
-# if end_sample_long > len(audio_data):
-#    slice_data = audio_data[start_sample:]
-#    pad_length = end_sample_long - len(audio_data)
+# if end_sample_long > len(audio_path):
+#    slice_data = audio_path[start_sample:]
+#    pad_length = end_sample_long - len(audio_path)
 #    y_window_long = np.pad(slice_data, (0, pad_length), mode='constant')
 # else:
-#    y_window_long = audio_data[start_sample:end_sample_long]
+#    y_window_long = audio_path[start_sample:end_sample_long]
 
 # 1. Extract the physics DNA
 # physics_profile = extract_features(y_window_short, y_window_long, sr)
@@ -766,7 +766,7 @@ def classify_events(audio_data: np.ndarray, sr: int, onsets: list[float]) -> lis
 # Reasoning: Replaced the static 2.0s duration check with an Onset Density check to safely gate long-ringing cymbals whilst protecting full songs.
 
 # --- LEGACY CODE --
-# def classify_events(audio_data: np.ndarray, sr: int, onsets: list[float]) -> list[dict]:
+# def classify_events(audio_path: np.ndarray, sr: int, onsets: list[float]) -> list[dict]:
 
 # Wrapper to route detected onsets through the new Physics-First Classification Engine.
 # Uses the unified dictionary keys: time_sec, instruments, debug_features.
@@ -774,8 +774,8 @@ def classify_events(audio_data: np.ndarray, sr: int, onsets: list[float]) -> lis
 # classified_events = []
 
 # Calculate global parameters to evaluate amplitude gating for single hits
-# global_max = np.max(np.abs(audio_data)) if len(audio_data) > 0 else 1.0
-# duration = len(audio_data) / sr
+# global_max = np.max(np.abs(audio_path)) if len(audio_path) > 0 else 1.0
+# duration = len(audio_path) / sr
 
 # for onset_time in onsets:
 #    start_sample = int(onset_time * sr)
@@ -784,12 +784,12 @@ def classify_events(audio_data: np.ndarray, sr: int, onsets: list[float]) -> lis
 #   duration_short_secs = ONSET_SLICE_DURATION_MS / 1000.0
 #   end_sample_short = start_sample + int(duration_short_secs * sr)
 
-#  if end_sample_short > len(audio_data):
-#      slice_data = audio_data[start_sample:]
-#      pad_length = end_sample_short - len(audio_data)
+#  if end_sample_short > len(audio_path):
+#      slice_data = audio_path[start_sample:]
+#      pad_length = end_sample_short - len(audio_path)
 #      y_window_short = np.pad(slice_data, (0, pad_length), mode='constant')
 #  else:
-#      y_window_short = audio_data[start_sample:end_sample_short]
+#      y_window_short = audio_path[start_sample:end_sample_short]
 
 # if len(y_window_short) == 0:
 #     continue
@@ -807,12 +807,12 @@ def classify_events(audio_data: np.ndarray, sr: int, onsets: list[float]) -> lis
 # duration_long_secs = 1.5
 # end_sample_long = start_sample + int(duration_long_secs * sr)
 
-# if end_sample_long > len(audio_data):
-#    slice_data = audio_data[start_sample:]
-#    pad_length = end_sample_long - len(audio_data)
+# if end_sample_long > len(audio_path):
+#    slice_data = audio_path[start_sample:]
+#    pad_length = end_sample_long - len(audio_path)
 #    y_window_long = np.pad(slice_data, (0, pad_length), mode='constant')
 # else:
-#    y_window_long = audio_data[start_sample:end_sample_long]
+#    y_window_long = audio_path[start_sample:end_sample_long]
 
 # 1. Extract the physics DNA
 # physics_profile = extract_features(y_window_short, y_window_long, sr)
@@ -837,7 +837,7 @@ def classify_events(audio_data: np.ndarray, sr: int, onsets: list[float]) -> lis
 # --- LEGACY CODE ---
 # Reasoning: Added a volume-based amplitude gate within the `classify_events` loop to discard quiet room reflections in short audio clips,
 # thereby stopping double-triggering without affecting full-song transcriptions.
-# def classify_events(audio_data: np.ndarray, sr: int, onsets: list[float]) -> list[dict]:
+# def classify_events(audio_path: np.ndarray, sr: int, onsets: list[float]) -> list[dict]:
 #     #
 #     Wrapper to route detected onsets through the new Physics-First Classification Engine.
 #     Uses the unified dictionary keys: time_sec, instruments, debug_features.
@@ -851,12 +851,12 @@ def classify_events(audio_data: np.ndarray, sr: int, onsets: list[float]) -> lis
 #         duration_short_secs = ONSET_SLICE_DURATION_MS / 1000.0
 #         end_sample_short = start_sample + int(duration_short_secs * sr)
 #
-#         if end_sample_short > len(audio_data):
-#             slice_data = audio_data[start_sample:]
-#             pad_length = end_sample_short - len(audio_data)
+#         if end_sample_short > len(audio_path):
+#             slice_data = audio_path[start_sample:]
+#             pad_length = end_sample_short - len(audio_path)
 #             y_window_short = np.pad(slice_data, (0, pad_length), mode='constant')
 #         else:
-#             y_window_short = audio_data[start_sample:end_sample_short]
+#             y_window_short = audio_path[start_sample:end_sample_short]
 #
 #         if len(y_window_short) == 0:
 #             continue
@@ -865,12 +865,12 @@ def classify_events(audio_data: np.ndarray, sr: int, onsets: list[float]) -> lis
 #         duration_long_secs = 1.5
 #         end_sample_long = start_sample + int(duration_long_secs * sr)
 #
-#         if end_sample_long > len(audio_data):
-#             slice_data = audio_data[start_sample:]
-#             pad_length = end_sample_long - len(audio_data)
+#         if end_sample_long > len(audio_path):
+#             slice_data = audio_path[start_sample:]
+#             pad_length = end_sample_long - len(audio_path)
 #             y_window_long = np.pad(slice_data, (0, pad_length), mode='constant')
 #         else:
-#             y_window_long = audio_data[start_sample:end_sample_long]
+#             y_window_long = audio_path[start_sample:end_sample_long]
 #
 #
 #         # 1. Extract the physics DNA
@@ -892,15 +892,15 @@ def classify_events(audio_data: np.ndarray, sr: int, onsets: list[float]) -> lis
 
 
 # --- LEGACY CODE ---
-# def classify_events(audio_data: np.ndarray, sr: int, onsets: list[float]) -> list[dict]:
+# def classify_events(audio_path: np.ndarray, sr: int, onsets: list[float]) -> list[dict]:
 # Wrapper to route detected onsets through the new Physics-First Classification Engine.
 # Uses the unified dictionary keys: time_sec, instruments, debug_features.
 
 #  classified_events = []
 
 # Calculate global parameters to evaluate amplitude gating
-# global_max = np.max(np.abs(audio_data)) if len(audio_data) > 0 else 1.0
-# duration = len(audio_data) / sr
+# global_max = np.max(np.abs(audio_path)) if len(audio_path) > 0 else 1.0
+# duration = len(audio_path) / sr
 
 # for onset_time in onsets:
 #  start_sample = int(onset_time * sr)
@@ -909,12 +909,12 @@ def classify_events(audio_data: np.ndarray, sr: int, onsets: list[float]) -> lis
 # duration_short_secs = ONSET_SLICE_DURATION_MS / 1000.0
 # end_sample_short = start_sample + int(duration_short_secs * sr)
 
-#        if end_sample_short > len(audio_data):
-#           slice_data = audio_data[start_sample:]
-#           pad_length = end_sample_short - len(audio_data)
+#        if end_sample_short > len(audio_path):
+#           slice_data = audio_path[start_sample:]
+#           pad_length = end_sample_short - len(audio_path)
 #           y_window_short = np.pad(slice_data, (0, pad_length), mode='constant')
 #       else:
-#           y_window_short = audio_data[start_sample:end_sample_short]
+#           y_window_short = audio_path[start_sample:end_sample_short]
 #
 #
 #        if len(y_window_short) == 0:
@@ -936,12 +936,12 @@ def classify_events(audio_data: np.ndarray, sr: int, onsets: list[float]) -> lis
 #        duration_long_secs = 1.5
 #        end_sample_long = start_sample + int(duration_long_secs * sr)
 
-#        if end_sample_long > len(audio_data):
-# slice_data = audio_data[start_sample:]
-# pad_length = end_sample_long - len(audio_data)
+#        if end_sample_long > len(audio_path):
+# slice_data = audio_path[start_sample:]
+# pad_length = end_sample_long - len(audio_path)
 # y_window_long = np.pad(slice_data, (0, pad_length), mode='constant')
 # else:
-#   y_window_long = audio_data[start_sample:end_sample_long]
+#   y_window_long = audio_path[start_sample:end_sample_long]
 
 
 # 1. Extract the physics DNA
@@ -1239,7 +1239,7 @@ def classify_events(audio_data: np.ndarray, sr: int, onsets: list[float]) -> lis
 #   return instruments
 
 # --- LEGACY CODE - COMMENTED OUT CLASSIFY_EVENTS ---
-# def classify_events(audio_data: np.ndarray, sr: int, onsets: list[float]) -> list[dict]:
+# def classify_events(audio_path: np.ndarray, sr: int, onsets: list[float]) -> list[dict]:
 #     #
 #     Wrapper to route detected onsets through the Physics-First Classification Engine.
 #     Uses the unified dictionary keys: time_sec, instruments, debug_features.
@@ -1254,12 +1254,12 @@ def classify_events(audio_data: np.ndarray, sr: int, onsets: list[float]) -> lis
 #         # #duration_secs = ONSET_SLICE_DURATION_MS / 1000.0
 #         # #end_sample = start_sample + int(duration_secs * sr)
 #         #
-#         # if end_sample > len(audio_data):
-#         #     end_sample = len(audio_data)
+#         # if end_sample > len(audio_path):
+#         #     end_sample = len(audio_path)
 #         # if start_sample >= end_sample:
 #         #     continue
 #         #
-#         # y_window = audio_data[start_sample:end_sample]
+#         # y_window = audio_path[start_sample:end_sample]
 #         # if len(y_window) == 0:
 #         #     continue
 #
@@ -1267,12 +1267,12 @@ def classify_events(audio_data: np.ndarray, sr: int, onsets: list[float]) -> lis
 #         duration_secs = ONSET_SLICE_DURATION_MS / 1000.0
 #         end_sample = start_sample + int(duration_secs * sr)
 #
-#         if end_sample > len(audio_data):
-#             slice_data = audio_data[start_sample:]
-#             pad_length = end_sample - len(audio_data)
+#         if end_sample > len(audio_path):
+#             slice_data = audio_path[start_sample:]
+#             pad_length = end_sample - len(audio_path)
 #             y_window = np.pad(slice_data, (0, pad_length), mode='constant')
 #         else:
-#             y_window = audio_data[start_sample:end_sample]
+#             y_window = audio_path[start_sample:end_sample]
 #
 #         if len(y_window) == 0:
 #             continue
@@ -1296,7 +1296,7 @@ def classify_events(audio_data: np.ndarray, sr: int, onsets: list[float]) -> lis
 
 
 # LEGACY CODE
-# def classify_events(audio_data: np.ndarray, sr: int, onsets: list[float]) -> list[dict]:
+# def classify_events(audio_path: np.ndarray, sr: int, onsets: list[float]) -> list[dict]:
 #
 #  Wrapper to route detected onsets through the Physics-First Classification Engine.
 #  Uses the unified dictionary keys: time_sec, instruments, debug_features.
@@ -1310,12 +1310,12 @@ def classify_events(audio_data: np.ndarray, sr: int, onsets: list[float]) -> lis
 #  duration_secs = ONSET_SLICE_DURATION_MS / 1000.0
 # end_sample = start_sample + int(duration_secs * sr)
 
-# if end_sample > len(audio_data):
-#    slice_data = audio_data[start_sample:]
-#        pad_length = end_sample - len(audio_data)
+# if end_sample > len(audio_path):
+#    slice_data = audio_path[start_sample:]
+#        pad_length = end_sample - len(audio_path)
 #        y_window = np.pad(slice_data, (0, pad_length), mode='constant')
 #    else:
-#        y_window = audio_data[start_sample:end_sample]
+#        y_window = audio_path[start_sample:end_sample]
 
 #    if len(y_window) == 0:
 #        continue
@@ -1396,10 +1396,10 @@ def classify_events(audio_data: np.ndarray, sr: int, onsets: list[float]) -> lis
 #
 #
 # # Leave these uncommented so not to break orchestration and docs
-# def classify_events_legacy (audio_data, sr, onsets) -> List[Dict[str, Any]]:
+# def classify_events_legacy (audio_path, sr, onsets) -> List[Dict[str, Any]]:
 #     # Classifies hits strictly based on Fundamental Frequency ($f_0$) ranges.
-#     # :param audio_data: Full audio array.
-#     # :type audio_data: np.ndarray
+#     # :param audio_path: Full audio array.
+#     # :type audio_path: np.ndarray
 #     # :param sr: Sampling rate.
 #     # :type sr: int
 #     # :param onsets: List of onset times.
@@ -1414,12 +1414,12 @@ def classify_events(audio_data: np.ndarray, sr: int, onsets: list[float]) -> lis
 #         start_sample = int(onset_time * sr)
 #         end_sample = int((onset_time + 0.15) * sr)
 #
-#         if end_sample > len(audio_data):
-#             end_sample = len(audio_data)
+#         if end_sample > len(audio_path):
+#             end_sample = len(audio_path)
 #         if start_sample >= end_sample:
 #             continue
 #
-#         y_window = audio_data[start_sample:end_sample]
+#         y_window = audio_path[start_sample:end_sample]
 #         if len(y_window) == 0:
 #             continue
 #

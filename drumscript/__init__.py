@@ -85,7 +85,7 @@ def extract_stems(audio_path, output_dir=None, output_format="wav", drumless=Fal
     result_path = extract_drum_stem(audio_path, output_dir=str(output_dir))
 
     results = separate_audio(
-        input_audio_path=audio_path, output_format=output_format, drumless=drumless, mute=mute, all_stems=all_stems, output_dir=str(output_dir)
+        audio_path=audio_path, output_format=output_format, drumless=drumless, mute=mute, all_stems=all_stems, output_dir=str(output_dir)
     )
 
     if full:
@@ -254,16 +254,16 @@ def transcribe(
     ]
 
     # 6. Build & export
-    out_dir = pathlib.Path(output_dir)
-    out_dir.mkdir(parents=True, exist_ok=True)
+    output_dir = pathlib.Path(output_dir)
+    output_dir.mkdir(parents=True, exist_ok=True)
     fname = output_filename or f"{input_stem}_transcription"
-    pdf_path = out_dir / f"{fname}.pdf"
+    pdf_path = output_dir / f"{fname}.pdf"
 
     print(f"...Building score: {pdf_path}")
     score_builder.build_score(
         detected_events=detected_events,
         tempo=tempo,
-        output_filepath=str(pdf_path),
+        output_path=str(pdf_path),
         time_signature=time_signature,
     )
     print("--- Done ---")
@@ -271,7 +271,7 @@ def transcribe(
     if full:
         return {
             "pdf_path": str(pdf_path),
-            "input_path": audio_path,
+            "audio_path": audio_path,
             "drum_stem_path": working_path if full_song else None,
             "tempo": tempo,
             "onsets": onsets,

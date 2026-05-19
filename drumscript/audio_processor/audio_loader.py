@@ -19,12 +19,12 @@ from drumscript.notation_generator.constants import SAMPLE_RATE
 # 1. Load audio file : -------------------------------------------------------------------------------
 
 
-def load_audio(file_path: str, sr: int | None = None) -> tuple[np.ndarray, int]:
+def load_audio(audio_path: str, sr: int | None = None) -> tuple[np.ndarray, int]:
     """
     Load an audio file and optionally resample it.
 
-    :param file_path: Path to the audio file (.wav, .mp3, .flac, .ogg, etc.).
-    :type file_path: str
+    :param audio_path: Path to the audio file (.wav, .mp3, .flac, .ogg, etc.).
+    :type audio_path: str
     :param sr: Target sample rate in Hz.
         - ``None`` (default): load at the file's native sample rate (no resampling).
         - An integer (e.g. ``44100``): resample to that rate.
@@ -49,15 +49,15 @@ def load_audio(file_path: str, sr: int | None = None) -> tuple[np.ndarray, int]:
     # sample_rate = SAMPLE_RATE
     try:
         audio_data, sample_rate = librosa.load(
-            file_path, sr=sr
+            audio_path, sr=sr
         )  # The librosa.load_audio() fct handles wide variety of audio formats, including .mp3, .wav, .flac, .ogg, etc.
         # return audio_data, sr
         return audio_data, sample_rate
     except FileNotFoundError:
-        print(f"Error: Audio file not found at {file_path}")
+        print(f"Error: Audio file not found at {audio_path}")
         raise
     except Exception as e:
-        print(f"Error loading audio file {file_path}: {e}")
+        print(f"Error loading audio file {audio_path}: {e}")
         raise
 
 
@@ -133,15 +133,15 @@ if __name__ == "__main__":
 
     # Set up argument parser
     parser = argparse.ArgumentParser(description="Load and process an audio file for DrumScript.")
-    parser.add_argument("audio_file_path", type=str, help="Path to the audio file to be processed.")
+    parser.add_argument("audio_path", type=str, help="Path to the audio file to be processed.")
 
     # Parse the command-line arguments
     args = parser.parse_args()
-    actual_drum_recording_path = args.audio_file_path
+    audio_path = args.audio_path
 
     try:
-        print(f"Attempting to load: {actual_drum_recording_path}")
-        audio, sr = load_audio(actual_drum_recording_path, sr=SAMPLE_RATE)
+        print(f"Attempting to load: {audio_path}")
+        audio, sr = load_audio(audio_path, sr=SAMPLE_RATE)
 
         normalised_audio = normalise_audio(audio)
         normalised_max = np.max(np.abs(normalised_audio))

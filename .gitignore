@@ -2,12 +2,23 @@
 # DrumScript .gitignore
 # =============================================================================
 
-# --- Python ---
+# ==========================================
+# PYTHON & ENVIRONMENTS
+# ==========================================
 __pycache__/
 *.py[cod]
 *$py.class
 *.so
 .Python
+.python-version
+.env
+env/
+venv/
+.venv/
+
+# ==========================================
+# DISTRIBUTION & PACKAGING
+# ==========================================
 build/
 develop-eggs/
 dist/
@@ -22,28 +33,26 @@ var/
 wheels/
 *.egg-info/
 .installed.cfg
-drumscript-*
 *.egg
 MANIFEST
 
-# --- Build & Distribution ---
-build/
-dist/
-sdist/
-wheels/
-.eggs/
-dist/
-downloads/
-eggs/
-*.egg-info/
+# ==========================================
+# IDEs, LINTERS & TOOLING
+# ==========================================
+.ruff_cache/
+.vscode/
+.idea/
+Makefile
 
-# --- Virtual Environments & Environment files ---
-.venv/
-.venv/
-*.env
-venv/
+# ==========================================
+# JUPYTER
+# ==========================================
+*.ipynb
+.ipynb_checkpoints/
 
-# --- OS Generated Files ---
+# ==========================================
+# OS GENERATED FILES
+# ==========================================
 .DS_Store
 .DS_Store?
 ._*
@@ -52,99 +61,88 @@ venv/
 ehthumbs.db
 Thumbs.db
 
-# --- Linters & Formatters ---
+# ==========================================
+# LOGS
+# ==========================================
+*.log
+*.logs
+logs/
+docs/logs/
+drumscript/logs/
+collect_code.log
 
-.ruff_cache/
-
-# --- IDE Settings ---
-.vscode/
-.idea/
-
-# --- Jupyter files/metadata --- 
-*.ipynb
-.ipynb_checkpoints/
-
-# --- Project Specific Output ---
-# Ignore generated outputs but keep the directory structure if needed
+# ==========================================
+# PROJECT OUTPUTS & DIRECTORIES
+# ==========================================
+outputs/
 outputs/*
 !outputs/.gitkeep
 output/*
-
-# --- Logs ---
-*.logs
-logs/
-drumscript/logs/
-*.log
-
-# --- Proofs ---
+drumscript_outputs/
+drumscript-*
 proofs/
 
-# --- Local Development & Testing ---
-# Ignore local test scripts if they are scratchpads
-# !local_tests/drumscript_lite/test_local_interface.py # Exception: Keep the main interface test
-# !local_tests/classification_engine/librosa
+# ==========================================
+# LOCAL DEVELOPMENT, TESTING & ARCHIVES
+# ==========================================
 .archive/
 .development/
-
-# --- Lar e/Binary Data ---
-# Ignore large audio files to keep repo light
-test_audio/
-reference_audio/
-training_data/
-machine-learning/models/*.h5
-machine-learning/models/*.joblib
-
-# --- Specific Tooling ---
-.python-version
-.env
-
-# --- Excluded Files for Lite Version ---
-# drumscript/main.py
-*machine-learning
-visuals/tempogram.png
 local_tests/
 local_tests/**
 
+# ==========================================
+# DATA, AUDIO & MACHINE LEARNING
+# ==========================================
+test_audio/
+reference_audio/
+training_data/
+*machine-learning
+machine-learning/models/*.h5
+machine-learning/models/*.joblib
 
-# Python
-__pycache__/
-*.py[cod]
-*.so
-.Python
-env/
-venv/
-.venv/
-
-
-
-# DrumScript Specific
-outputs/
-local_tests/
-drumscript_outputs/
+# ==========================================
+# DOCUMENTATION & SPECIFIC ASSETS
+# ==========================================
+docs/_build/
 docs/github_pages.sh
-! docs/_build/
-
-# docs/theory/images
+docs/theory/advanced_sound_analysis101.md
 docs/theory/images/FFmpeg-Logo.png
 docs/theory/images/FFmpeg-Logo.svg
 docs/theory/images/ismir-logo.png
 docs/theory/images/librosa-logo.png
 docs/theory/images/librosa-logo.svg
-docs/theory/advanced_sound_analysis101.md
+visuals/tempogram.png
 
-# Local scripts for testing
+# ==========================================
+# SCRIPTS, DEPLOYMENT & INFRASTRUCTURE
+# ==========================================
+aws_api.py
 backup.sh
-drumscript_full_review.txt
 collect_code.sh
-collect_code.log
 deploy.sh
-
-# GitHub Actions (Temporary Hide)
-.github/workflows/pages.yml
+Dockerfile
+drumscript_full_review.txt
+public/
 public/pyodideWorker.js
 tree_full.txt
+ui.py
+
+# ==========================================
+# TERRAFORM
+# ==========================================
+terraform/.terraform.lock.hcl
+terraform/.terraform.tfstate.lock.info
+terraform/iam.tf
+terraform/lambda.tf
+terraform/main.tf
+terraform/terraform.tfstate
+terraform/terraform.tfstate.backup
+terraform/.terraform/providers/registry.terraform.io/hashicorp/aws/5.100.0/darwin_arm64/LICENSE.txt
+terraform/.terraform/providers/registry.terraform.io/hashicorp/aws/5.100.0/darwin_arm64/terraform-provider-aws_v5.100.0_x5
+
+# ==========================================
+# GITHUB ACTIONS
+# ==========================================
+.github/workflows/pages.yml
+.github/workflows/deploy_aws.yml
 ! .github/workflows/publish.yml
-Makefile
-public/
-docs/logs/
-docs/guide/interactive/_templates

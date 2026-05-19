@@ -76,7 +76,8 @@ pip install drumscript
 ```bash
 git clone https://github.com/DrumScript/DrumScript.git
 cd DrumScript
-uv venv && source .venv/bin/activate && uv sync --extra dev
+uv sync # this will create a .venv
+source .venv/bin/activate && uv sync --extra dev
 pytest -m "not slow"
 ```
 

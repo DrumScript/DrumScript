@@ -352,30 +352,31 @@ data-aria-dark="Switch to auto color mode">
 </span><span data-line="74">    <span class="kn">from</span><span class="w"> </span><span class="nn">drumscript.notation_generator.constants</span><span class="w"> </span><span class="kn">import</span> <span class="n">SAMPLE_RATE</span>
 </span><span data-line="75">
 </span><span data-line="76">    <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">&quot;Estimate the tempo of an audio file.&quot;</span><span class="p">)</span>
-</span><span data-line="77">    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;audio_file_path&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Path to the audio file to be processed.&quot;</span><span class="p">)</span>
-</span><span data-line="78">    <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
-</span><span data-line="79">    <span class="c1"># actual_drum_recording_path = args.audio_file_path  # audio_file_path, relative to ROOT, not the path of this script</span>
-</span><span data-line="80">    <span class="n">input_audio_path</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">audio_file_path</span>  <span class="c1"># audio_file_path, relative to ROOT, not the path of this script</span>
-</span><span data-line="81">    <span class="n">sr</span> <span class="o">=</span> <span class="n">SAMPLE_RATE</span>
-</span><span data-line="82">
-</span><span data-line="83">    <span class="k">try</span><span class="p">:</span>
-</span><span data-line="84">        <span class="c1"># Load and normalise the audio</span>
-</span><span data-line="85">        <span class="c1"># print(f&quot;Attempting to load: {actual_drum_recording_path}&quot;)</span>
-</span><span data-line="86">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Attempting to load: </span><span class="si">{</span><span class="n">input_audio_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-</span><span data-line="87">        <span class="c1"># audio, sr = load_audio(actual_drum_recording_path, sr=44100)</span>
-</span><span data-line="88">        <span class="c1"># audio, sr = load_audio(actual_drum_recording_path, sr=sr)</span>
-</span><span data-line="89">        <span class="n">audio</span><span class="p">,</span> <span class="n">sr</span> <span class="o">=</span> <span class="n">load_audio</span><span class="p">(</span><span class="n">input_audio_path</span><span class="p">,</span> <span class="n">sr</span><span class="o">=</span><span class="n">sr</span><span class="p">)</span>
-</span><span data-line="90">        <span class="n">normalised_audio</span> <span class="o">=</span> <span class="n">normalise_audio</span><span class="p">(</span><span class="n">audio</span><span class="p">)</span>
-</span><span data-line="91">
-</span><span data-line="92">        <span class="c1"># Estimate the tempo</span>
-</span><span data-line="93">        <span class="n">bpm</span> <span class="o">=</span> <span class="n">estimate_tempo</span><span class="p">(</span><span class="n">normalised_audio</span><span class="p">,</span> <span class="n">sr</span><span class="p">)</span>
-</span><span data-line="94">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Estimated Tempo: </span><span class="si">{</span><span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">bpm</span><span class="p">))</span><span class="si">}</span><span class="s2"> BPM&quot;</span><span class="p">)</span>
-</span><span data-line="95">
-</span><span data-line="96">    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-</span><span data-line="97">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">An unexpected error occurred: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-</span><span data-line="98">    <span class="c1"># print(&quot;\n#==================================================================================================&quot;)</span>
-</span><span data-line="99">
-</span><span data-line="100"><span class="c1"># ------------------------------------------------------------------------------------------------------</span>
+</span><span data-line="77">    <span class="c1"># parser.add_argument(&quot;audio_file_path&quot;, type=str, help=&quot;Path to the audio file to be processed.&quot;)</span>
+</span><span data-line="78">    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;audio_path&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Path to the audio file to be processed.&quot;</span><span class="p">)</span>
+</span><span data-line="79">    <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
+</span><span data-line="80">    <span class="c1"># actual_drum_recording_path = args.audio_file_path  # audio_file_path, relative to ROOT, not the path of this script</span>
+</span><span data-line="81">    <span class="n">audio_path</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">audio_path</span>  <span class="c1"># audio_path, relative to ROOT, not the path of this script</span>
+</span><span data-line="82">    <span class="n">sr</span> <span class="o">=</span> <span class="n">SAMPLE_RATE</span>
+</span><span data-line="83">
+</span><span data-line="84">    <span class="k">try</span><span class="p">:</span>
+</span><span data-line="85">        <span class="c1"># Load and normalise the audio</span>
+</span><span data-line="86">        <span class="c1"># print(f&quot;Attempting to load: {actual_drum_recording_path}&quot;)</span>
+</span><span data-line="87">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Attempting to load: </span><span class="si">{</span><span class="n">audio_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span data-line="88">        <span class="c1"># audio, sr = load_audio(actual_drum_recording_path, sr=44100)</span>
+</span><span data-line="89">        <span class="c1"># audio, sr = load_audio(actual_drum_recording_path, sr=sr)</span>
+</span><span data-line="90">        <span class="n">audio</span><span class="p">,</span> <span class="n">sr</span> <span class="o">=</span> <span class="n">load_audio</span><span class="p">(</span><span class="n">audio_path</span><span class="p">,</span> <span class="n">sr</span><span class="o">=</span><span class="n">sr</span><span class="p">)</span>
+</span><span data-line="91">        <span class="n">normalised_audio</span> <span class="o">=</span> <span class="n">normalise_audio</span><span class="p">(</span><span class="n">audio</span><span class="p">)</span>
+</span><span data-line="92">
+</span><span data-line="93">        <span class="c1"># Estimate the tempo</span>
+</span><span data-line="94">        <span class="n">bpm</span> <span class="o">=</span> <span class="n">estimate_tempo</span><span class="p">(</span><span class="n">normalised_audio</span><span class="p">,</span> <span class="n">sr</span><span class="p">)</span>
+</span><span data-line="95">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Estimated Tempo: </span><span class="si">{</span><span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">bpm</span><span class="p">))</span><span class="si">}</span><span class="s2"> BPM&quot;</span><span class="p">)</span>
+</span><span data-line="96">
+</span><span data-line="97">    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+</span><span data-line="98">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">An unexpected error occurred: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span data-line="99">    <span class="c1"># print(&quot;\n#==================================================================================================&quot;)</span>
+</span><span data-line="100">
+</span><span data-line="101"><span class="c1"># ------------------------------------------------------------------------------------------------------</span>
 </span></pre></div>
         </article><button class="back-to-top" type="button">
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">

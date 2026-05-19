@@ -418,10 +418,10 @@ data-aria-dark="Switch to auto color mode">
 
 </span><span data-line="126">
 </span><span data-line="127">
-</span><span data-line="128"><span class="c1"># def generate_custom_pdf(detected_events, output_filepath, tempo, time_signature=&quot;4/4&quot;):</span>
+</span><span data-line="128"><span class="c1"># def generate_custom_pdf(detected_events, output_path, tempo, time_signature=&quot;4/4&quot;):</span>
 <div class="viewcode-block" id="export_pdf">
 <a class="viewcode-back" href="../../../generated/drumscript.notation_generator.pdf_exporter.export_pdf.html#drumscript.notation_generator.pdf_exporter.export_pdf">[docs]</a>
-</span><span data-line="129"><span class="k">def</span><span class="w"> </span><span class="nf">export_pdf</span><span class="p">(</span><span class="n">detected_events</span><span class="p">,</span> <span class="n">output_filepath</span><span class="p">,</span> <span class="n">tempo</span><span class="p">,</span> <span class="n">time_signature</span><span class="o">=</span><span class="s2">&quot;4/4&quot;</span><span class="p">):</span>
+</span><span data-line="129"><span class="k">def</span><span class="w"> </span><span class="nf">export_pdf</span><span class="p">(</span><span class="n">detected_events</span><span class="p">,</span> <span class="n">output_path</span><span class="p">,</span> <span class="n">tempo</span><span class="p">,</span> <span class="n">time_signature</span><span class="o">=</span><span class="s2">&quot;4/4&quot;</span><span class="p">):</span>
 </span><span data-line="130"><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span data-line="131"><span class="sd">    Generates a PDF drum score using ReportLab engine.</span>
 </span><span data-line="132"><span class="sd">    &quot;&quot;&quot;</span>
@@ -434,9 +434,9 @@ data-aria-dark="Switch to auto color mode">
 </span><span data-line="139">    <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
 </span><span data-line="140">        <span class="n">numerator</span><span class="p">,</span> <span class="n">denominator</span> <span class="o">=</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span>
 </span><span data-line="141">
-</span><span data-line="142">    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Generating PDF: </span><span class="si">{</span><span class="n">output_filepath</span><span class="si">}</span><span class="s2"> (Sig: </span><span class="si">{</span><span class="n">numerator</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">denominator</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="nb">int</span><span class="p">(</span><span class="n">tempo</span><span class="p">)</span><span class="si">}</span><span class="s2"> BPM)&quot;</span><span class="p">)</span>
+</span><span data-line="142">    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Generating PDF: </span><span class="si">{</span><span class="n">output_path</span><span class="si">}</span><span class="s2"> (Sig: </span><span class="si">{</span><span class="n">numerator</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">denominator</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="nb">int</span><span class="p">(</span><span class="n">tempo</span><span class="p">)</span><span class="si">}</span><span class="s2"> BPM)&quot;</span><span class="p">)</span>
 </span><span data-line="143">
-</span><span data-line="144">    <span class="n">c</span> <span class="o">=</span> <span class="n">canvas</span><span class="o">.</span><span class="n">Canvas</span><span class="p">(</span><span class="n">output_filepath</span><span class="p">,</span> <span class="n">pagesize</span><span class="o">=</span><span class="n">A4</span><span class="p">)</span>
+</span><span data-line="144">    <span class="n">c</span> <span class="o">=</span> <span class="n">canvas</span><span class="o">.</span><span class="n">Canvas</span><span class="p">(</span><span class="n">output_path</span><span class="p">,</span> <span class="n">pagesize</span><span class="o">=</span><span class="n">A4</span><span class="p">)</span>
 </span><span data-line="145">    <span class="n">c</span><span class="o">.</span><span class="n">setTitle</span><span class="p">(</span><span class="s2">&quot;DrumScript Transcription&quot;</span><span class="p">)</span>
 </span><span data-line="146">
 </span><span data-line="147">    <span class="n">system_width</span> <span class="o">=</span> <span class="n">PAGE_WIDTH</span> <span class="o">-</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">MARGIN_X</span><span class="p">)</span>
@@ -623,7 +623,7 @@ data-aria-dark="Switch to auto color mode">
 </span><span data-line="328">
 </span><span data-line="329">    <span class="n">c</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
 </span><span data-line="330">    <span class="c1"># print(&quot;\n# ------------------------------------------------------------------------------------&quot;)</span>
-</span><span data-line="331">    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;PDF successfully saved to: </span><span class="si">{</span><span class="n">output_filepath</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+</span><span data-line="331">    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;PDF successfully saved to: </span><span class="si">{</span><span class="n">output_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
 
 </span><span data-line="332">
 </span><span data-line="333">

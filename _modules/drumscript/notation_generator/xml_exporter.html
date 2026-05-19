@@ -307,16 +307,16 @@ data-aria-dark="Switch to auto color mode">
 </span><span data-line="30">
 </span><span data-line="31">    <span class="c1"># Ensure the parent directory of the requested file path exists</span>
 </span><span data-line="32">    <span class="n">xml_path</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-</span><span data-line="33">    <span class="n">output_filepath</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">xml_path</span><span class="p">)</span>
+</span><span data-line="33">    <span class="n">output_path</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">xml_path</span><span class="p">)</span>
 </span><span data-line="34">
-</span><span data-line="35">    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Generating MusicXML: </span><span class="si">{</span><span class="n">output_filepath</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span data-line="35">    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Generating MusicXML: </span><span class="si">{</span><span class="n">output_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </span><span data-line="36">
 </span><span data-line="37">    <span class="c1"># 2. Use music21&#39;s built-in MusicXML writer</span>
 </span><span data-line="38">    <span class="k">try</span><span class="p">:</span>
 </span><span data-line="39">        <span class="c1"># music21&#39;s score.write() natively handles the XML translation</span>
-</span><span data-line="40">        <span class="n">score</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;musicxml&quot;</span><span class="p">,</span> <span class="n">fp</span><span class="o">=</span><span class="n">output_filepath</span><span class="p">)</span>
-</span><span data-line="41">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;MusicXML successfully saved to: </span><span class="si">{</span><span class="n">output_filepath</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-</span><span data-line="42">        <span class="k">return</span> <span class="n">output_filepath</span>
+</span><span data-line="40">        <span class="n">score</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;musicxml&quot;</span><span class="p">,</span> <span class="n">fp</span><span class="o">=</span><span class="n">output_path</span><span class="p">)</span>
+</span><span data-line="41">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;MusicXML successfully saved to: </span><span class="si">{</span><span class="n">output_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span data-line="42">        <span class="k">return</span> <span class="n">output_path</span>
 </span><span data-line="43">
 </span><span data-line="44">    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
 </span><span data-line="45">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Failed to generate MusicXML: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>

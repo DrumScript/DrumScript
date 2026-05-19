@@ -6,19 +6,26 @@ Module for rendering the drum score to PDF using ReportLab.
 
 from collections import defaultdict
 
-import music21
-from reportlab.lib import colors
-from reportlab.lib.pagesizes import A4
-from reportlab.pdfgen import canvas
-
 from drumscript.notation_generator import constants
 
-# print("\n# ------------------------------------------------------------------------------------")
-# datetimestamp = datetime.now()
-# print(f'\ndate/time: {datetimestamp}')
-
 # --- Configuration Constants ---
-PAGE_WIDTH, PAGE_HEIGHT = A4
+try:
+    from reportlab.lib.pagesizes import A4
+
+    PAGE_WIDTH, PAGE_HEIGHT = A4
+except (ImportError, ValueError):
+    # Fallback for Sphinx autodoc mock imports
+    PAGE_WIDTH, PAGE_HEIGHT = 595.27, 841.89
+
+try:
+    import music21
+    from reportlab.lib import colors
+    from reportlab.pdfgen import canvas
+except ImportError:
+    music21 = None
+    colors = None
+    canvas = None
+
 MARGIN_X = 50
 MARGIN_Y = 50
 # STAFF_SPACING = 120
@@ -27,7 +34,10 @@ LINE_SPACING = 6
 CLEF_WIDTH = 40
 BARS_PER_SYSTEM = 4
 
-REF_PITCH_MIDDLE_LINE = music21.pitch.Pitch("B3")
+try:
+    REF_PITCH_MIDDLE_LINE = music21.pitch.Pitch("B3")
+except (AttributeError, TypeError):
+    REF_PITCH_MIDDLE_LINE = None
 
 
 def get_vertical_position(staff_position_str: str, staff_y_base: float) -> float:
@@ -480,3 +490,11 @@ def export_pdf(detected_events, output_filepath, tempo, time_signature="4/4"):
         #                 c.setLineWidth(1)
         #                 c.line(nx - 2.7, beam_y, nx + 2, beam_y + 5)
 """
+
+
+# --------------------------------------------------------------------------uncomment during testing
+# from datetime import datetime
+# print("\n# ------------------------------------------------------------------------------------")
+# datetimestamp = datetime.now()
+# print(f'\ndate/time: {datetimestamp}')
+# --------------------------------------------------------------------------------------------------

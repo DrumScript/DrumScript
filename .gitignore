@@ -1,3 +1,7 @@
+# =============================================================================
+# DrumScript .gitignore
+# =============================================================================
+
 # --- Python ---
 __pycache__/
 *.py[cod]
@@ -22,8 +26,22 @@ drumscript-*
 *.egg
 MANIFEST
 
-# --- Virtual Environments ---
+# --- Build & Distribution ---
+build/
+dist/
+sdist/
+wheels/
+.eggs/
+dist/
+downloads/
+eggs/
+*.egg-info/
+
+# --- Virtual Environments & Environment files ---
 .venv/
+.venv/
+*.env
+venv/
 
 # --- OS Generated Files ---
 .DS_Store
@@ -34,15 +52,13 @@ MANIFEST
 ehthumbs.db
 Thumbs.db
 
-
-# --- Linters ---
+# --- Linters & Formatters ---
 
 .ruff_cache/
 
 # --- IDE Settings ---
 .vscode/
 .idea/
-
 
 # --- Jupyter files/metadata --- 
 *.ipynb
@@ -99,26 +115,14 @@ env/
 venv/
 .venv/
 
-# Distribution
-build/
-develop-eggs/
-dist/
-downloads/
-eggs/
-.eggs/
-*.egg-info/
+
 
 # DrumScript Specific
 outputs/
 local_tests/
-test_audio/
 drumscript_outputs/
 docs/github_pages.sh
 ! docs/_build/
-
-# IDEs
-.vscode/
-.idea/
 
 # docs/theory/images
 docs/theory/images/FFmpeg-Logo.png
@@ -135,32 +139,12 @@ collect_code.sh
 collect_code.log
 deploy.sh
 
-
 # GitHub Actions (Temporary Hide)
 .github/workflows/pages.yml
-
-## TEMPORARILY GITIGNORING AWS FREE INFRA IN TESTING
-.github/workflows/deploy_aws.yml
-aws_api.py
-Dockerfile
-ui.py
 public/pyodideWorker.js
-terraform/.terraform.lock.hcl
-terraform/iam.tf
-terraform/lambda.tf
-terraform/main.tf
-terraform/terraform.tfstate
-terraform/terraform.tfstate.backup
-terraform/.terraform/providers/registry.terraform.io/hashicorp/aws/5.100.0/darwin_arm64/LICENSE.txt
-terraform/.terraform/providers/registry.terraform.io/hashicorp/aws/5.100.0/darwin_arm64/terraform-provider-aws_v5.100.0_x5
-terraform/.terraform.tfstate.lock.info
-
 tree_full.txt
 ! .github/workflows/publish.yml
-! .github/workflows/publish.yml
-
 Makefile
 public/
-.DS_Store # if not already there
 docs/logs/
 docs/guide/interactive/_templates

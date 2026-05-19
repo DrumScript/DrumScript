@@ -6,7 +6,6 @@
 This module contains functions for visualising tempo using librosa's tempogram function
 """
 
-# Import packages: ------------------------------------------------------------------------------------------------
 import librosa
 import matplotlib
 
@@ -24,14 +23,15 @@ from drumscript.notation_generator.constants import HOP_LENGTH, SAMPLE_RATE
 
 # --- Define function --------------------------------------------------------------------------------------------
 # def visualise_tempogram(audio_data, sr, hop_length=256, output_path="tempogram.png"):
-def visualise_tempogram(audio_data, sr, hop_length=HOP_LENGTH, output_path="tempogram.png"):
+# def visualise_tempogram(audio_data, sr, hop_length=HOP_LENGTH, output_path="tempogram.png"):
+def visualise_tempogram(audio_input, sr, hop_length=HOP_LENGTH, output_path="tempogram.png"):
     """
     Calculates and saves a tempogram visualization for the given audio in folder `visuals`. Creates folder if not present.
 
     Calculates and saves a tempogram visualization.
 
-    :param audio_data: The audio time series.
-    :type audio_data: np.ndarray
+    :param audio_input: The audio time series.
+    :type audio_input: np.ndarray
     :param sr: Sampling rate.
     :type sr: int
     :param hop_length: Hop length for analysis.
@@ -40,9 +40,9 @@ def visualise_tempogram(audio_data, sr, hop_length=HOP_LENGTH, output_path="temp
     :type output_path: str, optional
     """
     sr = SAMPLE_RATE
-    oenv = librosa.onset.onset_strength(y=audio_data, sr=SAMPLE_RATE, hop_length=HOP_LENGTH)
+    oenv = librosa.onset.onset_strength(y=audio_input, sr=SAMPLE_RATE, hop_length=HOP_LENGTH)
     tempogram = librosa.feature.tempogram(onset_envelope=oenv, sr=SAMPLE_RATE, hop_length=HOP_LENGTH)
-    global_tempo = estimate_tempo(audio_data, sr)
+    global_tempo = estimate_tempo(audio_input, sr)
 
     fig, ax = plt.subplots(figsize=(12, 6))
     librosa.display.specshow(tempogram, sr=SAMPLE_RATE, hop_length=HOP_LENGTH, x_axis="time", y_axis="tempo", cmap="magma", ax=ax)
@@ -95,8 +95,3 @@ if __name__ == "__main__":
 
     except Exception as e:
         print(f"\nAn unexpected error occurred: {e}")
-# ===========================================================================================================
-# MAIN BLOCK - for local testing of this function
-
-# Uncomment to use, for clearer error logs
-# print("\n# ------------------------------------------------------------------------------------")

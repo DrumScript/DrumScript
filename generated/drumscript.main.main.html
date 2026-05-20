@@ -2,7 +2,7 @@
 <html lang="en" data-accent-color="violet" data-content_root="../">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"><title>drumscript.notation_generator.midi_exporter.export_to_midi - DrumScript 0.1.3 documentation</title><link rel="author" title="About these documents" href="../about.html" /><link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="drumscript.notation_generator.xml_exporter" href="drumscript.notation_generator.xml_exporter.html" /><link rel="prev" title="drumscript.notation_generator.midi_exporter" href="drumscript.notation_generator.midi_exporter.html" /><script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"><title>drumscript.main.main - DrumScript 0.1.3 documentation</title><link rel="author" title="About these documents" href="../about.html" /><link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><script>
     function setColorMode(t){let e=document.documentElement;e.setAttribute("data-color-mode",t);let a=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches,s=t;"auto"===t&&(s=a?"dark":"light"),"light"===s?(e.classList.remove("dark"),e.classList.add("light")):(e.classList.remove("light"),e.classList.add("dark"))}
     setColorMode(localStorage._theme||"auto");
   </script><link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=e1a1ceaf" />
@@ -20,7 +20,7 @@
 }
 </style>
     
-  <meta property="og:type" content="website"/><meta property="og:title" content="drumscript.notation_generator.midi_exporter.export_to_midi"/>
+  <meta property="og:type" content="website"/><meta property="og:title" content="drumscript.main.main"/>
     <meta name="twitter:card" content="summary"/>
   </head>
 <body><div class="sy-head">
@@ -86,8 +86,8 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l1"><a class="reference internal" href="../theory/sources.html"><strong><code class="docutils literal notranslate"><span class="pre">Theory/</span></code> Sources</strong></a></li>
 </ul>
 <p class="caption" role="heading" aria-level="3"><span class="caption-text">API Reference</span></p>
-<ul class="current">
-<li class="toctree-l1 current"><a class="reference internal" href="../api.html">API Reference</a><ul class="current">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../api.html">API Reference</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="drumscript.notation_generator.constants.html">drumscript.notation_generator.constants</a></li>
 <li class="toctree-l2"><a class="reference internal" href="drumscript.transcribe.html">drumscript.transcribe</a></li>
 <li class="toctree-l2"><a class="reference internal" href="drumscript.extract_stems.html">drumscript.extract_stems</a></li>
@@ -161,8 +161,8 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l3"><a class="reference internal" href="drumscript.notation_generator.pdf_exporter.get_vertical_position.html">drumscript.notation_generator.pdf_exporter.get_vertical_position</a></li>
 </ul>
 </li>
-<li class="toctree-l2 current"><a class="reference internal" href="drumscript.notation_generator.midi_exporter.html">drumscript.notation_generator.midi_exporter</a><ul class="current">
-<li class="toctree-l3 current"><a class="current reference internal" href="#">drumscript.notation_generator.midi_exporter.export_to_midi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="drumscript.notation_generator.midi_exporter.html">drumscript.notation_generator.midi_exporter</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="drumscript.notation_generator.midi_exporter.export_to_midi.html">drumscript.notation_generator.midi_exporter.export_to_midi</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="drumscript.notation_generator.xml_exporter.html">drumscript.notation_generator.xml_exporter</a><ul>
@@ -215,7 +215,7 @@ data-aria-dark="Switch to auto color mode">
       <i class="i-lucide close"></i>
     </button>
     <div class="sy-scrollbar sy-rside-inner px-6 xl:top-16 xl:sticky xl:pl-0 pt-6 pb-4"><div class="localtoc"><h3>On this page</h3><ul>
-<li><a class="reference internal" href="#drumscript.notation_generator.midi_exporter.export_to_midi"><code class="docutils literal notranslate"><span class="pre">export_to_midi()</span></code></a></li>
+<li><a class="reference internal" href="#drumscript.main.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
 </ul>
 </div><a class="js-repo-stats repo-stats flex items-center" href="https://github.com/DrumScript/DrumScript"
   data-type="github" data-user="DrumScript" data-repo="DrumScript">
@@ -239,7 +239,7 @@ data-aria-dark="Switch to auto color mode">
     </span>
   </span>
 </a><div class="edit-this-page">
-  <a href="https://github.com/DrumScript/DrumScript/blob/main/docs/generated/drumscript.notation_generator.midi_exporter.export_to_midi.rst">Edit this page</a>
+  <a href="https://github.com/DrumScript/DrumScript/blob/main/docs/generated/drumscript.main.main.rst">Edit this page</a>
 </div><div id="ethical-ad-placement" data-ea-publisher="readthedocs"></div></div>
   </aside>
   <div class="rside-overlay js-menu" role="button" aria-label="Close Table of Contents" aria-controls="rside" aria-expanded="false"></div>
@@ -256,16 +256,8 @@ data-aria-dark="Switch to auto color mode">
         <span>/</span>
         <meta itemprop="position" content="1" />
       </li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-        <a itemprop="item" href="../api.html"><span itemprop="name">API Reference</span></a>
-        <span>/</span>
+        <strong itemprop="name">drumscript.main.main</strong>
         <meta itemprop="position" content="2" />
-      </li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-        <a itemprop="item" href="drumscript.notation_generator.midi_exporter.html"><span itemprop="name">drumscript.notation_generator.midi_exporter</span></a>
-        <span>/</span>
-        <meta itemprop="position" content="3" />
-      </li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-        <strong itemprop="name">drumscript.notation_generator.midi_exporter.export_to_midi</strong>
-        <meta itemprop="position" content="4" />
       </li></ol>
     <div class="xl:hidden ml-1">
       <button class="js-menu" aria-label="Show table of contents" type="button" aria-controls="rside"
@@ -281,7 +273,7 @@ data-aria-dark="Switch to auto color mode">
     <button
       type="button"
       class="js-copy px-3 py-1 inline-flex items-center gap-1"
-      data-url="https://raw.githubusercontent.com/DrumScript/DrumScript/refs/heads/main/docs/generated/drumscript.notation_generator.midi_exporter.export_to_midi.rst.txt"
+      data-url="https://raw.githubusercontent.com/DrumScript/DrumScript/refs/heads/main/docs/generated/drumscript.main.main.rst.txt"
     >
       <i class="i-lucide" data-icon="copy"></i>
       <span>Copy page</span>
@@ -295,35 +287,40 @@ data-aria-dark="Switch to auto color mode">
     <div role="presentation">
       <div class="flex flex-col" role="group">
         <button class="js-copy" type="button" role="menuitem"
-          data-url="https://raw.githubusercontent.com/DrumScript/DrumScript/refs/heads/main/docs/generated/drumscript.notation_generator.midi_exporter.export_to_midi.rst.txt">
+          data-url="https://raw.githubusercontent.com/DrumScript/DrumScript/refs/heads/main/docs/generated/drumscript.main.main.rst.txt">
           <span class="iconify-icon">
             <i class="i-lucide" data-icon="copy"></i>
           </span>
           <span>Copy page</span>
         </button>
-        <a role="menuitem" href="https://raw.githubusercontent.com/DrumScript/DrumScript/refs/heads/main/docs/generated/drumscript.notation_generator.midi_exporter.export_to_midi.rst.txt" target="_blank" rel="nofollow"><iconify-icon icon="bi:code-slash"></iconify-icon>
-            <span>View Source</span></a><a role="menuitem" href="https://chatgpt.com/?hints=search&q=Read%20https%3A//raw.githubusercontent.com/DrumScript/DrumScript/refs/heads/main/docs/generated/drumscript.notation_generator.midi_exporter.export_to_midi.rst.txt%20so%20I%20can%20ask%20questions%20about%20it." target="_blank" rel="nofollow">
+        <a role="menuitem" href="https://raw.githubusercontent.com/DrumScript/DrumScript/refs/heads/main/docs/generated/drumscript.main.main.rst.txt" target="_blank" rel="nofollow"><iconify-icon icon="bi:code-slash"></iconify-icon>
+            <span>View Source</span></a><a role="menuitem" href="https://chatgpt.com/?hints=search&q=Read%20https%3A//raw.githubusercontent.com/DrumScript/DrumScript/refs/heads/main/docs/generated/drumscript.main.main.rst.txt%20so%20I%20can%20ask%20questions%20about%20it." target="_blank" rel="nofollow">
           <iconify-icon icon="bi:openai"></iconify-icon>
           <span>Open in ChatGPT</span>
-        </a><a role="menuitem" href="https://claude.ai/new?q=Read%20https%3A//raw.githubusercontent.com/DrumScript/DrumScript/refs/heads/main/docs/generated/drumscript.notation_generator.midi_exporter.export_to_midi.rst.txt%20so%20I%20can%20ask%20questions%20about%20it." target="_blank" rel="nofollow">
+        </a><a role="menuitem" href="https://claude.ai/new?q=Read%20https%3A//raw.githubusercontent.com/DrumScript/DrumScript/refs/heads/main/docs/generated/drumscript.main.main.rst.txt%20so%20I%20can%20ask%20questions%20about%20it." target="_blank" rel="nofollow">
           <iconify-icon icon="bi:claude"></iconify-icon>
           <span>Open in Claude</span>
         </a></div>
     </div>
   </div>
 </div><article class="yue" role="main">
-          <section id="drumscript-notation-generator-midi-exporter-export-to-midi">
-<h1>drumscript.notation_generator.midi_exporter.export_to_midi<a class="headerlink" href="#drumscript-notation-generator-midi-exporter-export-to-midi" title="Link to this heading">¶</a></h1>
+          <section id="drumscript-main-main">
+<h1>drumscript.main.main<a class="headerlink" href="#drumscript-main-main" title="Link to this heading">¶</a></h1>
 <dl class="py function">
-<dt class="sig sig-object py" id="drumscript.notation_generator.midi_exporter.export_to_midi">
-<span class="sig-name descname"><span class="pre">export_to_midi</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">classified_events</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tempo</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">120.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/drumscript/notation_generator/midi_exporter.html#export_to_midi"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drumscript.notation_generator.midi_exporter.export_to_midi" title="Link to this definition">¶</a></dt>
-<dd><p>Takes a list of event dictionaries and writes a standard .mid file.</p>
+<dt class="sig sig-object py" id="drumscript.main.main">
+<span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_audio_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">full_song</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_signature</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'4/4'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">drumless</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mute</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">all_stems</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_format</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'wav'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_rudiment</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/drumscript/main.html#main"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drumscript.main.main" title="Link to this definition">¶</a></dt>
+<dd><p>Main orchestration function for DrumScript.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>classified_events</strong> – List of dicts containing ‘time_sec’ and ‘instruments’.</p></li>
-<li><p><strong>output_path</strong> – Where to save the file (e.g., ‘output/drum_score.mid’).</p></li>
-<li><p><strong>tempo</strong> – The detected BPM of the track.</p></li>
+<li><p><strong>input_audio_path</strong> (<em>str</em>) – Path to the input audio file.</p></li>
+<li><p><strong>full_song</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, separates drums and generates score.</p></li>
+<li><p><strong>time_signature</strong> (<em>str</em><em>, </em><em>optional</em>) – Time signature for notation, defaults to “4/4”.</p></li>
+<li><p><strong>drumless</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, generates a drumless backing track.</p></li>
+<li><p><strong>mute</strong> (<em>list</em><em>, </em><em>optional</em>) – List of stems to mute (e.g. [‘bass’]).</p></li>
+<li><p><strong>all_stems</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, exports all individual stems.</p></li>
+<li><p><strong>output_format</strong> (<em>str</em><em>, </em><em>optional</em>) – Output format (‘wav’ or ‘mp3’), defaults to “wav”.</p></li>
+<li><p><strong>is_rudiment</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, optimises classification for isolated single beats, rudiments, or paradiddles by applying dynamic transient gating.</p></li>
 </ul>
 </dd>
 </dl>
@@ -336,21 +333,7 @@ data-aria-dark="Switch to auto color mode">
     <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
   </svg>
   <span>Back to top</span>
-</button><div class="navigation flex print:hidden"><div class="navigation-prev">
-    <a href="drumscript.notation_generator.midi_exporter.html">
-      <i class="i-lucide chevron-left"></i>
-      <div class="page-info">
-        <span>Previous</span><div class="title">drumscript.notation_generator.midi_exporter</div></div>
-    </a>
-  </div><div class="navigation-next">
-    <a href="drumscript.notation_generator.xml_exporter.html">
-      <div class="page-info">
-        <span>Next</span>
-        <div class="title">drumscript.notation_generator.xml_exporter</div>
-      </div>
-      <i class="i-lucide chevron-right"></i>
-    </a>
-  </div></div></div>
+</button><div class="navigation flex print:hidden"></div></div>
     </div>
   </main>
 </div>

@@ -6,7 +6,7 @@
     function setColorMode(t){let e=document.documentElement;e.setAttribute("data-color-mode",t);let a=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches,s=t;"auto"===t&&(s=a?"dark":"light"),"light"===s?(e.classList.remove("dark"),e.classList.add("light")):(e.classList.remove("light"),e.classList.add("dark"))}
     setColorMode(localStorage._theme||"auto");
   </script><link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=e1a1ceaf" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/shibuya.css?v=44020203" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/shibuya.css?v=9454f7d5" />
     <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
     <link media="print" rel="stylesheet" type="text/css" href="../../../_static/print.css?v=20ff2c19" />
     <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=5885bd2b" />
@@ -19,7 +19,8 @@
   --sy-f-heading: "Inter", var(--sy-f-sys), var(--sy-f-cjk), sans-serif;
 }
 </style>
-    <meta property="og:type" content="website"/><meta property="og:title" content="drumscript.audio_processor.onset_detector"/>
+    
+  <meta property="og:type" content="website"/><meta property="og:title" content="drumscript.audio_processor.onset_detector"/>
     <meta name="twitter:card" content="summary"/>
   </head>
 <body><div class="sy-head">
@@ -186,10 +187,10 @@ data-aria-dark="Switch to auto color mode">
 <p class="caption" role="heading" aria-level="3"><span class="caption-text">Runbooks</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../guide/interactive/index.html">Interactive Runbooks</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../../guide/interactive/create_backing_track.html">Create backing track</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../guide/interactive/extract_drums.html">Extract drums from a song</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../guide/interactive/create_backing_track.html">Create a Drumless Backing Track</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../guide/interactive/extract_drums.html">Extract Drums from a Song</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../guide/interactive/measure_tempo.html">Measure Tempo</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../guide/interactive/transcribe.html">Transcribe a song using DrumScript</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../guide/interactive/transcribe.html">Transcribe a Drum Track</a></li>
 </ul>
 </li>
 </ul>
@@ -432,7 +433,7 @@ data-aria-dark="Switch to auto color mode">
 </span><span data-line="151">
 </span><span data-line="152">        <span class="c1"># Required for CLI argparsing</span>
 </span><span data-line="153">        <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">&quot;Detect onsets in drum audio.&quot;</span><span class="p">)</span>
-</span><span data-line="154">        <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;input_audio&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Path to the input audio file&quot;</span><span class="p">)</span>
+</span><span data-line="154">        <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;audio_path&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Path to the input audio file&quot;</span><span class="p">)</span>
 </span><span data-line="155">        <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
 </span><span data-line="156">
 </span><span data-line="157">        <span class="c1"># sr = 44100 # Target sample rate for processing</span>
@@ -446,7 +447,7 @@ data-aria-dark="Switch to auto color mode">
 </span><span data-line="165">        <span class="c1"># Go up one level from audio_processor/onset_detector.py to the outer DRUMSCRIPT/ folder</span>
 </span><span data-line="166">        <span class="n">project_root</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">current_script_dir</span><span class="p">,</span> <span class="s2">&quot;..&quot;</span><span class="p">,</span> <span class="s2">&quot;..&quot;</span><span class="p">))</span>
 </span><span data-line="167">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;project_root: </span><span class="si">{</span><span class="n">project_root</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-</span><span data-line="168">        <span class="n">audio_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">input_audio</span><span class="p">)</span>
+</span><span data-line="168">        <span class="n">audio_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">audio_path</span><span class="p">)</span>
 </span><span data-line="169">
 </span><span data-line="170">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;audio_path: </span><span class="si">{</span><span class="n">audio_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </span><span data-line="171">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Attempting to load: </span><span class="si">{</span><span class="n">audio_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
@@ -542,5 +543,5 @@ data-aria-dark="Switch to auto color mode">
       <script src="../../../_static/documentation_options.js?v=360bc84d"></script>
       <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
       <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
-      <script src="../../../_static/shibuya.js?v=cac61aee"></script></body>
+      <script src="../../../_static/shibuya.js?v=50760d75"></script></body>
 </html>

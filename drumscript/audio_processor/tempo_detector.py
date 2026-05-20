@@ -74,19 +74,20 @@ if __name__ == "__main__":
     from drumscript.notation_generator.constants import SAMPLE_RATE
 
     parser = argparse.ArgumentParser(description="Estimate the tempo of an audio file.")
-    parser.add_argument("audio_file_path", type=str, help="Path to the audio file to be processed.")
+    # parser.add_argument("audio_file_path", type=str, help="Path to the audio file to be processed.")
+    parser.add_argument("audio_path", type=str, help="Path to the audio file to be processed.")
     args = parser.parse_args()
     # actual_drum_recording_path = args.audio_file_path  # audio_file_path, relative to ROOT, not the path of this script
-    input_audio_path = args.audio_file_path  # audio_file_path, relative to ROOT, not the path of this script
+    audio_path = args.audio_path  # audio_path, relative to ROOT, not the path of this script
     sr = SAMPLE_RATE
 
     try:
         # Load and normalise the audio
         # print(f"Attempting to load: {actual_drum_recording_path}")
-        print(f"Attempting to load: {input_audio_path}")
+        print(f"Attempting to load: {audio_path}")
         # audio, sr = load_audio(actual_drum_recording_path, sr=44100)
         # audio, sr = load_audio(actual_drum_recording_path, sr=sr)
-        audio, sr = load_audio(input_audio_path, sr=sr)
+        audio, sr = load_audio(audio_path, sr=sr)
         normalised_audio = normalise_audio(audio)
 
         # Estimate the tempo

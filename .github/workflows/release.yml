@@ -83,15 +83,16 @@ jobs:
       - name: Bump docs/versions.json
         run: |
           if [ -f docs/versions.json ]; then
-            # Add the new version to the JSON array if not already present
             python3 -c "
           import json
           with open('docs/versions.json') as f:
               data = json.load(f)
-          versions = [v['version'] if isinstance(v, dict) else v for v in data]
+          items = data.get('list', [])
+          versions = [v['version'] if isinstance(v, dict) else v for v in items]
           if '${{ env.VERSION }}' not in versions:
-              entry = {'version': '${{ env.VERSION }}', 'url': '/DrumScript/'}
-              data.insert(0, entry)
+              entry = {'name': '${{ env.VERSION }} (Alpha)', 'version': '${{ env.VERSION }}'}
+              items.insert(0, entry)
+              data['list'] = items
               with open('docs/versions.json', 'w') as f:
                   json.dump(data, f, indent=2)
               print(f'Added ${{ env.VERSION }} to versions.json')

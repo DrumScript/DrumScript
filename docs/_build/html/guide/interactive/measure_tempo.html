@@ -2,11 +2,11 @@
 <html lang="en" data-accent-color="violet" data-content_root="../../">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Measure Tempo - DrumScript 0.1.3 documentation</title><link rel="author" title="About these documents" href="../../about.html" /><link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" /><link rel="next" title="Transcribe a song using DrumScript" href="transcribe.html" /><link rel="prev" title="Extract drums from a song" href="extract_drums.html" /><script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Measure Tempo - DrumScript 0.1.3 documentation</title><link rel="author" title="About these documents" href="../../about.html" /><link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" /><link rel="next" title="Transcribe a Drum Track" href="transcribe.html" /><link rel="prev" title="Extract Drums from a Song" href="extract_drums.html" /><script>
     function setColorMode(t){let e=document.documentElement;e.setAttribute("data-color-mode",t);let a=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches,s=t;"auto"===t&&(s=a?"dark":"light"),"light"===s?(e.classList.remove("dark"),e.classList.add("light")):(e.classList.remove("light"),e.classList.add("dark"))}
     setColorMode(localStorage._theme||"auto");
   </script><link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=e1a1ceaf" />
-    <link rel="stylesheet" type="text/css" href="../../_static/shibuya.css?v=44020203" />
+    <link rel="stylesheet" type="text/css" href="../../_static/shibuya.css?v=9454f7d5" />
     <link rel="stylesheet" type="text/css" href="../../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
     <link media="print" rel="stylesheet" type="text/css" href="../../_static/print.css?v=20ff2c19" />
     <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=5885bd2b" />
@@ -19,7 +19,8 @@
   --sy-f-heading: "Inter", var(--sy-f-sys), var(--sy-f-cjk), sans-serif;
 }
 </style>
-    <meta property="og:type" content="website"/><meta property="og:title" content="Measure Tempo"/>
+    
+  <meta property="og:type" content="website"/><meta property="og:title" content="Measure Tempo"/>
     <meta name="twitter:card" content="summary"/>
   </head>
 <body><div class="sy-head">
@@ -186,10 +187,10 @@ data-aria-dark="Switch to auto color mode">
 <p class="caption" role="heading" aria-level="3"><span class="caption-text">Runbooks</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">Interactive Runbooks</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="create_backing_track.html">Create backing track</a></li>
-<li class="toctree-l2"><a class="reference internal" href="extract_drums.html">Extract drums from a song</a></li>
+<li class="toctree-l2"><a class="reference internal" href="create_backing_track.html">Create a Drumless Backing Track</a></li>
+<li class="toctree-l2"><a class="reference internal" href="extract_drums.html">Extract Drums from a Song</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Measure Tempo</a></li>
-<li class="toctree-l2"><a class="reference internal" href="transcribe.html">Transcribe a song using DrumScript</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transcribe.html">Transcribe a Drum Track</a></li>
 </ul>
 </li>
 </ul>
@@ -310,21 +311,23 @@ data-aria-dark="Switch to auto color mode">
 </div><article class="yue" role="main">
           <section id="measure-tempo">
 <h1>Measure Tempo<a class="headerlink" href="#measure-tempo" title="Link to this heading">¶</a></h1>
-<p><em>(Note: We are using a copyright-free synthetic track for this demonstration).</em></p>
+<p>DrumScript estimates the tempo (BPM) of any audio file using a <strong>spectral onset envelope</strong> approach.</p>
+<p>Under the hood, <code class="docutils literal notranslate"><span class="pre">ds.detect_tempo()</span></code> works by:</p>
+<ol class="arabic simple">
+<li><p>Computing an <strong>onset strength envelope</strong> — a curve that peaks wherever a drum hit occurs.</p></li>
+<li><p>Building a <strong>tempogram</strong> — a matrix that measures how periodic (i.e. “beat-like”) the onset envelope is at every possible BPM.</p></li>
+<li><p>Summing the tempogram energy across time, then picking the BPM with the strongest peak — but only within a plausible musical range (60–240 BPM) to avoid artifacts.</p></li>
+</ol>
+<p>If the audio is shorter than 1 second, tempo estimation is unreliable, so DrumScript defaults to 120 BPM.</p>
+<p><em>(Note: We are using a copyright-free synthetic track for this demonstration.)</em></p>
 <!--date_created:sat-16-may-2026-->
-<!--date_updated:sat-16-may-2026-->
+<!--date_updated:tues-19-may-2026-->
 <hr class="docutils" />
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="kn">from</span><span class="w"> </span><span class="nn">IPython.display</span><span class="w"> </span><span class="kn">import</span> <span class="n">Audio</span><span class="p">,</span> <span class="n">display</span>
-</span><span data-line="2"><span class="kn">import</span><span class="w"> </span><span class="nn">drumscript</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">ds</span>
-</span></pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span data-line="1"># ------------------------------------------------------------------------------------
 </span><span data-line="2">
-</span><span data-line="3">date/time: 2026-05-16 16:30:27.981022
+</span><span data-line="3"><span class="kn">import</span><span class="w"> </span><span class="nn">drumscript</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">ds</span>
 </span></pre></div>
 </div>
 </div>
@@ -333,7 +336,7 @@ data-aria-dark="Switch to auto color mode">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="c1"># 1. Load audio</span>
 </span><span data-line="2"><span class="n">audio_file_path</span> <span class="o">=</span> <span class="s2">&quot;audio/test_track_1.wav&quot;</span>
-</span><span data-line="3"><span class="n">audio_data</span><span class="p">,</span> <span class="n">sample_rate</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">load_audio</span><span class="p">(</span><span class="n">audio_file_path</span><span class="p">)</span>
+</span><span data-line="3"><span class="n">audio_file</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">load_audio</span><span class="p">(</span><span class="n">audio_file_path</span><span class="p">)</span>
 </span><span data-line="4"><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Audio loaded!&quot;</span><span class="p">)</span>
 </span><span data-line="5"><span class="n">display</span><span class="p">(</span><span class="n">Audio</span><span class="p">(</span><span class="n">audio_file_path</span><span class="p">))</span>
 </span></pre></div>
@@ -355,12 +358,12 @@ data-aria-dark="Switch to auto color mode">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="c1"># 2. Detect tempo</span>
 </span><span data-line="2"><span class="n">bpm</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">detect_tempo</span><span class="p">(</span><span class="n">audio_file_path</span><span class="p">)</span>
 </span><span data-line="3">
-</span><span data-line="4"><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Detected Tempo: </span><span class="si">{</span><span class="n">bpm</span><span class="si">}</span><span class="s1"> BPM&#39;</span><span class="p">)</span>
+</span><span data-line="4"><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Detected Tempo: </span><span class="si">{</span><span class="n">bpm</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1"> BPM&#39;</span><span class="p">)</span>
 </span></pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span data-line="1">Detected Tempo: 75.99954044117646 BPM
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span data-line="1">Detected Tempo: 76.00 BPM
 </span></pre></div>
 </div>
 </div>
@@ -377,13 +380,13 @@ data-aria-dark="Switch to auto color mode">
     <a href="extract_drums.html">
       <i class="i-lucide chevron-left"></i>
       <div class="page-info">
-        <span>Previous</span><div class="title">Extract drums from a song</div></div>
+        <span>Previous</span><div class="title">Extract Drums from a Song</div></div>
     </a>
   </div><div class="navigation-next">
     <a href="transcribe.html">
       <div class="page-info">
         <span>Next</span>
-        <div class="title">Transcribe a song using DrumScript</div>
+        <div class="title">Transcribe a Drum Track</div>
       </div>
       <i class="i-lucide chevron-right"></i>
     </a>
@@ -414,5 +417,5 @@ data-aria-dark="Switch to auto color mode">
       <script src="../../_static/documentation_options.js?v=360bc84d"></script>
       <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
       <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
-      <script src="../../_static/shibuya.js?v=cac61aee"></script></body>
+      <script src="../../_static/shibuya.js?v=50760d75"></script></body>
 </html>

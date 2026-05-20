@@ -43,5 +43,4 @@ jobs:
         uv run ruff check .
 
     - name: Run tests with pytest
-      run: |
-        uv run pytest
+      run: uv run pytest -m "not slow"

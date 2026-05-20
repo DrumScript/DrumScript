@@ -6,7 +6,7 @@
     function setColorMode(t){let e=document.documentElement;e.setAttribute("data-color-mode",t);let a=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches,s=t;"auto"===t&&(s=a?"dark":"light"),"light"===s?(e.classList.remove("dark"),e.classList.add("light")):(e.classList.remove("light"),e.classList.add("dark"))}
     setColorMode(localStorage._theme||"auto");
   </script><link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=e1a1ceaf" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/shibuya.css?v=44020203" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/shibuya.css?v=9454f7d5" />
     <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
     <link media="print" rel="stylesheet" type="text/css" href="../../../_static/print.css?v=20ff2c19" />
     <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=5885bd2b" />
@@ -19,7 +19,8 @@
   --sy-f-heading: "Inter", var(--sy-f-sys), var(--sy-f-cjk), sans-serif;
 }
 </style>
-    <meta property="og:type" content="website"/><meta property="og:title" content="drumscript.audio_processor.feature_extractor"/>
+    
+  <meta property="og:type" content="website"/><meta property="og:title" content="drumscript.audio_processor.feature_extractor"/>
     <meta name="twitter:card" content="summary"/>
   </head>
 <body><div class="sy-head">
@@ -186,10 +187,10 @@ data-aria-dark="Switch to auto color mode">
 <p class="caption" role="heading" aria-level="3"><span class="caption-text">Runbooks</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../guide/interactive/index.html">Interactive Runbooks</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../../guide/interactive/create_backing_track.html">Create backing track</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../guide/interactive/extract_drums.html">Extract drums from a song</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../guide/interactive/create_backing_track.html">Create a Drumless Backing Track</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../guide/interactive/extract_drums.html">Extract Drums from a Song</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../guide/interactive/measure_tempo.html">Measure Tempo</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../guide/interactive/transcribe.html">Transcribe a song using DrumScript</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../guide/interactive/transcribe.html">Transcribe a Drum Track</a></li>
 </ul>
 </li>
 </ul>
@@ -314,44 +315,44 @@ data-aria-dark="Switch to auto color mode">
 </span><span data-line="36">
 <div class="viewcode-block" id="extract_features">
 <a class="viewcode-back" href="../../../generated/drumscript.audio_processor.feature_extractor.extract_features.html#drumscript.audio_processor.feature_extractor.extract_features">[docs]</a>
-</span><span data-line="37"><span class="k">def</span><span class="w"> </span><span class="nf">extract_features</span><span class="p">(</span><span class="n">audio_segment</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">sr</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+</span><span data-line="37"><span class="k">def</span><span class="w"> </span><span class="nf">extract_features</span><span class="p">(</span><span class="n">audio_path</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">sr</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
 </span><span data-line="38"><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span data-line="39"><span class="sd">    Extracts a dictionary of features from a single audio segment.</span>
 </span><span data-line="40"><span class="sd">    Features are returned as mean values over the segment&#39;s duration.</span>
 </span><span data-line="41">
-</span><span data-line="42"><span class="sd">    :param audio_segment: The audio data array.</span>
-</span><span data-line="43"><span class="sd">    :type audio_segment: np.ndarray</span>
+</span><span data-line="42"><span class="sd">    :param audio_path: The audio data array.</span>
+</span><span data-line="43"><span class="sd">    :type audio_path: np.ndarray</span>
 </span><span data-line="44"><span class="sd">    :param sr: The sampling rate.</span>
 </span><span data-line="45"><span class="sd">    :type sr: int</span>
 </span><span data-line="46"><span class="sd">    :return: Dictionary of features (spectral_centroid, rms, mfccs, etc.).</span>
 </span><span data-line="47"><span class="sd">    :rtype: Dict[str, Any]</span>
 </span><span data-line="48"><span class="sd">    &quot;&quot;&quot;</span>
-</span><span data-line="49">    <span class="k">if</span> <span class="n">audio_segment</span><span class="o">.</span><span class="n">size</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+</span><span data-line="49">    <span class="k">if</span> <span class="n">audio_path</span><span class="o">.</span><span class="n">size</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
 </span><span data-line="50">        <span class="k">return</span> <span class="kc">None</span>
 </span><span data-line="51">
 </span><span data-line="52">    <span class="k">try</span><span class="p">:</span>
 </span><span data-line="53">        <span class="c1"># --- Standard Features ---</span>
-</span><span data-line="54">        <span class="c1"># spectral_centroid = np.mean(librosa.feature.spectral_centroid(y=audio_segment, sr=sr))</span>
-</span><span data-line="55">        <span class="n">spectral_centroid</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">librosa</span><span class="o">.</span><span class="n">feature</span><span class="o">.</span><span class="n">spectral_centroid</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="n">audio_segment</span><span class="p">,</span> <span class="n">sr</span><span class="o">=</span><span class="n">SAMPLE_RATE</span><span class="p">))</span>
-</span><span data-line="56">        <span class="n">spectral_rolloff</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">librosa</span><span class="o">.</span><span class="n">feature</span><span class="o">.</span><span class="n">spectral_rolloff</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="n">audio_segment</span><span class="p">,</span> <span class="n">sr</span><span class="o">=</span><span class="n">SAMPLE_RATE</span><span class="p">))</span>
-</span><span data-line="57">        <span class="c1"># spectral_rolloff = np.mean(librosa.feature.spectral_rolloff(y=audio_segment, sr=sr))</span>
-</span><span data-line="58">        <span class="n">rms</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">librosa</span><span class="o">.</span><span class="n">feature</span><span class="o">.</span><span class="n">rms</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="n">audio_segment</span><span class="p">))</span>
-</span><span data-line="59">        <span class="n">zcr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">librosa</span><span class="o">.</span><span class="n">feature</span><span class="o">.</span><span class="n">zero_crossing_rate</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="n">audio_segment</span><span class="p">))</span>
-</span><span data-line="60">        <span class="c1"># mfccs = np.mean(librosa.feature.mfcc(y=audio_segment, sr=sr, n_mfcc=N_MFCC), axis=1)</span>
-</span><span data-line="61">        <span class="n">mfccs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">librosa</span><span class="o">.</span><span class="n">feature</span><span class="o">.</span><span class="n">mfcc</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="n">audio_segment</span><span class="p">,</span> <span class="n">sr</span><span class="o">=</span><span class="n">SAMPLE_RATE</span><span class="p">,</span> <span class="n">n_mfcc</span><span class="o">=</span><span class="n">N_MFCC</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</span><span data-line="54">        <span class="c1"># spectral_centroid = np.mean(librosa.feature.spectral_centroid(y=audio_path, sr=sr))</span>
+</span><span data-line="55">        <span class="n">spectral_centroid</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">librosa</span><span class="o">.</span><span class="n">feature</span><span class="o">.</span><span class="n">spectral_centroid</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="n">audio_path</span><span class="p">,</span> <span class="n">sr</span><span class="o">=</span><span class="n">SAMPLE_RATE</span><span class="p">))</span>
+</span><span data-line="56">        <span class="n">spectral_rolloff</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">librosa</span><span class="o">.</span><span class="n">feature</span><span class="o">.</span><span class="n">spectral_rolloff</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="n">audio_path</span><span class="p">,</span> <span class="n">sr</span><span class="o">=</span><span class="n">SAMPLE_RATE</span><span class="p">))</span>
+</span><span data-line="57">        <span class="c1"># spectral_rolloff = np.mean(librosa.feature.spectral_rolloff(y=audio_path, sr=sr))</span>
+</span><span data-line="58">        <span class="n">rms</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">librosa</span><span class="o">.</span><span class="n">feature</span><span class="o">.</span><span class="n">rms</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="n">audio_path</span><span class="p">))</span>
+</span><span data-line="59">        <span class="n">zcr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">librosa</span><span class="o">.</span><span class="n">feature</span><span class="o">.</span><span class="n">zero_crossing_rate</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="n">audio_path</span><span class="p">))</span>
+</span><span data-line="60">        <span class="c1"># mfccs = np.mean(librosa.feature.mfcc(y=audio_path, sr=sr, n_mfcc=N_MFCC), axis=1)</span>
+</span><span data-line="61">        <span class="n">mfccs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">librosa</span><span class="o">.</span><span class="n">feature</span><span class="o">.</span><span class="n">mfcc</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="n">audio_path</span><span class="p">,</span> <span class="n">sr</span><span class="o">=</span><span class="n">SAMPLE_RATE</span><span class="p">,</span> <span class="n">n_mfcc</span><span class="o">=</span><span class="n">N_MFCC</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 </span><span data-line="62">
 </span><span data-line="63">        <span class="c1"># --- Sustain Feature Calculation ---</span>
 </span><span data-line="64">        <span class="c1"># Split the segment into two halves to measure energy decay.</span>
-</span><span data-line="65">        <span class="n">half_point</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">audio_segment</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span>
-</span><span data-line="66">        <span class="n">first_half_rms</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">librosa</span><span class="o">.</span><span class="n">feature</span><span class="o">.</span><span class="n">rms</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="n">audio_segment</span><span class="p">[:</span><span class="n">half_point</span><span class="p">]))</span>
-</span><span data-line="67">        <span class="n">second_half_rms</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">librosa</span><span class="o">.</span><span class="n">feature</span><span class="o">.</span><span class="n">rms</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="n">audio_segment</span><span class="p">[</span><span class="n">half_point</span><span class="p">:]))</span>
+</span><span data-line="65">        <span class="n">half_point</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">audio_path</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span>
+</span><span data-line="66">        <span class="n">first_half_rms</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">librosa</span><span class="o">.</span><span class="n">feature</span><span class="o">.</span><span class="n">rms</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="n">audio_path</span><span class="p">[:</span><span class="n">half_point</span><span class="p">]))</span>
+</span><span data-line="67">        <span class="n">second_half_rms</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">librosa</span><span class="o">.</span><span class="n">feature</span><span class="o">.</span><span class="n">rms</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="n">audio_path</span><span class="p">[</span><span class="n">half_point</span><span class="p">:]))</span>
 </span><span data-line="68">
 </span><span data-line="69">        <span class="c1"># Calculate the ratio. Add a small epsilon to avoid division by zero.</span>
 </span><span data-line="70">        <span class="n">sustain_level</span> <span class="o">=</span> <span class="n">second_half_rms</span> <span class="o">/</span> <span class="p">(</span><span class="n">first_half_rms</span> <span class="o">+</span> <span class="mf">1e-6</span><span class="p">)</span>
 </span><span data-line="71">
 </span><span data-line="72">        <span class="c1"># --- Band Energy Calculation (Based on Cheatsheet Logic) ---</span>
 </span><span data-line="73">        <span class="c1"># Calculate Spectrogram magnitude</span>
-</span><span data-line="74">        <span class="n">S</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">librosa</span><span class="o">.</span><span class="n">stft</span><span class="p">(</span><span class="n">audio_segment</span><span class="p">,</span> <span class="n">n_fft</span><span class="o">=</span><span class="n">N_FFT</span><span class="p">,</span> <span class="n">hop_length</span><span class="o">=</span><span class="n">HOP_LENGTH</span><span class="p">))</span>
+</span><span data-line="74">        <span class="n">S</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">librosa</span><span class="o">.</span><span class="n">stft</span><span class="p">(</span><span class="n">audio_path</span><span class="p">,</span> <span class="n">n_fft</span><span class="o">=</span><span class="n">N_FFT</span><span class="p">,</span> <span class="n">hop_length</span><span class="o">=</span><span class="n">HOP_LENGTH</span><span class="p">))</span>
 </span><span data-line="75">
 </span><span data-line="76">        <span class="c1"># Get frequency bins</span>
 </span><span data-line="77">        <span class="c1"># fft_freqs = librosa.fft_frequencies(sr=sr, n_fft=N_FFT)</span>
@@ -388,12 +389,12 @@ data-aria-dark="Switch to auto color mode">
 </span><span data-line="107">
 <div class="viewcode-block" id="extract_features_for_onsets">
 <a class="viewcode-back" href="../../../generated/drumscript.audio_processor.feature_extractor.extract_features_for_onsets.html#drumscript.audio_processor.feature_extractor.extract_features_for_onsets">[docs]</a>
-</span><span data-line="108"><span class="k">def</span><span class="w"> </span><span class="nf">extract_features_for_onsets</span><span class="p">(</span><span class="n">y</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">sr</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">onset_times</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">float</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]:</span>
+</span><span data-line="108"><span class="k">def</span><span class="w"> </span><span class="nf">extract_features_for_onsets</span><span class="p">(</span><span class="n">audio_path</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">sr</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">onset_times</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">float</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]:</span>
 </span><span data-line="109"><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span data-line="110"><span class="sd">    Slices an audio array around each onset time and extracts features for each slice.</span>
 </span><span data-line="111">
-</span><span data-line="112"><span class="sd">    :param y: Full audio array.</span>
-</span><span data-line="113"><span class="sd">    :type y: np.ndarray</span>
+</span><span data-line="112"><span class="sd">    :param audio_path: Full audio array.</span>
+</span><span data-line="113"><span class="sd">    :type audio_path: np.ndarray</span>
 </span><span data-line="114"><span class="sd">    :param sr: Sampling rate.</span>
 </span><span data-line="115"><span class="sd">    :type sr: int</span>
 </span><span data-line="116"><span class="sd">    :param onset_times: List of onset timestamps.</span>
@@ -406,40 +407,41 @@ data-aria-dark="Switch to auto color mode">
 </span><span data-line="123">    <span class="n">all_features</span> <span class="o">=</span> <span class="p">[]</span>
 </span><span data-line="124">    <span class="n">sr</span> <span class="o">=</span> <span class="n">SAMPLE_RATE</span>
 </span><span data-line="125">    <span class="c1"># Calculate *half* the slice duration in samples</span>
-</span><span data-line="126">    <span class="n">half_slice_samples</span> <span class="o">=</span> <span class="nb">int</span><span class="p">((</span><span class="n">ONSET_SLICE_DURATION_MS</span> <span class="o">/</span> <span class="mf">1000.0</span><span class="p">)</span> <span class="o">*</span> <span class="n">sr</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span>
-</span><span data-line="127">
-</span><span data-line="128">    <span class="k">for</span> <span class="n">time_sec</span> <span class="ow">in</span> <span class="n">onset_times</span><span class="p">:</span>
-</span><span data-line="129">        <span class="c1"># center_sample = librosa.time_to_samples(time_sec, sr=sr)</span>
-</span><span data-line="130">        <span class="n">center_sample</span> <span class="o">=</span> <span class="n">librosa</span><span class="o">.</span><span class="n">time_to_samples</span><span class="p">(</span><span class="n">time_sec</span><span class="p">,</span> <span class="n">sr</span><span class="o">=</span><span class="n">SAMPLE_RATE</span><span class="p">)</span>
-</span><span data-line="131">
-</span><span data-line="132">        <span class="c1"># Define start and end points, centered around the onset</span>
-</span><span data-line="133">        <span class="n">start_sample</span> <span class="o">=</span> <span class="n">center_sample</span> <span class="o">-</span> <span class="n">half_slice_samples</span>
-</span><span data-line="134">        <span class="n">end_sample</span> <span class="o">=</span> <span class="n">center_sample</span> <span class="o">+</span> <span class="n">half_slice_samples</span>
-</span><span data-line="135">
-</span><span data-line="136">        <span class="c1"># Boundary checks</span>
-</span><span data-line="137">        <span class="n">start_sample</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">start_sample</span><span class="p">)</span>
-</span><span data-line="138">        <span class="n">end_sample</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">),</span> <span class="n">end_sample</span><span class="p">)</span>
-</span><span data-line="139">
-</span><span data-line="140">        <span class="n">audio_slice</span> <span class="o">=</span> <span class="n">y</span><span class="p">[</span><span class="n">start_sample</span><span class="p">:</span><span class="n">end_sample</span><span class="p">]</span>
-</span><span data-line="141">
-</span><span data-line="142">        <span class="c1"># Extract features for the slice</span>
-</span><span data-line="143">        <span class="n">features</span> <span class="o">=</span> <span class="n">extract_features</span><span class="p">(</span><span class="n">audio_slice</span><span class="p">,</span> <span class="n">sr</span><span class="p">)</span>
-</span><span data-line="144">
-</span><span data-line="145">        <span class="k">if</span> <span class="n">features</span><span class="p">:</span>
-</span><span data-line="146">            <span class="c1"># Add the onset time to the dictionary of features</span>
-</span><span data-line="147">            <span class="n">features</span><span class="p">[</span><span class="s2">&quot;onset_time&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">time_sec</span>
-</span><span data-line="148">            <span class="n">all_features</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">features</span><span class="p">)</span>
-</span><span data-line="149">
-</span><span data-line="150">    <span class="k">return</span> <span class="n">all_features</span></div>
+</span><span data-line="126">
+</span><span data-line="127">    <span class="n">half_slice_samples</span> <span class="o">=</span> <span class="nb">int</span><span class="p">((</span><span class="n">ONSET_SLICE_DURATION_MS</span> <span class="o">/</span> <span class="mf">1000.0</span><span class="p">)</span> <span class="o">*</span> <span class="n">sr</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span>
+</span><span data-line="128">
+</span><span data-line="129">    <span class="k">for</span> <span class="n">time_sec</span> <span class="ow">in</span> <span class="n">onset_times</span><span class="p">:</span>
+</span><span data-line="130">        <span class="c1"># center_sample = librosa.time_to_samples(time_sec, sr=sr)</span>
+</span><span data-line="131">        <span class="n">center_sample</span> <span class="o">=</span> <span class="n">librosa</span><span class="o">.</span><span class="n">time_to_samples</span><span class="p">(</span><span class="n">time_sec</span><span class="p">,</span> <span class="n">sr</span><span class="o">=</span><span class="n">SAMPLE_RATE</span><span class="p">)</span>
+</span><span data-line="132">
+</span><span data-line="133">        <span class="c1"># Define start and end points, centered around the onset</span>
+</span><span data-line="134">        <span class="n">start_sample</span> <span class="o">=</span> <span class="n">center_sample</span> <span class="o">-</span> <span class="n">half_slice_samples</span>
+</span><span data-line="135">        <span class="n">end_sample</span> <span class="o">=</span> <span class="n">center_sample</span> <span class="o">+</span> <span class="n">half_slice_samples</span>
+</span><span data-line="136">
+</span><span data-line="137">        <span class="c1"># Boundary checks</span>
+</span><span data-line="138">        <span class="n">start_sample</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">start_sample</span><span class="p">)</span>
+</span><span data-line="139">        <span class="n">end_sample</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">audio_path</span><span class="p">),</span> <span class="n">end_sample</span><span class="p">)</span>
+</span><span data-line="140">
+</span><span data-line="141">        <span class="n">audio_slice</span> <span class="o">=</span> <span class="n">audio_path</span><span class="p">[</span><span class="n">start_sample</span><span class="p">:</span><span class="n">end_sample</span><span class="p">]</span>
+</span><span data-line="142">
+</span><span data-line="143">        <span class="c1"># Extract features for the slice</span>
+</span><span data-line="144">        <span class="n">features</span> <span class="o">=</span> <span class="n">extract_features</span><span class="p">(</span><span class="n">audio_slice</span><span class="p">,</span> <span class="n">sr</span><span class="p">)</span>
+</span><span data-line="145">
+</span><span data-line="146">        <span class="k">if</span> <span class="n">features</span><span class="p">:</span>
+</span><span data-line="147">            <span class="c1"># Add the onset time to the dictionary of features</span>
+</span><span data-line="148">            <span class="n">features</span><span class="p">[</span><span class="s2">&quot;onset_time&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">time_sec</span>
+</span><span data-line="149">            <span class="n">all_features</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">features</span><span class="p">)</span>
+</span><span data-line="150">
+</span><span data-line="151">    <span class="k">return</span> <span class="n">all_features</span></div>
 
-</span><span data-line="151">
 </span><span data-line="152">
-</span><span data-line="153"><span class="c1"># --------------------------------------------------------------------------uncomment during testing</span>
-</span><span data-line="154"><span class="c1"># from datetime import datetime</span>
-</span><span data-line="155"><span class="c1"># print(&quot;\n# ------------------------------------------------------------------------------------&quot;)</span>
-</span><span data-line="156"><span class="c1"># datetimestamp = datetime.now()</span>
-</span><span data-line="157"><span class="c1"># print(f&#39;\ndate/time: {datetimestamp}&#39;)</span>
-</span><span data-line="158"><span class="c1"># --------------------------------------------------------------------------------------------------</span>
+</span><span data-line="153">
+</span><span data-line="154"><span class="c1"># --------------------------------------------------------------------------uncomment during testing</span>
+</span><span data-line="155"><span class="c1"># from datetime import datetime</span>
+</span><span data-line="156"><span class="c1"># print(&quot;\n# ------------------------------------------------------------------------------------&quot;)</span>
+</span><span data-line="157"><span class="c1"># datetimestamp = datetime.now()</span>
+</span><span data-line="158"><span class="c1"># print(f&#39;\ndate/time: {datetimestamp}&#39;)</span>
+</span><span data-line="159"><span class="c1"># --------------------------------------------------------------------------------------------------</span>
 </span></pre></div>
         </article><button class="back-to-top" type="button">
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -473,5 +475,5 @@ data-aria-dark="Switch to auto color mode">
       <script src="../../../_static/documentation_options.js?v=360bc84d"></script>
       <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
       <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
-      <script src="../../../_static/shibuya.js?v=cac61aee"></script></body>
+      <script src="../../../_static/shibuya.js?v=50760d75"></script></body>
 </html>

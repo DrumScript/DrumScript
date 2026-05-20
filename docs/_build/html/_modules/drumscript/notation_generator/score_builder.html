@@ -6,7 +6,7 @@
     function setColorMode(t){let e=document.documentElement;e.setAttribute("data-color-mode",t);let a=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches,s=t;"auto"===t&&(s=a?"dark":"light"),"light"===s?(e.classList.remove("dark"),e.classList.add("light")):(e.classList.remove("light"),e.classList.add("dark"))}
     setColorMode(localStorage._theme||"auto");
   </script><link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=e1a1ceaf" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/shibuya.css?v=44020203" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/shibuya.css?v=9454f7d5" />
     <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
     <link media="print" rel="stylesheet" type="text/css" href="../../../_static/print.css?v=20ff2c19" />
     <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=5885bd2b" />
@@ -19,7 +19,8 @@
   --sy-f-heading: "Inter", var(--sy-f-sys), var(--sy-f-cjk), sans-serif;
 }
 </style>
-    <meta property="og:type" content="website"/><meta property="og:title" content="drumscript.notation_generator.score_builder"/>
+    
+  <meta property="og:type" content="website"/><meta property="og:title" content="drumscript.notation_generator.score_builder"/>
     <meta name="twitter:card" content="summary"/>
   </head>
 <body><div class="sy-head">
@@ -186,10 +187,10 @@ data-aria-dark="Switch to auto color mode">
 <p class="caption" role="heading" aria-level="3"><span class="caption-text">Runbooks</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../guide/interactive/index.html">Interactive Runbooks</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../../guide/interactive/create_backing_track.html">Create backing track</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../guide/interactive/extract_drums.html">Extract drums from a song</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../guide/interactive/create_backing_track.html">Create a Drumless Backing Track</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../guide/interactive/extract_drums.html">Extract Drums from a Song</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../guide/interactive/measure_tempo.html">Measure Tempo</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../guide/interactive/transcribe.html">Transcribe a song using DrumScript</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../guide/interactive/transcribe.html">Transcribe a Drum Track</a></li>
 </ul>
 </li>
 </ul>
@@ -299,7 +300,7 @@ data-aria-dark="Switch to auto color mode">
 </span><span data-line="19">    <span class="c1"># tempo: int = 120,</span>
 </span><span data-line="20">    <span class="c1"># tempo: int, # &lt;-- forces the caller to provide tempo</span>
 </span><span data-line="21">    <span class="n">tempo</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
-</span><span data-line="22">    <span class="n">output_filepath</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;outputs/score.pdf&quot;</span><span class="p">,</span>
+</span><span data-line="22">    <span class="n">output_path</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;outputs/score.pdf&quot;</span><span class="p">,</span>
 </span><span data-line="23">    <span class="n">quantization_subdivision</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">16</span><span class="p">,</span>
 </span><span data-line="24">    <span class="n">time_signature</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;4/4&quot;</span><span class="p">,</span>
 </span><span data-line="25"><span class="p">):</span>
@@ -314,15 +315,15 @@ data-aria-dark="Switch to auto color mode">
 </span><span data-line="34"><span class="sd">    :type detected_events: List[Dict[str, Any]]</span>
 </span><span data-line="35"><span class="sd">    :param tempo: Tempo in BPM.</span>
 </span><span data-line="36"><span class="sd">    :type tempo: int</span>
-</span><span data-line="37"><span class="sd">    :param output_filepath: Path to save the PDF.</span>
-</span><span data-line="38"><span class="sd">    :type output_filepath: str, optional</span>
+</span><span data-line="37"><span class="sd">    :param output_path: Path to save the PDF.</span>
+</span><span data-line="38"><span class="sd">    :type output_path: str, optional</span>
 </span><span data-line="39"><span class="sd">    :param quantization_subdivision: Grid for quantization (e.g., 16 for 16th notes).</span>
 </span><span data-line="40"><span class="sd">    :type quantization_subdivision: int, optional</span>
 </span><span data-line="41"><span class="sd">    :param time_signature: Time signature string (e.g., &quot;4/4&quot;).</span>
 </span><span data-line="42"><span class="sd">    :type time_signature: str, optional</span>
 </span><span data-line="43"><span class="sd">    &quot;&quot;&quot;</span>
 </span><span data-line="44">
-</span><span data-line="45">    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;--- Building Score for: </span><span class="si">{</span><span class="n">output_filepath</span><span class="si">}</span><span class="s2"> [Time Sig: </span><span class="si">{</span><span class="n">time_signature</span><span class="si">}</span><span class="s2">] ---&quot;</span><span class="p">)</span>
+</span><span data-line="45">    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;--- Building Score for: </span><span class="si">{</span><span class="n">output_path</span><span class="si">}</span><span class="s2"> [Time Sig: </span><span class="si">{</span><span class="n">time_signature</span><span class="si">}</span><span class="s2">] ---&quot;</span><span class="p">)</span>
 </span><span data-line="46">
 </span><span data-line="47">    <span class="c1"># --- MUSICAL INTERPRETATION LOGIC ---</span>
 </span><span data-line="48">    <span class="c1"># Drum algorithms often detect the &quot;double time&quot; tempo (e.g. 130 BPM instead of 65 BPM).</span>
@@ -349,8 +350,8 @@ data-aria-dark="Switch to auto color mode">
 </span><span data-line="69">
 </span><span data-line="70">    <span class="c1"># ----------------------------------------------------</span>
 </span><span data-line="71">    <span class="c1"># 1. Prepare File Paths</span>
-</span><span data-line="72">    <span class="c1"># output_filepath e.g. &quot;outputs/mysong.pdf&quot;</span>
-</span><span data-line="73">    <span class="n">base_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">output_filepath</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>  <span class="c1"># &quot;outputs/mysong&quot;</span>
+</span><span data-line="72">    <span class="c1"># output_path e.g. &quot;outputs/mysong.pdf&quot;</span>
+</span><span data-line="73">    <span class="n">base_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">output_path</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>  <span class="c1"># &quot;outputs/mysong&quot;</span>
 </span><span data-line="74">    <span class="n">json_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">base_path</span><span class="si">}</span><span class="s2">.json&quot;</span>
 </span><span data-line="75">
 </span><span data-line="76">    <span class="c1"># NEW: Derive specific file paths from the base string</span>
@@ -371,8 +372,8 @@ data-aria-dark="Switch to auto color mode">
 </span><span data-line="91">        <span class="c1"># generate_custom_pdf(</span>
 </span><span data-line="92">        <span class="n">export_pdf</span><span class="p">(</span>
 </span><span data-line="93">            <span class="n">detected_events</span><span class="o">=</span><span class="n">detected_events</span><span class="p">,</span>
-</span><span data-line="94">            <span class="c1"># OLD: output_filepath=output_filepath,</span>
-</span><span data-line="95">            <span class="n">output_filepath</span><span class="o">=</span><span class="n">pdf_filepath</span><span class="p">,</span>  <span class="c1"># Updated to explicitly map to .pdf</span>
+</span><span data-line="94">            <span class="c1"># OLD: output_path=output_path,</span>
+</span><span data-line="95">            <span class="n">output_path</span><span class="o">=</span><span class="n">pdf_filepath</span><span class="p">,</span>  <span class="c1"># Updated to explicitly map to .pdf</span>
 </span><span data-line="96">            <span class="n">tempo</span><span class="o">=</span><span class="n">tempo</span><span class="p">,</span>
 </span><span data-line="97">            <span class="n">time_signature</span><span class="o">=</span><span class="n">time_signature</span><span class="p">,</span>
 </span><span data-line="98">        <span class="p">)</span>
@@ -388,7 +389,7 @@ data-aria-dark="Switch to auto color mode">
 </span><span data-line="108">    <span class="k">try</span><span class="p">:</span>
 </span><span data-line="109">        <span class="n">export_to_midi</span><span class="p">(</span>
 </span><span data-line="110">            <span class="n">classified_events</span><span class="o">=</span><span class="n">detected_events</span><span class="p">,</span>
-</span><span data-line="111">            <span class="n">output_filepath</span><span class="o">=</span><span class="n">midi_filepath</span><span class="p">,</span>  <span class="c1"># Updated to explicitly map to .mid</span>
+</span><span data-line="111">            <span class="n">output_path</span><span class="o">=</span><span class="n">midi_filepath</span><span class="p">,</span>  <span class="c1"># Updated to explicitly map to .mid</span>
 </span><span data-line="112">            <span class="n">tempo</span><span class="o">=</span><span class="n">tempo</span><span class="p">,</span>
 </span><span data-line="113">        <span class="p">)</span>
 </span><span data-line="114">    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
@@ -438,5 +439,5 @@ data-aria-dark="Switch to auto color mode">
       <script src="../../../_static/documentation_options.js?v=360bc84d"></script>
       <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
       <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
-      <script src="../../../_static/shibuya.js?v=cac61aee"></script></body>
+      <script src="../../../_static/shibuya.js?v=50760d75"></script></body>
 </html>

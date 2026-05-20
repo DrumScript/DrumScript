@@ -27,4 +27,4 @@ DrumScript bridges the gap between **Signal Processing (DSP)** and **Music Theor
 DrumScript is currently in **Alpha (v0.1.2)**. We are looking for contributors who are passionate about audio, music, or Python.
 
 * Check out the [GitHub Repository](https://github.com/DrumScript/DrumScript)
-* Read the [Contribution Guide](development/contributor_guidance)
+* Read the [Contributor Guide](./development/contributor_guidance.md)

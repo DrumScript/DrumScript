@@ -19,7 +19,7 @@ def build_score(
     # tempo: int = 120,
     # tempo: int, # <-- forces the caller to provide tempo
     tempo: float,
-    output_filepath: str = "outputs/score.pdf",
+    output_path: str = "outputs/score.pdf",
     quantization_subdivision: int = 16,
     time_signature: str = "4/4",
 ):
@@ -34,15 +34,15 @@ def build_score(
     :type detected_events: List[Dict[str, Any]]
     :param tempo: Tempo in BPM.
     :type tempo: int
-    :param output_filepath: Path to save the PDF.
-    :type output_filepath: str, optional
+    :param output_path: Path to save the PDF.
+    :type output_path: str, optional
     :param quantization_subdivision: Grid for quantization (e.g., 16 for 16th notes).
     :type quantization_subdivision: int, optional
     :param time_signature: Time signature string (e.g., "4/4").
     :type time_signature: str, optional
     """
 
-    print(f"--- Building Score for: {output_filepath} [Time Sig: {time_signature}] ---")
+    print(f"--- Building Score for: {output_path} [Time Sig: {time_signature}] ---")
 
     # --- MUSICAL INTERPRETATION LOGIC ---
     # Drum algorithms often detect the "double time" tempo (e.g. 130 BPM instead of 65 BPM).
@@ -69,8 +69,8 @@ def build_score(
 
     # ----------------------------------------------------
     # 1. Prepare File Paths
-    # output_filepath e.g. "outputs/mysong.pdf"
-    base_path = os.path.splitext(output_filepath)[0]  # "outputs/mysong"
+    # output_path e.g. "outputs/mysong.pdf"
+    base_path = os.path.splitext(output_path)[0]  # "outputs/mysong"
     json_path = f"{base_path}.json"
 
     # NEW: Derive specific file paths from the base string
@@ -91,8 +91,8 @@ def build_score(
         # generate_custom_pdf(
         export_pdf(
             detected_events=detected_events,
-            # OLD: output_filepath=output_filepath,
-            output_filepath=pdf_filepath,  # Updated to explicitly map to .pdf
+            # OLD: output_path=output_path,
+            output_path=pdf_filepath,  # Updated to explicitly map to .pdf
             tempo=tempo,
             time_signature=time_signature,
         )
@@ -108,7 +108,7 @@ def build_score(
     try:
         export_to_midi(
             classified_events=detected_events,
-            output_filepath=midi_filepath,  # Updated to explicitly map to .mid
+            output_path=midi_filepath,  # Updated to explicitly map to .mid
             tempo=tempo,
         )
     except Exception as e:

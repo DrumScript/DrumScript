@@ -151,7 +151,7 @@ if __name__ == "__main__":
 
         # Required for CLI argparsing
         parser = argparse.ArgumentParser(description="Detect onsets in drum audio.")
-        parser.add_argument("input_audio", help="Path to the input audio file")
+        parser.add_argument("audio_path", help="Path to the input audio file")
         args = parser.parse_args()
 
         # sr = 44100 # Target sample rate for processing
@@ -165,7 +165,7 @@ if __name__ == "__main__":
         # Go up one level from audio_processor/onset_detector.py to the outer DRUMSCRIPT/ folder
         project_root = os.path.abspath(os.path.join(current_script_dir, "..", ".."))
         print(f"project_root: {project_root}")
-        audio_path = os.path.abspath(args.input_audio)
+        audio_path = os.path.abspath(args.audio_path)
 
         print(f"audio_path: {audio_path}")
         print(f"Attempting to load: {audio_path}")

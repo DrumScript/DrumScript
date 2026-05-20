@@ -6,7 +6,7 @@
     function setColorMode(t){let e=document.documentElement;e.setAttribute("data-color-mode",t);let a=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches,s=t;"auto"===t&&(s=a?"dark":"light"),"light"===s?(e.classList.remove("dark"),e.classList.add("light")):(e.classList.remove("light"),e.classList.add("dark"))}
     setColorMode(localStorage._theme||"auto");
   </script><link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=e1a1ceaf" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/shibuya.css?v=44020203" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/shibuya.css?v=9454f7d5" />
     <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
     <link media="print" rel="stylesheet" type="text/css" href="../../../_static/print.css?v=20ff2c19" />
     <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=5885bd2b" />
@@ -19,7 +19,8 @@
   --sy-f-heading: "Inter", var(--sy-f-sys), var(--sy-f-cjk), sans-serif;
 }
 </style>
-    <meta property="og:type" content="website"/><meta property="og:title" content="drumscript.notation_generator.midi_exporter"/>
+    
+  <meta property="og:type" content="website"/><meta property="og:title" content="drumscript.notation_generator.midi_exporter"/>
     <meta name="twitter:card" content="summary"/>
   </head>
 <body><div class="sy-head">
@@ -186,10 +187,10 @@ data-aria-dark="Switch to auto color mode">
 <p class="caption" role="heading" aria-level="3"><span class="caption-text">Runbooks</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../guide/interactive/index.html">Interactive Runbooks</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../../guide/interactive/create_backing_track.html">Create backing track</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../guide/interactive/extract_drums.html">Extract drums from a song</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../guide/interactive/create_backing_track.html">Create a Drumless Backing Track</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../guide/interactive/extract_drums.html">Extract Drums from a Song</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../guide/interactive/measure_tempo.html">Measure Tempo</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../guide/interactive/transcribe.html">Transcribe a song using DrumScript</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../guide/interactive/transcribe.html">Transcribe a Drum Track</a></li>
 </ul>
 </li>
 </ul>
@@ -292,12 +293,12 @@ data-aria-dark="Switch to auto color mode">
 </span><span data-line="14">
 <div class="viewcode-block" id="export_to_midi">
 <a class="viewcode-back" href="../../../generated/drumscript.notation_generator.midi_exporter.export_to_midi.html#drumscript.notation_generator.midi_exporter.export_to_midi">[docs]</a>
-</span><span data-line="15"><span class="k">def</span><span class="w"> </span><span class="nf">export_to_midi</span><span class="p">(</span><span class="n">classified_events</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">],</span> <span class="n">output_filepath</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">tempo</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">120.0</span><span class="p">):</span>
+</span><span data-line="15"><span class="k">def</span><span class="w"> </span><span class="nf">export_to_midi</span><span class="p">(</span><span class="n">classified_events</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">],</span> <span class="n">output_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">tempo</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">120.0</span><span class="p">):</span>
 </span><span data-line="16"><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span data-line="17"><span class="sd">    Takes a list of event dictionaries and writes a standard .mid file.</span>
 </span><span data-line="18">
 </span><span data-line="19"><span class="sd">    :param classified_events: List of dicts containing &#39;time_sec&#39; and &#39;instruments&#39;.</span>
-</span><span data-line="20"><span class="sd">    :param output_filepath: Where to save the file (e.g., &#39;output/drum_score.mid&#39;).</span>
+</span><span data-line="20"><span class="sd">    :param output_path: Where to save the file (e.g., &#39;output/drum_score.mid&#39;).</span>
 </span><span data-line="21"><span class="sd">    :param tempo: The detected BPM of the track.</span>
 </span><span data-line="22"><span class="sd">    &quot;&quot;&quot;</span>
 </span><span data-line="23">    <span class="c1"># 1. Initialise a new MIDI object with the detected tempo</span>
@@ -337,10 +338,10 @@ data-aria-dark="Switch to auto color mode">
 </span><span data-line="57">    <span class="n">midi</span><span class="o">.</span><span class="n">instruments</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">drum_track</span><span class="p">)</span>
 </span><span data-line="58">
 </span><span data-line="59">    <span class="c1"># Ensure directory exists</span>
-</span><span data-line="60">    <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">output_filepath</span><span class="p">),</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-</span><span data-line="61">    <span class="n">midi</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">output_filepath</span><span class="p">)</span>
+</span><span data-line="60">    <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">output_path</span><span class="p">),</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span><span data-line="61">    <span class="n">midi</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">output_path</span><span class="p">)</span>
 </span><span data-line="62">
-</span><span data-line="63">    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;SUCCESS: MIDI file generated at -&gt; </span><span class="si">{</span><span class="n">output_filepath</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+</span><span data-line="63">    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;SUCCESS: MIDI file generated at -&gt; </span><span class="si">{</span><span class="n">output_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
 
 </span><span data-line="64">
 </span><span data-line="65">
@@ -383,5 +384,5 @@ data-aria-dark="Switch to auto color mode">
       <script src="../../../_static/documentation_options.js?v=360bc84d"></script>
       <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
       <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
-      <script src="../../../_static/shibuya.js?v=cac61aee"></script></body>
+      <script src="../../../_static/shibuya.js?v=50760d75"></script></body>
 </html>

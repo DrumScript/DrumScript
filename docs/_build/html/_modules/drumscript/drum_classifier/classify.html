@@ -6,7 +6,7 @@
     function setColorMode(t){let e=document.documentElement;e.setAttribute("data-color-mode",t);let a=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches,s=t;"auto"===t&&(s=a?"dark":"light"),"light"===s?(e.classList.remove("dark"),e.classList.add("light")):(e.classList.remove("light"),e.classList.add("dark"))}
     setColorMode(localStorage._theme||"auto");
   </script><link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=e1a1ceaf" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/shibuya.css?v=44020203" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/shibuya.css?v=9454f7d5" />
     <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
     <link media="print" rel="stylesheet" type="text/css" href="../../../_static/print.css?v=20ff2c19" />
     <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=5885bd2b" />
@@ -19,7 +19,8 @@
   --sy-f-heading: "Inter", var(--sy-f-sys), var(--sy-f-cjk), sans-serif;
 }
 </style>
-    <meta property="og:type" content="website"/><meta property="og:title" content="drumscript.drum_classifier.classify"/>
+    
+  <meta property="og:type" content="website"/><meta property="og:title" content="drumscript.drum_classifier.classify"/>
     <meta name="twitter:card" content="summary"/>
   </head>
 <body><div class="sy-head">
@@ -186,10 +187,10 @@ data-aria-dark="Switch to auto color mode">
 <p class="caption" role="heading" aria-level="3"><span class="caption-text">Runbooks</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../guide/interactive/index.html">Interactive Runbooks</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../../guide/interactive/create_backing_track.html">Create backing track</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../guide/interactive/extract_drums.html">Extract drums from a song</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../guide/interactive/create_backing_track.html">Create a Drumless Backing Track</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../guide/interactive/extract_drums.html">Extract Drums from a Song</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../guide/interactive/measure_tempo.html">Measure Tempo</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../guide/interactive/transcribe.html">Transcribe a song using DrumScript</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../guide/interactive/transcribe.html">Transcribe a Drum Track</a></li>
 </ul>
 </li>
 </ul>
@@ -309,7 +310,7 @@ data-aria-dark="Switch to auto color mode">
 </span><span data-line="31">
 <div class="viewcode-block" id="get_audio_slice">
 <a class="viewcode-back" href="../../../generated/drumscript.drum_classifier.classify.get_audio_slice.html#drumscript.drum_classifier.classify.get_audio_slice">[docs]</a>
-</span><span data-line="32"><span class="k">def</span><span class="w"> </span><span class="nf">get_audio_slice</span><span class="p">(</span><span class="n">audio_data</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">onset_time</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">sr</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+</span><span data-line="32"><span class="k">def</span><span class="w"> </span><span class="nf">get_audio_slice</span><span class="p">(</span><span class="n">audio_path</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">onset_time</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">sr</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
 </span><span data-line="33"><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span data-line="34"><span class="sd">    Cuts a specific millisecond slice of audio starting exactly at the onset time.</span>
 </span><span data-line="35"><span class="sd">    &quot;&quot;&quot;</span>
@@ -319,13 +320,13 @@ data-aria-dark="Switch to auto color mode">
 </span><span data-line="39">    <span class="n">end_sample</span> <span class="o">=</span> <span class="n">start_sample</span> <span class="o">+</span> <span class="nb">int</span><span class="p">(</span><span class="n">duration_secs</span> <span class="o">*</span> <span class="n">sr</span><span class="p">)</span>
 </span><span data-line="40">
 </span><span data-line="41">    <span class="c1"># Pad with zeros if the slice goes past the end of the audio file</span>
-</span><span data-line="42">    <span class="k">if</span> <span class="n">end_sample</span> <span class="o">&gt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">audio_data</span><span class="p">):</span>
-</span><span data-line="43">        <span class="n">slice_data</span> <span class="o">=</span> <span class="n">audio_data</span><span class="p">[</span><span class="n">start_sample</span><span class="p">:]</span>
-</span><span data-line="44">        <span class="n">pad_length</span> <span class="o">=</span> <span class="n">end_sample</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">audio_data</span><span class="p">)</span>
+</span><span data-line="42">    <span class="k">if</span> <span class="n">end_sample</span> <span class="o">&gt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">audio_path</span><span class="p">):</span>
+</span><span data-line="43">        <span class="n">slice_data</span> <span class="o">=</span> <span class="n">audio_path</span><span class="p">[</span><span class="n">start_sample</span><span class="p">:]</span>
+</span><span data-line="44">        <span class="n">pad_length</span> <span class="o">=</span> <span class="n">end_sample</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">audio_path</span><span class="p">)</span>
 </span><span data-line="45">        <span class="n">slice_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">pad</span><span class="p">(</span><span class="n">slice_data</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">pad_length</span><span class="p">),</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;constant&quot;</span><span class="p">)</span>
 </span><span data-line="46">        <span class="k">return</span> <span class="n">slice_data</span>
 </span><span data-line="47">
-</span><span data-line="48">    <span class="k">return</span> <span class="n">audio_data</span><span class="p">[</span><span class="n">start_sample</span><span class="p">:</span><span class="n">end_sample</span><span class="p">]</span></div>
+</span><span data-line="48">    <span class="k">return</span> <span class="n">audio_path</span><span class="p">[</span><span class="n">start_sample</span><span class="p">:</span><span class="n">end_sample</span><span class="p">]</span></div>
 
 </span><span data-line="49">
 </span><span data-line="50">
@@ -473,7 +474,7 @@ data-aria-dark="Switch to auto color mode">
 </span><span data-line="180">
 <div class="viewcode-block" id="classify_rudiment_events">
 <a class="viewcode-back" href="../../../generated/drumscript.drum_classifier.classify.classify_rudiment_events.html#drumscript.drum_classifier.classify.classify_rudiment_events">[docs]</a>
-</span><span data-line="181"><span class="k">def</span><span class="w"> </span><span class="nf">classify_rudiment_events</span><span class="p">(</span><span class="n">audio_data</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">sr</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">onsets</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">float</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">]:</span>
+</span><span data-line="181"><span class="k">def</span><span class="w"> </span><span class="nf">classify_rudiment_events</span><span class="p">(</span><span class="n">audio_path</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">sr</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">onsets</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">float</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">]:</span>
 </span><span data-line="182"><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span data-line="183"><span class="sd">    Dedicated classification engine for single beats, paradiddles, and rudiments.</span>
 </span><span data-line="184"><span class="sd">    Uses strict, data-driven physics boundaries and ADSR Transient Gating</span>
@@ -481,7 +482,7 @@ data-aria-dark="Switch to auto color mode">
 </span><span data-line="186"><span class="sd">    &quot;&quot;&quot;</span>
 </span><span data-line="187">    <span class="n">classified_events</span> <span class="o">=</span> <span class="p">[]</span>
 </span><span data-line="188">
-</span><span data-line="189">    <span class="n">global_max</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">audio_data</span><span class="p">))</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">audio_data</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="mf">1.0</span>
+</span><span data-line="189">    <span class="n">global_max</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">audio_path</span><span class="p">))</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">audio_path</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="mf">1.0</span>
 </span><span data-line="190">
 </span><span data-line="191">    <span class="k">for</span> <span class="n">onset_time</span> <span class="ow">in</span> <span class="n">onsets</span><span class="p">:</span>
 </span><span data-line="192">        <span class="n">start_sample</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">onset_time</span> <span class="o">*</span> <span class="n">sr</span><span class="p">)</span>
@@ -490,12 +491,12 @@ data-aria-dark="Switch to auto color mode">
 </span><span data-line="195">        <span class="n">duration_short_secs</span> <span class="o">=</span> <span class="mf">0.100</span>
 </span><span data-line="196">        <span class="n">end_sample_short</span> <span class="o">=</span> <span class="n">start_sample</span> <span class="o">+</span> <span class="nb">int</span><span class="p">(</span><span class="n">duration_short_secs</span> <span class="o">*</span> <span class="n">sr</span><span class="p">)</span>
 </span><span data-line="197">
-</span><span data-line="198">        <span class="k">if</span> <span class="n">end_sample_short</span> <span class="o">&gt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">audio_data</span><span class="p">):</span>
-</span><span data-line="199">            <span class="n">slice_data</span> <span class="o">=</span> <span class="n">audio_data</span><span class="p">[</span><span class="n">start_sample</span><span class="p">:]</span>
-</span><span data-line="200">            <span class="n">pad_length</span> <span class="o">=</span> <span class="n">end_sample_short</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">audio_data</span><span class="p">)</span>
+</span><span data-line="198">        <span class="k">if</span> <span class="n">end_sample_short</span> <span class="o">&gt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">audio_path</span><span class="p">):</span>
+</span><span data-line="199">            <span class="n">slice_data</span> <span class="o">=</span> <span class="n">audio_path</span><span class="p">[</span><span class="n">start_sample</span><span class="p">:]</span>
+</span><span data-line="200">            <span class="n">pad_length</span> <span class="o">=</span> <span class="n">end_sample_short</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">audio_path</span><span class="p">)</span>
 </span><span data-line="201">            <span class="n">y_window_short</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">pad</span><span class="p">(</span><span class="n">slice_data</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">pad_length</span><span class="p">),</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;constant&quot;</span><span class="p">)</span>
 </span><span data-line="202">        <span class="k">else</span><span class="p">:</span>
-</span><span data-line="203">            <span class="n">y_window_short</span> <span class="o">=</span> <span class="n">audio_data</span><span class="p">[</span><span class="n">start_sample</span><span class="p">:</span><span class="n">end_sample_short</span><span class="p">]</span>
+</span><span data-line="203">            <span class="n">y_window_short</span> <span class="o">=</span> <span class="n">audio_path</span><span class="p">[</span><span class="n">start_sample</span><span class="p">:</span><span class="n">end_sample_short</span><span class="p">]</span>
 </span><span data-line="204">
 </span><span data-line="205">        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">y_window_short</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
 </span><span data-line="206">            <span class="k">continue</span>
@@ -510,12 +511,12 @@ data-aria-dark="Switch to auto color mode">
 </span><span data-line="215">        <span class="n">duration_long_secs</span> <span class="o">=</span> <span class="mf">1.5</span>
 </span><span data-line="216">        <span class="n">end_sample_long</span> <span class="o">=</span> <span class="n">start_sample</span> <span class="o">+</span> <span class="nb">int</span><span class="p">(</span><span class="n">duration_long_secs</span> <span class="o">*</span> <span class="n">sr</span><span class="p">)</span>
 </span><span data-line="217">
-</span><span data-line="218">        <span class="k">if</span> <span class="n">end_sample_long</span> <span class="o">&gt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">audio_data</span><span class="p">):</span>
-</span><span data-line="219">            <span class="n">slice_data</span> <span class="o">=</span> <span class="n">audio_data</span><span class="p">[</span><span class="n">start_sample</span><span class="p">:]</span>
-</span><span data-line="220">            <span class="n">pad_length</span> <span class="o">=</span> <span class="n">end_sample_long</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">audio_data</span><span class="p">)</span>
+</span><span data-line="218">        <span class="k">if</span> <span class="n">end_sample_long</span> <span class="o">&gt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">audio_path</span><span class="p">):</span>
+</span><span data-line="219">            <span class="n">slice_data</span> <span class="o">=</span> <span class="n">audio_path</span><span class="p">[</span><span class="n">start_sample</span><span class="p">:]</span>
+</span><span data-line="220">            <span class="n">pad_length</span> <span class="o">=</span> <span class="n">end_sample_long</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">audio_path</span><span class="p">)</span>
 </span><span data-line="221">            <span class="n">y_window_long</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">pad</span><span class="p">(</span><span class="n">slice_data</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">pad_length</span><span class="p">),</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;constant&quot;</span><span class="p">)</span>
 </span><span data-line="222">        <span class="k">else</span><span class="p">:</span>
-</span><span data-line="223">            <span class="n">y_window_long</span> <span class="o">=</span> <span class="n">audio_data</span><span class="p">[</span><span class="n">start_sample</span><span class="p">:</span><span class="n">end_sample_long</span><span class="p">]</span>
+</span><span data-line="223">            <span class="n">y_window_long</span> <span class="o">=</span> <span class="n">audio_path</span><span class="p">[</span><span class="n">start_sample</span><span class="p">:</span><span class="n">end_sample_long</span><span class="p">]</span>
 </span><span data-line="224">
 </span><span data-line="225">        <span class="c1"># Extract the physics DNA</span>
 </span><span data-line="226">        <span class="n">physics_profile</span> <span class="o">=</span> <span class="n">extract_features</span><span class="p">(</span><span class="n">y_window_short</span><span class="p">,</span> <span class="n">y_window_long</span><span class="p">,</span> <span class="n">sr</span><span class="p">)</span>
@@ -601,10 +602,10 @@ data-aria-dark="Switch to auto color mode">
 </span><span data-line="306">        <span class="c1"># A stick hit explodes in volume. A wobble/reverb just sustains smoothly.</span>
 </span><span data-line="307">        <span class="n">pre_start</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">int</span><span class="p">((</span><span class="n">time_s</span> <span class="o">-</span> <span class="mf">0.030</span><span class="p">)</span> <span class="o">*</span> <span class="n">sr</span><span class="p">))</span>
 </span><span data-line="308">        <span class="n">pre_end</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">time_s</span> <span class="o">*</span> <span class="n">sr</span><span class="p">)</span>
-</span><span data-line="309">        <span class="n">post_end</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">audio_data</span><span class="p">),</span> <span class="nb">int</span><span class="p">((</span><span class="n">time_s</span> <span class="o">+</span> <span class="mf">0.050</span><span class="p">)</span> <span class="o">*</span> <span class="n">sr</span><span class="p">))</span>
+</span><span data-line="309">        <span class="n">post_end</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">audio_path</span><span class="p">),</span> <span class="nb">int</span><span class="p">((</span><span class="n">time_s</span> <span class="o">+</span> <span class="mf">0.050</span><span class="p">)</span> <span class="o">*</span> <span class="n">sr</span><span class="p">))</span>
 </span><span data-line="310">
-</span><span data-line="311">        <span class="n">pre_data</span> <span class="o">=</span> <span class="n">audio_data</span><span class="p">[</span><span class="n">pre_start</span><span class="p">:</span><span class="n">pre_end</span><span class="p">]</span>
-</span><span data-line="312">        <span class="n">post_data</span> <span class="o">=</span> <span class="n">audio_data</span><span class="p">[</span><span class="n">pre_end</span><span class="p">:</span><span class="n">post_end</span><span class="p">]</span>
+</span><span data-line="311">        <span class="n">pre_data</span> <span class="o">=</span> <span class="n">audio_path</span><span class="p">[</span><span class="n">pre_start</span><span class="p">:</span><span class="n">pre_end</span><span class="p">]</span>
+</span><span data-line="312">        <span class="n">post_data</span> <span class="o">=</span> <span class="n">audio_path</span><span class="p">[</span><span class="n">pre_end</span><span class="p">:</span><span class="n">post_end</span><span class="p">]</span>
 </span><span data-line="313">
 </span><span data-line="314">        <span class="n">pre_vol</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">pre_data</span><span class="p">))</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">pre_data</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="mf">0.0</span>
 </span><span data-line="315">        <span class="n">post_vol</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">post_data</span><span class="p">))</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">post_data</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="mf">0.0</span>
@@ -627,7 +628,7 @@ data-aria-dark="Switch to auto color mode">
 </span><span data-line="331">
 <div class="viewcode-block" id="classify_events">
 <a class="viewcode-back" href="../../../generated/drumscript.drum_classifier.classify.classify_events.html#drumscript.drum_classifier.classify.classify_events">[docs]</a>
-</span><span data-line="332"><span class="k">def</span><span class="w"> </span><span class="nf">classify_events</span><span class="p">(</span><span class="n">audio_data</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">sr</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">onsets</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">float</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">]:</span>
+</span><span data-line="332"><span class="k">def</span><span class="w"> </span><span class="nf">classify_events</span><span class="p">(</span><span class="n">audio_path</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">sr</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">onsets</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">float</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">]:</span>
 </span><span data-line="333"><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span data-line="334"><span class="sd">    Wrapper to route validated onsets through the Physics-First Classification Engine.</span>
 </span><span data-line="335"><span class="sd">    Natively detects and filters isolated single-beat cymbals/kicks using Peak Dominance.</span>
@@ -635,15 +636,15 @@ data-aria-dark="Switch to auto color mode">
 </span><span data-line="337"><span class="sd">    &quot;&quot;&quot;</span>
 </span><span data-line="338">    <span class="n">classified_events</span> <span class="o">=</span> <span class="p">[]</span>
 </span><span data-line="339">
-</span><span data-line="340">    <span class="n">global_max</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">audio_data</span><span class="p">))</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">audio_data</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="mf">1.0</span>
-</span><span data-line="341">    <span class="n">duration</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">audio_data</span><span class="p">)</span> <span class="o">/</span> <span class="n">sr</span>
+</span><span data-line="340">    <span class="n">global_max</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">audio_path</span><span class="p">))</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">audio_path</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="mf">1.0</span>
+</span><span data-line="341">    <span class="n">duration</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">audio_path</span><span class="p">)</span> <span class="o">/</span> <span class="n">sr</span>
 </span><span data-line="342">
 </span><span data-line="343">    <span class="c1"># --- NATIVE PEAK DOMINANCE CHECK (Single-Beat Detection) ---</span>
 </span><span data-line="344">    <span class="n">loud_hit_count</span> <span class="o">=</span> <span class="mi">0</span>
 </span><span data-line="345">    <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">onsets</span><span class="p">:</span>
 </span><span data-line="346">        <span class="n">s_start</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">t</span> <span class="o">*</span> <span class="n">sr</span><span class="p">)</span>
 </span><span data-line="347">        <span class="n">s_end</span> <span class="o">=</span> <span class="n">s_start</span> <span class="o">+</span> <span class="nb">int</span><span class="p">(</span><span class="mf">0.1</span> <span class="o">*</span> <span class="n">sr</span><span class="p">)</span>
-</span><span data-line="348">        <span class="n">s_data</span> <span class="o">=</span> <span class="n">audio_data</span><span class="p">[</span><span class="n">s_start</span> <span class="p">:</span> <span class="nb">min</span><span class="p">(</span><span class="n">s_end</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">audio_data</span><span class="p">))]</span>
+</span><span data-line="348">        <span class="n">s_data</span> <span class="o">=</span> <span class="n">audio_path</span><span class="p">[</span><span class="n">s_start</span> <span class="p">:</span> <span class="nb">min</span><span class="p">(</span><span class="n">s_end</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">audio_path</span><span class="p">))]</span>
 </span><span data-line="349">        <span class="n">s_vol</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">s_data</span><span class="p">))</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">s_data</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="mf">0.0</span>
 </span><span data-line="350">
 </span><span data-line="351">        <span class="k">if</span> <span class="n">s_vol</span> <span class="o">&gt;</span> <span class="n">global_max</span> <span class="o">*</span> <span class="mf">0.50</span><span class="p">:</span>
@@ -659,12 +660,12 @@ data-aria-dark="Switch to auto color mode">
 </span><span data-line="361">        <span class="n">duration_short_secs</span> <span class="o">=</span> <span class="n">constants</span><span class="o">.</span><span class="n">ONSET_SLICE_DURATION_MS</span> <span class="o">/</span> <span class="mf">1000.0</span>
 </span><span data-line="362">        <span class="n">end_sample_short</span> <span class="o">=</span> <span class="n">start_sample</span> <span class="o">+</span> <span class="nb">int</span><span class="p">(</span><span class="n">duration_short_secs</span> <span class="o">*</span> <span class="n">sr</span><span class="p">)</span>
 </span><span data-line="363">
-</span><span data-line="364">        <span class="k">if</span> <span class="n">end_sample_short</span> <span class="o">&gt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">audio_data</span><span class="p">):</span>
-</span><span data-line="365">            <span class="n">slice_data</span> <span class="o">=</span> <span class="n">audio_data</span><span class="p">[</span><span class="n">start_sample</span><span class="p">:]</span>
-</span><span data-line="366">            <span class="n">pad_length</span> <span class="o">=</span> <span class="n">end_sample_short</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">audio_data</span><span class="p">)</span>
+</span><span data-line="364">        <span class="k">if</span> <span class="n">end_sample_short</span> <span class="o">&gt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">audio_path</span><span class="p">):</span>
+</span><span data-line="365">            <span class="n">slice_data</span> <span class="o">=</span> <span class="n">audio_path</span><span class="p">[</span><span class="n">start_sample</span><span class="p">:]</span>
+</span><span data-line="366">            <span class="n">pad_length</span> <span class="o">=</span> <span class="n">end_sample_short</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">audio_path</span><span class="p">)</span>
 </span><span data-line="367">            <span class="n">y_window_short</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">pad</span><span class="p">(</span><span class="n">slice_data</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">pad_length</span><span class="p">),</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;constant&quot;</span><span class="p">)</span>
 </span><span data-line="368">        <span class="k">else</span><span class="p">:</span>
-</span><span data-line="369">            <span class="n">y_window_short</span> <span class="o">=</span> <span class="n">audio_data</span><span class="p">[</span><span class="n">start_sample</span><span class="p">:</span><span class="n">end_sample_short</span><span class="p">]</span>
+</span><span data-line="369">            <span class="n">y_window_short</span> <span class="o">=</span> <span class="n">audio_path</span><span class="p">[</span><span class="n">start_sample</span><span class="p">:</span><span class="n">end_sample_short</span><span class="p">]</span>
 </span><span data-line="370">
 </span><span data-line="371">        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">y_window_short</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
 </span><span data-line="372">            <span class="k">continue</span>
@@ -687,12 +688,12 @@ data-aria-dark="Switch to auto color mode">
 </span><span data-line="389">        <span class="n">duration_long_secs</span> <span class="o">=</span> <span class="mf">1.5</span>
 </span><span data-line="390">        <span class="n">end_sample_long</span> <span class="o">=</span> <span class="n">start_sample</span> <span class="o">+</span> <span class="nb">int</span><span class="p">(</span><span class="n">duration_long_secs</span> <span class="o">*</span> <span class="n">sr</span><span class="p">)</span>
 </span><span data-line="391">
-</span><span data-line="392">        <span class="k">if</span> <span class="n">end_sample_long</span> <span class="o">&gt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">audio_data</span><span class="p">):</span>
-</span><span data-line="393">            <span class="n">slice_data</span> <span class="o">=</span> <span class="n">audio_data</span><span class="p">[</span><span class="n">start_sample</span><span class="p">:]</span>
-</span><span data-line="394">            <span class="n">pad_length</span> <span class="o">=</span> <span class="n">end_sample_long</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">audio_data</span><span class="p">)</span>
+</span><span data-line="392">        <span class="k">if</span> <span class="n">end_sample_long</span> <span class="o">&gt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">audio_path</span><span class="p">):</span>
+</span><span data-line="393">            <span class="n">slice_data</span> <span class="o">=</span> <span class="n">audio_path</span><span class="p">[</span><span class="n">start_sample</span><span class="p">:]</span>
+</span><span data-line="394">            <span class="n">pad_length</span> <span class="o">=</span> <span class="n">end_sample_long</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">audio_path</span><span class="p">)</span>
 </span><span data-line="395">            <span class="n">y_window_long</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">pad</span><span class="p">(</span><span class="n">slice_data</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">pad_length</span><span class="p">),</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;constant&quot;</span><span class="p">)</span>
 </span><span data-line="396">        <span class="k">else</span><span class="p">:</span>
-</span><span data-line="397">            <span class="n">y_window_long</span> <span class="o">=</span> <span class="n">audio_data</span><span class="p">[</span><span class="n">start_sample</span><span class="p">:</span><span class="n">end_sample_long</span><span class="p">]</span>
+</span><span data-line="397">            <span class="n">y_window_long</span> <span class="o">=</span> <span class="n">audio_path</span><span class="p">[</span><span class="n">start_sample</span><span class="p">:</span><span class="n">end_sample_long</span><span class="p">]</span>
 </span><span data-line="398">
 </span><span data-line="399">        <span class="c1"># 1. Extract the physics DNA</span>
 </span><span data-line="400">        <span class="n">physics_profile</span> <span class="o">=</span> <span class="n">extract_features</span><span class="p">(</span><span class="n">y_window_short</span><span class="p">,</span> <span class="n">y_window_long</span><span class="p">,</span> <span class="n">sr</span><span class="p">)</span>
@@ -755,7 +756,7 @@ data-aria-dark="Switch to auto color mode">
 </span><span data-line="456">
 </span><span data-line="457">
 </span><span data-line="458"><span class="sd">&quot;&quot;&quot; LEGACY CODE (KEEP FOR ALPHA)</span>
-</span><span data-line="459"><span class="sd"># def classify_events(audio_data: np.ndarray, sr: int, onsets: list[float]) -&gt; list[dict]:</span>
+</span><span data-line="459"><span class="sd"># def classify_events(audio_path: np.ndarray, sr: int, onsets: list[float]) -&gt; list[dict]:</span>
 </span><span data-line="460">
 </span><span data-line="461"><span class="sd"># Restored the explicit `physics_profile` variable name throughout the consolidated rule block for clarity and strict consistency with JSON exports.</span>
 </span><span data-line="462">
@@ -766,15 +767,15 @@ data-aria-dark="Switch to auto color mode">
 </span><span data-line="467"><span class="sd"># from drumscript.notation_generator import constants</span>
 </span><span data-line="468"><span class="sd"># classified_events = []</span>
 </span><span data-line="469">
-</span><span data-line="470"><span class="sd"># global_max = np.max(np.abs(audio_data)) if len(audio_data) &gt; 0 else 1.0</span>
-</span><span data-line="471"><span class="sd"># duration = len(audio_data) / sr</span>
+</span><span data-line="470"><span class="sd"># global_max = np.max(np.abs(audio_path)) if len(audio_path) &gt; 0 else 1.0</span>
+</span><span data-line="471"><span class="sd"># duration = len(audio_path) / sr</span>
 </span><span data-line="472">
 </span><span data-line="473"><span class="sd"># --- NATIVE PEAK DOMINANCE CHECK (Single-Beat Detection) ---</span>
 </span><span data-line="474"><span class="sd"># loud_hit_count = 0</span>
 </span><span data-line="475"><span class="sd"># for t in onsets:</span>
 </span><span data-line="476"><span class="sd">#    s_start = int(t * sr)</span>
 </span><span data-line="477"><span class="sd">#    s_end = s_start + int(0.1 * sr)</span>
-</span><span data-line="478"><span class="sd">#    s_data = audio_data[s_start:min(s_end, len(audio_data))]</span>
+</span><span data-line="478"><span class="sd">#    s_data = audio_path[s_start:min(s_end, len(audio_path))]</span>
 </span><span data-line="479"><span class="sd">#    s_vol = np.max(np.abs(s_data)) if len(s_data) &gt; 0 else 0.0</span>
 </span><span data-line="480">
 </span><span data-line="481"><span class="sd">#    if s_vol &gt; global_max * 0.50:</span>
@@ -790,12 +791,12 @@ data-aria-dark="Switch to auto color mode">
 </span><span data-line="491"><span class="sd">#    duration_short_secs = constants.ONSET_SLICE_DURATION_MS / 1000.0</span>
 </span><span data-line="492"><span class="sd">#    end_sample_short = start_sample + int(duration_short_secs * sr)</span>
 </span><span data-line="493">
-</span><span data-line="494"><span class="sd">#    if end_sample_short &gt; len(audio_data):</span>
-</span><span data-line="495"><span class="sd">#        slice_data = audio_data[start_sample:]</span>
-</span><span data-line="496"><span class="sd">#        pad_length = end_sample_short - len(audio_data)</span>
+</span><span data-line="494"><span class="sd">#    if end_sample_short &gt; len(audio_path):</span>
+</span><span data-line="495"><span class="sd">#        slice_data = audio_path[start_sample:]</span>
+</span><span data-line="496"><span class="sd">#        pad_length = end_sample_short - len(audio_path)</span>
 </span><span data-line="497"><span class="sd">#        y_window_short = np.pad(slice_data, (0, pad_length), mode=&#39;constant&#39;)</span>
 </span><span data-line="498"><span class="sd">#    else:</span>
-</span><span data-line="499"><span class="sd">#        y_window_short = audio_data[start_sample:end_sample_short]</span>
+</span><span data-line="499"><span class="sd">#        y_window_short = audio_path[start_sample:end_sample_short]</span>
 </span><span data-line="500">
 </span><span data-line="501"><span class="sd"># if len(y_window_short) == 0:</span>
 </span><span data-line="502"><span class="sd">#   continue</span>
@@ -822,12 +823,12 @@ data-aria-dark="Switch to auto color mode">
 </span><span data-line="523"><span class="sd"># duration_long_secs = 1.5</span>
 </span><span data-line="524"><span class="sd"># end_sample_long = start_sample + int(duration_long_secs * sr)</span>
 </span><span data-line="525">
-</span><span data-line="526"><span class="sd"># if end_sample_long &gt; len(audio_data):</span>
-</span><span data-line="527"><span class="sd">#    slice_data = audio_data[start_sample:]</span>
-</span><span data-line="528"><span class="sd">#    pad_length = end_sample_long - len(audio_data)</span>
+</span><span data-line="526"><span class="sd"># if end_sample_long &gt; len(audio_path):</span>
+</span><span data-line="527"><span class="sd">#    slice_data = audio_path[start_sample:]</span>
+</span><span data-line="528"><span class="sd">#    pad_length = end_sample_long - len(audio_path)</span>
 </span><span data-line="529"><span class="sd">#    y_window_long = np.pad(slice_data, (0, pad_length), mode=&#39;constant&#39;)</span>
 </span><span data-line="530"><span class="sd"># else:</span>
-</span><span data-line="531"><span class="sd">#    y_window_long = audio_data[start_sample:end_sample_long]</span>
+</span><span data-line="531"><span class="sd">#    y_window_long = audio_path[start_sample:end_sample_long]</span>
 </span><span data-line="532">
 </span><span data-line="533"><span class="sd"># 1. Extract the physics DNA</span>
 </span><span data-line="534"><span class="sd"># physics_profile = extract_features(y_window_short, y_window_long, sr)</span>
@@ -886,7 +887,7 @@ data-aria-dark="Switch to auto color mode">
 </span><span data-line="587">
 </span><span data-line="588">
 </span><span data-line="589"><span class="sd">## --- LEGACY CODE ---</span>
-</span><span data-line="590"><span class="sd"># def classify_events(audio_data: np.ndarray, sr: int, onsets: list[float]) -&gt; list[dict]:</span>
+</span><span data-line="590"><span class="sd"># def classify_events(audio_path: np.ndarray, sr: int, onsets: list[float]) -&gt; list[dict]:</span>
 </span><span data-line="591"><span class="sd">#</span>
 </span><span data-line="592"><span class="sd"># Wrapper to route detected onsets through the new Physics-First Classification Engine.</span>
 </span><span data-line="593"><span class="sd"># Uses the unified dictionary keys: time_sec, instruments, debug_features.</span>
@@ -895,8 +896,8 @@ data-aria-dark="Switch to auto color mode">
 </span><span data-line="596"><span class="sd">#   classified_events = []</span>
 </span><span data-line="597">
 </span><span data-line="598"><span class="sd"># Calculate global parameters to evaluate amplitude gating for single hits</span>
-</span><span data-line="599"><span class="sd">#  global_max = np.max(np.abs(audio_data)) if len(audio_data) &gt; 0 else 1.0</span>
-</span><span data-line="600"><span class="sd">#  duration = len(audio_data) / sr</span>
+</span><span data-line="599"><span class="sd">#  global_max = np.max(np.abs(audio_path)) if len(audio_path) &gt; 0 else 1.0</span>
+</span><span data-line="600"><span class="sd">#  duration = len(audio_path) / sr</span>
 </span><span data-line="601">
 </span><span data-line="602"><span class="sd"># --- Peak Dominance Check (Single-Beat Detection) ---</span>
 </span><span data-line="603"><span class="sd"># Look ahead at the volume of all detected onsets. A ringing cymbal might hallucinate 30 fake onsets due to &quot;shimmer&quot;, but only the initial stick</span>
@@ -905,7 +906,7 @@ data-aria-dark="Switch to auto color mode">
 </span><span data-line="606"><span class="sd"># for t in onsets:</span>
 </span><span data-line="607"><span class="sd">#    s_start = int(t * sr)</span>
 </span><span data-line="608"><span class="sd">#    s_end = s_start + int(0.1 * sr) # Look at the first 100ms of the hit</span>
-</span><span data-line="609"><span class="sd">#    s_data = audio_data[s_start:min(s_end, len(audio_data))]</span>
+</span><span data-line="609"><span class="sd">#    s_data = audio_path[s_start:min(s_end, len(audio_path))]</span>
 </span><span data-line="610"><span class="sd">#    s_vol = np.max(np.abs(s_data)) if len(s_data) &gt; 0 else 0.0</span>
 </span><span data-line="611">
 </span><span data-line="612"><span class="sd">#    if s_vol &gt; global_max * 0.50:</span>
@@ -929,12 +930,12 @@ data-aria-dark="Switch to auto color mode">
 </span><span data-line="630"><span class="sd">#    duration_short_secs = constants.ONSET_SLICE_DURATION_MS / 1000.0</span>
 </span><span data-line="631"><span class="sd">#    end_sample_short = start_sample + int(duration_short_secs * sr)</span>
 </span><span data-line="632">
-</span><span data-line="633"><span class="sd">#    if end_sample_short &gt; len(audio_data):</span>
-</span><span data-line="634"><span class="sd">#        slice_data = audio_data[start_sample:]</span>
-</span><span data-line="635"><span class="sd">#        pad_length = end_sample_short - len(audio_data)</span>
+</span><span data-line="633"><span class="sd">#    if end_sample_short &gt; len(audio_path):</span>
+</span><span data-line="634"><span class="sd">#        slice_data = audio_path[start_sample:]</span>
+</span><span data-line="635"><span class="sd">#        pad_length = end_sample_short - len(audio_path)</span>
 </span><span data-line="636"><span class="sd">#        y_window_short = np.pad(slice_data, (0, pad_length), mode=&#39;constant&#39;)</span>
 </span><span data-line="637"><span class="sd">#    else:</span>
-</span><span data-line="638"><span class="sd">#        y_window_short = audio_data[start_sample:end_sample_short]</span>
+</span><span data-line="638"><span class="sd">#        y_window_short = audio_path[start_sample:end_sample_short]</span>
 </span><span data-line="639"><span class="sd">#</span>
 </span><span data-line="640"><span class="sd">#</span>
 </span><span data-line="641"><span class="sd">#    if len(y_window_short) == 0:</span>
@@ -965,12 +966,12 @@ data-aria-dark="Switch to auto color mode">
 </span><span data-line="666"><span class="sd">#    duration_long_secs = 1.5</span>
 </span><span data-line="667"><span class="sd">#    end_sample_long = start_sample + int(duration_long_secs * sr)</span>
 </span><span data-line="668">
-</span><span data-line="669"><span class="sd">#    if end_sample_long &gt; len(audio_data):</span>
-</span><span data-line="670"><span class="sd">#        slice_data = audio_data[start_sample:]</span>
-</span><span data-line="671"><span class="sd">#        pad_length = end_sample_long - len(audio_data)</span>
+</span><span data-line="669"><span class="sd">#    if end_sample_long &gt; len(audio_path):</span>
+</span><span data-line="670"><span class="sd">#        slice_data = audio_path[start_sample:]</span>
+</span><span data-line="671"><span class="sd">#        pad_length = end_sample_long - len(audio_path)</span>
 </span><span data-line="672"><span class="sd">#        y_window_long = np.pad(slice_data, (0, pad_length), mode=&#39;constant&#39;)</span>
 </span><span data-line="673"><span class="sd">#    else:</span>
-</span><span data-line="674"><span class="sd">#        y_window_long = audio_data[start_sample:end_sample_long]</span>
+</span><span data-line="674"><span class="sd">#        y_window_long = audio_path[start_sample:end_sample_long]</span>
 </span><span data-line="675">
 </span><span data-line="676">
 </span><span data-line="677"><span class="sd"># 1. Extract the physics DNA</span>
@@ -990,7 +991,7 @@ data-aria-dark="Switch to auto color mode">
 </span><span data-line="691">
 </span><span data-line="692"><span class="sd"># return classified_events</span>
 </span><span data-line="693">
-</span><span data-line="694"><span class="sd"># def classify_events(audio_data: np.ndarray, sr: int, onsets: list[float]) -&gt; list[dict]:</span>
+</span><span data-line="694"><span class="sd"># def classify_events(audio_path: np.ndarray, sr: int, onsets: list[float]) -&gt; list[dict]:</span>
 </span><span data-line="695"><span class="sd">#</span>
 </span><span data-line="696"><span class="sd"># Wrapper to route detected onsets through the new Physics-First Classification Engine.</span>
 </span><span data-line="697"><span class="sd"># Uses the unified dictionary keys: time_sec, instruments, debug_features.</span>
@@ -998,8 +999,8 @@ data-aria-dark="Switch to auto color mode">
 </span><span data-line="699"><span class="sd"># classified_events = []</span>
 </span><span data-line="700">
 </span><span data-line="701"><span class="sd"># Calculate global parameters to evaluate amplitude gating for single hits</span>
-</span><span data-line="702"><span class="sd"># global_max = np.max(np.abs(audio_data)) if len(audio_data) &gt; 0 else 1.0</span>
-</span><span data-line="703"><span class="sd"># duration = len(audio_data) / sr</span>
+</span><span data-line="702"><span class="sd"># global_max = np.max(np.abs(audio_path)) if len(audio_path) &gt; 0 else 1.0</span>
+</span><span data-line="703"><span class="sd"># duration = len(audio_path) / sr</span>
 </span><span data-line="704">
 </span><span data-line="705"><span class="sd"># --- DYNAMIC ISOLATED SAMPLE DETECTION ---</span>
 </span><span data-line="706"><span class="sd"># Cymbals ring out for 5-15 seconds, bypassing our old &#39;duration &lt; 2.0&#39; check.</span>
@@ -1015,12 +1016,12 @@ data-aria-dark="Switch to auto color mode">
 </span><span data-line="716"><span class="sd">#   duration_short_secs = ONSET_SLICE_DURATION_MS / 1000.0</span>
 </span><span data-line="717"><span class="sd">#   end_sample_short = start_sample + int(duration_short_secs * sr)</span>
 </span><span data-line="718">
-</span><span data-line="719"><span class="sd"># if end_sample_short &gt; len(audio_data):</span>
-</span><span data-line="720"><span class="sd">#  slice_data = audio_data[start_sample:]</span>
-</span><span data-line="721"><span class="sd">#  pad_length = end_sample_short - len(audio_data)</span>
+</span><span data-line="719"><span class="sd"># if end_sample_short &gt; len(audio_path):</span>
+</span><span data-line="720"><span class="sd">#  slice_data = audio_path[start_sample:]</span>
+</span><span data-line="721"><span class="sd">#  pad_length = end_sample_short - len(audio_path)</span>
 </span><span data-line="722"><span class="sd">#  y_window_short = np.pad(slice_data, (0, pad_length), mode=&#39;constant&#39;)</span>
 </span><span data-line="723"><span class="sd"># else:</span>
-</span><span data-line="724"><span class="sd">#   y_window_short = audio_data[start_sample:end_sample_short]</span>
+</span><span data-line="724"><span class="sd">#   y_window_short = audio_path[start_sample:end_sample_short]</span>
 </span><span data-line="725">
 </span><span data-line="726"><span class="sd"># if len(y_window_short) == 0:</span>
 </span><span data-line="727"><span class="sd">#   continue</span>
@@ -1038,12 +1039,12 @@ data-aria-dark="Switch to auto color mode">
 </span><span data-line="739"><span class="sd"># duration_long_secs = 1.5</span>
 </span><span data-line="740"><span class="sd"># end_sample_long = start_sample + int(duration_long_secs * sr)</span>
 </span><span data-line="741">
-</span><span data-line="742"><span class="sd"># if end_sample_long &gt; len(audio_data):</span>
-</span><span data-line="743"><span class="sd">#    slice_data = audio_data[start_sample:]</span>
-</span><span data-line="744"><span class="sd">#    pad_length = end_sample_long - len(audio_data)</span>
+</span><span data-line="742"><span class="sd"># if end_sample_long &gt; len(audio_path):</span>
+</span><span data-line="743"><span class="sd">#    slice_data = audio_path[start_sample:]</span>
+</span><span data-line="744"><span class="sd">#    pad_length = end_sample_long - len(audio_path)</span>
 </span><span data-line="745"><span class="sd">#    y_window_long = np.pad(slice_data, (0, pad_length), mode=&#39;constant&#39;)</span>
 </span><span data-line="746"><span class="sd"># else:</span>
-</span><span data-line="747"><span class="sd">#    y_window_long = audio_data[start_sample:end_sample_long]</span>
+</span><span data-line="747"><span class="sd">#    y_window_long = audio_path[start_sample:end_sample_long]</span>
 </span><span data-line="748">
 </span><span data-line="749"><span class="sd"># 1. Extract the physics DNA</span>
 </span><span data-line="750"><span class="sd"># physics_profile = extract_features(y_window_short, y_window_long, sr)</span>
@@ -1065,7 +1066,7 @@ data-aria-dark="Switch to auto color mode">
 </span><span data-line="766"><span class="sd"># Reasoning: Replaced the static 2.0s duration check with an Onset Density check to safely gate long-ringing cymbals whilst protecting full songs.</span>
 </span><span data-line="767">
 </span><span data-line="768"><span class="sd"># --- LEGACY CODE --</span>
-</span><span data-line="769"><span class="sd"># def classify_events(audio_data: np.ndarray, sr: int, onsets: list[float]) -&gt; list[dict]:</span>
+</span><span data-line="769"><span class="sd"># def classify_events(audio_path: np.ndarray, sr: int, onsets: list[float]) -&gt; list[dict]:</span>
 </span><span data-line="770">
 </span><span data-line="771"><span class="sd"># Wrapper to route detected onsets through the new Physics-First Classification Engine.</span>
 </span><span data-line="772"><span class="sd"># Uses the unified dictionary keys: time_sec, instruments, debug_features.</span>
@@ -1073,8 +1074,8 @@ data-aria-dark="Switch to auto color mode">
 </span><span data-line="774"><span class="sd"># classified_events = []</span>
 </span><span data-line="775">
 </span><span data-line="776"><span class="sd"># Calculate global parameters to evaluate amplitude gating for single hits</span>
-</span><span data-line="777"><span class="sd"># global_max = np.max(np.abs(audio_data)) if len(audio_data) &gt; 0 else 1.0</span>
-</span><span data-line="778"><span class="sd"># duration = len(audio_data) / sr</span>
+</span><span data-line="777"><span class="sd"># global_max = np.max(np.abs(audio_path)) if len(audio_path) &gt; 0 else 1.0</span>
+</span><span data-line="778"><span class="sd"># duration = len(audio_path) / sr</span>
 </span><span data-line="779">
 </span><span data-line="780"><span class="sd"># for onset_time in onsets:</span>
 </span><span data-line="781"><span class="sd">#    start_sample = int(onset_time * sr)</span>
@@ -1083,12 +1084,12 @@ data-aria-dark="Switch to auto color mode">
 </span><span data-line="784"><span class="sd">#   duration_short_secs = ONSET_SLICE_DURATION_MS / 1000.0</span>
 </span><span data-line="785"><span class="sd">#   end_sample_short = start_sample + int(duration_short_secs * sr)</span>
 </span><span data-line="786">
-</span><span data-line="787"><span class="sd">#  if end_sample_short &gt; len(audio_data):</span>
-</span><span data-line="788"><span class="sd">#      slice_data = audio_data[start_sample:]</span>
-</span><span data-line="789"><span class="sd">#      pad_length = end_sample_short - len(audio_data)</span>
+</span><span data-line="787"><span class="sd">#  if end_sample_short &gt; len(audio_path):</span>
+</span><span data-line="788"><span class="sd">#      slice_data = audio_path[start_sample:]</span>
+</span><span data-line="789"><span class="sd">#      pad_length = end_sample_short - len(audio_path)</span>
 </span><span data-line="790"><span class="sd">#      y_window_short = np.pad(slice_data, (0, pad_length), mode=&#39;constant&#39;)</span>
 </span><span data-line="791"><span class="sd">#  else:</span>
-</span><span data-line="792"><span class="sd">#      y_window_short = audio_data[start_sample:end_sample_short]</span>
+</span><span data-line="792"><span class="sd">#      y_window_short = audio_path[start_sample:end_sample_short]</span>
 </span><span data-line="793">
 </span><span data-line="794"><span class="sd"># if len(y_window_short) == 0:</span>
 </span><span data-line="795"><span class="sd">#     continue</span>
@@ -1106,12 +1107,12 @@ data-aria-dark="Switch to auto color mode">
 </span><span data-line="807"><span class="sd"># duration_long_secs = 1.5</span>
 </span><span data-line="808"><span class="sd"># end_sample_long = start_sample + int(duration_long_secs * sr)</span>
 </span><span data-line="809">
-</span><span data-line="810"><span class="sd"># if end_sample_long &gt; len(audio_data):</span>
-</span><span data-line="811"><span class="sd">#    slice_data = audio_data[start_sample:]</span>
-</span><span data-line="812"><span class="sd">#    pad_length = end_sample_long - len(audio_data)</span>
+</span><span data-line="810"><span class="sd"># if end_sample_long &gt; len(audio_path):</span>
+</span><span data-line="811"><span class="sd">#    slice_data = audio_path[start_sample:]</span>
+</span><span data-line="812"><span class="sd">#    pad_length = end_sample_long - len(audio_path)</span>
 </span><span data-line="813"><span class="sd">#    y_window_long = np.pad(slice_data, (0, pad_length), mode=&#39;constant&#39;)</span>
 </span><span data-line="814"><span class="sd"># else:</span>
-</span><span data-line="815"><span class="sd">#    y_window_long = audio_data[start_sample:end_sample_long]</span>
+</span><span data-line="815"><span class="sd">#    y_window_long = audio_path[start_sample:end_sample_long]</span>
 </span><span data-line="816">
 </span><span data-line="817"><span class="sd"># 1. Extract the physics DNA</span>
 </span><span data-line="818"><span class="sd"># physics_profile = extract_features(y_window_short, y_window_long, sr)</span>
@@ -1136,7 +1137,7 @@ data-aria-dark="Switch to auto color mode">
 </span><span data-line="837"><span class="sd"># --- LEGACY CODE ---</span>
 </span><span data-line="838"><span class="sd"># Reasoning: Added a volume-based amplitude gate within the `classify_events` loop to discard quiet room reflections in short audio clips,</span>
 </span><span data-line="839"><span class="sd"># thereby stopping double-triggering without affecting full-song transcriptions.</span>
-</span><span data-line="840"><span class="sd"># def classify_events(audio_data: np.ndarray, sr: int, onsets: list[float]) -&gt; list[dict]:</span>
+</span><span data-line="840"><span class="sd"># def classify_events(audio_path: np.ndarray, sr: int, onsets: list[float]) -&gt; list[dict]:</span>
 </span><span data-line="841"><span class="sd">#     #</span>
 </span><span data-line="842"><span class="sd">#     Wrapper to route detected onsets through the new Physics-First Classification Engine.</span>
 </span><span data-line="843"><span class="sd">#     Uses the unified dictionary keys: time_sec, instruments, debug_features.</span>
@@ -1150,12 +1151,12 @@ data-aria-dark="Switch to auto color mode">
 </span><span data-line="851"><span class="sd">#         duration_short_secs = ONSET_SLICE_DURATION_MS / 1000.0</span>
 </span><span data-line="852"><span class="sd">#         end_sample_short = start_sample + int(duration_short_secs * sr)</span>
 </span><span data-line="853"><span class="sd">#</span>
-</span><span data-line="854"><span class="sd">#         if end_sample_short &gt; len(audio_data):</span>
-</span><span data-line="855"><span class="sd">#             slice_data = audio_data[start_sample:]</span>
-</span><span data-line="856"><span class="sd">#             pad_length = end_sample_short - len(audio_data)</span>
+</span><span data-line="854"><span class="sd">#         if end_sample_short &gt; len(audio_path):</span>
+</span><span data-line="855"><span class="sd">#             slice_data = audio_path[start_sample:]</span>
+</span><span data-line="856"><span class="sd">#             pad_length = end_sample_short - len(audio_path)</span>
 </span><span data-line="857"><span class="sd">#             y_window_short = np.pad(slice_data, (0, pad_length), mode=&#39;constant&#39;)</span>
 </span><span data-line="858"><span class="sd">#         else:</span>
-</span><span data-line="859"><span class="sd">#             y_window_short = audio_data[start_sample:end_sample_short]</span>
+</span><span data-line="859"><span class="sd">#             y_window_short = audio_path[start_sample:end_sample_short]</span>
 </span><span data-line="860"><span class="sd">#</span>
 </span><span data-line="861"><span class="sd">#         if len(y_window_short) == 0:</span>
 </span><span data-line="862"><span class="sd">#             continue</span>
@@ -1164,12 +1165,12 @@ data-aria-dark="Switch to auto color mode">
 </span><span data-line="865"><span class="sd">#         duration_long_secs = 1.5</span>
 </span><span data-line="866"><span class="sd">#         end_sample_long = start_sample + int(duration_long_secs * sr)</span>
 </span><span data-line="867"><span class="sd">#</span>
-</span><span data-line="868"><span class="sd">#         if end_sample_long &gt; len(audio_data):</span>
-</span><span data-line="869"><span class="sd">#             slice_data = audio_data[start_sample:]</span>
-</span><span data-line="870"><span class="sd">#             pad_length = end_sample_long - len(audio_data)</span>
+</span><span data-line="868"><span class="sd">#         if end_sample_long &gt; len(audio_path):</span>
+</span><span data-line="869"><span class="sd">#             slice_data = audio_path[start_sample:]</span>
+</span><span data-line="870"><span class="sd">#             pad_length = end_sample_long - len(audio_path)</span>
 </span><span data-line="871"><span class="sd">#             y_window_long = np.pad(slice_data, (0, pad_length), mode=&#39;constant&#39;)</span>
 </span><span data-line="872"><span class="sd">#         else:</span>
-</span><span data-line="873"><span class="sd">#             y_window_long = audio_data[start_sample:end_sample_long]</span>
+</span><span data-line="873"><span class="sd">#             y_window_long = audio_path[start_sample:end_sample_long]</span>
 </span><span data-line="874"><span class="sd">#</span>
 </span><span data-line="875"><span class="sd">#</span>
 </span><span data-line="876"><span class="sd">#         # 1. Extract the physics DNA</span>
@@ -1191,15 +1192,15 @@ data-aria-dark="Switch to auto color mode">
 </span><span data-line="892">
 </span><span data-line="893">
 </span><span data-line="894"><span class="sd"># --- LEGACY CODE ---</span>
-</span><span data-line="895"><span class="sd"># def classify_events(audio_data: np.ndarray, sr: int, onsets: list[float]) -&gt; list[dict]:</span>
+</span><span data-line="895"><span class="sd"># def classify_events(audio_path: np.ndarray, sr: int, onsets: list[float]) -&gt; list[dict]:</span>
 </span><span data-line="896"><span class="sd"># Wrapper to route detected onsets through the new Physics-First Classification Engine.</span>
 </span><span data-line="897"><span class="sd"># Uses the unified dictionary keys: time_sec, instruments, debug_features.</span>
 </span><span data-line="898">
 </span><span data-line="899"><span class="sd">#  classified_events = []</span>
 </span><span data-line="900">
 </span><span data-line="901"><span class="sd"># Calculate global parameters to evaluate amplitude gating</span>
-</span><span data-line="902"><span class="sd"># global_max = np.max(np.abs(audio_data)) if len(audio_data) &gt; 0 else 1.0</span>
-</span><span data-line="903"><span class="sd"># duration = len(audio_data) / sr</span>
+</span><span data-line="902"><span class="sd"># global_max = np.max(np.abs(audio_path)) if len(audio_path) &gt; 0 else 1.0</span>
+</span><span data-line="903"><span class="sd"># duration = len(audio_path) / sr</span>
 </span><span data-line="904">
 </span><span data-line="905"><span class="sd"># for onset_time in onsets:</span>
 </span><span data-line="906"><span class="sd">#  start_sample = int(onset_time * sr)</span>
@@ -1208,12 +1209,12 @@ data-aria-dark="Switch to auto color mode">
 </span><span data-line="909"><span class="sd"># duration_short_secs = ONSET_SLICE_DURATION_MS / 1000.0</span>
 </span><span data-line="910"><span class="sd"># end_sample_short = start_sample + int(duration_short_secs * sr)</span>
 </span><span data-line="911">
-</span><span data-line="912"><span class="sd">#        if end_sample_short &gt; len(audio_data):</span>
-</span><span data-line="913"><span class="sd">#           slice_data = audio_data[start_sample:]</span>
-</span><span data-line="914"><span class="sd">#           pad_length = end_sample_short - len(audio_data)</span>
+</span><span data-line="912"><span class="sd">#        if end_sample_short &gt; len(audio_path):</span>
+</span><span data-line="913"><span class="sd">#           slice_data = audio_path[start_sample:]</span>
+</span><span data-line="914"><span class="sd">#           pad_length = end_sample_short - len(audio_path)</span>
 </span><span data-line="915"><span class="sd">#           y_window_short = np.pad(slice_data, (0, pad_length), mode=&#39;constant&#39;)</span>
 </span><span data-line="916"><span class="sd">#       else:</span>
-</span><span data-line="917"><span class="sd">#           y_window_short = audio_data[start_sample:end_sample_short]</span>
+</span><span data-line="917"><span class="sd">#           y_window_short = audio_path[start_sample:end_sample_short]</span>
 </span><span data-line="918"><span class="sd">#</span>
 </span><span data-line="919"><span class="sd">#</span>
 </span><span data-line="920"><span class="sd">#        if len(y_window_short) == 0:</span>
@@ -1235,12 +1236,12 @@ data-aria-dark="Switch to auto color mode">
 </span><span data-line="936"><span class="sd">#        duration_long_secs = 1.5</span>
 </span><span data-line="937"><span class="sd">#        end_sample_long = start_sample + int(duration_long_secs * sr)</span>
 </span><span data-line="938">
-</span><span data-line="939"><span class="sd">#        if end_sample_long &gt; len(audio_data):</span>
-</span><span data-line="940"><span class="sd"># slice_data = audio_data[start_sample:]</span>
-</span><span data-line="941"><span class="sd"># pad_length = end_sample_long - len(audio_data)</span>
+</span><span data-line="939"><span class="sd">#        if end_sample_long &gt; len(audio_path):</span>
+</span><span data-line="940"><span class="sd"># slice_data = audio_path[start_sample:]</span>
+</span><span data-line="941"><span class="sd"># pad_length = end_sample_long - len(audio_path)</span>
 </span><span data-line="942"><span class="sd"># y_window_long = np.pad(slice_data, (0, pad_length), mode=&#39;constant&#39;)</span>
 </span><span data-line="943"><span class="sd"># else:</span>
-</span><span data-line="944"><span class="sd">#   y_window_long = audio_data[start_sample:end_sample_long]</span>
+</span><span data-line="944"><span class="sd">#   y_window_long = audio_path[start_sample:end_sample_long]</span>
 </span><span data-line="945">
 </span><span data-line="946">
 </span><span data-line="947"><span class="sd"># 1. Extract the physics DNA</span>
@@ -1538,7 +1539,7 @@ data-aria-dark="Switch to auto color mode">
 </span><span data-line="1239"><span class="sd">#   return instruments</span>
 </span><span data-line="1240">
 </span><span data-line="1241"><span class="sd"># --- LEGACY CODE - COMMENTED OUT CLASSIFY_EVENTS ---</span>
-</span><span data-line="1242"><span class="sd"># def classify_events(audio_data: np.ndarray, sr: int, onsets: list[float]) -&gt; list[dict]:</span>
+</span><span data-line="1242"><span class="sd"># def classify_events(audio_path: np.ndarray, sr: int, onsets: list[float]) -&gt; list[dict]:</span>
 </span><span data-line="1243"><span class="sd">#     #</span>
 </span><span data-line="1244"><span class="sd">#     Wrapper to route detected onsets through the Physics-First Classification Engine.</span>
 </span><span data-line="1245"><span class="sd">#     Uses the unified dictionary keys: time_sec, instruments, debug_features.</span>
@@ -1553,12 +1554,12 @@ data-aria-dark="Switch to auto color mode">
 </span><span data-line="1254"><span class="sd">#         # #duration_secs = ONSET_SLICE_DURATION_MS / 1000.0</span>
 </span><span data-line="1255"><span class="sd">#         # #end_sample = start_sample + int(duration_secs * sr)</span>
 </span><span data-line="1256"><span class="sd">#         #</span>
-</span><span data-line="1257"><span class="sd">#         # if end_sample &gt; len(audio_data):</span>
-</span><span data-line="1258"><span class="sd">#         #     end_sample = len(audio_data)</span>
+</span><span data-line="1257"><span class="sd">#         # if end_sample &gt; len(audio_path):</span>
+</span><span data-line="1258"><span class="sd">#         #     end_sample = len(audio_path)</span>
 </span><span data-line="1259"><span class="sd">#         # if start_sample &gt;= end_sample:</span>
 </span><span data-line="1260"><span class="sd">#         #     continue</span>
 </span><span data-line="1261"><span class="sd">#         #</span>
-</span><span data-line="1262"><span class="sd">#         # y_window = audio_data[start_sample:end_sample]</span>
+</span><span data-line="1262"><span class="sd">#         # y_window = audio_path[start_sample:end_sample]</span>
 </span><span data-line="1263"><span class="sd">#         # if len(y_window) == 0:</span>
 </span><span data-line="1264"><span class="sd">#         #     continue</span>
 </span><span data-line="1265"><span class="sd">#</span>
@@ -1566,12 +1567,12 @@ data-aria-dark="Switch to auto color mode">
 </span><span data-line="1267"><span class="sd">#         duration_secs = ONSET_SLICE_DURATION_MS / 1000.0</span>
 </span><span data-line="1268"><span class="sd">#         end_sample = start_sample + int(duration_secs * sr)</span>
 </span><span data-line="1269"><span class="sd">#</span>
-</span><span data-line="1270"><span class="sd">#         if end_sample &gt; len(audio_data):</span>
-</span><span data-line="1271"><span class="sd">#             slice_data = audio_data[start_sample:]</span>
-</span><span data-line="1272"><span class="sd">#             pad_length = end_sample - len(audio_data)</span>
+</span><span data-line="1270"><span class="sd">#         if end_sample &gt; len(audio_path):</span>
+</span><span data-line="1271"><span class="sd">#             slice_data = audio_path[start_sample:]</span>
+</span><span data-line="1272"><span class="sd">#             pad_length = end_sample - len(audio_path)</span>
 </span><span data-line="1273"><span class="sd">#             y_window = np.pad(slice_data, (0, pad_length), mode=&#39;constant&#39;)</span>
 </span><span data-line="1274"><span class="sd">#         else:</span>
-</span><span data-line="1275"><span class="sd">#             y_window = audio_data[start_sample:end_sample]</span>
+</span><span data-line="1275"><span class="sd">#             y_window = audio_path[start_sample:end_sample]</span>
 </span><span data-line="1276"><span class="sd">#</span>
 </span><span data-line="1277"><span class="sd">#         if len(y_window) == 0:</span>
 </span><span data-line="1278"><span class="sd">#             continue</span>
@@ -1595,7 +1596,7 @@ data-aria-dark="Switch to auto color mode">
 </span><span data-line="1296">
 </span><span data-line="1297">
 </span><span data-line="1298"><span class="sd"># LEGACY CODE</span>
-</span><span data-line="1299"><span class="sd"># def classify_events(audio_data: np.ndarray, sr: int, onsets: list[float]) -&gt; list[dict]:</span>
+</span><span data-line="1299"><span class="sd"># def classify_events(audio_path: np.ndarray, sr: int, onsets: list[float]) -&gt; list[dict]:</span>
 </span><span data-line="1300"><span class="sd">#</span>
 </span><span data-line="1301"><span class="sd">#  Wrapper to route detected onsets through the Physics-First Classification Engine.</span>
 </span><span data-line="1302"><span class="sd">#  Uses the unified dictionary keys: time_sec, instruments, debug_features.</span>
@@ -1609,12 +1610,12 @@ data-aria-dark="Switch to auto color mode">
 </span><span data-line="1310"><span class="sd">#  duration_secs = ONSET_SLICE_DURATION_MS / 1000.0</span>
 </span><span data-line="1311"><span class="sd"># end_sample = start_sample + int(duration_secs * sr)</span>
 </span><span data-line="1312">
-</span><span data-line="1313"><span class="sd"># if end_sample &gt; len(audio_data):</span>
-</span><span data-line="1314"><span class="sd">#    slice_data = audio_data[start_sample:]</span>
-</span><span data-line="1315"><span class="sd">#        pad_length = end_sample - len(audio_data)</span>
+</span><span data-line="1313"><span class="sd"># if end_sample &gt; len(audio_path):</span>
+</span><span data-line="1314"><span class="sd">#    slice_data = audio_path[start_sample:]</span>
+</span><span data-line="1315"><span class="sd">#        pad_length = end_sample - len(audio_path)</span>
 </span><span data-line="1316"><span class="sd">#        y_window = np.pad(slice_data, (0, pad_length), mode=&#39;constant&#39;)</span>
 </span><span data-line="1317"><span class="sd">#    else:</span>
-</span><span data-line="1318"><span class="sd">#        y_window = audio_data[start_sample:end_sample]</span>
+</span><span data-line="1318"><span class="sd">#        y_window = audio_path[start_sample:end_sample]</span>
 </span><span data-line="1319">
 </span><span data-line="1320"><span class="sd">#    if len(y_window) == 0:</span>
 </span><span data-line="1321"><span class="sd">#        continue</span>
@@ -1695,10 +1696,10 @@ data-aria-dark="Switch to auto color mode">
 </span><span data-line="1396"><span class="sd">#</span>
 </span><span data-line="1397"><span class="sd">#</span>
 </span><span data-line="1398"><span class="sd"># # Leave these uncommented so not to break orchestration and docs</span>
-</span><span data-line="1399"><span class="sd"># def classify_events_legacy (audio_data, sr, onsets) -&gt; List[Dict[str, Any]]:</span>
+</span><span data-line="1399"><span class="sd"># def classify_events_legacy (audio_path, sr, onsets) -&gt; List[Dict[str, Any]]:</span>
 </span><span data-line="1400"><span class="sd">#     # Classifies hits strictly based on Fundamental Frequency ($f_0$) ranges.</span>
-</span><span data-line="1401"><span class="sd">#     # :param audio_data: Full audio array.</span>
-</span><span data-line="1402"><span class="sd">#     # :type audio_data: np.ndarray</span>
+</span><span data-line="1401"><span class="sd">#     # :param audio_path: Full audio array.</span>
+</span><span data-line="1402"><span class="sd">#     # :type audio_path: np.ndarray</span>
 </span><span data-line="1403"><span class="sd">#     # :param sr: Sampling rate.</span>
 </span><span data-line="1404"><span class="sd">#     # :type sr: int</span>
 </span><span data-line="1405"><span class="sd">#     # :param onsets: List of onset times.</span>
@@ -1713,12 +1714,12 @@ data-aria-dark="Switch to auto color mode">
 </span><span data-line="1414"><span class="sd">#         start_sample = int(onset_time * sr)</span>
 </span><span data-line="1415"><span class="sd">#         end_sample = int((onset_time + 0.15) * sr)</span>
 </span><span data-line="1416"><span class="sd">#</span>
-</span><span data-line="1417"><span class="sd">#         if end_sample &gt; len(audio_data):</span>
-</span><span data-line="1418"><span class="sd">#             end_sample = len(audio_data)</span>
+</span><span data-line="1417"><span class="sd">#         if end_sample &gt; len(audio_path):</span>
+</span><span data-line="1418"><span class="sd">#             end_sample = len(audio_path)</span>
 </span><span data-line="1419"><span class="sd">#         if start_sample &gt;= end_sample:</span>
 </span><span data-line="1420"><span class="sd">#             continue</span>
 </span><span data-line="1421"><span class="sd">#</span>
-</span><span data-line="1422"><span class="sd">#         y_window = audio_data[start_sample:end_sample]</span>
+</span><span data-line="1422"><span class="sd">#         y_window = audio_path[start_sample:end_sample]</span>
 </span><span data-line="1423"><span class="sd">#         if len(y_window) == 0:</span>
 </span><span data-line="1424"><span class="sd">#             continue</span>
 </span><span data-line="1425"><span class="sd">#</span>
@@ -1802,5 +1803,5 @@ data-aria-dark="Switch to auto color mode">
       <script src="../../../_static/documentation_options.js?v=360bc84d"></script>
       <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
       <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
-      <script src="../../../_static/shibuya.js?v=cac61aee"></script></body>
+      <script src="../../../_static/shibuya.js?v=50760d75"></script></body>
 </html>

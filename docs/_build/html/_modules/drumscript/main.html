@@ -6,7 +6,7 @@
     function setColorMode(t){let e=document.documentElement;e.setAttribute("data-color-mode",t);let a=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches,s=t;"auto"===t&&(s=a?"dark":"light"),"light"===s?(e.classList.remove("dark"),e.classList.add("light")):(e.classList.remove("light"),e.classList.add("dark"))}
     setColorMode(localStorage._theme||"auto");
   </script><link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=e1a1ceaf" />
-    <link rel="stylesheet" type="text/css" href="../../_static/shibuya.css?v=44020203" />
+    <link rel="stylesheet" type="text/css" href="../../_static/shibuya.css?v=9454f7d5" />
     <link rel="stylesheet" type="text/css" href="../../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
     <link media="print" rel="stylesheet" type="text/css" href="../../_static/print.css?v=20ff2c19" />
     <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=5885bd2b" />
@@ -19,7 +19,8 @@
   --sy-f-heading: "Inter", var(--sy-f-sys), var(--sy-f-cjk), sans-serif;
 }
 </style>
-    <meta property="og:type" content="website"/><meta property="og:title" content="drumscript.main"/>
+    
+  <meta property="og:type" content="website"/><meta property="og:title" content="drumscript.main"/>
     <meta name="twitter:card" content="summary"/>
   </head>
 <body><div class="sy-head">
@@ -186,10 +187,10 @@ data-aria-dark="Switch to auto color mode">
 <p class="caption" role="heading" aria-level="3"><span class="caption-text">Runbooks</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../guide/interactive/index.html">Interactive Runbooks</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../guide/interactive/create_backing_track.html">Create backing track</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../guide/interactive/extract_drums.html">Extract drums from a song</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../guide/interactive/create_backing_track.html">Create a Drumless Backing Track</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../guide/interactive/extract_drums.html">Extract Drums from a Song</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../guide/interactive/measure_tempo.html">Measure Tempo</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../guide/interactive/transcribe.html">Transcribe a song using DrumScript</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../guide/interactive/transcribe.html">Transcribe a Drum Track</a></li>
 </ul>
 </li>
 </ul>
@@ -295,7 +296,7 @@ data-aria-dark="Switch to auto color mode">
 <a class="viewcode-back" href="../../generated/drumscript.main.main.html#drumscript.main.main">[docs]</a>
 </span><span data-line="16"><span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span>
 </span><span data-line="17">    <span class="n">input_audio_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-</span><span data-line="18">    <span class="n">transcribe_full_song</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+</span><span data-line="18">    <span class="n">full_song</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
 </span><span data-line="19">    <span class="n">time_signature</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;4/4&quot;</span><span class="p">,</span>
 </span><span data-line="20">    <span class="n">drumless</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
 </span><span data-line="21">    <span class="n">mute</span><span class="p">:</span> <span class="nb">list</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -310,8 +311,8 @@ data-aria-dark="Switch to auto color mode">
 </span><span data-line="30">
 </span><span data-line="31"><span class="sd">    :param input_audio_path: Path to the input audio file.</span>
 </span><span data-line="32"><span class="sd">    :type input_audio_path: str</span>
-</span><span data-line="33"><span class="sd">    :param transcribe_full_song: If True, separates drums and generates score.</span>
-</span><span data-line="34"><span class="sd">    :type transcribe_full_song: bool, optional</span>
+</span><span data-line="33"><span class="sd">    :param full_song: If True, separates drums and generates score.</span>
+</span><span data-line="34"><span class="sd">    :type full_song: bool, optional</span>
 </span><span data-line="35"><span class="sd">    :param time_signature: Time signature for notation, defaults to &quot;4/4&quot;.</span>
 </span><span data-line="36"><span class="sd">    :type time_signature: str, optional</span>
 </span><span data-line="37"><span class="sd">    :param drumless: If True, generates a drumless backing track.</span>
@@ -333,7 +334,7 @@ data-aria-dark="Switch to auto color mode">
 </span><span data-line="53">
 </span><span data-line="54">        <span class="c1"># 1. Stem Separation / Pre-processing</span>
 </span><span data-line="55">        <span class="c1"># Check if user wants stem separation (either for transcription or just extracting stems)</span>
-</span><span data-line="56">        <span class="k">if</span> <span class="n">transcribe_full_song</span><span class="p">:</span>
+</span><span data-line="56">        <span class="k">if</span> <span class="n">full_song</span><span class="p">:</span>
 </span><span data-line="57">            <span class="k">try</span><span class="p">:</span>
 </span><span data-line="58">                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;...Separating drum stem...&quot;</span><span class="p">)</span>
 </span><span data-line="59">                <span class="n">audio_path</span> <span class="o">=</span> <span class="n">extract_drum_stem</span><span class="p">(</span><span class="n">input_audio_path</span><span class="p">)</span>
@@ -413,7 +414,7 @@ data-aria-dark="Switch to auto color mode">
 </span><span data-line="133">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;...Building Score &amp; JSON: </span><span class="si">{</span><span class="n">pdf_path</span><span class="si">}</span><span class="s2">...&quot;</span><span class="p">)</span>
 </span><span data-line="134">
 </span><span data-line="135">        <span class="c1"># score_builder.build_and_export_drum_score(</span>
-</span><span data-line="136">        <span class="n">score_builder</span><span class="o">.</span><span class="n">build_score</span><span class="p">(</span><span class="n">detected_events</span><span class="o">=</span><span class="n">detected_events</span><span class="p">,</span> <span class="n">tempo</span><span class="o">=</span><span class="n">tempo</span><span class="p">,</span> <span class="n">output_filepath</span><span class="o">=</span><span class="n">pdf_path</span><span class="p">,</span> <span class="n">time_signature</span><span class="o">=</span><span class="n">time_signature</span><span class="p">)</span>
+</span><span data-line="136">        <span class="n">score_builder</span><span class="o">.</span><span class="n">build_score</span><span class="p">(</span><span class="n">detected_events</span><span class="o">=</span><span class="n">detected_events</span><span class="p">,</span> <span class="n">tempo</span><span class="o">=</span><span class="n">tempo</span><span class="p">,</span> <span class="n">output_path</span><span class="o">=</span><span class="n">pdf_path</span><span class="p">,</span> <span class="n">time_signature</span><span class="o">=</span><span class="n">time_signature</span><span class="p">)</span>
 </span><span data-line="137">
 </span><span data-line="138">        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;--- Done! ---</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
 </span><span data-line="139">
@@ -424,7 +425,7 @@ data-aria-dark="Switch to auto color mode">
 </span><span data-line="144">        <span class="n">traceback</span><span class="o">.</span><span class="n">print_exc</span><span class="p">()</span>
 </span><span data-line="145">
 </span><span data-line="146">        <span class="c1"># If any stem splitting flag is active</span>
-</span><span data-line="147">        <span class="k">if</span> <span class="n">transcribe_full_song</span> <span class="ow">or</span> <span class="n">drumless</span> <span class="ow">or</span> <span class="n">mute</span> <span class="ow">or</span> <span class="n">all_stems</span><span class="p">:</span>
+</span><span data-line="147">        <span class="k">if</span> <span class="n">full_song</span> <span class="ow">or</span> <span class="n">drumless</span> <span class="ow">or</span> <span class="n">mute</span> <span class="ow">or</span> <span class="n">all_stems</span><span class="p">:</span>
 </span><span data-line="148">            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;...Processing Stems...&quot;</span><span class="p">)</span>
 </span><span data-line="149">
 </span><span data-line="150">            <span class="c1"># If transcription is requested (--full), we assume the user wants the stems separated</span>
@@ -432,152 +433,150 @@ data-aria-dark="Switch to auto color mode">
 </span><span data-line="152">            <span class="c1"># If only --drumless is passed, we might not want to transcribe, but the script flow</span>
 </span><span data-line="153">            <span class="c1"># currently implies transcription follows.</span>
 </span><span data-line="154">
-</span><span data-line="155">            <span class="n">results</span> <span class="o">=</span> <span class="n">separate_audio</span><span class="p">(</span>
-</span><span data-line="156">                <span class="n">input_audio_path</span><span class="o">=</span><span class="n">input_audio_path</span><span class="p">,</span> <span class="n">output_format</span><span class="o">=</span><span class="n">output_format</span><span class="p">,</span> <span class="n">drumless</span><span class="o">=</span><span class="n">drumless</span><span class="p">,</span> <span class="n">mute</span><span class="o">=</span><span class="n">mute</span><span class="p">,</span> <span class="n">all_stems</span><span class="o">=</span><span class="n">all_stems</span>
-</span><span data-line="157">            <span class="p">)</span>
-</span><span data-line="158">
-</span><span data-line="159">            <span class="c1"># If we are transcribing, we need the isolated drum track</span>
-</span><span data-line="160">            <span class="k">if</span> <span class="n">transcribe_full_song</span><span class="p">:</span>
-</span><span data-line="161">                <span class="k">if</span> <span class="s2">&quot;drums&quot;</span> <span class="ow">in</span> <span class="n">results</span><span class="p">:</span>
-</span><span data-line="162">                    <span class="n">audio_path</span> <span class="o">=</span> <span class="n">results</span><span class="p">[</span><span class="s2">&quot;drums&quot;</span><span class="p">]</span>
-</span><span data-line="163">                <span class="k">elif</span> <span class="s2">&quot;drums_stem&quot;</span> <span class="ow">in</span> <span class="n">results</span><span class="p">:</span>
-</span><span data-line="164">                    <span class="n">audio_path</span> <span class="o">=</span> <span class="n">results</span><span class="p">[</span><span class="s2">&quot;drums_stem&quot;</span><span class="p">]</span>
-</span><span data-line="165">                <span class="k">else</span><span class="p">:</span>
-</span><span data-line="166">                    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Warning: Drums stem was not found in separation results. Using original.&quot;</span><span class="p">)</span>
-</span><span data-line="167">
-</span><span data-line="168">            <span class="c1"># If the user ONLY wanted stems (e.g. --drumless) and NOT transcription,</span>
-</span><span data-line="169">            <span class="c1"># we should probably stop here?</span>
-</span><span data-line="170">            <span class="c1"># For now, I will allow it to proceed to transcription unless the user didn&#39;t ask for it.</span>
-</span><span data-line="171">            <span class="c1"># However, the current main() structure is built around &quot;Do Transcription&quot;.</span>
-</span><span data-line="172">            <span class="c1"># Let&#39;s check if the user actually wants to stop.</span>
-</span><span data-line="173">            <span class="k">if</span> <span class="ow">not</span> <span class="n">transcribe_full_song</span><span class="p">:</span>
-</span><span data-line="174">                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Stem processing complete. Exiting (Transcription not requested).&quot;</span><span class="p">)</span>
-</span><span data-line="175">                <span class="k">return</span>
-</span><span data-line="176">
-</span><span data-line="177">        <span class="c1"># 2. Analysis Pipeline</span>
-</span><span data-line="178">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;...Loading &amp; Analysing Audio (</span><span class="si">{</span><span class="n">Path</span><span class="p">(</span><span class="n">audio_path</span><span class="p">)</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">)...&quot;</span><span class="p">)</span>
-</span><span data-line="179">        <span class="c1"># y, sr = audio_loader.load_audio(audio_path)</span>
-</span><span data-line="180">        <span class="c1"># y, sr = audio_loader.load_audio(audio_path, sr=sr)</span>
-</span><span data-line="181">        <span class="n">y</span><span class="p">,</span> <span class="n">sr</span> <span class="o">=</span> <span class="n">audio_loader</span><span class="o">.</span><span class="n">load_audio</span><span class="p">(</span><span class="n">audio_path</span><span class="p">,</span> <span class="n">sr</span><span class="o">=</span><span class="n">SAMPLE_RATE</span><span class="p">)</span>
-</span><span data-line="182">        <span class="n">y</span> <span class="o">=</span> <span class="n">audio_loader</span><span class="o">.</span><span class="n">normalise_audio</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
-</span><span data-line="183">
-</span><span data-line="184">        <span class="n">duration_total_sec</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">)</span> <span class="o">/</span> <span class="n">sr</span>  <span class="c1"># duplicate of calc in try block ~line80-83, but required inside except block too, TO DO: make original vars</span>
-</span><span data-line="185">        <span class="c1"># in try block global vars for mins, secs (and duration_total_sec?)</span>
-</span><span data-line="186">        <span class="n">mins</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">duration_total_sec</span> <span class="o">//</span> <span class="mi">60</span><span class="p">)</span>  <span class="c1"># duplicate of calc in try block ~line80-83, but required inside except block too</span>
-</span><span data-line="187">        <span class="n">secs</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">duration_total_sec</span> <span class="o">%</span> <span class="mi">60</span><span class="p">)</span>  <span class="c1"># duplicate of calc in try block ~line80-83, but required inside except block too</span>
-</span><span data-line="188">        <span class="n">tempo</span> <span class="o">=</span> <span class="n">tempo_detector</span><span class="o">.</span><span class="n">estimate_tempo</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">sr</span><span class="p">)</span>
-</span><span data-line="189">        <span class="n">onsets</span> <span class="o">=</span> <span class="n">onset_detector</span><span class="o">.</span><span class="n">detect_onsets</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">sr</span><span class="p">)</span>
-</span><span data-line="190">
-</span><span data-line="191">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   -&gt; Duration: </span><span class="si">{</span><span class="n">mins</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">secs</span><span class="si">:</span><span class="s2">02d</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="n">duration_total_sec</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">s)&quot;</span><span class="p">)</span>
-</span><span data-line="192">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   -&gt; Detected Tempo: </span><span class="si">{</span><span class="n">tempo</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> BPM&quot;</span><span class="p">)</span>
-</span><span data-line="193">        <span class="c1"># print(f&quot;   -&gt; Detected Onsets: {len(onsets)}, type(onsets):{type}&quot;)</span>
-</span><span data-line="194">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   -&gt; Detected Onsets: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">onsets</span><span class="p">)</span><span class="si">}</span><span class="s2">, type(onsets):</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">onsets</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-</span><span data-line="195">
-</span><span data-line="196">        <span class="c1"># 3. Classification</span>
-</span><span data-line="197">        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;...Classifying (Fundamental Frequency Engine)...&quot;</span><span class="p">)</span>
-</span><span data-line="198">        <span class="c1"># classified_events = classify.classify_drum_hits(y, sr, onsets)</span>
-</span><span data-line="199">        <span class="c1"># classified_events = classify.classify_events(y, sr, onsets)</span>
-</span><span data-line="200">        <span class="c1"># print(f&quot;   -&gt; Classified {len(classified_events)} events&quot;)</span>
-</span><span data-line="201">
-</span><span data-line="202">        <span class="k">if</span> <span class="n">is_rudiment</span><span class="p">:</span>
-</span><span data-line="203">            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;   -&gt; Using Rudiment/Single-Beat Classification Engine&quot;</span><span class="p">)</span>
-</span><span data-line="204">            <span class="c1"># classified_events = classify.classify_rudiment_events(y, sr, onsets)</span>
-</span><span data-line="205">            <span class="n">classified_events</span> <span class="o">=</span> <span class="n">classify_rudiment_events</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">sr</span><span class="p">,</span> <span class="n">onsets</span><span class="p">)</span>
-</span><span data-line="206">        <span class="k">else</span><span class="p">:</span>
-</span><span data-line="207">            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;   -&gt; Using Standard Polyphonic Classification Engine&quot;</span><span class="p">)</span>
-</span><span data-line="208">            <span class="c1"># classified_events = classify.classify_events(y, sr, onsets)</span>
-</span><span data-line="209">            <span class="n">classified_events</span> <span class="o">=</span> <span class="n">classify_events</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">sr</span><span class="p">,</span> <span class="n">onsets</span><span class="p">)</span>
+</span><span data-line="155">            <span class="n">results</span> <span class="o">=</span> <span class="n">separate_audio</span><span class="p">(</span><span class="n">audio_path</span><span class="o">=</span><span class="n">input_audio_path</span><span class="p">,</span> <span class="n">output_format</span><span class="o">=</span><span class="n">output_format</span><span class="p">,</span> <span class="n">drumless</span><span class="o">=</span><span class="n">drumless</span><span class="p">,</span> <span class="n">mute</span><span class="o">=</span><span class="n">mute</span><span class="p">,</span> <span class="n">all_stems</span><span class="o">=</span><span class="n">all_stems</span><span class="p">)</span>
+</span><span data-line="156">
+</span><span data-line="157">            <span class="c1"># If we are transcribing, we need the isolated drum track</span>
+</span><span data-line="158">            <span class="k">if</span> <span class="n">full_song</span><span class="p">:</span>
+</span><span data-line="159">                <span class="k">if</span> <span class="s2">&quot;drums&quot;</span> <span class="ow">in</span> <span class="n">results</span><span class="p">:</span>
+</span><span data-line="160">                    <span class="n">audio_path</span> <span class="o">=</span> <span class="n">results</span><span class="p">[</span><span class="s2">&quot;drums&quot;</span><span class="p">]</span>
+</span><span data-line="161">                <span class="k">elif</span> <span class="s2">&quot;drums_stem&quot;</span> <span class="ow">in</span> <span class="n">results</span><span class="p">:</span>
+</span><span data-line="162">                    <span class="n">audio_path</span> <span class="o">=</span> <span class="n">results</span><span class="p">[</span><span class="s2">&quot;drums_stem&quot;</span><span class="p">]</span>
+</span><span data-line="163">                <span class="k">else</span><span class="p">:</span>
+</span><span data-line="164">                    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Warning: Drums stem was not found in separation results. Using original.&quot;</span><span class="p">)</span>
+</span><span data-line="165">
+</span><span data-line="166">            <span class="c1"># If the user ONLY wanted stems (e.g. --drumless) and NOT transcription,</span>
+</span><span data-line="167">            <span class="c1"># we should probably stop here?</span>
+</span><span data-line="168">            <span class="c1"># For now, I will allow it to proceed to transcription unless the user didn&#39;t ask for it.</span>
+</span><span data-line="169">            <span class="c1"># However, the current main() structure is built around &quot;Do Transcription&quot;.</span>
+</span><span data-line="170">            <span class="c1"># Let&#39;s check if the user actually wants to stop.</span>
+</span><span data-line="171">            <span class="k">if</span> <span class="ow">not</span> <span class="n">full_song</span><span class="p">:</span>
+</span><span data-line="172">                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Stem processing complete. Exiting (Transcription not requested).&quot;</span><span class="p">)</span>
+</span><span data-line="173">                <span class="k">return</span>
+</span><span data-line="174">
+</span><span data-line="175">        <span class="c1"># 2. Analysis Pipeline</span>
+</span><span data-line="176">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;...Loading &amp; Analysing Audio (</span><span class="si">{</span><span class="n">Path</span><span class="p">(</span><span class="n">audio_path</span><span class="p">)</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">)...&quot;</span><span class="p">)</span>
+</span><span data-line="177">        <span class="c1"># y, sr = audio_loader.load_audio(audio_path)</span>
+</span><span data-line="178">        <span class="c1"># y, sr = audio_loader.load_audio(audio_path, sr=sr)</span>
+</span><span data-line="179">        <span class="n">y</span><span class="p">,</span> <span class="n">sr</span> <span class="o">=</span> <span class="n">audio_loader</span><span class="o">.</span><span class="n">load_audio</span><span class="p">(</span><span class="n">audio_path</span><span class="p">,</span> <span class="n">sr</span><span class="o">=</span><span class="n">SAMPLE_RATE</span><span class="p">)</span>
+</span><span data-line="180">        <span class="n">y</span> <span class="o">=</span> <span class="n">audio_loader</span><span class="o">.</span><span class="n">normalise_audio</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+</span><span data-line="181">
+</span><span data-line="182">        <span class="n">duration_total_sec</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">)</span> <span class="o">/</span> <span class="n">sr</span>  <span class="c1"># duplicate of calc in try block ~line80-83, but required inside except block too, TO DO: make original vars</span>
+</span><span data-line="183">        <span class="c1"># in try block global vars for mins, secs (and duration_total_sec?)</span>
+</span><span data-line="184">        <span class="n">mins</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">duration_total_sec</span> <span class="o">//</span> <span class="mi">60</span><span class="p">)</span>  <span class="c1"># duplicate of calc in try block ~line80-83, but required inside except block too</span>
+</span><span data-line="185">        <span class="n">secs</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">duration_total_sec</span> <span class="o">%</span> <span class="mi">60</span><span class="p">)</span>  <span class="c1"># duplicate of calc in try block ~line80-83, but required inside except block too</span>
+</span><span data-line="186">        <span class="n">tempo</span> <span class="o">=</span> <span class="n">tempo_detector</span><span class="o">.</span><span class="n">estimate_tempo</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">sr</span><span class="p">)</span>
+</span><span data-line="187">        <span class="n">onsets</span> <span class="o">=</span> <span class="n">onset_detector</span><span class="o">.</span><span class="n">detect_onsets</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">sr</span><span class="p">)</span>
+</span><span data-line="188">
+</span><span data-line="189">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   -&gt; Duration: </span><span class="si">{</span><span class="n">mins</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">secs</span><span class="si">:</span><span class="s2">02d</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="n">duration_total_sec</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">s)&quot;</span><span class="p">)</span>
+</span><span data-line="190">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   -&gt; Detected Tempo: </span><span class="si">{</span><span class="n">tempo</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> BPM&quot;</span><span class="p">)</span>
+</span><span data-line="191">        <span class="c1"># print(f&quot;   -&gt; Detected Onsets: {len(onsets)}, type(onsets):{type}&quot;)</span>
+</span><span data-line="192">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   -&gt; Detected Onsets: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">onsets</span><span class="p">)</span><span class="si">}</span><span class="s2">, type(onsets):</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">onsets</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span data-line="193">
+</span><span data-line="194">        <span class="c1"># 3. Classification</span>
+</span><span data-line="195">        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;...Classifying (Fundamental Frequency Engine)...&quot;</span><span class="p">)</span>
+</span><span data-line="196">        <span class="c1"># classified_events = classify.classify_drum_hits(y, sr, onsets)</span>
+</span><span data-line="197">        <span class="c1"># classified_events = classify.classify_events(y, sr, onsets)</span>
+</span><span data-line="198">        <span class="c1"># print(f&quot;   -&gt; Classified {len(classified_events)} events&quot;)</span>
+</span><span data-line="199">
+</span><span data-line="200">        <span class="k">if</span> <span class="n">is_rudiment</span><span class="p">:</span>
+</span><span data-line="201">            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;   -&gt; Using Rudiment/Single-Beat Classification Engine&quot;</span><span class="p">)</span>
+</span><span data-line="202">            <span class="c1"># classified_events = classify.classify_rudiment_events(y, sr, onsets)</span>
+</span><span data-line="203">            <span class="n">classified_events</span> <span class="o">=</span> <span class="n">classify_rudiment_events</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">sr</span><span class="p">,</span> <span class="n">onsets</span><span class="p">)</span>
+</span><span data-line="204">        <span class="k">else</span><span class="p">:</span>
+</span><span data-line="205">            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;   -&gt; Using Standard Polyphonic Classification Engine&quot;</span><span class="p">)</span>
+</span><span data-line="206">            <span class="c1"># classified_events = classify.classify_events(y, sr, onsets)</span>
+</span><span data-line="207">            <span class="n">classified_events</span> <span class="o">=</span> <span class="n">classify_events</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">sr</span><span class="p">,</span> <span class="n">onsets</span><span class="p">)</span>
+</span><span data-line="208">
+</span><span data-line="209">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   -&gt; Classified </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">classified_events</span><span class="p">)</span><span class="si">}</span><span class="s2"> events&quot;</span><span class="p">)</span>
 </span><span data-line="210">
-</span><span data-line="211">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   -&gt; Classified </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">classified_events</span><span class="p">)</span><span class="si">}</span><span class="s2"> events&quot;</span><span class="p">)</span>
-</span><span data-line="212">
-</span><span data-line="213">        <span class="c1"># 4. Score Formatting</span>
-</span><span data-line="214">        <span class="n">detected_events</span> <span class="o">=</span> <span class="p">[]</span>
-</span><span data-line="215">        <span class="k">for</span> <span class="n">event</span> <span class="ow">in</span> <span class="n">classified_events</span><span class="p">:</span>
-</span><span data-line="216">            <span class="n">detected_events</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
-</span><span data-line="217">                <span class="p">{</span>
-</span><span data-line="218">                    <span class="c1"># --- MAPPING ---</span>
-</span><span data-line="219">                    <span class="c1"># &#39;time&#39;: event[&#39;time_sec&#39;],</span>
-</span><span data-line="220">                    <span class="c1"># &#39;drums&#39;: event[&#39;instruments&#39;], # Map list to &#39;drums&#39;</span>
-</span><span data-line="221">                    <span class="c1"># &#39;analysis&#39;: event[&#39;debug_features&#39;], # NOW CONTAINS: peak_freq, centroid, lfer, hfer, hfer_2k, hfer_5k, decay</span>
-</span><span data-line="222">                    <span class="s2">&quot;time_sec&quot;</span><span class="p">:</span> <span class="n">event</span><span class="p">[</span><span class="s2">&quot;time_sec&quot;</span><span class="p">],</span>
-</span><span data-line="223">                    <span class="s2">&quot;instruments&quot;</span><span class="p">:</span> <span class="n">event</span><span class="p">[</span><span class="s2">&quot;instruments&quot;</span><span class="p">],</span>
-</span><span data-line="224">                    <span class="s2">&quot;debug_features&quot;</span><span class="p">:</span> <span class="n">event</span><span class="p">[</span><span class="s2">&quot;debug_features&quot;</span><span class="p">],</span>
-</span><span data-line="225">                    <span class="c1"># &#39;midi_pitch&#39;: event[&#39;midi_pitch&#39;],</span>
-</span><span data-line="226">                    <span class="c1"># &#39;note_head_type&#39;: event[&#39;note_head_type&#39;]</span>
-</span><span data-line="227">                    <span class="c1">#&#39;staff_position&#39;: event[&#39;staff_position&#39;]</span>
-</span><span data-line="228">                <span class="p">}</span>
-</span><span data-line="229">            <span class="p">)</span>
-</span><span data-line="230">
-</span><span data-line="231">        <span class="c1"># 5. Output Generation</span>
-</span><span data-line="232">        <span class="n">pdf_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">Path</span><span class="p">(</span><span class="n">input_audio_path</span><span class="p">)</span><span class="o">.</span><span class="n">stem</span><span class="si">}</span><span class="s2">_transcription&quot;</span>
-</span><span data-line="233">        <span class="n">pdf_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;outputs/</span><span class="si">{</span><span class="n">pdf_path</span><span class="si">}</span><span class="s2">.pdf&quot;</span>
+</span><span data-line="211">        <span class="c1"># 4. Score Formatting</span>
+</span><span data-line="212">        <span class="n">detected_events</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span data-line="213">        <span class="k">for</span> <span class="n">event</span> <span class="ow">in</span> <span class="n">classified_events</span><span class="p">:</span>
+</span><span data-line="214">            <span class="n">detected_events</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+</span><span data-line="215">                <span class="p">{</span>
+</span><span data-line="216">                    <span class="c1"># --- MAPPING ---</span>
+</span><span data-line="217">                    <span class="c1"># &#39;time&#39;: event[&#39;time_sec&#39;],</span>
+</span><span data-line="218">                    <span class="c1"># &#39;drums&#39;: event[&#39;instruments&#39;], # Map list to &#39;drums&#39;</span>
+</span><span data-line="219">                    <span class="c1"># &#39;analysis&#39;: event[&#39;debug_features&#39;], # NOW CONTAINS: peak_freq, centroid, lfer, hfer, hfer_2k, hfer_5k, decay</span>
+</span><span data-line="220">                    <span class="s2">&quot;time_sec&quot;</span><span class="p">:</span> <span class="n">event</span><span class="p">[</span><span class="s2">&quot;time_sec&quot;</span><span class="p">],</span>
+</span><span data-line="221">                    <span class="s2">&quot;instruments&quot;</span><span class="p">:</span> <span class="n">event</span><span class="p">[</span><span class="s2">&quot;instruments&quot;</span><span class="p">],</span>
+</span><span data-line="222">                    <span class="s2">&quot;debug_features&quot;</span><span class="p">:</span> <span class="n">event</span><span class="p">[</span><span class="s2">&quot;debug_features&quot;</span><span class="p">],</span>
+</span><span data-line="223">                    <span class="c1"># &#39;midi_pitch&#39;: event[&#39;midi_pitch&#39;],</span>
+</span><span data-line="224">                    <span class="c1"># &#39;note_head_type&#39;: event[&#39;note_head_type&#39;]</span>
+</span><span data-line="225">                    <span class="c1">#&#39;staff_position&#39;: event[&#39;staff_position&#39;]</span>
+</span><span data-line="226">                <span class="p">}</span>
+</span><span data-line="227">            <span class="p">)</span>
+</span><span data-line="228">
+</span><span data-line="229">        <span class="c1"># 5. Output Generation</span>
+</span><span data-line="230">        <span class="n">pdf_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">Path</span><span class="p">(</span><span class="n">input_audio_path</span><span class="p">)</span><span class="o">.</span><span class="n">stem</span><span class="si">}</span><span class="s2">_transcription&quot;</span>
+</span><span data-line="231">        <span class="n">pdf_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;outputs/</span><span class="si">{</span><span class="n">pdf_path</span><span class="si">}</span><span class="s2">.pdf&quot;</span>
+</span><span data-line="232">
+</span><span data-line="233">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;...Building Score &amp; JSON: </span><span class="si">{</span><span class="n">pdf_path</span><span class="si">}</span><span class="s2">...&quot;</span><span class="p">)</span>
 </span><span data-line="234">
-</span><span data-line="235">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;...Building Score &amp; JSON: </span><span class="si">{</span><span class="n">pdf_path</span><span class="si">}</span><span class="s2">...&quot;</span><span class="p">)</span>
-</span><span data-line="236">
-</span><span data-line="237">        <span class="c1"># score_builder.build_and_export_drum_score(</span>
-</span><span data-line="238">        <span class="n">score_builder</span><span class="o">.</span><span class="n">build_score</span><span class="p">(</span><span class="n">detected_events</span><span class="o">=</span><span class="n">detected_events</span><span class="p">,</span> <span class="n">tempo</span><span class="o">=</span><span class="n">tempo</span><span class="p">,</span> <span class="n">output_filepath</span><span class="o">=</span><span class="n">pdf_path</span><span class="p">,</span> <span class="n">time_signature</span><span class="o">=</span><span class="n">time_signature</span><span class="p">)</span>
+</span><span data-line="235">        <span class="c1"># score_builder.build_and_export_drum_score(</span>
+</span><span data-line="236">        <span class="n">score_builder</span><span class="o">.</span><span class="n">build_score</span><span class="p">(</span><span class="n">detected_events</span><span class="o">=</span><span class="n">detected_events</span><span class="p">,</span> <span class="n">tempo</span><span class="o">=</span><span class="n">tempo</span><span class="p">,</span> <span class="n">output_path</span><span class="o">=</span><span class="n">pdf_path</span><span class="p">,</span> <span class="n">time_signature</span><span class="o">=</span><span class="n">time_signature</span><span class="p">)</span>
+</span><span data-line="237">
+</span><span data-line="238">        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;--- Done! ---</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
 </span><span data-line="239">
-</span><span data-line="240">        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;--- Done! ---</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
-</span><span data-line="241">
-</span><span data-line="242">    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-</span><span data-line="243">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-</span><span data-line="244">        <span class="kn">import</span><span class="w"> </span><span class="nn">traceback</span>
-</span><span data-line="245">
-</span><span data-line="246">        <span class="n">traceback</span><span class="o">.</span><span class="n">print_exc</span><span class="p">()</span></div>
+</span><span data-line="240">    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+</span><span data-line="241">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span data-line="242">        <span class="kn">import</span><span class="w"> </span><span class="nn">traceback</span>
+</span><span data-line="243">
+</span><span data-line="244">        <span class="n">traceback</span><span class="o">.</span><span class="n">print_exc</span><span class="p">()</span></div>
 
-</span><span data-line="247">
-</span><span data-line="248">
-</span><span data-line="249"><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
-</span><span data-line="250">    <span class="c1"># from datetime import datetime</span>
-</span><span data-line="251">    <span class="c1"># print(&quot;\n# ------------------------------------------------------------------------------------&quot;)</span>
-</span><span data-line="252">    <span class="c1"># datetimestamp = datetime.now()</span>
-</span><span data-line="253">    <span class="c1"># print(f&#39;\ndate/time: {datetimestamp}&#39;)</span>
-</span><span data-line="254">    <span class="c1"># print(f&#39;start: {datetimestamp:%Y-%m-%d %H:%M:%S}&#39;)</span>
+</span><span data-line="245">
+</span><span data-line="246">
+</span><span data-line="247"><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+</span><span data-line="248">    <span class="c1"># from datetime import datetime</span>
+</span><span data-line="249">    <span class="c1"># print(&quot;\n# ------------------------------------------------------------------------------------&quot;)</span>
+</span><span data-line="250">    <span class="c1"># datetimestamp = datetime.now()</span>
+</span><span data-line="251">    <span class="c1"># print(f&#39;\ndate/time: {datetimestamp}&#39;)</span>
+</span><span data-line="252">    <span class="c1"># print(f&#39;start: {datetimestamp:%Y-%m-%d %H:%M:%S}&#39;)</span>
+</span><span data-line="253">
+</span><span data-line="254">    <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">&quot;DrumScript: Audio to Sheet Music &amp; Stem Splitter&quot;</span><span class="p">)</span>
 </span><span data-line="255">
-</span><span data-line="256">    <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">&quot;DrumScript: Audio to Sheet Music &amp; Stem Splitter&quot;</span><span class="p">)</span>
+</span><span data-line="256">    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;input_audio_path&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Path to the audio file&quot;</span><span class="p">)</span>
 </span><span data-line="257">
-</span><span data-line="258">    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;input_audio_path&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Path to the audio file&quot;</span><span class="p">)</span>
-</span><span data-line="259">
-</span><span data-line="260">    <span class="c1"># Transcription argument</span>
-</span><span data-line="261">    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--full&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Transcribe the full song (isolates drums first)&quot;</span><span class="p">)</span>
-</span><span data-line="262">
-</span><span data-line="263">    <span class="c1"># Stem Splitter arguments</span>
-</span><span data-line="264">    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
-</span><span data-line="265">        <span class="s2">&quot;--drumless&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Extract a drumless backing track. Saves both the backing track and the drum-only audio&quot;</span>
-</span><span data-line="266">    <span class="p">)</span>
-</span><span data-line="267">    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--mute&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;append&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Mute specific stems (e.g. --mute bass). Can be used multiple times.&quot;</span><span class="p">)</span>
-</span><span data-line="268">    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--all-stems&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Export all individual stems&quot;</span><span class="p">)</span>
-</span><span data-line="269">    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--format&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s2">&quot;wav&quot;</span><span class="p">,</span> <span class="n">choices</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;wav&quot;</span><span class="p">,</span> <span class="s2">&quot;mp3&quot;</span><span class="p">],</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Output format for stems (default: wav)&quot;</span><span class="p">)</span>
-</span><span data-line="270">
-</span><span data-line="271">    <span class="c1"># Add argument for triggering simpler orchestration function in classify_rudiment_events() function</span>
-</span><span data-line="272">    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--rudiment&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Optimise classification for isolated single beats, rudiments, or paradiddles.&quot;</span><span class="p">)</span>
-</span><span data-line="273">
-</span><span data-line="274">    <span class="c1"># Notation arguments</span>
-</span><span data-line="275">    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--ts&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s2">&quot;4/4&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Time signature (default: 4/4)&quot;</span><span class="p">)</span>
+</span><span data-line="258">    <span class="c1"># Transcription argument</span>
+</span><span data-line="259">    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--full&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Transcribe the full song (isolates drums first)&quot;</span><span class="p">)</span>
+</span><span data-line="260">
+</span><span data-line="261">    <span class="c1"># Stem Splitter arguments</span>
+</span><span data-line="262">    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+</span><span data-line="263">        <span class="s2">&quot;--drumless&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Extract a drumless backing track. Saves both the backing track and the drum-only audio&quot;</span>
+</span><span data-line="264">    <span class="p">)</span>
+</span><span data-line="265">    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--mute&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;append&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Mute specific stems (e.g. --mute bass). Can be used multiple times.&quot;</span><span class="p">)</span>
+</span><span data-line="266">    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--all-stems&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Export all individual stems&quot;</span><span class="p">)</span>
+</span><span data-line="267">    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--format&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s2">&quot;wav&quot;</span><span class="p">,</span> <span class="n">choices</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;wav&quot;</span><span class="p">,</span> <span class="s2">&quot;mp3&quot;</span><span class="p">],</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Output format for stems (default: wav)&quot;</span><span class="p">)</span>
+</span><span data-line="268">
+</span><span data-line="269">    <span class="c1"># Add argument for triggering simpler orchestration function in classify_rudiment_events() function</span>
+</span><span data-line="270">    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--rudiment&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Optimise classification for isolated single beats, rudiments, or paradiddles.&quot;</span><span class="p">)</span>
+</span><span data-line="271">
+</span><span data-line="272">    <span class="c1"># Notation arguments</span>
+</span><span data-line="273">    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--ts&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s2">&quot;4/4&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Time signature (default: 4/4)&quot;</span><span class="p">)</span>
+</span><span data-line="274">
+</span><span data-line="275">    <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
 </span><span data-line="276">
-</span><span data-line="277">    <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
-</span><span data-line="278">
-</span><span data-line="279">    <span class="n">main</span><span class="p">(</span>
-</span><span data-line="280">        <span class="n">input_audio_path</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">input_audio_path</span><span class="p">,</span>
-</span><span data-line="281">        <span class="n">transcribe_full_song</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">full</span><span class="p">,</span>
-</span><span data-line="282">        <span class="n">time_signature</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">ts</span><span class="p">,</span>
-</span><span data-line="283">        <span class="n">drumless</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">drumless</span><span class="p">,</span>
-</span><span data-line="284">        <span class="n">mute</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">mute</span><span class="p">,</span>
-</span><span data-line="285">        <span class="n">all_stems</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">all_stems</span><span class="p">,</span>
-</span><span data-line="286">        <span class="n">is_rudiment</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">rudiment</span><span class="p">,</span>
-</span><span data-line="287">        <span class="n">output_format</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">format</span><span class="p">,</span>
-</span><span data-line="288">    <span class="p">)</span>
-</span><span data-line="289">
-</span><span data-line="290">    <span class="c1"># LEGACY: if __name__ == &#39;__main__&#39;:</span>
-</span><span data-line="291">    <span class="c1">#  parser = argparse.ArgumentParser()</span>
-</span><span data-line="292">    <span class="c1">#  parser.add_argument(&quot;input_audio_path&quot;, type=str)</span>
-</span><span data-line="293">    <span class="c1">#  parser.add_argument(&quot;--full&quot;, action=&quot;store_true&quot;)</span>
-</span><span data-line="294">    <span class="c1">#  parser.add_argument(&quot;--ts&quot;, type=str, default=&quot;4/4&quot;)</span>
-</span><span data-line="295">    <span class="c1">#  args = parser.parse_args()</span>
+</span><span data-line="277">    <span class="n">main</span><span class="p">(</span>
+</span><span data-line="278">        <span class="n">input_audio_path</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">input_audio_path</span><span class="p">,</span>
+</span><span data-line="279">        <span class="n">full_song</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">full</span><span class="p">,</span>
+</span><span data-line="280">        <span class="n">time_signature</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">ts</span><span class="p">,</span>
+</span><span data-line="281">        <span class="n">drumless</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">drumless</span><span class="p">,</span>
+</span><span data-line="282">        <span class="n">mute</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">mute</span><span class="p">,</span>
+</span><span data-line="283">        <span class="n">all_stems</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">all_stems</span><span class="p">,</span>
+</span><span data-line="284">        <span class="n">is_rudiment</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">rudiment</span><span class="p">,</span>
+</span><span data-line="285">        <span class="n">output_format</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">format</span><span class="p">,</span>
+</span><span data-line="286">    <span class="p">)</span>
+</span><span data-line="287">
+</span><span data-line="288">    <span class="c1"># LEGACY: if __name__ == &#39;__main__&#39;:</span>
+</span><span data-line="289">    <span class="c1">#  parser = argparse.ArgumentParser()</span>
+</span><span data-line="290">    <span class="c1">#  parser.add_argument(&quot;input_audio_path&quot;, type=str)</span>
+</span><span data-line="291">    <span class="c1">#  parser.add_argument(&quot;--full&quot;, action=&quot;store_true&quot;)</span>
+</span><span data-line="292">    <span class="c1">#  parser.add_argument(&quot;--ts&quot;, type=str, default=&quot;4/4&quot;)</span>
+</span><span data-line="293">    <span class="c1">#  args = parser.parse_args()</span>
+</span><span data-line="294">
+</span><span data-line="295">    <span class="c1">#  main(args.input_audio_path, args.full, args.ts)</span>
 </span><span data-line="296">
-</span><span data-line="297">    <span class="c1">#  main(args.input_audio_path, args.full, args.ts)</span>
-</span><span data-line="298">
-</span><span data-line="299">    <span class="c1"># print(&quot;# ------------------------------------------------------------------------------------&quot;)</span>
+</span><span data-line="297">    <span class="c1"># print(&quot;# ------------------------------------------------------------------------------------&quot;)</span>
 </span></pre></div>
         </article><button class="back-to-top" type="button">
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -611,5 +610,5 @@ data-aria-dark="Switch to auto color mode">
       <script src="../../_static/documentation_options.js?v=360bc84d"></script>
       <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
       <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
-      <script src="../../_static/shibuya.js?v=cac61aee"></script></body>
+      <script src="../../_static/shibuya.js?v=50760d75"></script></body>
 </html>

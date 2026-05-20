@@ -32,7 +32,7 @@ on:
         type: choice
         options:
           - Alpha
-          - Beta
+          - Betav
           - Stable
       summary:
         description: "One-line release summary (used in GitHub Release title)"

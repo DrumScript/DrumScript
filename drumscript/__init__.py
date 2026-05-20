@@ -96,7 +96,7 @@ def extract_stems(audio_path, output_dir=None, output_format="wav", drumless=Fal
         output_dir=str(output_dir),
     )
 
-    drum_path = results.get("drums") or results.get("drums_stem")
+    # drum_path = results.get("drums") or results.get("drums_stem")
 
     # if full:
     #   return {"status": "success", "drum_stem_path": result_path, "original_file": audio_path,

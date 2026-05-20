@@ -104,6 +104,7 @@ machine-learning/models/*.joblib
 # DOCUMENTATION & SPECIFIC ASSETS
 # ==========================================
 docs/_build/
+docs/generated
 docs/github_pages.sh
 docs/theory/advanced_sound_analysis101.md
 docs/theory/images/FFmpeg-Logo.png

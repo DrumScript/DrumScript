@@ -82,16 +82,46 @@ def extract_stems(audio_path, output_dir=None, output_format="wav", drumless=Fal
 
     output_dir.mkdir(parents=True, exist_ok=True)
 
-    result_path = extract_drum_stem(audio_path, output_dir=str(output_dir))
+    # result_path = extract_drum_stem(audio_path, output_dir=str(output_dir))
+
+    # results = separate_audio(
+    #   audio_path=audio_path, output_format=output_format, drumless=drumless, mute=mute, all_stems=all_stems, output_dir=str(output_dir)
 
     results = separate_audio(
-        input_audio_path=audio_path, output_format=output_format, drumless=drumless, mute=mute, all_stems=all_stems, output_dir=str(output_dir)
+        audio_path=audio_path,
+        output_format=output_format,
+        drumless=drumless,
+        mute=mute,
+        all_stems=all_stems,
+        output_dir=str(output_dir),
     )
 
-    if full:
-        return {"status": "success", "drum_stem_path": result_path, "original_file": audio_path, "output_directory": str(output_dir)}
+    # drum_path = results.get("drums") or results.get("drums_stem")
 
-    return result_path or results.get("drums") or results.get("drums_stem")
+    # if full:
+    #   return {"status": "success", "drum_stem_path": result_path, "original_file": audio_path,
+    # "output_directory": str(output_dir)}
+
+    drum_path = results.get("drums") or results.get("drums_stem")
+    if full:
+        return {
+            "status": "success",
+            "drum_stem_path": drum_path,
+            "original_file": audio_path,
+            "output_directory": str(output_dir),
+        }
+    # return result_path or results.get("drums") or results.get("drums_stem")
+    return drum_path
+
+    # if full:
+    #   return {
+    #       "status": "success",
+    #       "drum_stem_path": results.get("drums") or results.get("drums_stem"),
+    #       "original_file": audio_path,
+    #       "output_directory": str(output_dir),
+    #   }
+
+    # return results.get("drums") or results.get("drums_stem")
 
 
 def detect_tempo(audio_path, full=False):
@@ -254,16 +284,16 @@ def transcribe(
     ]
 
     # 6. Build & export
-    out_dir = pathlib.Path(output_dir)
-    out_dir.mkdir(parents=True, exist_ok=True)
+    output_dir = pathlib.Path(output_dir)
+    output_dir.mkdir(parents=True, exist_ok=True)
     fname = output_filename or f"{input_stem}_transcription"
-    pdf_path = out_dir / f"{fname}.pdf"
+    pdf_path = output_dir / f"{fname}.pdf"
 
     print(f"...Building score: {pdf_path}")
     score_builder.build_score(
         detected_events=detected_events,
         tempo=tempo,
-        output_filepath=str(pdf_path),
+        output_path=str(pdf_path),
         time_signature=time_signature,
     )
     print("--- Done ---")
@@ -271,7 +301,7 @@ def transcribe(
     if full:
         return {
             "pdf_path": str(pdf_path),
-            "input_path": audio_path,
+            "audio_path": audio_path,
             "drum_stem_path": working_path if full_song else None,
             "tempo": tempo,
             "onsets": onsets,
@@ -339,7 +369,7 @@ def export_midi(score, output_path=None, **kwargs):
        import drumscript as ds
 
        # Assuming `score` is a previously generated score object
-       midi_path = ds.export_to_midi(score, output_path="./midi_exports/my_song.mid")
+       midi_path = ds.export_midi(score, output_path="./midi_exports/my_song.mid")
     """
     if output_path is None:
         # output_path = pathlib.Path.cwd() / "drum_score.mid"

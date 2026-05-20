@@ -34,44 +34,44 @@ TOTAL_FEATURES_PER_FRAME = N_MFCC + 3 + 3  # TOTAL_FEATURES_PER_FRAME = 47
 # --- Main Feature Extraction Functions ---
 
 
-def extract_features(audio_segment: np.ndarray, sr: int) -> dict[str, Any]:
+def extract_features(audio_path: np.ndarray, sr: int) -> dict[str, Any]:
     """
     Extracts a dictionary of features from a single audio segment.
     Features are returned as mean values over the segment's duration.
 
-    :param audio_segment: The audio data array.
-    :type audio_segment: np.ndarray
+    :param audio_path: The audio data array.
+    :type audio_path: np.ndarray
     :param sr: The sampling rate.
     :type sr: int
     :return: Dictionary of features (spectral_centroid, rms, mfccs, etc.).
     :rtype: Dict[str, Any]
     """
-    if audio_segment.size == 0:
+    if audio_path.size == 0:
         return None
 
     try:
         # --- Standard Features ---
-        # spectral_centroid = np.mean(librosa.feature.spectral_centroid(y=audio_segment, sr=sr))
-        spectral_centroid = np.mean(librosa.feature.spectral_centroid(y=audio_segment, sr=SAMPLE_RATE))
-        spectral_rolloff = np.mean(librosa.feature.spectral_rolloff(y=audio_segment, sr=SAMPLE_RATE))
-        # spectral_rolloff = np.mean(librosa.feature.spectral_rolloff(y=audio_segment, sr=sr))
-        rms = np.mean(librosa.feature.rms(y=audio_segment))
-        zcr = np.mean(librosa.feature.zero_crossing_rate(y=audio_segment))
-        # mfccs = np.mean(librosa.feature.mfcc(y=audio_segment, sr=sr, n_mfcc=N_MFCC), axis=1)
-        mfccs = np.mean(librosa.feature.mfcc(y=audio_segment, sr=SAMPLE_RATE, n_mfcc=N_MFCC), axis=1)
+        # spectral_centroid = np.mean(librosa.feature.spectral_centroid(y=audio_path, sr=sr))
+        spectral_centroid = np.mean(librosa.feature.spectral_centroid(y=audio_path, sr=SAMPLE_RATE))
+        spectral_rolloff = np.mean(librosa.feature.spectral_rolloff(y=audio_path, sr=SAMPLE_RATE))
+        # spectral_rolloff = np.mean(librosa.feature.spectral_rolloff(y=audio_path, sr=sr))
+        rms = np.mean(librosa.feature.rms(y=audio_path))
+        zcr = np.mean(librosa.feature.zero_crossing_rate(y=audio_path))
+        # mfccs = np.mean(librosa.feature.mfcc(y=audio_path, sr=sr, n_mfcc=N_MFCC), axis=1)
+        mfccs = np.mean(librosa.feature.mfcc(y=audio_path, sr=SAMPLE_RATE, n_mfcc=N_MFCC), axis=1)
 
         # --- Sustain Feature Calculation ---
         # Split the segment into two halves to measure energy decay.
-        half_point = len(audio_segment) // 2
-        first_half_rms = np.mean(librosa.feature.rms(y=audio_segment[:half_point]))
-        second_half_rms = np.mean(librosa.feature.rms(y=audio_segment[half_point:]))
+        half_point = len(audio_path) // 2
+        first_half_rms = np.mean(librosa.feature.rms(y=audio_path[:half_point]))
+        second_half_rms = np.mean(librosa.feature.rms(y=audio_path[half_point:]))
 
         # Calculate the ratio. Add a small epsilon to avoid division by zero.
         sustain_level = second_half_rms / (first_half_rms + 1e-6)
 
         # --- Band Energy Calculation (Based on Cheatsheet Logic) ---
         # Calculate Spectrogram magnitude
-        S = np.abs(librosa.stft(audio_segment, n_fft=N_FFT, hop_length=HOP_LENGTH))
+        S = np.abs(librosa.stft(audio_path, n_fft=N_FFT, hop_length=HOP_LENGTH))
 
         # Get frequency bins
         # fft_freqs = librosa.fft_frequencies(sr=sr, n_fft=N_FFT)
@@ -105,12 +105,12 @@ def extract_features(audio_segment: np.ndarray, sr: int) -> dict[str, Any]:
         return None
 
 
-def extract_features_for_onsets(y: np.ndarray, sr: int, onset_times: list[float]) -> list[dict[str, Any]]:
+def extract_features_for_onsets(audio_path: np.ndarray, sr: int, onset_times: list[float]) -> list[dict[str, Any]]:
     """
     Slices an audio array around each onset time and extracts features for each slice.
 
-    :param y: Full audio array.
-    :type y: np.ndarray
+    :param audio_path: Full audio array.
+    :type audio_path: np.ndarray
     :param sr: Sampling rate.
     :type sr: int
     :param onset_times: List of onset timestamps.
@@ -123,6 +123,7 @@ def extract_features_for_onsets(y: np.ndarray, sr: int, onset_times: list[float]
     all_features = []
     sr = SAMPLE_RATE
     # Calculate *half* the slice duration in samples
+
     half_slice_samples = int((ONSET_SLICE_DURATION_MS / 1000.0) * sr) // 2
 
     for time_sec in onset_times:
@@ -135,9 +136,9 @@ def extract_features_for_onsets(y: np.ndarray, sr: int, onset_times: list[float]
 
         # Boundary checks
         start_sample = max(0, start_sample)
-        end_sample = min(len(y), end_sample)
+        end_sample = min(len(audio_path), end_sample)
 
-        audio_slice = y[start_sample:end_sample]
+        audio_slice = audio_path[start_sample:end_sample]
 
         # Extract features for the slice
         features = extract_features(audio_slice, sr)

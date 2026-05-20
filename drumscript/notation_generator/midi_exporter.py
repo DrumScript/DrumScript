@@ -12,12 +12,12 @@ import pretty_midi
 from drumscript.notation_generator.constants import DRUM_NOTATION_MAP
 
 
-def export_to_midi(classified_events: list[dict], output_filepath: str, tempo: float = 120.0):
+def export_to_midi(classified_events: list[dict], output_path: str, tempo: float = 120.0):
     """
     Takes a list of event dictionaries and writes a standard .mid file.
 
     :param classified_events: List of dicts containing 'time_sec' and 'instruments'.
-    :param output_filepath: Where to save the file (e.g., 'output/drum_score.mid').
+    :param output_path: Where to save the file (e.g., 'output/drum_score.mid').
     :param tempo: The detected BPM of the track.
     """
     # 1. Initialise a new MIDI object with the detected tempo
@@ -57,10 +57,10 @@ def export_to_midi(classified_events: list[dict], output_filepath: str, tempo: f
     midi.instruments.append(drum_track)
 
     # Ensure directory exists
-    os.makedirs(os.path.dirname(output_filepath), exist_ok=True)
-    midi.write(output_filepath)
+    os.makedirs(os.path.dirname(output_path), exist_ok=True)
+    midi.write(output_path)
 
-    print(f"SUCCESS: MIDI file generated at -> {output_filepath}")
+    print(f"SUCCESS: MIDI file generated at -> {output_path}")
 
 
 # --------------------------------------------------------------------------uncomment during testing

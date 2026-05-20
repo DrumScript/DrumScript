@@ -6,19 +6,26 @@ Module for rendering the drum score to PDF using ReportLab.
 
 from collections import defaultdict
 
-import music21
-from reportlab.lib import colors
-from reportlab.lib.pagesizes import A4
-from reportlab.pdfgen import canvas
-
 from drumscript.notation_generator import constants
 
-# print("\n# ------------------------------------------------------------------------------------")
-# datetimestamp = datetime.now()
-# print(f'\ndate/time: {datetimestamp}')
-
 # --- Configuration Constants ---
-PAGE_WIDTH, PAGE_HEIGHT = A4
+try:
+    from reportlab.lib.pagesizes import A4
+
+    PAGE_WIDTH, PAGE_HEIGHT = A4
+except (ImportError, ValueError):
+    # Fallback for Sphinx autodoc mock imports
+    PAGE_WIDTH, PAGE_HEIGHT = 595.27, 841.89
+
+try:
+    import music21
+    from reportlab.lib import colors
+    from reportlab.pdfgen import canvas
+except ImportError:
+    music21 = None
+    colors = None
+    canvas = None
+
 MARGIN_X = 50
 MARGIN_Y = 50
 # STAFF_SPACING = 120
@@ -27,7 +34,10 @@ LINE_SPACING = 6
 CLEF_WIDTH = 40
 BARS_PER_SYSTEM = 4
 
-REF_PITCH_MIDDLE_LINE = music21.pitch.Pitch("B3")
+try:
+    REF_PITCH_MIDDLE_LINE = music21.pitch.Pitch("B3")
+except (AttributeError, TypeError):
+    REF_PITCH_MIDDLE_LINE = None
 
 
 def get_vertical_position(staff_position_str: str, staff_y_base: float) -> float:
@@ -115,8 +125,8 @@ def draw_notehead(c, x, y, note_type, staff_y_base, accent=False):
         c.line(x - 4, y + 6, x + 4, y + 9)
 
 
-# def generate_custom_pdf(detected_events, output_filepath, tempo, time_signature="4/4"):
-def export_pdf(detected_events, output_filepath, tempo, time_signature="4/4"):
+# def generate_custom_pdf(detected_events, output_path, tempo, time_signature="4/4"):
+def export_pdf(detected_events, output_path, tempo, time_signature="4/4"):
     """
     Generates a PDF drum score using ReportLab engine.
     """
@@ -129,9 +139,9 @@ def export_pdf(detected_events, output_filepath, tempo, time_signature="4/4"):
     except ValueError:
         numerator, denominator = 4, 4
 
-    print(f"Generating PDF: {output_filepath} (Sig: {numerator}/{denominator}, {int(tempo)} BPM)")
+    print(f"Generating PDF: {output_path} (Sig: {numerator}/{denominator}, {int(tempo)} BPM)")
 
-    c = canvas.Canvas(output_filepath, pagesize=A4)
+    c = canvas.Canvas(output_path, pagesize=A4)
     c.setTitle("DrumScript Transcription")
 
     system_width = PAGE_WIDTH - (2 * MARGIN_X)
@@ -318,7 +328,7 @@ def export_pdf(detected_events, output_filepath, tempo, time_signature="4/4"):
 
     c.save()
     # print("\n# ------------------------------------------------------------------------------------")
-    print(f"PDF successfully saved to: {output_filepath}")
+    print(f"PDF successfully saved to: {output_path}")
 
 
 """ LEGACY (KEEP FOR ALPHA)
@@ -480,3 +490,11 @@ def export_pdf(detected_events, output_filepath, tempo, time_signature="4/4"):
         #                 c.setLineWidth(1)
         #                 c.line(nx - 2.7, beam_y, nx + 2, beam_y + 5)
 """
+
+
+# --------------------------------------------------------------------------uncomment during testing
+# from datetime import datetime
+# print("\n# ------------------------------------------------------------------------------------")
+# datetimestamp = datetime.now()
+# print(f'\ndate/time: {datetimestamp}')
+# --------------------------------------------------------------------------------------------------

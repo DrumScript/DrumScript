@@ -111,14 +111,14 @@ def _write_audio(audio_data, sample_rate, output_path, fmt="wav"):
 
 # ===============================================================================================
 def separate_audio(
-    input_audio_path: str, output_format: str = "wav", drumless: bool = False, mute: list = None, all_stems: bool = False, output_dir: str = None
+    audio_path: str, output_format: str = "wav", drumless: bool = False, mute: list = None, all_stems: bool = False, output_dir: str = None
 ) -> dict:
     """
     Separates a full audio track using Demucs and processes the outputs based on user-input args (optional)
 
     Args:
-    :param input_audio_path: Path to the source audio.
-    :type input_audio_path: str
+    :param audio_path: Path to the source audio.
+    :type audio_path: str
     :param output_format: 'wav' or 'mp3', defaults to 'wav'.
     :type output_format: str, optional
     :param drumless: If True, generates a track with everything EXCEPT drums, but also saves the drum only output
@@ -132,9 +132,9 @@ def separate_audio(
     :return: Dictionary of paths to generated files (e.g., ``{'drums': path, 'mix': path}``).
     :rtype: dict
     """
-    input_path = Path(input_audio_path)
+    input_path = Path(audio_path)
     if not input_path.exists():
-        raise FileNotFoundError(f"Input audio path not found: {input_audio_path}")
+        raise FileNotFoundError(f"Audio path not found: {audio_path}")
 
     # 1. Define output dir. If no path specified in user a default director
     if output_dir is None:
@@ -305,15 +305,15 @@ def separate_audio(
 
 
 # ===============================================================================================
-# def extract_drum_stem(input_audio_path: str) -> str:
-def extract_drum_stem(input_audio_path: str, output_dir: str = None) -> str:
+# def extract_drum_stem(audio_path: str) -> str:
+def extract_drum_stem(audio_path: str, output_dir: str = None) -> str:
     """
     Legacy wrapper for the transcription pipeline.
     Separates a full audio track using the Demucs command-line tool
     and returns the file path to the isolated drum stem.
 
-    :param input_audio_path: The file path to the user's full song.
-    :type input_audio_path: str
+    :param audio_path: The file path to the user's full song.
+    :type audio_path: str
     :return: The file path to the extracted 'drums.wav' stem.
     :rtype: str
     """
@@ -352,12 +352,12 @@ def extract_drum_stem(input_audio_path: str, output_dir: str = None) -> str:
     #     "-o", str(temp_output_dir),
     #     "-n", DEMUCS_MODEL,
     #     "--flac",
-    #     str(input_audio_path)
+    #     str(audio_path)
     # ]
     # --- LEGACY v2: tried --backend soundfile. Demucs CLI doesn't support it.
     # Current: plain invocation, Demucs writes WAV natively. No ffmpeg needed
     # for the drum extraction path.
-    command = ["demucs", "-o", str(temp_output_dir), "-n", DEMUCS_MODEL, str(input_audio_path)]
+    command = ["demucs", "-o", str(temp_output_dir), "-n", DEMUCS_MODEL, str(audio_path)]
     # 3. Run the Demucs separation process
     # print("\n# ------------------------------------------------------------------------------------")
     # print("\n# PLEASE NOTE: This is currently a test script. Original Demucs is no longer being maintained (owned by Meta/Facebook).
@@ -365,7 +365,7 @@ def extract_drum_stem(input_audio_path: str, output_dir: str = None) -> str:
     #  We may decide to build our own stem_splitter model in DrumScript in order to ensure the long-term stability of the package, and to continue to
     # make it as lightweight as possible.")
 
-    print(f"Starting Demucs separation for: {input_audio_path}...")
+    print(f"Starting Demucs separation for: {audio_path}...")
 
     ## ---- Timer block, might remove later --------------------------------------------------------------
     start_time = time.monotonic()  # Start timer, MIGHT REMOVE LATER ONCE FINISHED DEBUGGING
@@ -384,7 +384,7 @@ def extract_drum_stem(input_audio_path: str, output_dir: str = None) -> str:
     # --- format conversion (when actually wanted) is handled by the calling
     # --- code via _write_audio(). This block is dead code kept for reference.
     # print("Converting stems to MP3...")
-    # input_filename_stem = Path(input_audio_path).stem
+    # input_filename_stem = Path(audio_path).stem
     # stems_folder = Path(temp_output_dir) / DEMUCS_MODEL / input_filename_stem
     # flac_files = list(stems_folder.glob("*.flac"))
     # if not flac_files:
@@ -415,7 +415,7 @@ def extract_drum_stem(input_audio_path: str, output_dir: str = None) -> str:
         raise FileNotFoundError("The 'demucs' command was not found. Is it installed correctly in your environment's PATH?")
 
     # 4. Find and return the path to the drum file
-    input_filename_stem = Path(input_audio_path).stem
+    input_filename_stem = Path(audio_path).stem
 
     # --- LEGACY: Demucs used to output FLAC because we passed --flac. Now it
     # --- writes WAV, which soundfile can read with no ffmpeg dependency.
@@ -506,7 +506,7 @@ if __name__ == "__main__":
 
     fmt = "mp3" if args.mp3 else "wav"
 
-    separate_audio(input_audio_path=args.input_file, output_format=fmt, drumless=args.drumless, all_stems=args.all, output_dir=args.output_dir)
+    separate_audio(audio_path=args.input_file, output_format=fmt, drumless=args.drumless, all_stems=args.all, output_dir=args.output_dir)
 
 """ LEGACY CODE (KEEP FOR NOW)
 # if __name__ == "__main__":

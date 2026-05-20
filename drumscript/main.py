@@ -152,9 +152,7 @@ def main(
             # If only --drumless is passed, we might not want to transcribe, but the script flow
             # currently implies transcription follows.
 
-            results = separate_audio(
-                input_audio_path=input_audio_path, output_format=output_format, drumless=drumless, mute=mute, all_stems=all_stems
-            )
+            results = separate_audio(audio_path=input_audio_path, output_format=output_format, drumless=drumless, mute=mute, all_stems=all_stems)
 
             # If we are transcribing, we need the isolated drum track
             if full_song:

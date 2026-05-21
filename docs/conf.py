@@ -20,7 +20,7 @@ sys.path.insert(0, os.path.abspath(".."))
 project = "DrumScript"
 copyright = "© 2026, DrumScript"
 author = "DrumScript"
-release = "0.1.3"
+release = "0.1.4"
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
@@ -33,6 +33,7 @@ extensions = [
     # "myst_parser",  # Read .md files
     "myst_nb",  # Read .ipynb files
 ]
+
 
 ## -- MyST configuration ------------------------------------------------------
 myst_heading_anchors = 3  # auto-generate anchors for H1-H3, anchor IDs for H1 through H3 headings, slugified from the heading text.

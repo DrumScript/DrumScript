@@ -1,5 +1,5 @@
 # `DrumScript` Documentation
-<!--[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1eDVXc3d6ezmorxINOjzldRPSC3emTl2I)-->
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1eDVXc3d6ezmorxINOjzldRPSC3emTl2I)
 
 **DrumScript** is an open-source Python library and CLI tool designed for drummers and audio engineers. 
 
@@ -59,6 +59,10 @@ guide/installation
 guide/cli_reference
 guide/configuration
 guide/usage
+guide/glossary
+guide/roadmap
+guide/security
+guide/usage
 ```
 
 ## Theory
@@ -74,7 +78,6 @@ theory/stem_splitting
 theory/how_it_works
 theory/percussion_frequencies
 theory/bibliography
-guide/glossary
 theory/sources
 ```
 

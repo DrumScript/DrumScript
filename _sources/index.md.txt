@@ -59,6 +59,10 @@ guide/installation
 guide/cli_reference
 guide/configuration
 guide/usage
+guide/glossary
+guide/roadmap
+guide/security
+guide/usage
 ```
 
 ## Theory
@@ -74,7 +78,6 @@ theory/stem_splitting
 theory/how_it_works
 theory/percussion_frequencies
 theory/bibliography
-guide/glossary
 theory/sources
 ```
 

@@ -14,7 +14,8 @@
 
 **Public Alpha (v0.1.4) — June to August 2026**
 
- - We're looking for early adopters and feedback — [try it out](https://colab.research.google.com/assets/colab-badge.svg)(https://colab.research.google.com/drive/1eDVXc3d6ezmorxINOjzldRPSC3emTl2), [report issues](https://github.com/DrumScript/DrumScript/issues), and help shape v1.0.
+ - We're looking for early adopters and feedback — [![Try DrumScript in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1eDVXc3d6ezmorxINOjzldRPSC3emTl2I) 
+ - [Feedback on the classification model](https://github.com/DrumScript/DrumScript/issues), and help shape v1.0.
  - In particular we are interested in hearing from everyone:: drummers (coding not required!), sound engineers and academics in Music Information Retrieval with an interest in deterministic drum/percussion classifications. 
  - For beta release, we are planning to (amongst other things) improve the classification model, fix any user-suggested bugs, implement user-suggested feature requests and **most importantly** build a **WebGPU/ONNX/WASM UI** that will be free to use for all.
 

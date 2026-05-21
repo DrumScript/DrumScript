@@ -1,5 +1,5 @@
 # `DrumScript` Documentation
-<!--[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1eDVXc3d6ezmorxINOjzldRPSC3emTl2I)-->
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1eDVXc3d6ezmorxINOjzldRPSC3emTl2I)
 
 **DrumScript** is an open-source Python library and CLI tool designed for drummers and audio engineers. 
 

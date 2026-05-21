@@ -47,7 +47,13 @@ Makefile
 # ==========================================
 # JUPYTER
 # ==========================================
-*.ipynb
+.ipynb
+docs/guide/interactive/_templates/_template.ipynb
+!docs/guide/interactive/create_backing_track.ipynb
+!docs/guide/interactive/extract_drums.ipynb
+!docs/guide/interactive/measure_tempo.ipynb
+!docs/guide/interactive/transcribe.ipynb
+
 .ipynb_checkpoints/
 
 # ==========================================

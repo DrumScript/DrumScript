@@ -1,5 +1,10 @@
 # About DrumScript
 
+<!--date_updated:tues-30-dec-2025-->
+<!--date_updated:thurs-21-may-2026-->
+
+---
+
 ## The Origin Story
 **DrumScript was born from a simple frustration: sheet music for drums is inaccessible.**
 
@@ -24,7 +29,7 @@ DrumScript bridges the gap between **Signal Processing (DSP)** and **Music Theor
 * It uses a custom **Rule-Based Classification Engine** to determine *what* was hit (Kick vs. Snare vs. Hi-Hat) based on frequency analysis.
 
 ## Join the Project
-DrumScript is currently in **Alpha (v0.1.2)**. We are looking for contributors who are passionate about audio, music, or Python.
+DrumScript is currently in **Alpha (v0.1.4)**. We are looking for contributors who are passionate about audio, music, or Python.
 
 * Check out the [GitHub Repository](https://github.com/DrumScript/DrumScript)
 * Read the [Contributor Guide](./development/contributor_guidance.md)

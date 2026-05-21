@@ -8,6 +8,8 @@
 import os
 import sys
 
+import drumscript as ds
+
 sys.path.insert(0, os.path.abspath(".."))
 
 #
@@ -20,7 +22,8 @@ sys.path.insert(0, os.path.abspath(".."))
 project = "DrumScript"
 copyright = "© 2026, DrumScript"
 author = "DrumScript"
-release = "0.1.4"
+# release = "0.1.4"
+release = ds.__version__
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration

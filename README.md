@@ -3,23 +3,37 @@
 <!--date_created: sun-15-june-2025-->
 <!--date_edited: thurs-21-may-2026--->
 
+**Workflow Status**
+
+[![Run Tests](https://github.com/DrumScript/DrumScript/actions/workflows/tests.yml/badge.svg?branch=main)](https://github.com/DrumScript/DrumScript/actions/workflows/tests.yml)
+
+**Demo Notebooks**
+
+[![Try DrumScript in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1eDVXc3d6ezmorxINOjzldRPSC3emTl2I)
+
 **DrumScript** is an open-source Python library and CLI tool for drum audio analysis and transcription. Give it a recording — a full mix or an isolated drum stem — and it will generate PDF sheet music, MIDI files, and MusicXML output. The `DrumScript` model is a **deterministic classifier**, and doesn't use AI/machine learning. Built for drummers and by drummers, it is - and always will be - an open-source community tool.
 
 > **Python >=3.9**
 
 > **[Documentation](https://drumscript.github.io/DrumScript/)**
 
----
-
-
 **Public Alpha (v0.1.4) — June to August 2026**
 
- - We're looking for early adopters and feedback — [![Try DrumScript in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1eDVXc3d6ezmorxINOjzldRPSC3emTl2I) 
+ - We're looking for early adopters and feedback
  - [Feedback on the classification model](https://github.com/DrumScript/DrumScript/issues), and help shape v1.0.
  - In particular we are interested in hearing from everyone:: drummers (coding not required!), sound engineers and academics in Music Information Retrieval with an interest in deterministic drum/percussion classifications. 
  - For beta release, we are planning to (amongst other things) improve the classification model, fix any user-suggested bugs, implement user-suggested feature requests and **most importantly** build a **WebGPU/ONNX/WASM UI** that will be free to use for all.
 
-> See the [Roadmap](https://drumscript.github.io/DrumScript/guide/roadmap.html) for what's planned.
+> See the **[Roadmap](https://drumscript.github.io/DrumScript/guide/roadmap.html)** for what's planned.
+
+**What it looks like**
+
+<!-- TODO: Replace with a GIF showing terminal output if you have one -->
+<!-- For now, this shows the PDF transcription output -->
+
+*Input: audio recording → Output: drum notation (PDF).
+
+![DrumScript transcription output](docs/_static/transcription.png)
 
 ---
 
@@ -29,25 +43,6 @@
 - **[CLI Usage](#cli-usage)**
 - **[Contributing](#contributing)**
 - **[FAQs](#faqs)**
-
-**Workflow Status**
-
-[![Run Tests](https://github.com/DrumScript/DrumScript/actions/workflows/tests.yml/badge.svg?branch=main)](https://github.com/DrumScript/DrumScript/actions/workflows/tests.yml)
-
-**Demo Notebooks**
-
-[![Try DrumScript in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1eDVXc3d6ezmorxINOjzldRPSC3emTl2I)
-
-
-### What it looks like
-
-<!-- TODO: Replace with a GIF showing terminal output if you have one -->
-<!-- For now, this shows the PDF transcription output -->
-
-*Input: audio recording → Output: drum notation (PDF).
-
-![DrumScript transcription output](docs/_static/transcription.png)
-
 
 
 ---

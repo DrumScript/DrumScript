@@ -1,20 +1,24 @@
 # **`DrumScript`**
 
-**[Documentation](https://drumscript.github.io/DrumScript/)**
-
 <!--date_created: sun-15-june-2025-->
 <!--date_edited: thurs-21-may-2026--->
-> **Public Alpha (v0.1.x) — June to August 2026**
->
-> DrumScript is in active development. The core pipeline works end-to-end, but the API may change between releases and classification accuracy is still being tuned across genres. We're looking for early adopters and feedback — [try it out](https://colab.research.google.com/drive/YOUR_NEW_COLAB_ID_HERE), [report issues](https://github.com/DrumScript/DrumScript/issues), and help shape v1.0.
->
-> See the [Roadmap](https://drumscript.github.io/DrumScript/guide/roadmap.html) for what's planned.
 
-**DrumScript** is an open-source Python library and CLI tool for drum audio analysis and transcription. Give it a recording — a full mix or an isolated drum stem — and it will generate PDF sheet music, MIDI files, and MusicXML output.
-
-> **[hello.drumscript@gmail.com](mailto:hello.drumscript@gmail.com)**
+**DrumScript** is an open-source Python library and CLI tool for drum audio analysis and transcription. Give it a recording — a full mix or an isolated drum stem — and it will generate PDF sheet music, MIDI files, and MusicXML output. The `DrumScript` model is a **deterministic classifier**, and doesn't use AI/machine learning. Built for drummers and by drummers, it is - and always will be - an open-source community tool.
 
 > **Python >=3.9**
+
+> **[Documentation](https://drumscript.github.io/DrumScript/)**
+
+---
+
+
+**Public Alpha (v0.1.4) — June to August 2026**
+
+ - We're looking for early adopters and feedback — [try it out](https://colab.research.google.com/assets/colab-badge.svg)(https://colab.research.google.com/drive/1eDVXc3d6ezmorxINOjzldRPSC3emTl2), [report issues](https://github.com/DrumScript/DrumScript/issues), and help shape v1.0.
+ - In particular we are interested in hearing from everyone:: drummers (coding not required!), sound engineers and academics in Music Information Retrieval with an interest in deterministic drum/percussion classifications. 
+ - For beta release, we are planning to (amongst other things) improve the classification model, fix any user-suggested bugs, implement user-suggested feature requests and **most importantly** build a **WebGPU/ONNX/WASM UI** that will be free to use for all.
+
+> See the [Roadmap](https://drumscript.github.io/DrumScript/guide/roadmap.html) for what's planned.
 
 ---
 
@@ -32,6 +36,18 @@
 **Demo Notebooks**
 
 [![Try DrumScript in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1eDVXc3d6ezmorxINOjzldRPSC3emTl2I)
+
+
+### What it looks like
+
+<!-- TODO: Replace with a GIF showing terminal output if you have one -->
+<!-- For now, this shows the PDF transcription output -->
+
+*Input: audio recording → Output: drum notation (PDF).
+
+![DrumScript transcription output](docs/_static/transcription.png)
+
+
 
 ---
 
@@ -218,6 +234,28 @@ We welcome contributions! DrumScript is intended to be a community-owned project
 - See **[CONTRIBUTING.md](CONTRIBUTING.md)** for the full contributor guide.
 
 > All bug reports and feature requests must be filed as GitHub Issues. All code changes must be submitted as Pull Requests. Keeping discussion public helps everyone.
+
+**[hello.drumscript@gmail.com](mailto:hello.drumscript@gmail.com)**
+
+## Alpha Priorities (v0.1 – v0.2) 
+The alpha phase runs between 01 June and 31 August 2026
+
+**What works today:**
+
+- End-to-end transcription pipeline: audio → onsets → classification → PDF / MIDI / MusicXML
+- Tempo detection via spectral onset envelope
+- Stem separation using Demucs (`htdemucs` 4-stem model)
+- Drumless backing track generation
+- CLI and Python API
+
+**What we're focused on during the alpha:**
+
+- Expanding test coverage across genres, kit types, and recording conditions
+- Fixing classification edge cases (deep snares vs clicky kicks, splash cymbals vs open hats)
+- Improving onset detection sensitivity for ghost notes and fast passages
+- Stabilising the public API ahead of the beta freeze
+- Community feedback collection
+
 
 ---
 

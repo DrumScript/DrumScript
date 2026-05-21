@@ -3,7 +3,12 @@
 **[Documentation](https://drumscript.github.io/DrumScript/)**
 
 <!--date_created: sun-15-june-2025-->
-<!--date_edited: thurs-20-may-2026--->
+<!--date_edited: thurs-21-may-2026--->
+> **Public Alpha (v0.1.x) — June to August 2026**
+>
+> DrumScript is in active development. The core pipeline works end-to-end, but the API may change between releases and classification accuracy is still being tuned across genres. We're looking for early adopters and feedback — [try it out](https://colab.research.google.com/drive/YOUR_NEW_COLAB_ID_HERE), [report issues](https://github.com/DrumScript/DrumScript/issues), and help shape v1.0.
+>
+> See the [Roadmap](https://drumscript.github.io/DrumScript/guide/roadmap.html) for what's planned.
 
 **DrumScript** is an open-source Python library and CLI tool for drum audio analysis and transcription. Give it a recording — a full mix or an isolated drum stem — and it will generate PDF sheet music, MIDI files, and MusicXML output.
 

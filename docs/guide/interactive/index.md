@@ -9,7 +9,6 @@ If you want to run these locally, download the notebooks and run them via Jupyte
 
 create_backing_track.ipynb
 extract_drums.ipynb
-extract_stems.ipynb
 measure_tempo.ipynb
 transcribe.ipynb
 ```

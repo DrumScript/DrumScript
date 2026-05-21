@@ -115,6 +115,14 @@ docs/theory/images/librosa-logo.svg
 visuals/tempogram.png
 
 # ==========================================
+# LOCALLY-GENERATED IPYNB/JSON ASSETS
+# ==========================================
+docs/guide/interactive/backing_track/
+docs/guide/interactive/transcription/
+docs/guide/interactive/stems/
+
+
+# ==========================================
 # SCRIPTS, DEPLOYMENT & INFRASTRUCTURE
 # ==========================================
 aws_api.py

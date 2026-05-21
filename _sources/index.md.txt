@@ -37,7 +37,7 @@ Want to play along to your favorite song but the drums are in the way?
 
 **Example output**
 
-![transcription.png](attachment:transcription.png)
+![alt text](_static/transcription.png)
 
 ---
 

@@ -1,7 +1,9 @@
 # **`DrumScript`**
 
+**[Documentation](https://drumscript.github.io/DrumScript/)**
+
 <!--date_created: sun-15-june-2025-->
-<!--date_edited: tues-19-may-2026--->
+<!--date_edited: thurs-20-may-2026--->
 
 **DrumScript** is an open-source Python library and CLI tool for drum audio analysis and transcription. Give it a recording — a full mix or an isolated drum stem — and it will generate PDF sheet music, MIDI files, and MusicXML output.
 

@@ -44,4 +44,4 @@ Check out the [GitHub Repository](https://github.com/DrumScript/DrumScript) or t
 
 **hello.drumscript@gmail.com**
 
-Please also just submit a thread in the. 
+Please also just submit a thread in the **[Discussions](https://github.com/orgs/DrumScript/discussions)** page

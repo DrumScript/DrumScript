@@ -328,9 +328,37 @@ data-aria-dark="Switch to auto color mode">
           <section id="drumscript-documentation">
 <h1><code class="docutils literal notranslate"><span class="pre">DrumScript</span></code> Documentation<a class="headerlink" href="#drumscript-documentation" title="Link to this heading">¶</a></h1>
 <p><a class="reference external" href="https://colab.research.google.com/drive/1eDVXc3d6ezmorxINOjzldRPSC3emTl2I"><img alt="Open In Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a></p>
-<p><strong>DrumScript</strong> is an open-source Python library and CLI tool designed for drummers and audio engineers.</p>
-<p>While its core mission is <strong>Automatic Drum Transcription (ADT)</strong> (converting drum recordings into sheet music), it also functions as a powerful <strong>Audio Toolbox</strong> for isolating instruments, creating backing tracks, and analysing rhythm.</p>
-<p>Unlike most ADT systems, DrumScript’s classification engine is <strong>deterministic</strong>. <code class="docutils literal notranslate"><span class="pre">DrumScript</span></code> combines physics-derived spectral analysis: fundamental frequency, spectral centroid, energy ratios, and decay characteristics, applied through a rule-based pipeline built on <code class="docutils literal notranslate"><span class="pre">librosa</span></code> and <code class="docutils literal notranslate"><span class="pre">Demucs</span></code>. It also functions as a general-purpose audio toolbox: stem separation, drumless/bassless backing track generation, and tempo detection.</p>
+<p><strong>DrumScript</strong> is an open-source Python library and CLI tool designed for drummers and audio engineers.  DrumScript’s classification engine is <strong>deterministic</strong>. While its core mission is <strong>Automatic Drum Transcription (ADT)</strong> (converting drum recordings into sheet music), it also functions as a powerful <strong>Audio Toolbox</strong> for extracting drums from polyphonic tracks, creating backing tracks, and analysing rhythm.</p>
+<div class="table-wrapper colwidths-auto docutils container">
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>#</p></th>
+<th class="head"><p>Feature</p></th>
+<th class="head"><p>What it does</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>1</p></td>
+<td><p><strong>Tempo Detection</strong></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">DrumScript</span></code> stimates BPM from drum audio file based on tempogram-anaysis</p></td>
+</tr>
+<tr class="row-odd"><td><p>2</p></td>
+<td><p><strong>Stem Separation</strong></p></td>
+<td><p>Extracts drums from <code class="docutils literal notranslate"><span class="pre">.wav</span></code> and <code class="docutils literal notranslate"><span class="pre">.mp3</span></code>^ songs. Also supports extraction of bass, vocals, and other instruments</p></td>
+</tr>
+<tr class="row-even"><td><p>3</p></td>
+<td><p><strong>Backing Tracks</strong></p></td>
+<td><p>Give <code class="docutils literal notranslate"><span class="pre">DrumScript</span></code> a song and it will mute the drums to create a backing track for you</p></td>
+</tr>
+<tr class="row-odd"><td><p>4</p></td>
+<td><p><strong>Transcription</strong></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">DrumScript</span></code> converts drum audio → PDF sheet music . The –full flag also means you can give it a full song and it will extract the drums <strong>and</strong> transcribe</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>^ <code class="docutils literal notranslate"><span class="pre">.mp3</span></code> requires <code class="docutils literal notranslate"><span class="pre">.ffmpeg</span></code> (<code class="docutils literal notranslate"><span class="pre">brew</span> <span class="pre">install</span> <span class="pre">ffmpeg</span></code>)
+Unlike most ADT systems, DrumScript’s classification engine is <strong>deterministic</strong>. <code class="docutils literal notranslate"><span class="pre">DrumScript</span></code> combines physics-derived spectral analysis: fundamental frequency, spectral centroid, energy ratios, and decay characteristics, applied through a rule-based pipeline built on <code class="docutils literal notranslate"><span class="pre">librosa</span></code> and <code class="docutils literal notranslate"><span class="pre">Demucs</span></code>. It also functions as a general-purpose audio toolbox: stem separation, drumless/bassless backing track generation, and tempo detection.</p>
 <p>The project was born from one working drummer’s desire to make playing drums more fun and in an accessible way - it’s taken almost a year to build. <code class="docutils literal notranslate"><span class="pre">v0.1.4</span></code> is the <strong>Alpha release</strong>. Between <strong>01 June and 31 August 2026</strong> Im reaching out to communities, both musicians and academics alike, to find people to test  - and hopefully improve - the deterministic classification model. For more info on where this is headed see <strong><a class="reference internal" href="guide/roadmap.html"><span class="std std-doc">roadmap</span></a></strong> or <strong>https://github.com/orgs/DrumScript/discussions</strong></p>
 <section id="what-can-drumscript-do">
 <h2>What can DrumScript do?<a class="headerlink" href="#what-can-drumscript-do" title="Link to this heading">¶</a></h2>

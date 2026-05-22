@@ -1,18 +1,18 @@
 # About DrumScript
 
 <!--date_updated:tues-30-dec-2025-->
-<!--date_updated:thurs-21-may-2026-->
+<!--date_updated:fri-22-may-2026-->
 
 ---
 
 ## The Origin Story
 **DrumScript was born from a simple frustration: sheet music for drums is inaccessible.**
 
-For piano or guitar, converting MIDI to notation is a solved problem. But for drummers, the landscape is different. Most "transcription" tools are black boxes that cost money, require cloud uploads, or output messy MIDI files that look nothing like standard drum notation.
+For piano or guitar, converting MIDI to notation is a solved problem. But for drummers, the landscape is different. Most "transcription" tools are black boxes that cost money, require cloud uploads, or output messy MIDI files that look nothing like standard drum notation. As a drummer, I wanted a tool that could listen to a track and hand me a chart I could actually read on the stand. I didn't want a "piano roll" — I wanted a **score**.
 
-As a drummer, I wanted a tool that could listen to a track and hand me a chart I could actually read on the stand. I didn't want a "piano roll" — I wanted a **score**.
+When I couldn't find a free, open-source tool that prioritised *readability* over raw MIDI data, I decided to build one. Over time I became really interested in **Digital Signal Processing (DSP)**, **Sound Engineering** and **Automatic Transcription** in both theory and practise.  I discovered the field of **Music Information Retrieval**, communities like **[International Society for Music Information Retrieval (ISMIR)](https://ismir.net/)**, and so have a working interest in the theory of these fields.
 
-When I couldn't find a free, open-source tool that prioritised *readability* over raw MIDI data, I decided to build one.
+Above all I built this tool to fix a problem I had never found a free and easily-accessible solution to as a fellow drummer.
 
 ## The Mission
 DrumScript is built on three core philosophies:
@@ -31,5 +31,17 @@ DrumScript bridges the gap between **Signal Processing (DSP)** and **Music Theor
 ## Join the Project
 DrumScript is currently in **Alpha (v0.1.4)**. We are looking for contributors who are passionate about audio, music, or Python.
 
-* Check out the [GitHub Repository](https://github.com/DrumScript/DrumScript)
-* Read the [Contributor Guide](./development/contributor_guidance.md)
+Check out the [GitHub Repository](https://github.com/DrumScript/DrumScript) or the [Contributor Guide](./development/contributor_guidance.md)
+
+`DrumScript` could be potentially useful (and developed by):
+
+* Drummers who want to transcribe their playing automatically
+* Music tech / audio-ML developers
+* Python open-source community
+* Music educators
+* Beat-makers / producers who want stems
+* Drummers! :drum:
+
+**hello.drumscript@gmail.com**
+
+Please also just submit a thread in the. 

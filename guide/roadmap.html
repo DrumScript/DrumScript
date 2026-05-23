@@ -223,15 +223,10 @@ data-aria-dark="Switch to auto color mode">
       <i class="i-lucide close"></i>
     </button>
     <div class="sy-scrollbar sy-rside-inner px-6 xl:top-16 xl:sticky xl:pl-0 pt-6 pb-4"><div class="localtoc"><h3>On this page</h3><ul>
-<li><a class="reference internal" href="#release-phases">Release Phases</a></li>
-<li><a class="reference internal" href="#alpha-priorities-v0-1-v0-2">Alpha Priorities (v0.1 &#8211; v0.2)</a></li>
-<li><a class="reference internal" href="#planned-beta-and-beyond">Planned &#8212; Beta and Beyond</a><ul>
-<li><a class="reference internal" href="#smarter-classification-across-genres-and-kits">Smarter classification across genres and kits</a></li>
-<li><a class="reference internal" href="#richer-organological-modelling">Richer organological modelling</a></li>
-<li><a class="reference internal" href="#dynamics-and-advanced-technique">Dynamics and advanced technique</a></li>
-<li><a class="reference internal" href="#broader-stem-separation-uses">Broader stem separation uses</a></li>
-<li><a class="reference internal" href="#browser-based-zero-code-ui">Browser-based zero-code UI</a></li>
-<li><a class="reference internal" href="#formal-evaluation-and-paper">Formal evaluation and paper</a></li>
+<li><a class="reference internal" href="#release-plan">Release Plan</a><ul>
+<li><a class="reference internal" href="#alpha-priorities-v0-3-0-v0-9-0">Alpha Priorities (v0.3.0 &#8211; v0.9.0)</a></li>
+<li><a class="reference internal" href="#beta-priorities-0-9-x-0-9-9">Beta Priorities <code class="docutils literal notranslate">9.x</span></code> &#8211; <code class="docutils literal notranslate">9.9</span></code></a></li>
+<li><a class="reference internal" href="#stable-version-1-0-0-and-beyond">Stable Version <code class="docutils literal notranslate">0.0</span></code> and Beyond</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#how-to-get-involved">How to Get Involved</a></li>
@@ -325,14 +320,26 @@ data-aria-dark="Switch to auto color mode">
 </div><article class="yue" role="main">
           <section id="roadmap-for-drumscript">
 <h1>Roadmap for <code class="docutils literal notranslate"><span class="pre">DrumScript</span></code><a class="headerlink" href="#roadmap-for-drumscript" title="Link to this heading">¶</a></h1>
-<!--date_created: 2026-05-21-->
+<!--date_created: thurs-21-may-2026-->
+<!--date_updated: sat-23-may-2026-->
 <blockquote>
 <div><p>DrumScript follows <a class="reference external" href="https://semver.org/">Semantic Versioning</a>.
-The current phase is <strong>Alpha</strong> (<code class="docutils literal notranslate"><span class="pre">0.x.y</span></code>) — the API is stabilising and breaking changes between minor versions are expected.</p>
+The current phase is <strong>Alpha</strong> (<code class="docutils literal notranslate"><span class="pre">0.1.3</span></code>) — the API is under improvement.
+From <strong>01 June 2026 to 31 August</strong> alpha testing is under way.</p>
 </div></blockquote>
+<ul class="simple">
+<li><p><strong><a class="reference internal" href="#release-phases"><span class="xref myst">Release plan</span></a></strong></p>
+<ul>
+<li><p><strong><a class="reference internal" href="#alpha-priorities-v0-3-0-v0-9-0">Alpha priorities</a></strong></p></li>
+<li><p><strong><a class="reference internal" href="#beta-priorities-0-9-x-0-9-9">Beta</a></strong></p></li>
+<li><p><strong><a class="reference internal" href="#stable-version-1-0-0-and-beyond">Stable version (v1.0.0) and beyond</a></strong></p></li>
+</ul>
+</li>
+<li><p><strong><a class="reference internal" href="#how-to-get-involved">How to get involved</a></strong></p></li>
+</ul>
 <hr class="docutils" />
-<section id="release-phases">
-<h2>Release Phases<a class="headerlink" href="#release-phases" title="Link to this heading">¶</a></h2>
+<section id="release-plan">
+<h2>Release Plan<a class="headerlink" href="#release-plan" title="Link to this heading">¶</a></h2>
 <div class="table-wrapper colwidths-auto docutils container">
 <table class="docutils align-default">
 <thead>
@@ -343,28 +350,29 @@ The current phase is <strong>Alpha</strong> (<code class="docutils literal notra
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p><strong>Alpha</strong> (current)</p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">0.1.x</span></code> – <code class="docutils literal notranslate"><span class="pre">0.2.x</span></code></p></td>
-<td><p>June – August 2026</p></td>
-<td><p>Core pipeline works end-to-end. API may change between releases. Feedback actively sought.</p></td>
+<tr class="row-even"><td><p><strong>Pre-Alpha</strong></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">0.1.0</span></code> – <code class="docutils literal notranslate"><span class="pre">0.9.0</span></code></p></td>
+<td><p>June 2025 - May 2026</p></td>
+<td><p>Core pipeline works end-to-end. API may change between releases. Built in isolation</p></td>
 </tr>
-<tr class="row-odd"><td><p><strong>Beta</strong></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">0.3.x</span></code> – <code class="docutils literal notranslate"><span class="pre">0.9.x</span></code></p></td>
+<tr class="row-odd"><td><p><strong>Alpha</strong> (current)</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">0.1.0</span></code> – <code class="docutils literal notranslate"><span class="pre">0.9.0</span></code></p></td>
+<td><p><strong>June – August 2026</strong></p></td>
+<td><p>Core pipeline works end-to-end. API may change between releases. Feedback sought. Cross off some of the <strong><a class="reference external" href="https://github.com/DrumScript/DrumScript/issues">Issues</a></strong> added in pre-Alpha</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Beta</strong></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">0.9.x</span></code> – <code class="docutils literal notranslate"><span class="pre">0.9.9</span></code></p></td>
 <td><p>September 2026 onwards</p></td>
-<td><p>API locked for each minor version. Focus on accuracy, edge cases, and evaluation against standard ADT datasets.</p></td>
+<td><p>API locked for each minor version. Focus on accuracy, edge cases, and evaluation against standard ADT datasets.  Release <strong>free-to-use</strong> <code class="docutils literal notranslate"><span class="pre">WebGPU/WASM/ONNX</span></code> UI for non-coders</p></td>
 </tr>
-<tr class="row-even"><td><p><strong>Stable</strong></p></td>
+<tr class="row-odd"><td><p><strong>Stable</strong></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">1.0.0</span></code></p></td>
-<td><p>TBD</p></td>
-<td><p>Public API frozen. Breaking changes only in major versions. Formal write-up targeting TISMIR.</p></td>
+<td><p><em>tbc</em></p></td>
+<td><p>Public API frozen. Breaking changes only in major versions. Community-owned tool. Publication of paper in journal to announce release</p></td>
 </tr>
 </tbody>
 </table>
 </div>
-</section>
-<hr class="docutils" />
-<section id="alpha-priorities-v0-1-v0-2">
-<h2>Alpha Priorities (v0.1 – v0.2)<a class="headerlink" href="#alpha-priorities-v0-1-v0-2" title="Link to this heading">¶</a></h2>
 <p><strong>What works today:</strong></p>
 <ul class="simple">
 <li><p>End-to-end transcription pipeline: audio → onsets → classification → PDF / MIDI / MusicXML</p></li>
@@ -374,51 +382,63 @@ The current phase is <strong>Alpha</strong> (<code class="docutils literal notra
 <li><p>CLI and Python API</p></li>
 <li><p>Colab demo notebook</p></li>
 </ul>
+<hr class="docutils" />
+<section id="alpha-priorities-v0-3-0-v0-9-0">
+<h3>Alpha Priorities (v0.3.0 – v0.9.0)<a class="headerlink" href="#alpha-priorities-v0-3-0-v0-9-0" title="Link to this heading">¶</a></h3>
 <p><strong>What we’re focused on during the alpha:</strong></p>
 <ul class="simple">
-<li><p>Expanding test coverage across genres, kit types, and recording conditions</p></li>
-<li><p>Fixing classification edge cases (deep snares vs clicky kicks, splash cymbals vs open hats)</p></li>
+<li><p>Expanding test coverage across <strong>genres</strong>, <strong>kit types</strong>, and <strong>recording conditions</strong></p></li>
+<li><p>Fixing <strong>deterministic classification</strong> edge cases (deep snares vs clicky kicks, splash cymbals vs open hats)</p></li>
 <li><p>Improving onset detection sensitivity for ghost notes and fast passages</p></li>
-<li><p>Stabilising the public API ahead of the beta freeze</p></li>
-<li><p>Community feedback collection</p></li>
+<li><p>Improve transcription notations, known bugs: ie note tails that dont mark up with note head, review cosmetic looks</p></li>
+<li><p>Fix time signatures and ensure the transcription timing is correct to semi-quaver</p></li>
+<li><p>Improving <strong>Demucs</strong> stem-separation quality outputs</p></li>
+<li><p>Community feedback from fellow drummers, audio, engineers and the TISMIR/MIR community</p></li>
 </ul>
 </section>
-<hr class="docutils" />
-<section id="planned-beta-and-beyond">
-<h2>Planned — Beta and Beyond<a class="headerlink" href="#planned-beta-and-beyond" title="Link to this heading">¶</a></h2>
-<section id="smarter-classification-across-genres-and-kits">
-<h3>Smarter classification across genres and kits<a class="headerlink" href="#smarter-classification-across-genres-and-kits" title="Link to this heading">¶</a></h3>
-<p>The current frequency thresholds were derived from a small sample set and are essentially absolute values — they work well for a typical rock/pop kit but can struggle with jazz kits, piccolo snares, deep floor toms, and non-standard tunings.</p>
-<p>The plan is to introduce a <strong>per-track calibration step</strong>: before the deterministic classifier runs, DrumScript would first characterise the kit as a whole (identify the frequency clusters present in a given track) and then classify hits relative to those clusters, rather than relying on fixed Hz bands. The working theory is that all drum kits have relative frequency relationships regardless of absolute tuning — making the system far more genre-agnostic.</p>
+<section id="beta-priorities-0-9-x-0-9-9">
+<h3>Beta Priorities <code class="docutils literal notranslate"><span class="pre">0.9.x</span></code> – <code class="docutils literal notranslate"><span class="pre">0.9.9</span></code><a class="headerlink" href="#beta-priorities-0-9-x-0-9-9" title="Link to this heading">¶</a></h3>
+<p><strong>Immediately prior to release of DrumScript v1.0.0 some goals will be small fixes to ensure robustness, testing the UI, integrating the UI with current CI/CD pipelines</strong></p>
 </section>
-<section id="richer-organological-modelling">
-<h3>Richer organological modelling<a class="headerlink" href="#richer-organological-modelling" title="Link to this heading">¶</a></h3>
-<p>Building out the classification taxonomy along the membranophone/idiophone divide:</p>
+<section id="stable-version-1-0-0-and-beyond">
+<h3>Stable Version <code class="docutils literal notranslate"><span class="pre">1.0.0</span></code> and Beyond<a class="headerlink" href="#stable-version-1-0-0-and-beyond" title="Link to this heading">¶</a></h3>
+<ol class="arabic simple">
+<li><p><strong>Smarter classification across genres and kits</strong></p></li>
+</ol>
+<ul class="simple">
+<li><p>The current frequency thresholds were derived from a small sample set and are essentially absolute values — they work well for a typical rock/pop kit but can struggle with jazz kits, piccolo snares, deep floor toms, and non-standard tunings.</p></li>
+<li><p>The plan is to introduce a <strong>per-track calibration step</strong>: before the deterministic classifier runs, DrumScript would first characterise the kit as a whole (identify the frequency clusters present in a given track) and then classify hits relative to those clusters, rather than relying on fixed Hz bands.</p></li>
+</ul>
+<p>The working theory is that all drum kits have relative frequency relationships regardless of absolute tuning — making the system far more genre-agnostic.</p>
+<ol class="arabic simple" start="2">
+<li><p><strong>Richer organological modelling</strong></p></li>
+</ol>
+<p>Building out the classification taxonomy along the <code class="docutils literal notranslate"><span class="pre">membranophone</span></code> (snares, toms, etc) and <code class="docutils literal notranslate"><span class="pre">idiophone</span></code> (cymbals, hats, etc) classification ontology:</p>
 <ul class="simple">
 <li><p>Better separation of tom voices (floor, mid, rack)</p></li>
 <li><p>Recognition of cymbal subtypes (splash, china, bell hits vs edge hits)</p></li>
 <li><p>Hi-hat gradations beyond open/closed (half-open, foot splash, pedal chick)</p></li>
 </ul>
-</section>
-<section id="dynamics-and-advanced-technique">
-<h3>Dynamics and advanced technique<a class="headerlink" href="#dynamics-and-advanced-technique" title="Link to this heading">¶</a></h3>
+<ol class="arabic simple" start="3">
+<li><p><strong>Dynamics and advanced technique</strong></p></li>
+</ol>
 <p>The alpha treats every hit as equal. Future versions should handle:</p>
 <ul class="simple">
 <li><p>Accents and ghost notes</p></li>
 <li><p>Different beater styles (stick tip vs shoulder, brush sweeps, mallet rolls)</p></li>
-<li><p>Expressive techniques critical for accurate transcription and meaningful notation</p></li>
+<li><p>Expressive techniques critical for accurate transcription and meaningful notatio</p></li>
 </ul>
-</section>
-<section id="broader-stem-separation-uses">
-<h3>Broader stem separation uses<a class="headerlink" href="#broader-stem-separation-uses" title="Link to this heading">¶</a></h3>
+<ol class="arabic simple" start="4">
+<li><p>Broader stem separation uses</p></li>
+</ol>
 <p>The Demucs integration currently targets drummers, but the same pipeline can produce vocal-only, bass-only, or instrument-only extractions. These will be exposed as first-class features so the tool is useful to vocalists, bassists, and producers — not just drummers.</p>
-</section>
-<section id="browser-based-zero-code-ui">
-<h3>Browser-based zero-code UI<a class="headerlink" href="#browser-based-zero-code-ui" title="Link to this heading">¶</a></h3>
+<ol class="arabic simple" start="5">
+<li><p>Browser-based zero-code UI</p></li>
+</ol>
 <p>A major goal: a browser deployment using WebGPU, WebAssembly, Pyodide, and ONNX Runtime so that DrumScript can run entirely client-side — no installation, no server, no account, no data leaves the user’s machine. The aim is a free, local-input/local-output tool that non-technical musicians can use without touching a terminal.</p>
-</section>
-<section id="formal-evaluation-and-paper">
-<h3>Formal evaluation and paper<a class="headerlink" href="#formal-evaluation-and-paper" title="Link to this heading">¶</a></h3>
+<ol class="arabic simple" start="6">
+<li><p>Formal evaluation and paper</p></li>
+</ol>
 <p>Benchmarking against standard ADT datasets using <code class="docutils literal notranslate"><span class="pre">mir_eval</span></code> metrics, with a write-up targeting the <a class="reference external" href="https://transactions.ismir.net/">TISMIR</a> Educational Articles track covering the pipeline architecture, evaluation results, and design decisions.</p>
 </section>
 </section>
@@ -430,7 +450,9 @@ The current phase is <strong>Alpha</strong> (<code class="docutils literal notra
 <li><p><strong>Suggest features:</strong> <a class="reference external" href="https://github.com/DrumScript/DrumScript/issues/new?template=feature_request.md">Feature Request template</a></p></li>
 <li><p><strong>Contribute code:</strong> See <a class="reference internal" href="../development/contributor_guidance.html"><span class="std std-doc">Contributing</span></a></p></li>
 <li><p><strong>Share feedback:</strong> <a class="reference external" href="mailto:hello&#46;drumscript&#37;&#52;&#48;gmail&#46;com">hello<span>&#46;</span>drumscript<span>&#64;</span>gmail<span>&#46;</span>com</a></p></li>
+<li><p><strong>Start a public discussion:</strong> <a class="reference external" href="https://github.com/DrumScript/DrumScript/discussions">Discussions</a></p></li>
 </ul>
+<hr class="docutils" />
 </section>
 </section>
 

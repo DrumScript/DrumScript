@@ -1,7 +1,7 @@
 # **`DrumScript`**
 
 <!--date_created: sun-15-june-2025-->
-<!--date_edited: thurs-21-may-2026--->
+<!--date_edited: sat-22-may-2026--->
 
 **Workflow Status**
 
@@ -43,7 +43,7 @@
 - **[CLI Usage](#cli-usage)**
 - **[Contributing](#contributing)**
 - **[FAQs](#faqs)**
-
+- **[Similar projects](#similar-projects)**
 
 ---
 
@@ -277,14 +277,26 @@ DrumScript's own classification engine is **fully deterministic** — it uses ph
 
 ## Acknowledgements
 
-- **[Demucs](https://github.com/adefossez/demucs)** — The stem splitting functionality is built upon the work of [@adefossez](https://github.com/adefossez).
-- **[librosa](https://librosa.org/)** — For foundational audio processing tools.
+1. **[Demucs](https://github.com/adefossez/demucs)** — The stem splitting functionality is built upon the work of [@adefossez](https://github.com/adefossez).
+2. **[librosa](https://librosa.org/)** — For foundational audio processing tools.
 
 ---
 
 ## License
 
 [Apache License 2.0](LICENSE)
+
+---
+## Similar Projects
+
+No affiliation as yet, however. 
+
+**[librosa](https://librosa.org/)** — The spectral analysis library that powers DrumScript's onset detection and feature extraction.
+**[Demucs](https://github.com/adefossez/demucs)** — The stem separation model we use for isolating drums from full mixes.
+**[tepreece/drumscript (Golang)](https://github.com/tepreece/drumscript)** — A `(Go)lang` MIDI drum pattern scripting language by Tom Preece. Different use case (composing drum patterns via script), different technology (MIDI output rather than audio transcription). If you're looking to *write* drum patterns programmatically, check it out. Maintained by [@tepreece](https://github.com/tepreece)
+**[basic-pitch][**https://github.com/spotify/basic-pitch]** - A lightweight yet powerful audio-to-MIDI converter with pitch bend detection (better for non-percussive audio)
+**[mir_eval](https://github.com/mir-evaluation/mir_eval)** — Standard evaluation metrics for music information retrieval tasks.
+**[onset_db](https://github.com/CPJKU/onset_db)** - Provides a dataset of annotated musical onsets for tuning and evaluating audio detection algorithms. Maintained by JKU Linz.
 
 ---
 

@@ -435,4 +435,4 @@ __all__ = [
     "install_ffmpeg",
 ]
 
-__version__ = "0.1.4"
+__version__ = "0.1.5"

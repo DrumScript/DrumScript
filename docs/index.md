@@ -45,9 +45,18 @@ Want to play along to your favorite song but the drums are in the way?
 `DrumScript` was built for drummers, by drummers. It is - and always will be - a community-owned tool. 
 
 
-**Example output**
+**Example outputs**
 
-![alt text](_static/transcription.png)
+**Example 1: Simple groove**
+
+![DrumScript transcription output](./_static/test_wav.png)
+
+**Example 2: A well-known Sabbath song**
+
+![DrumScript transcription output](./_static/iron_man_1.png)
+![DrumScript transcription output](./_static/iron_man_2.png)
+![DrumScript transcription output](./_static/iron_man_3.png)
+
 
 ---
 

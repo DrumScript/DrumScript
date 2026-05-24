@@ -17,7 +17,7 @@
 
 > **[Documentation](https://drumscript.github.io/DrumScript/)**
 
-**Public Alpha (v0.1.4) — June to August 2026**
+**Public Alpha (v.1.4+) — June to August 2026**
 
  - We're looking for early adopters and feedback
  - [Feedback on the classification model](https://github.com/DrumScript/DrumScript/issues), and help shape v1.0.

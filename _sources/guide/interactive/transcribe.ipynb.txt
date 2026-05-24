@@ -28,7 +28,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 1,
+   "execution_count": 4,
    "id": "203355ce",
    "metadata": {},
    "outputs": [
@@ -71,7 +71,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 2,
+   "execution_count": null,
    "id": "741a625a",
    "metadata": {},
    "outputs": [
@@ -79,28 +79,15 @@
      "name": "stdout",
      "output_type": "stream",
      "text": [
-      "...Loading & analysing audio...\n",
-      "(HOP_LENGTH: 128)\n",
-      "(Wait Frames Applied: 17)\n",
-      "(len_onset_times:1013)\n",
-      "   -> Tempo: 76.0 BPM | Onsets: 1013\n",
-      "   -> Classifier: standard polyphonic engine\n",
-      "   -> Classified 1013 events\n",
-      "...Building score: transcription/test_track_1_transcription.pdf\n",
-      "--- Building Score for: transcription/test_track_1_transcription.pdf [Time Sig: 4/4] ---\n",
-      "Saving to: transcription/test_track_1_transcription.json\n",
-      "Generating PDF: transcription/test_track_1_transcription.pdf (Sig: 4/4, 75 BPM)\n",
-      "PDF successfully saved to: transcription/test_track_1_transcription.pdf\n",
-      "SUCCESS: MIDI file generated at -> transcription/test_track_1_transcription.mid\n",
-      "--- Done ---\n",
-      "Transcription complete. Files generated: transcription/test_track_1_transcription.pdf\n"
+      "...Separating drum stem...\n",
+      "Starting Demucs separation for: audio/test_track_1.wav...\n"
      ]
     }
    ],
    "source": [
     "# 1. Basic transcription\n",
     "# This outputs XML and PDF files by default\n",
-    "basic_transcription = ds.transcribe(audio_path=audio_file_path, output_dir=\"transcription\")\n",
+    "basic_transcription = ds.transcribe(audio_path=audio_file_path, output_dir=\"transcription\", full_song=True, full=True)\n",
     "\n",
     "print(\"Transcription complete. Files generated:\", basic_transcription)"
    ]

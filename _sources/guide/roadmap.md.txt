@@ -1,10 +1,10 @@
 # Roadmap for `DrumScript`
 
 <!--date_created: thurs-21-may-2026-->
-<!--date_updated: sat-23-may-2026-->
+<!--date_updated: sun-24-may-2026-->
 
 > DrumScript follows [Semantic Versioning](https://semver.org/).
-> The current phase is **Alpha** (`0.1.3`) — the API is under improvement.
+> The current phase is **Alpha** (`0.1.5`) — the classification model and score generation/ API is out for testing. 
 > From **01 June 2026 to 31 August** alpha testing is under way.
 
 * **[Release plan](#release-phases)**
@@ -76,7 +76,14 @@ The alpha treats every hit as equal. Future versions should handle:
 
 * Accents and ghost notes
 * Different beater styles (stick tip vs shoulder, brush sweeps, mallet rolls)
-* Expressive techniques critical for accurate transcription and meaningful notatio
+* Expressive techniques critical for accur  FIX 1: Restored minimal noise gate (2% of global max) in classify_events.
+         Dead silence was passing through and generating phantom events.
+  FIX 2: Aligned ride/crash centroid threshold from 2500 → 5500 in classify_events,
+         matching classify_idiophone standalone function. 2500 was causing massive
+         crash over-detection (859 crashes in TGOO transcription).
+  FIX 3: Added minimal de-bounce lockout (50ms) in classify_events for full-song mode.
+         Duplicate timestamps were appearing because consecutive onsets on the same
+         transient were both being classified.ate transcription and meaningful notatio
 
 4.  Broader stem separation uses
 

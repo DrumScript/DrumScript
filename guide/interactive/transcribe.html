@@ -359,28 +359,15 @@ data-aria-dark="Switch to auto color mode">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="c1"># 1. Basic transcription</span>
 </span><span data-line="2"><span class="c1"># This outputs XML and PDF files by default</span>
-</span><span data-line="3"><span class="n">basic_transcription</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">transcribe</span><span class="p">(</span><span class="n">audio_path</span><span class="o">=</span><span class="n">audio_file_path</span><span class="p">,</span> <span class="n">output_dir</span><span class="o">=</span><span class="s2">&quot;transcription&quot;</span><span class="p">)</span>
+</span><span data-line="3"><span class="n">basic_transcription</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">transcribe</span><span class="p">(</span><span class="n">audio_path</span><span class="o">=</span><span class="n">audio_file_path</span><span class="p">,</span> <span class="n">output_dir</span><span class="o">=</span><span class="s2">&quot;transcription&quot;</span><span class="p">,</span> <span class="n">full_song</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">full</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </span><span data-line="4">
 </span><span data-line="5"><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Transcription complete. Files generated:&quot;</span><span class="p">,</span> <span class="n">basic_transcription</span><span class="p">)</span>
 </span></pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span data-line="1">...Loading &amp; analysing audio...
-</span><span data-line="2">(HOP_LENGTH: 128)
-</span><span data-line="3">(Wait Frames Applied: 17)
-</span><span data-line="4">(len_onset_times:1013)
-</span><span data-line="5">   -&gt; Tempo: 76.0 BPM | Onsets: 1013
-</span><span data-line="6">   -&gt; Classifier: standard polyphonic engine
-</span><span data-line="7">   -&gt; Classified 1013 events
-</span><span data-line="8">...Building score: transcription/test_track_1_transcription.pdf
-</span><span data-line="9">--- Building Score for: transcription/test_track_1_transcription.pdf [Time Sig: 4/4] ---
-</span><span data-line="10">Saving to: transcription/test_track_1_transcription.json
-</span><span data-line="11">Generating PDF: transcription/test_track_1_transcription.pdf (Sig: 4/4, 75 BPM)
-</span><span data-line="12">PDF successfully saved to: transcription/test_track_1_transcription.pdf
-</span><span data-line="13">SUCCESS: MIDI file generated at -&gt; transcription/test_track_1_transcription.mid
-</span><span data-line="14">--- Done ---
-</span><span data-line="15">Transcription complete. Files generated: transcription/test_track_1_transcription.pdf
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span data-line="1">...Separating drum stem...
+</span><span data-line="2">Starting Demucs separation for: audio/test_track_1.wav...
 </span></pre></div>
 </div>
 </div>
@@ -389,7 +376,7 @@ data-aria-dark="Switch to auto color mode">
 <blockquote>
 <div><p><strong>Please note:</strong> If no output path is specified when running <code class="docutils literal notranslate"><span class="pre">ds.transcribe()</span></code> the default save location is the <code class="docutils literal notranslate"><span class="pre">outputs/</span></code> directory.</p>
 </div></blockquote>
-<p><img alt="alt text" src="../../_images/transcription.png" /></p>
+<p><img alt="alt text" src="_static/transcription.png" /></p>
 <hr class="docutils" />
 <!--END--></section>
 

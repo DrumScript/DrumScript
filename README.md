@@ -1,7 +1,7 @@
 # **`DrumScript`**
 
 <!--date_created: sun-15-june-2025-->
-<!--date_edited: sat-22-may-2026--->
+<!--date_edited: sun-24-may-2026--->
 
 **Workflow Status**
 
@@ -33,7 +33,15 @@
 
 *Input: audio recording → Output: drum notation (PDF).
 
-![DrumScript transcription output](docs/_static/transcription.png)
+**Example 1: Simple groove**
+
+![DrumScript transcription output](docs/_static/test_wav.png)
+
+**Example 2: A well-known Sabbath song**
+
+![DrumScript transcription output](docs/_static/iron_man_1.png)
+![DrumScript transcription output](docs/_static/iron_man_2.png)
+![DrumScript transcription output](docs/_static/iron_man_3.png)
 
 ---
 

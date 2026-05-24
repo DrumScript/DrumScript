@@ -1,8 +1,10 @@
-# Interactive Runbooks
+<!--date_added:tues-12-may-2026-->
+<!--date_updated:fri-22-may-2026-->
 
-Welcome to the `DrumScript` interactive runbooks! You can view the code and outputs right here in your browser. 
+# Runbooks
 
-If you want to run these locally, download the notebooks and run them via Jupyter.
+Welcome to the `DrumScript` runbooks! You can view the code and outputs right here. 
+
 
 ```{toctree}
 :maxdepth: 1

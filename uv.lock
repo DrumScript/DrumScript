@@ -1013,7 +1013,7 @@ sdist = { url = "https://files.pythonhosted.org/packages/d5/9d/9a13947db23737548
 
 [[package]]
 name = "drumscript"
-version = "0.1.4"
+version = "0.1.5"
 source = { editable = "." }
 dependencies = [
     { name = "demucs" },

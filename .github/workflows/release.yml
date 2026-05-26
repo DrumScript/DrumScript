@@ -145,15 +145,15 @@ jobs:
 
       # ── Commit, tag, release ───────────────────────────────────
 
-      - name: Create release PR
-        uses: peter-evans/create-pull-request@v6
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          commit-message: "release: bump version to ${{ env.VERSION }}"
-          branch: "release/${{ env.VERSION }}"
-          title: "release: v${{ env.VERSION }}"
-          body: "Automated version bump to ${{ env.VERSION }}"
-          sign-commits: true
+      - name: Commit version bump
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git diff --cached --quiet && echo "No changes to commit" && exit 0
+          git commit -m "release: bump version to ${{ env.VERSION }}"
+          git tag "${{ env.TAG }}"
+          git push origin HEAD --tags
 
       - name: Generate changelog from commits
         id: changelog

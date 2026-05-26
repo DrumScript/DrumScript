@@ -1,7 +1,7 @@
 # **`DrumScript`**
 
 <!--date_created: sun-15-june-2025-->
-<!--date_edited: sun-24-may-2026--->
+<!--date_edited: tues-26-may-2026--->
 
 **Workflow Status**
 
@@ -127,6 +127,10 @@ DrumScript manages all dependencies via [`pyproject.toml`](pyproject.toml) using
 
 ## Quick Start
 
+> Please note: DrumScript assumes you are providing **drum audio-only inputs by default** 
+
+> If you are using transcription with full song use the `full_song=True` flag, ie 
+
 ### End-to-end transcription
 
 ```python
@@ -136,7 +140,8 @@ import drumscript as ds
 pdf_path = ds.transcribe("drum_audio.wav")
 
 # Transcribe a full song (separates drums automatically)
-pdf_path = ds.transcribe("full_song.mp3", full_song=True)
+pdf_path = ds.transcribe("full_song.mp3") # drum only audio
+pdf_path = ds.transcribe("full_song.mp3", full_song=True) # full song, tells DrumScript to extract the drums first and then transcribe
 
 # Get all intermediate results
 result = ds.transcribe("drum_audio.wav", full=True)

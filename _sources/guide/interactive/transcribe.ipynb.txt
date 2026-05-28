@@ -28,7 +28,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 4,
+   "execution_count": 1,
    "id": "203355ce",
    "metadata": {},
    "outputs": [
@@ -98,11 +98,24 @@
    "metadata": {},
    "source": [
     "\n",
-    "**Example output**\n",
+    "**Output**\n",
     "\n",
     "> **Please note:** If no output path is specified when running `ds.transcribe()` the default save location is the `outputs/` directory.\n",
     "\n",
-    "![alt text](../../_static/transcription.png)\n"
+    "**Page 1**\n",
+    "> \n",
+    "![Page 1](../../_static/transcription-pg1.png)\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "b443f682",
+   "metadata": {},
+   "source": [
+    "**Page 2**\n",
+    ">\n",
+    "\n",
+    "![Page 2](../../_static/transcription-pg2.png)\n"
    ]
   },
   {

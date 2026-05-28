@@ -1,4 +1,4 @@
-.DrumScript
+.
 ├── .github
 │   ├── CODEOWNERS
 │   ├── ISSUE_TEMPLATE
@@ -11,10 +11,10 @@
 │       ├── release.yml
 │       ├── test_build.yml
 │       └── tests.yml
-├── .github.zip
 ├── .gitignore
 ├── .pre-commit-config.yaml
 ├── .python-version
+├── CHANGELOG.md
 ├── CODE_OF_CONDUCT.md
 ├── CONTRIBUTING.md
 ├── LICENSE
@@ -34,12 +34,10 @@
 │   │   ├── contributor_guidance.md
 │   │   ├── documentation.md
 │   │   └── testing_guidance.md
-│   ├── github_pages.sh
 │   ├── index.md
 │   ├── make.bat
 │   ├── theory
 │   └── versions.json
-├── docs.zip
 ├── drumscript
 │   ├── __init__.py
 │   ├── audio_processor
@@ -83,7 +81,7 @@
 │           ├── measure_hat_frequency.py
 │           ├── measure_kick_frequency.py
 │           └── measure_snare_frequency.py
-├── drumscript.zip
+├── drumscript_interactive_notebook.ipynb
 ├── public
 │   └── pyodideWorker.js
 ├── pyproject.toml
@@ -109,4 +107,4 @@
 └── visuals
     └── tempogram.png
 
-23 directories, 87 files
+23 directories, 85 files

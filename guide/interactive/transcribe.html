@@ -371,6 +371,67 @@ data-aria-dark="Switch to auto color mode">
 </span><span data-line="2">Starting Demucs separation for: audio/test_track_1.wav...
 </span></pre></div>
 </div>
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="gt">---------------------------------------------------------------------------</span>
+</span><span data-line="2"><span class="ne">KeyboardInterrupt</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
+</span><span data-line="3"><span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">line</span> <span class="mi">3</span>
+</span><span data-line="4"><span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1"># 1. Basic transcription</span>
+</span><span data-line="5"><span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="c1"># This outputs XML and PDF files by default</span>
+</span><span data-line="6"><span class="ne">----&gt; </span><span class="mi">3</span> <span class="n">basic_transcription</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">transcribe</span><span class="p">(</span><span class="n">audio_path</span><span class="o">=</span><span class="n">audio_file_path</span><span class="p">,</span> <span class="n">output_dir</span><span class="o">=</span><span class="s2">&quot;transcription&quot;</span><span class="p">,</span> <span class="n">full_song</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">full</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span><span data-line="7"><span class="g g-Whitespace">      </span><span class="mi">4</span> 
+</span><span data-line="8"><span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Transcription complete. Files generated:&quot;</span><span class="p">,</span> <span class="n">basic_transcription</span><span class="p">)</span>
+</span><span data-line="9">
+</span><span data-line="10"><span class="nn">File ~/work/DrumScript/DrumScript/drumscript/__init__.py:253,</span> in <span class="ni">transcribe</span><span class="nt">(audio_path, full_song, time_signature, is_rudiment, output_dir, output_filename, full)</span>
+</span><span data-line="11"><span class="g g-Whitespace">    </span><span class="mi">251</span> <span class="k">if</span> <span class="n">full_song</span><span class="p">:</span>
+</span><span data-line="12"><span class="g g-Whitespace">    </span><span class="mi">252</span>     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;...Separating drum stem...&quot;</span><span class="p">)</span>
+</span><span data-line="13"><span class="ne">--&gt; </span><span class="mi">253</span>     <span class="n">working_path</span> <span class="o">=</span> <span class="n">extract_drum_stem</span><span class="p">(</span><span class="n">audio_path</span><span class="p">)</span>
+</span><span data-line="14"><span class="g g-Whitespace">    </span><span class="mi">255</span> <span class="c1"># 2. Load + normalise</span>
+</span><span data-line="15"><span class="g g-Whitespace">    </span><span class="mi">256</span> <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;...Loading &amp; analysing audio...&quot;</span><span class="p">)</span>
+</span><span data-line="16">
+</span><span data-line="17"><span class="nn">File ~/work/DrumScript/DrumScript/drumscript/audio_processor/stem_splitter.py:374,</span> in <span class="ni">extract_drum_stem</span><span class="nt">(audio_path, output_dir)</span>
+</span><span data-line="18"><span class="g g-Whitespace">    </span><span class="mi">371</span> <span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">monotonic</span><span class="p">()</span>  <span class="c1"># Start timer, MIGHT REMOVE LATER ONCE FINISHED DEBUGGING</span>
+</span><span data-line="19"><span class="g g-Whitespace">    </span><span class="mi">373</span> <span class="k">try</span><span class="p">:</span>
+</span><span data-line="20"><span class="ne">--&gt; </span><span class="mi">374</span>     <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">command</span><span class="p">,</span> <span class="n">check</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">capture_output</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span><span data-line="21"><span class="g g-Whitespace">    </span><span class="mi">376</span>     <span class="n">end_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">monotonic</span><span class="p">()</span>  <span class="c1"># &lt;-- 3. Stop the timer</span>
+</span><span data-line="22"><span class="g g-Whitespace">    </span><span class="mi">377</span>     <span class="n">duration</span> <span class="o">=</span> <span class="n">end_time</span> <span class="o">-</span> <span class="n">start_time</span>
+</span><span data-line="23">
+</span><span data-line="24"><span class="nn">File /opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/subprocess.py:550,</span> in <span class="ni">run</span><span class="nt">(input, capture_output, timeout, check, *popenargs, **kwargs)</span>
+</span><span data-line="25"><span class="g g-Whitespace">    </span><span class="mi">548</span> <span class="k">with</span> <span class="n">Popen</span><span class="p">(</span><span class="o">*</span><span class="n">popenargs</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="k">as</span> <span class="n">process</span><span class="p">:</span>
+</span><span data-line="26"><span class="g g-Whitespace">    </span><span class="mi">549</span>     <span class="k">try</span><span class="p">:</span>
+</span><span data-line="27"><span class="ne">--&gt; </span><span class="mi">550</span>         <span class="n">stdout</span><span class="p">,</span> <span class="n">stderr</span> <span class="o">=</span> <span class="n">process</span><span class="o">.</span><span class="n">communicate</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">)</span>
+</span><span data-line="28"><span class="g g-Whitespace">    </span><span class="mi">551</span>     <span class="k">except</span> <span class="n">TimeoutExpired</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
+</span><span data-line="29"><span class="g g-Whitespace">    </span><span class="mi">552</span>         <span class="n">process</span><span class="o">.</span><span class="n">kill</span><span class="p">()</span>
+</span><span data-line="30">
+</span><span data-line="31"><span class="nn">File /opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/subprocess.py:1209,</span> in <span class="ni">Popen.communicate</span><span class="nt">(self, input, timeout)</span>
+</span><span data-line="32"><span class="g g-Whitespace">   </span><span class="mi">1206</span>     <span class="n">endtime</span> <span class="o">=</span> <span class="kc">None</span>
+</span><span data-line="33"><span class="g g-Whitespace">   </span><span class="mi">1208</span> <span class="k">try</span><span class="p">:</span>
+</span><span data-line="34"><span class="ne">-&gt; </span><span class="mi">1209</span>     <span class="n">stdout</span><span class="p">,</span> <span class="n">stderr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_communicate</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span> <span class="n">endtime</span><span class="p">,</span> <span class="n">timeout</span><span class="p">)</span>
+</span><span data-line="35"><span class="g g-Whitespace">   </span><span class="mi">1210</span> <span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">:</span>
+</span><span data-line="36"><span class="g g-Whitespace">   </span><span class="mi">1211</span>     <span class="c1"># https://bugs.python.org/issue25942</span>
+</span><span data-line="37"><span class="g g-Whitespace">   </span><span class="mi">1212</span>     <span class="c1"># See the detailed comment in .wait().</span>
+</span><span data-line="38"><span class="g g-Whitespace">   </span><span class="mi">1213</span>     <span class="k">if</span> <span class="n">timeout</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+</span><span data-line="39">
+</span><span data-line="40"><span class="nn">File /opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/subprocess.py:2115,</span> in <span class="ni">Popen._communicate</span><span class="nt">(self, input, endtime, orig_timeout)</span>
+</span><span data-line="41"><span class="g g-Whitespace">   </span><span class="mi">2108</span>     <span class="bp">self</span><span class="o">.</span><span class="n">_check_timeout</span><span class="p">(</span><span class="n">endtime</span><span class="p">,</span> <span class="n">orig_timeout</span><span class="p">,</span>
+</span><span data-line="42"><span class="g g-Whitespace">   </span><span class="mi">2109</span>                         <span class="n">stdout</span><span class="p">,</span> <span class="n">stderr</span><span class="p">,</span>
+</span><span data-line="43"><span class="g g-Whitespace">   </span><span class="mi">2110</span>                         <span class="n">skip_check_and_raise</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span><span data-line="44"><span class="g g-Whitespace">   </span><span class="mi">2111</span>     <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span>  <span class="c1"># Impossible :)</span>
+</span><span data-line="45"><span class="g g-Whitespace">   </span><span class="mi">2112</span>         <span class="s1">&#39;_check_timeout(..., skip_check_and_raise=True) &#39;</span>
+</span><span data-line="46"><span class="g g-Whitespace">   </span><span class="mi">2113</span>         <span class="s1">&#39;failed to raise TimeoutExpired.&#39;</span><span class="p">)</span>
+</span><span data-line="47"><span class="ne">-&gt; </span><span class="mi">2115</span> <span class="n">ready</span> <span class="o">=</span> <span class="n">selector</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">timeout</span><span class="p">)</span>
+</span><span data-line="48"><span class="g g-Whitespace">   </span><span class="mi">2116</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_timeout</span><span class="p">(</span><span class="n">endtime</span><span class="p">,</span> <span class="n">orig_timeout</span><span class="p">,</span> <span class="n">stdout</span><span class="p">,</span> <span class="n">stderr</span><span class="p">)</span>
+</span><span data-line="49"><span class="g g-Whitespace">   </span><span class="mi">2118</span> <span class="c1"># XXX Rewrite these to use non-blocking I/O on the file</span>
+</span><span data-line="50"><span class="g g-Whitespace">   </span><span class="mi">2119</span> <span class="c1"># objects; they are no longer using C stdio!</span>
+</span><span data-line="51">
+</span><span data-line="52"><span class="nn">File /opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/selectors.py:415,</span> in <span class="ni">_PollLikeSelector.select</span><span class="nt">(self, timeout)</span>
+</span><span data-line="53"><span class="g g-Whitespace">    </span><span class="mi">413</span> <span class="n">ready</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span data-line="54"><span class="g g-Whitespace">    </span><span class="mi">414</span> <span class="k">try</span><span class="p">:</span>
+</span><span data-line="55"><span class="ne">--&gt; </span><span class="mi">415</span>     <span class="n">fd_event_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_selector</span><span class="o">.</span><span class="n">poll</span><span class="p">(</span><span class="n">timeout</span><span class="p">)</span>
+</span><span data-line="56"><span class="g g-Whitespace">    </span><span class="mi">416</span> <span class="k">except</span> <span class="ne">InterruptedError</span><span class="p">:</span>
+</span><span data-line="57"><span class="g g-Whitespace">    </span><span class="mi">417</span>     <span class="k">return</span> <span class="n">ready</span>
+</span><span data-line="58">
+</span><span data-line="59"><span class="ne">KeyboardInterrupt</span>: 
+</span></pre></div>
+</div>
 </div>
 </div>
 <p><strong>Output</strong></p>

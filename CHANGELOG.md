@@ -28,7 +28,7 @@ DrumScript follows [Semantic Versioning](https://semver.org/).
 ## [0.1.5] - May 2026
 
 ### Fixed
-- Emergency fix: transcription examples were generated without `--drums-only` flag, causing full polyphonic mixes to be classified as drums. Output is now cleaner and more accurate.
+- Emergency fix: transcription outputs
 - Updated docstrings to clarify expected input for transcription functions
 
 ---

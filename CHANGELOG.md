@@ -14,7 +14,7 @@ DrumScript follows [Semantic Versioning](https://semver.org/).
 
 ## Planned
 
-### **[0.1.6] - June 2026**
+### [0.1.6] - June 2026
 
 - Transcription function docstrings updated to make clear that drum-only audio is expected as standard input
 - README updated to clarify expected input for transcription functions
@@ -24,17 +24,17 @@ DrumScript follows [Semantic Versioning](https://semver.org/).
 
 ---
 
+## Released
+
 ### [0.1.5] - May 2026
 
-### Fixed
+**Fixed**
 - Emergency fix: transcription outputs
 - Updated docstrings to clarify expected input for transcription functions
 
----
+### [0.1.4] - 20 May 2026 (First PyPI publication)
 
-### [0.1.4] - 20 May 2026 (Public Alpha Release)
-
-### Added
+**First release**
 - Initial public alpha release to PyPI
 - End-to-end CLI pipeline: stem separation → onset detection → classification → score generation
 - Drum classification (kick, snare, hi-hat open/closed, toms, crash, ride) using deterministic spectral analysis
@@ -47,8 +47,6 @@ DrumScript follows [Semantic Versioning](https://semver.org/).
 - Custom time signature support (e.g. 3/4, 6/8)
 - ffmpeg-free WAV output path (soundfile + numpy)
 - Google Colab notebook support
-
----
 
 ### Notes
 

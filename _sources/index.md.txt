@@ -145,5 +145,6 @@ about
 :caption: Versions
 
 release_notes/index
+changelog
 
 ```

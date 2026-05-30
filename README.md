@@ -1,7 +1,7 @@
 # **`DrumScript`**
 
 <!--date_created: sun-15-june-2025-->
-<!--date_edited: weds-27-may-2026--->
+<!--date_edited: sat-30-may-2026--->
 
 **Workflow Status**
 
@@ -17,10 +17,10 @@
 
 > **[Documentation](https://drumscript.github.io/DrumScript/)**
 
-**Public Alpha (v.1.4+) — June to August 2026**
+**Public Alpha (v0.1.4+) — June to August 2026**
 
  - We're looking for early adopters and feedback
- - [Feedback on the classification model](https://github.com/DrumScript/DrumScript/issues), and help shape v1.0.
+ - [Feedback on the classification model](https://github.com/DrumScript/DrumScript/issues), and help shape v1.0.0.
  - In particular we are interested in hearing from everyone:: drummers (coding not required!), sound engineers and academics in Music Information Retrieval with an interest in deterministic drum/percussion classifications. 
  - For beta release, we are planning to (amongst other things) improve the classification model, fix any user-suggested bugs, implement user-suggested feature requests and **most importantly** build a **WebGPU/ONNX/WASM UI** that will be free to use for all.
 

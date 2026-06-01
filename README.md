@@ -1,7 +1,7 @@
 # **`DrumScript`**
 
 <!--date_created: sun-15-june-2025-->
-<!--date_edited: sat-30-may-2026--->
+<!--date_edited: mon-01-june-2026--->
 
 **Workflow Status**
 
@@ -122,6 +122,12 @@ DrumScript manages all dependencies via [`pyproject.toml`](pyproject.toml) using
   - macOS: `brew install portaudio`
   - Ubuntu/Debian: `sudo apt-get install libportaudio2`
   - Windows: Usually bundled with the `sounddevice` wheel.
+
+- **git-lfs** is **only** required if you want to run the documentation notebooks locally or rebuild the docs site. Some example audio files in `docs/guide/interactive/audio/` are tracked via Git LFS to keep the main repo lightweight. `pip install drumscript` and ordinary use of the package do **not** need it. If you skip this step, `git clone` will still succeed — you'll just get small LFS pointer files in place of the example audio.
+  - macOS: `brew install git-lfs`
+  - Ubuntu/Debian: `sudo apt-get install git-lfs`
+  - Windows: [Download from git-lfs.com](https://git-lfs.com/) or install via `winget install GitHub.GitLFS`.
+  - After installing, run `git lfs install` once, then `git lfs pull` inside the cloned repo to fetch the audio.
 
 ---
 
@@ -302,12 +308,12 @@ DrumScript's own classification engine is **fully deterministic** — it uses ph
 ---
 ## Similar Projects
 
-No affiliation as yet, however. 
+DrumScript has no affiliation with any of the projects below. They are listed for context and reference.
 
 * **[librosa](https://librosa.org/)** — The spectral analysis library that powers DrumScript's onset detection and feature extraction.
 * **[Demucs](https://github.com/adefossez/demucs)** — The stem separation model we use for isolating drums from full mixes.
 * **[tepreece/drumscript (Golang)](https://github.com/tepreece/drumscript)** — A `(Go)lang` MIDI drum pattern scripting language by Tom Preece. Different use case (composing drum patterns via script), different technology (MIDI output rather than audio transcription). If you're looking to *write* drum patterns programmatically, check it out. Maintained by [@tepreece](https://github.com/tepreece)
-* **[basic-pitch][**https://github.com/spotify/basic-pitch]** - A lightweight yet powerful audio-to-MIDI converter with pitch bend detection (better for non-percussive audio)
+* **[basic-pitch](https://github.com/spotify/basic-pitch)** — A lightweight yet powerful audio-to-MIDI converter with pitch bend detection (better for non-percussive audio). Maintained by Spotify.
 * **[mir_eval](https://github.com/mir-evaluation/mir_eval)** — Standard evaluation metrics for music information retrieval tasks.
 * **[onset_db](https://github.com/CPJKU/onset_db)** - Provides a dataset of annotated musical onsets for tuning and evaluating audio detection algorithms. Maintained by JKU Linz.
 

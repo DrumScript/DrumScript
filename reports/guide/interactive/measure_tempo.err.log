@@ -26,7 +26,7 @@ display(Audio(audio_file_path))
 ------------------
 
 ----- stdout -----
-Error: Audio file not found at audio/test_track_1.wav
+Error loading audio file audio/test_track_1.wav:
 ----- stderr -----
 /home/runner/work/DrumScript/DrumScript/drumscript/audio_processor/audio_loader.py:51: UserWarning: PySoundFile failed. Trying audioread instead.
   audio_data, sample_rate = librosa.load(
@@ -65,11 +65,11 @@ Error: Audio file not found at audio/test_track_1.wav
 [32m   1268[39m     [38;5;66;03m# when opening a named pipe in SFM_WRITE mode.[39;00m
 [32m   1269[39m     [38;5;66;03m# See http://github.com/erikd/libsndfile/issues/77.[39;00m
 
-[31mLibsndfileError[39m: Error opening 'audio/test_track_1.wav': System error.
+[31mLibsndfileError[39m: Error opening 'audio/test_track_1.wav': Format not recognised.
 
 During handling of the above exception, another exception occurred:
 
-[31mFileNotFoundError[39m                         Traceback (most recent call last)
+[31mNoBackendError[39m                            Traceback (most recent call last)
 [36mCell[39m[36m [39m[32mIn[2][39m[32m, line 3[39m
 [32m      1[39m [38;5;66;03m# 1. Load audio[39;00m
 [32m      2[39m audio_file_path = [33m"audio/test_track_1.wav"[39m
@@ -117,18 +117,10 @@ During handling of the above exception, another exception occurred:
 [32m    242[39m [38;5;28;01mwith[39;00m reader [38;5;28;01mas[39;00m input_file:
 [32m    243[39m     sr_native = input_file.samplerate
 
-[36mFile [39m[32m~/work/DrumScript/DrumScript/.venv/lib/python3.12/site-packages/audioread/__init__.py:126[39m, in [36maudio_open[39m[34m(path, backends)[39m
-[32m    124[39m [38;5;28;01mfor[39;00m BackendClass [38;5;129;01min[39;00m backends:
-[32m    125[39m     [38;5;28;01mtry[39;00m:
-[32m--> [39m[32m126[39m         [38;5;28;01mreturn[39;00m [30;43mBackendClass[39;49m[30;43m([39;49m[30;43mpath[39;49m[30;43m)[39;49m
-[32m    127[39m     [38;5;28;01mexcept[39;00m DecodeError:
+[36mFile [39m[32m~/work/DrumScript/DrumScript/.venv/lib/python3.12/site-packages/audioread/__init__.py:131[39m, in [36maudio_open[39m[34m(path, backends)[39m
 [32m    128[39m         [38;5;28;01mpass[39;00m
+[32m    130[39m [38;5;66;03m# All backends failed![39;00m
+[32m--> [39m[32m131[39m [38;5;28;01mraise[39;00m NoBackendError()
 
-[36mFile [39m[32m~/work/DrumScript/DrumScript/.venv/lib/python3.12/site-packages/audioread/rawread.py:59[39m, in [36mRawAudioFile.__init__[39m[34m(self, filename)[39m
-[32m     58[39m [38;5;28;01mdef[39;00m[38;5;250m [39m[34m__init__[39m([38;5;28mself[39m, filename):
-[32m---> [39m[32m59[39m     [38;5;28mself[39m._fh = [30;43mopen[39;49m[30;43m([39;49m[30;43mfilename[39;49m[30;43m,[39;49m[30;43m [39;49m[30;43m'[39;49m[30;43mrb[39;49m[30;43m'[39;49m[30;43m)[39;49m
-[32m     61[39m     [38;5;28;01mtry[39;00m:
-[32m     62[39m         [38;5;28mself[39m._file = aifc.open([38;5;28mself[39m._fh)
-
-[31mFileNotFoundError[39m: [Errno 2] No such file or directory: 'audio/test_track_1.wav'
+[31mNoBackendError[39m: 
 

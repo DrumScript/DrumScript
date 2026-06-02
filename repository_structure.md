@@ -2,7 +2,7 @@
 ## `DrumScript` Python Package Structure
 
 <!--date_created: weds-25-oct-2025-->
-<!--date_edited: thurs-14-may-2026-->
+<!--date_edited: weds-27-may-2026-->
 
 ```markdown
 DrumScript/                          # Project root
@@ -18,7 +18,6 @@ DrumScript/                          # Project root
 │   │   ├── bug_report.md
 │   │   └── feature_request.md
 │   └── PULL_REQUEST_TEMPLATE.md
-│
 ├── drumscript/                      # <--- Main Source Package Directory
 │   ├── __init__.py                  # Exposes the package.
 │   ├── main.py                      # Main entry point for the application's full pipeline.
@@ -62,7 +61,6 @@ DrumScript/                          # Project root
 │           ├── measure_hat_frequency.py
 │           ├── measure_kick_frequency.py
 │           └── measure_snare_frequency.py
-├── LICENSE
 ├── docs/                            # Documentation for developers and contributors, as well as the `_build` artifacts for the `DrumScript` 
 └── tests/
     ├── __init__.py
@@ -75,6 +73,7 @@ DrumScript/                          # Project root
 ├── LICENSE                          # Apache 2.0
 ├── MANIFEST.in                      
 ├── README.md                        # Project overview and main documentation.
+├── CHANGELOG.md                    
 ├── CODE_OF_CONDUCT.md
 ├── CONTRIBUTING.md
 ├── LICENSE

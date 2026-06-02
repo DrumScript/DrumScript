@@ -45,14 +45,14 @@ ADAPTERS: dict[str, ModuleType] = {
 # ── shared evaluation primitives ─────────────────────────────────────────────
 
 
-def onset_metrics(reference: np.ndarray, estimated: np.ndarray) -> tuple[float, float, float]:
-    """Return precision, recall, and F-measure for onset times."""
+def onset_metrics(reference: np.ndarray, estimated: np.ndarray) -> dict[str, float]:
+    """Return named onset precision, recall, and F-measure metrics."""
     if len(estimated) == 0:
-        return 0.0, 0.0, 0.0
+        return {"precision": 0.0, "recall": 0.0, "f_measure": 0.0}
     f_measure, precision, recall = mir_eval.onset.f_measure(
         reference, estimated, window=ONSET_WINDOW
     )
-    return precision, recall, f_measure
+    return {"precision": precision, "recall": recall, "f_measure": f_measure}
 
 
 def evaluate_per_instrument(
@@ -68,11 +68,11 @@ def evaluate_per_instrument(
             est_times.extend(predictions.get(label, []))
         est_onsets = np.array(sorted(est_times))
 
-        precision, recall, f_measure = onset_metrics(ref_onsets, est_onsets)
+        onset_scores = onset_metrics(ref_onsets, est_onsets)
         metrics[code] = {
-            "precision": precision,
-            "recall": recall,
-            "f_measure": f_measure,
+            "precision": onset_scores["precision"],
+            "recall": onset_scores["recall"],
+            "f_measure": onset_scores["f_measure"],
             "n_ref": len(ref_onsets),
             "n_est": len(est_onsets),
         }

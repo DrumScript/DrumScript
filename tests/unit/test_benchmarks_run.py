@@ -50,6 +50,18 @@ class TestBenchmarkRun:
         assert metrics["HH"]["recall"] == pytest.approx(1.0)
         assert metrics["HH"]["f_measure"] == pytest.approx(1.0)
 
+    def test_onset_metrics_returns_named_precision_recall_f_measure(self):
+        benchmark_run = load_benchmark_run()
+
+        metrics = benchmark_run.onset_metrics(
+            reference=np.array([0.0, 1.0]),
+            estimated=np.array([0.0]),
+        )
+
+        assert metrics["precision"] == pytest.approx(1.0)
+        assert metrics["recall"] == pytest.approx(0.5)
+        assert metrics["f_measure"] == pytest.approx(2 / 3)
+
     def test_predict_instruments_uses_existing_drumscript_pipeline_functions(self, monkeypatch, tmp_path):
         benchmark_run = load_benchmark_run()
         audio_path = tmp_path / "RealDrum01_00#MIX.wav"

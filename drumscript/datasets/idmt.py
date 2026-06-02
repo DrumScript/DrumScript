@@ -41,11 +41,13 @@ GM_PITCH_TO_IDMT: dict[int, str] = {
 
 
 def add_cli_args(parser: argparse.ArgumentParser) -> None:
+    """Add IDMT-specific command-line arguments to a benchmark parser."""
     parser.add_argument("--root", required=True, help="Path to extracted IDMT-SMT-DRUMS-V2/")
     parser.add_argument("--subset", default=None, help=f"Filter by subset: {', '.join(SUBSETS)}")
 
 
 def iter_items(args: argparse.Namespace) -> Iterator[BenchmarkItem]:
+    """Yield benchmark items from an extracted IDMT-SMT-Drums directory."""
     root = Path(args.root)
     if not root.is_dir():
         sys.exit(f"[ERROR] IDMT dataset directory not found: {root}")
@@ -93,6 +95,7 @@ def subset_of(mix_path: Path) -> str:
 
 
 def annotation_dirs_for(mix_path: Path) -> list[Path]:
+    """Return candidate annotation directories for an IDMT mix file."""
     root = find_dataset_root(mix_path)
     candidates = [root / "annotation_xml", mix_path.parent, root / "annotation_svl"]
     return [p for p in candidates if p.is_dir()]

@@ -26,11 +26,11 @@ Only IDMT-SMT-Drums is currently verified to run end-to-end.
 
 - Source: <https://zenodo.org/record/7544164>
 - Download the V2 archive from Zenodo and extract it anywhere.
-- Required layout after extraction (the path you pass to `--dataset` must be
+- Required layout after extraction (the path you pass to `--root` must be
   the directory that directly contains `audio/` and `annotation_xml/`):
 
   ```
-  IDMT-SMT-DRUMS-V2/                 ← pass this path to --dataset
+  IDMT-SMT-DRUMS-V2/                 ← pass this path to --root
     audio/
       RealDrum01_00#MIX.wav
       WaveDrum01_00#MIX.wav

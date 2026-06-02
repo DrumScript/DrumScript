@@ -29,17 +29,15 @@ import mir_eval
 import numpy as np
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-from drumscript.datasets import idmt as idmt_adapter
-from drumscript.datasets import idmt as idmt_adapter
-from drumscript.datasets.base import BenchmarkItem
 from drumscript.audio_processor.audio_loader import load_audio, normalise_audio
 from drumscript.audio_processor.onset_detector import detect_onsets
+from drumscript.datasets import idmt as idmt_adapter
+from drumscript.datasets.base import BenchmarkItem
 from drumscript.drum_classifier.classify import classify_events
 from drumscript.notation_generator.constants import SAMPLE_RATE
 
 ONSET_WINDOW = 0.050  # 50 ms tolerance, standard in ADT literature.
 ADAPTERS: dict[str, ModuleType] = {
-    idmt_adapter.DATASET_NAME: idmt_adapter,
     idmt_adapter.DATASET_NAME: idmt_adapter,
 }
 
@@ -48,6 +46,7 @@ ADAPTERS: dict[str, ModuleType] = {
 
 
 def onset_metrics(reference: np.ndarray, estimated: np.ndarray) -> tuple[float, float, float]:
+    """Return precision, recall, and F-measure for onset times."""
     if len(estimated) == 0:
         return 0.0, 0.0, 0.0
     f_measure, precision, recall = mir_eval.onset.f_measure(
@@ -61,6 +60,7 @@ def evaluate_per_instrument(
     references: Mapping[str, np.ndarray],
     code_to_labels: Mapping[str, Sequence[str]],
 ) -> dict[str, dict]:
+    """Evaluate predictions against reference onsets for each dataset code."""
     metrics: dict[str, dict] = {}
     for code, ref_onsets in references.items():
         est_times: list[float] = []
@@ -80,6 +80,7 @@ def evaluate_per_instrument(
 
 
 def summarise(results: Iterable[dict]) -> dict:
+    """Macro-average per-item metric dictionaries."""
     accum: dict[str, dict[str, list[float]]] = defaultdict(lambda: defaultdict(list))
     for file_res in results:
         for inst, metrics in file_res.items():
@@ -92,6 +93,7 @@ def summarise(results: Iterable[dict]) -> dict:
 
 
 def summarise_by_bucket(items: Sequence[BenchmarkItem], results: Sequence[dict]) -> dict[str, dict]:
+    """Macro-average metrics grouped by each benchmark item's bucket."""
     grouped: dict[str, list[dict]] = defaultdict(list)
     for item, result in zip(items, results, strict=True):
         if result:
@@ -100,6 +102,7 @@ def summarise_by_bucket(items: Sequence[BenchmarkItem], results: Sequence[dict])
 
 
 def print_summary(title: str, summary: dict) -> None:
+    """Print a compact metric table."""
     print(title)
     print(f"{'Instrument':<12} {'Precision':>10} {'Recall':>10} {'F-measure':>10}")
     print("-" * 44)
@@ -111,6 +114,7 @@ def print_summary(title: str, summary: dict) -> None:
 
 
 def fmt_optional(value) -> str:
+    """Format optional numeric CSV values."""
     if value is None or value == "":
         return ""
     return f"{float(value):.4f}"
@@ -122,6 +126,7 @@ def write_metrics_csv(
     instrument_codes: Sequence[str],
     output_path: Path,
 ) -> None:
+    """Write per-item benchmark metrics to a CSV file."""
     extra_cols = sorted({key for item in items for key in item.extra})
     with open(output_path, "w", newline="") as fh:
         writer = csv.writer(fh)
@@ -147,6 +152,7 @@ def write_metrics_csv(
 
 
 def predict_instruments(audio_path: Path) -> dict[str, list[float]]:
+    """Run DrumScript inference and return predicted times per instrument."""
     audio, sr = load_audio(str(audio_path), sr=SAMPLE_RATE)
     audio = normalise_audio(audio)
     onsets = detect_onsets(audio, sr)
@@ -163,6 +169,7 @@ def predict_instruments(audio_path: Path) -> dict[str, list[float]]:
 
 
 def git_output(args: list[str]) -> str:
+    """Return stdout from a git command, or ``unknown`` if unavailable."""
     try:
         return subprocess.check_output(["git", *args], text=True, stderr=subprocess.DEVNULL).strip()
     except (subprocess.CalledProcessError, FileNotFoundError):
@@ -170,12 +177,15 @@ def git_output(args: list[str]) -> str:
 
 
 def safe_name(value: str) -> str:
+    """Convert a free-form run name into a filesystem-safe suffix."""
     cleaned = "".join(ch if ch.isalnum() or ch in ("-", "_") else "-" for ch in value.strip())
     return cleaned.strip("-") or "run"
 
 
 @dataclass
 class RunContext:
+    """Runtime context shared by benchmark archive helpers."""
+
     dataset_name: str
     adapter: ModuleType
     args: argparse.Namespace
@@ -188,6 +198,7 @@ def archive_run(
     summary: dict,
     bucket_summaries: dict,
 ) -> Path:
+    """Archive metrics and run metadata under ``outputs/benchmarks``."""
     commit = git_output(["rev-parse", "--short", "HEAD"])
     timestamp = datetime.now().strftime("%Y-%m-%d_%H%M%S")
     run_suffix = f"_{safe_name(ctx.args.run_name)}" if ctx.args.run_name else ""
@@ -220,6 +231,7 @@ def archive_run(
 
 
 def evaluate_item(item: BenchmarkItem, code_to_labels: Mapping[str, Sequence[str]]) -> dict | None:
+    """Run DrumScript on one benchmark item and score its predictions."""
     print(f"  {item.track_id} [{item.bucket}]")
     if not item.references:
         print("    [WARN] No annotations, skipping.")
@@ -244,6 +256,7 @@ def evaluate_item(item: BenchmarkItem, code_to_labels: Mapping[str, Sequence[str
 
 
 def build_parser() -> argparse.ArgumentParser:
+    """Build the benchmark command-line parser."""
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("--output", default=None,
                         help="Per-item CSV path (default: <dataset>_results.csv)")
@@ -260,6 +273,7 @@ def build_parser() -> argparse.ArgumentParser:
 
 
 def main() -> None:
+    """Run the selected benchmark from command-line arguments."""
     parser = build_parser()
     args = parser.parse_args()
 

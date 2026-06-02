@@ -11,6 +11,14 @@ DrumScript follows [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [Unreleased]
+
+### Added
+
+- IDMT-SMT-Drums benchmark runner with dataset adapter and unit test coverage.
+
+---
+
 
 ## Planned
 

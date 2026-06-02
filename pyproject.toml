@@ -43,6 +43,7 @@ dependencies = [
     "demucs",
     "librosa",
     "matplotlib",
+    "mir-eval>=0.8.2",
     "music21",
     "numba",
     "numpy<2",

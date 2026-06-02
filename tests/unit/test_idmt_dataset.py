@@ -65,3 +65,19 @@ class TestIdmtDataset:
         specific.write_text("<annotations />")
 
         assert idmt.get_annotation_path(mix_path, "SD") == specific
+
+    def test_parse_svl_ignores_non_point_time_attributes(self, tmp_path):
+        annotation = tmp_path / "RealDrum01_00#KD.svl"
+        annotation.write_text(
+            """
+            <sv>
+              <model time="99.0">
+                <dataset>
+                  <point frame="4410" label="KD" />
+                </dataset>
+              </model>
+            </sv>
+            """
+        )
+
+        assert np.array_equal(idmt.parse_annotation(annotation, "KD"), np.array([0.1]))

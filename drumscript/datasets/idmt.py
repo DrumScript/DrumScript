@@ -146,7 +146,7 @@ def parse_annotation(
         return xml_events
 
     onsets: list[float] = []
-    for elem in root.iter():
+    for elem in root.iter("point"):
         label = _element_label(elem)
         if instrument_code and label and instrument_code not in label:
             continue

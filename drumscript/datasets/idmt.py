@@ -107,11 +107,11 @@ def get_annotation_path(mix_path: Path, instrument_code: str) -> Path | None:
     base_stem = mix_stem.replace("#MIX", "")
     patterns = [
         f"{mix_stem}.xml",
-        f"{base_stem}*.xml",
         f"{base_stem}#{instrument_code}*.xml",
+        f"{base_stem}*.xml",
         f"{mix_stem}.svl",
-        f"{base_stem}*.svl",
         f"{base_stem}#{instrument_code}*.svl",
+        f"{base_stem}*.svl",
     ]
     for ann_dir in annotation_dirs_for(mix_path):
         for pattern in patterns:

@@ -51,3 +51,17 @@ class TestIdmtDataset:
         assert np.array_equal(item.references["KD"], np.array([0.1]))
         assert np.array_equal(item.references["SD"], np.array([0.2]))
         assert np.array_equal(item.references["HH"], np.array([0.3]))
+
+    def test_get_annotation_path_prefers_instrument_specific_file(self, tmp_path):
+        audio_dir = tmp_path / "audio"
+        annotation_dir = tmp_path / "annotation_xml"
+        audio_dir.mkdir()
+        annotation_dir.mkdir()
+        mix_path = audio_dir / "RealDrum01_00#MIX.wav"
+        mix_path.write_bytes(b"placeholder")
+        generic = annotation_dir / "RealDrum01_00#KD.xml"
+        specific = annotation_dir / "RealDrum01_00#SD.xml"
+        generic.write_text("<annotations />")
+        specific.write_text("<annotations />")
+
+        assert idmt.get_annotation_path(mix_path, "SD") == specific

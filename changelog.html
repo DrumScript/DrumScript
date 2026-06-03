@@ -225,8 +225,13 @@ data-aria-dark="Switch to auto color mode">
       <i class="i-lucide close"></i>
     </button>
     <div class="sy-scrollbar sy-rside-inner px-6 xl:top-16 xl:sticky xl:pl-0 pt-6 pb-4"><div class="localtoc"><h3>On this page</h3><ul>
-<li><a class="reference internal" href="#planned">Planned</a><ul>
-<li><a class="reference internal" href="#june-2026">[0.1.6] - June 2026</a></li>
+<li><a class="reference internal" href="#unreleased">Unreleased</a><ul>
+<li><a class="reference internal" href="#june-2026-target-07-june-2026">[0.1.6] - June 2026 - Target: 07 June 2026</a><ul>
+<li><a class="reference internal" href="#pending">Pending</a></li>
+<li><a class="reference internal" href="#added-pending-pr-273-by-nanaoto">Added (pending &#8212; PR #273 by nanaoto)</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#june-2026-target-21-june-2026">[0.1.7] - June 2026 - Target: 21 June 2026</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#released">Released</a><ul>
@@ -326,21 +331,44 @@ data-aria-dark="Switch to auto color mode">
           <section id="changelog">
 <h1>Changelog<a class="headerlink" href="#changelog" title="Link to this heading">¶</a></h1>
 <!--date_added:thurs-28-may-2026-->
-<!--date:updated:thurs-28-may-2026-->
+<!--date:updated:tues-02-june-2026-->
 <p>All notable changes to DrumScript will be documented here.
 Format follows <a class="reference external" href="https://keepachangelog.com/en/1.0.0/">Keep a Changelog</a>.
 DrumScript follows <a class="reference external" href="https://semver.org/">Semantic Versioning</a>.</p>
 <hr class="docutils" />
-<section id="planned">
-<h2>Planned<a class="headerlink" href="#planned" title="Link to this heading">¶</a></h2>
-<section id="june-2026">
-<h3>[0.1.6] - June 2026<a class="headerlink" href="#june-2026" title="Link to this heading">¶</a></h3>
+<section id="unreleased">
+<h2>Unreleased<a class="headerlink" href="#unreleased" title="Link to this heading">¶</a></h2>
+<section id="june-2026-target-07-june-2026">
+<h3>[0.1.6] - June 2026 - Target: 07 June 2026<a class="headerlink" href="#june-2026-target-07-june-2026" title="Link to this heading">¶</a></h3>
+<section id="pending">
+<h4>Pending<a class="headerlink" href="#pending" title="Link to this heading">¶</a></h4>
 <ul class="simple">
 <li><p>Transcription function docstrings updated to make clear that drum-only audio is expected as standard input</p></li>
 <li><p>README updated to clarify expected input for transcription functions</p></li>
 <li><p>Example notebooks updated to reflect expected drum-only audio input</p></li>
 <li><p>Better audio samples used for runbooks, ie not synthetic, which has created messy outputs so far</p></li>
 <li><p>Cymbal and hi-hat stem rendering: note tails and heads correctly aligned</p></li>
+</ul>
+</section>
+<section id="added-pending-pr-273-by-nanaoto">
+<h4>Added (pending — PR #273 by nanaoto)<a class="headerlink" href="#added-pending-pr-273-by-nanaoto" title="Link to this heading">¶</a></h4>
+<ul class="simple">
+<li><p>IDMT-SMT-Drums V2 benchmark runner (<code class="docutils literal notranslate"><span class="pre">benchmarks/run.py</span></code>) with <code class="docutils literal notranslate"><span class="pre">mir_eval</span></code> scaffolding</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">drumscript/datasets/</span></code> package: <code class="docutils literal notranslate"><span class="pre">BenchmarkItem</span></code> dataclass and IDMT adapter</p></li>
+<li><p>Unit tests for benchmark runner and IDMT dataset adapter</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">benchmarks/README.md</span></code> documenting conventions and dataset setup</p></li>
+</ul>
+<blockquote>
+<div><p>PR #273 targets this release if CI passes by Thursday 04 June 2026.
+If not, it moves to v0.1.7.</p>
+</div></blockquote>
+</section>
+</section>
+<section id="june-2026-target-21-june-2026">
+<h3>[0.1.7] - June 2026 - Target: 21 June 2026<a class="headerlink" href="#june-2026-target-21-june-2026" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>Even when audio classification is accurate, slight timing imperfections, in onset detection cause notes to be placed at incorrect positions in the score. For example, a snare hit detected at 0.503s instead of
+exactly 0.500s may be notated in the wrong rhythmic position or generate spurious rests. https://github.com/DrumScript/DrumScript/issues/274</p></li>
 </ul>
 </section>
 </section>

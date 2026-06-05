@@ -1,4 +1,5 @@
-.
+./DrumScript
+├── .gitattributes
 ├── .github
 │   ├── CODEOWNERS
 │   ├── ISSUE_TEMPLATE
@@ -28,6 +29,7 @@
 │   │       └── module.rst
 │   ├── about.md
 │   ├── api.rst
+│   ├── changelog.md -> ../CHANGELOG.md
 │   ├── conf.py
 │   ├── development
 │   │   ├── code_of_conduct.md
@@ -107,4 +109,4 @@
 └── visuals
     └── tempogram.png
 
-23 directories, 85 files
+23 directories, 87 files

@@ -31,7 +31,7 @@ DrumScript follows [Semantic Versioning](https://semver.org/).
 - CHANGELOG reference to be added to README and Sphinx docs
 - `output_midi`, `output_json`, `output_xml` flags to be added to `transcribe()` for multi-format export
 
-#### Moved to v0.1.7
+#### Moved to Future Release (PR reviews requested of contributor)
 - PR #273 by nanaoto (IDMT-SMT-Drums V2 benchmark runner with `mir_eval` scaffolding) (pending items)
 
 ### [0.1.7] - June/July 2026 - Target: TBD

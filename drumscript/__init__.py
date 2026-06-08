@@ -9,7 +9,6 @@ transcription, as well as the core low-level building blocks for custom DSP pipe
 
 import pathlib
 
-# from pathlib import Path
 # 1. Import internal functions
 from .audio_processor.audio_loader import load_audio, normalise_audio
 from .audio_processor.feature_extractor import extract_features
@@ -23,7 +22,7 @@ from .notation_generator.score_builder import build_score
 from .utils.ffmpeg_installer import install_ffmpeg
 
 
-# 2. Create user-friendly wrappers
+# 2. Create (user-friendly) wrappers
 def extract_stems(audio_path, output_dir=None, output_format="wav", drumless=False, mute=None, all_stems=False, full=False):
     """
     Extracts drum stems and optionally separates the full track into constituent parts.
@@ -340,8 +339,7 @@ def export_pdf(score, output_path=None, **kwargs):
        pdf_path = ds.export_pdf(score, output_path="./transcriptions/my_song.pdf")
     """
     if output_path is None:
-        # output_path = pathlib.Path.cwd() / "drum_score.pdf"
-        output_path = pathlib.Path.cwd() / "drumscript.pdf"
+        output_path = pathlib.Path.cwd() / "drumscript.pdf" # previously named `output_path = pathlib.Path.cwd() / "drum_score.pdf"``
 
     return pdf_exporter.export_pdf(score, output_path=output_path, **kwargs)
 
@@ -372,8 +370,7 @@ def export_midi(score, output_path=None, **kwargs):
        midi_path = ds.export_midi(score, output_path="./midi_exports/my_song.mid")
     """
     if output_path is None:
-        # output_path = pathlib.Path.cwd() / "drum_score.mid"
-        output_path = pathlib.Path.cwd() / "drumscript.mid"
+        output_path = pathlib.Path.cwd() / "drumscript.mid" # previously named `output_path = pathlib.Path.cwd() / "drum_score.mid"``
 
     return midi_exporter.export_to_midi(score, output_path=output_path, **kwargs)
 
@@ -435,4 +432,4 @@ __all__ = [
     "install_ffmpeg",
 ]
 
-__version__ = "0.1.5"
+__version__ = "0.1.6"

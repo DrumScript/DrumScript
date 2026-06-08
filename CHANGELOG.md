@@ -2,7 +2,7 @@
 # Changelog
 
 <!--date_added:thurs-28-may-2026-->
-<!--date:updated:sun-07-june-2026-->
+<!--date:updated: mon-08-june-2026-->
 
 
 All notable changes to DrumScript will be documented here.
@@ -18,6 +18,7 @@ DrumScript follows [Semantic Versioning](https://semver.org/).
 - `ds.transcribe()` only outputs PDF, not the documented `.json` / `.midi` / `.xml`
 - `main.py` structural bug: duplicated pipeline inside `except` block needs removing, error handling needs restructuring
 - Flag inconsistency: `full=True` means "return detailed dict" in Python API but `--full` means "full song / separate stems" in CLI — rename to `verbose=True` (or `detail=True` / `return_dict=True`) across all wrapper functions (`transcribe`, `extract_stems`, `detect_tempo`)
+-  `drumscript/main.py` (~line 26)`.wav` comment `# .wav format as default, unless --mp3 input specified as an arg in user command (drumscript/main.py)`. check if this is actually true, across all scripts in `drumscript/`  modular code.
 
 #### Planned — Changes
 - Transcription function docstrings to be updated to make clear that drum-only audio is expected as standard input

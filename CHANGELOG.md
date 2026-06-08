@@ -43,6 +43,7 @@ DrumScript follows [Semantic Versioning](https://semver.org/).
 - Unit tests for benchmark runner and IDMT dataset adapter
 - `benchmarks/README.md` documenting conventions and dataset setup
 - **Onset timing precision**: investigate user-feedback on score generation. Though quantisation is used, look at the extent to which there are slight imperfections in onset detection cause notes to be placed at incorrect positions in the score (e.g. snare hit at 0.503s instead of 0.500s generates spurious rests). https://github.com/DrumScript/DrumScript/issues/274
+- QA check on recent-ish GitHub release notes: (https://github.blog/changelog/2026-05-15-github-app-installation-tokens-per-request-override-header/)
  
 ---
 

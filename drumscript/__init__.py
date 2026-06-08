@@ -339,7 +339,7 @@ def export_pdf(score, output_path=None, **kwargs):
        pdf_path = ds.export_pdf(score, output_path="./transcriptions/my_song.pdf")
     """
     if output_path is None:
-        output_path = pathlib.Path.cwd() / "drumscript.pdf" # previously named `output_path = pathlib.Path.cwd() / "drum_score.pdf"``
+        output_path = pathlib.Path.cwd() / "drumscript.pdf"  # previously named `output_path = pathlib.Path.cwd() / "drum_score.pdf"``
 
     return pdf_exporter.export_pdf(score, output_path=output_path, **kwargs)
 
@@ -370,7 +370,7 @@ def export_midi(score, output_path=None, **kwargs):
        midi_path = ds.export_midi(score, output_path="./midi_exports/my_song.mid")
     """
     if output_path is None:
-        output_path = pathlib.Path.cwd() / "drumscript.mid" # previously named `output_path = pathlib.Path.cwd() / "drum_score.mid"``
+        output_path = pathlib.Path.cwd() / "drumscript.mid"  # previously named `output_path = pathlib.Path.cwd() / "drum_score.mid"``
 
     return midi_exporter.export_to_midi(score, output_path=output_path, **kwargs)
 

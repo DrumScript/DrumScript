@@ -36,6 +36,8 @@ DrumScript follows [Semantic Versioning](https://semver.org/).
 
 **Fixed**
 - Commented-out dead code to be removed from `drumscript/__init__.py` and `drumscript/main.py` (Changes)
+- Inconsistent flags for `--full=True` (which outputs JSON-payload to API) and `--full_song=True` (which signals to extract the drums first from polyphonic audio) in `drumscript/main.py` and `drumscript/__init__.py` corrected: `argparse` in main block updated so now the `--full_song` flag is consistent in both `drumscript/__init__.py` and `drumscript/main.py`
+
 ### [0.1.7] - June/July 2026 - Target: TBD
 
 #### Planned

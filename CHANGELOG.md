@@ -2,7 +2,7 @@
 # Changelog
 
 <!--date_added:thurs-28-may-2026-->
-<!--date:updated: mon-08-june-2026-->
+<!--date:updated:tues-09-june-2026-->
 
 
 All notable changes to DrumScript will be documented here.
@@ -26,7 +26,6 @@ DrumScript follows [Semantic Versioning](https://semver.org/).
 - Example notebooks to be updated to reflect expected drum-only audio input
 - Better audio samples needed for runbooks — not synthetic, which has created messy outputs
 - Runbook presentation to be tidied: one variable per line, properly tested
-- Commented-out dead code to be removed from `drumscript/__init__.py` and `drumscript/main.py`
 
 #### Planned — Additions
 - CHANGELOG reference to be added to README and Sphinx docs
@@ -35,6 +34,8 @@ DrumScript follows [Semantic Versioning](https://semver.org/).
 #### Moved to Future Release (PR reviews requested of contributor)
 - PR #273 by nanaoto (IDMT-SMT-Drums V2 benchmark runner with `mir_eval` scaffolding) (pending items)
 
+**Fixed**
+- Commented-out dead code to be removed from `drumscript/__init__.py` and `drumscript/main.py` (Changes)
 ### [0.1.7] - June/July 2026 - Target: TBD
 
 #### Planned

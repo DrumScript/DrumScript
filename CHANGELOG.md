@@ -1,8 +1,7 @@
-
 # Changelog
 
 <!--date_added:thurs-28-may-2026-->
-<!--date:updated:sun-07-june-2026-->
+<!--date:updated:tues-09-june-2026-->
 
 
 All notable changes to DrumScript will be documented here.
@@ -18,6 +17,7 @@ DrumScript follows [Semantic Versioning](https://semver.org/).
 - `ds.transcribe()` only outputs PDF, not the documented `.json` / `.midi` / `.xml`
 - `main.py` structural bug: duplicated pipeline inside `except` block needs removing, error handling needs restructuring
 - Flag inconsistency: `full=True` means "return detailed dict" in Python API but `--full` means "full song / separate stems" in CLI — rename to `verbose=True` (or `detail=True` / `return_dict=True`) across all wrapper functions (`transcribe`, `extract_stems`, `detect_tempo`)
+-  `drumscript/main.py` (~line 26)`.wav` comment `# .wav format as default, unless --mp3 input specified as an arg in user command (drumscript/main.py)`. check if this is actually true, across all scripts in `drumscript/`  modular code.
 
 #### Planned — Changes
 - Transcription function docstrings to be updated to make clear that drum-only audio is expected as standard input
@@ -25,7 +25,6 @@ DrumScript follows [Semantic Versioning](https://semver.org/).
 - Example notebooks to be updated to reflect expected drum-only audio input
 - Better audio samples needed for runbooks — not synthetic, which has created messy outputs
 - Runbook presentation to be tidied: one variable per line, properly tested
-- Commented-out dead code to be removed from `drumscript/__init__.py` and `drumscript/main.py`
 
 #### Planned — Additions
 - CHANGELOG reference to be added to README and Sphinx docs
@@ -33,6 +32,10 @@ DrumScript follows [Semantic Versioning](https://semver.org/).
 
 #### Moved to Future Release (PR reviews requested of contributor)
 - PR #273 by nanaoto (IDMT-SMT-Drums V2 benchmark runner with `mir_eval` scaffolding) (pending items)
+
+**Fixed**
+- Commented-out dead code to be removed from `drumscript/__init__.py` and `drumscript/main.py` (Changes)
+- Inconsistent flags for `--full=True` (which outputs JSON-payload to API) and `--full_song=True` (which signals to extract the drums first from polyphonic audio) in `drumscript/main.py` and `drumscript/__init__.py` corrected: `argparse` in main block updated so now the `--full_song` flag is consistent in both `drumscript/__init__.py` and `drumscript/main.py`
 
 ### [0.1.7] - June/July 2026 - Target: TBD
 
@@ -42,6 +45,7 @@ DrumScript follows [Semantic Versioning](https://semver.org/).
 - Unit tests for benchmark runner and IDMT dataset adapter
 - `benchmarks/README.md` documenting conventions and dataset setup
 - **Onset timing precision**: investigate user-feedback on score generation. Though quantisation is used, look at the extent to which there are slight imperfections in onset detection cause notes to be placed at incorrect positions in the score (e.g. snare hit at 0.503s instead of 0.500s generates spurious rests). https://github.com/DrumScript/DrumScript/issues/274
+- QA check on recent-ish GitHub release notes: (https://github.blog/changelog/2026-05-15-github-app-installation-tokens-per-request-override-header/)
  
 ---
 

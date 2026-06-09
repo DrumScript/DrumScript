@@ -255,8 +255,7 @@ if __name__ == "__main__":
 
     parser.add_argument("input_audio_path", type=str, help="Path to the audio file")
 
-    # Transcription argument
-    parser.add_argument("--full", action="store_true", help="Transcribe the full song (isolates drums first)")
+    parser.add_argument("--full-song", action="store_true", help="Transcribe the full song (isolates drums first)")
 
     # Stem Splitter arguments
     parser.add_argument(
@@ -276,7 +275,7 @@ if __name__ == "__main__":
 
     main(
         input_audio_path=args.input_audio_path,
-        full_song=args.full,
+        full_song=args.full_song,
         time_signature=args.ts,
         drumless=args.drumless,
         mute=args.mute,
@@ -284,8 +283,19 @@ if __name__ == "__main__":
         is_rudiment=args.rudiment,
         output_format=args.format,
     )
-
-    # LEGACY: if __name__ == '__main__':
+    # LEGACY (KEEP FOR ALPHA, IE FOR NOW):
+    # (1)
+    #     main(
+    # input_audio_path=args.input_audio_path,
+    # full_song=args.full,
+    # time_signature=args.ts,
+    # drumless=args.drumless,
+    # mute=args.mute,
+    # all_stems=args.all_stems,
+    # is_rudiment=args.rudiment,
+    # output_format=args.format,
+    # )
+    # (2) if __name__ == '__main__':
     #  parser = argparse.ArgumentParser()
     #  parser.add_argument("input_audio_path", type=str)
     #  parser.add_argument("--full", action="store_true")

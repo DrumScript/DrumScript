@@ -287,7 +287,7 @@ if __name__ == "__main__":
     # (1)
     #     main(
     # input_audio_path=args.input_audio_path,
-    # full_song=args.full,
+    # full_song=args.full_song,
     # time_signature=args.ts,
     # drumless=args.drumless,
     # mute=args.mute,
@@ -298,10 +298,10 @@ if __name__ == "__main__":
     # (2) if __name__ == '__main__':
     #  parser = argparse.ArgumentParser()
     #  parser.add_argument("input_audio_path", type=str)
-    #  parser.add_argument("--full", action="store_true")
+    #  parser.add_argument("--full_song", action="store_true")
     #  parser.add_argument("--ts", type=str, default="4/4")
     #  args = parser.parse_args()
 
-    #  main(args.input_audio_path, args.full, args.ts)
+    #  main(args.input_audio_path, args.full_song, args.ts)
 
     # print("# ------------------------------------------------------------------------------------")

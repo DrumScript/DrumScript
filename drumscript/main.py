@@ -147,7 +147,7 @@ def main(
         if full_song or drumless or mute or all_stems:
             print("...Processing Stems...")
 
-            # If transcription is requested (--full), we assume the user wants the stems separated
+            # If transcription is requested (--full-song), we assume the user wants the stems separated
             # to feed the 'drums' stem into the transcriber.
             # If only --drumless is passed, we might not want to transcribe, but the script flow
             # currently implies transcription follows.
@@ -255,7 +255,7 @@ if __name__ == "__main__":
 
     parser.add_argument("input_audio_path", type=str, help="Path to the audio file")
 
-    parser.add_argument("--full_song", action="store_true", help="Transcribe the full song (isolates drums first)")
+    parser.add_argument("--full-song", action="store_true", help="Transcribe the full song (isolates drums first)")
 
     # Stem Splitter arguments
     parser.add_argument(

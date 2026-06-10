@@ -255,7 +255,7 @@ if __name__ == "__main__":
 
     parser.add_argument("input_audio_path", type=str, help="Path to the audio file")
 
-    parser.add_argument("--full-song", action="store_true", help="Transcribe the full song (isolates drums first)")
+    parser.add_argument("--full_song", action="store_true", help="Transcribe the full song (isolates drums first)")
 
     # Stem Splitter arguments
     parser.add_argument(

@@ -202,7 +202,7 @@ drumscript drum_audio.wav
 ### Full song transcription (auto-separates drums)
 
 ```bash
-drumscript full_song.mp3 --full-song
+drumscript full_song.mp3 --full_song
 ```
 
 ### Extract a drumless backing track
@@ -217,7 +217,7 @@ drumscript full_song.mp3 --drumless
 drumscript <audio_file> [OPTIONS]
 
 Options:
-  --full-song     Transcribe a full song (isolates drums first via Demucs)
+  --full_song     Transcribe a full song (isolates drums first via Demucs)
   --drumless      Extract a drumless backing track
   --mute STEM     Mute a specific stem (e.g. --mute bass). Repeatable.
   --all-stems     Export all individual stems (drums, bass, vocals, other)

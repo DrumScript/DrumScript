@@ -1,7 +1,7 @@
 # Changelog
 
 <!--date_added:thurs-28-may-2026-->
-<!--date:updated:tues-09-june-2026-->
+<!--date:updated:weds-10-june-2026-->
 
 
 All notable changes to DrumScript will be documented here.
@@ -16,7 +16,6 @@ DrumScript follows [Semantic Versioning](https://semver.org/).
 - Cymbal and hi-hat stem rendering: note tails and heads correctly aligned
 - `ds.transcribe()` only outputs PDF, not the documented `.json` / `.midi` / `.xml`
 - `main.py` structural bug: duplicated pipeline inside `except` block needs removing, error handling needs restructuring
-- Flag inconsistency: `full=True` means "return detailed dict" in Python API but `--full` means "full song / separate stems" in CLI — rename to `verbose=True` (or `detail=True` / `return_dict=True`) across all wrapper functions (`transcribe`, `extract_stems`, `detect_tempo`)
 -  `drumscript/main.py` (~line 26)`.wav` comment `# .wav format as default, unless --mp3 input specified as an arg in user command (drumscript/main.py)`. check if this is actually true, across all scripts in `drumscript/`  modular code.
 
 #### Planned — Changes
@@ -35,7 +34,8 @@ DrumScript follows [Semantic Versioning](https://semver.org/).
 
 **Fixed**
 - Commented-out dead code to be removed from `drumscript/__init__.py` and `drumscript/main.py` (Changes)
-- Inconsistent flags for `--full=True` (which outputs JSON-payload to API) and `--full_song=True` (which signals to extract the drums first from polyphonic audio) in `drumscript/main.py` and `drumscript/__init__.py` corrected: `argparse` in main block updated so now the `--full_song` flag is consistent in both `drumscript/__init__.py` and `drumscript/main.py`
+- Inconsistent flags for `--full=True` (which outputs JSON-payload to API) and `--full_song=True` (which signals to extract the drums first from polyphonic audio) in `drumscript/main.py` and `drumscript/__init__.py` corrected: `argparse` in main block updated so now the `--full-song` flag is consistent in both `drumscript/__init__.py` and `drumscript/main.py`
+-- - Flag inconsistency: `full=True` means "return detailed dict" in Python API but `--full` means "full song / separate stems" in CLI — rename to `verbose=True` (or `detail=True` / `return_dict=True`) across all wrapper functions (`transcribe`, `extract_stems`, `detect_tempo`)
 
 ### [0.1.7] - June/July 2026 - Target: TBD
 

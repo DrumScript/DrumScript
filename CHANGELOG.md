@@ -1,7 +1,7 @@
 # Changelog
 
 <!--date_added:thurs-28-may-2026-->
-<!--date:updated:sat-13-june-2026-->
+<!--date:updated:weds-10-june-2026-->
 
 
 All notable changes to DrumScript will be documented here.
@@ -20,7 +20,7 @@ DrumScript follows [Semantic Versioning](https://semver.org/).
 - Cymbal and hi-hat stem rendering: note tails and heads correctly aligned
 - `ds.transcribe()` only outputs PDF, not the documented `.json` / `.midi` / `.xml`
 - `main.py` structural bug: duplicated pipeline inside `except` block needs removing, error handling needs restructuring
-- `drumscript/main.py` (~line 26) `.wav` comment `# .wav format as default, unless --mp3 input specified as an arg in user command`. Check if this is actually true across all scripts in `drumscript/` modular code.
+-  `drumscript/main.py` (~line 26)`.wav` comment `# .wav format as default, unless --mp3 input specified as an arg in user command (drumscript/main.py)`. check if this is actually true, across all scripts in `drumscript/`  modular code.
 
 #### Planned — Changes
 - Transcription function docstrings to be updated to make clear that drum-only audio is expected as standard input
@@ -40,20 +40,16 @@ DrumScript follows [Semantic Versioning](https://semver.org/).
   - New unit test confirms the warning is actually emitted
 
 #### Moved to Future Release (PR reviews requested of contributor)
-- PR #273 by nanaoto (IDMT-SMT-Drums V2 benchmark runner with `mir_eval` scaffolding) — moved to v0.2.0
+- PR #273 by nanaoto (IDMT-SMT-Drums V2 benchmark runner with `mir_eval` scaffolding) (pending items)
 
-#### Fixed
-- Commented-out dead code removed from `drumscript/__init__.py` and `drumscript/main.py`
-- Flag inconsistency between `drumscript/main.py` and `drumscript/__init__.py` resolved: `argparse` in main block updated so the CLI flag is now `--full-song` (hyphenated, consistent with `--all-stems`). Auto-converts to `args.full_song` matching the Python API parameter name.
-- Regression test added (`tests/unit/test_cli_args.py`) locking in `--full-song` as the canonical CLI flag
+**Fixed**
+- Commented-out dead code to be removed from `drumscript/__init__.py` and `drumscript/main.py` (Changes)
+- Inconsistent flags for `--full=True` (which outputs JSON-payload to API) and `--full_song=True` (which signals to extract the drums first from polyphonic audio) in `drumscript/main.py` and `drumscript/__init__.py` corrected: `argparse` in main block updated so now the `--full-song` flag is consistent in both `drumscript/__init__.py` and `drumscript/main.py`
+-- - Flag inconsistency: `full=True` means "return detailed dict" in Python API but `--full` means "full song / separate stems" in CLI — rename to `verbose=True` (or `detail=True` / `return_dict=True`) across all wrapper functions (`transcribe`, `extract_stems`, `detect_tempo`)
 
----
+### [0.1.7] - June/July 2026 - Target: TBD
 
-### [0.2.0] - July/August 2026 - Target: TBD
-
-> First minor-version bump. Signals the start of the breaking-change track ahead of v1.0.0 beta. `full` parameter still works here but warning continues.
-
-#### Planned — Additions
+#### Planned
 - IDMT-SMT-Drums V2 benchmark runner (`benchmarks/run.py`) with `mir_eval` scaffolding (PR #273 by nanaoto)
 - `drumscript/datasets/` package: `BenchmarkItem` dataclass and IDMT adapter
 - Unit tests for benchmark runner and IDMT dataset adapter

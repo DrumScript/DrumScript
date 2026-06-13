@@ -11,9 +11,9 @@ DrumScript follows [Semantic Versioning](https://semver.org/).
 ---
 ## Unreleased
 
-### [0.1.6] - June 2026 - Target: 14 June 2026
+### [0.1.6] - June 2026 - Target: mid-June 2026
 
-> **Final v0.1.x release.** After this, the next release jumps to v0.2.0 to signal the breaking-change track for the `full` → `verbose` rename.
+> **Final v0.1.x release.** After this, the next release jumps to v0.2.0 to signal the breaking-change track for the `full` → `verbose` removal.
 
 #### Planned — Bug Fixes
 - Cymbal and hi-hat stem rendering: note tails and heads correctly aligned
@@ -37,9 +37,12 @@ DrumScript follows [Semantic Versioning](https://semver.org/).
   - Warning states `full` will be removed in v1.0.0 (beta release)
   - Docstrings updated to mark `verbose` as primary and `full` as deprecated
   - New unit test confirms the warning is actually emitted
-
-#### Moved to Future Release (PR reviews requested of contributor)
-- PR #273 by nanaoto (IDMT-SMT-Drums V2 benchmark runner with `mir_eval` scaffolding) — moved to v0.2.0
+- **PR #273 by nanaoto** — IDMT-SMT-Drums V2 benchmark runner with `mir_eval` scaffolding (pending final review and merge)
+  - `benchmarks/run.py` entrypoint with dataset adapter dispatch
+  - `drumscript/datasets/` package: `BenchmarkItem` dataclass and IDMT adapter
+  - `benchmarks/README.md` documenting conventions and dataset setup
+  - Unit tests for benchmark runner and IDMT dataset adapter
+  - `mir_eval` added as a dev dependency
 
 #### Fixed
 - Commented-out dead code removed from `drumscript/__init__.py` and `drumscript/main.py`
@@ -50,13 +53,11 @@ DrumScript follows [Semantic Versioning](https://semver.org/).
 
 ### [0.2.0] - July/August 2026 - Target: TBD
 
-> First minor-version bump. Signals the start of the breaking-change track ahead of v1.0.0 beta. `full` parameter still works here but warning continues.
+> First minor-version bump. Signals the start of the breaking-change track ahead of v1.0.0 beta.
 
 #### Planned — Additions
-- IDMT-SMT-Drums V2 benchmark runner (`benchmarks/run.py`) with `mir_eval` scaffolding (PR #273 by nanaoto)
-- `drumscript/datasets/` package: `BenchmarkItem` dataclass and IDMT adapter
-- Unit tests for benchmark runner and IDMT dataset adapter
-- `benchmarks/README.md` documenting conventions and dataset setup
+- Expanded benchmark dataset coverage (ENST-Drums, MDB-Drums) building on the IDMT-SMT-Drums V2 foundation shipped in v0.1.6
+- Code-to-DrumScript label mapping expanded beyond `KD`/`SD`/`HH` to cover full-kit classes (toms, crash, ride)
 
 #### Planned — Changes
 - Improve documentation: clearer docstrings for the `rudiment` flag/functionality

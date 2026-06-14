@@ -6,7 +6,7 @@
 This directory contains the pytest test suite for `DrumScript`.
 
 ---
-## Repository Tree (Testing)
+## Repository Tree (`tests/`)
 
 ```zsh
 DrumScript/
@@ -34,13 +34,12 @@ DrumScript/
         └── test_stem_splitter_real.py      ←  8 tests
 ```
 
-> **Note:** Counts above reflect the number of `test_*` functions/methods.
-> Parametrized tests count as one entry here but expand into multiple cases
-> at runtime — pytest's collected total is higher (~95 cases).
-egression
-```
+> **Note:** Counts above reflect pytest's collected case count, ie parametrized
+> tests are expanded into their individual cases. Unit total: **121** cases.
+> Integration total: **8** cases.
 
---
+
+---
 
 ## Setup
 
@@ -71,6 +70,7 @@ The `[dev]` group installs:
 1. Documentation tooling (`shibuya`, `myst-parser`)
 2. Testing suite (`pytest`, `pytest-cov`)
 3. Jupyter support (`ipykernel`) — convenience only
+4. Benchmarking (`mir_eval` — for benchmark runners under `benchmarks/`) *forthcoming*
 
 > **Note:** `ipykernel`/Jupyter is a convenience package; **`.ipynb` files must never be committed**. PRs containing `.ipynb` files (or their metadata) will not be reviewed until they are removed.
 
@@ -100,31 +100,7 @@ pytest -s
 pytest --cov=drumscript --cov-report=term-missing
 ```
 
-
-## Layout
-
-```
-DrumScript/
-├── pytest.ini                              ← project root
-└── tests/
-    ├── __init__.py
-    ├── README.md                           ← you are here
-    ├── conftest.py                         ← shared fixtures (auto-discovered)
-    ├── fixtures/
-    │   └── audio/                          ← real audio files
-    │                                         (empty; synthesised in conftest)
-    ├── unit/                               ← fast, no I/O, no subprocess
-    │   ├── __init__.py
-    │   ├── test_audio_loader.py
-    │   ├── test_helpers.py
-    │   ├── test_stem_splitter_helpers.py
-    │   ├── test_tempo_detector.py
-    │   ├── test_onset_detector.py
-    │   └── test_classify.py
-    └── integration/                        ← real Demucs / ffmpeg / files (slow)
-        ├── __init__.py
-        └── test_stem_splitter_real.py
-```
+---
 
 ## Running the suite
 
@@ -134,6 +110,7 @@ The recommended way is via the runner script:
 ./scripts/run_tests.sh                  # All unit tests, one file at a time
 ./scripts/run_tests.sh --all-at-once    # Single pytest invocation
 ./scripts/run_tests.sh --integration    # Include integration tests
+./scripts/run_tests.sh --everything     # Unit + integration in one pytest call
 ./scripts/run_tests.sh --help           # Show all options
 ```
 
@@ -141,9 +118,11 @@ Logs are written to `logs/tests/<timestamp>/`.
 
 For one-off direct pytest runs, see [Quick start](#quick-start).
 
+--- 
+
 ## Markers
 
-Tests can be tagged with custom markers (defined in `pytest.ini`):
+Tests can be tagged with custom markers (defined in `pyproject.toml`):
 
 - `@pytest.mark.slow` — skip by default during development
 - `@pytest.mark.integration` — requires Demucs/ffmpeg installed
@@ -159,6 +138,7 @@ Run only integration tests:
 ```zsh
 pytest -m integration
 ```
+---
 
 ## Adding a new test file
 
@@ -169,7 +149,7 @@ pytest -m integration
 4. Reuse fixtures from `conftest.py` where possible. Only add new ones to
    `conftest.py` if multiple files will use them.
 
-
+---
 ## Style conventions
 
 - One concept per test. Many small tests > one mega-test.
@@ -179,6 +159,23 @@ pytest -m integration
 - Use `pytest.approx(...)` for float comparisons. Direct `==` on floats
   is unreliable.
 - Use `pytest.raises(...)` for expected exceptions.
+- Use `pytest.warns(...)` for expected warnings (e.g. deprecation tests).
+
+---
+
+## Regression tests
+
+A handful of tests exist specifically to lock in behaviour that was previously
+inconsistent or ambiguous. These shouldn't be removed without a deliberate
+decision:
+
+- `test_cli_args.py` — locks in `--full-song` (hyphenated) as the canonical
+  CLI flag after the v0.1.6 rename from `--full`.
+- `test_deprecation_warnings.py` — locks in the `full` → `verbose` shim
+  behaviour on the Python API. Delete (or flip) this when `full` is removed
+  in v1.0.0.
+
+---
 
 ## Known issues
 

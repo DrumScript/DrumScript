@@ -1,7 +1,7 @@
 # Testing Guidance
 
 <!--date_created: sat-21-june-2025-->
-<!--date_updated: thurs-30-apr-2026-->
+<!--date_updated: sun-14-june-2026-->
 
 DrumScript ships with a [pytest](https://docs.pytest.org/) test suite organised
 around a clear separation between **fast unit tests** and **slower integration
@@ -10,36 +10,34 @@ the suite. For a copy-pasteable command reference, see the
 [tests README on GitHub](https://github.com/DrumScript/DrumScript/tree/main/tests#readme).
 
 - **[The Test Pyramid](#the-test-pyramid)**
-- **[Modules](#modules)**
 - **[Suite layout](#suite-layout)**
 - **[Markers](#markers)**
 - **[Writing a new test](#writing-a-new-test)**
 - **[Patterns you'll use often](#patterns-youll-use-often)**
+- **[Regression tests](#regression-tests)**
 - **[Coverage reports](#coverage-reports)**
 - **[Common pitfalls](#common-pitfalls)**
 - **[Continuous integration](#continuous-integration)**
 - **[See also](#see-also)**
 
-
 <!--- - **[]()**-->
 
 
 ---
-
 ## The Test Pyramid
 [*back to top*](#testing-guidance)
 
 DrumScript follows the classic [test pyramid](https://martinfowler.com/articles/practical-test-pyramid.html):
 
-| Layer | Speed | Volume | What it covers |
+| Layer | Speed | Volume (as of v0.1.6) | What it covers |
 |---|---|---|---|
-| **Unit** | milliseconds | many (~75 tests) | Pure functions, helper logic, no I/O |
-| **Integration** | seconds–minutes | few (~8 tests) | Real Demucs runs, real ffmpeg, real files |
+| **Unit** | milliseconds | ~121 cases across 9 files | Pure functions, helper logic, no I/O |
+| **Integration** | seconds–minutes | ~8 cases | Real Demucs runs, real ffmpeg, real files |
 | **End-to-end** | minutes | very few | Full pipeline: audio → MIDI/PDF/XML |
 
 The dev loop (`pytest -m "not slow"`) runs only the unit layer, which finishes
-in well under 5 seconds. Integration tests are opt-in, so they don't slow down
-day-to-day development but can be triggered before a release with a plain
+in well under 10 seconds. Integration tests are opt-in, so they don't slow
+down day-to-day development but can be triggered before a release with a plain
 `pytest`.
 
 ```{admonition} Why this matters
@@ -48,6 +46,7 @@ Trying to test everything end-to-end is the most common testing mistake. It
 gives you a suite that takes 20 minutes to run and tells you nothing useful
 when something fails. Unit tests catch *most* bugs *much* faster.
 ```
+
 ---
 ## Suite Layout
 [*back to top*](#testing-guidance)
@@ -75,7 +74,7 @@ when adding new files.
 
 ## Markers
 
-Two custom markers are defined in `pytest.ini`:
+Two custom markers are defined in `pyproject.toml` (under `[tool.pytest.ini_options]`):
 
 `@pytest.mark.slow`
 : Tests that take more than a second or two. Skipped by default during
@@ -98,9 +97,9 @@ pytest
 
 ```{admonition} Strict markers
 :class: note
-`pytest.ini` enables `--strict-markers`, which means typos like
+The pytest configuration enables `--strict-markers`, which means typos like
 `@pytest.mark.slwo` will fail loudly instead of silently applying to nothing.
-If you add a new marker category, register it in `pytest.ini` first.
+If you add a new marker category, register it in `pyproject.toml` first.
 ```
 
 ---
@@ -174,7 +173,9 @@ Add new fixtures to `conftest.py` only if more than one file will use them.
 Single-use fixtures belong in the test file itself.
 
 ---
+
 ## Patterns You'll Use Often
+[*back to top*](#testing-guidance)
 
 ### Parametrised tests
 
@@ -217,6 +218,46 @@ too slow. Instead, they mock `subprocess.run` and verify the *command being
 constructed*. The real Demucs run lives in
 `tests/integration/test_stem_splitter_real.py`.
 
+### Asserting on warnings
+
+When testing deprecated APIs or other code paths that should emit warnings,
+use `pytest.warns()` rather than `try`/`except`:
+
+```python
+def test_deprecated_param_warns():
+    with pytest.warns(DeprecationWarning, match="verbose"):
+        ds.detect_tempo(audio, full=True)
+```
+
+The `match` argument is a regex against the warning message — useful for
+locking in that the warning text actually points users at the replacement.
+---
+
+## Regression tests
+[*back to top*](#testing-guidance)
+
+Some test files exist specifically to lock in behaviour that was previously
+inconsistent, ambiguous, or breaking. They sit alongside the normal unit tests
+but should not be removed without a deliberate decision:
+
+`test_cli_args.py`
+: Locks in `--full-song` (hyphenated) as the canonical CLI flag after the
+  v0.1.6 rename from `--full`. Also asserts that the underscore variant
+  `--full_song` is rejected, and documents that `--full` continues to work
+  as a backwards-compat prefix.
+
+`test_deprecation_warnings.py`
+: Locks in the `full` → `verbose` deprecation shim on the Python API
+  (`transcribe`, `extract_stems`, `detect_tempo`). Asserts that `full=True`
+  still works, emits a `DeprecationWarning`, and that the warning text
+  mentions both the replacement parameter (`verbose`) and the removal
+  version (v1.0.0). Delete (or flip to expect `TypeError`) when `full` is
+  removed in v1.0.0.
+
+When you find a class of bug that previously slipped through, the corresponding
+test belongs here too — not just as a pass/fail check, but with comments
+explaining *why* the test exists so it isn't deleted by accident later.
+
 ---
 
 ## Coverage Reports
@@ -253,19 +294,27 @@ better than total coverage.
 4. **Don't write the test only after the bug.** When you fix a bug, write the
    test that *would have caught it*. This is the single most valuable kind of
    test you can add.
+5. **Don't conflate filter configuration with behaviour.** Tests that use
+   `pytest.warns()` and `recwarn` capture warnings regardless of how Python's
+   warning filters are configured. Don't add `warnings.simplefilter("always")`
+   inside tests — pytest handles this for you.
+
 
 ---
 
 ## Continuous Integration
 
-CI configuration is on the roadmap. The intended setup is:
 
-- Run `pytest -m "not slow"` on every push and pull request
-- Run the full suite (`pytest`) on tagged release commits
-- Publish coverage reports as a build artifact
+CI runs via GitHub Actions on every push and pull request. The current
+configuration:
 
-Until CI is in place, contributors are expected to run `pytest -m "not slow"`
-locally before opening a pull request.
+- `pytest -m "not slow"` runs on every push and pull request via
+  `.github/workflows/tests.yml`
+- Full suite (`pytest`) runs on tagged release commits
+- Publish (`.github/workflows/publish.yml`) runs on release creation
+
+Contributors should still run `pytest -m "not slow"` locally before opening
+a pull request so the feedback loop is fast.
 
 ---
 

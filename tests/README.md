@@ -1,7 +1,7 @@
 # DrumScript Tests
 
 <!--date_added:weds-29-apr-2026-->
-<!--date_updated:sat-02-may-2026-->
+<!--date_updated:sun-14-june-2026-->
 
 This directory contains the pytest test suite for `DrumScript`.
 
@@ -10,7 +10,7 @@ This directory contains the pytest test suite for `DrumScript`.
 
 ```zsh
 DrumScript/
-├── pytest.ini                              ← project root
+├── pyproject.toml                          ← project root (test config here)
 └── tests/
     ├── __init__.py
     ├── README.md                           ← you are here
@@ -20,12 +20,15 @@ DrumScript/
     │                                         (empty; synthesised in conftest)
     ├── unit/                               ← fast, no I/O, no subprocess
     │   ├── __init__.py
-    │   ├── test_audio_loader.py            ← 11 tests
-    │   ├── test_helpers.py                 ← 14 tests
-    │   ├── test_stem_splitter_helpers.py   ← 17 tests, includes regression
-    │   ├── test_tempo_detector.py          ←  6 tests
+    │   ├── test_audio_loader.py            ← 13 tests
+    │   ├── test_classify.py                ← 24 tests
+    │   ├── test_cli_args.py                ←  4 tests (adding in v0.1.6)
+    │   ├── test_deprecation_warnings.py    ← 13 tests (adding v0.1.6)
+    │   ├── test_helpers.py                 ← 24 tests,o
     │   ├── test_onset_detector.py          ←  7 tests
-    │   └── test_classify.py                ← 20 tests
+    │   ├── test_stem_splitter_helpers.py   ← 17 tests (includes regression)
+    │   ├── test_tempo_detector.py          ←  6 tests
+    │   └── test_transcribe.py              ← 13 tests
     └── integration/                        ← real Demucs / ffmpeg / files (slow)
         ├── __init__.py
         └── test_stem_splitter_real.py      ←  8 tests

@@ -486,7 +486,6 @@ Tempogram saved to: `DrumScript/visuals/tempogram.png`
 **PLEASE NOTE:**[Testing instructions to be added for the new rule-based classifier scripts: `classify.py` and `generate_score.py`]
 
 <!--TO DO: Add in (any) missing fcts and modules-->
--->
 
 ---
 <!--END-->

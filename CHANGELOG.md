@@ -1,26 +1,27 @@
 # Changelog
 
 <!--date_added:thurs-28-may-2026-->
-<!--date:updated:weds-10-june-2026-->
+<!--date:updated:mon-15-june-2026-->
 
 
 All notable changes to DrumScript will be documented here.
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 DrumScript follows [Semantic Versioning](https://semver.org/).
 
+
 ---
 
 ## Unreleased
 
-### [0.1.6] - June 2026 - Target: 14 June 2026
+### [0.1.6] - June 2026 - Target: mid-June 2026
 
-> **Final v0.1.x release.** After this, the next release jumps to v0.2.0 to signal the breaking-change track for the `full` → `verbose` rename.
+> **Final v0.1.x release.** After this, the next release jumps to v0.2.0 to signal the breaking-change track for the `full` → `verbose` removal.
 
 #### Planned — Bug Fixes
 - Cymbal and hi-hat stem rendering: note tails and heads correctly aligned
 - `ds.transcribe()` only outputs PDF, not the documented `.json` / `.midi` / `.xml`
 - `main.py` structural bug: duplicated pipeline inside `except` block needs removing, error handling needs restructuring
--  `drumscript/main.py` (~line 26)`.wav` comment `# .wav format as default, unless --mp3 input specified as an arg in user command (drumscript/main.py)`. check if this is actually true, across all scripts in `drumscript/`  modular code.
+- `drumscript/main.py` (~line 26) `.wav` comment `# .wav format as default, unless --mp3 input specified as an arg in user command`. Check if this is actually true across all scripts in `drumscript/` modular code.
 
 #### Planned — Changes
 - Transcription function docstrings to be updated to make clear that drum-only audio is expected as standard input
@@ -32,28 +33,42 @@ DrumScript follows [Semantic Versioning](https://semver.org/).
 #### Planned — Additions
 - CHANGELOG reference to be added to README and Sphinx docs
 - `output_midi`, `output_json`, `output_xml` flags to be added to `transcribe()` for multi-format export
-- Deprecation shim for `full` parameter (Python API):
-  - Add `verbose` parameter alongside existing `full` on `transcribe()`, `extract_stems()`, and `detect_tempo()`
-  - Passing `full=True` continues to work but emits a `DeprecationWarning` directing users to `verbose=True`
-  - Warning states `full` will be removed in v1.0.0 (beta release)
+- **PR #273 by nanaoto** — IDMT-SMT-Drums V2 benchmark runner with `mir_eval` scaffolding (pending final review and merge)
+  - `benchmarks/run.py` entrypoint with dataset adapter dispatch
+  - `drumscript/datasets/` package: `BenchmarkItem` dataclass and IDMT adapter
+  - `benchmarks/README.md` documenting conventions and dataset setup
+  - Unit tests for benchmark runner and IDMT dataset adapter
+  - `mir_eval` added as a dev dependency
+
+#### Added
+- Deprecation shim for `full` parameter on the Python API:
+  - New `verbose` parameter added to `transcribe()`, `extract_stems()`, and `detect_tempo()` as the canonical replacement for `full`
+  - Passing `full=True` (or `full=False`) continues to work but emits a `DeprecationWarning` directing users to `verbose`
+  - Warning explicitly names the v1.0.0 (beta) removal target so users have a clear migration timeline
+  - Passing both `full` and `verbose` together raises `TypeError` (ambiguous, almost certainly a bug)
+  - Internal helper `_resolve_verbose_flag()` centralises the resolution logic so it cannot drift between wrappers
   - Docstrings updated to mark `verbose` as primary and `full` as deprecated
-  - New unit test confirms the warning is actually emitted
+- New unit test file `tests/unit/test_deprecation_warnings.py` covers:
+  - `verbose=True` works without warning
+  - `full=True` still works but emits the warning
+  - Warning text mentions `verbose`, `v1.0.0`, and the function name
+  - Passing both raises `TypeError`
+  - Signature-level wiring checks confirm both parameters exist on all three wrappers
 
-#### Moved to Future Release (PR reviews requested of contributor)
-- PR #273 by nanaoto (IDMT-SMT-Drums V2 benchmark runner with `mir_eval` scaffolding) (pending items)
+#### Fixed
+- Commented-out dead code removed from `drumscript/__init__.py` and `drumscript/main.py`
+- Flag inconsistency between `drumscript/main.py` and `drumscript/__init__.py` resolved: `argparse` in main block updated so the CLI flag is now `--full-song` (hyphenated, consistent with `--all-stems`). Auto-converts to `args.full_song` matching the Python API parameter name.
+- Regression test added (`tests/unit/test_cli_args.py`) locking in `--full-song` as the canonical CLI flag
 
-**Fixed**
-- Commented-out dead code to be removed from `drumscript/__init__.py` and `drumscript/main.py` (Changes)
-- Inconsistent flags for `--full=True` (which outputs JSON-payload to API) and `--full_song=True` (which signals to extract the drums first from polyphonic audio) in `drumscript/main.py` and `drumscript/__init__.py` corrected: `argparse` in main block updated so now the `--full-song` flag is consistent in both `drumscript/__init__.py` and `drumscript/main.py`
--- - Flag inconsistency: `full=True` means "return detailed dict" in Python API but `--full` means "full song / separate stems" in CLI — rename to `verbose=True` (or `detail=True` / `return_dict=True`) across all wrapper functions (`transcribe`, `extract_stems`, `detect_tempo`)
+---
 
-### [0.1.7] - June/July 2026 - Target: TBD
+### [0.2.0] - July/August 2026 - Target: TBD
 
-#### Planned
-- IDMT-SMT-Drums V2 benchmark runner (`benchmarks/run.py`) with `mir_eval` scaffolding (PR #273 by nanaoto)
-- `drumscript/datasets/` package: `BenchmarkItem` dataclass and IDMT adapter
-- Unit tests for benchmark runner and IDMT dataset adapter
-- `benchmarks/README.md` documenting conventions and dataset setup
+> First minor-version bump. Signals the start of the breaking-change track ahead of v1.0.0 beta.
+
+#### Planned — Additions
+- Expanded benchmark dataset coverage (ENST-Drums, MDB-Drums) building on the IDMT-SMT-Drums V2 foundation shipped in v0.1.6
+- Code-to-DrumScript label mapping expanded beyond `KD`/`SD`/`HH` to cover full-kit classes (toms, crash, ride)
 
 #### Planned — Changes
 - Improve documentation: clearer docstrings for the `rudiment` flag/functionality
@@ -71,6 +86,7 @@ DrumScript follows [Semantic Versioning](https://semver.org/).
 #### Planned — Removed (breaking)
 - `full` parameter removed entirely from `transcribe()`, `extract_stems()`, and `detect_tempo()`. Users must use `verbose` instead.
 - Deprecation warning removed (no longer needed)
+- `tests/unit/test_deprecation_warnings.py` deleted (or flipped to assert `full` now raises `TypeError`)
 
 ---
 

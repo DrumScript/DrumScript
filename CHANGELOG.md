@@ -1,14 +1,16 @@
 # Changelog
 
 <!--date_added:thurs-28-may-2026-->
-<!--date:updated:sat-13-june-2026-->
+<!--date:updated:mon-15-june-2026-->
 
 
 All notable changes to DrumScript will be documented here.
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 DrumScript follows [Semantic Versioning](https://semver.org/).
 
+
 ---
+
 ## Unreleased
 
 ### [0.1.6] - June 2026 - Target: mid-June 2026
@@ -31,18 +33,27 @@ DrumScript follows [Semantic Versioning](https://semver.org/).
 #### Planned — Additions
 - CHANGELOG reference to be added to README and Sphinx docs
 - `output_midi`, `output_json`, `output_xml` flags to be added to `transcribe()` for multi-format export
-- Deprecation shim for `full` parameter (Python API):
-  - Add `verbose` parameter alongside existing `full` on `transcribe()`, `extract_stems()`, and `detect_tempo()`
-  - Passing `full=True` continues to work but emits a `DeprecationWarning` directing users to `verbose=True`
-  - Warning states `full` will be removed in v1.0.0 (beta release)
-  - Docstrings updated to mark `verbose` as primary and `full` as deprecated
-  - New unit test confirms the warning is actually emitted
 - **PR #273 by nanaoto** — IDMT-SMT-Drums V2 benchmark runner with `mir_eval` scaffolding (pending final review and merge)
   - `benchmarks/run.py` entrypoint with dataset adapter dispatch
   - `drumscript/datasets/` package: `BenchmarkItem` dataclass and IDMT adapter
   - `benchmarks/README.md` documenting conventions and dataset setup
   - Unit tests for benchmark runner and IDMT dataset adapter
   - `mir_eval` added as a dev dependency
+
+#### Added
+- Deprecation shim for `full` parameter on the Python API:
+  - New `verbose` parameter added to `transcribe()`, `extract_stems()`, and `detect_tempo()` as the canonical replacement for `full`
+  - Passing `full=True` (or `full=False`) continues to work but emits a `DeprecationWarning` directing users to `verbose`
+  - Warning explicitly names the v1.0.0 (beta) removal target so users have a clear migration timeline
+  - Passing both `full` and `verbose` together raises `TypeError` (ambiguous, almost certainly a bug)
+  - Internal helper `_resolve_verbose_flag()` centralises the resolution logic so it cannot drift between wrappers
+  - Docstrings updated to mark `verbose` as primary and `full` as deprecated
+- New unit test file `tests/unit/test_deprecation_warnings.py` covers:
+  - `verbose=True` works without warning
+  - `full=True` still works but emits the warning
+  - Warning text mentions `verbose`, `v1.0.0`, and the function name
+  - Passing both raises `TypeError`
+  - Signature-level wiring checks confirm both parameters exist on all three wrappers
 
 #### Fixed
 - Commented-out dead code removed from `drumscript/__init__.py` and `drumscript/main.py`
@@ -75,6 +86,7 @@ DrumScript follows [Semantic Versioning](https://semver.org/).
 #### Planned — Removed (breaking)
 - `full` parameter removed entirely from `transcribe()`, `extract_stems()`, and `detect_tempo()`. Users must use `verbose` instead.
 - Deprecation warning removed (no longer needed)
+- `tests/unit/test_deprecation_warnings.py` deleted (or flipped to assert `full` now raises `TypeError`)
 
 ---
 

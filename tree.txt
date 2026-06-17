@@ -1,4 +1,4 @@
-./DrumScript
+.
 ├── .gitattributes
 ├── .github
 │   ├── CODEOWNERS
@@ -83,7 +83,6 @@
 │           ├── measure_hat_frequency.py
 │           ├── measure_kick_frequency.py
 │           └── measure_snare_frequency.py
-├── drumscript_interactive_notebook.ipynb
 ├── public
 │   └── pyodideWorker.js
 ├── pyproject.toml
@@ -99,6 +98,8 @@
 │       ├── __init__.py
 │       ├── test_audio_loader.py
 │       ├── test_classify.py
+│       ├── test_cli_args.py
+│       ├── test_deprecation_warnings.py
 │       ├── test_helpers.py
 │       ├── test_onset_detector.py
 │       ├── test_stem_splitter_helpers.py
@@ -109,4 +110,4 @@
 └── visuals
     └── tempogram.png
 
-23 directories, 87 files
+23 directories, 88 files

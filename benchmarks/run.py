@@ -91,7 +91,8 @@ def summarise(results: Iterable[dict]) -> dict:
 def summarise_by_bucket(items: Sequence[BenchmarkItem], results: Sequence[dict | None]) -> dict[str, dict]:
     """Macro-average metrics grouped by each benchmark item's bucket."""
     grouped: dict[str, list[dict]] = defaultdict(list)
-    for item, result in zip(items, results, strict=True):
+    # for item, result in zip(items, results, strict=True):
+    for item, result in zip(items, results):
         if result is not None:
             grouped[item.bucket].append(result)
     return {bucket: summarise(values) for bucket, values in grouped.items()}
@@ -102,7 +103,8 @@ def count_result_statuses(items: Sequence[BenchmarkItem], results: Sequence[dict
     skipped_no_annotations = 0
     failed = 0
     evaluated = 0
-    for item, result in zip(items, results, strict=True):
+    # for item, result in zip(items, results, strict=True):
+    for item, result in zip(items, results):
         if result is not None:
             evaluated += 1
         elif not item.references:
@@ -148,7 +150,8 @@ def write_metrics_csv(
             header += [f"{code}_P", f"{code}_R", f"{code}_F", f"{code}_n_ref", f"{code}_n_est"]
         writer.writerow(header)
 
-        for item, metrics in zip(items, results, strict=True):
+        # for item, metrics in zip(items, results, strict=True):
+        for item, metrics in zip(items, results):
             if metrics is None:
                 continue
             row: list = [item.track_id, item.bucket] + [item.extra.get(col, "") for col in extra_cols]

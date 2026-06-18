@@ -1,7 +1,7 @@
 # Changelog
 
 <!--date_added:thurs-28-may-2026-->
-<!--date:updated:mon-15-june-2026-->
+<!--date:updated:thurs-18-june-2026-->
 
 
 All notable changes to DrumScript will be documented here.
@@ -11,7 +11,13 @@ DrumScript follows [Semantic Versioning](https://semver.org/).
 
 ---
 
-## Unreleased
+## [Unreleased]
+
+### Added
+
+- IDMT-SMT-Drums benchmark runner with dataset adapter and unit test coverage.
+
+---
 
 ### [0.1.6] - June 2026 - Target: mid-June 2026
 

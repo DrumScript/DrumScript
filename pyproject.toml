@@ -67,6 +67,7 @@ dev = [
   "ipykernel",
   "myst-parser",
   "myst-nb>=1.3.0",
+  "mir-eval>=0.8.2",
   "pytest",
   "pytest-cov>=7.1.0",
   "shibuya>=2025.10.21",

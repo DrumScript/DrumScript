@@ -301,10 +301,7 @@ def main() -> None:
     result_statuses = count_result_statuses(items, results)
     print(f"\n{'─' * 60}\nEvaluated {result_statuses['files_evaluated']} / {len(items)} items successfully.")
     if result_statuses["files_skipped_no_annotations"] or result_statuses["files_failed"]:
-        print(
-            f"Skipped {result_statuses['files_skipped_no_annotations']} without annotations; "
-            f"failed {result_statuses['files_failed']}.\n"
-        )
+        print(f"Skipped {result_statuses['files_skipped_no_annotations']} without annotations; failed {result_statuses['files_failed']}.\n")
     else:
         print()
 

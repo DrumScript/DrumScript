@@ -22,8 +22,6 @@
 ├── MANIFEST.in
 ├── README.md
 ├── SECURITY.md
-├── app
-│   └── js
 ├── benchmarks
 │   ├── README.md
 │   └── run.py
@@ -122,4 +120,4 @@
 └── visuals
     └── tempogram.png
 
-27 directories, 96 files
+25 directories, 96 files

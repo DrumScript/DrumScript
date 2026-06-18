@@ -22,6 +22,11 @@
 ├── MANIFEST.in
 ├── README.md
 ├── SECURITY.md
+├── app
+│   └── js
+├── benchmarks
+│   ├── README.md
+│   └── run.py
 ├── docs
 │   ├── FOLDER_STRUCTURE.txt
 │   ├── _templates
@@ -50,6 +55,10 @@
 │   │   ├── stem_splitter.py
 │   │   ├── tempo_detector.py
 │   │   └── tempogram.py
+│   ├── datasets
+│   │   ├── __init__.py
+│   │   ├── base.py
+│   │   └── idmt.py
 │   ├── drum_classifier
 │   │   ├── __init__.py
 │   │   ├── classify.py
@@ -94,13 +103,16 @@
 │   ├── conftest.py
 │   ├── integration
 │   │   └── test_stem_splitter_real.py
+│   ├── tree_tests
 │   └── unit
 │       ├── __init__.py
 │       ├── test_audio_loader.py
+│       ├── test_benchmarks_run.py
 │       ├── test_classify.py
 │       ├── test_cli_args.py
 │       ├── test_deprecation_warnings.py
 │       ├── test_helpers.py
+│       ├── test_idmt_dataset.py
 │       ├── test_onset_detector.py
 │       ├── test_stem_splitter_helpers.py
 │       ├── test_tempo_detector.py
@@ -110,4 +122,4 @@
 └── visuals
     └── tempogram.png
 
-23 directories, 88 files
+27 directories, 96 files

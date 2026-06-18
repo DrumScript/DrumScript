@@ -30,7 +30,7 @@ DrumScript follows the classic [test pyramid](https://martinfowler.com/articles/
 
 | Layer | Speed | Volume (as of v0.1.6) | What it covers |
 |---|---|---|---|
-| **Unit** | milliseconds | ~121 cases across 9 files | Pure functions, helper logic, no I/O |
+| **Unit** | milliseconds | ~131 cases across 11 files | Pure functions, helper logic, no I/O |
 | **Integration** | seconds–minutes | ~8 cases | Real Demucs runs, real ffmpeg, real files |
 | **End-to-end** | minutes | very few | Full pipeline: audio → MIDI/PDF/XML |
 

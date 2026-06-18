@@ -1,7 +1,7 @@
 # Testing Guidance
 
 <!--date_created: sat-21-june-2025-->
-<!--date_updated: sun-14-june-2026-->
+<!--date_updated: thurs-18-june-2026-->
 
 DrumScript ships with a [pytest](https://docs.pytest.org/) test suite organised
 around a clear separation between **fast unit tests** and **slower integration
@@ -55,13 +55,23 @@ tests/
 ├── conftest.py              ← shared fixtures (auto-discovered)
 ├── fixtures/audio/          ← real audio files (empty; synthesised in conftest)
 ├── unit/                    ← fast, no I/O, no subprocess
-│   ├── test_audio_loader.py
-│   ├── test_helpers.py
-│   ├── test_stem_splitter_helpers.py
-│   ├── test_tempo_detector.py
-│   ├── test_onset_detector.py
-│   └── test_classify.py
-└── integration/             ← real Demucs / ffmpeg / files (slow)
+tests/
+├── README.md
+├── conftest.py
+└── unit
+    ├── __init__.py
+    ├── test_audio_loader.py
+    ├── test_benchmarks_run.py
+    ├── test_classify.py
+    ├── test_cli_args.py
+    ├── test_deprecation_warnings.py
+    ├── test_helpers.py
+    ├── test_idmt_dataset.py
+    ├── test_onset_detector.py
+    ├── test_stem_splitter_helpers.py
+    ├── test_tempo_detector.py
+    └── test_transcribe.py
+└── integration/             ← Demucs / ffmpeg / files (slow)
     └── test_stem_splitter_real.py
 ```
 

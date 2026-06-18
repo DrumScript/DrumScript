@@ -11,7 +11,6 @@ the suite. For a copy-pasteable command reference, see the
 
 - **[The Test Pyramid](#the-test-pyramid)**
 - **[Suite layout](#suite-layout)**
-- **[Markers](#markers)**
 - **[Writing a new test](#writing-a-new-test)**
 - **[Patterns you'll use often](#patterns-youll-use-often)**
 - **[Regression tests](#regression-tests)**

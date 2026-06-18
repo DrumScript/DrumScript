@@ -2,7 +2,7 @@
 <html lang="en" data-accent-color="violet" data-content_root="../">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"><title>drumscript.extract_stems - DrumScript 0.1.5 documentation</title><link rel="author" title="About these documents" href="../about.html" /><link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="drumscript.detect_tempo" href="drumscript.detect_tempo.html" /><link rel="prev" title="drumscript.transcribe" href="drumscript.transcribe.html" /><script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"><title>drumscript.extract_stems - DrumScript 0.1.6 documentation</title><link rel="author" title="About these documents" href="../about.html" /><link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="drumscript.detect_tempo" href="drumscript.detect_tempo.html" /><link rel="prev" title="drumscript.transcribe" href="drumscript.transcribe.html" /><script>
     function setColorMode(t){let e=document.documentElement;e.setAttribute("data-color-mode",t);let a=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches,s=t;"auto"===t&&(s=a?"dark":"light"),"light"===s?(e.classList.remove("dark"),e.classList.add("light")):(e.classList.remove("light"),e.classList.add("dark"))}
     setColorMode(localStorage._theme||"auto");
   </script><link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=e1a1ceaf" />
@@ -211,6 +211,7 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l2"><a class="reference internal" href="../release_notes/0.1.3.html">v0.1.3 (Pre-Alpha)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../release_notes/0.1.4.html">v0.1.4 (Alpha)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../release_notes/0.1.5.html">v0.1.5 (Alpha)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes/0.1.6.html">v0.1.6 (Alpha)</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a></li>
@@ -323,7 +324,7 @@ data-aria-dark="Switch to auto color mode">
 <h1>drumscript.extract_stems<a class="headerlink" href="#drumscript-extract-stems" title="Link to this heading">¶</a></h1>
 <dl class="py function">
 <dt class="sig sig-object py" id="drumscript.extract_stems">
-<span class="sig-name descname"><span class="pre">extract_stems</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">audio_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'wav'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">drumless</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mute</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">all_stems</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">full</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/drumscript.html#extract_stems"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drumscript.extract_stems" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">extract_stems</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">audio_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'wav'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">drumless</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mute</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">all_stems</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">full</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/drumscript.html#extract_stems"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drumscript.extract_stems" title="Link to this definition">¶</a></dt>
 <dd><p>Extracts drum stems and optionally separates the full track into constituent parts.</p>
 <p>This function serves as a high-level wrapper around the Demucs source separation model.
 It allows for quick isolation of drum tracks for transcription, or the creation of
@@ -337,14 +338,21 @@ It allows for quick isolation of drum tracks for transcription, or the creation 
 <li><p><strong>drumless</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, extracts a track with NO drums (plus the isolated drum track).</p></li>
 <li><p><strong>mute</strong> (<em>list</em><em>, </em><em>optional</em>) – List of specific stems to mute (e.g., [‘bass’, ‘vocals’]).</p></li>
 <li><p><strong>all_stems</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, exports all separated stems individually.</p></li>
-<li><p><strong>full</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, returns a detailed dictionary of all output paths.</p></li>
+<li><p><strong>verbose</strong> – If True, returns a detailed dictionary of all output paths instead</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Path to the extracted file, or a dictionary of results if full=True.</p>
+</dl>
+<p>of just the drum stem path.
+:type verbose: bool, optional
+:param full: <strong>Deprecated</strong> since v0.1.6, will be removed in v1.0.0. Use <code class="docutils literal notranslate"><span class="pre">verbose</span></code>
+instead. Passing <code class="docutils literal notranslate"><span class="pre">full=True</span></code> still works but emits a <code class="docutils literal notranslate"><span class="pre">DeprecationWarning</span></code>.
+:type full: bool, optional</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Path to the extracted file, or a dictionary of results if <code class="docutils literal notranslate"><span class="pre">verbose=True</span></code>.</p>
 </dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>str or dict</p>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>str or dict</p>
 </dd>
 </dl>
 <div class="admonition note">
@@ -363,9 +371,10 @@ from a 3-minute song may take a few minutes.</p>
 </span><span data-line="2">    <span class="s2">&quot;my_song.mp3&quot;</span><span class="p">,</span>
 </span><span data-line="3">    <span class="n">drumless</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
 </span><span data-line="4">    <span class="n">output_format</span><span class="o">=</span><span class="s2">&quot;mp3&quot;</span><span class="p">,</span>
-</span><span data-line="5">    <span class="n">full</span><span class="o">=</span><span class="kc">True</span>
-</span><span data-line="6"><span class="p">)</span>
-</span><span data-line="7"><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Backing track saved to: </span><span class="si">{</span><span class="n">results</span><span class="p">[</span><span class="s1">&#39;mix&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span data-line="5">    <span class="c1"># full=True, # LEGACY CODE FROM V0.1.5 (--full flag replaced with deprecation shim, in place of --verbose)</span>
+</span><span data-line="6">    <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span>
+</span><span data-line="7"><span class="p">)</span>
+</span><span data-line="8"><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Backing track saved to: </span><span class="si">{</span><span class="n">results</span><span class="p">[</span><span class="s1">&#39;mix&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </span></pre></div>
 </div>
 </dd></dl>
@@ -415,7 +424,7 @@ from a 3-minute song may take a few minutes.</p>
     </div>
   </div>
 </footer>
-      <script src="../_static/documentation_options.js?v=59fadc99"></script>
+      <script src="../_static/documentation_options.js?v=6e0256f3"></script>
       <script src="../_static/doctools.js?v=fd6eb6e6"></script>
       <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script src="../_static/shibuya.js?v=50760d75"></script></body>

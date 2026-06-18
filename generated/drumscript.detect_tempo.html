@@ -2,7 +2,7 @@
 <html lang="en" data-accent-color="violet" data-content_root="../">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"><title>drumscript.detect_tempo - DrumScript 0.1.5 documentation</title><link rel="author" title="About these documents" href="../about.html" /><link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="drumscript.export_pdf" href="drumscript.export_pdf.html" /><link rel="prev" title="drumscript.extract_stems" href="drumscript.extract_stems.html" /><script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"><title>drumscript.detect_tempo - DrumScript 0.1.6 documentation</title><link rel="author" title="About these documents" href="../about.html" /><link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="drumscript.export_pdf" href="drumscript.export_pdf.html" /><link rel="prev" title="drumscript.extract_stems" href="drumscript.extract_stems.html" /><script>
     function setColorMode(t){let e=document.documentElement;e.setAttribute("data-color-mode",t);let a=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches,s=t;"auto"===t&&(s=a?"dark":"light"),"light"===s?(e.classList.remove("dark"),e.classList.add("light")):(e.classList.remove("light"),e.classList.add("dark"))}
     setColorMode(localStorage._theme||"auto");
   </script><link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=e1a1ceaf" />
@@ -211,6 +211,7 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l2"><a class="reference internal" href="../release_notes/0.1.3.html">v0.1.3 (Pre-Alpha)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../release_notes/0.1.4.html">v0.1.4 (Alpha)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../release_notes/0.1.5.html">v0.1.5 (Alpha)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes/0.1.6.html">v0.1.6 (Alpha)</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a></li>
@@ -323,7 +324,7 @@ data-aria-dark="Switch to auto color mode">
 <h1>drumscript.detect_tempo<a class="headerlink" href="#drumscript-detect-tempo" title="Link to this heading">¶</a></h1>
 <dl class="py function">
 <dt class="sig sig-object py" id="drumscript.detect_tempo">
-<span class="sig-name descname"><span class="pre">detect_tempo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">audio_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">full</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/drumscript.html#detect_tempo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drumscript.detect_tempo" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">detect_tempo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">audio_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">full</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/drumscript.html#detect_tempo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drumscript.detect_tempo" title="Link to this definition">¶</a></dt>
 <dd><p>Estimates the global tempo (BPM) of a given audio file or pre-loaded audio array.</p>
 <p>This function utilizes spectral onset envelope detection to accurately
 estimate the global tempo of a percussive track.</p>
@@ -331,7 +332,9 @@ estimate the global tempo of a percussive track.</p>
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>audio_path</strong> (<em>str</em><em> or </em><em>np.ndarray</em>) – File path (str) OR a pre-loaded audio data array (np.ndarray).</p></li>
-<li><p><strong>full</strong> (<em>bool</em><em>, </em><em>optional</em>) – Return a detailed stats dictionary instead of just the float if True.</p></li>
+<li><p><strong>verbose</strong> (<em>bool</em><em>, </em><em>optional</em>) – Return a detailed stats dictionary instead of just the float if True.</p></li>
+<li><p><strong>full</strong> (<em>bool</em><em>, </em><em>optional</em>) – <strong>Deprecated</strong> since v0.1.6, will be removed in v1.0.0. Use <code class="docutils literal notranslate"><span class="pre">verbose</span></code>
+instead. Passing <code class="docutils literal notranslate"><span class="pre">full=True</span></code> still works but emits a <code class="docutils literal notranslate"><span class="pre">DeprecationWarning</span></code>.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -355,8 +358,9 @@ multiple analysis functions on the exact same audio file.</p>
 </div>
 <p>Detect tempo from a pre-loaded array:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="n">y</span><span class="p">,</span> <span class="n">sr</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">load_audio</span><span class="p">(</span><span class="s2">&quot;drum_loop.wav&quot;</span><span class="p">)</span>
-</span><span data-line="2"><span class="n">stats</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">detect_tempo</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">full</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-</span><span data-line="3"><span class="nb">print</span><span class="p">(</span><span class="n">stats</span><span class="p">[</span><span class="s1">&#39;bpm&#39;</span><span class="p">])</span>
+</span><span data-line="2"><span class="c1"># stats = ds.detect_tempo(y, full=True)</span>
+</span><span data-line="3"><span class="n">stats</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">detect_tempo</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span><span data-line="4"><span class="nb">print</span><span class="p">(</span><span class="n">stats</span><span class="p">[</span><span class="s1">&#39;bpm&#39;</span><span class="p">])</span>
 </span></pre></div>
 </div>
 </dd></dl>
@@ -406,7 +410,7 @@ multiple analysis functions on the exact same audio file.</p>
     </div>
   </div>
 </footer>
-      <script src="../_static/documentation_options.js?v=59fadc99"></script>
+      <script src="../_static/documentation_options.js?v=6e0256f3"></script>
       <script src="../_static/doctools.js?v=fd6eb6e6"></script>
       <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script src="../_static/shibuya.js?v=50760d75"></script></body>

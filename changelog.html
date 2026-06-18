@@ -2,7 +2,7 @@
 <html lang="en" data-accent-color="violet" data-content_root="./">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Changelog - DrumScript 0.1.5 documentation</title><link rel="author" title="About these documents" href="about.html" /><link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="prev" title="v0.1.5 (Alpha)" href="release_notes/0.1.5.html" /><script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Changelog - DrumScript 0.1.6 documentation</title><link rel="author" title="About these documents" href="about.html" /><link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="prev" title="v0.1.6 (Alpha)" href="release_notes/0.1.6.html" /><script>
     function setColorMode(t){let e=document.documentElement;e.setAttribute("data-color-mode",t);let a=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches,s=t;"auto"===t&&(s=a?"dark":"light"),"light"===s?(e.classList.remove("dark"),e.classList.add("light")):(e.classList.remove("light"),e.classList.add("dark"))}
     setColorMode(localStorage._theme||"auto");
   </script><link rel="stylesheet" type="text/css" href="_static/pygments.css?v=e1a1ceaf" />
@@ -211,6 +211,7 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l2"><a class="reference internal" href="release_notes/0.1.3.html">v0.1.3 (Pre-Alpha)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="release_notes/0.1.4.html">v0.1.4 (Alpha)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="release_notes/0.1.5.html">v0.1.5 (Alpha)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release_notes/0.1.6.html">v0.1.6 (Alpha)</a></li>
 </ul>
 </li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Changelog</a></li>
@@ -226,19 +227,16 @@ data-aria-dark="Switch to auto color mode">
       <i class="i-lucide close"></i>
     </button>
     <div class="sy-scrollbar sy-rside-inner px-6 xl:top-16 xl:sticky xl:pl-0 pt-6 pb-4"><div class="localtoc"><h3>On this page</h3><ul>
-<li><a class="reference internal" href="#unreleased">[Unreleased]</a><ul>
+<li><a class="reference internal" href="#unreleased">Unreleased</a><ul>
+<li><a class="reference internal" href="#june-2026">[0.1.6] - June 2026</a><ul>
 <li><a class="reference internal" href="#added">Added</a></li>
-<li><a class="reference internal" href="#june-2026-target-mid-june-2026">[0.1.6] - June 2026 - Target: mid-June 2026</a><ul>
-<li><a class="reference internal" href="#planned-bug-fixes">Planned &#8212; Bug Fixes</a></li>
-<li><a class="reference internal" href="#planned-changes">Planned &#8212; Changes</a></li>
-<li><a class="reference internal" href="#planned-additions">Planned &#8212; Additions</a></li>
-<li><a class="reference internal" href="#id1">Added</a></li>
 <li><a class="reference internal" href="#fixed">Fixed</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#july-august-2026-target-tbd">[0.2.0] - July/August 2026 - Target: TBD</a><ul>
-<li><a class="reference internal" href="#id2">Planned &#8212; Additions</a></li>
-<li><a class="reference internal" href="#id3">Planned &#8212; Changes</a></li>
+<li><a class="reference internal" href="#planned-bug-fixes">Planned &#8212; Bug Fixes</a></li>
+<li><a class="reference internal" href="#planned-changes">Planned &#8212; Changes</a></li>
+<li><a class="reference internal" href="#planned-additions">Planned &#8212; Additions</a></li>
 <li><a class="reference internal" href="#planned-investigation">Planned &#8212; Investigation</a></li>
 </ul>
 </li>
@@ -351,56 +349,14 @@ Format follows <a class="reference external" href="https://keepachangelog.com/en
 DrumScript follows <a class="reference external" href="https://semver.org/">Semantic Versioning</a>.</p>
 <hr class="docutils" />
 <section id="unreleased">
-<h2>[Unreleased]<a class="headerlink" href="#unreleased" title="Link to this heading">¶</a></h2>
-<section id="added">
-<h3>Added<a class="headerlink" href="#added" title="Link to this heading">¶</a></h3>
-<ul class="simple">
-<li><p>IDMT-SMT-Drums benchmark runner with dataset adapter and unit test coverage.</p></li>
-</ul>
-</section>
-<hr class="docutils" />
-<section id="june-2026-target-mid-june-2026">
-<h3>[0.1.6] - June 2026 - Target: mid-June 2026<a class="headerlink" href="#june-2026-target-mid-june-2026" title="Link to this heading">¶</a></h3>
+<h2>Unreleased<a class="headerlink" href="#unreleased" title="Link to this heading">¶</a></h2>
+<section id="june-2026">
+<h3>[0.1.6] - June 2026<a class="headerlink" href="#june-2026" title="Link to this heading">¶</a></h3>
 <blockquote>
 <div><p><strong>Final v0.1.x release.</strong> After this, the next release jumps to v0.2.0 to signal the breaking-change track for the <code class="docutils literal notranslate"><span class="pre">full</span></code> → <code class="docutils literal notranslate"><span class="pre">verbose</span></code> removal.</p>
 </div></blockquote>
-<section id="planned-bug-fixes">
-<h4>Planned — Bug Fixes<a class="headerlink" href="#planned-bug-fixes" title="Link to this heading">¶</a></h4>
-<ul class="simple">
-<li><p>Cymbal and hi-hat stem rendering: note tails and heads correctly aligned</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">ds.transcribe()</span></code> only outputs PDF, not the documented <code class="docutils literal notranslate"><span class="pre">.json</span></code> / <code class="docutils literal notranslate"><span class="pre">.midi</span></code> / <code class="docutils literal notranslate"><span class="pre">.xml</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">main.py</span></code> structural bug: duplicated pipeline inside <code class="docutils literal notranslate"><span class="pre">except</span></code> block needs removing, error handling needs restructuring</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">drumscript/main.py</span></code> (~line 26) <code class="docutils literal notranslate"><span class="pre">.wav</span></code> comment <code class="docutils literal notranslate"><span class="pre">#</span> <span class="pre">.wav</span> <span class="pre">format</span> <span class="pre">as</span> <span class="pre">default,</span> <span class="pre">unless</span> <span class="pre">--mp3</span> <span class="pre">input</span> <span class="pre">specified</span> <span class="pre">as</span> <span class="pre">an</span> <span class="pre">arg</span> <span class="pre">in</span> <span class="pre">user</span> <span class="pre">command</span></code>. Check if this is actually true across all scripts in <code class="docutils literal notranslate"><span class="pre">drumscript/</span></code> modular code.</p></li>
-</ul>
-</section>
-<section id="planned-changes">
-<h4>Planned — Changes<a class="headerlink" href="#planned-changes" title="Link to this heading">¶</a></h4>
-<ul class="simple">
-<li><p>Transcription function docstrings to be updated to make clear that drum-only audio is expected as standard input</p></li>
-<li><p>README to be updated to clarify expected input for transcription functions</p></li>
-<li><p>Example notebooks to be updated to reflect expected drum-only audio input</p></li>
-<li><p>Better audio samples needed for runbooks — not synthetic, which has created messy outputs</p></li>
-<li><p>Runbook presentation to be tidied: one variable per line, properly tested</p></li>
-</ul>
-</section>
-<section id="planned-additions">
-<h4>Planned — Additions<a class="headerlink" href="#planned-additions" title="Link to this heading">¶</a></h4>
-<ul class="simple">
-<li><p>CHANGELOG reference to be added to README and Sphinx docs</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">output_midi</span></code>, <code class="docutils literal notranslate"><span class="pre">output_json</span></code>, <code class="docutils literal notranslate"><span class="pre">output_xml</span></code> flags to be added to <code class="docutils literal notranslate"><span class="pre">transcribe()</span></code> for multi-format export</p></li>
-<li><p><strong>PR #273 by nanaoto</strong> — IDMT-SMT-Drums V2 benchmark runner with <code class="docutils literal notranslate"><span class="pre">mir_eval</span></code> scaffolding (pending final review and merge)</p>
-<ul>
-<li><p><code class="docutils literal notranslate"><span class="pre">benchmarks/run.py</span></code> entrypoint with dataset adapter dispatch</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">drumscript/datasets/</span></code> package: <code class="docutils literal notranslate"><span class="pre">BenchmarkItem</span></code> dataclass and IDMT adapter</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">benchmarks/README.md</span></code> documenting conventions and dataset setup</p></li>
-<li><p>Unit tests for benchmark runner and IDMT dataset adapter</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">mir_eval</span></code> added as a dev dependency</p></li>
-</ul>
-</li>
-</ul>
-</section>
-<section id="id1">
-<h4>Added<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h4>
+<section id="added">
+<h4>Added<a class="headerlink" href="#added" title="Link to this heading">¶</a></h4>
 <ul class="simple">
 <li><p>Deprecation shim for <code class="docutils literal notranslate"><span class="pre">full</span></code> parameter on the Python API:</p>
 <ul>
@@ -412,15 +368,17 @@ DrumScript follows <a class="reference external" href="https://semver.org/">Sema
 <li><p>Docstrings updated to mark <code class="docutils literal notranslate"><span class="pre">verbose</span></code> as primary and <code class="docutils literal notranslate"><span class="pre">full</span></code> as deprecated</p></li>
 </ul>
 </li>
-<li><p>New unit test file <code class="docutils literal notranslate"><span class="pre">tests/unit/test_deprecation_warnings.py</span></code> covers:</p>
+<li><p><strong>PR #273 by nanaoto</strong> — IDMT-SMT-Drums V2 benchmark runner with <code class="docutils literal notranslate"><span class="pre">mir_eval</span></code> scaffolding:</p>
 <ul>
-<li><p><code class="docutils literal notranslate"><span class="pre">verbose=True</span></code> works without warning</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">full=True</span></code> still works but emits the warning</p></li>
-<li><p>Warning text mentions <code class="docutils literal notranslate"><span class="pre">verbose</span></code>, <code class="docutils literal notranslate"><span class="pre">v1.0.0</span></code>, and the function name</p></li>
-<li><p>Passing both raises <code class="docutils literal notranslate"><span class="pre">TypeError</span></code></p></li>
-<li><p>Signature-level wiring checks confirm both parameters exist on all three wrappers</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">benchmarks/run.py</span></code> entrypoint with dataset adapter dispatch, evaluation loop, CSV/JSON archive with git commit tracking</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">drumscript/datasets/</span></code> package: <code class="docutils literal notranslate"><span class="pre">BenchmarkItem</span></code> dataclass and IDMT adapter (XML/SVL annotation parsing)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">benchmarks/README.md</span></code> documenting conventions, dataset setup, and planned dataset coverage</p></li>
+<li><p>Unit tests for benchmark runner (<code class="docutils literal notranslate"><span class="pre">test_benchmarks_run.py</span></code>) and IDMT dataset adapter (<code class="docutils literal notranslate"><span class="pre">test_idmt_dataset.py</span></code>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">mir_eval</span></code> added as a dev dependency</p></li>
 </ul>
 </li>
+<li><p>New unit test file <code class="docutils literal notranslate"><span class="pre">tests/unit/test_deprecation_warnings.py</span></code> (13 tests)</p></li>
+<li><p>New unit test file <code class="docutils literal notranslate"><span class="pre">tests/unit/test_cli_args.py</span></code> (4 tests)</p></li>
 </ul>
 </section>
 <section id="fixed">
@@ -428,7 +386,6 @@ DrumScript follows <a class="reference external" href="https://semver.org/">Sema
 <ul class="simple">
 <li><p>Commented-out dead code removed from <code class="docutils literal notranslate"><span class="pre">drumscript/__init__.py</span></code> and <code class="docutils literal notranslate"><span class="pre">drumscript/main.py</span></code></p></li>
 <li><p>Flag inconsistency between <code class="docutils literal notranslate"><span class="pre">drumscript/main.py</span></code> and <code class="docutils literal notranslate"><span class="pre">drumscript/__init__.py</span></code> resolved: <code class="docutils literal notranslate"><span class="pre">argparse</span></code> in main block updated so the CLI flag is now <code class="docutils literal notranslate"><span class="pre">--full-song</span></code> (hyphenated, consistent with <code class="docutils literal notranslate"><span class="pre">--all-stems</span></code>). Auto-converts to <code class="docutils literal notranslate"><span class="pre">args.full_song</span></code> matching the Python API parameter name.</p></li>
-<li><p>Regression test added (<code class="docutils literal notranslate"><span class="pre">tests/unit/test_cli_args.py</span></code>) locking in <code class="docutils literal notranslate"><span class="pre">--full-song</span></code> as the canonical CLI flag</p></li>
 </ul>
 </section>
 </section>
@@ -436,22 +393,38 @@ DrumScript follows <a class="reference external" href="https://semver.org/">Sema
 <section id="july-august-2026-target-tbd">
 <h3>[0.2.0] - July/August 2026 - Target: TBD<a class="headerlink" href="#july-august-2026-target-tbd" title="Link to this heading">¶</a></h3>
 <blockquote>
-<div><p>First minor-version bump. Signals the start of the breaking-change track ahead of v1.0.0 beta.</p>
+<div><p>First minor-version bump.</p>
+<!--> Signals the start of the breaking-change track for --full flag (replaced by --verbose) ahead of v1.0.0 beta.-->
 </div></blockquote>
-<section id="id2">
-<h4>Planned — Additions<a class="headerlink" href="#id2" title="Link to this heading">¶</a></h4>
+<section id="planned-bug-fixes">
+<h4>Planned — Bug Fixes<a class="headerlink" href="#planned-bug-fixes" title="Link to this heading">¶</a></h4>
 <ul class="simple">
-<li><p>Expanded benchmark dataset coverage (ENST-Drums, MDB-Drums) building on the IDMT-SMT-Drums V2 foundation shipped in v0.1.6</p></li>
-<li><p>Code-to-DrumScript label mapping expanded beyond <code class="docutils literal notranslate"><span class="pre">KD</span></code>/<code class="docutils literal notranslate"><span class="pre">SD</span></code>/<code class="docutils literal notranslate"><span class="pre">HH</span></code> to cover full-kit classes (toms, crash, ride)</p></li>
+<li><p>Cymbal and hi-hat stem rendering: note tails and heads correctly aligned</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ds.transcribe()</span></code> only outputs PDF, not the documented <code class="docutils literal notranslate"><span class="pre">.json</span></code> / <code class="docutils literal notranslate"><span class="pre">.midi</span></code> / <code class="docutils literal notranslate"><span class="pre">.xml</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">main.py</span></code> structural bug: duplicated pipeline inside <code class="docutils literal notranslate"><span class="pre">except</span></code> block needs removing, error handling needs restructuring</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">drumscript/main.py</span></code> (~line 26) <code class="docutils literal notranslate"><span class="pre">.wav</span></code> comment. Check if this is actually true across all scripts in <code class="docutils literal notranslate"><span class="pre">drumscript/</span></code> modular code.</p></li>
 </ul>
 </section>
-<section id="id3">
-<h4>Planned — Changes<a class="headerlink" href="#id3" title="Link to this heading">¶</a></h4>
+<section id="planned-changes">
+<h4>Planned — Changes<a class="headerlink" href="#planned-changes" title="Link to this heading">¶</a></h4>
 <ul class="simple">
+<li><p>Transcription function docstrings to be updated to make clear that drum-only audio is expected as standard input</p></li>
+<li><p>README to be updated to clarify expected input for transcription functions</p></li>
+<li><p>Example notebooks to be updated to reflect expected drum-only audio input</p></li>
+<li><p>Better audio samples needed for runbooks — not synthetic, which has created messy outputs</p></li>
+<li><p>Runbook presentation to be tidied: one variable per line, properly tested</p></li>
 <li><p>Improve documentation: clearer docstrings for the <code class="docutils literal notranslate"><span class="pre">rudiment</span></code> flag/functionality</p></li>
 <li><p>Check if <code class="docutils literal notranslate"><span class="pre">is_rudiment</span></code> applies to <code class="docutils literal notranslate"><span class="pre">score_builder</span></code> function — is it relevant, per <code class="docutils literal notranslate"><span class="pre">drumscript/main.py</span></code>?</p></li>
-<li><p>QA check on recent GitHub release notes: https://github.blog/changelog/2026-05-15-github-app-installation-tokens-per-request-override-header/</p></li>
 <li><p>Refactor <code class="docutils literal notranslate"><span class="pre">main.py</span></code> argparse block into a <code class="docutils literal notranslate"><span class="pre">build_parser()</span></code> function so <code class="docutils literal notranslate"><span class="pre">tests/unit/test_cli_args.py</span></code> can import the real parser instead of mirroring it</p></li>
+</ul>
+</section>
+<section id="planned-additions">
+<h4>Planned — Additions<a class="headerlink" href="#planned-additions" title="Link to this heading">¶</a></h4>
+<ul class="simple">
+<li><p>CHANGELOG reference to be added to README and Sphinx docs</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">output_midi</span></code>, <code class="docutils literal notranslate"><span class="pre">output_json</span></code>, <code class="docutils literal notranslate"><span class="pre">output_xml</span></code> flags to be added to <code class="docutils literal notranslate"><span class="pre">transcribe()</span></code> for multi-format export</p></li>
+<li><p>Expanded benchmark dataset coverage (ENST-Drums, MDB-Drums) building on the IDMT-SMT-Drums V2 foundation shipped in v0.1.6</p></li>
+<li><p>Code-to-DrumScript label mapping expanded beyond <code class="docutils literal notranslate"><span class="pre">KD</span></code>/<code class="docutils literal notranslate"><span class="pre">SD</span></code>/<code class="docutils literal notranslate"><span class="pre">HH</span></code> to cover full-kit classes (toms, crash, ride)</p></li>
 </ul>
 </section>
 <section id="planned-investigation">
@@ -522,10 +495,10 @@ DrumScript follows <a class="reference external" href="https://semver.org/">Sema
   </svg>
   <span>Back to top</span>
 </button><div class="navigation flex print:hidden"><div class="navigation-prev">
-    <a href="release_notes/0.1.5.html">
+    <a href="release_notes/0.1.6.html">
       <i class="i-lucide chevron-left"></i>
       <div class="page-info">
-        <span>Previous</span><div class="title">v0.1.5 (Alpha)</div></div>
+        <span>Previous</span><div class="title">v0.1.6 (Alpha)</div></div>
     </a>
   </div></div></div>
     </div>
@@ -551,7 +524,7 @@ DrumScript follows <a class="reference external" href="https://semver.org/">Sema
     </div>
   </div>
 </footer>
-      <script src="_static/documentation_options.js?v=59fadc99"></script>
+      <script src="_static/documentation_options.js?v=6e0256f3"></script>
       <script src="_static/doctools.js?v=fd6eb6e6"></script>
       <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script src="_static/shibuya.js?v=50760d75"></script></body>

@@ -2,7 +2,7 @@
 <html lang="en" data-accent-color="violet" data-content_root="../">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"><title>drumscript.transcribe - DrumScript 0.1.5 documentation</title><link rel="author" title="About these documents" href="../about.html" /><link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="drumscript.extract_stems" href="drumscript.extract_stems.html" /><link rel="prev" title="drumscript.notation_generator.constants" href="drumscript.notation_generator.constants.html" /><script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"><title>drumscript.transcribe - DrumScript 0.1.6 documentation</title><link rel="author" title="About these documents" href="../about.html" /><link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="drumscript.extract_stems" href="drumscript.extract_stems.html" /><link rel="prev" title="drumscript.notation_generator.constants" href="drumscript.notation_generator.constants.html" /><script>
     function setColorMode(t){let e=document.documentElement;e.setAttribute("data-color-mode",t);let a=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches,s=t;"auto"===t&&(s=a?"dark":"light"),"light"===s?(e.classList.remove("dark"),e.classList.add("light")):(e.classList.remove("light"),e.classList.add("dark"))}
     setColorMode(localStorage._theme||"auto");
   </script><link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=e1a1ceaf" />
@@ -211,6 +211,7 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l2"><a class="reference internal" href="../release_notes/0.1.3.html">v0.1.3 (Pre-Alpha)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../release_notes/0.1.4.html">v0.1.4 (Alpha)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../release_notes/0.1.5.html">v0.1.5 (Alpha)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes/0.1.6.html">v0.1.6 (Alpha)</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a></li>
@@ -323,7 +324,7 @@ data-aria-dark="Switch to auto color mode">
 <h1>drumscript.transcribe<a class="headerlink" href="#drumscript-transcribe" title="Link to this heading">¶</a></h1>
 <dl class="py function">
 <dt class="sig sig-object py" id="drumscript.transcribe">
-<span class="sig-name descname"><span class="pre">transcribe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">audio_path</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">full_song</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_signature</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'4/4'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_rudiment</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'outputs'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">full</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/drumscript.html#transcribe"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drumscript.transcribe" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">transcribe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">audio_path</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">full_song</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_signature</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'4/4'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_rudiment</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'outputs'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">full</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/drumscript.html#transcribe"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drumscript.transcribe" title="Link to this definition">¶</a></dt>
 <dd><p>Run the full DrumScript transcription pipeline end-to-end.</p>
 <p>Loads audio → optionally extracts the drum stem → detects tempo and onsets →
 classifies hits → builds the score → writes PDF output.</p>
@@ -340,12 +341,15 @@ single beats and rudiments rather than full polyphonic drum patterns.</p></li>
 Defaults to ‘outputs/’.</p></li>
 <li><p><strong>output_filename</strong> (<em>str</em><em>, </em><em>optional</em>) – Output filename without extension. Defaults to
 ‘&lt;input_stem&gt;_transcription’.</p></li>
-<li><p><strong>full</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, return a dict with all intermediate results (tempo, onsets,
+<li><p><strong>verbose</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, return a dict with all intermediate results (tempo, onsets,
 events, paths) instead of just the PDF path.</p></li>
+<li><p><strong>full</strong> – <strong>Deprecated</strong> since v0.1.6, will be removed in v1.0.0. Use <code class="docutils literal notranslate"><span class="pre">verbose</span></code>
+instead. Passing <code class="docutils literal notranslate"><span class="pre">full=True</span></code> still works but emits a <code class="docutils literal notranslate"><span class="pre">DeprecationWarning</span></code>.
+Note: this is unrelated to <code class="docutils literal notranslate"><span class="pre">full_song</span></code>, which controls stem separation.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Path to the generated PDF, or a dict of full results if full=True.</p>
+<dd class="field-even"><p>Path to the generated PDF, or a dict of full results if <code class="docutils literal notranslate"><span class="pre">verbose=True</span></code>.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>str or dict</p>
@@ -363,11 +367,12 @@ events, paths) instead of just the PDF path.</p></li>
 </span><span data-line="3">    <span class="n">full_song</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
 </span><span data-line="4">    <span class="n">time_signature</span><span class="o">=</span><span class="s2">&quot;6/8&quot;</span><span class="p">,</span>
 </span><span data-line="5">    <span class="n">output_dir</span><span class="o">=</span><span class="s2">&quot;./my_transcriptions&quot;</span><span class="p">,</span>
-</span><span data-line="6">    <span class="n">full</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-</span><span data-line="7"><span class="p">)</span>
-</span><span data-line="8"><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;PDF: </span><span class="si">{</span><span class="n">result</span><span class="p">[</span><span class="s1">&#39;pdf_path&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-</span><span data-line="9"><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Detected tempo: </span><span class="si">{</span><span class="n">result</span><span class="p">[</span><span class="s1">&#39;tempo&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> BPM&quot;</span><span class="p">)</span>
-</span><span data-line="10"><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Onsets: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s1">&#39;onsets&#39;</span><span class="p">])</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span data-line="6">    <span class="c1"># full=True, # LEGACY CODE FROM V0.1.5 (--full flag replaced with deprecation shim, in place of --verbose)</span>
+</span><span data-line="7">    <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span>
+</span><span data-line="8"><span class="p">)</span>
+</span><span data-line="9"><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;PDF: </span><span class="si">{</span><span class="n">result</span><span class="p">[</span><span class="s1">&#39;pdf_path&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span data-line="10"><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Detected tempo: </span><span class="si">{</span><span class="n">result</span><span class="p">[</span><span class="s1">&#39;tempo&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> BPM&quot;</span><span class="p">)</span>
+</span><span data-line="11"><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Onsets: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s1">&#39;onsets&#39;</span><span class="p">])</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </span></pre></div>
 </div>
 </dd></dl>
@@ -417,7 +422,7 @@ events, paths) instead of just the PDF path.</p></li>
     </div>
   </div>
 </footer>
-      <script src="../_static/documentation_options.js?v=59fadc99"></script>
+      <script src="../_static/documentation_options.js?v=6e0256f3"></script>
       <script src="../_static/doctools.js?v=fd6eb6e6"></script>
       <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script src="../_static/shibuya.js?v=50760d75"></script></body>

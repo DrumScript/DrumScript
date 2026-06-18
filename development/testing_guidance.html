@@ -2,7 +2,7 @@
 <html lang="en" data-accent-color="violet" data-content_root="../">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Testing Guidance - DrumScript 0.1.5 documentation</title><link rel="author" title="About these documents" href="../about.html" /><link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Runbooks" href="../guide/interactive/index.html" /><link rel="prev" title="Documentation" href="documentation.html" /><script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Testing Guidance - DrumScript 0.1.6 documentation</title><link rel="author" title="About these documents" href="../about.html" /><link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Runbooks" href="../guide/interactive/index.html" /><link rel="prev" title="Documentation" href="documentation.html" /><script>
     function setColorMode(t){let e=document.documentElement;e.setAttribute("data-color-mode",t);let a=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches,s=t;"auto"===t&&(s=a?"dark":"light"),"light"===s?(e.classList.remove("dark"),e.classList.add("light")):(e.classList.remove("light"),e.classList.add("dark"))}
     setColorMode(localStorage._theme||"auto");
   </script><link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=e1a1ceaf" />
@@ -211,6 +211,7 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l2"><a class="reference internal" href="../release_notes/0.1.3.html">v0.1.3 (Pre-Alpha)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../release_notes/0.1.4.html">v0.1.4 (Alpha)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../release_notes/0.1.5.html">v0.1.5 (Alpha)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes/0.1.6.html">v0.1.6 (Alpha)</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a></li>
@@ -241,8 +242,12 @@ data-aria-dark="Switch to auto color mode">
 <li><a class="reference internal" href="#parametrised-tests">Parametrised tests</a></li>
 <li><a class="reference internal" href="#approximate-snapshot-tests-for-dsp-code">Approximate snapshot tests for DSP code</a></li>
 <li><a class="reference internal" href="#mocking-subprocess-calls">Mocking subprocess calls</a></li>
+<li><a class="reference internal" href="#asserting-on-warnings">Asserting on warnings</a></li>
 </ul>
 </li>
+<li><a class="reference internal" href="#the-match-argument-is-a-regex-against-the-warning-message-useful-for-locking-in-that-the-warning-text-actually-points-users-at-the-replacement">The <code class="docutils literal notranslate"><span class="pre">match</span></code> argument is a regex against the warning message &#8212; useful for
+locking in that the warning text actually points users at the replacement.</a></li>
+<li><a class="reference internal" href="#regression-tests">Regression tests</a></li>
 <li><a class="reference internal" href="#coverage-reports">Coverage Reports</a></li>
 <li><a class="reference internal" href="#common-pitfalls">Common Pitfalls</a></li>
 <li><a class="reference internal" href="#continuous-integration">Continuous Integration</a></li>
@@ -338,7 +343,7 @@ data-aria-dark="Switch to auto color mode">
           <section id="testing-guidance">
 <h1>Testing Guidance<a class="headerlink" href="#testing-guidance" title="Link to this heading">¶</a></h1>
 <!--date_created: sat-21-june-2025-->
-<!--date_updated: thurs-30-apr-2026-->
+<!--date_updated: thurs-18-june-2026-->
 <p>DrumScript ships with a <a class="reference external" href="https://docs.pytest.org/">pytest</a> test suite organised
 around a clear separation between <strong>fast unit tests</strong> and <strong>slower integration
 tests</strong>. This page covers the <em>philosophy</em> and <em>contribution conventions</em> for
@@ -346,11 +351,10 @@ the suite. For a copy-pasteable command reference, see the
 <a class="reference external" href="https://github.com/DrumScript/DrumScript/tree/main/tests#readme">tests README on GitHub</a>.</p>
 <ul class="simple">
 <li><p><strong><a class="reference internal" href="#the-test-pyramid">The Test Pyramid</a></strong></p></li>
-<li><p><strong><a class="reference internal" href="#modules"><span class="xref myst">Modules</span></a></strong></p></li>
 <li><p><strong><a class="reference internal" href="#suite-layout">Suite layout</a></strong></p></li>
-<li><p><strong><a class="reference internal" href="#markers">Markers</a></strong></p></li>
 <li><p><strong><a class="reference internal" href="#writing-a-new-test">Writing a new test</a></strong></p></li>
 <li><p><strong><a class="reference internal" href="#patterns-you-ll-use-often">Patterns you’ll use often</a></strong></p></li>
+<li><p><strong><a class="reference internal" href="#regression-tests">Regression tests</a></strong></p></li>
 <li><p><strong><a class="reference internal" href="#coverage-reports">Coverage reports</a></strong></p></li>
 <li><p><strong><a class="reference internal" href="#common-pitfalls">Common pitfalls</a></strong></p></li>
 <li><p><strong><a class="reference internal" href="#continuous-integration">Continuous integration</a></strong></p></li>
@@ -367,19 +371,19 @@ the suite. For a copy-pasteable command reference, see the
 <thead>
 <tr class="row-odd"><th class="head"><p>Layer</p></th>
 <th class="head"><p>Speed</p></th>
-<th class="head"><p>Volume</p></th>
+<th class="head"><p>Volume (as of v0.1.6)</p></th>
 <th class="head"><p>What it covers</p></th>
 </tr>
 </thead>
 <tbody>
 <tr class="row-even"><td><p><strong>Unit</strong></p></td>
 <td><p>milliseconds</p></td>
-<td><p>many (~75 tests)</p></td>
+<td><p>~131 cases across 11 files</p></td>
 <td><p>Pure functions, helper logic, no I/O</p></td>
 </tr>
 <tr class="row-odd"><td><p><strong>Integration</strong></p></td>
 <td><p>seconds–minutes</p></td>
-<td><p>few (~8 tests)</p></td>
+<td><p>~8 cases</p></td>
 <td><p>Real Demucs runs, real ffmpeg, real files</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>End-to-end</strong></p></td>
@@ -391,8 +395,8 @@ the suite. For a copy-pasteable command reference, see the
 </table>
 </div>
 <p>The dev loop (<code class="docutils literal notranslate"><span class="pre">pytest</span> <span class="pre">-m</span> <span class="pre">&quot;not</span> <span class="pre">slow&quot;</span></code>) runs only the unit layer, which finishes
-in well under 5 seconds. Integration tests are opt-in, so they don’t slow down
-day-to-day development but can be triggered before a release with a plain
+in well under 10 seconds. Integration tests are opt-in, so they don’t slow
+down day-to-day development but can be triggered before a release with a plain
 <code class="docutils literal notranslate"><span class="pre">pytest</span></code>.</p>
 <div class="tip admonition">
 <p class="admonition-title">Why this matters</p>
@@ -409,14 +413,24 @@ when something fails. Unit tests catch <em>most</em> bugs <em>much</em> faster.<
 </span><span data-line="2">├── conftest.py              ← shared fixtures (auto-discovered)
 </span><span data-line="3">├── fixtures/audio/          ← real audio files (empty; synthesised in conftest)
 </span><span data-line="4">├── unit/                    ← fast, no I/O, no subprocess
-</span><span data-line="5">│   ├── test_audio_loader.py
-</span><span data-line="6">│   ├── test_helpers.py
-</span><span data-line="7">│   ├── test_stem_splitter_helpers.py
-</span><span data-line="8">│   ├── test_tempo_detector.py
-</span><span data-line="9">│   ├── test_onset_detector.py
-</span><span data-line="10">│   └── test_classify.py
-</span><span data-line="11">└── integration/             ← real Demucs / ffmpeg / files (slow)
-</span><span data-line="12">    └── test_stem_splitter_real.py
+</span><span data-line="5">tests/
+</span><span data-line="6">├── README.md
+</span><span data-line="7">├── conftest.py
+</span><span data-line="8">└── unit
+</span><span data-line="9">    ├── __init__.py
+</span><span data-line="10">    ├── test_audio_loader.py
+</span><span data-line="11">    ├── test_benchmarks_run.py
+</span><span data-line="12">    ├── test_classify.py
+</span><span data-line="13">    ├── test_cli_args.py
+</span><span data-line="14">    ├── test_deprecation_warnings.py
+</span><span data-line="15">    ├── test_helpers.py
+</span><span data-line="16">    ├── test_idmt_dataset.py
+</span><span data-line="17">    ├── test_onset_detector.py
+</span><span data-line="18">    ├── test_stem_splitter_helpers.py
+</span><span data-line="19">    ├── test_tempo_detector.py
+</span><span data-line="20">    └── test_transcribe.py
+</span><span data-line="21">└── integration/             ← Demucs / ffmpeg / files (slow)
+</span><span data-line="22">    └── test_stem_splitter_real.py
 </span></pre></div>
 </div>
 <p>Tests are auto-discovered by pytest — any file matching <code class="docutils literal notranslate"><span class="pre">test_*.py</span></code> under
@@ -426,7 +440,7 @@ when adding new files.</p>
 <hr class="docutils" />
 <section id="markers">
 <h2>Markers<a class="headerlink" href="#markers" title="Link to this heading">¶</a></h2>
-<p>Two custom markers are defined in <code class="docutils literal notranslate"><span class="pre">pytest.ini</span></code>:</p>
+<p>Two custom markers are defined in <code class="docutils literal notranslate"><span class="pre">pyproject.toml</span></code> (under <code class="docutils literal notranslate"><span class="pre">[tool.pytest.ini_options]</span></code>):</p>
 <p><code class="docutils literal notranslate"><span class="pre">&#64;pytest.mark.slow</span></code>
 : Tests that take more than a second or two. Skipped by default during
 development.</p>
@@ -445,9 +459,9 @@ files. Always combined with <code class="docutils literal notranslate"><span cla
 </div>
 <div class="note admonition">
 <p class="admonition-title">Strict markers</p>
-<p><code class="docutils literal notranslate"><span class="pre">pytest.ini</span></code> enables <code class="docutils literal notranslate"><span class="pre">--strict-markers</span></code>, which means typos like
+<p>The pytest configuration enables <code class="docutils literal notranslate"><span class="pre">--strict-markers</span></code>, which means typos like
 <code class="docutils literal notranslate"><span class="pre">&#64;pytest.mark.slwo</span></code> will fail loudly instead of silently applying to nothing.
-If you add a new marker category, register it in <code class="docutils literal notranslate"><span class="pre">pytest.ini</span></code> first.</p>
+If you add a new marker category, register it in <code class="docutils literal notranslate"><span class="pre">pyproject.toml</span></code> first.</p>
 </div>
 </section>
 <hr class="docutils" />
@@ -542,6 +556,7 @@ Single-use fixtures belong in the test file itself.</p>
 <hr class="docutils" />
 <section id="patterns-you-ll-use-often">
 <h2>Patterns You’ll Use Often<a class="headerlink" href="#patterns-you-ll-use-often" title="Link to this heading">¶</a></h2>
+<p><a class="reference internal" href="#testing-guidance"><em>back to top</em></a></p>
 <section id="parametrised-tests">
 <h3>Parametrised tests<a class="headerlink" href="#parametrised-tests" title="Link to this heading">¶</a></h3>
 <p>When the same logic needs to be checked against many inputs, use
@@ -580,6 +595,42 @@ too slow. Instead, they mock <code class="docutils literal notranslate"><span cl
 constructed</em>. The real Demucs run lives in
 <code class="docutils literal notranslate"><span class="pre">tests/integration/test_stem_splitter_real.py</span></code>.</p>
 </section>
+<section id="asserting-on-warnings">
+<h3>Asserting on warnings<a class="headerlink" href="#asserting-on-warnings" title="Link to this heading">¶</a></h3>
+<p>When testing deprecated APIs or other code paths that should emit warnings,
+use <code class="docutils literal notranslate"><span class="pre">pytest.warns()</span></code> rather than <code class="docutils literal notranslate"><span class="pre">try</span></code>/<code class="docutils literal notranslate"><span class="pre">except</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="k">def</span><span class="w"> </span><span class="nf">test_deprecated_param_warns</span><span class="p">():</span>
+</span><span data-line="2">    <span class="k">with</span> <span class="n">pytest</span><span class="o">.</span><span class="n">warns</span><span class="p">(</span><span class="ne">DeprecationWarning</span><span class="p">,</span> <span class="n">match</span><span class="o">=</span><span class="s2">&quot;verbose&quot;</span><span class="p">):</span>
+</span><span data-line="3">        <span class="n">ds</span><span class="o">.</span><span class="n">detect_tempo</span><span class="p">(</span><span class="n">audio</span><span class="p">,</span> <span class="n">full</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span></pre></div>
+</div>
+</section>
+</section>
+<section id="the-match-argument-is-a-regex-against-the-warning-message-useful-for-locking-in-that-the-warning-text-actually-points-users-at-the-replacement">
+<h2>The <code class="docutils literal notranslate"><span class="pre">match</span></code> argument is a regex against the warning message — useful for
+locking in that the warning text actually points users at the replacement.<a class="headerlink" href="#the-match-argument-is-a-regex-against-the-warning-message-useful-for-locking-in-that-the-warning-text-actually-points-users-at-the-replacement" title="Link to this heading">¶</a></h2>
+</section>
+<section id="regression-tests">
+<h2>Regression tests<a class="headerlink" href="#regression-tests" title="Link to this heading">¶</a></h2>
+<p><a class="reference internal" href="#testing-guidance"><em>back to top</em></a></p>
+<p>Some test files exist specifically to lock in behaviour that was previously
+inconsistent, ambiguous, or breaking. They sit alongside the normal unit tests
+but should not be removed without a deliberate decision:</p>
+<p><code class="docutils literal notranslate"><span class="pre">test_cli_args.py</span></code>
+: Locks in <code class="docutils literal notranslate"><span class="pre">--full-song</span></code> (hyphenated) as the canonical CLI flag after the
+v0.1.6 rename from <code class="docutils literal notranslate"><span class="pre">--full</span></code>. Also asserts that the underscore variant
+<code class="docutils literal notranslate"><span class="pre">--full_song</span></code> is rejected, and documents that <code class="docutils literal notranslate"><span class="pre">--full</span></code> continues to work
+as a backwards-compat prefix.</p>
+<p><code class="docutils literal notranslate"><span class="pre">test_deprecation_warnings.py</span></code>
+: Locks in the <code class="docutils literal notranslate"><span class="pre">full</span></code> → <code class="docutils literal notranslate"><span class="pre">verbose</span></code> deprecation shim on the Python API
+(<code class="docutils literal notranslate"><span class="pre">transcribe</span></code>, <code class="docutils literal notranslate"><span class="pre">extract_stems</span></code>, <code class="docutils literal notranslate"><span class="pre">detect_tempo</span></code>). Asserts that <code class="docutils literal notranslate"><span class="pre">full=True</span></code>
+still works, emits a <code class="docutils literal notranslate"><span class="pre">DeprecationWarning</span></code>, and that the warning text
+mentions both the replacement parameter (<code class="docutils literal notranslate"><span class="pre">verbose</span></code>) and the removal
+version (v1.0.0). Delete (or flip to expect <code class="docutils literal notranslate"><span class="pre">TypeError</span></code>) when <code class="docutils literal notranslate"><span class="pre">full</span></code> is
+removed in v1.0.0.</p>
+<p>When you find a class of bug that previously slipped through, the corresponding
+test belongs here too — not just as a pass/fail check, but with comments
+explaining <em>why</em> the test exists so it isn’t deleted by accident later.</p>
 </section>
 <hr class="docutils" />
 <section id="coverage-reports">
@@ -613,19 +664,25 @@ fixtures and synthesise the rest in <code class="docutils literal notranslate"><
 <li><p><strong>Don’t write the test only after the bug.</strong> When you fix a bug, write the
 test that <em>would have caught it</em>. This is the single most valuable kind of
 test you can add.</p></li>
+<li><p><strong>Don’t conflate filter configuration with behaviour.</strong> Tests that use
+<code class="docutils literal notranslate"><span class="pre">pytest.warns()</span></code> and <code class="docutils literal notranslate"><span class="pre">recwarn</span></code> capture warnings regardless of how Python’s
+warning filters are configured. Don’t add <code class="docutils literal notranslate"><span class="pre">warnings.simplefilter(&quot;always&quot;)</span></code>
+inside tests — pytest handles this for you.</p></li>
 </ol>
 </section>
 <hr class="docutils" />
 <section id="continuous-integration">
 <h2>Continuous Integration<a class="headerlink" href="#continuous-integration" title="Link to this heading">¶</a></h2>
-<p>CI configuration is on the roadmap. The intended setup is:</p>
+<p>CI runs via GitHub Actions on every push and pull request. The current
+configuration:</p>
 <ul class="simple">
-<li><p>Run <code class="docutils literal notranslate"><span class="pre">pytest</span> <span class="pre">-m</span> <span class="pre">&quot;not</span> <span class="pre">slow&quot;</span></code> on every push and pull request</p></li>
-<li><p>Run the full suite (<code class="docutils literal notranslate"><span class="pre">pytest</span></code>) on tagged release commits</p></li>
-<li><p>Publish coverage reports as a build artifact</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pytest</span> <span class="pre">-m</span> <span class="pre">&quot;not</span> <span class="pre">slow&quot;</span></code> runs on every push and pull request via
+<code class="docutils literal notranslate"><span class="pre">.github/workflows/tests.yml</span></code></p></li>
+<li><p>Full suite (<code class="docutils literal notranslate"><span class="pre">pytest</span></code>) runs on tagged release commits</p></li>
+<li><p>Publish (<code class="docutils literal notranslate"><span class="pre">.github/workflows/publish.yml</span></code>) runs on release creation</p></li>
 </ul>
-<p>Until CI is in place, contributors are expected to run <code class="docutils literal notranslate"><span class="pre">pytest</span> <span class="pre">-m</span> <span class="pre">&quot;not</span> <span class="pre">slow&quot;</span></code>
-locally before opening a pull request.</p>
+<p>Contributors should still run <code class="docutils literal notranslate"><span class="pre">pytest</span> <span class="pre">-m</span> <span class="pre">&quot;not</span> <span class="pre">slow&quot;</span></code> locally before opening
+a pull request so the feedback loop is fast.</p>
 </section>
 <hr class="docutils" />
 <section id="see-also">
@@ -797,7 +854,6 @@ Tempogram saved to: `DrumScript/visuals/tempogram.png`
 **PLEASE NOTE:**[Testing instructions to be added for the new rule-based classifier scripts: `classify.py` and `generate_score.py`]
 
 <!--TO DO: Add in (any) missing fcts and modules-->
-<p>–&gt;</p>
 <hr class="docutils" />
 <!--END--></section>
 </section>
@@ -845,7 +901,7 @@ Tempogram saved to: `DrumScript/visuals/tempogram.png`
     </div>
   </div>
 </footer>
-      <script src="../_static/documentation_options.js?v=59fadc99"></script>
+      <script src="../_static/documentation_options.js?v=6e0256f3"></script>
       <script src="../_static/doctools.js?v=fd6eb6e6"></script>
       <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script src="../_static/shibuya.js?v=50760d75"></script></body>

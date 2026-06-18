@@ -14,23 +14,21 @@ DrumScript/
 └── tests/
     ├── __init__.py
     ├── README.md                           ← you are here
-    ├── conftest.py                         ← shared fixtures (auto-discovered)
+    ├── conftest.py                         ← shared fixtures
     ├── fixtures/
     │   └── audio/                          ← real audio files
     │                                         (empty; synthesised in conftest)
     ├── unit/                               ← fast, no I/O, no subprocess
     │   ├── __init__.py
     │   ├── test_audio_loader.py            ← 13 tests
-    │   ├── test_benchmarks_run.py            (adding in v0.1.6)
+    │   ├── test_benchmarks_run.py          ←  6 tests (added v0.1.6,{PR#273})
     │   ├── test_classify.py                ← 24 tests
-    │   ├── test_cli_args.py                ←  4 tests (adding in v0.1.6)
-    │   ├── test_deprecation_warnings.py    ← 13 tests (adding v0.1.6)
+    │   ├── test_cli_args.py                ←  4 tests (added v0.1.6)
+    │   ├── test_deprecation_warnings.py    ← 13 tests (added v0.1.6)
     │   ├── test_helpers.py                 ← 24 tests
-    │   ├── test_idmt_dataset.py         
-
-     test_idmt_dataset.py 
+    │   ├── test_idmt_dataset.py            ←  4 tests  (added v0.1.6,{PR#273})
     │   ├── test_onset_detector.py          ←  7 tests
-    │   ├── test_stem_splitter_helpers.py   ← 17 tests (includes regression)
+    │   ├── test_stem_splitter_helpers.py    ← 17 tests (includes regression)
     │   ├── test_tempo_detector.py          ←  6 tests
     │   └── test_transcribe.py              ← 13 tests
     └── integration/                        ← real Demucs / ffmpeg / files (slow)
@@ -38,8 +36,9 @@ DrumScript/
         └── test_stem_splitter_real.py      ←  8 tests
 ```
 
-> **Note:** Counts above reflect pytest's collected case count, ie parametrized
-> tests are expanded into their individual cases. Unit total: **150** cases.
+> **Note:** Counts above reflect pytest's collected case count, ie parametrised
+> tests are expanded into their individual cases. Unit total: **131** cases
+> across **11** files. 
 > Integration total: **8** cases.
 
 
@@ -74,11 +73,12 @@ The `[dev]` group installs:
 1. Documentation tooling (`shibuya`, `myst-parser`)
 2. Testing suite (`pytest`, `pytest-cov`)
 3. Jupyter support (`ipykernel`) — convenience only
-4. Benchmarking (`mir_eval` — for benchmark runners under `benchmarks/`) *forthcoming*
+4. Benchmarking (`mir_eval` — for benchmark runners under `benchmarks/`)
 
 > **Note:** `ipykernel`/Jupyter is a convenience package; **`.ipynb` files must never be committed**. PRs containing `.ipynb` files (or their metadata) will not be reviewed until they are removed.
 
---
+---
+
 ## Quick start
 
 > * Install [`dev`] dependencies:  `uv sync --extra dev`
@@ -118,11 +118,11 @@ The recommended way is via the runner script:
 ./scripts/run_tests.sh --help           # Show all options
 ```
 
-Logs are written to `logs/tests/<timestamp>/`.
+Per-file logs are written to `scripts/logs/tests/<timestamp>/`.
 
 For one-off direct pytest runs, see [Quick start](#quick-start).
 
---- 
+---
 
 ## Markers
 
@@ -148,7 +148,8 @@ pytest -m integration
 
 
 1. Place it under `tests/unit/` (or `tests/integration/` if it's slow).
-2. Name the file `test_*.py`.
+2. Name the file `test_*.py`. The runner script auto-discovers anything
+   matching this pattern; no extra wiring required.
 3. Group related tests in a `Test*` class with `test_*` methods.
 4. Reuse fixtures from `conftest.py` where possible. Only add new ones to
    `conftest.py` if multiple files will use them.

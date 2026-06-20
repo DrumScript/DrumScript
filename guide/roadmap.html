@@ -326,10 +326,10 @@ data-aria-dark="Switch to auto color mode">
           <section id="roadmap-for-drumscript">
 <h1>Roadmap for <code class="docutils literal notranslate"><span class="pre">DrumScript</span></code><a class="headerlink" href="#roadmap-for-drumscript" title="Link to this heading">¶</a></h1>
 <!--date_created: thurs-21-may-2026-->
-<!--date_updated: sun-24-may-2026-->
+<!--date_updated: sat-20-june-2026-->
 <blockquote>
 <div><p>DrumScript follows <a class="reference external" href="https://semver.org/">Semantic Versioning</a>.
-The current phase is <strong>Alpha</strong> (<code class="docutils literal notranslate"><span class="pre">0.1.5</span></code>) — the classification model and score generation/ API is out for testing.
+The current phase is <strong>Alpha</strong> (<code class="docutils literal notranslate"><span class="pre">v{{version}}</span></code>) — the classification model and score generation/ API is out for testing.
 From <strong>01 June 2026 to 31 August</strong> alpha testing is under way.</p>
 </div></blockquote>
 <ul class="simple">
@@ -386,6 +386,7 @@ From <strong>01 June 2026 to 31 August</strong> alpha testing is under way.</p>
 <li><p>Drumless backing track generation</p></li>
 <li><p>CLI and Python API</p></li>
 <li><p>Colab demo notebook</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">mir_eval</span></code> benchmarking framework with IDMT-SMT-Drums V2 adapter (added v0.1.6, contributed by <a class="reference external" href="https://github.com/nanaoto">&#64;nanaoto</a>)</p></li>
 </ul>
 <hr class="docutils" />
 <section id="alpha-priorities-v0-3-0-v0-9-0">
@@ -399,6 +400,7 @@ From <strong>01 June 2026 to 31 August</strong> alpha testing is under way.</p>
 <li><p>Fix time signatures and ensure the transcription timing is correct to semi-quaver</p></li>
 <li><p>Improving <strong>Demucs</strong> stem-separation quality outputs</p></li>
 <li><p>Community feedback from fellow drummers, audio, engineers and the TISMIR/MIR community</p></li>
+<li><p>Expanding benchmark dataset coverage (ENST-Drums, MDB-Drums) and recalibrating classifier thresholds based on benchmark findings</p></li>
 </ul>
 </section>
 <section id="beta-priorities-0-9-x-0-9-9">
@@ -451,7 +453,7 @@ transient were both being classified.ate transcription and meaningful notatio</p
 <ol class="arabic simple" start="6">
 <li><p>Formal evaluation and paper</p></li>
 </ol>
-<p>Benchmarking against standard ADT datasets using <code class="docutils literal notranslate"><span class="pre">mir_eval</span></code> metrics, with a write-up targeting the <a class="reference external" href="https://transactions.ismir.net/">TISMIR</a> Educational Articles track covering the pipeline architecture, evaluation results, and design decisions.</p>
+<p>Benchmarking against standard ADT datasets using <code class="docutils literal notranslate"><span class="pre">mir_eval</span></code> metrics is now underway — the infrastructure shipped in v0.1.6 with IDMT-SMT-Drums V2 as the first verified benchmark. The write-up will target the <a class="reference external" href="https://transactions.ismir.net/">TISMIR</a> Educational Articles track covering the pipeline architecture, evaluation results, and design decisions.</p>
 </section>
 </section>
 <hr class="docutils" />

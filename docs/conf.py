@@ -20,6 +20,7 @@ sys.path.insert(0, os.path.abspath(".."))
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
 project = "DrumScript"
+# project = f"DrumScript v{ds.__version__}"
 copyright = "© 2026, DrumScript"
 author = "DrumScript"
 release = ds.__version__
@@ -71,7 +72,9 @@ html_css_files = [
 ]
 # Shibuya Setup
 html_theme_options = {
-    # Logos: Shibuya prefers the full relative path from your docs folder
+    # Logos: Shibuya prefers the full relative path from docs folder
+    # "announcement": f"Alpha release — v{ds.__version__}",
+    # "announcement": f"DrumScript v{ds.__version__} now available: with mir_eval benchmarking",
     "light_logo": "_static/logo-light.svg",
     "dark_logo": "_static/logo-dark.svg",
     "github_url": "https://github.com/DrumScript/DrumScript",

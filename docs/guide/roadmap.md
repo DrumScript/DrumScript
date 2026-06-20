@@ -1,10 +1,10 @@
 # Roadmap for `DrumScript`
 
 <!--date_created: thurs-21-may-2026-->
-<!--date_updated: sun-24-may-2026-->
+<!--date_updated: sat-20-june-2026-->
 
 > DrumScript follows [Semantic Versioning](https://semver.org/).
-> The current phase is **Alpha** (`0.1.5`) — the classification model and score generation/ API is out for testing. 
+> The current phase is **Alpha** (`v{{version}}`) — the classification model and score generation/ API is out for testing. 
 > From **01 June 2026 to 31 August** alpha testing is under way.
 
 * **[Release plan](#release-phases)**
@@ -33,6 +33,7 @@
 - Drumless backing track generation
 - CLI and Python API
 - Colab demo notebook
+- `mir_eval` benchmarking framework with IDMT-SMT-Drums V2 adapter (added v0.1.6, contributed by [@nanaoto](https://github.com/nanaoto))
 
 ---
 
@@ -47,6 +48,7 @@
 - Fix time signatures and ensure the transcription timing is correct to semi-quaver
 - Improving **Demucs** stem-separation quality outputs
 - Community feedback from fellow drummers, audio, engineers and the TISMIR/MIR community
+- Expanding benchmark dataset coverage (ENST-Drums, MDB-Drums) and recalibrating classifier thresholds based on benchmark findings
 
 ### Beta Priorities `0.9.x` – `0.9.9`
 
@@ -95,7 +97,7 @@ A major goal: a browser deployment using WebGPU, WebAssembly, Pyodide, and ONNX 
 
 6. Formal evaluation and paper
 
-Benchmarking against standard ADT datasets using `mir_eval` metrics, with a write-up targeting the [TISMIR](https://transactions.ismir.net/) Educational Articles track covering the pipeline architecture, evaluation results, and design decisions.
+Benchmarking against standard ADT datasets using `mir_eval` metrics is now underway — the infrastructure shipped in v0.1.6 with IDMT-SMT-Drums V2 as the first verified benchmark. The write-up will target the [TISMIR](https://transactions.ismir.net/) Educational Articles track covering the pipeline architecture, evaluation results, and design decisions.
 
 ---
 

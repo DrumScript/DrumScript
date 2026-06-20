@@ -1,5 +1,7 @@
 # **DrumScript CLI Reference**
 
+<!--date_added:Sat20june2026-->
+
 This document provides a comprehensive guide to the command-line interface for **DrumScript**. The primary entry point for the full pipeline is `main.py`, while individual modules can be run standalone for development and testing purposes.
 
 ## **Primary Orchestrator (`main.py`)**
@@ -18,7 +20,7 @@ python drumscript/main.py <audio_path> [options]
 
 ### **Transcription Options**
 
-* **`--full`**: Instructs the pipeline to isolate the drum stem using Demucs before proceeding with transcription.
+* **`--full-song`**: Instructs the pipeline to isolate the drum stem using Demucs before proceeding with transcription.
 
 ### **Stem Separation Options**
 
@@ -82,7 +84,7 @@ python -m drumscript.audio_processor.onset_detector
 **1. Transcribe a full song into sheet music (isolating drums first):**
 
 ```bash
-python drumscript/main.py "audio_path.mp3" --full
+python drumscript/main.py "audio_path.mp3" --full-song
 ```
 
 **2. Generate a drumless backing track in MP3 format:**

@@ -1,7 +1,7 @@
 # Testing Guidance
 
 <!--date_created: sat-21-june-2025-->
-<!--date_updated: sun-14-june-2026-->
+<!--date_updated: thurs-18-june-2026-->
 
 DrumScript ships with a [pytest](https://docs.pytest.org/) test suite organised
 around a clear separation between **fast unit tests** and **slower integration
@@ -11,7 +11,6 @@ the suite. For a copy-pasteable command reference, see the
 
 - **[The Test Pyramid](#the-test-pyramid)**
 - **[Suite layout](#suite-layout)**
-- **[Markers](#markers)**
 - **[Writing a new test](#writing-a-new-test)**
 - **[Patterns you'll use often](#patterns-youll-use-often)**
 - **[Regression tests](#regression-tests)**
@@ -31,7 +30,7 @@ DrumScript follows the classic [test pyramid](https://martinfowler.com/articles/
 
 | Layer | Speed | Volume (as of v0.1.6) | What it covers |
 |---|---|---|---|
-| **Unit** | milliseconds | ~121 cases across 9 files | Pure functions, helper logic, no I/O |
+| **Unit** | milliseconds | ~131 cases across 11 files | Pure functions, helper logic, no I/O |
 | **Integration** | seconds–minutes | ~8 cases | Real Demucs runs, real ffmpeg, real files |
 | **End-to-end** | minutes | very few | Full pipeline: audio → MIDI/PDF/XML |
 
@@ -56,13 +55,23 @@ tests/
 ├── conftest.py              ← shared fixtures (auto-discovered)
 ├── fixtures/audio/          ← real audio files (empty; synthesised in conftest)
 ├── unit/                    ← fast, no I/O, no subprocess
-│   ├── test_audio_loader.py
-│   ├── test_helpers.py
-│   ├── test_stem_splitter_helpers.py
-│   ├── test_tempo_detector.py
-│   ├── test_onset_detector.py
-│   └── test_classify.py
-└── integration/             ← real Demucs / ffmpeg / files (slow)
+tests/
+├── README.md
+├── conftest.py
+└── unit
+    ├── __init__.py
+    ├── test_audio_loader.py
+    ├── test_benchmarks_run.py
+    ├── test_classify.py
+    ├── test_cli_args.py
+    ├── test_deprecation_warnings.py
+    ├── test_helpers.py
+    ├── test_idmt_dataset.py
+    ├── test_onset_detector.py
+    ├── test_stem_splitter_helpers.py
+    ├── test_tempo_detector.py
+    └── test_transcribe.py
+└── integration/             ← Demucs / ffmpeg / files (slow)
     └── test_stem_splitter_real.py
 ```
 

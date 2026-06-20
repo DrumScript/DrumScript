@@ -63,3 +63,4 @@ Images are stored in `docs/_static`.
 1. Ensure you are in the root directory (`DrumScript/`)
 2. `open docs/_build/html/index.html`
 3. Once you are happy, commit the changes.
+

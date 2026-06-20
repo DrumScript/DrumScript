@@ -22,7 +22,6 @@ sys.path.insert(0, os.path.abspath(".."))
 project = "DrumScript"
 copyright = "© 2026, DrumScript"
 author = "DrumScript"
-# release = "0.1.4"
 release = ds.__version__
 
 # -- General configuration ---------------------------------------------------
@@ -40,6 +39,11 @@ extensions = [
 
 ## -- MyST configuration ------------------------------------------------------
 myst_heading_anchors = 3  # auto-generate anchors for H1-H3, anchor IDs for H1 through H3 headings, slugified from the heading text.
+
+# Dynamic substitutions for use in .md files via {{variable_name}} syntax.
+myst_substitutions = {
+    "version": ds.__version__,
+}
 
 # Generate the stub pages automatically
 autosummary_generate = True

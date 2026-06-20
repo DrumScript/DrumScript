@@ -1,4 +1,6 @@
 # `DrumScript` Documentation
+<!--date_updated:sat-20-june-2026-->
+
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1eDVXc3d6ezmorxINOjzldRPSC3emTl2I)
 
 **DrumScript** is an open-source Python library and CLI tool designed for drummers and audio engineers.  DrumScript's classification engine is **deterministic**. While its core mission is **Automatic Drum Transcription (ADT)** (converting drum recordings into sheet music), it also functions as a powerful **Audio Toolbox** for extracting drums from polyphonic tracks, creating backing tracks, and analysing rhythm.
@@ -14,7 +16,7 @@
 >
 Unlike most ADT systems, DrumScript's classification engine is **deterministic**. `DrumScript` combines physics-derived spectral analysis: fundamental frequency, spectral centroid, energy ratios, and decay characteristics, applied through a rule-based pipeline built on `librosa` and `Demucs`. It also functions as a general-purpose audio toolbox: stem separation, drumless/bassless backing track generation, and tempo detection. 
 
-The project was born from one working drummer's desire to make playing drums more fun and in an accessible way - it's taken almost a year to build. `v0.1.5` is the **Alpha release**. Between **01 June and 31 August 2026** we are reaching out to communities, both musicians and academics alike, to find people to test  - and hopefully improve - the deterministic classification model. For more info on where this is headed see **[roadmap](guide/roadmap.md)** or **https://github.com/orgs/DrumScript/discussions**
+The project was born from one working drummer's desire to make playing drums more fun and in an accessible way - it's taken almost a year to build. `v{{version}}` is the **Alpha release**. Between **01 June and 31 August 2026** we are reaching out to communities, both musicians and academics alike, to find people to test  - and hopefully improve - the deterministic classification model. For more info on where this is headed see **[roadmap](guide/roadmap.md)** or **https://github.com/orgs/DrumScript/discussions**
 
 ## What can DrumScript do?
 

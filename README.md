@@ -1,7 +1,7 @@
 # **`DrumScript`**
 
 <!--date_created: sun-15-june-2025-->
-<!--date_edited: fri-05-june-2026--->
+<!--date_edited: thurs-18-june-2026--->
 
 **Workflow Status**
 
@@ -81,9 +81,11 @@ DrumScript/
 │   ├── audio_processor/        # Audio loading, DSP, stem splitting
 │   ├── drum_classifier/        # Rule-based classification engine
 │   ├── notation_generator/     # Score building, PDF/MIDI/XML export
+│   ├── datasets/               # Benchmark dataset adapters (IDMT, etc.)
 │   └── utils/                  # Helpers (ffmpeg installer, research scripts)
+├── benchmarks/                 # Evaluation runners (see benchmarks/README.md)
 ├── docs/                       # Sphinx documentation
-├── tests/                      # pytest test suite
+├── tests/                      # pytest test suite (131 unit + 8 integration)
 ├── .github/workflows/          # CI/CD (tests, build, publish, docs)
 ├── pyproject.toml              # Package metadata and dependencies
 └── uv.lock                     # Pinned dependency versions
@@ -94,13 +96,13 @@ DrumScript/
 
 **For users:**
 
-```bash
+```zsh
 pip install drumscript
 ```
 
 **For developers:**
 
-```bash
+```zsh
 git clone https://github.com/DrumScript/DrumScript.git
 cd DrumScript
 uv sync # this will create a .venv
@@ -150,7 +152,7 @@ pdf_path = ds.transcribe("full_song.mp3") # drum only audio
 pdf_path = ds.transcribe("full_song.mp3", full_song=True) # full song, tells DrumScript to extract the drums first and then transcribe
 
 # Get all intermediate results
-result = ds.transcribe("drum_audio.wav", full=True)
+result = ds.transcribe("drum_audio.wav", verbose=True)
 print(f"Tempo: {result['tempo']:.1f} BPM")
 print(f"Events: {len(result['events'])}")
 ```
@@ -182,10 +184,33 @@ results = ds.extract_stems(
     "full_song.mp3",
     drumless=True,
     output_format="mp3",
-    full=True,
+    verbose=True,
 )
 print(f"Backing track: {results['mix']}")
 ```
+
+---
+
+## Benchmarking
+
+DrumScript includes a benchmarking framework for evaluating the classifier against standard ADT datasets using [`mir_eval`](https://github.com/mir-evaluation/mir_eval). Currently supports IDMT-SMT-Drums V2.
+
+```zsh
+# Install dev dependencies (includes mir_eval)
+uv sync --extra dev
+
+# Run the IDMT benchmark
+uv run --extra dev python benchmarks/run.py idmt \
+  --root /path/to/IDMT-SMT-DRUMS-V2
+
+# Run on a single subset with a limit
+uv run --extra dev python benchmarks/run.py idmt \
+  --root /path/to/IDMT-SMT-DRUMS-V2 \
+  --subset RealDrum --limit 5
+```
+
+Results are archived to `outputs/benchmarks/idmt/` with per-file metrics, summary statistics, and git commit tracking for reproducibility. See [`benchmarks/README.md`](benchmarks/README.md) for dataset setup and full usage.
+
 
 ---
 
@@ -195,29 +220,29 @@ DrumScript also provides a command-line interface.
 
 ### Basic transcription (isolated drum stem)
 
-```bash
+```zsh
 drumscript drum_audio.wav
 ```
 
 ### Full song transcription (auto-separates drums)
 
-```bash
-drumscript full_song.mp3 --full
+```zsh
+drumscript full_song.mp3 --full-song
 ```
 
 ### Extract a drumless backing track
 
-```bash
+```zsh
 drumscript full_song.mp3 --drumless
 ```
 
 ### All options
 
-```bash
+```zsh
 drumscript <audio_file> [OPTIONS]
 
 Options:
-  --full          Transcribe a full song (isolates drums first via Demucs)
+  --full-song     Transcribe a full song (isolates drums first via Demucs)
   --drumless      Extract a drumless backing track
   --mute STEM     Mute a specific stem (e.g. --mute bass). Repeatable.
   --all-stems     Export all individual stems (drums, bass, vocals, other)
@@ -228,7 +253,7 @@ Options:
 
 ### Examples
 
-```bash
+```zsh
 # Transcribe with 6/8 time signature
 drumscript drum_audio.wav --ts 6/8
 
@@ -252,7 +277,7 @@ We welcome contributions! DrumScript is intended to be a community-owned project
 
 **[hello.drumscript@gmail.com](mailto:hello.drumscript@gmail.com)**
 
-## Alpha Priorities (v0.1 – v0.2) 
+## Alpha Priorities (v0.0.4 < v1.0.0) 
 The alpha phase runs between 01 June and 31 August 2026
 
 **What works today:**
@@ -298,6 +323,7 @@ DrumScript's own classification engine is **fully deterministic** — it uses ph
 
 1. **[Demucs](https://github.com/adefossez/demucs)** — The stem splitting functionality is built upon the work of [@adefossez](https://github.com/adefossez).
 2. **[librosa](https://librosa.org/)** — For foundational audio processing tools.
+3. **[@nanaoto](https://github.com/nanaoto)** — For building the `mir_eval` benchmarking infrastructure and IDMT-SMT-Drums V2 adapter (PR [#273](https://github.com/DrumScript/DrumScript/pull/273)).
 
 ---
 

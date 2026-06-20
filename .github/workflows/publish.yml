@@ -12,7 +12,7 @@ jobs:
       name: pypi
       url: https://pypi.org/p/DrumScript
     permissions:
-      id-token: write 
+      id-token: write
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -38,6 +38,22 @@ jobs:
       - name: Build package
         run: python -m build
 
-      # 5. Publish to PYPI
+      # 5. Check if package version already exists on PyPI
+      - name: Check if package version exists on PyPI
+        id: package_exists
+        run: |
+          package_name="drumscript"
+          version=$(python -c "import tomllib; print(tomllib.load(open('pyproject.toml','rb'))['project']['version'])")
+          response=$(curl -s -o /dev/null -w "%{http_code}" https://pypi.org/pypi/$package_name/$version/json)
+          if [ "$response" = "200" ]; then
+            echo "Package version $version already exists on PyPI"
+            echo "package_exists=true" >> $GITHUB_OUTPUT
+          else
+            echo "Package version $version does not exist on PyPI"
+            echo "package_exists=false" >> $GITHUB_OUTPUT
+          fi
+
+      # 6. Publish to PyPI
       - name: Publish package distributions to PyPI
+        if: steps.package_exists.outputs.package_exists == 'false'
         uses: pypa/gh-action-pypi-publish@release/v1

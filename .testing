@@ -12,32 +12,58 @@ jobs:
       name: pypi
       url: https://pypi.org/p/DrumScript
     permissions:
-      id-token: write 
+      id-token: write
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # 1. Install uv efficiently
-      - name: Install uv
+      - name: Install uv 
         uses: astral-sh/setup-uv@v5
         with:
           version: "latest"
 
-      # 2. Set up Python (uv needs a python version to target)
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.x"
 
-      # 3. Install build dependencies using uv
       - name: Install build tools
         run: |
-          uv pip install --system build
+          uv pip install --system build twine
 
-      # 4. Build the package (using standard python build module)
       - name: Build package
         run: python -m build
 
-      # 5. Publish to PYPI
+      - name: Check if package version exists on PyPI
+        id: package_exists
+        run: |
+          package_name="drumscript"
+          version=$(grep -Po "(?<=version=').*(?=')" pyproject.toml)
+          response=$(curl -s -o /dev/null -w "%{http_code}" https://pypi.org/pypi/$package_name/$version/json)
+          if [ "$response" = "200" ]; then
+            echo "Package version $version already exists on PyPI"
+            echo "package_exists=true" >> $GITHUB_OUTPUT
+          else
+            echo "Package version $version does not exist on PyPI"
+            echo "package_exists=false" >> $GITHUB_OUTPUT
+          fi
+
       - name: Publish package distributions to PyPI
+        if: steps.package_exists.outputs.package_exists == 'false'
+              - name: Check if package version exists on PyPI
+        id: package_exists
+        run: |
+          package_name="drumscript"
+          version=$(grep -Po "(?<=version=').*(?=')" pyproject.toml)
+          response=$(curl -s -o /dev/null -w "%{http_code}" https://pypi.org/pypi/$package_name/$version/json)
+          if [ "$response" = "200" ]; then
+            echo "Package version $version already exists on PyPI"
+            echo "package_exists=true" >> $GITHUB_OUTPUT
+          else
+            echo "Package version $version does not exist on PyPI" 
+            echo "package_exists=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Publish package distributions to PyPI
+        if: steps.package_exists.outputs.package_exists == 'false'  
         uses: pypa/gh-action-pypi-publish@release/v1

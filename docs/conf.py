@@ -46,7 +46,7 @@ myst_substitutions = {
     "version": ds.__version__,
 }
 
-myst_enable_extensions = ["substitution"]
+myst_enable_extensions = ["substitution", "colon_fence"]
 
 # Generate the stub pages automatically
 autosummary_generate = True

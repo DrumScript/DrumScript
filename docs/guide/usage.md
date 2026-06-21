@@ -1,5 +1,7 @@
 # Usage Guide
 
+<!--date_updated:sat20june2026-->
+
 ## Quick Start
 
 <!--`DrumScript` accepts the default format of `.wav` if the `--mp3` flag is not specified.-->
@@ -75,14 +77,14 @@ python -m drumscript.main "audio_path.wav" --ts 6_8
 ```
 <!--You can also use DrumScript directly from your terminal:-->
 
-### 6. Full Audio to PDF Transcription (`--full`)
+### 6. Full Audio to PDF Transcription (`--full-song`)
 ```zsh
-python -m drumscript.main audio_path.mp3 --output my_score.pdf --full
+python -m drumscript.main audio_path.mp3 --output my_score.pdf --full-song
 ```
 
 ```python
 import drumscript as ds
-get_drum_score = ds.main("audio_path.mp3", format=="mp3", output_name="my_score.pdf", "--full")
+get_drum_score = ds.main("audio_path.mp3", format=="mp3", output_name="my_score.pdf", "--full-song")
 ```
 
 > **Full commands**

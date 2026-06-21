@@ -46,6 +46,8 @@ myst_substitutions = {
     "version": ds.__version__,
 }
 
+myst_enable_extensions = ["substitution"]
+
 # Generate the stub pages automatically
 autosummary_generate = True
 add_module_names = False
@@ -74,7 +76,7 @@ html_css_files = [
 html_theme_options = {
     # Logos: Shibuya prefers the full relative path from docs folder
     # "announcement": f"Alpha release — v{ds.__version__}",
-    # "announcement": f"DrumScript v{ds.__version__} now available: with mir_eval benchmarking",
+    "announcement": f"DrumScript v{ds.__version__} now available: with mir_eval benchmarking",
     "light_logo": "_static/logo-light.svg",
     "dark_logo": "_static/logo-dark.svg",
     "github_url": "https://github.com/DrumScript/DrumScript",

@@ -8,9 +8,9 @@
 import os
 import sys
 
-import drumscript as ds
-
 sys.path.insert(0, os.path.abspath(".."))
+
+import drumscript as ds
 
 #
 # For the full list of built-in configuration values, see the documentation:

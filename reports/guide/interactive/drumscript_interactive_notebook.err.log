@@ -28,8 +28,6 @@ print("\n▶ Demo audio:")
 ipd.display(ipd.Audio(AUDIO_FILE))
 ------------------
 
------ stdout -----
-Error loading audio file ./audio/test_track_1.wav:
 ----- stderr -----
 /home/runner/work/DrumScript/DrumScript/drumscript/audio_processor/audio_loader.py:51: UserWarning: PySoundFile failed. Trying audioread instead.
   audio_data, sample_rate = librosa.load(
@@ -37,6 +35,8 @@ Error loading audio file ./audio/test_track_1.wav:
 	Deprecated as of librosa version 0.10.0.
 	It will be removed in librosa version 1.0.
   y, sr_native = __audioread_load(path, offset, duration, dtype)
+----- stdout -----
+Error loading audio file ./audio/test_track_1.wav:
 ------------------
 
 [31m---------------------------------------------------------------------------[39m

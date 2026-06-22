@@ -94,8 +94,6 @@
 │   └── pyodideWorker.js
 ├── pyproject.toml
 ├── repository_structure.md
-├── scripts
-│   └── run_tests.sh
 ├── tests
 │   ├── README.md
 │   ├── conftest.py
@@ -120,4 +118,4 @@
 └── visuals
     └── tempogram.png
 
-25 directories, 96 files
+24 directories, 95 files

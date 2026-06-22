@@ -1,7 +1,7 @@
 # Changelog
 
 <!--date_added:thurs-28-may-2026-->
-<!--date:updated:thurs-18-june-2026-->
+<!--date:updated:mon-22-june-2026-->
 
 
 All notable changes to DrumScript will be documented here.
@@ -11,30 +11,10 @@ DrumScript follows [Semantic Versioning](https://semver.org/).
 ---
 ## Unreleased
 
-### [0.1.6] - June 2026
+### Fixed since last release
 
-> **Final v0.1.x release.** After this, the next release jumps to v0.2.0 to signal the breaking-change track for the `full` → `verbose` removal.
-
-#### Added
-- Deprecation shim for `full` parameter on the Python API:
-  - New `verbose` parameter added to `transcribe()`, `extract_stems()`, and `detect_tempo()` as the canonical replacement for `full`
-  - Passing `full=True` (or `full=False`) continues to work but emits a `DeprecationWarning` directing users to `verbose`
-  - Warning explicitly names the v1.0.0 (beta) removal target so users have a clear migration timeline
-  - Passing both `full` and `verbose` together raises `TypeError` (ambiguous, almost certainly a bug)
-  - Internal helper `_resolve_verbose_flag()` centralises the resolution logic so it cannot drift between wrappers
-  - Docstrings updated to mark `verbose` as primary and `full` as deprecated
-- **PR #273 by nanaoto** — IDMT-SMT-Drums V2 benchmark runner with `mir_eval` scaffolding:
-  - `benchmarks/run.py` entrypoint with dataset adapter dispatch, evaluation loop, CSV/JSON archive with git commit tracking
-  - `drumscript/datasets/` package: `BenchmarkItem` dataclass and IDMT adapter (XML/SVL annotation parsing)
-  - `benchmarks/README.md` documenting conventions, dataset setup, and planned dataset coverage
-  - Unit tests for benchmark runner (`test_benchmarks_run.py`) and IDMT dataset adapter (`test_idmt_dataset.py`)
-  - `mir_eval` added as a dev dependency
-- New unit test file `tests/unit/test_deprecation_warnings.py` (13 tests)
-- New unit test file `tests/unit/test_cli_args.py` (4 tests)
-
-#### Fixed
-- Commented-out dead code removed from `drumscript/__init__.py` and `drumscript/main.py`
-- Flag inconsistency between `drumscript/main.py` and `drumscript/__init__.py` resolved: `argparse` in main block updated so the CLI flag is now `--full-song` (hyphenated, consistent with `--all-stems`). Auto-converts to `args.full_song` matching the Python API parameter name.
+* Adjusted documentation so that when version appears in documentation it is no longer hardcoded, but linked to `import importlib.metadata` in `drumscript/__init__.py` [Reduces maintenance burden on contributors]
+* Updated version in pyproject.toml from `v0.1.5` to `v0.1.6` (This should have been changed *prior* to pypi release of v0.1.6 on Thursday 18 June 2026)
 
 ---
 
@@ -80,6 +60,33 @@ DrumScript follows [Semantic Versioning](https://semver.org/).
 ---
 
 ## Released
+
+### [0.1.6] - June 2026
+
+> **`v0.1.6` is the final v0.1.*x* release.** 
+> After this, the next release jumps to v0.2.0 to signal the deprecation shim for the `full` → `verbose` removal.
+
+#### Added
+- Deprecation shim for `full` parameter on the Python API:
+  - New `verbose` parameter added to `transcribe()`, `extract_stems()`, and `detect_tempo()` as the canonical replacement for `full`
+  - Passing `full=True` (or `full=False`) continues to work but emits a `DeprecationWarning` directing users to `verbose`
+  - Warning explicitly names the v1.0.0 (beta) removal target so users have a clear migration timeline
+  - Passing both `full` and `verbose` together raises `TypeError` (ambiguous, almost certainly a bug)
+  - Internal helper `_resolve_verbose_flag()` centralises the resolution logic so it cannot drift between wrappers
+  - Docstrings updated to mark `verbose` as primary and `full` as deprecated
+- **PR #273 by nanaoto** — IDMT-SMT-Drums V2 benchmark runner with `mir_eval` scaffolding:
+  - `benchmarks/run.py` entrypoint with dataset adapter dispatch, evaluation loop, CSV/JSON archive with git commit tracking
+  - `drumscript/datasets/` package: `BenchmarkItem` dataclass and IDMT adapter (XML/SVL annotation parsing)
+  - `benchmarks/README.md` documenting conventions, dataset setup, and planned dataset coverage
+  - Unit tests for benchmark runner (`test_benchmarks_run.py`) and IDMT dataset adapter (`test_idmt_dataset.py`)
+  - `mir_eval` added as a dev dependency
+- New unit test file `tests/unit/test_deprecation_warnings.py` (13 tests)
+- New unit test file `tests/unit/test_cli_args.py` (4 tests)
+
+#### Fixed
+- Commented-out dead code removed from `drumscript/__init__.py` and `drumscript/main.py`
+- Flag inconsistency between `drumscript/main.py` and `drumscript/__init__.py` resolved: `argparse` in main block updated so the CLI flag is now `--full-song` (hyphenated, consistent with `--all-stems`). Auto-converts to `args.full_song` matching the Python API parameter name.
+
 
 ### [0.1.5] - May 2026
 

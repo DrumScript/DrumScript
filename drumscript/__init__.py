@@ -7,6 +7,7 @@ This top-level module exposes the primary high-level wrappers for end-to-end
 transcription, as well as the core low-level building blocks for custom DSP pipelines.
 """
 
+import importlib.metadata
 import pathlib
 import warnings
 
@@ -512,4 +513,9 @@ __all__ = [
     "install_ffmpeg",
 ]
 
-__version__ = "0.1.6"
+# __version__ = "0.1.6"
+
+try:
+    __version__ = importlib.metadata.version("drumscript")
+except importlib.metadata.PackageNotFoundError:
+    __version__ = "0.1.6"

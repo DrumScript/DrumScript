@@ -1,45 +1,59 @@
-name: Deploy Sphinx Docs
+name: Build & deploy docs
+
+# Builds the Sphinx (Shibuya) site and deploys it to gh-pages /docs/.
+# Pairs with app.yml which deploys to gh-pages root.
+# Both use keep_files: true so neither workflow wipes the other.
 
 on:
   push:
-    branches: ["main"]
+    branches: [main]
     paths:
-      - "docs/**"
-      - "drumscript/**"
-      - ".github/workflows/docs.yml"
+      - 'docs/**'
+      - 'drumscript/**'              # autosummary depends on the source
+      - 'pyproject.toml'
+      - '.github/workflows/docs.yml'
   workflow_dispatch:
 
-permissions:
-  contents: write
+concurrency:
+  group: pages-docs
+  cancel-in-progress: true
 
 jobs:
-  deploy:
+  build-deploy:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v4
 
       - uses: actions/setup-python@v5
         with:
-          python-version: "3.12"
-
-      - name: Install system dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y libsndfile1 libportaudio2 ffmpeg
+          python-version: '3.12'
 
       - name: Install uv
-        uses: astral-sh/setup-uv@v5
+        uses: astral-sh/setup-uv@v3
         with:
-          version: "latest"
+          enable-cache: true
 
-      - name: Install package and dev dependencies
-        run: uv sync --extra dev
+      - name: Install project + dev deps
+        run: |
+          uv venv
+          # Activate venv for subsequent steps in this job.
+          echo "$PWD/.venv/bin" >> "$GITHUB_PATH"
+          uv sync --extra dev
 
-      - name: Build Sphinx
-        run: uv run sphinx-build -b html docs docs/_build/html
+      - name: Build Sphinx site
+        run: |
+          cd docs
+          make html
 
-      - name: Deploy to GitHub Pages
+      - name: Deploy to gh-pages /docs/
         uses: peaceiris/actions-gh-pages@v4
         with:
-          personal_token: ${{ secrets.PAGES_DEPLOY_TOKEN }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./docs/_build/html
+          # Subfolder under gh-pages branch root.
+          destination_dir: docs
+          # CRUCIAL: don't delete files already on gh-pages (i.e. the app at /).
+          keep_files: true
+          commit_message: 'deploy: docs from ${{ github.sha }}'

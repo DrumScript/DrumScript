@@ -40,21 +40,27 @@ classifiers = [
 ]
 
 dependencies = [
-    "demucs",
+    # --- Pyodide-compatible core (browser + desktop) ---
+    # `pip install drumscript` installs only these.
     "librosa",
     "matplotlib",
     "music21",
-    "numba",
     "numpy<2",
     "pretty-midi",
-    "pydub",
     "reportlab",
     "scipy",
     "soundfile",
-    "torch>=2.4,<2.9",
-    "torchaudio>=2.4,<2.9",
+
+    # --- Moved to [project.optional-dependencies] full ---
+    # Not Pyodide-compatible; browser uses ONNX Runtime Web for stems instead.
+    # "demucs",
+    # "numba",      # requires LLVM compiler — not available in WASM
+    # "pydub",      # requires ffmpeg binary — not available in browser
+    # "torch>=2.4,<2.9",
+    # "torchaudio>=2.4,<2.9",
 ]
 # Note: torch only compatible with Python ABI tags cp39-cp312. Not yet compatible with 3.13.
+# Note: demucs, numba, pydub, torch, torchaudio moved to the `full` extra — see [project.optional-dependencies]
 
 [project.urls]
 "Homepage" = "https://drumscript.github.io/DrumScript/"
@@ -63,6 +69,16 @@ dependencies = [
 "Issues" = "https://github.com/DrumScript/DrumScript/issues"
 
 [project.optional-dependencies]
+# `pip install drumscript[full]` — full desktop install including Demucs.
+# Same behaviour as `pip install drumscript` before v0.1.7.
+full = [
+    "demucs",
+    "numba",
+    "pydub",
+    "torch>=2.4,<2.9",
+    "torchaudio>=2.4,<2.9",
+]
+
 dev = [
   "ipykernel",
   "myst-parser",

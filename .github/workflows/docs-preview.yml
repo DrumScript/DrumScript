@@ -1,0 +1,75 @@
+name: Preview docs (branch)
+
+# Builds Sphinx and deploys to drumscript.github.io/preview/{branch}/
+# so you can review docs changes live before merging to main.
+#
+# Does NOT run on main — main uses docs.yml instead.
+# Only runs on branches that touch docs/ or drumscript/ source.
+#
+# Result URL: https://drumscript.github.io/preview/build-integrate_ui/
+# (slashes in branch names are replaced with hyphens to keep URLs clean)
+
+on:
+  push:
+    branches-ignore:
+      - main
+      - gh-pages
+    paths:
+      - 'docs/**'
+      - 'drumscript/**'
+      - 'pyproject.toml'
+      - '.github/workflows/docs-preview.yml'
+  workflow_dispatch:
+
+concurrency:
+  group: pages-docs-preview-${{ github.ref_name }}
+  cancel-in-progress: true
+
+jobs:
+  preview:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3
+        with:
+          enable-cache: true
+
+      - name: Install project + dev deps
+        run: |
+          uv venv
+          echo "$PWD/.venv/bin" >> "$GITHUB_PATH"
+          uv sync --extra dev
+
+      - name: Build Sphinx
+        run: |
+          cd docs
+          make html
+
+      # Sanitise the branch name for use as a URL path segment.
+      # build/integrate_ui → build-integrate_ui
+      - name: Set preview path
+        id: preview
+        run: |
+          BRANCH="${{ github.ref_name }}"
+          SAFE="${BRANCH//\//-}"
+          echo "path=preview/${SAFE}" >> "$GITHUB_OUTPUT"
+          echo "Preview will be at: https://drumscript.github.io/preview/${SAFE}/"
+
+      - name: Deploy to gh-pages /preview/{branch}/
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./docs/_build/html
+          destination_dir: ${{ steps.preview.outputs.path }}
+          # keep_files: true is CRITICAL — don't wipe the main /docs/ or /app
+          keep_files: true
+          commit_message: 'preview: docs for ${{ github.ref_name }} @ ${{ github.sha }}'

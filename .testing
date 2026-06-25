@@ -1,0 +1,106 @@
+{
+  // --- CORE EDITOR & UI ---
+  "keyboard.layout": "com.apple.keylayout.British",
+  "window.zoomLevel": -3,
+  "editor.wordWrap": "on",
+  "editor.formatOnSave": true,
+  "editor.accessibilitySupport": "off",
+  "workbench.startupEditor": "none", // Starts faster without the "Welcome" page
+  "explorer.confirmDragAndDrop": false,
+
+  // --- GIT BEHAVIOR ---
+  "git.enableSmartCommit": true,
+  "git.autofetch": true,
+  "git.ignoreRebaseWarning": true,
+  "git.openRepositoryInParentFolders": "never",
+  "githubPullRequests.createOnPublishBranch": "never",
+
+  // --- FILE EXCLUSIONS (Standardized) ---
+  "files.exclude": {
+    "**/.git": true,
+    "**/.DS_Store": true,
+    "**/__pycache__": true,
+    "**/*.pyc": true,
+    "**/node_modules": true, // Hide heavy folders from explorer
+  },
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/bower_components": true,
+    "**/*.code-search": true,
+    "**/dist": true,
+    "**/build": true,
+    "**/.git": true,
+    "**/.venv": true,
+    "**/__pycache__": true,
+  },
+
+"settings": {
+    "terminal.integrated.env.osx": {
+      "GIT_AUTHOR_NAME": "bellescoincidences",
+      "GIT_AUTHOR_EMAIL": "victoria.mckinney@digital.cabinet-office.gov.uk",
+      "GIT_COMMITTER_NAME": "victoria-mckinney",
+      "GIT_COMMITTER_EMAIL": "victoria.mckinney@gmail.com"
+    },
+    // Add this line to ensure this workspace uses the NEW work signing key
+    "git.config": {
+        "user.signingkey": "~/.ssh/id_ed25519_work.pub",
+        "gpg.format": "ssh",
+        "commit.gpgsign": true
+    }
+},
+
+  // --- LIGHTWEIGHT FORMATTING ---
+  "[dockerfile]": {
+    "editor.defaultFormatter": "ms-azuretools.vscode-containers",
+  },
+  "[dockercompose]": {
+    "editor.insertSpaces": true,
+    "editor.tabSize": 2,
+    "editor.autoIndent": "advanced",
+    "editor.defaultFormatter": "redhat.vscode-yaml",
+  },
+  "[yaml]": {
+    "editor.defaultFormatter": "redhat.vscode-yaml",
+  },
+  "[github-actions-workflow]": {
+    "editor.defaultFormatter": "redhat.vscode-yaml",
+  },
+
+  // --- TERMINAL ---
+  "terminal.integrated.allowedLinkSchemes": [
+    "file",
+    "http",
+    "https",
+    "mailto",
+    "vscode",
+    "docker-desktop",
+  ],
+
+  // --- BASIC AI (Optional - remove if you want 0 RAM usage) ---
+  "geminicodeassist.inlineSuggestions.enableAuto": false,
+  "chat.commandCenter.enabled": false,
+
+  // --- CLEAN PYTHON DEFAULTS ---
+  // We keep this generic so it doesn't break if you open a random script
+"python.interpreter.infoVisibility": true,
+  "python.createEnvironment.trigger": "off",
+  "python.terminal.activateEnvironment": true,
+  "python.terminal.useEnvFile": true,
+  "python.defaultInterpreterPath": "${workspaceFolder}/.venv/bin/python",
+  "azureTerraform.survey": {
+    "surveyPromptDate": "2026-06-11T16:47:48.253Z",
+    "surveyPromptIgnoredCount": 3
+  },
+  "geminicodeassist.project": "rich-nature-9f3h4",
+  "docker.extension.enableComposeLanguageServer": false,
+  "chat.instructionsFilesLocations": {
+    ".github/instructions": true,
+  },
+  "gitlens.ai.model": "vscode",
+  "gitlens.ai.vscode.model": "aitk-github:aitk",
+  "extensions.allowed": "*",
+  "workbench.colorTheme": "Dark Modern",
+  "editor.aiStats.enabled": true,
+  "chat.disableAIFeatures": true,
+  "update.mode": "manual",
+}

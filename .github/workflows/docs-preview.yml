@@ -51,8 +51,12 @@ jobs:
 
       - name: Build Sphinx
         run: |
-          cd docs
-          make html
+          # Your docs/ folder has make.bat (Windows) but no Unix Makefile,
+          # so we call sphinx-build directly instead of `make html`.
+          # -b html         → build format
+          # docs/           → source dir (contains conf.py)
+          # docs/_build/html → output dir
+          sphinx-build -b html docs docs/_build/html
 
       # Sanitise the branch name for use as a URL path segment.
       # build/integrate_ui → build-integrate_ui

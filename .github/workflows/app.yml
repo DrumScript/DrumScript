@@ -1,15 +1,27 @@
 name: Build & deploy app
 
-# Deploys the static browser app (app/ + public/) to GitHub Pages root.
+# Deploys the static browser app to GitHub Pages root.
 # Coexists with the Sphinx docs workflow via keep_files: true so neither
 # deployment nukes the other.
+#
+# Wheel strategy: rather than committing the wheel to public/ on every
+# release, we build it fresh here and inject the correct filename into
+# the deployed copy of pyodide-worker.js via sed. The source file is
+# left unchanged; only the deployed copy is patched. This means:
+#   - No manual public/ update after each release
+#   - The deployed app always loads the correct wheel version
+#   - Local dev still works (pointing at whichever wheel is in public/)
 
 on:
   push:
-    branches: [main]
+    branches:
+      - main
+      - build/integrate_ui      # temporary: remove once this branch is merged to main
     paths:
       - 'app/**'
       - 'public/**'
+      - 'drumscript/**'          # source change = new wheel needed
+      - 'pyproject.toml'
       - '.github/workflows/app.yml'
   workflow_dispatch:
 
@@ -27,18 +39,40 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3
+        with:
+          enable-cache: true
+
+      - name: Build wheel
+        run: |
+          uv build --wheel
+          echo "Built:"
+          ls -lh dist/drumscript-*-py3-none-any.whl
+
       - name: Stage app for deploy
         run: |
-          # Build directory layout that mirrors what the deployed site needs.
-          # No build tools — plain HTML/JS, just file copies.
           mkdir -p _site
           cp -r app/. _site/
+
+          # public/ contains the legacy pyodideWorker.js and any static
+          # assets. Copy it first, then override the wheel with the
+          # freshly-built one so the deployed version is always current.
           mkdir -p _site/public
           cp -r public/. _site/public/
-          # Add a .nojekyll so GitHub Pages doesn't try to Jekyll-process us.
-          # (Avoids it ignoring any folder/file starting with an underscore.)
+          cp dist/drumscript-*-py3-none-any.whl _site/public/
+
+          # Patch the wheel filename in the DEPLOYED copy of pyodide-worker.js.
+          # We sed the staged file (not the source) so the repo stays clean.
+          WHL=$(ls dist/drumscript-*-py3-none-any.whl | xargs basename)
+          sed -i "s|drumscript-[0-9][0-9.]*-py3-none-any\.whl|${WHL}|g" \
+              _site/js/pyodide-worker.js
+
+          echo "Wheel in deployed site: ${WHL}"
+          grep "whl" _site/js/pyodide-worker.js
+
           touch _site/.nojekyll
-          ls -la _site/
+          ls -la _site/ _site/public/
 
       - name: Deploy to gh-pages root
         uses: peaceiris/actions-gh-pages@v4

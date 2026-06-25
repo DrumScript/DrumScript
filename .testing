@@ -1,4 +1,4 @@
-  {
+{
   // --- CORE EDITOR & UI ---
   "keyboard.layout": "com.apple.keylayout.British",
   "window.zoomLevel": -3,
@@ -24,6 +24,7 @@
     "**/node_modules": true, // Hide heavy folders from explorer
   },
   "search.exclude": {
+  // --- CLEAN PYTHON DEFAULTS ---
     "**/node_modules": true,
     "**/bower_components": true,
     "**/*.code-search": true,
@@ -34,20 +35,32 @@
     "**/__pycache__": true,
   },
 
-"settings": {
-    "terminal.integrated.env.osx": {
-      "GIT_AUTHOR_NAME": "bellescoincidences",
-      "GIT_AUTHOR_EMAIL": "victoria.mckinney@digital.cabinet-office.gov.uk",
-      "GIT_COMMITTER_NAME": "victoria-mckinney",
-      "GIT_COMMITTER_EMAIL": "victoria.mckinney@gmail.com"
-    },
-    // Add this line to ensure this workspace uses the NEW work signing key
-    "git.config": {
-        "user.signingkey": "~/.ssh/id_ed25519_work.pub",
-        "gpg.format": "ssh",
-        "commit.gpgsign": true
-    }
-},
+// "settings": {
+//     "terminal.integrated.env.osx": {
+//       "GIT_AUTHOR_NAME": "bellescoincidences",
+//       "GIT_AUTHOR_EMAIL": "victoria.mckinney@digital.cabinet-office.gov.uk",
+//       "GIT_COMMITTER_NAME": "victoria-mckinney",
+//       "GIT_COMMITTER_EMAIL": "victoria.mckinney@gmail.com"
+//     },
+//     // Add this line to ensure this workspace uses the NEW work signing key
+//     "git.config": {
+//         "user.signingkey": "~/.ssh/id_ed25519_work.pub",
+//         "gpg.format": "ssh",
+//         "commit.gpgsign": true
+//     }
+// },
+  "terminal.integrated.env.osx": {
+    "GIT_AUTHOR_NAME": "bellescoincidences",
+    "GIT_AUTHOR_EMAIL": "victoria.mckinney@digital.cabinet-office.gov.uk",
+    "GIT_COMMITTER_NAME": "victoria-mckinney",
+    "GIT_COMMITTER_EMAIL": "victoria.mckinney@gmail.com"
+  },
+  // Add this line to ensure this workspace uses the NEW work signing key
+  "git.config": {
+      "user.signingkey": "~/.ssh/id_ed25519_work.pub",
+      "gpg.format": "ssh",
+      "commit.gpgsign": true
+  },
 
   // --- LIGHTWEIGHT FORMATTING ---
   "[dockerfile]": {
@@ -67,6 +80,7 @@
   },
 
   // --- TERMINAL ---
+  "terminal.integrated.defaultProfile.osx": "zsh",
   "terminal.integrated.allowedLinkSchemes": [
     "file",
     "http",
@@ -76,13 +90,14 @@
     "docker-desktop",
   ],
 
-  // --- BASIC AI (Optional - remove if you want 0 RAM usage) ---
+  // --- BASIC AI (Optional - remove if 0 RAM usage is desired) ---
   "geminicodeassist.inlineSuggestions.enableAuto": false,
   "chat.commandCenter.enabled": false,
 
   // --- CLEAN PYTHON DEFAULTS ---
-  // We keep this generic so it doesn't break if you open a random script
-"python.interpreter.infoVisibility": true,
+  // We keep this generic so it doesn't break if a random script is opened
+// "python.interpreter.infoVisibility": "True",
+  "python.interpreter.infoVisibility": true,
   "python.createEnvironment.trigger": "off",
   "python.terminal.activateEnvironment": true,
   "python.terminal.useEnvFile": true,

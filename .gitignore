@@ -139,8 +139,6 @@ collect_code.sh
 deploy.sh
 Dockerfile
 drumscript_full_review.txt
-public/
-public/pyodideWorker.js
 tree_full.txt
 ui.py
 

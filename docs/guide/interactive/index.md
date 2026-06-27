@@ -9,7 +9,6 @@ Welcome to the `DrumScript` runbooks! You can view the code and outputs right he
 ```{toctree}
 :maxdepth: 1
 
-drumscript_interactive_notebook.ipynb
 create_backing_track.ipynb
 extract_drums.ipynb
 measure_tempo.ipynb

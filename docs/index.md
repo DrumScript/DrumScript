@@ -70,43 +70,12 @@ Need to know the speed of a groove or drum loop? DrumScript can accurately estim
 
 ---
 
-## Getting Started
+## About
 
 ```{toctree}
 :maxdepth: 1
-:caption: Getting Started
-
-guide/installation
-```
-
-## User Guide
-
-```{toctree}
-:maxdepth: 1
-:caption: User Guide
-
-guide/cli_reference
-guide/configuration
-guide/glossary
-guide/roadmap
-guide/security
-guide/usage
-```
-
-## Theory
-
-```{toctree}
-:maxdepth: 1
-:caption: Theory
-
-theory/bibliography
-theory/drum_notation_guide
-theory/digital_signal_processing
-theory/how_it_works
-theory/percussion_frequencies
-theory/tempo_estimation
-theory/stem_splitting
-theory/sources
+:caption: Project Info
+about
 ```
 
 ## API Reference
@@ -130,22 +99,15 @@ development/documentation
 development/testing_guidance
 ```
 
-
-## Runbooks
-
-```{toctree}
-:maxdepth: 2
-:caption: Runbooks
-
-guide/interactive/index
-```
-## About
+## Getting Started
 
 ```{toctree}
 :maxdepth: 1
-:caption: Project Info
-about
+:caption: Getting Started
+
+guide/installation
 ```
+
 ## Release Notes
 
 
@@ -155,4 +117,43 @@ about
 
 release_notes/index
 changelog
+```
+
+## Runbooks
+
+```{toctree}
+:maxdepth: 2
+:caption: Runbooks
+
+guide/interactive/index
+```
+
+## Theory
+
+```{toctree}
+:maxdepth: 1
+:caption: Theory
+
+theory/bibliography
+theory/drum_notation_guide
+theory/digital_signal_processing
+theory/how_it_works
+theory/percussion_frequencies
+theory/tempo_estimation
+theory/stem_splitting
+theory/sources
+```
+
+## User Guide
+
+```{toctree}
+:maxdepth: 1
+:caption: User Guide
+
+guide/cli_reference
+guide/configuration
+guide/glossary
+guide/roadmap
+guide/security
+guide/usage
 ```

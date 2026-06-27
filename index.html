@@ -238,6 +238,7 @@ data-aria-dark="Switch to auto color mode">
 <li><a class="reference internal" href="#audio-to-sheet-music-transcription">1. Audio-to-Sheet Music (Transcription)</a></li>
 <li><a class="reference internal" href="#stem-splitting-the-de-mixer">2. Stem Splitting (The &#8220;De-Mixer&#8221;)</a></li>
 <li><a class="reference internal" href="#backing-track-generator">3. Backing Track Generator</a></li>
+<li><a class="reference internal" href="#automatic-tempo-detection">4. Automatic Tempo Detection</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#getting-started">Getting Started</a></li>
@@ -338,7 +339,8 @@ data-aria-dark="Switch to auto color mode">
 </div><article class="yue" role="main">
           <section id="drumscript-documentation">
 <h1><code class="docutils literal notranslate"><span class="pre">DrumScript</span></code> Documentation<a class="headerlink" href="#drumscript-documentation" title="Link to this heading">¶</a></h1>
-<!--date_updated:sun-21-june-2026-->
+<!--date_created:tuesday-30-december-2025-->
+<!--date_updated:sat-27-june-2026-->
 <p><a class="reference external" href="https://colab.research.google.com/drive/1eDVXc3d6ezmorxINOjzldRPSC3emTl2I"><img alt="Open In Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a></p>
 <p><strong>DrumScript</strong> is an open-source Python library and CLI tool designed for drummers and audio engineers.  DrumScript’s classification engine is <strong>deterministic</strong>. While its core mission is <strong>Automatic Drum Transcription (ADT)</strong> (converting drum recordings into sheet music), it also functions as a powerful <strong>Audio Toolbox</strong> for extracting drums from polyphonic tracks, creating backing tracks, and analysing rhythm.</p>
 <div class="table-wrapper colwidths-auto docutils container">
@@ -351,8 +353,8 @@ data-aria-dark="Switch to auto color mode">
 </thead>
 <tbody>
 <tr class="row-even"><td><p>1</p></td>
-<td><p><strong>Tempo Detection</strong></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">DrumScript</span></code> estimates BPM from drum audio file based on tempogram-anaysis</p></td>
+<td><p><strong>Transcription</strong></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">DrumScript</span></code> converts drum audio → PDF sheet music . The <code class="docutils literal notranslate"><span class="pre">--full</span></code> flag also means you can give it a full song and it will extract the drums <strong>and</strong> transcribe</p></td>
 </tr>
 <tr class="row-odd"><td><p>2</p></td>
 <td><p><strong>Stem Separation</strong></p></td>
@@ -363,8 +365,8 @@ data-aria-dark="Switch to auto color mode">
 <td><p>Give <code class="docutils literal notranslate"><span class="pre">DrumScript</span></code> a song and it will mute the drums to create a backing track for you</p></td>
 </tr>
 <tr class="row-odd"><td><p>4</p></td>
-<td><p><strong>Transcription</strong></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">DrumScript</span></code> converts drum audio → PDF sheet music . The –full flag also means you can give it a full song and it will extract the drums <strong>and</strong> transcribe</p></td>
+<td><p><strong>Tempo Detection</strong></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">DrumScript</span></code> estimates BPM from drum audio file based on tempogram-anaysis</p></td>
 </tr>
 </tbody>
 </table>
@@ -398,6 +400,14 @@ data-aria-dark="Switch to auto color mode">
 <ul class="simple">
 <li><p><strong>Drumless Tracks:</strong> Automatically remove the drums from any <code class="docutils literal notranslate"><span class="pre">.mp3</span></code> or <code class="docutils literal notranslate"><span class="pre">.wav</span></code> to create a play-along track.</p></li>
 <li><p><strong>Bassless Tracks:</strong> Mute the bass to practice your low-end theory.</p></li>
+</ul>
+</section>
+<section id="automatic-tempo-detection">
+<h3>4. Automatic Tempo Detection<a class="headerlink" href="#automatic-tempo-detection" title="Link to this heading">¶</a></h3>
+<p>Need to know the speed of a groove or drum loop? DrumScript can accurately estimate the global tempo of any percussive track.</p>
+<ul class="simple">
+<li><p><strong>Tempogram-First Approach:</strong> Calculates the Beats Per Minute (BPM) by generating a tempogram from the onset strength envelope</p></li>
+<li><p><strong>Automatic Tempo Detection:</strong> DrumScript automatically detects/calculates tempo when you provide a drum-only audio input. However, you can enforce a <strong>global tempo</strong> using the –tempo flag in transcribe() and the score generation will be built based on this.</p></li>
 </ul>
 <p><code class="docutils literal notranslate"><span class="pre">DrumScript</span></code> is an open-source Python library that converts drum audio (in <code class="docutils literal notranslate"><span class="pre">.mp3</span></code>, or <code class="docutils literal notranslate"><span class="pre">.wav</span></code>) to <code class="docutils literal notranslate"><span class="pre">.pdf</span></code> sheet music. It contains functions for you to <strong>automatically measure tempo of drum-only audio using Tempogram-first principles</strong>. <code class="docutils literal notranslate"><span class="pre">DrumScript</span></code> is unique to any other library because <strong>we do not use machine learning or AI</strong>. Our classification approach is a <strong>deterministic</strong> one.</p>
 <p><code class="docutils literal notranslate"><span class="pre">DrumScript</span></code> also <strong>extracts</strong> drum audio from <strong>any</strong> <code class="docutils literal notranslate"><span class="pre">.mp3</span></code> or <code class="docutils literal notranslate"><span class="pre">.wav</span></code> audio file for you. Give it your favourite track, and it will do the job of extracting <strong>just the drum audio</strong> and then transcribe into handy <code class="docutils literal notranslate"><span class="pre">.pdf</span></code> sheet music. There <strong>stem-splitter</strong> functionality also extracts, optionally, the <strong>non-drum-parts</strong> of an audio track and provides it as a <strong>backing track</strong> for all you aspiring drummers and percussionists to play along to.</p>

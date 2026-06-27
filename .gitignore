@@ -72,6 +72,7 @@ Thumbs.db
 # LOGS
 # ==========================================
 *.log
+**.log
 *.logs
 logs/
 docs/logs/

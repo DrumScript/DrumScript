@@ -87,7 +87,6 @@ guide/installation
 
 guide/cli_reference
 guide/configuration
-guide/usage
 guide/glossary
 guide/roadmap
 guide/security
@@ -100,13 +99,13 @@ guide/usage
 :maxdepth: 1
 :caption: Theory
 
+theory/bibliography
 theory/drum_notation_guide
 theory/digital_signal_processing
-theory/tempo_estimation
-theory/stem_splitting
 theory/how_it_works
 theory/percussion_frequencies
-theory/bibliography
+theory/tempo_estimation
+theory/stem_splitting
 theory/sources
 ```
 

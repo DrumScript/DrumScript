@@ -1,5 +1,7 @@
 # `DrumScript` Documentation
-<!--date_updated:sun-21-june-2026-->
+
+<!--date_created:tuesday-30-december-2025-->
+<!--date_updated:sat-27-june-2026-->
 
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1eDVXc3d6ezmorxINOjzldRPSC3emTl2I)
 
@@ -7,13 +9,13 @@
 
 | # | Feature | What it does |
 |---|---------|-------------|
-| 1 | **Tempo Detection** | `DrumScript` estimates BPM from drum audio file based on tempogram-anaysis |
+| 1 | **Transcription** | `DrumScript` converts drum audio → PDF sheet music . The `--full-song` flag also means you can give it a full song and it will extract the drums **and** transcribe|
 | 2 | **Stem Separation** | Extracts drums from `.wav` and `.mp3`^ songs. Also supports extraction of bass, vocals, and other instruments |
 | 3 | **Backing Tracks** | Give `DrumScript` a song and it will mute the drums to create a backing track for you|
-| 4 | **Transcription** | `DrumScript` converts drum audio → PDF sheet music . The --full flag also means you can give it a full song and it will extract the drums **and** transcribe|
+| 4 | **Tempo Detection** | `DrumScript` estimates BPM from drum audio file based on tempogram-anaysis |
 
 *^ `.mp3` requires `.ffmpeg` (`brew install ffmpeg`)*
->
+
 Unlike most ADT systems, DrumScript's classification engine is **deterministic**. `DrumScript` combines physics-derived spectral analysis: fundamental frequency, spectral centroid, energy ratios, and decay characteristics, applied through a rule-based pipeline built on `librosa` and `Demucs`. It also functions as a general-purpose audio toolbox: stem separation, drumless/bassless backing track generation, and tempo detection. 
 
 The project was born from one working drummer's desire to make playing drums more fun and in an accessible way - it's taken almost a year to build. **v{{ version }}** is part of the the **Alpha release**. Between **01 June and 31 August 2026** we are reaching out to communities, both musicians and academics alike, to find people to test  - and hopefully improve - the deterministic classification model. For more info on where this is headed see **[roadmap](guide/roadmap.md)** or **https://github.com/orgs/DrumScript/discussions**
@@ -36,6 +38,11 @@ Powered by **Demucs** (Hybrid Transformer Source Separation), DrumScript can un-
 Want to play along to your favorite song but the drums are in the way?
 * **Drumless Tracks:** Automatically remove the drums from any `.mp3` or `.wav` to create a play-along track.
 * **Bassless Tracks:** Mute the bass to practice your low-end theory.
+
+### 4. Automatic Tempo Detection
+Need to know the speed of a groove or drum loop? DrumScript can accurately estimate the global tempo of any percussive track.
+* **Tempogram-First Approach:** Calculates the Beats Per Minute (BPM) by generating a tempogram from the onset strength envelope
+* **Automatic Tempo Detection:** DrumScript automatically detects/calculates tempo when you provide a drum-only audio input. However, you can enforce a **global tempo** using the --tempo flag in transcribe() and the score generation will be built based on this. 
 
 `DrumScript` is an open-source Python library that converts drum audio (in `.mp3`, or `.wav`) to `.pdf` sheet music. It contains functions for you to **automatically measure tempo of drum-only audio using Tempogram-first principles**. `DrumScript` is unique to any other library because **we do not use machine learning or AI**. Our classification approach is a **deterministic** one. 
 
@@ -80,7 +87,6 @@ guide/installation
 
 guide/cli_reference
 guide/configuration
-guide/usage
 guide/glossary
 guide/roadmap
 guide/security
@@ -93,13 +99,13 @@ guide/usage
 :maxdepth: 1
 :caption: Theory
 
+theory/bibliography
 theory/drum_notation_guide
 theory/digital_signal_processing
-theory/tempo_estimation
-theory/stem_splitting
 theory/how_it_works
 theory/percussion_frequencies
-theory/bibliography
+theory/tempo_estimation
+theory/stem_splitting
 theory/sources
 ```
 
@@ -149,5 +155,4 @@ about
 
 release_notes/index
 changelog
-
 ```

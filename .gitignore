@@ -35,7 +35,6 @@ wheels/
 .installed.cfg
 *.egg
 MANIFEST
-scripts/update_public_wheel.sh
 
 # ==========================================
 # IDEs, LINTERS & TOOLING
@@ -54,6 +53,7 @@ docs/guide/interactive/_templates/_template.ipynb
 !docs/guide/interactive/extract_drums.ipynb
 !docs/guide/interactive/measure_tempo.ipynb
 !docs/guide/interactive/transcribe.ipynb
+docs/guide/interactive/drumscript_interactive_notebook.ipynb
 
 .ipynb_checkpoints/
 
@@ -71,8 +71,8 @@ Thumbs.db
 # ==========================================
 # LOGS
 # ==========================================
+.log
 *.log
-**.log
 *.logs
 logs/
 docs/logs/
@@ -170,3 +170,4 @@ terraform/.terraform/providers/registry.terraform.io/hashicorp/aws/5.100.0/darwi
 
 app/
 scripts/update_public_wheel.sh
+drumscript_full_review.txt

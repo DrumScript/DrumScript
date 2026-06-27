@@ -1,7 +1,7 @@
-# **Glossary of Terms**
+# Glossary of Terms
 
 <!--date_created:03-july-2025-->
-<!--date_updated:02-feb-2026-->
+<!--date_updated:sat-27-june-2026-->
 
 ## **Python Libraries & Classes**
 

@@ -1,12 +1,13 @@
-# **`Theory/` Sources**
+# Theory
 
 This is a reference document that outlines the sources of various files and images, reference pdfs provided in the `DrumScript/theory/` folder and sub-folders. Some of the references are duplicated in the **[`bibliography.md`](bibliography.md)**
 
-<!--date_created: weds-06-august-2025 -->
-<!-- date_updated: fri-20-feb-2026 -->
+<!--date_created:weds-06-august-2025-->
+<!--date_updated:sat-27-june-2026-->
 
 ---
-## Sources
+
+A lot of research has been done while building `DrumScript` deterministic classification; particularly around Music Information Retrieval (MIR). See also **[`Bibliography`](./bibliography.md)**
 
 > **NOTE:** **All theory and sources** listed here are free-to-use at the time of sharing, and are **non-affiliated** with the `CODEOWNERS` of `DrumScript`.
 

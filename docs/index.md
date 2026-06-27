@@ -20,7 +20,7 @@ Unlike most ADT systems, DrumScript's classification engine is **deterministic**
 
 The project was born from one working drummer's desire to make playing drums more fun and in an accessible way - it's taken almost a year to build. **v{{ version }}** is part of the the **Alpha release**. Between **01 June and 31 August 2026** we are reaching out to communities, both musicians and academics alike, to find people to test  - and hopefully improve - the deterministic classification model. For more info on where this is headed see **[roadmap](guide/roadmap.md)** or **https://github.com/orgs/DrumScript/discussions**
 
-## What can DrumScript do?
+## **What can DrumScript do?**
 
 ### 1. Audio-to-Sheet Music (Transcription)
 Give DrumScript a recording of a drum beat, and it will generate a **PDF Score**.

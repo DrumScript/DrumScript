@@ -9,13 +9,13 @@
 
 | # | Feature | What it does |
 |---|---------|-------------|
-| 1 | **Transcription** | `DrumScript` converts drum audio → PDF sheet music . The `--full` flag also means you can give it a full song and it will extract the drums **and** transcribe|
+| 1 | **Transcription** | `DrumScript` converts drum audio → PDF sheet music . The `--full-song` flag also means you can give it a full song and it will extract the drums **and** transcribe|
 | 2 | **Stem Separation** | Extracts drums from `.wav` and `.mp3`^ songs. Also supports extraction of bass, vocals, and other instruments |
 | 3 | **Backing Tracks** | Give `DrumScript` a song and it will mute the drums to create a backing track for you|
 | 4 | **Tempo Detection** | `DrumScript` estimates BPM from drum audio file based on tempogram-anaysis |
 
 *^ `.mp3` requires `.ffmpeg` (`brew install ffmpeg`)*
->
+
 Unlike most ADT systems, DrumScript's classification engine is **deterministic**. `DrumScript` combines physics-derived spectral analysis: fundamental frequency, spectral centroid, energy ratios, and decay characteristics, applied through a rule-based pipeline built on `librosa` and `Demucs`. It also functions as a general-purpose audio toolbox: stem separation, drumless/bassless backing track generation, and tempo detection. 
 
 The project was born from one working drummer's desire to make playing drums more fun and in an accessible way - it's taken almost a year to build. **v{{ version }}** is part of the the **Alpha release**. Between **01 June and 31 August 2026** we are reaching out to communities, both musicians and academics alike, to find people to test  - and hopefully improve - the deterministic classification model. For more info on where this is headed see **[roadmap](guide/roadmap.md)** or **https://github.com/orgs/DrumScript/discussions**

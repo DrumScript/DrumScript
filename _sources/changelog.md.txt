@@ -1,7 +1,7 @@
 # Changelog
 
 <!--date_added:thurs-28-may-2026-->
-<!--date:updated:mon-22-june-2026-->
+<!--date:updated:saturday-27-june-2026-->
 
 
 All notable changes to DrumScript will be documented here.
@@ -15,6 +15,7 @@ DrumScript follows [Semantic Versioning](https://semver.org/).
 
 * Adjusted documentation so that when version appears in documentation it is no longer hardcoded, but linked to `import importlib.metadata` in `drumscript/__init__.py` [Reduces maintenance burden on contributors]
 * Updated version in pyproject.toml from `v0.1.5` to `v0.1.6` (This should have been changed *prior* to pypi release of v0.1.6 on Thursday 18 June 2026)
+* Updated table ordering in `docs/index.md` to match right sidebar ordering and added missing sidebar navigation point for tempogram-detection
 
 ---
 

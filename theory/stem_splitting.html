@@ -232,7 +232,18 @@ data-aria-dark="Switch to auto color mode">
     <button class="rside-close js-menu xl:hidden" aria-label="Close Table of Contents" type="button" aria-controls="rside" aria-expanded="false">
       <i class="i-lucide close"></i>
     </button>
-    <div class="sy-scrollbar sy-rside-inner px-6 xl:top-16 xl:sticky xl:pl-0 pt-6 pb-4"><a class="js-repo-stats repo-stats flex items-center" href="https://github.com/DrumScript/DrumScript"
+    <div class="sy-scrollbar sy-rside-inner px-6 xl:top-16 xl:sticky xl:pl-0 pt-6 pb-4"><div class="localtoc"><h3>On this page</h3><ul>
+<li><a class="reference internal" href="#how-does-the-stem-splitter-module-audio-processor-stem-splitter-py-work">How does the stem-splitter module (<code class="docutils literal notranslate"><span class="pre">audio_processor/stem_splitter.py</span></code>) work?</a><ul>
+<li><a class="reference internal" href="#what-the-module-does">What the Module Does</a></li>
+<li><a class="reference internal" href="#why-this-approach">Why This Approach</a><ul>
+<li><a class="reference internal" href="#key-design-choices">Key design choices</a></li>
+<li><a class="reference internal" href="#a-note-on-demucs-s-long-term-maintenance">A note on Demucs&#8217;s long-term maintenance</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div><a class="js-repo-stats repo-stats flex items-center" href="https://github.com/DrumScript/DrumScript"
   data-type="github" data-user="DrumScript" data-repo="DrumScript">
   <span class="w-8 flex items-center justify-around shrink-0 text-3xl">
     <iconify-icon icon="simple-icons:github"></iconify-icon>
@@ -321,7 +332,57 @@ data-aria-dark="Switch to auto color mode">
 </div><article class="yue" role="main">
           <section id="stem-splitter">
 <h1>Stem-Splitter<a class="headerlink" href="#stem-splitter" title="Link to this heading">¶</a></h1>
-<!--add-content--></section>
+<!--date_createdthurs-07-may-2026-->
+<!--date_updated:sat-27-june-2026-->
+<hr class="docutils" />
+<section id="how-does-the-stem-splitter-module-audio-processor-stem-splitter-py-work">
+<h2>How does the stem-splitter module (<code class="docutils literal notranslate"><span class="pre">audio_processor/stem_splitter.py</span></code>) work?<a class="headerlink" href="#how-does-the-stem-splitter-module-audio-processor-stem-splitter-py-work" title="Link to this heading">¶</a></h2>
+<p>In simple terms, the <strong>stem-splitter</strong> takes a full polyphonic song and pulls it apart into its individual instrumental layers — drums, bass, vocals, and “other” — using the <strong>Demucs</strong> source separation model. From there, those isolated layers can be saved individually, recombined into custom mixes (e.g. a drumless backing track), or fed into the rest of the DrumScript transcription pipeline.</p>
+<p>Here’s a more detailed breakdown of what it does and why it’s designed this way.</p>
+<section id="what-the-module-does">
+<h3>What the Module Does<a class="headerlink" href="#what-the-module-does" title="Link to this heading">¶</a></h3>
+<ol class="arabic simple">
+<li><p><strong>Receives a full audio mix</strong> — any <code class="docutils literal notranslate"><span class="pre">.wav</span></code> or <code class="docutils literal notranslate"><span class="pre">.mp3</span></code> file containing a complete song.</p></li>
+<li><p><strong>Runs Demucs in a subprocess</strong>, using the high-quality 4-stem <code class="docutils literal notranslate"><span class="pre">htdemucs</span></code> model. Calling Demucs via its CLI (rather than importing it as a Python library) keeps Demucs’s heavy dependencies (PyTorch, torchaudio, torchcodec) outside the core DrumScript Python process.</p></li>
+<li><p><strong>Demucs writes four raw WAV stems to a temporary directory:</strong> <code class="docutils literal notranslate"><span class="pre">drums.wav</span></code>, <code class="docutils literal notranslate"><span class="pre">bass.wav</span></code>, <code class="docutils literal notranslate"><span class="pre">vocals.wav</span></code>, and <code class="docutils literal notranslate"><span class="pre">other.wav</span></code>.</p></li>
+<li><p><strong>Reads each stem back in as a NumPy array</strong> using <code class="docutils literal notranslate"><span class="pre">soundfile</span></code>. This step is deliberately ffmpeg-free for WAV — only the MP3 export path further down ever needs ffmpeg.</p></li>
+<li><p><strong>Decides what to do with the stems</strong>, based on which flags were passed:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">drumless=True</span></code> → mix every stem <strong>except</strong> drums into a backing track, and save the drums stem on its own.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">mute=[&quot;bass&quot;]</span></code> (or any other stem) → mix everything except the muted stem(s); save the muted stem(s) separately.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">all_stems=True</span></code> → export every individual stem as its own file.</p></li>
+<li><p><strong>No flags</strong> → default behaviour: just save the isolated drum stem (this is what the transcription pipeline uses internally when <code class="docutils literal notranslate"><span class="pre">full_song=True</span></code>).</p></li>
+</ul>
+</li>
+<li><p><strong>Mixes stems where needed</strong> by summing the NumPy arrays sample-by-sample (via the internal <code class="docutils literal notranslate"><span class="pre">mix_stems</span></code> helper) and clipping the result to the valid <code class="docutils literal notranslate"><span class="pre">[-1,</span> <span class="pre">1]</span></code> range to prevent overflow.</p></li>
+<li><p><strong>Writes outputs in the requested format.</strong> WAV writes go through <code class="docutils literal notranslate"><span class="pre">soundfile</span></code> (no ffmpeg). MP3 writes go through <code class="docutils literal notranslate"><span class="pre">pydub</span></code>, which shells out to ffmpeg’s LAME encoder.</p></li>
+<li><p><strong>Cleans up the temporary Demucs directory</strong> and returns a dictionary of paths to every generated file.</p></li>
+</ol>
+</section>
+<section id="why-this-approach">
+<h3>Why This Approach<a class="headerlink" href="#why-this-approach" title="Link to this heading">¶</a></h3>
+<p>DrumScript uses Demucs as a <strong>pre-processor</strong>, not as part of its own classification engine. This separation of concerns is deliberate:</p>
+<ul class="simple">
+<li><p><strong>Source separation and drum classification are different problems.</strong> Isolating a drum track from a polyphonic mix requires learning what “drums” sound like across many recording conditions, kits, and genres — a problem deep learning solves well. Drum <em>classification</em> (kick vs snare vs hi-hat etc.), by contrast, is a problem DrumScript solves with deterministic, physics-based rules.</p></li>
+<li><p><strong>Demucs is treated as a black box that produces a WAV file.</strong> From DrumScript’s perspective, the output of the stem-splitter is just another audio file. Everything downstream — onset detection, feature extraction, classification, score-building — runs on that file deterministically.</p></li>
+</ul>
+<section id="key-design-choices">
+<h4>Key design choices<a class="headerlink" href="#key-design-choices" title="Link to this heading">¶</a></h4>
+<ul class="simple">
+<li><p><strong>Demucs is invoked via subprocess CLI, not imported as a Python module.</strong> Demucs’s heavy ML dependencies (PyTorch, torchaudio, torchcodec) don’t have to be loaded into the Python process for every DrumScript call. This keeps DrumScript light to install and quick to import.</p></li>
+<li><p><strong>WAV output is ffmpeg-free.</strong> Demucs writes WAV by default; <code class="docutils literal notranslate"><span class="pre">soundfile</span></code> reads and writes WAV natively. A user on a WAV-only workflow never needs ffmpeg on their system.</p></li>
+<li><p><strong>MP3 output is opt-in.</strong> MP3 routes through <code class="docutils literal notranslate"><span class="pre">pydub</span></code> (which shells out to ffmpeg), so ffmpeg only becomes a requirement if the user explicitly asks for MP3 output.</p></li>
+</ul>
+</section>
+<section id="a-note-on-demucs-s-long-term-maintenance">
+<h4>A note on Demucs’s long-term maintenance<a class="headerlink" href="#a-note-on-demucs-s-long-term-maintenance" title="Link to this heading">¶</a></h4>
+<p>The original Demucs project is no longer actively maintained by its original owners (Meta). Alexandre Défossez maintains an occasional <a class="reference external" href="https://github.com/adefossez/demucs">fork</a>. To insulate DrumScript against potential dependency drift, the project may eventually replace Demucs with its own lightweight stem-splitter — but for now, Demucs remains the simplest, highest-quality option available.</p>
+<hr class="docutils" />
+<!--END-->
+</section>
+</section>
+</section>
+</section>
 
         </article><button class="back-to-top" type="button">
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">

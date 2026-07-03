@@ -15,7 +15,7 @@ DrumScript follows [Semantic Versioning](https://semver.org/).
 
 * Adjusted documentation so that when version appears in documentation it is no longer hardcoded, but linked to `import importlib.metadata` in `drumscript/__init__.py` [Reduces maintenance burden on contributors]
 * Updated version in pyproject.toml from `v0.1.5` to `v0.1.6` (This should have been changed *prior* to pypi release of v0.1.6 on Thursday 18 June 2026)
-* fixed `create_backing_track` runbook; replaced and tidied functions in drumscript_interactive_notebook on Colab
+* Fixed `create_backing_track` runbook; replaced and tidied functions in drumscript_interactive_notebook on Colab
 
 ### Changed
 

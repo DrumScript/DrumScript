@@ -1,7 +1,7 @@
 # **`DrumScript`**
 
 <!--date_created: sun-15-june-2025-->
-<!--date_edited: tues-30-june-2026--->
+<!--date_edited: fri-03-july-2026--->
 
 **Workflow Status**
 
@@ -179,14 +179,22 @@ print(f"Tempo: {bpm:.1f} BPM")
 ```python
 import drumscript as ds
 
-# Extract just the drum stem
-drum_path = ds.extract_stems("full_song.mp3")
+# Extract just the drum stem from full polyphonic audio (let's call it "full_song.wav")
+# Not to be confused with "full_song" flag used in transcribe(), which is for when you want to extract stems before transcribing
+stem_split = ds.extract_stems("full_song.wav")
 
-# Create a drumless backing track in MP3
-results = ds.extract_stems(
-    "full_song.mp3",
+```
+
+### Create drumless backing track to your favourite songs
+
+```python
+import drumscript as ds
+
+# Remember to use mp3 flag if using mp3 audio
+# default input format is .wav
+
+remove_drums = ds.extract_stems("full_song.wav",
     drumless=True,
-    output_format="mp3",
     verbose=True,
 )
 print(f"Backing track: {results['mix']}")

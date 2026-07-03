@@ -121,6 +121,7 @@ docs/theory/images/ismir-logo.png
 docs/theory/images/librosa-logo.png
 docs/theory/images/librosa-logo.svg
 visuals/tempogram.png
+docs/_static/root_redirect.html
 
 # ==========================================
 # LOCALLY-GENERATED IPYNB/JSON ASSETS

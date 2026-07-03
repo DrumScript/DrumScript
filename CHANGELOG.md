@@ -1,7 +1,7 @@
 # Changelog
 
 <!--date_added:thurs-28-may-2026-->
-<!--date:updated:saturday-27-june-2026-->
+<!--date:updated:friday-03-july-2026-->
 
 
 All notable changes to DrumScript will be documented here.
@@ -11,13 +11,17 @@ DrumScript follows [Semantic Versioning](https://semver.org/).
 ---
 ## Unreleased
 
-### Fixed since last release
+### Fixed
 
 * Adjusted documentation so that when version appears in documentation it is no longer hardcoded, but linked to `import importlib.metadata` in `drumscript/__init__.py` [Reduces maintenance burden on contributors]
 * Updated version in pyproject.toml from `v0.1.5` to `v0.1.6` (This should have been changed *prior* to pypi release of v0.1.6 on Thursday 18 June 2026)
+* fixed `create_backing_track` runbook; replaced and tidied functions in drumscript_interactive_notebook on Colab
+
+### Changed
+
 * Updated table ordering in `docs/index.md` to match right sidebar ordering and added missing sidebar navigation point for tempogram-detection
 * Amended documentation to remove bold markdown formatting for H1 references feeding into the side-nav bar visual presentation, for all except `DrumScript CLI Reference`; fixed ordering side in toctree (docs/index.md) for `User Guide` submenu to 1. remove duplicated `usage` reference in toctree and 2. reorder items alphabetically. Amended right hand navbar so that H2 links are now alphabetical.
-* fixed `create_backing_track` runbook; replaced and tidied functions in drumscript_interactive_notebook on Colab
+* Updated and tidied the examples for extract stems in README.md; split example up into extract stems and backing track function examples. 
 
 ---
 

@@ -1,7 +1,7 @@
 # Changelog
 
 <!--date_added:thurs-28-may-2026-->
-<!--date:updated:friday-03-july-2026-->
+<!--date:updated:monday-06-july-2026-->
 
 
 All notable changes to DrumScript will be documented here.
@@ -21,7 +21,17 @@ DrumScript follows [Semantic Versioning](https://semver.org/).
 
 * Updated table ordering in `docs/index.md` to match right sidebar ordering and added missing sidebar navigation point for tempogram-detection
 * Amended documentation to remove bold markdown formatting for H1 references feeding into the side-nav bar visual presentation, for all except `DrumScript CLI Reference`; fixed ordering side in toctree (docs/index.md) for `User Guide` submenu to 1. remove duplicated `usage` reference in toctree and 2. reorder items alphabetically. Amended right hand navbar so that H2 links are now alphabetical.
-* Updated and tidied the examples for extract stems in README.md; split example up into extract stems and backing track function examples. 
+* Updated and tidied the examples for extract stems in README.md; split example up into extract stems and backing track function examples.
+
+### Added
+
+* Versioned documentation deployment via `docs.yml` GitHub Actions workflow (`docs/versioned-deploy` branch):
+  - Documentation now deploys to version-specific folders on `gh-pages` (e.g. `/v0.1.6/`, `/v0.2.0/`)
+  - Tag pushes (`v*`) deploy to both `/<tag>/` and `/latest/` folders
+  - Main branch pushes deploy to `/dev/` folder (bleeding-edge docs)
+  - Root `index.html` auto-generated on tag push, redirects to `/latest/`
+  - `keep_files: true` ensures older version folders are never deleted
+  - Existing root-level docs remain untouched until explicit cleanup
 
 ---
 

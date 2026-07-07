@@ -1,7 +1,7 @@
 # **`DrumScript`**
 
 <!--date_created: sun-15-june-2025-->
-<!--date_edited: fri-03-july-2026--->
+<!--date_edited: tues-07-july-2026--->
 
 **Workflow Status**
 
@@ -278,7 +278,7 @@ drumscript snare_hit.wav --rudiment
 
 ## Contributing
 
-We welcome contributions! DrumScript is intended to be a community-owned project.
+We welcome contributions! DrumScript is intended to be a community-owned project. You can also refer to detailed contributor guidance **[here](./docs/development/contributor_guidance.md)**
 
 - **[Open an Issue](https://github.com/DrumScript/DrumScript/issues/new)** for bugs or feature requests.
 - **[Submit a Pull Request](https://github.com/DrumScript/DrumScript/pulls)** for code changes.
@@ -307,6 +307,23 @@ The alpha phase runs between 01 June and 31 August 2026
 - Stabilising the public API ahead of the beta freeze
 - Community feedback collection
 
+---
+
+## Publishing a new release
+
+We use an automated pipeline to publish new versions to PyPI. All releases must use a specific tag format: `vX.Y.Z` (for example, `v0.2.0`).
+
+**To publish a release via GitHub Actions (Recommended):**
+1. Go to the **Actions** tab in this repository.
+2. Click on **Create Release** on the left menu.
+3. Click **Run workflow** on the right.
+4. Type in your new version number (e.g., `0.2.0`) and click **Run workflow**. GitHub will handle the rest!
+
+---
+
+## Testing 
+
+For detailed instructions on testing and publishing via the command line, please see our [Testing Guidance](tests/README.md).
 
 ---
 

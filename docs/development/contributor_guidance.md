@@ -4,7 +4,7 @@
 
 
 
-First off, thank you for considering contributing to `DrumScript`! :)
+First off, thank you for considering contributing to `DrumScript`! :D
 
 We're thrilled to have you join us. Whether you are a drummer, a Python developer, a sound engineer, or all three, your help is vital to making this the standard open-source tool for drum transcription.
 
@@ -125,7 +125,9 @@ We follow a **Feature Branch** workflow. We generally do not commit directly to 
 
 
 
+
 ---
+
 ## Forking `DrumScript`
 
 
@@ -236,6 +238,71 @@ We do **not** publish a new PyPI package for every single bug fix.
 You don't need to worry about bumping the version number in `pyproject.toml`. The maintainers will handle versioning upon release. Just ensure your PR description clearly states *what* you fixed so we can classify it (Patch vs Minor).
 
 ---
+
+## Releasing and Publishing (Maintainer Guide)
+
+This section explains how to create a new release of `DrumScript` and publish it to PyPI. 
+
+There are two ways to do this. You can use your command line interface (CLI) to tag manually, or you can use the automated GitHub Action (`release.yml`).
+
+### Naming Convention for Tags
+Whenever you create a release, you must use a specific naming format for the tag. The format is `vX.Y.Z`.
+* `v` stands for version.
+* `X` is the major version (e.g., 1 for a big stable release).
+* `Y` is the minor version (e.g., 2 for new features or minor bumps).
+* `Z` is the patch version (e.g., 0 for small bug fixes).
+* Example: `v0.2.0` or `v1.0.4`.
+
+### Option 1: Releasing from the Command Line (CLI)
+Use these simple steps if you want to manually tag your code from your terminal and trigger the `publish.yml` workflow.
+
+1. **Check your branch:** Make sure you are on the `main` branch and your code is fully up to date.
+   ```bash
+   git checkout main
+   git pull origin main
+
+```
+
+2. **Tag the version:** Create a tag on your computer using the naming convention above.
+```bash
+git tag v0.2.0
+
+```
+
+
+3. **Push the tag to GitHub:** Send this tag to the remote repository.
+```bash
+git push origin v0.2.0
+
+```
+
+
+4. **Publish to PyPI:**
+* Go to the `DrumScript` repository on the GitHub website.
+* Click on **Releases** on the right side of the screen.
+* Click **Draft a new release**.
+* Choose your new tag (e.g., `v0.2.0`) from the dropdown menu.
+* Add a title and notes, then click **Publish release**.
+* *Note: Once you click Publish, the `publish.yml` workflow will automatically run and upload your new package to PyPI!*
+
+
+
+### Option 2: Releasing using the GitHub Actions Automator
+
+Use this option if you want GitHub to do the version bumping and tagging for you, using your `release.yml` file.
+
+1. Go to the `DrumScript` repository on GitHub.
+2. Click on the **Actions** tab at the top.
+3. On the left side, click on the workflow named **Create Release**.
+4. Click the **Run workflow** button on the right.
+5. Type in the new version number (e.g., `0.2.0`), choose the release type, and add a short summary.
+6. Click **Run workflow**.
+* *Note: This will automatically update your version files, tag the code, create the GitHub release, and then trigger `publish.yml` to send it to PyPI.*
+
+
+---
+
+
 
 ## Coding Standards
 

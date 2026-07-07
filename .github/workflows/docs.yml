@@ -3,10 +3,14 @@ name: Deploy Sphinx Docs
 on:
   push:
     branches: ["main"]
-    paths:
-      - "docs/**"
-      - "drumscript/**"
-      - ".github/workflows/docs.yml"
+    tags: ["v*"]
+    # --- COMMENTED OUT OLD PATHS RESTRICTION ---
+    # Paths filter commented out because tag pushes don't carry path info.
+    # If paths filter is active, tag pushes are silently ignored.
+    # paths:
+    #   - "docs/**"
+    #   - "drumscript/**"
+    #   - ".github/workflows/docs.yml"
   workflow_dispatch:
 
 permissions:
@@ -35,14 +39,30 @@ jobs:
       - name: Install package and dev dependencies
         run: uv sync --extra dev
 
+      # ── Version routing ──────────────────────────────────────────
+      # Tag push (e.g. v0.2.0)  → VERSION_DIR=v0.2.0, IS_RELEASE=true
+      # Main branch push        → VERSION_DIR=dev,     IS_RELEASE=false
+      - name: Determine version directory
+        run: |
+          if [[ $GITHUB_REF == refs/tags/* ]]; then
+            echo "VERSION_DIR=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
+            echo "IS_RELEASE=true" >> $GITHUB_ENV
+          else
+            echo "VERSION_DIR=dev" >> $GITHUB_ENV
+            echo "IS_RELEASE=false" >> $GITHUB_ENV
+          fi
+
       - name: Build Sphinx
         run: uv run sphinx-build -b html docs docs/_build/html
 
-      - name: Deploy to GitHub Pages
+      # ── Deploy 1: Version-specific folder ────────────────────────
+      # e.g. /v0.1.6/ or /dev/
+      - name: Deploy to version folder
         uses: peaceiris/actions-gh-pages@v4
         with:
           personal_token: ${{ secrets.PAGES_DEPLOY_TOKEN }}
           publish_dir: ./docs/_build/html
+<<<<<<< HEAD
       
       - name: Deploy root redirect
         uses: peaceiris/actions-gh-pages@v4
@@ -52,3 +72,46 @@ jobs:
           keep_files: true
           destination_dir: .
           exclude_assets: '*.css,*.svg,*.png,*.js'
+=======
+          destination_dir: ${{ env.VERSION_DIR }}
+          keep_files: true
+
+      # ── Deploy 2: /latest/ folder (tag pushes only) ──────────────
+      # Mirrors the tagged release so /latest/ always = most recent release
+      - name: Deploy to /latest/ folder
+        if: env.IS_RELEASE == 'true'
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          personal_token: ${{ secrets.PAGES_DEPLOY_TOKEN }}
+          publish_dir: ./docs/_build/html
+          destination_dir: latest
+          keep_files: true
+
+      # ── Deploy 3: Root redirect (tag pushes only) ────────────────
+      # Generates index.html at root pointing to /latest/
+      # Only updates on tag pushes so the redirect is stable
+      - name: Generate root redirect
+        if: env.IS_RELEASE == 'true'
+        run: |
+          mkdir -p /tmp/docs_redirect
+          cat > /tmp/docs_redirect/index.html << 'REDIRECT_EOF'
+          <!DOCTYPE html>
+          <html>
+            <head>
+              <meta http-equiv="refresh" content="0; url=latest/" />
+            </head>
+            <body>
+              <p>Redirecting to <a href="latest/">latest documentation</a>...</p>
+            </body>
+          </html>
+          REDIRECT_EOF
+
+      - name: Deploy root redirect
+        if: env.IS_RELEASE == 'true'
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          personal_token: ${{ secrets.PAGES_DEPLOY_TOKEN }}
+          publish_dir: /tmp/docs_redirect
+          keep_files: true
+          destination_dir: .
+>>>>>>> 6877598495caf23992fd310182989fb3d1fa0bca

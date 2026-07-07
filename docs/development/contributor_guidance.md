@@ -1,8 +1,22 @@
 # Contributing to `DrumScript`
+
 <!--date_created: thurs-03-jul-2025 -->
 <!--date_updated: weds-21-jan-2026 -->
 
+---
 
+## Table of Contents
+
+- [The Deterministic Mission](#the-deterministic-mission)
+- [Releasing and Publishing (Maintainer Guide)](#releasing-and-publishing-maintainer-guide)
+  - [Naming Convention for Tags](#naming-convention-for-tags)
+  - [Option 1: Releasing from the Command Line (CLI)](#option-1-releasing-from-the-command-line-cli)
+  - [Option 2: Releasing using the GitHub Actions Automator](#option-2-releasing-using-the-github-actions-automator)
+- [How to get started](#how-to-get-started)
+- [Pull Request Process](#pull-request-process)
+- [Coding Standards](#coding-standards)
+- [Reporting Issues](#reporting-issues)
+- [Questions & Support](#questions--support)
 
 First off, thank you for considering contributing to `DrumScript`! :D
 
@@ -16,6 +30,8 @@ This document outlines the project's philosophy, how to set up your environment,
 ---
 
 ## The Deterministic Mission
+*[back to top](#contributing-to-drumscript)*
+
 *Why we aren't using deep learning (for now).*
 
 **DrumScript is pivoting to a rule-based, deterministic classification engine.**
@@ -34,7 +50,10 @@ We have the skeleton (stem splitting, tempo detection, onset detection). We need
 We use the GitHub tool of assigning code 'owners' to the `DrumScript` repository. In the earliest release phases for the library only founding users will be on the `CODEOWNERS` documentation; but as people volunteer to contribute we will expand the scope of the `CODEOWNERS` doc. See [GitHub CODEOWNERS guidance](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners) for more information, or if this will be your first time contributing to an open-source project.
 
 ---
+
 ##  How to Get Started
+*[back to top](#contributing-to-drumscript)*
+
 ### 1. Prerequisites
 
 Before you begin, ensure you have the following installed:
@@ -96,6 +115,8 @@ uv run python local_tests/drumscript_lite/test_local_interface.py
 ```
 
 ---
+
+
 
 ## Development Workflow
 
@@ -239,13 +260,16 @@ You don't need to worry about bumping the version number in `pyproject.toml`. Th
 
 ---
 
-## Releasing and Publishing (Maintainer Guide)
+## Releasing and Publishing
+*[back to top](#contributing-to-drumscript)*
+
 
 This section explains how to create a new release of `DrumScript` and publish it to PyPI. 
 
 There are two ways to do this. You can use your command line interface (CLI) to tag manually, or you can use the automated GitHub Action (`release.yml`).
 
 ### Naming Convention for Tags
+*[back to top](#contributing-to-drumscript)*
 Whenever you create a release, you must use a specific naming format for the tag. The format is `vX.Y.Z`.
 * `v` stands for version.
 * `X` is the major version (e.g., 1 for a big stable release).
@@ -254,6 +278,7 @@ Whenever you create a release, you must use a specific naming format for the tag
 * Example: `v0.2.0` or `v1.0.4`.
 
 ### Option 1: Releasing from the Command Line (CLI)
+*[back to top](#contributing-to-drumscript)*
 Use these simple steps if you want to manually tag your code from your terminal and trigger the `publish.yml` workflow.
 
 1. **Check your branch:** Make sure you are on the `main` branch and your code is fully up to date.
@@ -287,7 +312,9 @@ git push origin v0.2.0
 
 
 
+
 ### Option 2: Releasing using the GitHub Actions Automator
+*[back to top](#contributing-to-drumscript)*
 
 Use this option if you want GitHub to do the version bumping and tagging for you, using your `release.yml` file.
 
@@ -300,9 +327,20 @@ Use this option if you want GitHub to do the version bumping and tagging for you
 * *Note: This will automatically update your version files, tag the code, create the GitHub release, and then trigger `publish.yml` to send it to PyPI.*
 
 
+--
+
+## Pull Request Process
+*[back to top](#contributing-to-drumscript)*
+
+1. Create a new branch (e.g., `feature/snare-detection` or `fix/tempo-bug`).
+2. Make your changes.
+3. Write or update tests in the `tests/` directory.
+4. Run the test suite: `pytest tests/`
+5. Submit a PR against the `main` branch.
+
+We enforce **Sphinx reST (https://www.sphinx-doc.org/en/master/usage/restructuredtext/basics.html) DocString convention**. All contributed code must follow this.
+
 ---
-
-
 
 ## Coding Standards
 
@@ -316,6 +354,7 @@ To maintain consistency, please adhere to the following:
 ---
 
 ## Reporting Issues
+*[back to top](#contributing-to-drumscript)*
 
 If you find a bug, please open an issue on the [GitHub Issues page](https://github.com/DrumScript/DrumScript/issues).
 
@@ -342,14 +381,12 @@ It is recommended to check that your issue complies with the following rules bef
 ---
 
 ## Questions & Support
+*[back to top](#contributing-to-drumscript)*
 
 If you have questions, feel free to reach out at **[hello.drumscript@gmail.com](mailto:hello.drumscript@gmail.com)**.
 
 Thank you for helping us build `DrumScript`! 🥁🚀 :D
 
-
-
-
-
 ---
+
 <!--END-->

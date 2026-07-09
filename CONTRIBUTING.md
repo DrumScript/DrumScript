@@ -37,6 +37,8 @@ w
 
 Releases are handled by maintainers. The tag format is `vX.Y.Z` (e.g. `v0.2.0`). The version is defined in `drumscript/__init__.py` and propagates automatically to `pyproject.toml`, documentation, and PyPI.
 
+**We are currently looking to add new maintainers!** If you are interested in becoming a maintainer, please contact admins at hello.drumscript@gmail.com! 
+
 ---
 
 <!--END-->

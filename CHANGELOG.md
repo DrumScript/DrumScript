@@ -1,7 +1,7 @@
 # Changelog
 
 <!--date_added:thurs-28-may-2026-->
-<!--date:updated:monday-06-july-2026-->
+<!--date:updated:wednesday-08-july-2026-->
 
 
 All notable changes to DrumScript will be documented here.
@@ -33,6 +33,7 @@ DrumScript follows [Semantic Versioning](https://semver.org/).
   - Root `index.html` auto-generated on tag push, redirects to `/latest/`
   - `keep_files: true` ensures older version folders are never deleted
   - Existing root-level docs remain untouched until explicit cleanup
+  - Contributor and Developer updated guidance
 
 ---
 

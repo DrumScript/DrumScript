@@ -13,7 +13,6 @@ DrumScript follows [Semantic Versioning](https://semver.org/).
 
 ### [0.2.0] - July 2026 - Target: *In progress*
 
-
 ### Fixed
 
 * Adjusted documentation so that when version appears in documentation it is no longer hardcoded, but linked to `import importlib.metadata` in `drumscript/__init__.py` [Reduces maintenance burden on contributors]

@@ -11,6 +11,9 @@ DrumScript follows [Semantic Versioning](https://semver.org/).
 ---
 ## Unreleased
 
+### [0.2.0] - July 2026 - Target: *In progress*
+
+
 ### Fixed
 
 * Adjusted documentation so that when version appears in documentation it is no longer hardcoded, but linked to `import importlib.metadata` in `drumscript/__init__.py` [Reduces maintenance burden on contributors]
@@ -41,7 +44,7 @@ DrumScript follows [Semantic Versioning](https://semver.org/).
 
 ---
 
-### [0.2.0] - July/August 2026 - Target: TBD
+### [0.2.0+] - August 2026 - Target: TBC
 
 > First minor-version bump. 
 ><!--> Signals the start of the breaking-change track for --full flag (replaced by --verbose) ahead of v1.0.0 beta.-->

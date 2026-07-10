@@ -1,7 +1,7 @@
 # Changelog
 
 <!--date_added:thurs-28-may-2026-->
-<!--date:updated:wednesday-08-july-2026-->
+<!--date:updated:friday-10-july-2026-->
 
 
 All notable changes to DrumScript will be documented here.
@@ -34,6 +34,10 @@ DrumScript follows [Semantic Versioning](https://semver.org/).
   - `keep_files: true` ensures older version folders are never deleted
   - Existing root-level docs remain untouched until explicit cleanup
   - Contributor and Developer updated guidance
+
+### Audited
+
+* Did full audit of all `drumscript` code to ensure `full-flag` / `full_flag` consistency throughout, following v0.1.6 release fix replacing `full=True` with `verbose=True` (`DeprecationShim`)
 
 ---
 

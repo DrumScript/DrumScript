@@ -233,10 +233,12 @@ data-aria-dark="Switch to auto color mode">
     </button>
     <div class="sy-scrollbar sy-rside-inner px-6 xl:top-16 xl:sticky xl:pl-0 pt-6 pb-4"><div class="localtoc"><h3>On this page</h3><ul>
 <li><a class="reference internal" href="#unreleased">Unreleased</a><ul>
+<li><a class="reference internal" href="#july-2026-target-in-progress">[0.2.0] - July 2026 - Target: <em>In progress</em></a></li>
 <li><a class="reference internal" href="#fixed">Fixed</a></li>
 <li><a class="reference internal" href="#changed">Changed</a></li>
 <li><a class="reference internal" href="#added">Added</a></li>
-<li><a class="reference internal" href="#july-august-2026-target-tbd">[0.2.0] - July/August 2026 - Target: TBD</a><ul>
+<li><a class="reference internal" href="#audited">Audited</a></li>
+<li><a class="reference internal" href="#august-2026-target-tbc">[0.2.0+] - August 2026 - Target: TBC</a><ul>
 <li><a class="reference internal" href="#planned-bug-fixes">Planned &#8212; Bug Fixes</a></li>
 <li><a class="reference internal" href="#planned-changes">Planned &#8212; Changes</a></li>
 <li><a class="reference internal" href="#planned-additions">Planned &#8212; Additions</a></li>
@@ -351,13 +353,16 @@ data-aria-dark="Switch to auto color mode">
           <section id="changelog">
 <h1>Changelog<a class="headerlink" href="#changelog" title="Link to this heading">¶</a></h1>
 <!--date_added:thurs-28-may-2026-->
-<!--date:updated:wednesday-08-july-2026-->
+<!--date:updated:saturday-11-july-2026-->
 <p>All notable changes to DrumScript will be documented here.
 Format follows <a class="reference external" href="https://keepachangelog.com/en/1.0.0/">Keep a Changelog</a>.
 DrumScript follows <a class="reference external" href="https://semver.org/">Semantic Versioning</a>.</p>
 <hr class="docutils" />
 <section id="unreleased">
 <h2>Unreleased<a class="headerlink" href="#unreleased" title="Link to this heading">¶</a></h2>
+<section id="july-2026-target-in-progress">
+<h3>[0.2.0] - July 2026 - Target: <em>In progress</em><a class="headerlink" href="#july-2026-target-in-progress" title="Link to this heading">¶</a></h3>
+</section>
 <section id="fixed">
 <h3>Fixed<a class="headerlink" href="#fixed" title="Link to this heading">¶</a></h3>
 <ul class="simple">
@@ -391,9 +396,16 @@ DrumScript follows <a class="reference external" href="https://semver.org/">Sema
 </li>
 </ul>
 </section>
+<section id="audited">
+<h3>Audited<a class="headerlink" href="#audited" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>Did full audit of all <code class="docutils literal notranslate"><span class="pre">drumscript</span></code> code to ensure <code class="docutils literal notranslate"><span class="pre">full-flag</span></code> / <code class="docutils literal notranslate"><span class="pre">full_flag</span></code> consistency throughout, following v0.1.6 release fix replacing <code class="docutils literal notranslate"><span class="pre">full=True</span></code> with <code class="docutils literal notranslate"><span class="pre">verbose=True</span></code> (<code class="docutils literal notranslate"><span class="pre">DeprecationShim</span></code>)</p></li>
+<li><p>Fixed Sphinx build errors for documentation</p></li>
+</ul>
+</section>
 <hr class="docutils" />
-<section id="july-august-2026-target-tbd">
-<h3>[0.2.0] - July/August 2026 - Target: TBD<a class="headerlink" href="#july-august-2026-target-tbd" title="Link to this heading">¶</a></h3>
+<section id="august-2026-target-tbc">
+<h3>[0.2.0+] - August 2026 - Target: TBC<a class="headerlink" href="#august-2026-target-tbc" title="Link to this heading">¶</a></h3>
 <blockquote>
 <div><p>First minor-version bump.</p>
 <!--> Signals the start of the breaking-change track for --full flag (replaced by --verbose) ahead of v1.0.0 beta.-->

@@ -93,10 +93,10 @@ def extract_stems(
     :param all_stems: If True, exports all separated stems individually.
     :type all_stems: bool, optional
     :param verbose: If True, returns a detailed dictionary of all output paths instead
-    of just the drum stem path.
+        of just the drum stem path.
     :type verbose: bool, optional
     :param full: **Deprecated** since v0.1.6, will be removed in v1.0.0. Use ``verbose``
-    instead. Passing ``full=True`` still works but emits a ``DeprecationWarning``.
+        instead. Passing ``full=True`` still works but emits a ``DeprecationWarning``.
     :type full: bool, optional
 
     :return: Path to the extracted file, or a dictionary of results if ``verbose=True``.
@@ -286,6 +286,7 @@ def transcribe(
     :param full: **Deprecated** since v0.1.6, will be removed in v1.0.0. Use ``verbose``
         instead. Passing ``full=True`` still works but emits a ``DeprecationWarning``.
         Note: this is unrelated to ``full_song``, which controls stem separation.
+    :type full: bool, optional
 
     :return: Path to the generated PDF, or a dict of full results if ``verbose=True``.
     :rtype: str or dict

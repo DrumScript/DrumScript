@@ -1,7 +1,7 @@
 # Changelog
 
 <!--date_added:thurs-28-may-2026-->
-<!--date:updated:wednesday-08-july-2026-->
+<!--date:updated:saturday-11-july-2026-->
 
 
 All notable changes to DrumScript will be documented here.
@@ -10,6 +10,8 @@ DrumScript follows [Semantic Versioning](https://semver.org/).
 
 ---
 ## Unreleased
+
+### [0.2.0] - July 2026 - Target: *In progress*
 
 ### Fixed
 
@@ -35,9 +37,14 @@ DrumScript follows [Semantic Versioning](https://semver.org/).
   - Existing root-level docs remain untouched until explicit cleanup
   - Contributor and Developer updated guidance
 
+### Audited
+
+* Did full audit of all `drumscript` code to ensure `full-flag` / `full_flag` consistency throughout, following v0.1.6 release fix replacing `full=True` with `verbose=True` (`DeprecationShim`)
+* Fixed Sphinx build errors for documentation
+
 ---
 
-### [0.2.0] - July/August 2026 - Target: TBD
+### [0.2.0+] - August 2026 - Target: TBC
 
 > First minor-version bump. 
 ><!--> Signals the start of the breaking-change track for --full flag (replaced by --verbose) ahead of v1.0.0 beta.-->

@@ -2,12 +2,8 @@ name: Deploy Sphinx Docs
 
 on:
   push:
-    branches: ["main"]
+    branches: ["main", "release/*"]
     tags: ["v*"]
-    # --- COMMENTED OUT OLD PATHS RESTRICTION ---
-    # Paths filter commented out because tag pushes don't carry path info.
-    # If paths filter is active, tag pushes are silently ignored.
-    # paths:
     #   - "docs/**"
     #   - "drumscript/**"
     #   - ".github/workflows/docs.yml"
@@ -40,13 +36,20 @@ jobs:
         run: uv sync --extra dev
 
       # ── Version routing ──────────────────────────────────────────
-      # Tag push (e.g. v0.2.0)  → VERSION_DIR=v0.2.0, IS_RELEASE=true
-      # Main branch push        → VERSION_DIR=dev,     IS_RELEASE=false
+      # Tag push (e.g. v0.2.0)      → VERSION_DIR=v0.2.0,       IS_RELEASE=true
+      # Main branch push             → VERSION_DIR=dev,           IS_RELEASE=false
+      # Release branch push          → VERSION_DIR=release-0.2.0, IS_RELEASE=false
+      #   (e.g. release/0.2.0)
       - name: Determine version directory
         run: |
           if [[ $GITHUB_REF == refs/tags/* ]]; then
             echo "VERSION_DIR=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
             echo "IS_RELEASE=true" >> $GITHUB_ENV
+          elif [[ $GITHUB_REF == refs/heads/release/* ]]; then
+            # Convert release/0.2.0 → release-0.2.0 (slashes not allowed in folder names)
+            BRANCH_NAME="${GITHUB_REF#refs/heads/}"
+            echo "VERSION_DIR=${BRANCH_NAME//\//-}" >> $GITHUB_ENV
+            echo "IS_RELEASE=false" >> $GITHUB_ENV
           else
             echo "VERSION_DIR=dev" >> $GITHUB_ENV
             echo "IS_RELEASE=false" >> $GITHUB_ENV
@@ -56,7 +59,7 @@ jobs:
         run: uv run sphinx-build -b html docs docs/_build/html
 
       # ── Deploy 1: Version-specific folder ────────────────────────
-      # e.g. /v0.1.6/ or /dev/
+      # e.g. /v0.1.6/, /dev/, or /release-0.2.0/
       - name: Deploy to version folder
         uses: peaceiris/actions-gh-pages@v4
         with:

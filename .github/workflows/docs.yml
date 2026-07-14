@@ -65,17 +65,6 @@ jobs:
         with:
           personal_token: ${{ secrets.PAGES_DEPLOY_TOKEN }}
           publish_dir: ./docs/_build/html
-<<<<<<< HEAD
-      
-      - name: Deploy root redirect
-        uses: peaceiris/actions-gh-pages@v4
-        with:
-          personal_token: ${{ secrets.PAGES_DEPLOY_TOKEN }}
-          publish_dir: ./docs/_static
-          keep_files: true
-          destination_dir: .
-          exclude_assets: '*.css,*.svg,*.png,*.js'
-=======
           destination_dir: ${{ env.VERSION_DIR }}
           keep_files: true
 

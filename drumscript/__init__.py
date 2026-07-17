@@ -519,4 +519,4 @@ __all__ = [
 try:
     __version__ = importlib.metadata.version("drumscript")
 except importlib.metadata.PackageNotFoundError:
-    __version__ = "0.1.6"
+    __version__ = "0.2.0"

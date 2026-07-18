@@ -232,7 +232,14 @@ data-aria-dark="Switch to auto color mode">
     <button class="rside-close js-menu xl:hidden" aria-label="Close Table of Contents" type="button" aria-controls="rside" aria-expanded="false">
       <i class="i-lucide close"></i>
     </button>
-    <div class="sy-scrollbar sy-rside-inner px-6 xl:top-16 xl:sticky xl:pl-0 pt-6 pb-4"><a class="js-repo-stats repo-stats flex items-center" href="https://github.com/DrumScript/DrumScript"
+    <div class="sy-scrollbar sy-rside-inner px-6 xl:top-16 xl:sticky xl:pl-0 pt-6 pb-4"><div class="localtoc"><h3>On this page</h3><ul>
+<li><a class="reference internal" href="#july-2026-target-in-progress">[0.2.0] - July 2026 - Target: <em>In progress</em></a></li>
+<li><a class="reference internal" href="#fixed">Fixed</a></li>
+<li><a class="reference internal" href="#changed">Changed</a></li>
+<li><a class="reference internal" href="#added">Added</a></li>
+<li><a class="reference internal" href="#audited">Audited</a></li>
+</ul>
+</div><a class="js-repo-stats repo-stats flex items-center" href="https://github.com/DrumScript/DrumScript"
   data-type="github" data-user="DrumScript" data-repo="DrumScript">
   <span class="w-8 flex items-center justify-around shrink-0 text-3xl">
     <iconify-icon icon="simple-icons:github"></iconify-icon>
@@ -325,6 +332,49 @@ data-aria-dark="Switch to auto color mode">
 </div><article class="yue" role="main">
           <section id="v0-2-0">
 <h1>v0.2.0<a class="headerlink" href="#v0-2-0" title="Link to this heading">¶</a></h1>
+<section id="july-2026-target-in-progress">
+<h2>[0.2.0] - July 2026 - Target: <em>In progress</em><a class="headerlink" href="#july-2026-target-in-progress" title="Link to this heading">¶</a></h2>
+</section>
+<section id="fixed">
+<h2>Fixed<a class="headerlink" href="#fixed" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p>Adjusted documentation so that when version appears in documentation it is no longer hardcoded, but linked to <code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">importlib.metadata</span></code> in <code class="docutils literal notranslate"><span class="pre">drumscript/__init__.py</span></code> [Reduces maintenance burden on contributors]</p></li>
+<li><p>Updated version in pyproject.toml from <code class="docutils literal notranslate"><span class="pre">v0.1.5</span></code> to <code class="docutils literal notranslate"><span class="pre">v0.1.6</span></code> (This should have been changed <em>prior</em> to pypi release of v0.1.6 on Thursday 18 June 2026)</p></li>
+<li><p>Fixed <code class="docutils literal notranslate"><span class="pre">create_backing_track</span></code> runbook; replaced and tidied functions in drumscript_interactive_notebook on Colab</p></li>
+</ul>
+</section>
+<section id="changed">
+<h2>Changed<a class="headerlink" href="#changed" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p>Updated table ordering in <code class="docutils literal notranslate"><span class="pre">docs/index.md</span></code> to match right sidebar ordering and added missing sidebar navigation point for tempogram-detection</p></li>
+<li><p>Amended documentation to remove bold markdown formatting for H1 references feeding into the side-nav bar visual presentation, for all except <code class="docutils literal notranslate"><span class="pre">DrumScript</span> <span class="pre">CLI</span> <span class="pre">Reference</span></code>; fixed ordering side in toctree (docs/index.md) for <code class="docutils literal notranslate"><span class="pre">User</span> <span class="pre">Guide</span></code> submenu to 1. remove duplicated <code class="docutils literal notranslate"><span class="pre">usage</span></code> reference in toctree and 2. reorder items alphabetically. Amended right hand navbar so that H2 links are now alphabetical.</p></li>
+<li><p>Updated and tidied the examples for extract stems in README.md; split example up into extract stems and backing track function examples.</p></li>
+<li><p>Standardised git tag naming convention from <code class="docutils literal notranslate"><span class="pre">drumscript__vX.Y.Z-alpha</span></code> to <code class="docutils literal notranslate"><span class="pre">vX.Y.Z</span></code> (e.g. <code class="docutils literal notranslate"><span class="pre">v0.1.6</span></code>). Old tags remain on remote (branch protection prevents deletion) but are ignored by the <code class="docutils literal notranslate"><span class="pre">docs.yml</span></code> workflow which only triggers on <code class="docutils literal notranslate"><span class="pre">v*</span></code>.</p></li>
+</ul>
+</section>
+<section id="added">
+<h2>Added<a class="headerlink" href="#added" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p>Versioned documentation deployment via <code class="docutils literal notranslate"><span class="pre">docs.yml</span></code> GitHub Actions workflow (<code class="docutils literal notranslate"><span class="pre">docs/versioned-deploy</span></code> branch):</p>
+<ul>
+<li><p>Documentation now deploys to version-specific folders on <code class="docutils literal notranslate"><span class="pre">gh-pages</span></code> (e.g. <code class="docutils literal notranslate"><span class="pre">/v0.1.6/</span></code>, <code class="docutils literal notranslate"><span class="pre">/v0.2.0/</span></code>)</p></li>
+<li><p>Tag pushes (<code class="docutils literal notranslate"><span class="pre">v*</span></code>) deploy to both <code class="docutils literal notranslate"><span class="pre">/&lt;tag&gt;/</span></code> and <code class="docutils literal notranslate"><span class="pre">/latest/</span></code> folders</p></li>
+<li><p>Main branch pushes deploy to <code class="docutils literal notranslate"><span class="pre">/dev/</span></code> folder (bleeding-edge docs)</p></li>
+<li><p>Root <code class="docutils literal notranslate"><span class="pre">index.html</span></code> auto-generated on tag push, redirects to <code class="docutils literal notranslate"><span class="pre">/latest/</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">keep_files:</span> <span class="pre">true</span></code> ensures older version folders are never deleted</p></li>
+<li><p>Existing root-level docs remain untouched until explicit cleanup</p></li>
+<li><p>Contributor and Developer updated guidance</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="audited">
+<h2>Audited<a class="headerlink" href="#audited" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p>Did full audit of all <code class="docutils literal notranslate"><span class="pre">drumscript</span></code> code to ensure <code class="docutils literal notranslate"><span class="pre">full-flag</span></code> / <code class="docutils literal notranslate"><span class="pre">full_flag</span></code> consistency throughout, following v0.1.6 release fix replacing <code class="docutils literal notranslate"><span class="pre">full=True</span></code> with <code class="docutils literal notranslate"><span class="pre">verbose=True</span></code> (<code class="docutils literal notranslate"><span class="pre">DeprecationShim</span></code>)</p></li>
+<li><p>Fixed Sphinx build errors for documentation</p></li>
+</ul>
+</section>
 </section>
 
         </article><button class="back-to-top" type="button">

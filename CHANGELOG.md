@@ -1,7 +1,7 @@
 # Changelog
 
 <!--date_added:thurs-28-may-2026-->
-<!--date:updated:saturday-11-july-2026-->
+<!--date:updated:mon-20-jul-2026-->
 
 
 All notable changes to DrumScript will be documented here.
@@ -25,6 +25,7 @@ DrumScript follows [Semantic Versioning](https://semver.org/).
 * Amended documentation to remove bold markdown formatting for H1 references feeding into the side-nav bar visual presentation, for all except `DrumScript CLI Reference`; fixed ordering side in toctree (docs/index.md) for `User Guide` submenu to 1. remove duplicated `usage` reference in toctree and 2. reorder items alphabetically. Amended right hand navbar so that H2 links are now alphabetical.
 * Updated and tidied the examples for extract stems in README.md; split example up into extract stems and backing track function examples.
 * Standardised git tag naming convention from `drumscript__vX.Y.Z-alpha` to `vX.Y.Z` (e.g. `v0.1.6`). Old tags remain on remote (branch protection prevents deletion) but are ignored by the `docs.yml` workflow which only triggers on `v*`.
+* Tidied banner in Shibuya dark theme to make more readable
 
 ### Added
 

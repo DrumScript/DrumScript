@@ -23,25 +23,8 @@
 }
 
 /* 3. ANNOUNCEMENT BANNER STYLING */
-/* Shibuya uses CSS variables --sy-c-banner (text) and --sy-c-banner-bg
-   (background) on .announcement. We override these variables at :root
-   and html.dark so both modes get lilac background + dark text. */
-
-/* Light mode variables */
-:root {
-    --sy-c-banner: #1a1a2e !important;     /* dark text */
-    --sy-c-banner-bg: #d8c9f0 !important;  /* soft lilac background */
-}
-
-/* Dark mode variables — same as light mode */
-html.dark {
-    --sy-c-banner: #1a1a2e !important;     /* same dark text */
-    --sy-c-banner-bg: #d8c9f0 !important;  /* same soft lilac */
-}
-
-/* Additional direct overrides as fallback */
-.sy-announce,
-.announcement {
+/* Light mode: lilac background with dark text */
+.sy-announce {
     background-color: #d8c9f0 !important;  /* soft lilac */
     color: #1a1a2e !important;             /* near-black text */
     font-weight: 600 !important;
@@ -50,21 +33,38 @@ html.dark {
     font-size: 0.9rem;
 }
 
-.sy-announce a,
-.announcement a {
+.sy-announce a {
     color: #4a2d7a !important;             /* darker purple for links */
     text-decoration: underline;
 }
 
-/* Dark mode direct overrides as fallback */
-html.dark .announcement,
-[data-color-mode="dark"] .announcement {
-    background-color: #d8c9f0 !important;
-    color: #1a1a2e !important;
+/* Shibuya uses .announcement (not .sy-announce) with CSS variables
+   --sy-c-banner (text colour) and --sy-c-banner-bg (background colour).
+   Override these variables so both light and dark mode get lilac + dark text.
+   The .announcement block adds font/padding styling that .sy-announce misses. */
+:root {
+    --sy-c-banner: #1a1a2e;
+    --sy-c-banner-bg: #d8c9f0;
 }
 
-html.dark .announcement a,
-[data-color-mode="dark"] .announcement a {
+html.dark {
+    --sy-c-banner: #1a1a2e;
+    --sy-c-banner-bg: #d8c9f0;
+}
+
+div.announcement {
+    font-weight: 600 !important;
+    text-align: center !important;
+    padding: 8px 16px !important;
+    font-size: 0.9rem !important;
+}
+
+div.announcement a {
+    color: #4a2d7a !important;
+    text-decoration: underline;
+}
+
+html.dark div.announcement a {
     color: #4a2d7a !important;
 }
 

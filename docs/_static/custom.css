@@ -23,8 +23,11 @@
 }
 
 /* 3. ANNOUNCEMENT BANNER STYLING */
-/* Light mode: lilac background with dark text */
-.sy-announce {
+/* Light mode: lilac background with dark text.
+   .sy-announce was the original guess; .announcement is the actual
+   Shibuya class (confirmed via DevTools). Both kept for safety. */
+.sy-announce,
+.announcement {
     background-color: #d8c9f0 !important;  /* soft lilac */
     color: #1a1a2e !important;             /* near-black text */
     font-weight: 600 !important;
@@ -33,9 +36,22 @@
     font-size: 0.9rem;
 }
 
-.sy-announce a {
+.sy-announce a,
+.announcement a {
     color: #4a2d7a !important;             /* darker purple for links */
     text-decoration: underline;
+}
+
+/* Dark mode: same lilac banner, same dark text — matches light mode. */
+html.dark .announcement,
+[data-color-mode="dark"] .announcement {
+    background-color: #d8c9f0 !important;  /* same lilac as light */
+    color: #1a1a2e !important;             /* same dark text as light */
+}
+
+html.dark .announcement a,
+[data-color-mode="dark"] .announcement a {
+    color: #4a2d7a !important;
 }
 
 /* Dark mode: keep the same lilac banner as light mode.

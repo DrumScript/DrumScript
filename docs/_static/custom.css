@@ -9,7 +9,7 @@
     max-width: none !important;    /* Allow it to be wide if needed */
 }
 
-/* 2. EXPAND NAV BARŸ*/
+/* 2. EXPAND NAV BAR*/
 /* We must unlock the header height so it can grow with the logo */
 .sy-head {
     height: auto !important;       /* Let content dictate height */

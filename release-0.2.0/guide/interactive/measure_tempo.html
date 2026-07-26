@@ -43,7 +43,14 @@
       <div class="sy-head-extra flex items-center print:hidden"><form class="searchbox flex items-center" action="../../search.html" method="get">
   <input type="text" name="q" placeholder="Search" />
   <kbd>/</kbd>
-</form><div class="sy-head-socials">
+</form><div class="nav-versions">
+    <button type="button" aria-label="Versions">
+      <span class="md:hidden">Versions</span>
+      <span class="hidden md:inline">v0.2.0</span>
+      <i class="i-lucide chevron-down"></i>
+    </button>
+    <div class="nav-versions-choices"><ul><li><a href="/DrumScript/latest/">latest</a></li><li><a href="/DrumScript/v0.2.0/">v0.2.0</a></li><li><a href="/DrumScript/dev/">dev</a></li></ul></div>
+  </div><div class="sy-head-socials">
   <a href="https://github.com/DrumScript/DrumScript" aria-label="GitHub">
     <iconify-icon icon="simple-icons:github"></iconify-icon>
   </a></div></div>
@@ -357,15 +364,15 @@ data-aria-dark="Switch to auto color mode">
 </div>
 </div>
 <div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span data-line="1">Error loading audio file audio/test_track_1.wav: 
+</span></pre></div>
+</div>
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span data-line="1">/home/runner/work/DrumScript/DrumScript/drumscript/audio_processor/audio_loader.py:51: UserWarning: PySoundFile failed. Trying audioread instead.
 </span><span data-line="2">  audio_data, sample_rate = librosa.load(
 </span><span data-line="3">/home/runner/work/DrumScript/DrumScript/.venv/lib/python3.12/site-packages/librosa/core/audio.py:184: FutureWarning: librosa.core.audio.__audioread_load
 </span><span data-line="4">	Deprecated as of librosa version 0.10.0.
 </span><span data-line="5">	It will be removed in librosa version 1.0.
 </span><span data-line="6">  y, sr_native = __audioread_load(path, offset, duration, dtype)
-</span></pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span data-line="1">Error loading audio file audio/test_track_1.wav: 
 </span></pre></div>
 </div>
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="gt">---------------------------------------------------------------------------</span>

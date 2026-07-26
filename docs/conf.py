@@ -100,7 +100,7 @@ html_context = {
     # Shibuya expects `versions` as a list of (label, url) tuples and
     # `current_version` as a string. URLs are relative to the docs root.
     # Update this list when adding new tagged releases.
-    "current_version": f"v{ds.__version__}",
+    # "current_version": f"v{ds.__version__}",
     "versions": [
         ("latest", "/DrumScript/latest/"),
         (f"v{ds.__version__}", f"/DrumScript/v{ds.__version__}/"),

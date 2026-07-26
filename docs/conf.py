@@ -95,5 +95,15 @@ html_context = {
     "source_type": "github",
     "source_user": "DrumScript",
     "source_repo": "DrumScript",
-    "versions_url": "/versions.json",
+    # "versions_url": "/versions.json",  # Not used by Shibuya — kept for reference
+    # ── Version switcher (Shibuya nav-versions.html) ───────────────
+    # Shibuya expects `versions` as a list of (label, url) tuples and
+    # `current_version` as a string. URLs are relative to the docs root.
+    # Update this list when adding new tagged releases.
+    "current_version": f"v{ds.__version__}",
+    "versions": [
+        ("latest", "/DrumScript/latest/"),
+        (f"v{ds.__version__}", f"/DrumScript/v{ds.__version__}/"),
+        ("dev", "/DrumScript/dev/"),
+    ],
 }

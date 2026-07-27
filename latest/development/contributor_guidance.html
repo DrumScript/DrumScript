@@ -232,6 +232,7 @@ data-aria-dark="Switch to auto color mode">
       <i class="i-lucide close"></i>
     </button>
     <div class="sy-scrollbar sy-rside-inner px-6 xl:top-16 xl:sticky xl:pl-0 pt-6 pb-4"><div class="localtoc"><h3>On this page</h3><ul>
+<li><a class="reference internal" href="#table-of-contents">Table of Contents</a></li>
 <li><a class="reference internal" href="#the-deterministic-mission">The Deterministic Mission</a></li>
 <li><a class="reference internal" href="#codeowners"><code class="docutils literal notranslate"><span class="pre">CODEOWNERS</span></code></a></li>
 <li><a class="reference internal" href="#how-to-get-started">How to Get Started</a><ul>
@@ -248,6 +249,13 @@ data-aria-dark="Switch to auto color mode">
 <li><a class="reference internal" href="#when-do-we-release">When do we release?</a></li>
 </ul>
 </li>
+<li><a class="reference internal" href="#releasing-and-publishing">Releasing and Publishing</a><ul>
+<li><a class="reference internal" href="#naming-convention-for-tags">Naming Convention for Tags</a></li>
+<li><a class="reference internal" href="#option-1-releasing-from-the-command-line-cli">Option 1: Releasing from the Command Line (CLI)</a></li>
+<li><a class="reference internal" href="#option-2-releasing-using-the-github-actions-automator">Option 2: Releasing using the GitHub Actions Automator</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#pull-request-process">Pull Request Process</a></li>
 <li><a class="reference internal" href="#coding-standards">Coding Standards</a></li>
 <li><a class="reference internal" href="#reporting-issues">Reporting Issues</a></li>
 <li><a class="reference internal" href="#questions-support">Questions &amp; Support</a></li>
@@ -343,16 +351,36 @@ data-aria-dark="Switch to auto color mode">
 <h1>Contributing to <code class="docutils literal notranslate"><span class="pre">DrumScript</span></code><a class="headerlink" href="#contributing-to-drumscript" title="Link to this heading">¶</a></h1>
 <!--date_created: thurs-03-jul-2025 -->
 <!--date_updated: weds-21-jan-2026 -->
-<p>First off, thank you for considering contributing to <code class="docutils literal notranslate"><span class="pre">DrumScript</span></code>! :)</p>
+<hr class="docutils" />
+<section id="table-of-contents">
+<h2>Table of Contents<a class="headerlink" href="#table-of-contents" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="#the-deterministic-mission">The Deterministic Mission</a></p></li>
+<li><p><a class="reference internal" href="#releasing-and-publishing-maintainer-guide"><span class="xref myst">Releasing and Publishing (Maintainer Guide)</span></a></p>
+<ul>
+<li><p><a class="reference internal" href="#naming-convention-for-tags">Naming Convention for Tags</a></p></li>
+<li><p><a class="reference internal" href="#option-1-releasing-from-the-command-line-cli">Option 1: Releasing from the Command Line (CLI)</a></p></li>
+<li><p><a class="reference internal" href="#option-2-releasing-using-the-github-actions-automator">Option 2: Releasing using the GitHub Actions Automator</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#how-to-get-started">How to get started</a></p></li>
+<li><p><a class="reference internal" href="#pull-request-process">Pull Request Process</a></p></li>
+<li><p><a class="reference internal" href="#coding-standards">Coding Standards</a></p></li>
+<li><p><a class="reference internal" href="#reporting-issues">Reporting Issues</a></p></li>
+<li><p><a class="reference internal" href="#questions-support">Questions &amp; Support</a></p></li>
+</ul>
+<p>First off, thank you for considering contributing to <code class="docutils literal notranslate"><span class="pre">DrumScript</span></code>! :D</p>
 <p>We’re thrilled to have you join us. Whether you are a drummer, a Python developer, a sound engineer, or all three, your help is vital to making this the standard open-source tool for drum transcription.</p>
 <p>This document outlines the project’s philosophy, how to set up your environment, and how we manage our releases.</p>
 <blockquote>
 <div><p><strong>Code of Conduct</strong>
 Please note that this project is released with a contributor <strong><code class="docutils literal notranslate"><span class="pre">Code</span> <span class="pre">of</span> <span class="pre">Conduct</span></code></strong>. By participating in this project, you agree to abide by its terms.</p>
 </div></blockquote>
+</section>
 <hr class="docutils" />
 <section id="the-deterministic-mission">
 <h2>The Deterministic Mission<a class="headerlink" href="#the-deterministic-mission" title="Link to this heading">¶</a></h2>
+<p><em><a class="reference internal" href="#contributing-to-drumscript">back to top</a></em></p>
 <p><em>Why we aren’t using deep learning (for now).</em></p>
 <p><strong>DrumScript is pivoting to a rule-based, deterministic classification engine.</strong></p>
 <p><strong>Why?</strong></p>
@@ -374,6 +402,7 @@ We have the skeleton (stem splitting, tempo detection, onset detection). We need
 <hr class="docutils" />
 <section id="how-to-get-started">
 <h2>How to Get Started<a class="headerlink" href="#how-to-get-started" title="Link to this heading">¶</a></h2>
+<p><em><a class="reference internal" href="#contributing-to-drumscript">back to top</a></em></p>
 <section id="prerequisites">
 <h3>1. Prerequisites<a class="headerlink" href="#prerequisites" title="Link to this heading">¶</a></h3>
 <p>Before you begin, ensure you have the following installed:</p>
@@ -582,6 +611,91 @@ You don’t need to worry about bumping the version number in <code class="docut
 </section>
 </section>
 <hr class="docutils" />
+<section id="releasing-and-publishing">
+<h2>Releasing and Publishing<a class="headerlink" href="#releasing-and-publishing" title="Link to this heading">¶</a></h2>
+<p><em><a class="reference internal" href="#contributing-to-drumscript">back to top</a></em></p>
+<p>This section explains how to create a new release of <code class="docutils literal notranslate"><span class="pre">DrumScript</span></code> and publish it to PyPI.</p>
+<p>There are two ways to do this. You can use your command line interface (CLI) to tag manually, or you can use the automated GitHub Action (<code class="docutils literal notranslate"><span class="pre">release.yml</span></code>).</p>
+<section id="naming-convention-for-tags">
+<h3>Naming Convention for Tags<a class="headerlink" href="#naming-convention-for-tags" title="Link to this heading">¶</a></h3>
+<p><em><a class="reference internal" href="#contributing-to-drumscript">back to top</a></em>
+Whenever you create a release, you must use a specific naming format for the tag. The format is <code class="docutils literal notranslate"><span class="pre">vX.Y.Z</span></code>.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">v</span></code> stands for version.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">X</span></code> is the major version (e.g., 1 for a big stable release).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Y</span></code> is the minor version (e.g., 2 for new features or minor bumps).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Z</span></code> is the patch version (e.g., 0 for small bug fixes).</p></li>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">v0.2.0</span></code> or <code class="docutils literal notranslate"><span class="pre">v1.0.4</span></code>.</p></li>
+</ul>
+</section>
+<section id="option-1-releasing-from-the-command-line-cli">
+<h3>Option 1: Releasing from the Command Line (CLI)<a class="headerlink" href="#option-1-releasing-from-the-command-line-cli" title="Link to this heading">¶</a></h3>
+<p><em><a class="reference internal" href="#contributing-to-drumscript">back to top</a></em>
+Use these simple steps if you want to manually tag your code from your terminal and trigger the <code class="docutils literal notranslate"><span class="pre">publish.yml</span></code> workflow.</p>
+<ol class="arabic">
+<li><p><strong>Check your branch:</strong> Make sure you are on the <code class="docutils literal notranslate"><span class="pre">main</span></code> branch and your code is fully up to date.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span data-line="1">git<span class="w"> </span>checkout<span class="w"> </span>main
+</span><span data-line="2">git<span class="w"> </span>pull<span class="w"> </span>origin<span class="w"> </span>main
+</span></pre></div>
+</div>
+</li>
+</ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span data-line="1">
+</span><span data-line="2">2. **Tag the version:** Create a tag on your computer using the naming convention above.
+</span><span data-line="3">```bash
+</span><span data-line="4">git tag v0.2.0
+</span><span data-line="5">
+</span></pre></div>
+</div>
+<ol class="arabic simple" start="3">
+<li><p><strong>Push the tag to GitHub:</strong> Send this tag to the remote repository.</p></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span data-line="1">git<span class="w"> </span>push<span class="w"> </span>origin<span class="w"> </span>v0.2.0
+</span></pre></div>
+</div>
+<ol class="arabic simple" start="4">
+<li><p><strong>Publish to PyPI:</strong></p></li>
+</ol>
+<ul class="simple">
+<li><p>Go to the <code class="docutils literal notranslate"><span class="pre">DrumScript</span></code> repository on the GitHub website.</p></li>
+<li><p>Click on <strong>Releases</strong> on the right side of the screen.</p></li>
+<li><p>Click <strong>Draft a new release</strong>.</p></li>
+<li><p>Choose your new tag (e.g., <code class="docutils literal notranslate"><span class="pre">v0.2.0</span></code>) from the dropdown menu.</p></li>
+<li><p>Add a title and notes, then click <strong>Publish release</strong>.</p></li>
+<li><p><em>Note: Once you click Publish, the <code class="docutils literal notranslate"><span class="pre">publish.yml</span></code> workflow will automatically run and upload your new package to PyPI!</em></p></li>
+</ul>
+</section>
+<section id="option-2-releasing-using-the-github-actions-automator">
+<h3>Option 2: Releasing using the GitHub Actions Automator<a class="headerlink" href="#option-2-releasing-using-the-github-actions-automator" title="Link to this heading">¶</a></h3>
+<p><em><a class="reference internal" href="#contributing-to-drumscript">back to top</a></em></p>
+<p>Use this option if you want GitHub to do the version bumping and tagging for you, using your <code class="docutils literal notranslate"><span class="pre">release.yml</span></code> file.</p>
+<ol class="arabic simple">
+<li><p>Go to the <code class="docutils literal notranslate"><span class="pre">DrumScript</span></code> repository on GitHub.</p></li>
+<li><p>Click on the <strong>Actions</strong> tab at the top.</p></li>
+<li><p>On the left side, click on the workflow named <strong>Create Release</strong>.</p></li>
+<li><p>Click the <strong>Run workflow</strong> button on the right.</p></li>
+<li><p>Type in the new version number (e.g., <code class="docutils literal notranslate"><span class="pre">0.2.0</span></code>), choose the release type, and add a short summary.</p></li>
+<li><p>Click <strong>Run workflow</strong>.</p></li>
+</ol>
+<ul class="simple">
+<li><p><em>Note: This will automatically update your version files, tag the code, create the GitHub release, and then trigger <code class="docutils literal notranslate"><span class="pre">publish.yml</span></code> to send it to PyPI.</em></p></li>
+</ul>
+<p>–</p>
+</section>
+</section>
+<section id="pull-request-process">
+<h2>Pull Request Process<a class="headerlink" href="#pull-request-process" title="Link to this heading">¶</a></h2>
+<p><em><a class="reference internal" href="#contributing-to-drumscript">back to top</a></em></p>
+<ol class="arabic simple">
+<li><p>Create a new branch (e.g., <code class="docutils literal notranslate"><span class="pre">feature/snare-detection</span></code> or <code class="docutils literal notranslate"><span class="pre">fix/tempo-bug</span></code>).</p></li>
+<li><p>Make your changes.</p></li>
+<li><p>Write or update tests in the <code class="docutils literal notranslate"><span class="pre">tests/</span></code> directory.</p></li>
+<li><p>Run the test suite: <code class="docutils literal notranslate"><span class="pre">pytest</span> <span class="pre">tests/</span></code></p></li>
+<li><p>Submit a PR against the <code class="docutils literal notranslate"><span class="pre">main</span></code> branch.</p></li>
+</ol>
+<p>We enforce <strong>Sphinx reST (https://www.sphinx-doc.org/en/master/usage/restructuredtext/basics.html) DocString convention</strong>. All contributed code must follow this.</p>
+</section>
+<hr class="docutils" />
 <section id="coding-standards">
 <h2>Coding Standards<a class="headerlink" href="#coding-standards" title="Link to this heading">¶</a></h2>
 <p>To maintain consistency, please adhere to the following:</p>
@@ -598,6 +712,7 @@ You don’t need to worry about bumping the version number in <code class="docut
 <hr class="docutils" />
 <section id="reporting-issues">
 <h2>Reporting Issues<a class="headerlink" href="#reporting-issues" title="Link to this heading">¶</a></h2>
+<p><em><a class="reference internal" href="#contributing-to-drumscript">back to top</a></em></p>
 <p>If you find a bug, please open an issue on the <a class="reference external" href="https://github.com/DrumScript/DrumScript/issues">GitHub Issues page</a>.</p>
 <ul class="simple">
 <li><p><strong>Be Specific:</strong> “The code crashed” is hard to fix. “The code crashed with <code class="docutils literal notranslate"><span class="pre">ValueError</span></code> when inputting a 48kHz WAV file” is helpful!</p></li>
@@ -620,6 +735,7 @@ or <a class="reference external" href="https://github.com/DrumScript/DrumScript/
 <hr class="docutils" />
 <section id="questions-support">
 <h2>Questions &amp; Support<a class="headerlink" href="#questions-support" title="Link to this heading">¶</a></h2>
+<p><em><a class="reference internal" href="#contributing-to-drumscript">back to top</a></em></p>
 <p>If you have questions, feel free to reach out at <strong><a class="reference external" href="mailto:hello&#46;drumscript&#37;&#52;&#48;gmail&#46;com">hello<span>&#46;</span>drumscript<span>&#64;</span>gmail<span>&#46;</span>com</a></strong>.</p>
 <p>Thank you for helping us build <code class="docutils literal notranslate"><span class="pre">DrumScript</span></code>! 🥁🚀 :D</p>
 <hr class="docutils" />

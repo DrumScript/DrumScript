@@ -35,11 +35,13 @@ jobs:
       - name: Install package and dev dependencies
         run: uv sync --extra dev
 
+
       # ── Version routing ──────────────────────────────────────────
-      # Tag push (e.g. v0.2.0)      → VERSION_DIR=v0.2.0,       IS_RELEASE=true
+      # Tag push (e.g. v0.2.0)       → VERSION_DIR=v0.2.0,        IS_RELEASE=true
       # Main branch push             → VERSION_DIR=dev,           IS_RELEASE=false
       # Release branch push          → VERSION_DIR=release-0.2.0, IS_RELEASE=false
       #   (e.g. release/0.2.0)
+
       - name: Determine version directory
         run: |
           if [[ $GITHUB_REF == refs/tags/* ]]; then
@@ -58,8 +60,10 @@ jobs:
       - name: Build Sphinx
         run: uv run sphinx-build -b html docs docs/_build/html
 
+
       # ── Deploy 1: Version-specific folder ────────────────────────
       # e.g. /v0.1.6/, /dev/, or /release-0.2.0/
+
       - name: Deploy to version folder
         uses: peaceiris/actions-gh-pages@v4
         with:
@@ -70,6 +74,7 @@ jobs:
 
       # ── Deploy 2: /latest/ folder (tag pushes only) ──────────────
       # Mirrors the tagged release so /latest/ always = most recent release
+
       - name: Deploy to /latest/ folder
         if: env.IS_RELEASE == 'true'
         uses: peaceiris/actions-gh-pages@v4
@@ -82,6 +87,7 @@ jobs:
       # ── Deploy 3: Root redirect (tag pushes only) ────────────────
       # Generates index.html at root pointing to /latest/
       # Only updates on tag pushes so the redirect is stable
+      
       - name: Generate root redirect
         if: env.IS_RELEASE == 'true'
         run: |

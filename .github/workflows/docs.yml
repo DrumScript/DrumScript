@@ -38,8 +38,8 @@ jobs:
 
       # ── Version routing ──────────────────────────────────────────
       # Tag push (e.g. v0.2.0)       → VERSION_DIR=v0.2.0,        IS_RELEASE=true
-      # Main branch push             → VERSION_DIR=dev,           IS_RELEASE=false
-      # Release branch push          → VERSION_DIR=release-0.2.0, IS_RELEASE=false
+      # Main branch push             → VERSION_DIR=latest,         IS_RELEASE=false
+      # Release branch push          → VERSION_DIR=dev,            IS_RELEASE=false
       #   (e.g. release/0.2.0)
 
       - name: Determine version directory
@@ -48,12 +48,12 @@ jobs:
             echo "VERSION_DIR=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
             echo "IS_RELEASE=true" >> $GITHUB_ENV
           elif [[ $GITHUB_REF == refs/heads/release/* ]]; then
-            # Convert release/0.2.0 → release-0.2.0 (slashes not allowed in folder names)
-            BRANCH_NAME="${GITHUB_REF#refs/heads/}"
-            echo "VERSION_DIR=${BRANCH_NAME//\//-}" >> $GITHUB_ENV
+            # Release branches deploy to /dev/ (the "in development" docs)
+            echo "VERSION_DIR=dev" >> $GITHUB_ENV
             echo "IS_RELEASE=false" >> $GITHUB_ENV
           else
-            echo "VERSION_DIR=dev" >> $GITHUB_ENV
+            # Main branch deploys to /latest/ (the stable release docs)
+            echo "VERSION_DIR=latest" >> $GITHUB_ENV
             echo "IS_RELEASE=false" >> $GITHUB_ENV
           fi
 
@@ -62,7 +62,9 @@ jobs:
 
 
       # ── Deploy 1: Version-specific folder ────────────────────────
-      # e.g. /v0.1.6/, /dev/, or /release-0.2.0/
+      # Tag push       → /v0.2.0/  (archived version)
+      # Main push      → /latest/  (stable release)
+      # Release/* push → /dev/     (in development)
 
       - name: Deploy to version folder
         uses: peaceiris/actions-gh-pages@v4

@@ -9,7 +9,7 @@
     max-width: none !important;    /* Allow it to be wide if needed */
 }
 
-/* 2. EXPAND NAV BARŸ*/
+/* 2. EXPAND NAV BAR*/
 /* We must unlock the header height so it can grow with the logo */
 .sy-head {
     height: auto !important;       /* Let content dictate height */
@@ -58,4 +58,13 @@
 
 [data-theme="dark"] .sy-announce a {
     color: #c9a6ff !important;
+}
+
+/* ── Dark mode banner text fix ─────────────────────────────────────
+   Shibuya's actual banner class is .announcement (not .sy-announce).
+   It reads colour from --sy-c-banner. Override that variable in dark
+   mode so the text matches the dark page background (#1a1a2e).
+   Light mode is NOT touched — it already looks correct. */
+html.dark {
+    --sy-c-banner: #1a1a2e;
 }

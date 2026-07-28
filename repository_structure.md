@@ -2,7 +2,7 @@
 ## `DrumScript` Python Package Structure
 
 <!--date_created: weds-25-oct-2025-->
-<!--date_edited: thurs-18-june-2026--->
+<!--date_edited: tues-28-july-2026--->
 
 ```markdown
 DrumScript/                          # Project root
@@ -11,7 +11,8 @@ DrumScript/                          # Project root
 │   │   ├── build_test.yml           # Tests whether the package is ready to be rebuilt and pushed to PyPi
 │   │   ├── docs.yml                 # Handles publishing of `DrumScript` documentation to GitHub Pages
 │   │   ├── publish.yml              # Handles publishing of the package to PyPi automatically
-│   │   ├── release.yml              # Manual dispatch from GitHub Actions UI (Actions → "Create Release" → Run workflow). You enter the version number, release type (Alpha/Beta/Stable), and an optional summary.
+│   │   ├── release.yml              # Manual dispatch from GitHub Actions UI (Actions → "Create Release" → Run workflow). Enter the version number, release type (Alpha/Beta/Stable), and an optional summary.
+│   │   ├── repo-stats.yml           # Daily (23:00 UTC) collection of repository traffic stats via [`jgehrcke/github-repo-stats`]|(https://github.com/jgehrcke/github-repo-stats). Data persisted to `DrumScript/github-repo-stats` branch. Not connected with source code to prevent bloat.
 │   │   └── tests.yml                # Handles tests on development branch and main to ensure they dont break when PR is merged
 │   ├── CODEOWNERS
 │   ├── ISSUE_TEMPLATE

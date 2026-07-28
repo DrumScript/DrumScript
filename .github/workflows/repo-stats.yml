@@ -12,6 +12,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: run-ghrs
-        uses: jgehrcke/github-repo-stats@v1.5.2
+        uses: jgehrcke/github-repo-stats@v1.4.2
         with:
           ghtoken: ${{ secrets.GHRS_GITHUB_API_TOKEN }}

@@ -1,0 +1,17 @@
+name: Repo Stats
+
+on:
+  schedule:
+    # Run daily at 23:00 UTC
+    - cron: "0 23 * * *"
+  workflow_dispatch: # Allow manual runs
+
+jobs:
+  repo-stats:
+    name: repo-stats
+    runs-on: ubuntu-latest
+    steps:
+      - name: run-ghrs
+        uses: jgehrcke/github-repo-stats@v1.5.2
+        with:
+          ghtoken: ${{ secrets.GHRS_GITHUB_API_TOKEN }}

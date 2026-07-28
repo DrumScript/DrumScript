@@ -1,4 +1,4 @@
-name: Repo Stats
+name: Repo stats
 
 on:
   schedule:

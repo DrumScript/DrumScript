@@ -1,7 +1,7 @@
 # **`DrumScript`**
 
 <!--date_created: sun-15-june-2025-->
-<!--date_edited: tues-28-july-2026--->
+<!--date_edited: weds-29july-2026--->
 
 **Workflow Status**
 
@@ -53,12 +53,14 @@
 - **[Quick Start](#quick-start)**
 - **[CLI Usage](#cli-usage)**
 - **[Contributing](#contributing)**
+- **[Traffic](#traffic)**
 - **[FAQs](#faqs)**
 - **[Similar projects](#similar-projects)**
 
 ---
 
 ## Features
+*[back](#drumscript)*
 
 - **Automatic Drum Transcription:** Detects kicks, snares, hi-hats, toms, and cymbals using a deterministic, rule-based classification engine — no machine learning required.
 - **Tempo Detection:** Automatically estimates BPM using a voting-system algorithm tuned for percussive audio.
@@ -96,6 +98,7 @@ DrumScript/
 
 
 ## Installation
+*[back](#drumscript)*
 
 **For users:**
 
@@ -137,6 +140,7 @@ DrumScript manages all dependencies via [`pyproject.toml`](pyproject.toml) using
 ---
 
 ## Quick Start
+*[back](#drumscript)*
 
 > Please note: DrumScript assumes you are providing **drum audio-only inputs by default** 
 
@@ -226,6 +230,7 @@ Results are archived to `outputs/benchmarks/idmt/` with per-file metrics, summar
 ---
 
 ## CLI Usage
+*[back](#drumscript)*
 
 DrumScript also provides a command-line interface.
 
@@ -277,6 +282,7 @@ drumscript snare_hit.wav --rudiment
 ---
 
 ## Contributing
+*[back](#drumscript)*
 
 We welcome contributions! DrumScript is intended to be a community-owned project. You can also refer to detailed contributor guidance **[here](./docs/development/contributor_guidance.md)**
 
@@ -327,7 +333,20 @@ For detailed instructions on testing and publishing via the command line, please
 
 ---
 
+## Traffic
+*[back](#drumscript)*
+
+Live repository statistics — updated daily:
+
+- [**View Report (PDF)**](https://github.com/DrumScript/DrumScript/blob/github-repo-stats/DrumScript/DrumScript/latest-report/report.pdf)
+- [**View Report (HTML)**](https://github.com/DrumScript/DrumScript/blob/github-repo-stats/DrumScript/DrumScript/latest-report/report.html)
+
+> Views, clones, stars, forks, top referrers and popular paths. Data collected automatically via [github-repo-stats](https://github.com/jgehrcke/github-repo-stats).
+
+---
+
 ## FAQs
+*[back](#drumscript)*
 
 ### Why doesn't DrumScript include `ffmpeg` as a dependency?
 
@@ -361,6 +380,8 @@ DrumScript's own classification engine is **fully deterministic** — it uses ph
 
 ---
 ## Similar Projects
+
+*[back](#drumscript)*
 
 DrumScript has no affiliation with any of the projects below. They are listed for context and reference.
 

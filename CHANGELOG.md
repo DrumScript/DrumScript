@@ -1,7 +1,7 @@
 # Changelog
 
 <!--date_added:thurs-28-may-2026-->
-<!--date:updated:sat-25-jul-2026-->
+<!--date:updated:weds-29-jul-2026-->
 
 
 All notable changes to DrumScript will be documented here.

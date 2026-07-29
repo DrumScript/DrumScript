@@ -60,6 +60,7 @@
 ---
 
 ## Features
+*[back](#drumscript)*
 
 - **Automatic Drum Transcription:** Detects kicks, snares, hi-hats, toms, and cymbals using a deterministic, rule-based classification engine — no machine learning required.
 - **Tempo Detection:** Automatically estimates BPM using a voting-system algorithm tuned for percussive audio.
@@ -97,6 +98,7 @@ DrumScript/
 
 
 ## Installation
+*[back](#drumscript)*
 
 **For users:**
 
@@ -138,6 +140,7 @@ DrumScript manages all dependencies via [`pyproject.toml`](pyproject.toml) using
 ---
 
 ## Quick Start
+*[back](#drumscript)*
 
 > Please note: DrumScript assumes you are providing **drum audio-only inputs by default** 
 
@@ -227,6 +230,7 @@ Results are archived to `outputs/benchmarks/idmt/` with per-file metrics, summar
 ---
 
 ## CLI Usage
+*[back](#drumscript)*
 
 DrumScript also provides a command-line interface.
 
@@ -278,6 +282,7 @@ drumscript snare_hit.wav --rudiment
 ---
 
 ## Contributing
+*[back](#drumscript)*
 
 We welcome contributions! DrumScript is intended to be a community-owned project. You can also refer to detailed contributor guidance **[here](./docs/development/contributor_guidance.md)**
 
@@ -327,7 +332,9 @@ We use an automated pipeline to publish new versions to PyPI. All releases must 
 For detailed instructions on testing and publishing via the command line, please see our [Testing Guidance](tests/README.md).
 
 ---
+
 ## Traffic
+*[back](#drumscript)*
 
 Live repository statistics — updated daily:
 
@@ -339,6 +346,7 @@ Live repository statistics — updated daily:
 ---
 
 ## FAQs
+*[back](#drumscript)*
 
 ### Why doesn't DrumScript include `ffmpeg` as a dependency?
 
@@ -372,6 +380,8 @@ DrumScript's own classification engine is **fully deterministic** — it uses ph
 
 ---
 ## Similar Projects
+
+*[back](#drumscript)*
 
 DrumScript has no affiliation with any of the projects below. They are listed for context and reference.
 

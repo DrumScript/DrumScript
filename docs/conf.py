@@ -103,7 +103,7 @@ html_context = {
     # "current_version": f"v{ds.__version__}",
     "versions": [
         ("latest", "/DrumScript/latest/"),
-        (f"v{ds.__version__}", f"/DrumScript/v{ds.__version__}/"),
         ("dev", "/DrumScript/dev/"),
+        ("v0.1.6", "/DrumScript/v0.1.6/"),
     ],
 }

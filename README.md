@@ -1,7 +1,7 @@
 # **`DrumScript`**
 
 <!--date_created: sun-15-june-2025-->
-<!--date_edited: tues-28-july-2026--->
+<!--date_edited: weds-29july-2026--->
 
 **Workflow Status**
 
@@ -53,6 +53,7 @@
 - **[Quick Start](#quick-start)**
 - **[CLI Usage](#cli-usage)**
 - **[Contributing](#contributing)**
+- **[Traffic](#traffic)**
 - **[FAQs](#faqs)**
 - **[Similar projects](#similar-projects)**
 
@@ -324,6 +325,16 @@ We use an automated pipeline to publish new versions to PyPI. All releases must 
 ## Testing 
 
 For detailed instructions on testing and publishing via the command line, please see our [Testing Guidance](tests/README.md).
+
+---
+## Traffic
+
+Live repository statistics — updated daily:
+
+- [**View Report (PDF)**](https://github.com/DrumScript/DrumScript/blob/github-repo-stats/DrumScript/DrumScript/latest-report/report.pdf)
+- [**View Report (HTML)**](https://github.com/DrumScript/DrumScript/blob/github-repo-stats/DrumScript/DrumScript/latest-report/report.html)
+
+> Views, clones, stars, forks, top referrers and popular paths. Data collected automatically via [github-repo-stats](https://github.com/jgehrcke/github-repo-stats).
 
 ---
 

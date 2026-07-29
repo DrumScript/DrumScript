@@ -10,6 +10,7 @@
 │       ├── docs.yml
 │       ├── publish.yml
 │       ├── release.yml
+│       ├── repo-stats.yml
 │       ├── test_build.yml
 │       └── tests.yml
 ├── .gitignore
@@ -25,6 +26,7 @@
 ├── benchmarks
 │   ├── README.md
 │   └── run.py
+├── collect_code.sh
 ├── docs
 │   ├── FOLDER_STRUCTURE.txt
 │   ├── _templates
@@ -91,11 +93,13 @@
 │           ├── measure_kick_frequency.py
 │           └── measure_snare_frequency.py
 ├── public
-│   └── pyodideWorker.js
+│   └── drumscript-0.1.6-py3-none-any.whl
 ├── pyproject.toml
 ├── repository_structure.md
 ├── scripts
-│   └── run_tests.sh
+│   ├── pypi.sh
+│   ├── run_tests.sh
+│   └── update_public_wheel.sh
 ├── tests
 │   ├── README.md
 │   ├── conftest.py
@@ -120,4 +124,4 @@
 └── visuals
     └── tempogram.png
 
-25 directories, 96 files
+25 directories, 100 files

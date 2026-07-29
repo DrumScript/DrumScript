@@ -7,10 +7,10 @@
 │   │   └── feature_request.md
 │   ├── PULL_REQUEST_TEMPLATE.md
 │   └── workflows
-│       ├── app.yml
 │       ├── docs.yml
 │       ├── publish.yml
 │       ├── release.yml
+│       ├── repo-stats.yml
 │       ├── test_build.yml
 │       └── tests.yml
 ├── .gitignore
@@ -26,6 +26,7 @@
 ├── benchmarks
 │   ├── README.md
 │   └── run.py
+├── collect_code.sh
 ├── docs
 │   ├── FOLDER_STRUCTURE.txt
 │   ├── _templates
@@ -92,19 +93,19 @@
 │           ├── measure_kick_frequency.py
 │           └── measure_snare_frequency.py
 ├── public
-│   ├── drumscript-0.1.6-py3-none-any.whl
-│   └── pyodideWorker.js
+│   └── drumscript-0.1.6-py3-none-any.whl
 ├── pyproject.toml
 ├── repository_structure.md
 ├── scripts
 │   ├── pypi.sh
-│   └── run_tests.sh
+│   ├── run_tests.sh
+│   └── update_public_wheel.sh
 ├── tests
 │   ├── README.md
 │   ├── conftest.py
 │   ├── integration
 │   │   └── test_stem_splitter_real.py
-│   ├── tree_tests.txt
+│   ├── tree_tests
 │   └── unit
 │       ├── __init__.py
 │       ├── test_audio_loader.py
@@ -123,4 +124,4 @@
 └── visuals
     └── tempogram.png
 
-25 directories, 99 files
+25 directories, 100 files

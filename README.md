@@ -1,24 +1,36 @@
 # **`DrumScript`**
 
 <!--date_created: sun-15-june-2025-->
-<!--date_edited: weds-29july-2026--->
+<!--date_edited: thurs-30-july-2026--->
 
-**Workflow Status**
-
-[![Run Tests](https://github.com/DrumScript/DrumScript/actions/workflows/tests.yml/badge.svg?branch=main)](https://github.com/DrumScript/DrumScript/actions/workflows/tests.yml)
-
-**Demo Notebooks**
-
-**[!Try DrumScript In Colab](https://colab.research.google.com/drive/15yBGu6WURPyiH-sEQ82g_2T2wKqiIPsq)**
-
-
-<a href="https://colab.research.google.com/drive/15yBGu6WURPyiH-sEQ82g_2T2wKqiIPsq" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
 
 **DrumScript** is an open-source Python library and CLI tool for drum audio analysis and transcription. Give it a recording — a full mix or an isolated drum stem — and it will generate PDF sheet music, MIDI files, and MusicXML output. The `DrumScript` model is a **deterministic classifier**, and doesn't use AI/machine learning. Built for drummers and by drummers, it is - and always will be - an open-source community tool.
 
 > **Python >=3.9**
 
-> **[Documentation](https://drumscript.github.io/DrumScript/)**
+**Workflow Status**
+[![Run Tests](https://github.com/DrumScript/DrumScript/actions/workflows/tests.yml/badge.svg?branch=main)](https://github.com/DrumScript/DrumScript/actions/workflows/tests.yml)
+**[Documentation](https://drumscript.github.io/DrumScript/)**
+
+> **[Try DrumScript In Colab](https://colab.research.google.com/drive/15yBGu6WURPyiH-sEQ82g_2T2wKqiIPsq)** 
+<a href="https://colab.research.google.com/drive/15yBGu6WURPyiH-sEQ82g_2T2wKqiIPsq" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
+
+
+- **[Overview](#overview)**
+- **[Features](#features)**
+- **[Installation](#installation)**
+- **[Quick Start](#quick-start)**
+- **[CLI Usage](#cli-usage)**
+- **[Contributing](#contributing)**
+- **[Traffic](#traffic)**
+- **[FAQs](#faqs)**
+- **[Similar projects](#similar-projects)**
+
+
+---
+
+## Overview
+*[back](#drumscript)*
 
 **Public Alpha (v0.1.4+) — June to August 2026**
 
@@ -45,17 +57,6 @@
 ![DrumScript transcription output](./docs/_static/iron_man_1.png)
 ![DrumScript transcription output](./docs/_static/iron_man_2.png)
 ![DrumScript transcription output](./docs/_static/iron_man_3.png)
-
----
-
-- **[Features](#features)**
-- **[Installation](#installation)**
-- **[Quick Start](#quick-start)**
-- **[CLI Usage](#cli-usage)**
-- **[Contributing](#contributing)**
-- **[Traffic](#traffic)**
-- **[FAQs](#faqs)**
-- **[Similar projects](#similar-projects)**
 
 ---
 
@@ -336,12 +337,12 @@ For detailed instructions on testing and publishing via the command line, please
 ## Traffic
 *[back](#drumscript)*
 
-Live repository statistics — updated daily:
+We collate usage over time for performance-monitoring. Live repository statistics — updated daily:
 
 - [**View Report (PDF)**](https://github.com/DrumScript/DrumScript/blob/github-repo-stats/DrumScript/DrumScript/latest-report/report.pdf)
-- [**View Report (HTML)**](https://github.com/DrumScript/DrumScript/blob/github-repo-stats/DrumScript/DrumScript/latest-report/report.html)
+<!--- [**View Report (HTML)**](https://github.com/DrumScript/DrumScript/blob/github-repo-stats/DrumScript/DrumScript/latest-report/report.html)
 
-> Views, clones, stars, forks, top referrers and popular paths. Data collected automatically via [github-repo-stats](https://github.com/jgehrcke/github-repo-stats).
+> Views, clones, stars, forks, top referrers and popular paths. Data collected automatically via [github-repo-stats](https://github.com/jgehrcke/github-repo-stats). Defaults to last 14 days in outputs. Raw data available on **[github-repo-stats](https://github.com/DrumScript/DrumScript/tree/github-repo-stats/DrumScript/DrumScript/ghrs-data**) branch-->
 
 ---
 

@@ -20,6 +20,7 @@
 
 
 - **[Features](#features)**
+- **[Project Structure](#project-structure)**
 - **[Installation](#installation)**
 - **[Quick Start](#quick-start)**
 - **[CLI Usage](#cli-usage)**

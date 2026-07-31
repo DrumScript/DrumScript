@@ -19,7 +19,6 @@
 > <a href="https://colab.research.google.com/drive/15yBGu6WURPyiH-sEQ82g_2T2wKqiIPsq" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
 
 
-- **[Overview](#overview)**
 - **[Features](#features)**
 - **[Installation](#installation)**
 - **[Quick Start](#quick-start)**
@@ -29,11 +28,7 @@
 - **[FAQs](#faqs)**
 - **[Similar projects](#similar-projects)**
 
-
 ---
-
-## Overview
-*[back](#drumscript)*
 
 **Public Alpha (v0.1.4+) — June to August 2026**
 

@@ -25,13 +25,17 @@
 - **[Quick Start](#quick-start)**
 - **[CLI Usage](#cli-usage)**
 - **[Contributing](#contributing)**
+- **[Testing](#testing)**
+   - **[Benchmarking](#benchmarking)**
 - **[Traffic](#traffic)**
 - **[FAQs](#faqs)**
+- **[Acknowledgements](#acknowledgements)**
+- **[License](#license)**
 - **[Similar projects](#similar-projects)**
 
 ---
 
-**Public Alpha (v0.1.4+) — June to August 2026**
+#### **Public Alpha (v0.1.4+) — June to August 2026**
 
  - We're looking for early adopters and feedback
  - [Feedback on the classification model](https://github.com/DrumScript/DrumScript/issues), and help shape v1.0.0.
@@ -40,7 +44,7 @@
 
 > See the **[Roadmap](https://drumscript.github.io/DrumScript/guide/roadmap.html)** for what's planned.
 
-**What it looks like**
+#### **What it looks like**
 
 <!-- TODO: Replace with a GIF showing terminal output-->
 <!-- For now, this shows the PDF transcription output -->
@@ -59,22 +63,9 @@
 
 ---
 
-## Features
-*[back](#drumscript)*
-
-- **Automatic Drum Transcription:** Detects kicks, snares, hi-hats, toms, and cymbals using a deterministic, rule-based classification engine — no machine learning required.
-- **Tempo Detection:** Automatically estimates BPM using a voting-system algorithm tuned for percussive audio.
-- **Onset Detection:** Onset detection method tuned to the physics of percussion audio rather than polyphonic instruments (piano, guitar, etc.).
-- **Stem Separation:** Uses the state-of-the-art [Demucs](https://github.com/adefossez/demucs) source separation model to isolate drums, bass, vocals, and other instruments from a full mix.
-- **Backing Track Generator:** Automatically remove the drums from any `.mp3` or `.wav` to create a drumless play-along track. Bass-only and vocal-only extraction also supported.
-- **Multiple Output Formats:** Export transcriptions to PDF sheet music, MIDI (`.mid`), and MusicXML (`.xml`) for import into DAWs and notation software (Logic Pro, Cubase, Ableton, MuseScore, Sibelius, etc.).
-- **Deterministic Classification:** DrumScript's core classification engine uses physics-based rules derived from acoustic analysis of real drum samples, not probabilistic AI/ML models.
-
-> **Note:** Some dependencies used by DrumScript (e.g. [Demucs](https://github.com/adefossez/demucs), [librosa](https://librosa.org/)) may internally use probabilistic methods. DrumScript's own classification engine is fully deterministic.
-
----
 
 ## Project Structure
+*[back](#drumscript)*
 
 See [`repository_structure.md`](repository_structure.md) for the full project layout.
 
@@ -95,6 +86,24 @@ DrumScript/
 ├── pyproject.toml              # Package metadata and dependencies
 └── uv.lock                     # Pinned dependency versions
 ```
+
+---
+
+## Features
+*[back](#drumscript)*
+
+- **Automatic Drum Transcription:** Detects kicks, snares, hi-hats, toms, and cymbals using a deterministic, rule-based classification engine — no machine learning required.
+- **Tempo Detection:** Automatically estimates BPM using a voting-system algorithm tuned for percussive audio.
+- **Onset Detection:** Onset detection method tuned to the physics of percussion audio rather than polyphonic instruments (piano, guitar, etc.).
+- **Stem Separation:** Uses the state-of-the-art [Demucs](https://github.com/adefossez/demucs) source separation model to isolate drums, bass, vocals, and other instruments from a full mix.
+- **Backing Track Generator:** Automatically remove the drums from any `.mp3` or `.wav` to create a drumless play-along track. Bass-only and vocal-only extraction also supported.
+- **Multiple Output Formats:** Export transcriptions to PDF sheet music, MIDI (`.mid`), and MusicXML (`.xml`) for import into DAWs and notation software (Logic Pro, Cubase, Ableton, MuseScore, Sibelius, etc.).
+- **Deterministic Classification:** DrumScript's core classification engine uses physics-based rules derived from acoustic analysis of real drum samples, not probabilistic AI/ML models.
+
+> **Note:** Some dependencies used by DrumScript (e.g. [Demucs](https://github.com/adefossez/demucs), [librosa](https://librosa.org/)) may internally use probabilistic methods. DrumScript's own classification engine is fully deterministic.
+
+---
+
 
 
 ## Installation
@@ -206,29 +215,6 @@ print(f"Backing track: {results['mix']}")
 
 ---
 
-## Benchmarking
-
-DrumScript includes a benchmarking framework for evaluating the classifier against standard ADT datasets using [`mir_eval`](https://github.com/mir-evaluation/mir_eval). Currently supports IDMT-SMT-Drums V2.
-
-```zsh
-# Install dev dependencies (includes mir_eval)
-uv sync --extra dev
-
-# Run the IDMT benchmark
-uv run --extra dev python benchmarks/run.py idmt \
-  --root /path/to/IDMT-SMT-DRUMS-V2
-
-# Run on a single subset with a limit
-uv run --extra dev python benchmarks/run.py idmt \
-  --root /path/to/IDMT-SMT-DRUMS-V2 \
-  --subset RealDrum --limit 5
-```
-
-Results are archived to `outputs/benchmarks/idmt/` with per-file metrics, summary statistics, and git commit tracking for reproducibility. See [`benchmarks/README.md`](benchmarks/README.md) for dataset setup and full usage.
-
-
----
-
 ## CLI Usage
 *[back](#drumscript)*
 
@@ -279,6 +265,7 @@ drumscript full_song.mp3 --all-stems --format mp3
 # Classify rudiments
 drumscript snare_hit.wav --rudiment
 ```
+
 ---
 
 ## Contributing
@@ -315,7 +302,8 @@ The alpha phase runs between 01 June and 31 August 2026
 
 ---
 
-## Publishing a new release
+### Publishing a new release
+*[back](#drumscript)*
 
 We use an automated pipeline to publish new versions to PyPI. All releases must use a specific tag format: `vX.Y.Z` (for example, `v0.2.0`).
 
@@ -327,9 +315,33 @@ We use an automated pipeline to publish new versions to PyPI. All releases must 
 
 ---
 
-## Testing 
+## Testing
+*[back](#drumscript)*
 
 For detailed instructions on testing and publishing via the command line, please see our [Testing Guidance](tests/README.md).
+
+---
+
+### Benchmarking
+*[back](#drumscript)*
+
+DrumScript includes a benchmarking framework for evaluating the classifier against standard ADT datasets using [`mir_eval`](https://github.com/mir-evaluation/mir_eval). Currently supports IDMT-SMT-Drums V2.
+
+```zsh
+# Install dev dependencies (includes mir_eval)
+uv sync --extra dev
+
+# Run the IDMT benchmark
+uv run --extra dev python benchmarks/run.py idmt \
+  --root /path/to/IDMT-SMT-DRUMS-V2
+
+# Run on a single subset with a limit
+uv run --extra dev python benchmarks/run.py idmt \
+  --root /path/to/IDMT-SMT-DRUMS-V2 \
+  --subset RealDrum --limit 5
+```
+
+Results are archived to `outputs/benchmarks/idmt/` with per-file metrics, summary statistics, and git commit tracking for reproducibility. See [`benchmarks/README.md`](benchmarks/README.md) for dataset setup and full usage.
 
 ---
 
@@ -367,6 +379,7 @@ DrumScript's own classification engine is **fully deterministic** — it uses ph
 ---
 
 ## Acknowledgements
+*[back](#drumscript)*
 
 1. **[Demucs](https://github.com/adefossez/demucs)** — The stem splitting functionality is built upon the work of [@adefossez](https://github.com/adefossez).
 2. **[librosa](https://librosa.org/)** — For foundational audio processing tools.
@@ -375,8 +388,15 @@ DrumScript's own classification engine is **fully deterministic** — it uses ph
 ---
 
 ## License
+*[back](#drumscript)*
 
-[Apache License 2.0](LICENSE)
+**[Apache License 2.0](LICENSE)**
+
+**Copyright 2026 DrumScript**
+
+                                 Apache License
+                           Version 2.0, January 2004
+                        http://www.apache.org/licenses/
 
 ---
 ## Similar Projects

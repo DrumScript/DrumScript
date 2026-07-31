@@ -239,21 +239,14 @@ data-aria-dark="Switch to auto color mode">
       <i class="i-lucide close"></i>
     </button>
     <div class="sy-scrollbar sy-rside-inner px-6 xl:top-16 xl:sticky xl:pl-0 pt-6 pb-4"><div class="localtoc"><h3>On this page</h3><ul>
-<li><a class="reference internal" href="#unreleased">Unreleased</a><ul>
-<li><a class="reference internal" href="#july-2026-target-in-progress">[0.2.0] - July 2026 - Target: <em>In progress</em></a></li>
-<li><a class="reference internal" href="#fixed">Fixed</a></li>
-<li><a class="reference internal" href="#changed">Changed</a></li>
-<li><a class="reference internal" href="#added">Added</a></li>
-<li><a class="reference internal" href="#audited">Audited</a></li>
-<li><a class="reference internal" href="#august-2026-target-tbc">[0.2.0+] - August 2026 - Target: TBC</a><ul>
+<li><a class="reference internal" href="#unreleased"><em>Unreleased</em></a><ul>
+<li><a class="reference internal" href="#audited"><em>Audited</em></a></li>
+<li><a class="reference internal" href="#future-releases">[Future releases]</a><ul>
+<li><a class="reference internal" href="#august-2026-and-beyond"><strong>August 2026 and beyond</strong></a></li>
 <li><a class="reference internal" href="#planned-bug-fixes">Planned &#8212; Bug Fixes</a></li>
 <li><a class="reference internal" href="#planned-changes">Planned &#8212; Changes</a></li>
 <li><a class="reference internal" href="#planned-additions">Planned &#8212; Additions</a></li>
 <li><a class="reference internal" href="#planned-investigation">Planned &#8212; Investigation</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#beta-release-target-tbd">[1.0.0] - Beta release - Target: TBD</a><ul>
-<li><a class="reference internal" href="#planned-removed-breaking">Planned &#8212; Removed (breaking)</a></li>
 </ul>
 </li>
 </ul>
@@ -267,6 +260,10 @@ data-aria-dark="Switch to auto color mode">
 <li><a class="reference internal" href="#may-2026">[0.1.5] - May 2026</a></li>
 <li><a class="reference internal" href="#may-2026-first-pypi-publication">[0.1.4] - 20 May 2026 (First PyPI publication)</a></li>
 <li><a class="reference internal" href="#notes">Notes</a></li>
+<li><a class="reference internal" href="#beta-release-target-late-2026">[1.0.0] - Beta release - Target: late-2026</a><ul>
+<li><a class="reference internal" href="#planned-removed-breaking">Planned &#8212; Removed (breaking)</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -360,26 +357,42 @@ data-aria-dark="Switch to auto color mode">
           <section id="changelog">
 <h1>Changelog<a class="headerlink" href="#changelog" title="Link to this heading">¶</a></h1>
 <!--date_added:thurs-28-may-2026-->
-<!--date:updated:weds-29-jul-2026-->
-<p>All notable changes to DrumScript will be documented here.
-Format follows <a class="reference external" href="https://keepachangelog.com/en/1.0.0/">Keep a Changelog</a>.
-DrumScript follows <a class="reference external" href="https://semver.org/">Semantic Versioning</a>.</p>
+<!--date:updated:fri-31-july-2026-->
+<ul class="simple">
+<li><p>All notable changes related to the repository and pypi distribution of <code class="docutils literal notranslate"><span class="pre">DrumScript</span></code> will be documented here</p></li>
+<li><p>Format follows <strong><a class="reference external" href="https://keepachangelog.com/en/1.0.0/">Keep a Changelog</a></strong> and <strong><a class="reference external" href="https://semver.org/">Semantic Versioning</a></strong>.</p></li>
+</ul>
+<hr class="docutils" />
+<ul class="simple">
+<li><p><strong><a class="reference internal" href="#unreleased">Unreleased</a></strong></p></li>
+<li><p><strong><a class="reference internal" href="#released">Released</a></strong></p></li>
+<li><p><strong><a class="reference internal" href="#future-releases">Future releases</a></strong></p></li>
+</ul>
 <hr class="docutils" />
 <section id="unreleased">
-<h2>Unreleased<a class="headerlink" href="#unreleased" title="Link to this heading">¶</a></h2>
-<section id="july-2026-target-in-progress">
-<h3>[0.2.0] - July 2026 - Target: <em>In progress</em><a class="headerlink" href="#july-2026-target-in-progress" title="Link to this heading">¶</a></h3>
-</section>
-<section id="fixed">
-<h3>Fixed<a class="headerlink" href="#fixed" title="Link to this heading">¶</a></h3>
+<h2><em>Unreleased</em><a class="headerlink" href="#unreleased" title="Link to this heading">¶</a></h2>
+<p><a class="reference internal" href="#changelog">back</a></p>
+<p>Items listed below are <strong>currently in development</strong> but <strong>have not been built into Python package</strong></p>
+<blockquote>
+<div><p class="rubric" id="drumscript-v0-2-0">DrumScript v0.2.0</p>
+</div></blockquote>
+<p><em>forthcoming/in progress</em>
+<em><strong>expected pypi release:</strong> august-2026</em></p>
+<blockquote>
+<div><p><strong>First minor-version bump</strong></p>
+<p>Signals the start of the breaking-change track for –full flag (replaced by –verbose) ahead of v1.0.0 beta.–&gt;</p>
+</div></blockquote>
+<blockquote>
+<div><p class="rubric" id="fixed"><em>Fixed</em></p>
+</div></blockquote>
 <ul class="simple">
 <li><p>Adjusted documentation so that when version appears in documentation it is no longer hardcoded, but linked to <code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">importlib.metadata</span></code> in <code class="docutils literal notranslate"><span class="pre">drumscript/__init__.py</span></code> [Reduces maintenance burden on contributors]</p></li>
 <li><p>Updated version in pyproject.toml from <code class="docutils literal notranslate"><span class="pre">v0.1.5</span></code> to <code class="docutils literal notranslate"><span class="pre">v0.1.6</span></code> (This should have been changed <em>prior</em> to pypi release of v0.1.6 on Thursday 18 June 2026)</p></li>
 <li><p>Fixed <code class="docutils literal notranslate"><span class="pre">create_backing_track</span></code> runbook; replaced and tidied functions in drumscript_interactive_notebook on Colab</p></li>
 </ul>
-</section>
-<section id="changed">
-<h3>Changed<a class="headerlink" href="#changed" title="Link to this heading">¶</a></h3>
+<blockquote>
+<div><p class="rubric" id="changed"><em>Changed</em></p>
+</div></blockquote>
 <ul class="simple">
 <li><p>Updated table ordering in <code class="docutils literal notranslate"><span class="pre">docs/index.md</span></code> to match right sidebar ordering and added missing sidebar navigation point for tempogram-detection</p></li>
 <li><p>Amended documentation to remove bold markdown formatting for H1 references feeding into the side-nav bar visual presentation, for all except <code class="docutils literal notranslate"><span class="pre">DrumScript</span> <span class="pre">CLI</span> <span class="pre">Reference</span></code>; fixed ordering side in toctree (docs/index.md) for <code class="docutils literal notranslate"><span class="pre">User</span> <span class="pre">Guide</span></code> submenu to 1. remove duplicated <code class="docutils literal notranslate"><span class="pre">usage</span></code> reference in toctree and 2. reorder items alphabetically. Amended right hand navbar so that H2 links are now alphabetical.</p></li>
@@ -387,9 +400,9 @@ DrumScript follows <a class="reference external" href="https://semver.org/">Sema
 <li><p>Standardised git tag naming convention from <code class="docutils literal notranslate"><span class="pre">drumscript__vX.Y.Z-alpha</span></code> to <code class="docutils literal notranslate"><span class="pre">vX.Y.Z</span></code> (e.g. <code class="docutils literal notranslate"><span class="pre">v0.1.6</span></code>). Old tags remain on remote (branch protection prevents deletion) but are ignored by the <code class="docutils literal notranslate"><span class="pre">docs.yml</span></code> workflow which only triggers on <code class="docutils literal notranslate"><span class="pre">v*</span></code>.</p></li>
 <li><p>Tidied banner in Shibuya dark theme to make more readable</p></li>
 </ul>
-</section>
-<section id="added">
-<h3>Added<a class="headerlink" href="#added" title="Link to this heading">¶</a></h3>
+<blockquote>
+<div><p class="rubric" id="added"><em>Added</em></p>
+</div></blockquote>
 <ul class="simple">
 <li><p>Versioned documentation deployment via <code class="docutils literal notranslate"><span class="pre">docs.yml</span></code> GitHub Actions workflow (<code class="docutils literal notranslate"><span class="pre">docs/versioned-deploy</span></code> branch):</p>
 <ul>
@@ -406,21 +419,22 @@ DrumScript follows <a class="reference external" href="https://semver.org/">Sema
 <li><p>Added <a class="reference internal" href="#.github/workflows/repo-stats.yml"><span class="xref myst">repo-stats.yml</span></a> GitHub Actions workflow: daily (23:00 UTC) collection of repository traffic statistics (views, clones, stars, forks, referrers, popular paths) via <a class="reference external" href="https://github.com/jgehrcke/github-repo-stats">github-repo-stats</a>. Data persisted to <code class="docutils literal notranslate"><span class="pre">github-repo-stats</span></code> branch. Overcomes GitHub’s 14-day traffic data retention limit and tracks usage</p></li>
 <li><p>Added <code class="docutils literal notranslate"><span class="pre">Traffic</span></code> section to <a class="reference internal" href="#./README.md#traffic"><span class="xref myst">README</span></a> with links to daily-updated repository statistics report (PDF and HTML), generated by <code class="docutils literal notranslate"><span class="pre">repo-stats.yml</span></code> via <a class="reference external" href="https://github.com/jgehrcke/github-repo-stats">github-repo-stats</a></p></li>
 </ul>
-</section>
 <section id="audited">
-<h3>Audited<a class="headerlink" href="#audited" title="Link to this heading">¶</a></h3>
+<h3><em>Audited</em><a class="headerlink" href="#audited" title="Link to this heading">¶</a></h3>
 <ul class="simple">
 <li><p>Did full audit of all <code class="docutils literal notranslate"><span class="pre">drumscript</span></code> code to ensure <code class="docutils literal notranslate"><span class="pre">full-flag</span></code> / <code class="docutils literal notranslate"><span class="pre">full_flag</span></code> consistency throughout, following v0.1.6 release fix replacing <code class="docutils literal notranslate"><span class="pre">full=True</span></code> with <code class="docutils literal notranslate"><span class="pre">verbose=True</span></code> (<code class="docutils literal notranslate"><span class="pre">DeprecationShim</span></code>)</p></li>
 <li><p>Fixed Sphinx build errors for documentation</p></li>
+<li><p>Amended structure of index in <a class="reference internal" href="#README.md"><span class="xref myst">README.md</span></a> and added missing H2 headers</p></li>
 </ul>
 </section>
 <hr class="docutils" />
-<section id="august-2026-target-tbc">
-<h3>[0.2.0+] - August 2026 - Target: TBC<a class="headerlink" href="#august-2026-target-tbc" title="Link to this heading">¶</a></h3>
-<blockquote>
-<div><p>First minor-version bump.</p>
-<!--> Signals the start of the breaking-change track for --full flag (replaced by --verbose) ahead of v1.0.0 beta.-->
-</div></blockquote>
+<section id="future-releases">
+<h3>[Future releases]<a class="headerlink" href="#future-releases" title="Link to this heading">¶</a></h3>
+<p><a class="reference internal" href="#changelog">back</a></p>
+<p>Items listed below are fully implemented and <strong>published to pypi</strong> under an official version</p>
+<section id="august-2026-and-beyond">
+<h4><strong>August 2026 and beyond</strong><a class="headerlink" href="#august-2026-and-beyond" title="Link to this heading">¶</a></h4>
+</section>
 <section id="planned-bug-fixes">
 <h4>Planned — Bug Fixes<a class="headerlink" href="#planned-bug-fixes" title="Link to this heading">¶</a></h4>
 <ul class="simple">
@@ -459,22 +473,10 @@ DrumScript follows <a class="reference external" href="https://semver.org/">Sema
 </ul>
 </section>
 </section>
-<hr class="docutils" />
-<section id="beta-release-target-tbd">
-<h3>[1.0.0] - Beta release - Target: TBD<a class="headerlink" href="#beta-release-target-tbd" title="Link to this heading">¶</a></h3>
-<section id="planned-removed-breaking">
-<h4>Planned — Removed (breaking)<a class="headerlink" href="#planned-removed-breaking" title="Link to this heading">¶</a></h4>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">full</span></code> parameter removed entirely from <code class="docutils literal notranslate"><span class="pre">transcribe()</span></code>, <code class="docutils literal notranslate"><span class="pre">extract_stems()</span></code>, and <code class="docutils literal notranslate"><span class="pre">detect_tempo()</span></code>. Users must use <code class="docutils literal notranslate"><span class="pre">verbose</span></code> instead.</p></li>
-<li><p>Deprecation warning removed (no longer needed)</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">tests/unit/test_deprecation_warnings.py</span></code> deleted (or flipped to assert <code class="docutils literal notranslate"><span class="pre">full</span></code> now raises <code class="docutils literal notranslate"><span class="pre">TypeError</span></code>)</p></li>
-</ul>
 </section>
-</section>
-</section>
-<hr class="docutils" />
 <section id="released">
 <h2>Released<a class="headerlink" href="#released" title="Link to this heading">¶</a></h2>
+<p><a class="reference internal" href="#changelog">back</a></p>
 <section id="june-2026">
 <h3>[0.1.6] - June 2026<a class="headerlink" href="#june-2026" title="Link to this heading">¶</a></h3>
 <blockquote>
@@ -548,8 +550,24 @@ After this, the next release jumps to v0.2.0 to signal the deprecation shim for 
 <li><p>Beta target: v1.0.0</p></li>
 <li><p>TISMIR Educational Articles paper planned for beta release</p></li>
 </ul>
+</section>
+<hr class="docutils" />
+<section id="beta-release-target-late-2026">
+<h3>[1.0.0] - Beta release - Target: late-2026<a class="headerlink" href="#beta-release-target-late-2026" title="Link to this heading">¶</a></h3>
+<section id="planned-removed-breaking">
+<h4>Planned — Removed (breaking)<a class="headerlink" href="#planned-removed-breaking" title="Link to this heading">¶</a></h4>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">full</span></code> parameter removed entirely from <code class="docutils literal notranslate"><span class="pre">transcribe()</span></code>, <code class="docutils literal notranslate"><span class="pre">extract_stems()</span></code>, and <code class="docutils literal notranslate"><span class="pre">detect_tempo()</span></code>. Users must use <code class="docutils literal notranslate"><span class="pre">verbose</span></code> instead.</p></li>
+<li><p>This was implemented as a deprecation shim in <a class="reference internal" href="#june-2026">v0.1.6 release</a></p></li>
+<li><p>Deprecation warning for <code class="docutils literal notranslate"><span class="pre">--full=</span> <span class="pre">flag</span></code> will be removed</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">tests/unit/test_deprecation_warnings.py</span></code> deleted (or flipped to assert <code class="docutils literal notranslate"><span class="pre">full</span></code> now raises <code class="docutils literal notranslate"><span class="pre">TypeError</span></code>)</p></li>
+<li><p>From 1.0.0 (beta) the flag <code class="docutils literal notranslate"><span class="pre">verbose=</span></code> will provide dictionary-based outputs, ie for cli-users and developers.</p></li>
+<li><p>This change, originally, was made in  <a class="reference internal" href="#june-2026">v0.1.6 release</a> to prevent confusion between <code class="docutils literal notranslate"><span class="pre">--full</span></code> flag outputting verbose in drumscript wrappers and the <code class="docutils literal notranslate"><span class="pre">full=true</span></code> functionality for specifying within <code class="docutils literal notranslate"><span class="pre">transcribe()</span></code> function that the input audio is polyphonic (non-drum-only) and therefore requires Demucs extraction <em>prior</em> to applying DrumScript’s deterministic classification model for transcription.</p></li>
+<li><p>As a side note, and for completeness, DrumScript functions default to drum-audio only inputs. User must indicate if the input_audio is not solo drum audio.</p></li>
+</ul>
 <hr class="docutils" />
 <!--END--></section>
+</section>
 </section>
 </section>
 

@@ -26,7 +26,7 @@
 - **[CLI Usage](#cli-usage)**
 - **[Contributing](#contributing)**
 - **[Testing](#testing)**
-   - **[Benchmarking](#benchmarking)**
+- **[Benchmarking](#benchmarking)**
 - **[Traffic](#traffic)**
 - **[FAQs](#faqs)**
 - **[Acknowledgements](#acknowledgements)**
@@ -318,11 +318,11 @@ We use an automated pipeline to publish new versions to PyPI. All releases must 
 ## Testing
 *[back](#drumscript)*
 
-For detailed instructions on testing and publishing via the command line, please see our [Testing Guidance](tests/README.md).
+For detailed instructions on testing and publishing via the command line, please see our **[Testing Guidance](tests/README.md).**
 
 ---
 
-### Benchmarking
+## Benchmarking
 *[back](#drumscript)*
 
 DrumScript includes a benchmarking framework for evaluating the classifier against standard ADT datasets using [`mir_eval`](https://github.com/mir-evaluation/mir_eval). Currently supports IDMT-SMT-Drums V2.

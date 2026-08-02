@@ -1,7 +1,7 @@
 # Changelog
 
 <!--date_added:thurs-28-may-2026-->
-<!--date:updated:fri-31-july-2026-->
+<!--date:updated:sun-01-august-2026-->
 >
 * All notable changes related to the repository and pypi distribution of `DrumScript` will be documented here
 * Format follows **[Keep a Changelog](https://keepachangelog.com/en/1.0.0/)** and **[Semantic Versioning](https://semver.org/)**.
@@ -11,7 +11,6 @@
 - **[Unreleased](#unreleased)**
 - **[Released](#released)**
 - **[Future releases](#future-releases)**
-
 
 ---
 
@@ -79,6 +78,7 @@ Items listed below are fully implemented and **published to pypi** under an offi
 - `ds.transcribe()` only outputs PDF, not the documented `.json` / `.midi` / `.xml`
 - `main.py` structural bug: duplicated pipeline inside `except` block needs removing, error handling needs restructuring
 - `drumscript/main.py` (~line 26) `.wav` comment. Check if this is actually true across all scripts in `drumscript/` modular code.
+- `ds.transcribe()` return value only references PDF path, but `score_builder.build_score()` silently writes JSON + MIDI too. Output behaviour needs documenting clearly and aligning between CLI and Python API
 
 #### Planned — Changes
 - Transcription function docstrings to be updated to make clear that drum-only audio is expected as standard input
@@ -89,6 +89,7 @@ Items listed below are fully implemented and **published to pypi** under an offi
 - Improve documentation: clearer docstrings for the `rudiment` flag/functionality
 - Check if `is_rudiment` applies to `score_builder` function — is it relevant, per `drumscript/main.py`?
 - Refactor `main.py` argparse block into a `build_parser()` function so `tests/unit/test_cli_args.py` can import the real parser instead of mirroring it
+- Clarify in docs/docstrings that input format is not limited to .wav/.mp3 — any format librosa (+ ffmpeg) supports works. ffmpeg is only required for MP3 input decoding and MP3 stem output
 
 #### Planned — Additions
 - `output_midi`, `output_json`, `output_xml` flags to be added to `transcribe()` for multi-format export

@@ -1,7 +1,7 @@
 # Changelog
 
 <!--date_added:thurs-28-may-2026-->
-<!--date:updated:sun-01-august-2026-->
+<!--date:updated:mon-03-august-2026-->
 >
 * All notable changes related to the repository and pypi distribution of `DrumScript` will be documented here
 * Format follows **[Keep a Changelog](https://keepachangelog.com/en/1.0.0/)** and **[Semantic Versioning](https://semver.org/)**.
@@ -70,7 +70,6 @@ Items listed below are **currently in development** but **have not been built in
 
 Items listed below are fully implemented and **published to pypi** under an official version
 
-
 #### **August 2026 and beyond**
 
 #### Planned — Bug Fixes
@@ -95,6 +94,7 @@ Items listed below are fully implemented and **published to pypi** under an offi
 - `output_midi`, `output_json`, `output_xml` flags to be added to `transcribe()` for multi-format export
 - Expanded benchmark dataset coverage (ENST-Drums, MDB-Drums) building on the IDMT-SMT-Drums V2 foundation shipped in v0.1.6
 - Code-to-DrumScript label mapping expanded beyond `KD`/`SD`/`HH` to cover full-kit classes (toms, crash, ride)
+- Consider adding `.xml` to outputs from `score_builder()` and `transcribe()` [Issue #295](https://github.com/DrumScript/DrumScript/issues/295)
 
 #### Planned — Investigation
 - **Onset timing precision**: investigate user feedback on score generation. Though quantisation is used, look at the extent to which slight imperfections in onset detection cause notes to be placed at incorrect positions in the score (e.g. snare hit at 0.503s instead of 0.500s generates spurious rests). https://github.com/DrumScript/DrumScript/issues/274

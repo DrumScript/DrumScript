@@ -366,6 +366,8 @@ def transcribe(
     output_dir.mkdir(parents=True, exist_ok=True)
     fname = output_filename or f"{input_stem}_transcription"
     pdf_path = output_dir / f"{fname}.pdf"
+    json_path = output_dir / f"{fname}.json"
+    midi_path = output_dir / f"{fname}.mid"
 
     print(f"...Building score: {pdf_path}")
     score_builder.build_score(
@@ -380,6 +382,8 @@ def transcribe(
     if verbose:
         return {
             "pdf_path": str(pdf_path),
+            "json_path": str(json_path),
+            "midi_path": str(midi_path),
             "audio_path": audio_path,
             "drum_stem_path": working_path if full_song else None,
             "tempo": tempo,

@@ -3,7 +3,8 @@ Unit tests for ``drumscript.transcribe`` — the high-level E2E wrapper.
 
 What this file covers
 ---------------------
-- Return-type contract (str vs dict depending on ``full`` flag).
+- Return-type contract (_TranscribeResult dict by default, full dict if ``verbose=True``).
+- Deprecation shim: using the non-verbose result as a string emits DeprecationWarning.
 - Output path construction (default and custom ``output_dir`` / ``output_filename``).
 - Flag routing: ``is_rudiment`` dispatches to the correct classifier.
 - Flag routing: ``full_song`` triggers stem separation.
@@ -19,6 +20,7 @@ extract_drum_stem) are mocked so these tests run in <1 second with no GPU,
 no ffmpeg, no model weights.
 """
 
+import warnings
 from unittest.mock import patch
 
 import numpy as np
@@ -108,15 +110,40 @@ def mock_pipeline():
 
 
 class TestTranscribeReturnType:
-    """``transcribe()`` returns a path string by default, or a dict if ``full=True``."""
+    """``transcribe()`` returns a _TranscribeResult dict by default, or a full dict if ``verbose=True``."""
 
-    def test_returns_string_by_default(self, drum_wav, tmp_path, mock_pipeline):
+    def test_returns_transcribe_result_by_default(self, drum_wav, tmp_path, mock_pipeline):
+        """Non-verbose return is a _TranscribeResult (dict subclass) with output paths."""
         from drumscript import transcribe
 
         result = transcribe(drum_wav, output_dir=str(tmp_path))
 
-        assert isinstance(result, str)
-        assert result.endswith(".pdf")
+        assert isinstance(result, dict)
+        assert "pdf_path" in result
+        assert "json_path" in result
+        assert "midi_path" in result
+        assert result["pdf_path"].endswith(".pdf")
+        assert result["json_path"].endswith(".json")
+        assert result["midi_path"].endswith(".mid")
+
+    def test_non_verbose_str_emits_deprecation_warning(self, drum_wav, tmp_path, mock_pipeline):
+        """Using the non-verbose result as a string should emit DeprecationWarning."""
+        from drumscript import transcribe
+
+        result = transcribe(drum_wav, output_dir=str(tmp_path))
+
+        with pytest.warns(DeprecationWarning, match="pdf_path"):
+            str(result)
+
+    def test_non_verbose_str_returns_pdf_path(self, drum_wav, tmp_path, mock_pipeline):
+        """The deprecated string value should still be the PDF path."""
+        from drumscript import transcribe
+
+        result = transcribe(drum_wav, output_dir=str(tmp_path))
+
+        with warnings.catch_warnings():
+            warnings.simplefilter("ignore", DeprecationWarning)
+            assert str(result).endswith(".pdf")
 
     def test_returns_dict_when_full(self, drum_wav, tmp_path, mock_pipeline):
         from drumscript import transcribe
@@ -139,6 +166,17 @@ class TestTranscribeReturnType:
         assert isinstance(result["tempo"], float)
         assert result["tempo"] == pytest.approx(120.0)
 
+    def test_verbose_dict_includes_json_and_midi_paths(self, drum_wav, tmp_path, mock_pipeline):
+        """Verbose return should include json_path and midi_path."""
+        from drumscript import transcribe
+
+        result = transcribe(drum_wav, output_dir=str(tmp_path), verbose=True)
+
+        assert "json_path" in result
+        assert "midi_path" in result
+        assert result["json_path"].endswith(".json")
+        assert result["midi_path"].endswith(".mid")
+
 
 # =============================================================================
 # Output path construction
@@ -153,8 +191,12 @@ class TestTranscribeOutputPaths:
 
         result = transcribe(drum_wav, output_dir=str(tmp_path))
 
-        expected = str(tmp_path / "test_drum_transcription.pdf")
-        assert result == expected
+        expected_pdf = str(tmp_path / "test_drum_transcription.pdf")
+        expected_json = str(tmp_path / "test_drum_transcription.json")
+        expected_midi = str(tmp_path / "test_drum_transcription.mid")
+        assert result["pdf_path"] == expected_pdf
+        assert result["json_path"] == expected_json
+        assert result["midi_path"] == expected_midi
 
     def test_custom_output_filename(self, drum_wav, tmp_path, mock_pipeline):
         from drumscript import transcribe
@@ -165,8 +207,12 @@ class TestTranscribeOutputPaths:
             output_filename="my_score",
         )
 
-        expected = str(tmp_path / "my_score.pdf")
-        assert result == expected
+        expected_pdf = str(tmp_path / "my_score.pdf")
+        expected_json = str(tmp_path / "my_score.json")
+        expected_midi = str(tmp_path / "my_score.mid")
+        assert result["pdf_path"] == expected_pdf
+        assert result["json_path"] == expected_json
+        assert result["midi_path"] == expected_midi
 
     def test_creates_output_dir_if_missing(self, drum_wav, tmp_path, mock_pipeline):
         from drumscript import transcribe

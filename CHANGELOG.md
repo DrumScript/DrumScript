@@ -118,6 +118,7 @@ Items listed below are fully implemented and **published to pypi** under an offi
 - `transcribe()` return type: `str` → `_TranscribeResult` (dict subclass). See Added above for migration details.
 - Standardised git tag naming convention to `vX.Y.Z`
 - Dark mode banner CSS improved for readability
+- Updated `tests/unit/test_transcribe.py` to reflect `_TranscribeResult` return type: replaced string assertions with dict key checks, added tests for deprecation warning on string usage, added test for verbose dict including `json_path` and `midi_path`
 
 #### Fixed
 - `transcribe()` now exposes all output paths (PDF, JSON, MIDI) that `score_builder.build_score()` actually writes

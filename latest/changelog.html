@@ -507,6 +507,7 @@ data-aria-dark="Switch to auto color mode">
 <li><p><code class="docutils literal notranslate"><span class="pre">transcribe()</span></code> return type: <code class="docutils literal notranslate"><span class="pre">str</span></code> → <code class="docutils literal notranslate"><span class="pre">_TranscribeResult</span></code> (dict subclass). See Added above for migration details.</p></li>
 <li><p>Standardised git tag naming convention to <code class="docutils literal notranslate"><span class="pre">vX.Y.Z</span></code></p></li>
 <li><p>Dark mode banner CSS improved for readability</p></li>
+<li><p>Updated <code class="docutils literal notranslate"><span class="pre">tests/unit/test_transcribe.py</span></code> to reflect <code class="docutils literal notranslate"><span class="pre">_TranscribeResult</span></code> return type: replaced string assertions with dict key checks, added tests for deprecation warning on string usage, added test for verbose dict including <code class="docutils literal notranslate"><span class="pre">json_path</span></code> and <code class="docutils literal notranslate"><span class="pre">midi_path</span></code></p></li>
 </ul>
 </section>
 <section id="id3">

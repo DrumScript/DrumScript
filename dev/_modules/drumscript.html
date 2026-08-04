@@ -670,170 +670,174 @@ data-aria-dark="Switch to auto color mode">
 </span><span data-line="366">    <span class="n">output_dir</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </span><span data-line="367">    <span class="n">fname</span> <span class="o">=</span> <span class="n">output_filename</span> <span class="ow">or</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">input_stem</span><span class="si">}</span><span class="s2">_transcription&quot;</span>
 </span><span data-line="368">    <span class="n">pdf_path</span> <span class="o">=</span> <span class="n">output_dir</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">fname</span><span class="si">}</span><span class="s2">.pdf&quot;</span>
-</span><span data-line="369">
-</span><span data-line="370">    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;...Building score: </span><span class="si">{</span><span class="n">pdf_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-</span><span data-line="371">    <span class="n">score_builder</span><span class="o">.</span><span class="n">build_score</span><span class="p">(</span>
-</span><span data-line="372">        <span class="n">detected_events</span><span class="o">=</span><span class="n">detected_events</span><span class="p">,</span>
-</span><span data-line="373">        <span class="n">tempo</span><span class="o">=</span><span class="n">tempo</span><span class="p">,</span>
-</span><span data-line="374">        <span class="n">output_path</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">pdf_path</span><span class="p">),</span>
-</span><span data-line="375">        <span class="n">time_signature</span><span class="o">=</span><span class="n">time_signature</span><span class="p">,</span>
-</span><span data-line="376">    <span class="p">)</span>
-</span><span data-line="377">    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;--- Done ---&quot;</span><span class="p">)</span>
-</span><span data-line="378">
-</span><span data-line="379">    <span class="c1"># if full:</span>
-</span><span data-line="380">    <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
-</span><span data-line="381">        <span class="k">return</span> <span class="p">{</span>
-</span><span data-line="382">            <span class="s2">&quot;pdf_path&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">pdf_path</span><span class="p">),</span>
-</span><span data-line="383">            <span class="s2">&quot;audio_path&quot;</span><span class="p">:</span> <span class="n">audio_path</span><span class="p">,</span>
-</span><span data-line="384">            <span class="s2">&quot;drum_stem_path&quot;</span><span class="p">:</span> <span class="n">working_path</span> <span class="k">if</span> <span class="n">full_song</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
-</span><span data-line="385">            <span class="s2">&quot;tempo&quot;</span><span class="p">:</span> <span class="n">tempo</span><span class="p">,</span>
-</span><span data-line="386">            <span class="s2">&quot;onsets&quot;</span><span class="p">:</span> <span class="n">onsets</span><span class="p">,</span>
-</span><span data-line="387">            <span class="s2">&quot;events&quot;</span><span class="p">:</span> <span class="n">detected_events</span><span class="p">,</span>
-</span><span data-line="388">            <span class="s2">&quot;time_signature&quot;</span><span class="p">:</span> <span class="n">time_signature</span><span class="p">,</span>
-</span><span data-line="389">            <span class="s2">&quot;sample_rate&quot;</span><span class="p">:</span> <span class="n">sr</span><span class="p">,</span>
-</span><span data-line="390">        <span class="p">}</span>
-</span><span data-line="391">    <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">pdf_path</span><span class="p">)</span></div>
+</span><span data-line="369">    <span class="n">json_path</span> <span class="o">=</span> <span class="n">output_dir</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">fname</span><span class="si">}</span><span class="s2">.json&quot;</span>
+</span><span data-line="370">    <span class="n">midi_path</span> <span class="o">=</span> <span class="n">output_dir</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">fname</span><span class="si">}</span><span class="s2">.mid&quot;</span>
+</span><span data-line="371">
+</span><span data-line="372">    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;...Building score: </span><span class="si">{</span><span class="n">pdf_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span data-line="373">    <span class="n">score_builder</span><span class="o">.</span><span class="n">build_score</span><span class="p">(</span>
+</span><span data-line="374">        <span class="n">detected_events</span><span class="o">=</span><span class="n">detected_events</span><span class="p">,</span>
+</span><span data-line="375">        <span class="n">tempo</span><span class="o">=</span><span class="n">tempo</span><span class="p">,</span>
+</span><span data-line="376">        <span class="n">output_path</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">pdf_path</span><span class="p">),</span>
+</span><span data-line="377">        <span class="n">time_signature</span><span class="o">=</span><span class="n">time_signature</span><span class="p">,</span>
+</span><span data-line="378">    <span class="p">)</span>
+</span><span data-line="379">    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;--- Done ---&quot;</span><span class="p">)</span>
+</span><span data-line="380">
+</span><span data-line="381">    <span class="c1"># if full:</span>
+</span><span data-line="382">    <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+</span><span data-line="383">        <span class="k">return</span> <span class="p">{</span>
+</span><span data-line="384">            <span class="s2">&quot;pdf_path&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">pdf_path</span><span class="p">),</span>
+</span><span data-line="385">            <span class="s2">&quot;json_path&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">json_path</span><span class="p">),</span>
+</span><span data-line="386">            <span class="s2">&quot;midi_path&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">midi_path</span><span class="p">),</span>
+</span><span data-line="387">            <span class="s2">&quot;audio_path&quot;</span><span class="p">:</span> <span class="n">audio_path</span><span class="p">,</span>
+</span><span data-line="388">            <span class="s2">&quot;drum_stem_path&quot;</span><span class="p">:</span> <span class="n">working_path</span> <span class="k">if</span> <span class="n">full_song</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
+</span><span data-line="389">            <span class="s2">&quot;tempo&quot;</span><span class="p">:</span> <span class="n">tempo</span><span class="p">,</span>
+</span><span data-line="390">            <span class="s2">&quot;onsets&quot;</span><span class="p">:</span> <span class="n">onsets</span><span class="p">,</span>
+</span><span data-line="391">            <span class="s2">&quot;events&quot;</span><span class="p">:</span> <span class="n">detected_events</span><span class="p">,</span>
+</span><span data-line="392">            <span class="s2">&quot;time_signature&quot;</span><span class="p">:</span> <span class="n">time_signature</span><span class="p">,</span>
+</span><span data-line="393">            <span class="s2">&quot;sample_rate&quot;</span><span class="p">:</span> <span class="n">sr</span><span class="p">,</span>
+</span><span data-line="394">        <span class="p">}</span>
+</span><span data-line="395">    <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">pdf_path</span><span class="p">)</span></div>
 
-</span><span data-line="392">
-</span><span data-line="393">
+</span><span data-line="396">
+</span><span data-line="397">
 <div class="viewcode-block" id="export_pdf">
 <a class="viewcode-back" href="../generated/drumscript.export_pdf.html#drumscript.export_pdf">[docs]</a>
-</span><span data-line="394"><span class="k">def</span><span class="w"> </span><span class="nf">export_pdf</span><span class="p">(</span><span class="n">score</span><span class="p">,</span> <span class="n">output_path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-</span><span data-line="395"><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span data-line="396"><span class="sd">    Exports a generated DrumScript score object to a beautifully rendered PDF file.</span>
-</span><span data-line="397">
-</span><span data-line="398"><span class="sd">    This function utilizes the ReportLab engine to generate clean, vector-based</span>
-</span><span data-line="399"><span class="sd">    sheet music optimized for standard A4 printing.</span>
-</span><span data-line="400">
-</span><span data-line="401"><span class="sd">    :param score: The internal score object generated by ``build_score()``.</span>
-</span><span data-line="402"><span class="sd">    :type score: object</span>
-</span><span data-line="403"><span class="sd">    :param output_path: The exact file path to save the PDF. Defaults to &#39;drumscript.pdf&#39; in CWD.</span>
-</span><span data-line="404"><span class="sd">    :type output_path: str, optional</span>
-</span><span data-line="405"><span class="sd">    :return: The absolute path to the generated PDF.</span>
-</span><span data-line="406"><span class="sd">    :rtype: str</span>
-</span><span data-line="407">
-</span><span data-line="408"><span class="sd">    .. note::</span>
-</span><span data-line="409"><span class="sd">       Because the PDF is generated using vector graphics, it can be scaled infinitely</span>
-</span><span data-line="410"><span class="sd">       without any loss of quality or pixelation.</span>
+</span><span data-line="398"><span class="k">def</span><span class="w"> </span><span class="nf">export_pdf</span><span class="p">(</span><span class="n">score</span><span class="p">,</span> <span class="n">output_path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+</span><span data-line="399"><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span data-line="400"><span class="sd">    Exports a generated DrumScript score object to a beautifully rendered PDF file.</span>
+</span><span data-line="401">
+</span><span data-line="402"><span class="sd">    This function utilizes the ReportLab engine to generate clean, vector-based</span>
+</span><span data-line="403"><span class="sd">    sheet music optimized for standard A4 printing.</span>
+</span><span data-line="404">
+</span><span data-line="405"><span class="sd">    :param score: The internal score object generated by ``build_score()``.</span>
+</span><span data-line="406"><span class="sd">    :type score: object</span>
+</span><span data-line="407"><span class="sd">    :param output_path: The exact file path to save the PDF. Defaults to &#39;drumscript.pdf&#39; in CWD.</span>
+</span><span data-line="408"><span class="sd">    :type output_path: str, optional</span>
+</span><span data-line="409"><span class="sd">    :return: The absolute path to the generated PDF.</span>
+</span><span data-line="410"><span class="sd">    :rtype: str</span>
 </span><span data-line="411">
-</span><span data-line="412"><span class="sd">    **Example:**</span>
-</span><span data-line="413">
-</span><span data-line="414"><span class="sd">    .. code-block:: python</span>
+</span><span data-line="412"><span class="sd">    .. note::</span>
+</span><span data-line="413"><span class="sd">       Because the PDF is generated using vector graphics, it can be scaled infinitely</span>
+</span><span data-line="414"><span class="sd">       without any loss of quality or pixelation.</span>
 </span><span data-line="415">
-</span><span data-line="416"><span class="sd">       import drumscript as ds</span>
+</span><span data-line="416"><span class="sd">    **Example:**</span>
 </span><span data-line="417">
-</span><span data-line="418"><span class="sd">       # Assuming `score` is a previously generated score object</span>
-</span><span data-line="419"><span class="sd">       pdf_path = ds.export_pdf(score, output_path=&quot;./transcriptions/my_song.pdf&quot;)</span>
-</span><span data-line="420"><span class="sd">    &quot;&quot;&quot;</span>
-</span><span data-line="421">    <span class="k">if</span> <span class="n">output_path</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-</span><span data-line="422">        <span class="c1"># output_path = pathlib.Path.cwd() / &quot;drumscript.pdf&quot;  # previously named `output_path = pathlib.Path.cwd() / &quot;drum_score.pdf&quot;``</span>
-</span><span data-line="423">        <span class="n">output_path</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="o">.</span><span class="n">cwd</span><span class="p">()</span> <span class="o">/</span> <span class="s2">&quot;drumscript.pdf&quot;</span>
-</span><span data-line="424">
-</span><span data-line="425">    <span class="k">return</span> <span class="n">pdf_exporter</span><span class="o">.</span><span class="n">export_pdf</span><span class="p">(</span><span class="n">score</span><span class="p">,</span> <span class="n">output_path</span><span class="o">=</span><span class="n">output_path</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+</span><span data-line="418"><span class="sd">    .. code-block:: python</span>
+</span><span data-line="419">
+</span><span data-line="420"><span class="sd">       import drumscript as ds</span>
+</span><span data-line="421">
+</span><span data-line="422"><span class="sd">       # Assuming `score` is a previously generated score object</span>
+</span><span data-line="423"><span class="sd">       pdf_path = ds.export_pdf(score, output_path=&quot;./transcriptions/my_song.pdf&quot;)</span>
+</span><span data-line="424"><span class="sd">    &quot;&quot;&quot;</span>
+</span><span data-line="425">    <span class="k">if</span> <span class="n">output_path</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+</span><span data-line="426">        <span class="c1"># output_path = pathlib.Path.cwd() / &quot;drumscript.pdf&quot;  # previously named `output_path = pathlib.Path.cwd() / &quot;drum_score.pdf&quot;``</span>
+</span><span data-line="427">        <span class="n">output_path</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="o">.</span><span class="n">cwd</span><span class="p">()</span> <span class="o">/</span> <span class="s2">&quot;drumscript.pdf&quot;</span>
+</span><span data-line="428">
+</span><span data-line="429">    <span class="k">return</span> <span class="n">pdf_exporter</span><span class="o">.</span><span class="n">export_pdf</span><span class="p">(</span><span class="n">score</span><span class="p">,</span> <span class="n">output_path</span><span class="o">=</span><span class="n">output_path</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
 
-</span><span data-line="426">
-</span><span data-line="427">
+</span><span data-line="430">
+</span><span data-line="431">
 <div class="viewcode-block" id="export_midi">
 <a class="viewcode-back" href="../generated/drumscript.export_midi.html#drumscript.export_midi">[docs]</a>
-</span><span data-line="428"><span class="k">def</span><span class="w"> </span><span class="nf">export_midi</span><span class="p">(</span><span class="n">score</span><span class="p">,</span> <span class="n">output_path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-</span><span data-line="429"><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span data-line="430"><span class="sd">    Converts a DrumScript score object into a standard MIDI file for DAW integration.</span>
-</span><span data-line="431">
-</span><span data-line="432"><span class="sd">    The exported MIDI file adheres to the General MIDI (GM) Level 1 Percussion Key Map,</span>
-</span><span data-line="433"><span class="sd">    ensuring immediate compatibility with virtual drum instruments like Superior Drummer,</span>
-</span><span data-line="434"><span class="sd">    EZdrummer, or standard DAW drum racks.</span>
+</span><span data-line="432"><span class="k">def</span><span class="w"> </span><span class="nf">export_midi</span><span class="p">(</span><span class="n">score</span><span class="p">,</span> <span class="n">output_path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+</span><span data-line="433"><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span data-line="434"><span class="sd">    Converts a DrumScript score object into a standard MIDI file for DAW integration.</span>
 </span><span data-line="435">
-</span><span data-line="436"><span class="sd">    :param score: The internal score object generated by ``build_score()``.</span>
-</span><span data-line="437"><span class="sd">    :type score: object</span>
-</span><span data-line="438"><span class="sd">    :param output_path: The exact file path to save the MIDI. Defaults to &#39;drumscript.mid&#39; in CWD.</span>
-</span><span data-line="439"><span class="sd">    :type output_path: str, optional</span>
-</span><span data-line="440">
-</span><span data-line="441"><span class="sd">    :return: The absolute path to the generated MIDI file.</span>
-</span><span data-line="442"><span class="sd">    :rtype: str</span>
-</span><span data-line="443">
-</span><span data-line="444"><span class="sd">    **Example:**</span>
-</span><span data-line="445">
-</span><span data-line="446"><span class="sd">    .. code-block:: python</span>
+</span><span data-line="436"><span class="sd">    The exported MIDI file adheres to the General MIDI (GM) Level 1 Percussion Key Map,</span>
+</span><span data-line="437"><span class="sd">    ensuring immediate compatibility with virtual drum instruments like Superior Drummer,</span>
+</span><span data-line="438"><span class="sd">    EZdrummer, or standard DAW drum racks.</span>
+</span><span data-line="439">
+</span><span data-line="440"><span class="sd">    :param score: The internal score object generated by ``build_score()``.</span>
+</span><span data-line="441"><span class="sd">    :type score: object</span>
+</span><span data-line="442"><span class="sd">    :param output_path: The exact file path to save the MIDI. Defaults to &#39;drumscript.mid&#39; in CWD.</span>
+</span><span data-line="443"><span class="sd">    :type output_path: str, optional</span>
+</span><span data-line="444">
+</span><span data-line="445"><span class="sd">    :return: The absolute path to the generated MIDI file.</span>
+</span><span data-line="446"><span class="sd">    :rtype: str</span>
 </span><span data-line="447">
-</span><span data-line="448"><span class="sd">       import drumscript as ds</span>
+</span><span data-line="448"><span class="sd">    **Example:**</span>
 </span><span data-line="449">
-</span><span data-line="450"><span class="sd">       # Assuming `score` is a previously generated score object</span>
-</span><span data-line="451"><span class="sd">       midi_path = ds.export_midi(score, output_path=&quot;./midi_exports/my_song.mid&quot;)</span>
-</span><span data-line="452"><span class="sd">    &quot;&quot;&quot;</span>
-</span><span data-line="453">    <span class="k">if</span> <span class="n">output_path</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-</span><span data-line="454">        <span class="c1"># output_path = pathlib.Path.cwd() / &quot;drumscript.mid&quot;  # previously named `output_path = pathlib.Path.cwd() / &quot;drum_score.mid&quot;``</span>
-</span><span data-line="455">        <span class="n">output_path</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="o">.</span><span class="n">cwd</span><span class="p">()</span> <span class="o">/</span> <span class="s2">&quot;drumscript.mid&quot;</span>
-</span><span data-line="456">
-</span><span data-line="457">    <span class="k">return</span> <span class="n">midi_exporter</span><span class="o">.</span><span class="n">export_to_midi</span><span class="p">(</span><span class="n">score</span><span class="p">,</span> <span class="n">output_path</span><span class="o">=</span><span class="n">output_path</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+</span><span data-line="450"><span class="sd">    .. code-block:: python</span>
+</span><span data-line="451">
+</span><span data-line="452"><span class="sd">       import drumscript as ds</span>
+</span><span data-line="453">
+</span><span data-line="454"><span class="sd">       # Assuming `score` is a previously generated score object</span>
+</span><span data-line="455"><span class="sd">       midi_path = ds.export_midi(score, output_path=&quot;./midi_exports/my_song.mid&quot;)</span>
+</span><span data-line="456"><span class="sd">    &quot;&quot;&quot;</span>
+</span><span data-line="457">    <span class="k">if</span> <span class="n">output_path</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+</span><span data-line="458">        <span class="c1"># output_path = pathlib.Path.cwd() / &quot;drumscript.mid&quot;  # previously named `output_path = pathlib.Path.cwd() / &quot;drum_score.mid&quot;``</span>
+</span><span data-line="459">        <span class="n">output_path</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="o">.</span><span class="n">cwd</span><span class="p">()</span> <span class="o">/</span> <span class="s2">&quot;drumscript.mid&quot;</span>
+</span><span data-line="460">
+</span><span data-line="461">    <span class="k">return</span> <span class="n">midi_exporter</span><span class="o">.</span><span class="n">export_to_midi</span><span class="p">(</span><span class="n">score</span><span class="p">,</span> <span class="n">output_path</span><span class="o">=</span><span class="n">output_path</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
 
-</span><span data-line="458">
-</span><span data-line="459">
+</span><span data-line="462">
+</span><span data-line="463">
 <div class="viewcode-block" id="export_xml">
 <a class="viewcode-back" href="../generated/drumscript.export_xml.html#drumscript.export_xml">[docs]</a>
-</span><span data-line="460"><span class="k">def</span><span class="w"> </span><span class="nf">export_xml</span><span class="p">(</span><span class="n">score</span><span class="p">,</span> <span class="n">output_path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-</span><span data-line="461"><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span data-line="462"><span class="sd">    Exports a DrumScript score object to MusicXML format.</span>
-</span><span data-line="463">
-</span><span data-line="464"><span class="sd">    MusicXML is the universal industry standard for sharing digital sheet music.</span>
-</span><span data-line="465"><span class="sd">    Generating an XML file allows you to seamlessly import your DrumScript</span>
-</span><span data-line="466"><span class="sd">    transcription into professional notation software like Sibelius, Finale,</span>
-</span><span data-line="467"><span class="sd">    MuseScore, or Guitar Pro for further editing.</span>
-</span><span data-line="468">
-</span><span data-line="469"><span class="sd">    :param score: The internal score object generated by ``build_score()``.</span>
-</span><span data-line="470"><span class="sd">    :type score: object</span>
-</span><span data-line="471"><span class="sd">    :param output_path: The exact file path to save the XML. Defaults to &#39;drumscript.xml&#39; in CWD.</span>
-</span><span data-line="472"><span class="sd">    :type output_path: str, optional</span>
-</span><span data-line="473">
-</span><span data-line="474"><span class="sd">    :return: The absolute path to the generated XML file.</span>
-</span><span data-line="475"><span class="sd">    :rtype: str</span>
-</span><span data-line="476">
-</span><span data-line="477"><span class="sd">    .. note::</span>
-</span><span data-line="478"><span class="sd">       When importing MusicXML into MuseScore, you may need to right-click the staff</span>
-</span><span data-line="479"><span class="sd">       and select &quot;Edit Drumset&quot; to map the custom noteheads to your preference.</span>
+</span><span data-line="464"><span class="k">def</span><span class="w"> </span><span class="nf">export_xml</span><span class="p">(</span><span class="n">score</span><span class="p">,</span> <span class="n">output_path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+</span><span data-line="465"><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span data-line="466"><span class="sd">    Exports a DrumScript score object to MusicXML format.</span>
+</span><span data-line="467">
+</span><span data-line="468"><span class="sd">    MusicXML is the universal industry standard for sharing digital sheet music.</span>
+</span><span data-line="469"><span class="sd">    Generating an XML file allows you to seamlessly import your DrumScript</span>
+</span><span data-line="470"><span class="sd">    transcription into professional notation software like Sibelius, Finale,</span>
+</span><span data-line="471"><span class="sd">    MuseScore, or Guitar Pro for further editing.</span>
+</span><span data-line="472">
+</span><span data-line="473"><span class="sd">    :param score: The internal score object generated by ``build_score()``.</span>
+</span><span data-line="474"><span class="sd">    :type score: object</span>
+</span><span data-line="475"><span class="sd">    :param output_path: The exact file path to save the XML. Defaults to &#39;drumscript.xml&#39; in CWD.</span>
+</span><span data-line="476"><span class="sd">    :type output_path: str, optional</span>
+</span><span data-line="477">
+</span><span data-line="478"><span class="sd">    :return: The absolute path to the generated XML file.</span>
+</span><span data-line="479"><span class="sd">    :rtype: str</span>
 </span><span data-line="480">
-</span><span data-line="481"><span class="sd">    **Example:**</span>
-</span><span data-line="482">
-</span><span data-line="483"><span class="sd">    .. code-block:: python</span>
+</span><span data-line="481"><span class="sd">    .. note::</span>
+</span><span data-line="482"><span class="sd">       When importing MusicXML into MuseScore, you may need to right-click the staff</span>
+</span><span data-line="483"><span class="sd">       and select &quot;Edit Drumset&quot; to map the custom noteheads to your preference.</span>
 </span><span data-line="484">
-</span><span data-line="485"><span class="sd">       import drumscript as ds</span>
+</span><span data-line="485"><span class="sd">    **Example:**</span>
 </span><span data-line="486">
-</span><span data-line="487"><span class="sd">       # Assuming `score` is a previously generated score object</span>
-</span><span data-line="488"><span class="sd">       xml_path = ds.export_xml(score, output_path=&quot;./xml_scores/my_song.xml&quot;)</span>
-</span><span data-line="489"><span class="sd">    &quot;&quot;&quot;</span>
-</span><span data-line="490">    <span class="k">if</span> <span class="n">output_path</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-</span><span data-line="491">        <span class="n">output_path</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="o">.</span><span class="n">cwd</span><span class="p">()</span> <span class="o">/</span> <span class="s2">&quot;drumscript.xml&quot;</span>
-</span><span data-line="492">
-</span><span data-line="493">    <span class="k">return</span> <span class="n">xml_exporter</span><span class="o">.</span><span class="n">export_xml</span><span class="p">(</span><span class="n">score</span><span class="p">,</span> <span class="n">output_path</span><span class="o">=</span><span class="n">output_path</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+</span><span data-line="487"><span class="sd">    .. code-block:: python</span>
+</span><span data-line="488">
+</span><span data-line="489"><span class="sd">       import drumscript as ds</span>
+</span><span data-line="490">
+</span><span data-line="491"><span class="sd">       # Assuming `score` is a previously generated score object</span>
+</span><span data-line="492"><span class="sd">       xml_path = ds.export_xml(score, output_path=&quot;./xml_scores/my_song.xml&quot;)</span>
+</span><span data-line="493"><span class="sd">    &quot;&quot;&quot;</span>
+</span><span data-line="494">    <span class="k">if</span> <span class="n">output_path</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+</span><span data-line="495">        <span class="n">output_path</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="o">.</span><span class="n">cwd</span><span class="p">()</span> <span class="o">/</span> <span class="s2">&quot;drumscript.xml&quot;</span>
+</span><span data-line="496">
+</span><span data-line="497">    <span class="k">return</span> <span class="n">xml_exporter</span><span class="o">.</span><span class="n">export_xml</span><span class="p">(</span><span class="n">score</span><span class="p">,</span> <span class="n">output_path</span><span class="o">=</span><span class="n">output_path</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
 
-</span><span data-line="494">
-</span><span data-line="495">
-</span><span data-line="496"><span class="c1"># 3. Explicitly define the Public API (Used by Sphinx and `from drumscript import *`)</span>
-</span><span data-line="497"><span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
-</span><span data-line="498">    <span class="c1"># High-level wrappers</span>
-</span><span data-line="499">    <span class="s2">&quot;transcribe&quot;</span><span class="p">,</span>
-</span><span data-line="500">    <span class="s2">&quot;extract_stems&quot;</span><span class="p">,</span>
-</span><span data-line="501">    <span class="s2">&quot;detect_tempo&quot;</span><span class="p">,</span>
-</span><span data-line="502">    <span class="s2">&quot;export_pdf&quot;</span><span class="p">,</span>
-</span><span data-line="503">    <span class="s2">&quot;export_midi&quot;</span><span class="p">,</span>
-</span><span data-line="504">    <span class="s2">&quot;export_xml&quot;</span><span class="p">,</span>
-</span><span data-line="505">    <span class="c1"># Core DSP &amp; Classification pipeline</span>
-</span><span data-line="506">    <span class="s2">&quot;load_audio&quot;</span><span class="p">,</span>
-</span><span data-line="507">    <span class="s2">&quot;normalise_audio&quot;</span><span class="p">,</span>
-</span><span data-line="508">    <span class="s2">&quot;detect_onsets&quot;</span><span class="p">,</span>
-</span><span data-line="509">    <span class="s2">&quot;extract_features&quot;</span><span class="p">,</span>
-</span><span data-line="510">    <span class="s2">&quot;classify_events&quot;</span><span class="p">,</span>
-</span><span data-line="511">    <span class="s2">&quot;classify_rudiment_events&quot;</span><span class="p">,</span>
-</span><span data-line="512">    <span class="s2">&quot;build_score&quot;</span><span class="p">,</span>
-</span><span data-line="513">    <span class="c1"># Utilities</span>
-</span><span data-line="514">    <span class="s2">&quot;install_ffmpeg&quot;</span><span class="p">,</span>
-</span><span data-line="515"><span class="p">]</span>
-</span><span data-line="516">
-</span><span data-line="517"><span class="c1"># __version__ = &quot;0.1.6&quot;</span>
-</span><span data-line="518">
-</span><span data-line="519"><span class="k">try</span><span class="p">:</span>
-</span><span data-line="520">    <span class="n">__version__</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">version</span><span class="p">(</span><span class="s2">&quot;drumscript&quot;</span><span class="p">)</span>
-</span><span data-line="521"><span class="k">except</span> <span class="n">importlib</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">PackageNotFoundError</span><span class="p">:</span>
-</span><span data-line="522">    <span class="n">__version__</span> <span class="o">=</span> <span class="s2">&quot;0.2.0&quot;</span>
+</span><span data-line="498">
+</span><span data-line="499">
+</span><span data-line="500"><span class="c1"># 3. Explicitly define the Public API (Used by Sphinx and `from drumscript import *`)</span>
+</span><span data-line="501"><span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
+</span><span data-line="502">    <span class="c1"># High-level wrappers</span>
+</span><span data-line="503">    <span class="s2">&quot;transcribe&quot;</span><span class="p">,</span>
+</span><span data-line="504">    <span class="s2">&quot;extract_stems&quot;</span><span class="p">,</span>
+</span><span data-line="505">    <span class="s2">&quot;detect_tempo&quot;</span><span class="p">,</span>
+</span><span data-line="506">    <span class="s2">&quot;export_pdf&quot;</span><span class="p">,</span>
+</span><span data-line="507">    <span class="s2">&quot;export_midi&quot;</span><span class="p">,</span>
+</span><span data-line="508">    <span class="s2">&quot;export_xml&quot;</span><span class="p">,</span>
+</span><span data-line="509">    <span class="c1"># Core DSP &amp; Classification pipeline</span>
+</span><span data-line="510">    <span class="s2">&quot;load_audio&quot;</span><span class="p">,</span>
+</span><span data-line="511">    <span class="s2">&quot;normalise_audio&quot;</span><span class="p">,</span>
+</span><span data-line="512">    <span class="s2">&quot;detect_onsets&quot;</span><span class="p">,</span>
+</span><span data-line="513">    <span class="s2">&quot;extract_features&quot;</span><span class="p">,</span>
+</span><span data-line="514">    <span class="s2">&quot;classify_events&quot;</span><span class="p">,</span>
+</span><span data-line="515">    <span class="s2">&quot;classify_rudiment_events&quot;</span><span class="p">,</span>
+</span><span data-line="516">    <span class="s2">&quot;build_score&quot;</span><span class="p">,</span>
+</span><span data-line="517">    <span class="c1"># Utilities</span>
+</span><span data-line="518">    <span class="s2">&quot;install_ffmpeg&quot;</span><span class="p">,</span>
+</span><span data-line="519"><span class="p">]</span>
+</span><span data-line="520">
+</span><span data-line="521"><span class="c1"># __version__ = &quot;0.1.6&quot;</span>
+</span><span data-line="522">
+</span><span data-line="523"><span class="k">try</span><span class="p">:</span>
+</span><span data-line="524">    <span class="n">__version__</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">version</span><span class="p">(</span><span class="s2">&quot;drumscript&quot;</span><span class="p">)</span>
+</span><span data-line="525"><span class="k">except</span> <span class="n">importlib</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">PackageNotFoundError</span><span class="p">:</span>
+</span><span data-line="526">    <span class="n">__version__</span> <span class="o">=</span> <span class="s2">&quot;0.2.0&quot;</span>
 </span></pre></div>
         </article><button class="back-to-top" type="button">
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">

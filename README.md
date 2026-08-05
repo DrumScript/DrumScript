@@ -1,8 +1,7 @@
 # **`DrumScript`**
 
 <!--date_created: sun-15-june-2025-->
-<!--date_edited: sat-01-august-2026--->
-
+<!--date_edited: tues-04-august-2026--->
 
 **DrumScript** is an open-source Python library and CLI tool for drum audio analysis and transcription. Give it a recording — a full mix or an isolated drum stem — and it will generate PDF sheet music, MIDI files, and MusicXML output. The `DrumScript` model is a **deterministic classifier**, and doesn't use AI/machine learning. Built for drummers and by drummers, it is - and always will be - an open-source community tool.
 
@@ -161,18 +160,25 @@ DrumScript manages all dependencies via [`pyproject.toml`](pyproject.toml) using
 ```python
 import drumscript as ds
 
-# Transcribe an isolated drum stem → PDF
-pdf_path = ds.transcribe("drum_audio.wav")
+# Transcribe an isolated drum stem → PDF + JSON + MIDI
+result = ds.transcribe("drum_audio.wav")
+print(result["pdf_path"])   # PDF sheet music
+print(result["json_path"])  # raw transcription data (JSON)
+print(result["midi_path"])  # MIDI file for DAW import
 
 # Transcribe a full song (separates drums automatically)
-pdf_path = ds.transcribe("full_song.mp3") # drum only audio
-pdf_path = ds.transcribe("full_song.mp3", full_song=True) # full song, tells DrumScript to extract the drums first and then transcribe
+result = ds.transcribe("full_song.mp3") # drum only audio
+result = ds.transcribe("full_song.mp3", full_song=True) # full song, tells DrumScript to extract the drums first and then transcribe
 
-# Get all intermediate results
+# Get all intermediate results (tempo, onsets, events, etc.)
 result = ds.transcribe("drum_audio.wav", verbose=True)
 print(f"Tempo: {result['tempo']:.1f} BPM")
 print(f"Events: {len(result['events'])}")
+print(f"PDF: {result['pdf_path']}")
+print(f"MIDI: {result['midi_path']}")
 ```
+
+> **Note (v0.2.0):** `transcribe()` now returns a dict with `pdf_path`, `json_path`, and `midi_path` keys. Using the return value as a plain string (e.g. `pdf = ds.transcribe(...)`) still works but is deprecated and will be removed in v1.0.0. Use `result["pdf_path"]` instead.
 
 ### Load and explore audio
 

@@ -1,7 +1,7 @@
 # **`DrumScript`**
 
 <!--date_created: sun-15-june-2025-->
-<!--date_edited: tues-04-august-2026--->
+<!--date_edited: weds-05-august-2026--->
 
 **DrumScript** is an open-source Python library and CLI tool for drum audio analysis and transcription. Give it a recording — a full mix or an isolated drum stem — and it will generate PDF sheet music, MIDI files, and MusicXML output. The `DrumScript` model is a **deterministic classifier**, and doesn't use AI/machine learning. Built for drummers and by drummers, it is - and always will be - an open-source community tool.
 
@@ -28,10 +28,10 @@
 - **[Benchmarking](#benchmarking)**
 - **[Traffic](#traffic)**
 - **[FAQs](#faqs)**
-- **[Acknowledgements](#acknowledgements)**
-- **[License](#license)**
 - **[Changelog](CHANGELOG.md)**
+- **[Acknowledgements](#acknowledgements)**
 - **[Similar projects](#similar-projects)**
+- **[License](#license)**
 
 ---
 
@@ -392,18 +392,7 @@ DrumScript's own classification engine is **fully deterministic** — it uses ph
 2. **[librosa](https://librosa.org/)** — For foundational audio processing tools.
 3. **[@nanaoto](https://github.com/nanaoto)** — For building the `mir_eval` benchmarking infrastructure and IDMT-SMT-Drums V2 adapter (PR [#273](https://github.com/DrumScript/DrumScript/pull/273)).
 
----
 
-## License
-*[back](#drumscript)*
-
-**[Apache License 2.0](LICENSE)**
-
-**Copyright 2026 DrumScript**
-
-                                 Apache License
-                           Version 2.0, January 2004
-                        http://www.apache.org/licenses/
 
 ---
 ## Similar Projects
@@ -418,6 +407,19 @@ DrumScript has no affiliation with any of the projects below. They are listed fo
 * **[basic-pitch](https://github.com/spotify/basic-pitch)** — A lightweight yet powerful audio-to-MIDI converter with pitch bend detection (better for non-percussive audio). Maintained by Spotify.
 * **[mir_eval](https://github.com/mir-evaluation/mir_eval)** — Standard evaluation metrics for music information retrieval tasks.
 * **[onset_db](https://github.com/CPJKU/onset_db)** - Provides a dataset of annotated musical onsets for tuning and evaluating audio detection algorithms. Maintained by JKU Linz.
+
+---
+
+## License
+*[back](#drumscript)*
+
+**[Apache License 2.0](LICENSE)**
+
+**Copyright 2026 DrumScript**
+
+                                 Apache License
+                           Version 2.0, January 2004
+                        http://www.apache.org/licenses/
 
 ---
 

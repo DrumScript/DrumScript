@@ -2,7 +2,7 @@
 <html lang="en" data-accent-color="violet" data-content_root="../">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"><title>v0.2.0 - DrumScript 0.2.0 documentation</title><link rel="author" title="About these documents" href="../about.html" /><link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Changelog" href="../changelog.html" /><link rel="prev" title="v0.1.6 (Alpha)" href="0.1.6.html" /><script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"><title>v0.2.0 (Alpha) - DrumScript 0.2.0 documentation</title><link rel="author" title="About these documents" href="../about.html" /><link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Changelog" href="../changelog.html" /><link rel="prev" title="v0.1.6 (Alpha)" href="0.1.6.html" /><script>
     function setColorMode(t){let e=document.documentElement;e.setAttribute("data-color-mode",t);let a=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches,s=t;"auto"===t&&(s=a?"dark":"light"),"light"===s?(e.classList.remove("dark"),e.classList.add("light")):(e.classList.remove("light"),e.classList.add("dark"))}
     setColorMode(localStorage._theme||"auto");
   </script><link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=e1a1ceaf" />
@@ -20,7 +20,7 @@
 }
 </style>
     
-  <meta property="og:type" content="website"/><meta property="og:title" content="v0.2.0"/>
+  <meta property="og:type" content="website"/><meta property="og:title" content="v0.2.0 (Alpha)"/>
     <meta name="twitter:card" content="summary"/>
   </head>
 <body><div class="announcement">
@@ -193,10 +193,10 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l2"><a class="reference internal" href="0.1.4.html">v0.1.4 (Alpha)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="0.1.5.html">v0.1.5 (Alpha)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="0.1.6.html">v0.1.6 (Alpha)</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">v0.2.0</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">v0.2.0 (Alpha)</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html"><strong>Changelog</strong></a></li>
 </ul>
 <p class="caption" role="heading" aria-level="3"><span class="caption-text">Runbooks</span></p>
 <ul>
@@ -240,11 +240,15 @@ data-aria-dark="Switch to auto color mode">
       <i class="i-lucide close"></i>
     </button>
     <div class="sy-scrollbar sy-rside-inner px-6 xl:top-16 xl:sticky xl:pl-0 pt-6 pb-4"><div class="localtoc"><h3>On this page</h3><ul>
-<li><a class="reference internal" href="#july-2026-target-in-progress">[0.2.0] - July 2026 - Target: <em>In progress</em></a></li>
-<li><a class="reference internal" href="#fixed">Fixed</a></li>
-<li><a class="reference internal" href="#changed">Changed</a></li>
-<li><a class="reference internal" href="#added">Added</a></li>
-<li><a class="reference internal" href="#audited">Audited</a></li>
+<li><a class="reference internal" href="#important-note">Important Note</a></li>
+<li><a class="reference internal" href="#highlights">Highlights</a><ul>
+<li><a class="reference internal" href="#multi-format-transcription-output-with-backwards-compatible-deprecation-shim">Multi-format transcription output with backwards-compatible deprecation shim</a></li>
+<li><a class="reference internal" href="#versioned-documentation">Versioned documentation</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#new-features">New Features</a></li>
+<li><a class="reference internal" href="#fixes-improvements">Fixes &amp; Improvements</a></li>
+<li><a class="reference internal" href="#contributors">Contributors</a></li>
 </ul>
 </div><a class="js-repo-stats repo-stats flex items-center" href="https://github.com/DrumScript/DrumScript"
   data-type="github" data-user="DrumScript" data-repo="DrumScript">
@@ -289,7 +293,7 @@ data-aria-dark="Switch to auto color mode">
         <span>/</span>
         <meta itemprop="position" content="2" />
       </li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-        <strong itemprop="name">v0.2.0</strong>
+        <strong itemprop="name">v0.2.0 (Alpha)</strong>
         <meta itemprop="position" content="3" />
       </li></ol>
     <div class="xl:hidden ml-1">
@@ -337,49 +341,70 @@ data-aria-dark="Switch to auto color mode">
     </div>
   </div>
 </div><article class="yue" role="main">
-          <section id="v0-2-0">
-<h1>v0.2.0<a class="headerlink" href="#v0-2-0" title="Link to this heading">¶</a></h1>
-<section id="july-2026-target-in-progress">
-<h2>[0.2.0] - July 2026 - Target: <em>In progress</em><a class="headerlink" href="#july-2026-target-in-progress" title="Link to this heading">¶</a></h2>
+          <section id="v0-2-0-alpha">
+<h1>v0.2.0 (Alpha)<a class="headerlink" href="#v0-2-0-alpha" title="Link to this heading">¶</a></h1>
+<p><em>Release Date: August 2026</em></p>
+<section id="important-note">
+<h2>Important Note<a class="headerlink" href="#important-note" title="Link to this heading">¶</a></h2>
+<blockquote>
+<div><p><strong>First minor-version bump.</strong> Signals the start of the breaking-change track for the <code class="docutils literal notranslate"><span class="pre">--full</span></code> flag (replaced by <code class="docutils literal notranslate"><span class="pre">--verbose</span></code>) ahead of v1.0.0 beta.</p>
+</div></blockquote>
 </section>
-<section id="fixed">
-<h2>Fixed<a class="headerlink" href="#fixed" title="Link to this heading">¶</a></h2>
+<section id="highlights">
+<h2>Highlights<a class="headerlink" href="#highlights" title="Link to this heading">¶</a></h2>
+<section id="multi-format-transcription-output-with-backwards-compatible-deprecation-shim">
+<h3>Multi-format transcription output with backwards-compatible deprecation shim<a class="headerlink" href="#multi-format-transcription-output-with-backwards-compatible-deprecation-shim" title="Link to this heading">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">transcribe()</span></code> now returns a dict with <code class="docutils literal notranslate"><span class="pre">pdf_path</span></code>, <code class="docutils literal notranslate"><span class="pre">json_path</span></code>, and <code class="docutils literal notranslate"><span class="pre">midi_path</span></code> keys, so users can see all the files that were actually written. Previously, <code class="docutils literal notranslate"><span class="pre">score_builder.build_score()</span></code> silently wrote JSON and MIDI files alongside the PDF, but <code class="docutils literal notranslate"><span class="pre">transcribe()</span></code> only returned the PDF path.</p>
+<p>For backwards compatibility, using the return value as a string still works (returns the PDF path) but emits a <code class="docutils literal notranslate"><span class="pre">DeprecationWarning</span></code>. String behaviour will be removed in v1.0.0.</p>
+<p><strong>Migration:</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="c1"># v0.1.x (still works, but deprecated)</span>
+</span><span data-line="2"><span class="n">pdf</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">transcribe</span><span class="p">(</span><span class="s2">&quot;drums.wav&quot;</span><span class="p">)</span>
+</span><span data-line="3"><span class="nb">print</span><span class="p">(</span><span class="n">pdf</span><span class="p">)</span>  <span class="c1"># warns</span>
+</span><span data-line="4">
+</span><span data-line="5"><span class="c1"># v0.2.0+ (recommended)</span>
+</span><span data-line="6"><span class="n">result</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">transcribe</span><span class="p">(</span><span class="s2">&quot;drums.wav&quot;</span><span class="p">)</span>
+</span><span data-line="7"><span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s2">&quot;pdf_path&quot;</span><span class="p">])</span>
+</span><span data-line="8"><span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s2">&quot;json_path&quot;</span><span class="p">])</span>
+</span><span data-line="9"><span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s2">&quot;midi_path&quot;</span><span class="p">])</span>
+</span></pre></div>
+</div>
+</section>
+<section id="versioned-documentation">
+<h3>Versioned documentation<a class="headerlink" href="#versioned-documentation" title="Link to this heading">¶</a></h3>
+<p>Documentation now deploys to version-specific folders on GitHub Pages. A version dropdown in the navbar lets users switch between <code class="docutils literal notranslate"><span class="pre">latest</span></code>, <code class="docutils literal notranslate"><span class="pre">dev</span></code>, and archived releases (e.g. <code class="docutils literal notranslate"><span class="pre">v0.1.6</span></code>).</p>
+</section>
+</section>
+<section id="new-features">
+<h2>New Features<a class="headerlink" href="#new-features" title="Link to this heading">¶</a></h2>
 <ul class="simple">
-<li><p>Adjusted documentation so that when version appears in documentation it is no longer hardcoded, but linked to <code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">importlib.metadata</span></code> in <code class="docutils literal notranslate"><span class="pre">drumscript/__init__.py</span></code> [Reduces maintenance burden on contributors]</p></li>
-<li><p>Updated version in pyproject.toml from <code class="docutils literal notranslate"><span class="pre">v0.1.5</span></code> to <code class="docutils literal notranslate"><span class="pre">v0.1.6</span></code> (This should have been changed <em>prior</em> to pypi release of v0.1.6 on Thursday 18 June 2026)</p></li>
-<li><p>Fixed <code class="docutils literal notranslate"><span class="pre">create_backing_track</span></code> runbook; replaced and tidied functions in drumscript_interactive_notebook on Colab</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">_TranscribeResult</span></code> deprecation shim class — dict subclass with <code class="docutils literal notranslate"><span class="pre">__str__</span></code> and <code class="docutils literal notranslate"><span class="pre">__fspath__</span></code> that emit <code class="docutils literal notranslate"><span class="pre">DeprecationWarning</span></code> when used as a string. Smooth migration path from v0.1.x string return to v1.0.0 dict return.</p></li>
+<li><p>Versioned documentation deployment via <code class="docutils literal notranslate"><span class="pre">docs.yml</span></code> workflow: tag pushes deploy to <code class="docutils literal notranslate"><span class="pre">/vX.Y.Z/</span></code> and <code class="docutils literal notranslate"><span class="pre">/latest/</span></code>, <code class="docutils literal notranslate"><span class="pre">release/*</span></code> branches deploy to <code class="docutils literal notranslate"><span class="pre">/dev/</span></code>, <code class="docutils literal notranslate"><span class="pre">main</span></code> deploys to <code class="docutils literal notranslate"><span class="pre">/latest/</span></code></p></li>
+<li><p>Version dropdown in Shibuya documentation navbar</p></li>
+<li><p>Repository traffic statistics workflow (<code class="docutils literal notranslate"><span class="pre">repo-stats.yml</span></code>) — daily collection of views, clones, stars, forks via <a class="reference external" href="https://github.com/jgehrcke/github-repo-stats">github-repo-stats</a></p></li>
+<li><p>CHANGELOG reference added to README table of contents</p></li>
 </ul>
 </section>
-<section id="changed">
-<h2>Changed<a class="headerlink" href="#changed" title="Link to this heading">¶</a></h2>
+<section id="fixes-improvements">
+<h2>Fixes &amp; Improvements<a class="headerlink" href="#fixes-improvements" title="Link to this heading">¶</a></h2>
 <ul class="simple">
-<li><p>Updated table ordering in <code class="docutils literal notranslate"><span class="pre">docs/index.md</span></code> to match right sidebar ordering and added missing sidebar navigation point for tempogram-detection</p></li>
-<li><p>Amended documentation to remove bold markdown formatting for H1 references feeding into the side-nav bar visual presentation, for all except <code class="docutils literal notranslate"><span class="pre">DrumScript</span> <span class="pre">CLI</span> <span class="pre">Reference</span></code>; fixed ordering side in toctree (docs/index.md) for <code class="docutils literal notranslate"><span class="pre">User</span> <span class="pre">Guide</span></code> submenu to 1. remove duplicated <code class="docutils literal notranslate"><span class="pre">usage</span></code> reference in toctree and 2. reorder items alphabetically. Amended right hand navbar so that H2 links are now alphabetical.</p></li>
-<li><p>Updated and tidied the examples for extract stems in README.md; split example up into extract stems and backing track function examples.</p></li>
-<li><p>Standardised git tag naming convention from <code class="docutils literal notranslate"><span class="pre">drumscript__vX.Y.Z-alpha</span></code> to <code class="docutils literal notranslate"><span class="pre">vX.Y.Z</span></code> (e.g. <code class="docutils literal notranslate"><span class="pre">v0.1.6</span></code>). Old tags remain on remote (branch protection prevents deletion) but are ignored by the <code class="docutils literal notranslate"><span class="pre">docs.yml</span></code> workflow which only triggers on <code class="docutils literal notranslate"><span class="pre">v*</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">transcribe()</span></code> now exposes all output paths (PDF, JSON, MIDI) that <code class="docutils literal notranslate"><span class="pre">score_builder.build_score()</span></code> actually writes</p></li>
+<li><p>Dynamic version in documentation via <code class="docutils literal notranslate"><span class="pre">importlib.metadata</span></code> — no longer hardcoded</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pyproject.toml</span></code> version corrected from <code class="docutils literal notranslate"><span class="pre">v0.1.5</span></code> to <code class="docutils literal notranslate"><span class="pre">v0.1.6</span></code></p></li>
+<li><p>Dark mode banner CSS improved for readability</p></li>
+<li><p>Sphinx build errors resolved</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">create_backing_track</span></code> runbook fixed</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">docs/guide/usage.md</span></code> Extract Backing Track and Extract Drum-Only Audio sections filled in</p></li>
+<li><p>README, usage guide, and Sphinx API docs updated for new <code class="docutils literal notranslate"><span class="pre">transcribe()</span></code> return type</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">tests/unit/test_transcribe.py</span></code> updated for <code class="docutils literal notranslate"><span class="pre">_TranscribeResult</span></code>: replaced string assertions with dict key checks, added deprecation warning tests</p></li>
+<li><p>Standardised git tag naming convention to <code class="docutils literal notranslate"><span class="pre">vX.Y.Z</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">main.py</span></code> line 26 <code class="docutils literal notranslate"><span class="pre">.wav</span></code> comment investigated and clarified</p></li>
 </ul>
 </section>
-<section id="added">
-<h2>Added<a class="headerlink" href="#added" title="Link to this heading">¶</a></h2>
+<section id="contributors">
+<h2>Contributors<a class="headerlink" href="#contributors" title="Link to this heading">¶</a></h2>
 <ul class="simple">
-<li><p>Versioned documentation deployment via <code class="docutils literal notranslate"><span class="pre">docs.yml</span></code> GitHub Actions workflow (<code class="docutils literal notranslate"><span class="pre">docs/versioned-deploy</span></code> branch):</p>
-<ul>
-<li><p>Documentation now deploys to version-specific folders on <code class="docutils literal notranslate"><span class="pre">gh-pages</span></code> (e.g. <code class="docutils literal notranslate"><span class="pre">/v0.1.6/</span></code>, <code class="docutils literal notranslate"><span class="pre">/v0.2.0/</span></code>)</p></li>
-<li><p>Tag pushes (<code class="docutils literal notranslate"><span class="pre">v*</span></code>) deploy to both <code class="docutils literal notranslate"><span class="pre">/&lt;tag&gt;/</span></code> and <code class="docutils literal notranslate"><span class="pre">/latest/</span></code> folders</p></li>
-<li><p>Main branch pushes deploy to <code class="docutils literal notranslate"><span class="pre">/dev/</span></code> folder (bleeding-edge docs)</p></li>
-<li><p>Root <code class="docutils literal notranslate"><span class="pre">index.html</span></code> auto-generated on tag push, redirects to <code class="docutils literal notranslate"><span class="pre">/latest/</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">keep_files:</span> <span class="pre">true</span></code> ensures older version folders are never deleted</p></li>
-<li><p>Existing root-level docs remain untouched until explicit cleanup</p></li>
-<li><p>Contributor and Developer updated guidance</p></li>
-</ul>
-</li>
-</ul>
-</section>
-<section id="audited">
-<h2>Audited<a class="headerlink" href="#audited" title="Link to this heading">¶</a></h2>
-<ul class="simple">
-<li><p>Did full audit of all <code class="docutils literal notranslate"><span class="pre">drumscript</span></code> code to ensure <code class="docutils literal notranslate"><span class="pre">full-flag</span></code> / <code class="docutils literal notranslate"><span class="pre">full_flag</span></code> consistency throughout, following v0.1.6 release fix replacing <code class="docutils literal notranslate"><span class="pre">full=True</span></code> with <code class="docutils literal notranslate"><span class="pre">verbose=True</span></code> (<code class="docutils literal notranslate"><span class="pre">DeprecationShim</span></code>)</p></li>
-<li><p>Fixed Sphinx build errors for documentation</p></li>
+<li><p>&#64;victoria-mckinney</p></li>
+<li><p>&#64;drumscript-admin</p></li>
 </ul>
 </section>
 </section>
@@ -399,7 +424,7 @@ data-aria-dark="Switch to auto color mode">
     <a href="../changelog.html">
       <div class="page-info">
         <span>Next</span>
-        <div class="title">Changelog</div>
+        <div class="title"><strong>Changelog</strong></div>
       </div>
       <i class="i-lucide chevron-right"></i>
     </a>

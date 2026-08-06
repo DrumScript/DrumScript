@@ -193,10 +193,10 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l2"><a class="reference internal" href="../release_notes/0.1.4.html">v0.1.4 (Alpha)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../release_notes/0.1.5.html">v0.1.5 (Alpha)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../release_notes/0.1.6.html">v0.1.6 (Alpha)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../release_notes/0.2.0.html">v0.2.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes/0.2.0.html">v0.2.0 (Alpha)</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html"><strong>Changelog</strong></a></li>
 </ul>
 <p class="caption" role="heading" aria-level="3"><span class="caption-text">Runbooks</span></p>
 <ul>
@@ -251,6 +251,7 @@ data-aria-dark="Switch to auto color mode">
 <li><a class="reference internal" href="#stem-splitting"><strong>Stem Splitting</strong></a></li>
 <li><a class="reference internal" href="#id1"><strong>Audio Loading</strong></a></li>
 <li><a class="reference internal" href="#extract-backing-track">Extract Backing Track</a></li>
+<li><a class="reference internal" href="#extract-drum-only-audio">Extract Drum-Only Audio</a></li>
 </ul>
 </li>
 </ul>
@@ -345,7 +346,8 @@ data-aria-dark="Switch to auto color mode">
 </div><article class="yue" role="main">
           <section id="usage-guide">
 <h1>Usage Guide<a class="headerlink" href="#usage-guide" title="Link to this heading">¶</a></h1>
-<!--date_updated:sat20june2026-->
+<!--date_updated:sat-17-january-2026-->
+<!--date_updated:tues-04-august-2026-->
 <section id="quick-start">
 <h2>Quick Start<a class="headerlink" href="#quick-start" title="Link to this heading">¶</a></h2>
 <!--`DrumScript` accepts the default format of `.wav` if the `--mp3` flag is not specified.-->
@@ -418,13 +420,34 @@ y, sr = ds.AudioLoader("audio_path.wav")
 </section>
 <section id="full-audio-to-pdf-transcription-full-song">
 <h3>6. Full Audio to PDF Transcription (<code class="docutils literal notranslate"><span class="pre">--full-song</span></code>)<a class="headerlink" href="#full-audio-to-pdf-transcription-full-song" title="Link to this heading">¶</a></h3>
-<div class="highlight-zsh notranslate"><div class="highlight"><pre><span></span><span data-line="1">python<span class="w"> </span>-m<span class="w"> </span>drumscript.main<span class="w"> </span>audio_path.mp3<span class="w"> </span>--output<span class="w"> </span>my_score.pdf<span class="w"> </span>--full-song
+<p><strong>CLI:</strong></p>
+<div class="highlight-zsh notranslate"><div class="highlight"><pre><span></span><span data-line="1">python<span class="w"> </span>-m<span class="w"> </span>drumscript.main<span class="w"> </span>audio_path.mp3<span class="w"> </span>--full-song
 </span></pre></div>
 </div>
+<p><strong>Python API:</strong></p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="kn">import</span><span class="w"> </span><span class="nn">drumscript</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">ds</span>
-</span><span data-line="2"><span class="n">get_drum_score</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">main</span><span class="p">(</span><span class="s2">&quot;audio_path.mp3&quot;</span><span class="p">,</span> <span class="nb">format</span><span class="o">==</span><span class="s2">&quot;mp3&quot;</span><span class="p">,</span> <span class="n">output_name</span><span class="o">=</span><span class="s2">&quot;my_score.pdf&quot;</span><span class="p">,</span> <span class="s2">&quot;--full-song&quot;</span><span class="p">)</span>
+</span><span data-line="2">
+</span><span data-line="3"><span class="c1"># Transcribe an isolated drum stem → PDF + JSON + MIDI</span>
+</span><span data-line="4"><span class="n">result</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">transcribe</span><span class="p">(</span><span class="s2">&quot;drum_audio.wav&quot;</span><span class="p">)</span>
+</span><span data-line="5"><span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s2">&quot;pdf_path&quot;</span><span class="p">])</span>   <span class="c1"># PDF sheet music</span>
+</span><span data-line="6"><span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s2">&quot;json_path&quot;</span><span class="p">])</span>  <span class="c1"># raw transcription data (JSON)</span>
+</span><span data-line="7"><span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s2">&quot;midi_path&quot;</span><span class="p">])</span>  <span class="c1"># MIDI file for DAW import</span>
+</span><span data-line="8">
+</span><span data-line="9"><span class="c1"># Transcribe a full song (separates drums automatically)</span>
+</span><span data-line="10"><span class="n">result</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">transcribe</span><span class="p">(</span><span class="s2">&quot;full_song.mp3&quot;</span><span class="p">,</span> <span class="n">full_song</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span><span data-line="11"><span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s2">&quot;pdf_path&quot;</span><span class="p">])</span>
+</span><span data-line="12">
+</span><span data-line="13"><span class="c1"># Get all intermediate results (tempo, onsets, events, etc.)</span>
+</span><span data-line="14"><span class="n">result</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">transcribe</span><span class="p">(</span><span class="s2">&quot;drum_audio.wav&quot;</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span><span data-line="15"><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Tempo: </span><span class="si">{</span><span class="n">result</span><span class="p">[</span><span class="s1">&#39;tempo&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> BPM&quot;</span><span class="p">)</span>
+</span><span data-line="16"><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Events: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s1">&#39;events&#39;</span><span class="p">])</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span data-line="17"><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;PDF: </span><span class="si">{</span><span class="n">result</span><span class="p">[</span><span class="s1">&#39;pdf_path&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span data-line="18"><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;MIDI: </span><span class="si">{</span><span class="n">result</span><span class="p">[</span><span class="s1">&#39;midi_path&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </span></pre></div>
 </div>
+<blockquote>
+<div><p><strong>Note (v0.2.0):</strong> <code class="docutils literal notranslate"><span class="pre">transcribe()</span></code> now returns a dict with <code class="docutils literal notranslate"><span class="pre">pdf_path</span></code>, <code class="docutils literal notranslate"><span class="pre">json_path</span></code>, and <code class="docutils literal notranslate"><span class="pre">midi_path</span></code> keys. Using the return value as a plain string (e.g. <code class="docutils literal notranslate"><span class="pre">pdf</span> <span class="pre">=</span> <span class="pre">ds.transcribe(...)</span></code>) still works but is deprecated and will be removed in v1.0.0. Use <code class="docutils literal notranslate"><span class="pre">result[&quot;pdf_path&quot;]</span></code> instead.</p>
+</div></blockquote>
 <blockquote>
 <div><p><strong>Full commands</strong></p>
 </div></blockquote>
@@ -470,7 +493,9 @@ y, sr = ds.AudioLoader("audio_path.wav")
 <section id="extract-backing-track">
 <h4>Extract Backing Track<a class="headerlink" href="#extract-backing-track" title="Link to this heading">¶</a></h4>
 <!--TO DO: Add content-->
-<p>#### Extract Drum-Only Audio</p>
+</section>
+<section id="extract-drum-only-audio">
+<h4>Extract Drum-Only Audio<a class="headerlink" href="#extract-drum-only-audio" title="Link to this heading">¶</a></h4>
 <!--TO DO: Add content-->
 </section>
 </section>

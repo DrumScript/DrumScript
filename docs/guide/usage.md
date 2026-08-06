@@ -1,13 +1,14 @@
 # Usage Guide
 
-<!--date_updated:sat20june2026-->
+<!--date_updated:sat-17-january-2026-->
+<!--date_updated:tues-04-august-2026-->
 
 ## Quick Start
 
 <!--`DrumScript` accepts the default format of `.wav` if the `--mp3` flag is not specified.-->
 
 ### 1. **Audio Loading**
-
+ 
 Load and normalise audio files for analysis. The `AudioLoader` handles mono conversion and peak normalisation automatically.
 
 ```python
@@ -78,14 +79,37 @@ python -m drumscript.main "audio_path.wav" --ts 6_8
 <!--You can also use DrumScript directly from your terminal:-->
 
 ### 6. Full Audio to PDF Transcription (`--full-song`)
+
+**CLI:**
+
 ```zsh
-python -m drumscript.main audio_path.mp3 --output my_score.pdf --full-song
+python -m drumscript.main audio_path.mp3 --full-song
 ```
+
+**Python API:**
 
 ```python
 import drumscript as ds
-get_drum_score = ds.main("audio_path.mp3", format=="mp3", output_name="my_score.pdf", "--full-song")
+
+# Transcribe an isolated drum stem → PDF + JSON + MIDI
+result = ds.transcribe("drum_audio.wav")
+print(result["pdf_path"])   # PDF sheet music
+print(result["json_path"])  # raw transcription data (JSON)
+print(result["midi_path"])  # MIDI file for DAW import
+
+# Transcribe a full song (separates drums automatically)
+result = ds.transcribe("full_song.mp3", full_song=True)
+print(result["pdf_path"])
+
+# Get all intermediate results (tempo, onsets, events, etc.)
+result = ds.transcribe("drum_audio.wav", verbose=True)
+print(f"Tempo: {result['tempo']:.1f} BPM")
+print(f"Events: {len(result['events'])}")
+print(f"PDF: {result['pdf_path']}")
+print(f"MIDI: {result['midi_path']}")
 ```
+
+> **Note (v0.2.0):** `transcribe()` now returns a dict with `pdf_path`, `json_path`, and `midi_path` keys. Using the return value as a plain string (e.g. `pdf = ds.transcribe(...)`) still works but is deprecated and will be removed in v1.0.0. Use `result["pdf_path"]` instead.
 
 > **Full commands**
 
@@ -133,6 +157,5 @@ y, sr = ds.AudioLoader("audio_path.wav")
 
 #### Extract Backing Track
 <!--TO DO: Add content-->
-#### Extract Drum-Only Audio
+#### Extract Drum-Only Audio
 <!--TO DO: Add content-->
-

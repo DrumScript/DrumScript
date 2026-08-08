@@ -1,7 +1,7 @@
 # **Changelog**
 
 <!--date_added:thurs-28-may-2026-->
-<!--date:updated:thurs-06-aug-2026-->
+<!--date:updated:sat-08-aug-2026-->
 
 
 * All notable changes related to the repository and pypi distribution of `DrumScript` will be documented here
@@ -56,7 +56,6 @@
 * Updated `tests/unit/test_transcribe.py` to reflect `_TranscribeResult` return type: replaced string assertions with dict key checks, added tests for deprecation warning on string usage, added test for verbose dict including `json_path` and `midi_path`
 * Updated `README.md` Quick Start examples to use new dict-based `transcribe()` return with deprecation note
 * Updated `docs/guide/usage.md` section 6 with new `transcribe()` return type examples; filled in previously empty Extract Backing Track and Extract Drum-Only Audio sections
-* Updated `docs/conf.py` banner text from mir_eval benchmarking to multi-format transcription output
 * Added repository statistics link to `docs/index.md` homepage
 
 > ### *Additions*

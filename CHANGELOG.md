@@ -1,7 +1,7 @@
 # **Changelog**
 
 <!--date_added:thurs-28-may-2026-->
-<!--date:updated:sat-08-aug-2026-->
+<!--date:updated:sun-09-aug-2026-->
 
 
 * All notable changes related to the repository and pypi distribution of `DrumScript` will be documented here
@@ -151,8 +151,7 @@ Items listed below are fully implemented and **published to pypi** under an offi
 #### *Changes*
 - `transcribe()` return type: `str` → `_TranscribeResult` (dict subclass). See Added above for migration details.
 - Standardised git tag naming convention to `vX.Y.Z`
-- Dark mode banner CSS improved for readability
-- Documentation banner updated for v0.2.0
+- Documentation banner updated for v0.2.0: - Dark mode banner CSS improved for readability
 - Updated `tests/unit/test_transcribe.py` to reflect `_TranscribeResult` return type: replaced string assertions with dict key checks, added tests for deprecation warning on string usage, added test for verbose dict including `json_path` and `midi_path`
 - Updated README and Sphinx usage guide examples for new `transcribe()` return type
 - Filled in previously empty Extract Backing Track and Extract Drum-Only Audio sections in `docs/guide/usage.md`

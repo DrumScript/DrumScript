@@ -59,13 +59,12 @@
 * Amended documentation to remove bold markdown formatting for H1 references feeding into the side-nav bar visual presentation, for all except `DrumScript CLI Reference`; fixed ordering side in toctree (docs/index.md) for `User Guide` submenu to 1. remove duplicated `usage` reference in toctree and 2. reorder items alphabetically. Amended right hand navbar so that H2 links are now alphabetical.
 * Updated and tidied the examples for extract stems in README.md; split example up into extract stems and backing track function examples.
 * Standardised git tag naming convention from `drumscript__vX.Y.Z-alpha` to `vX.Y.Z` (e.g. `v0.1.6`). Old tags remain on remote (branch protection prevents deletion) but are ignored by the `docs.yml` workflow which only triggers on `v*`.
-* Tidied banner in Shibuya dark theme to make more readable
 * `transcribe()` non-verbose return type changed from `str` to `_TranscribeResult` (a `dict` subclass). The return value is a dict with `pdf_path`, `json_path`, and `midi_path` keys. For backwards compatibility, using the result as a string still works (returns the PDF path) but emits a `DeprecationWarning` directing users to use `result['pdf_path']` instead. String behaviour will be removed in v1.0.0.
 * Updated `tests/unit/test_transcribe.py` to reflect `_TranscribeResult` return type: replaced string assertions with dict key checks, added tests for deprecation warning on string usage, added test for verbose dict including `json_path` and `midi_path`
 * Updated `README.md` Quick Start examples to use new dict-based `transcribe()` return with deprecation note
 * Updated `docs/guide/usage.md` section 6 with new `transcribe()` return type examples; filled in previously empty Extract Backing Track and Extract Drum-Only Audio sections
 * Added repository statistics link to `docs/index.md` homepage
-* Updated `docs/conf.py` banner text for v0.2.0 to reflect multi-format transcription output
+* Consolidated `twine` into the `dev` optional-dependency group in `pyproject.toml`; removed the now-redundant `[dependency-groups]` section
 
 > ### *Fixes*
 

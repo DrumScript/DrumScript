@@ -25,6 +25,13 @@ print("Audio loaded!")
 display(Audio(audio_file_path))
 ------------------
 
+----- stderr -----
+/home/runner/work/DrumScript/DrumScript/drumscript/audio_processor/audio_loader.py:51: UserWarning: PySoundFile failed. Trying audioread instead.
+  audio_data, sample_rate = librosa.load(
+/home/runner/work/DrumScript/DrumScript/.venv/lib/python3.12/site-packages/librosa/core/audio.py:184: FutureWarning: librosa.core.audio.__audioread_load
+	Deprecated as of librosa version 0.10.0.
+	It will be removed in librosa version 1.0.
+  y, sr_native = __audioread_load(path, offset, duration, dtype)
 ----- stdout -----
 Error loading audio file audio/test_track_1.wav:
 ------------------

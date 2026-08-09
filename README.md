@@ -81,7 +81,7 @@ DrumScript/
 │   └── utils/                  # Helpers (ffmpeg installer, research scripts)
 ├── benchmarks/                 # Evaluation runners (see benchmarks/README.md)
 ├── docs/                       # Sphinx documentation
-├── tests/                      # pytest test suite (131 unit + 8 integration)
+├── tests/                      # pytest test suite (138 unit + 23 integration)
 ├── .github/workflows/          # CI/CD (tests, build, publish, docs)
 ├── pyproject.toml              # Package metadata and dependencies
 └── uv.lock                     # Pinned dependency versions

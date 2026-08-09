@@ -53,13 +53,53 @@ def main(
 
         # 1. Stem Separation / Pre-processing
         # Check if user wants stem separation (either for transcription or just extracting stems)
-        if full_song:
+        # Stem separation is required when the user asks for *any* stem output,
+        # or when transcribing a full song (where only the drum stem is wanted).
+        if drumless or mute or all_stems:
+            # Full separation: backing tracks and/or individual stems.
+            print("...Processing Stems...")
+            results = separate_audio(
+                audio_path=input_audio_path,
+                output_format=output_format,
+                drumless=drumless,
+                mute=mute,
+                all_stems=all_stems,
+            )
+
+            if full_song:
+                # Transcription also requested: feed the isolated drums onward.
+                if "drums" in results:
+                    audio_path = results["drums"]
+                elif "drums_stem" in results:
+                    audio_path = results["drums_stem"]
+                else:
+                    print("Warning: Drums stem was not found in separation results. Using original.")
+            else:
+                # Stems only — no transcription was asked for.
+                print("Stem processing complete. Exiting (Transcription not requested).")
+                return
+
+        elif full_song:
+            # Transcription of a full song: only the drum stem is needed, so use
+            # the cheaper single-stem extraction rather than a full separation.
             try:
                 print("...Separating drum stem...")
                 audio_path = extract_drum_stem(input_audio_path)
             except Exception as e:
                 print(f"Stem separation failed: {e}")
                 return
+
+        # ----------------------------------------------------------------------
+        # SUPERSEDED (v0.2.0): handled full_song only, so --drumless/--all-stems/
+        # --mute never ran on the happy path. Kept per project convention.
+        # ----------------------------------------------------------------------
+        # if full_song:
+        #     try:
+        #         print("...Separating drum stem...")
+        #         audio_path = extract_drum_stem(input_audio_path)
+        #     except Exception as e:
+        #         print(f"Stem separation failed: {e}")
+        #         return
 
         # 2. Analysis Pipeline
         print("...Loading & Analysing Audio...")
@@ -143,105 +183,119 @@ def main(
 
         traceback.print_exc()
 
-        # If any stem splitting flag is active
-        if full_song or drumless or mute or all_stems:
-            print("...Processing Stems...")
-
-            # If transcription is requested (--full-song), we assume the user wants the stems separated
-            # to feed the 'drums' stem into the transcriber.
-            # If only --drumless is passed, we might not want to transcribe, but the script flow
-            # currently implies transcription follows.
-
-            results = separate_audio(audio_path=input_audio_path, output_format=output_format, drumless=drumless, mute=mute, all_stems=all_stems)
-
-            # If we are transcribing, we need the isolated drum track
-            if full_song:
-                if "drums" in results:
-                    audio_path = results["drums"]
-                elif "drums_stem" in results:
-                    audio_path = results["drums_stem"]
-                else:
-                    print("Warning: Drums stem was not found in separation results. Using original.")
-
-            # If the user ONLY wanted stems (e.g. --drumless) and NOT transcription,
-            # we should probably stop here?
-            # For now, I will allow it to proceed to transcription unless the user didn't ask for it.
-            # However, the current main() structure is built around "Do Transcription".
-            # Let's check if the user actually wants to stop.
-            if not full_song:
-                print("Stem processing complete. Exiting (Transcription not requested).")
-                return
-
-        # 2. Analysis Pipeline
-        print(f"...Loading & Analysing Audio ({Path(audio_path).name})...")
-        # y, sr = audio_loader.load_audio(audio_path)
-        # y, sr = audio_loader.load_audio(audio_path, sr=sr)
-        y, sr = audio_loader.load_audio(audio_path, sr=SAMPLE_RATE)
-        y = audio_loader.normalise_audio(y)
-
-        duration_total_sec = len(y) / sr  # duplicate of calc in try block ~line80-83, but required inside except block too, TO DO: make original vars
-        # in try block global vars for mins, secs (and duration_total_sec?)
-        mins = int(duration_total_sec // 60)  # duplicate of calc in try block ~line80-83, but required inside except block too
-        secs = int(duration_total_sec % 60)  # duplicate of calc in try block ~line80-83, but required inside except block too
-        tempo = tempo_detector.estimate_tempo(y, sr)
-        onsets = onset_detector.detect_onsets(y, sr)
-
-        print(f"   -> Duration: {mins}:{secs:02d} ({duration_total_sec:.2f}s)")
-        print(f"   -> Detected Tempo: {tempo:.1f} BPM")
-        # print(f"   -> Detected Onsets: {len(onsets)}, type(onsets):{type}")
-        print(f"   -> Detected Onsets: {len(onsets)}, type(onsets):{type(onsets)}")
-
-        # 3. Classification
-        print("...Classifying (Fundamental Frequency Engine)...")
-        # classified_events = classify.classify_drum_hits(y, sr, onsets)
-        # classified_events = classify.classify_events(y, sr, onsets)
+        # ------------------------------------------------------------------
+        # REMOVED (v0.2.0): duplicated pipeline that lived inside this error
+        # handler. It made the stem flags (--drumless / --all-stems / --mute)
+        # reachable ONLY when the primary pipeline had already failed. That
+        # handling now lives in the primary `try` block above. Exceptions
+        # raised in here also propagated uncaught, since a sibling `except`
+        # clause cannot catch them.
+        # Commented out rather than deleted, per project convention.
+        # ------------------------------------------------------------------
+        # # If any stem splitting flag is active
+        # if full_song or drumless or mute or all_stems:
+        #     print("...Processing Stems...")
+        #
+        #     # If transcription is requested (--full-song), we assume the user wants the stems separated
+        #     # to feed the 'drums' stem into the transcriber.
+        #     # If only --drumless is passed, we might not want to transcribe, but the script flow
+        #     # currently implies transcription follows.
+        #
+        #     results = separate_audio(audio_path=input_audio_path, output_format=output_format, drumless=drumless, mute=mute, all_stems=all_stems)
+        #
+        #     # If we are transcribing, we need the isolated drum track
+        #     if full_song:
+        #         if "drums" in results:
+        #             audio_path = results["drums"]
+        #         elif "drums_stem" in results:
+        #             audio_path = results["drums_stem"]
+        #         else:
+        #             print("Warning: Drums stem was not found in separation results. Using original.")
+        #
+        #     # If the user ONLY wanted stems (e.g. --drumless) and NOT transcription,
+        #     # we should probably stop here?
+        #     # For now, I will allow it to proceed to transcription unless the user didn't ask for it.
+        #     # However, the current main() structure is built around "Do Transcription".
+        #     # Let's check if the user actually wants to stop.
+        #     if not full_song:
+        #         print("Stem processing complete. Exiting (Transcription not requested).")
+        #         return
+        #
+        # # 2. Analysis Pipeline
+        # print(f"...Loading & Analysing Audio ({Path(audio_path).name})...")
+        # # y, sr = audio_loader.load_audio(audio_path)
+        # # y, sr = audio_loader.load_audio(audio_path, sr=sr)
+        # y, sr = audio_loader.load_audio(audio_path, sr=SAMPLE_RATE)
+        # y = audio_loader.normalise_audio(y)
+        #
+        # duration_total_sec = len(y) / sr  # duplicate of calc in try block ~line80-83, but required inside except block too, TO DO: make original vars  # noqa: E501
+        # # in try block global vars for mins, secs (and duration_total_sec?)
+        # mins = int(duration_total_sec // 60)  # duplicate of calc in try block ~line80-83, but required inside except block too
+        # secs = int(duration_total_sec % 60)  # duplicate of calc in try block ~line80-83, but required inside except block too
+        # tempo = tempo_detector.estimate_tempo(y, sr)
+        # onsets = onset_detector.detect_onsets(y, sr)
+        #
+        # print(f"   -> Duration: {mins}:{secs:02d} ({duration_total_sec:.2f}s)")
+        # print(f"   -> Detected Tempo: {tempo:.1f} BPM")
+        # # print(f"   -> Detected Onsets: {len(onsets)}, type(onsets):{type}")
+        # print(f"   -> Detected Onsets: {len(onsets)}, type(onsets):{type(onsets)}")
+        #
+        # # 3. Classification
+        # print("...Classifying (Fundamental Frequency Engine)...")
+        # # classified_events = classify.classify_drum_hits(y, sr, onsets)
+        # # classified_events = classify.classify_events(y, sr, onsets)
+        # # print(f"   -> Classified {len(classified_events)} events")
+        #
+        # if is_rudiment:
+        #     print("   -> Using Rudiment/Single-Beat Classification Engine")
+        #     # classified_events = classify.classify_rudiment_events(y, sr, onsets)
+        #     classified_events = classify_rudiment_events(y, sr, onsets)
+        # else:
+        #     print("   -> Using Standard Polyphonic Classification Engine")
+        #     # classified_events = classify.classify_events(y, sr, onsets)
+        #     classified_events = classify_events(y, sr, onsets)
+        #
         # print(f"   -> Classified {len(classified_events)} events")
+        #
+        # # 4. Score Formatting
+        # detected_events = []
+        # for event in classified_events:
+        #     detected_events.append(
+        #         {
+        #             # --- MAPPING ---
+        #             # 'time': event['time_sec'],
+        #             # 'drums': event['instruments'], # Map list to 'drums'
+        #             # 'analysis': event['debug_features'], # NOW CONTAINS: peak_freq, centroid, lfer, hfer, hfer_2k, hfer_5k, decay
+        #             "time_sec": event["time_sec"],
+        #             "instruments": event["instruments"],
+        #             "debug_features": event["debug_features"],
+        #             # 'midi_pitch': event['midi_pitch'],
+        #             # 'note_head_type': event['note_head_type']
+        #             #'staff_position': event['staff_position']
+        #         }
+        #     )
+        #
+        # # 5. Output Generation
+        # pdf_path = f"{Path(input_audio_path).stem}_transcription"
+        # pdf_path = f"outputs/{pdf_path}.pdf"
+        #
+        # print(f"...Building Score & JSON: {pdf_path}...")
+        #
+        # # score_builder.build_and_export_drum_score(
+        # score_builder.build_score(detected_events=detected_events, tempo=tempo, output_path=pdf_path, time_signature=time_signature)
+        #
+        # print("--- Done! ---\n")
 
-        if is_rudiment:
-            print("   -> Using Rudiment/Single-Beat Classification Engine")
-            # classified_events = classify.classify_rudiment_events(y, sr, onsets)
-            classified_events = classify_rudiment_events(y, sr, onsets)
-        else:
-            print("   -> Using Standard Polyphonic Classification Engine")
-            # classified_events = classify.classify_events(y, sr, onsets)
-            classified_events = classify_events(y, sr, onsets)
-
-        print(f"   -> Classified {len(classified_events)} events")
-
-        # 4. Score Formatting
-        detected_events = []
-        for event in classified_events:
-            detected_events.append(
-                {
-                    # --- MAPPING ---
-                    # 'time': event['time_sec'],
-                    # 'drums': event['instruments'], # Map list to 'drums'
-                    # 'analysis': event['debug_features'], # NOW CONTAINS: peak_freq, centroid, lfer, hfer, hfer_2k, hfer_5k, decay
-                    "time_sec": event["time_sec"],
-                    "instruments": event["instruments"],
-                    "debug_features": event["debug_features"],
-                    # 'midi_pitch': event['midi_pitch'],
-                    # 'note_head_type': event['note_head_type']
-                    #'staff_position': event['staff_position']
-                }
-            )
-
-        # 5. Output Generation
-        pdf_path = f"{Path(input_audio_path).stem}_transcription"
-        pdf_path = f"outputs/{pdf_path}.pdf"
-
-        print(f"...Building Score & JSON: {pdf_path}...")
-
-        # score_builder.build_and_export_drum_score(
-        score_builder.build_score(detected_events=detected_events, tempo=tempo, output_path=pdf_path, time_signature=time_signature)
-
-        print("--- Done! ---\n")
-
-    except Exception as e:
-        print(f"Error: {e}")
-        import traceback
-
-        traceback.print_exc()
+    # ----------------------------------------------------------------------
+    # REMOVED (v0.2.0): unreachable duplicate `except Exception` clause.
+    # The handler above already catches Exception, so this could never run.
+    # Commented out rather than deleted, per project convention.
+    # ----------------------------------------------------------------------
+    # except Exception as e:
+    #     print(f"Error: {e}")
+    #     import traceback
+    #
+    #     traceback.print_exc()
 
 
 if __name__ == "__main__":

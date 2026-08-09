@@ -6,7 +6,7 @@
     function setColorMode(t){let e=document.documentElement;e.setAttribute("data-color-mode",t);let a=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches,s=t;"auto"===t&&(s=a?"dark":"light"),"light"===s?(e.classList.remove("dark"),e.classList.add("light")):(e.classList.remove("light"),e.classList.add("dark"))}
     setColorMode(localStorage._theme||"auto");
   </script><link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=e1a1ceaf" />
-    <link rel="stylesheet" type="text/css" href="../_static/shibuya.css?v=9454f7d5" />
+    <link rel="stylesheet" type="text/css" href="../_static/shibuya.css?v=2ceb65ce" />
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
     <link media="print" rel="stylesheet" type="text/css" href="../_static/print.css?v=20ff2c19" />
     <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=132fcf90" />
@@ -338,16 +338,16 @@ data-aria-dark="Switch to auto color mode">
   </div>
 </div><article class="yue" role="main">
           <section id="stem-splitter">
-<h1>Stem-Splitter<a class="headerlink" href="#stem-splitter" title="Link to this heading">¶</a></h1>
+<h1>Stem-Splitter<a class="headerlink" href="#stem-splitter" title="Link to this heading">#</a></h1>
 <!--date_createdthurs-07-may-2026-->
 <!--date_updated:sat-27-june-2026-->
 <hr class="docutils" />
 <section id="how-does-the-stem-splitter-module-audio-processor-stem-splitter-py-work">
-<h2>How does the stem-splitter module (<code class="docutils literal notranslate"><span class="pre">audio_processor/stem_splitter.py</span></code>) work?<a class="headerlink" href="#how-does-the-stem-splitter-module-audio-processor-stem-splitter-py-work" title="Link to this heading">¶</a></h2>
+<h2>How does the stem-splitter module (<code class="docutils literal notranslate"><span class="pre">audio_processor/stem_splitter.py</span></code>) work?<a class="headerlink" href="#how-does-the-stem-splitter-module-audio-processor-stem-splitter-py-work" title="Link to this heading">#</a></h2>
 <p>In simple terms, the <strong>stem-splitter</strong> takes a full polyphonic song and pulls it apart into its individual instrumental layers — drums, bass, vocals, and “other” — using the <strong>Demucs</strong> source separation model. From there, those isolated layers can be saved individually, recombined into custom mixes (e.g. a drumless backing track), or fed into the rest of the DrumScript transcription pipeline.</p>
 <p>Here’s a more detailed breakdown of what it does and why it’s designed this way.</p>
 <section id="what-the-module-does">
-<h3>What the Module Does<a class="headerlink" href="#what-the-module-does" title="Link to this heading">¶</a></h3>
+<h3>What the Module Does<a class="headerlink" href="#what-the-module-does" title="Link to this heading">#</a></h3>
 <ol class="arabic simple">
 <li><p><strong>Receives a full audio mix</strong> — any <code class="docutils literal notranslate"><span class="pre">.wav</span></code> or <code class="docutils literal notranslate"><span class="pre">.mp3</span></code> file containing a complete song.</p></li>
 <li><p><strong>Runs Demucs in a subprocess</strong>, using the high-quality 4-stem <code class="docutils literal notranslate"><span class="pre">htdemucs</span></code> model. Calling Demucs via its CLI (rather than importing it as a Python library) keeps Demucs’s heavy dependencies (PyTorch, torchaudio, torchcodec) outside the core DrumScript Python process.</p></li>
@@ -367,14 +367,14 @@ data-aria-dark="Switch to auto color mode">
 </ol>
 </section>
 <section id="why-this-approach">
-<h3>Why This Approach<a class="headerlink" href="#why-this-approach" title="Link to this heading">¶</a></h3>
+<h3>Why This Approach<a class="headerlink" href="#why-this-approach" title="Link to this heading">#</a></h3>
 <p>DrumScript uses Demucs as a <strong>pre-processor</strong>, not as part of its own classification engine. This separation of concerns is deliberate:</p>
 <ul class="simple">
 <li><p><strong>Source separation and drum classification are different problems.</strong> Isolating a drum track from a polyphonic mix requires learning what “drums” sound like across many recording conditions, kits, and genres — a problem deep learning solves well. Drum <em>classification</em> (kick vs snare vs hi-hat etc.), by contrast, is a problem DrumScript solves with deterministic, physics-based rules.</p></li>
 <li><p><strong>Demucs is treated as a black box that produces a WAV file.</strong> From DrumScript’s perspective, the output of the stem-splitter is just another audio file. Everything downstream — onset detection, feature extraction, classification, score-building — runs on that file deterministically.</p></li>
 </ul>
 <section id="key-design-choices">
-<h4>Key design choices<a class="headerlink" href="#key-design-choices" title="Link to this heading">¶</a></h4>
+<h4>Key design choices<a class="headerlink" href="#key-design-choices" title="Link to this heading">#</a></h4>
 <ul class="simple">
 <li><p><strong>Demucs is invoked via subprocess CLI, not imported as a Python module.</strong> Demucs’s heavy ML dependencies (PyTorch, torchaudio, torchcodec) don’t have to be loaded into the Python process for every DrumScript call. This keeps DrumScript light to install and quick to import.</p></li>
 <li><p><strong>WAV output is ffmpeg-free.</strong> Demucs writes WAV by default; <code class="docutils literal notranslate"><span class="pre">soundfile</span></code> reads and writes WAV natively. A user on a WAV-only workflow never needs ffmpeg on their system.</p></li>
@@ -382,7 +382,7 @@ data-aria-dark="Switch to auto color mode">
 </ul>
 </section>
 <section id="a-note-on-demucs-s-long-term-maintenance">
-<h4>A note on Demucs’s long-term maintenance<a class="headerlink" href="#a-note-on-demucs-s-long-term-maintenance" title="Link to this heading">¶</a></h4>
+<h4>A note on Demucs’s long-term maintenance<a class="headerlink" href="#a-note-on-demucs-s-long-term-maintenance" title="Link to this heading">#</a></h4>
 <p>The original Demucs project is no longer actively maintained by its original owners (Meta). Alexandre Défossez maintains an occasional <a class="reference external" href="https://github.com/adefossez/demucs">fork</a>. To insulate DrumScript against potential dependency drift, the project may eventually replace Demucs with its own lightweight stem-splitter — but for now, Demucs remains the simplest, highest-quality option available.</p>
 <hr class="docutils" />
 <!--END-->
@@ -428,9 +428,9 @@ data-aria-dark="Switch to auto color mode">
   </p>
 </div>
       <div class="sy-foot-socials">
-<a href="https://github.com/DrumScript/DrumScript" aria-label="GitHub">
-  <iconify-icon icon="simple-icons:github"></iconify-icon>
-</a></div>
+  <a href="https://github.com/DrumScript/DrumScript" aria-label="GitHub">
+    <iconify-icon icon="simple-icons:github"></iconify-icon>
+  </a></div>
     </div>
   </div>
 </footer>

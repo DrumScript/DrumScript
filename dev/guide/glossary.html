@@ -6,7 +6,7 @@
     function setColorMode(t){let e=document.documentElement;e.setAttribute("data-color-mode",t);let a=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches,s=t;"auto"===t&&(s=a?"dark":"light"),"light"===s?(e.classList.remove("dark"),e.classList.add("light")):(e.classList.remove("light"),e.classList.add("dark"))}
     setColorMode(localStorage._theme||"auto");
   </script><link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=e1a1ceaf" />
-    <link rel="stylesheet" type="text/css" href="../_static/shibuya.css?v=9454f7d5" />
+    <link rel="stylesheet" type="text/css" href="../_static/shibuya.css?v=2ceb65ce" />
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
     <link media="print" rel="stylesheet" type="text/css" href="../_static/print.css?v=20ff2c19" />
     <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=132fcf90" />
@@ -347,13 +347,13 @@ data-aria-dark="Switch to auto color mode">
   </div>
 </div><article class="yue" role="main">
           <section id="glossary-of-terms">
-<h1>Glossary of Terms<a class="headerlink" href="#glossary-of-terms" title="Link to this heading">¶</a></h1>
+<h1>Glossary of Terms<a class="headerlink" href="#glossary-of-terms" title="Link to this heading">#</a></h1>
 <!--date_created:03-july-2025-->
 <!--date_updated:sat-27-june-2026-->
 <section id="python-libraries-classes">
-<h2><strong>Python Libraries &amp; Classes</strong><a class="headerlink" href="#python-libraries-classes" title="Link to this heading">¶</a></h2>
+<h2><strong>Python Libraries &amp; Classes</strong><a class="headerlink" href="#python-libraries-classes" title="Link to this heading">#</a></h2>
 <section id="librosa">
-<h3><a class="reference internal" href="#librosa"><code class="docutils literal notranslate"><span class="pre">Librosa</span></code></a><a class="headerlink" href="#librosa" title="Link to this heading">¶</a></h3>
+<h3><a class="reference internal" href="#librosa"><code class="docutils literal notranslate"><span class="pre">Librosa</span></code></a><a class="headerlink" href="#librosa" title="Link to this heading">#</a></h3>
 <blockquote>
 <div><p><strong>Python library</strong></p>
 </div></blockquote>
@@ -373,7 +373,7 @@ data-aria-dark="Switch to auto color mode">
 <p>In <code class="docutils literal notranslate"><span class="pre">DrumScript</span></code>, <code class="docutils literal notranslate"><span class="pre">librosa</span></code> is crucial because it’s the underlying library that <code class="docutils literal notranslate"><span class="pre">audio_loader.py</span></code>, <code class="docutils literal notranslate"><span class="pre">feature_extractor.py</span></code>, and <code class="docutils literal notranslate"><span class="pre">onset_detector.py</span></code> use to actually perform the <strong>low-level audio processing</strong> and extract the characteristics of your <strong>drum sound</strong> and <strong>audio recordings</strong>. <code class="docutils literal notranslate"><span class="pre">Librosa</span></code>’s beat and tempo detection functions are specifically used in the <code class="docutils literal notranslate"><span class="pre">tempo_detector.py</span></code> and <code class="docutils literal notranslate"><span class="pre">tempogram.py</span></code> scripts.</p>
 </section>
 <section id="stemsplitter">
-<h3><code class="docutils literal notranslate"><span class="pre">StemSplitter</span></code><a class="headerlink" href="#stemsplitter" title="Link to this heading">¶</a></h3>
+<h3><code class="docutils literal notranslate"><span class="pre">StemSplitter</span></code><a class="headerlink" href="#stemsplitter" title="Link to this heading">#</a></h3>
 <blockquote>
 <div><p><strong>Class</strong></p>
 </div></blockquote>
@@ -393,7 +393,7 @@ data-aria-dark="Switch to auto color mode">
 </div></blockquote>
 </section>
 <section id="demucs">
-<h3><code class="docutils literal notranslate"><span class="pre">Demucs</span></code><a class="headerlink" href="#demucs" title="Link to this heading">¶</a></h3>
+<h3><code class="docutils literal notranslate"><span class="pre">Demucs</span></code><a class="headerlink" href="#demucs" title="Link to this heading">#</a></h3>
 <blockquote>
 <div><p><strong>External Library / Model</strong></p>
 </div></blockquote>
@@ -419,9 +419,9 @@ In `DrumScript`, `MuseScore` is crucial because `music21` can be configured to u
 </section>
 <hr class="docutils" />
 <section id="definitions">
-<h1>Definitions<a class="headerlink" href="#definitions" title="Link to this heading">¶</a></h1>
+<h1>Definitions<a class="headerlink" href="#definitions" title="Link to this heading">#</a></h1>
 <section id="discrete-fourier-transform-dft">
-<h2><code class="docutils literal notranslate"><span class="pre">Discrete</span> <span class="pre">Fourier</span> <span class="pre">Transform</span></code> (<code class="docutils literal notranslate"><span class="pre">DFT</span></code>)<a class="headerlink" href="#discrete-fourier-transform-dft" title="Link to this heading">¶</a></h2>
+<h2><code class="docutils literal notranslate"><span class="pre">Discrete</span> <span class="pre">Fourier</span> <span class="pre">Transform</span></code> (<code class="docutils literal notranslate"><span class="pre">DFT</span></code>)<a class="headerlink" href="#discrete-fourier-transform-dft" title="Link to this heading">#</a></h2>
 <blockquote>
 <div><p><em><strong>Mathematics</strong></em></p>
 </div></blockquote>
@@ -436,7 +436,7 @@ In `DrumScript`, `MuseScore` is crucial because `music21` can be configured to u
 </div></blockquote>
 </section>
 <section id="fast-fourier-transform-fft">
-<h2><code class="docutils literal notranslate"><span class="pre">Fast</span> <span class="pre">Fourier</span> <span class="pre">Transform</span></code> (<code class="docutils literal notranslate"><span class="pre">FFT</span></code>)<a class="headerlink" href="#fast-fourier-transform-fft" title="Link to this heading">¶</a></h2>
+<h2><code class="docutils literal notranslate"><span class="pre">Fast</span> <span class="pre">Fourier</span> <span class="pre">Transform</span></code> (<code class="docutils literal notranslate"><span class="pre">FFT</span></code>)<a class="headerlink" href="#fast-fourier-transform-fft" title="Link to this heading">#</a></h2>
 <blockquote>
 <div><p><em><strong>Mathematics</strong></em></p>
 </div></blockquote>
@@ -451,7 +451,7 @@ In `DrumScript`, `MuseScore` is crucial because `music21` can be configured to u
 </div></blockquote>
 </section>
 <section id="hop-length">
-<h2><code class="docutils literal notranslate"><span class="pre">hop_length</span></code><a class="headerlink" href="#hop-length" title="Link to this heading">¶</a></h2>
+<h2><code class="docutils literal notranslate"><span class="pre">hop_length</span></code><a class="headerlink" href="#hop-length" title="Link to this heading">#</a></h2>
 <blockquote>
 <div><p><em><strong>Variable</strong></em></p>
 </div></blockquote>
@@ -472,7 +472,7 @@ In `DrumScript`, `MuseScore` is crucial because `music21` can be configured to u
 </div></blockquote>
 </section>
 <section id="n-fft">
-<h2><code class="docutils literal notranslate"><span class="pre">n_fft</span></code><a class="headerlink" href="#n-fft" title="Link to this heading">¶</a></h2>
+<h2><code class="docutils literal notranslate"><span class="pre">n_fft</span></code><a class="headerlink" href="#n-fft" title="Link to this heading">#</a></h2>
 <blockquote>
 <div><p><em><strong>Variable</strong></em></p>
 </div></blockquote>
@@ -487,7 +487,7 @@ In `DrumScript`, `MuseScore` is crucial because `music21` can be configured to u
 </div></blockquote>
 </section>
 <section id="sample-rate-sr">
-<h2><code class="docutils literal notranslate"><span class="pre">sample_rate</span></code> (<code class="docutils literal notranslate"><span class="pre">sr</span></code>)<a class="headerlink" href="#sample-rate-sr" title="Link to this heading">¶</a></h2>
+<h2><code class="docutils literal notranslate"><span class="pre">sample_rate</span></code> (<code class="docutils literal notranslate"><span class="pre">sr</span></code>)<a class="headerlink" href="#sample-rate-sr" title="Link to this heading">#</a></h2>
 <blockquote>
 <div><p><em><strong>Variable</strong></em></p>
 </div></blockquote>
@@ -508,7 +508,7 @@ In `DrumScript`, `MuseScore` is crucial because `music21` can be configured to u
 </div>
 </section>
 <section id="spectral-centroid-brightness-or-center-of-gravity-sc">
-<h2>Spectral Centroid = <em>Brightness</em> or <em>Center of Gravity</em> (<code class="docutils literal notranslate"><span class="pre">sc</span></code>)<a class="headerlink" href="#spectral-centroid-brightness-or-center-of-gravity-sc" title="Link to this heading">¶</a></h2>
+<h2>Spectral Centroid = <em>Brightness</em> or <em>Center of Gravity</em> (<code class="docutils literal notranslate"><span class="pre">sc</span></code>)<a class="headerlink" href="#spectral-centroid-brightness-or-center-of-gravity-sc" title="Link to this heading">#</a></h2>
 <p>Imagine the full range of sound (Frequency Spectrum) is a long seesaw or balance beam.</p>
 <ul class="simple">
 <li><p><strong>Left side:</strong> Low bass frequencies (the <em>Thud</em>).</p></li>
@@ -568,9 +568,9 @@ In `DrumScript`, `MuseScore` is crucial because `music21` can be configured to u
   </p>
 </div>
       <div class="sy-foot-socials">
-<a href="https://github.com/DrumScript/DrumScript" aria-label="GitHub">
-  <iconify-icon icon="simple-icons:github"></iconify-icon>
-</a></div>
+  <a href="https://github.com/DrumScript/DrumScript" aria-label="GitHub">
+    <iconify-icon icon="simple-icons:github"></iconify-icon>
+  </a></div>
     </div>
   </div>
 </footer>

@@ -25,8 +25,6 @@ print("Audio loaded!")
 display(Audio(audio_file_path))
 ------------------
 
------ stdout -----
-Error loading audio file audio/test_track_1.wav:
 ----- stderr -----
 /home/runner/work/DrumScript/DrumScript/drumscript/audio_processor/audio_loader.py:51: UserWarning: PySoundFile failed. Trying audioread instead.
   audio_data, sample_rate = librosa.load(
@@ -34,6 +32,8 @@ Error loading audio file audio/test_track_1.wav:
 	Deprecated as of librosa version 0.10.0.
 	It will be removed in librosa version 1.0.
   y, sr_native = __audioread_load(path, offset, duration, dtype)
+----- stdout -----
+Error loading audio file audio/test_track_1.wav:
 ------------------
 
 [31m---------------------------------------------------------------------------[39m
@@ -50,20 +50,20 @@ Error loading audio file audio/test_track_1.wav:
 [32m--> [39m[32m209[39m     context = [30;43msf[39;49m[30;43m.[39;49m[30;43mSoundFile[39;49m[30;43m([39;49m[30;43mpath[39;49m[30;43m)[39;49m
 [32m    211[39m [38;5;28;01mwith[39;00m context [38;5;28;01mas[39;00m sf_desc:
 
-[36mFile [39m[32m~/work/DrumScript/DrumScript/.venv/lib/python3.12/site-packages/soundfile.py:690[39m, in [36mSoundFile.__init__[39m[34m(self, file, mode, samplerate, channels, subtype, endian, format, closefd, compression_level, bitrate_mode)[39m
-[32m    688[39m [38;5;28mself[39m._info = _create_info_struct(file, mode, samplerate, channels,
-[32m    689[39m                                  [38;5;28mformat[39m, subtype, endian)
-[32m--> [39m[32m690[39m [38;5;28mself[39m._file = [30;43mself[39;49m[30;43m.[39;49m[30;43m_open[39;49m[30;43m([39;49m[30;43mfile[39;49m[30;43m,[39;49m[30;43m [39;49m[30;43mmode_int[39;49m[30;43m,[39;49m[30;43m [39;49m[30;43mclosefd[39;49m[30;43m)[39;49m
-[32m    691[39m [38;5;28;01mif[39;00m [38;5;28mset[39m(mode).issuperset([33m'[39m[33mr+[39m[33m'[39m) [38;5;129;01mand[39;00m [38;5;28mself[39m.seekable():
-[32m    692[39m     [38;5;66;03m# Move write position to 0 (like in Python file objects)[39;00m
+[36mFile [39m[32m~/work/DrumScript/DrumScript/.venv/lib/python3.12/site-packages/soundfile.py:708[39m, in [36mSoundFile.__init__[39m[34m(self, file, mode, samplerate, channels, subtype, endian, format, closefd, compression_level, bitrate_mode)[39m
+[32m    706[39m [38;5;28mself[39m._info = _create_info_struct(file, mode, samplerate, channels,
+[32m    707[39m                                  [38;5;28mformat[39m, subtype, endian)
+[32m--> [39m[32m708[39m [38;5;28mself[39m._file = [30;43mself[39;49m[30;43m.[39;49m[30;43m_open[39;49m[30;43m([39;49m[30;43mfile[39;49m[30;43m,[39;49m[30;43m [39;49m[30;43mmode_int[39;49m[30;43m,[39;49m[30;43m [39;49m[30;43mclosefd[39;49m[30;43m)[39;49m
+[32m    709[39m [38;5;28;01mif[39;00m [38;5;28mset[39m(mode).issuperset([33m'[39m[33mr+[39m[33m'[39m) [38;5;129;01mand[39;00m [38;5;28mself[39m.seekable():
+[32m    710[39m     [38;5;66;03m# Move write position to 0 (like in Python file objects)[39;00m
 
-[36mFile [39m[32m~/work/DrumScript/DrumScript/.venv/lib/python3.12/site-packages/soundfile.py:1265[39m, in [36mSoundFile._open[39m[34m(self, file, mode_int, closefd)[39m
-[32m   1264[39m     err = _snd.sf_error(file_ptr)
-[32m-> [39m[32m1265[39m     [38;5;28;01mraise[39;00m LibsndfileError(err, prefix=[33m"[39m[33mError opening [39m[38;5;132;01m{0!r}[39;00m[33m: [39m[33m"[39m.format([38;5;28mself[39m.name))
-[32m   1266[39m [38;5;28;01mif[39;00m mode_int == _snd.SFM_WRITE:
-[32m   1267[39m     [38;5;66;03m# Due to a bug in libsndfile version <= 1.0.25, frames != 0[39;00m
-[32m   1268[39m     [38;5;66;03m# when opening a named pipe in SFM_WRITE mode.[39;00m
-[32m   1269[39m     [38;5;66;03m# See http://github.com/erikd/libsndfile/issues/77.[39;00m
+[36mFile [39m[32m~/work/DrumScript/DrumScript/.venv/lib/python3.12/site-packages/soundfile.py:1296[39m, in [36mSoundFile._open[39m[34m(self, file, mode_int, closefd)[39m
+[32m   1295[39m         err = _snd.sf_error(file_ptr)
+[32m-> [39m[32m1296[39m         [38;5;28;01mraise[39;00m LibsndfileError(err, prefix=[33mf[39m[33m"[39m[33mError opening [39m[38;5;132;01m{[39;00m[38;5;28mself[39m.name[38;5;132;01m!r}[39;00m[33m: [39m[33m"[39m)
+[32m   1297[39m [38;5;28;01mif[39;00m mode_int == _snd.SFM_WRITE:
+[32m   1298[39m     [38;5;66;03m# Due to a bug in libsndfile version <= 1.0.25, frames != 0[39;00m
+[32m   1299[39m     [38;5;66;03m# when opening a named pipe in SFM_WRITE mode.[39;00m
+[32m   1300[39m     [38;5;66;03m# See http://github.com/erikd/libsndfile/issues/77.[39;00m
 
 [31mLibsndfileError[39m: Error opening 'audio/test_track_1.wav': Format not recognised.
 

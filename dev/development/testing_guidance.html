@@ -6,7 +6,7 @@
     function setColorMode(t){let e=document.documentElement;e.setAttribute("data-color-mode",t);let a=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches,s=t;"auto"===t&&(s=a?"dark":"light"),"light"===s?(e.classList.remove("dark"),e.classList.add("light")):(e.classList.remove("light"),e.classList.add("dark"))}
     setColorMode(localStorage._theme||"auto");
   </script><link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=e1a1ceaf" />
-    <link rel="stylesheet" type="text/css" href="../_static/shibuya.css?v=9454f7d5" />
+    <link rel="stylesheet" type="text/css" href="../_static/shibuya.css?v=2ceb65ce" />
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
     <link media="print" rel="stylesheet" type="text/css" href="../_static/print.css?v=20ff2c19" />
     <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=132fcf90" />
@@ -248,7 +248,7 @@ data-aria-dark="Switch to auto color mode">
 <li><a class="reference internal" href="#follow-the-file-conventions">2. Follow the file conventions</a></li>
 <li><a class="reference internal" href="#use-arrange-act-assert">3. Use Arrange / Act / Assert</a></li>
 <li><a class="reference internal" href="#use-tmp-path-for-file-output">4. Use <code class="docutils literal notranslate"><span class="pre">tmp_path</span></code> for file output</a></li>
-<li><a class="reference internal" href="#reuse-fixtures-from-conftest-py">5. Reuse fixtures from <code class="docutils literal notranslate">py</span></code></a></li>
+<li><a class="reference internal" href="#reuse-fixtures-from-conftest-py">5. Reuse fixtures from <code class="docutils literal notranslate"><span class="pre">conftest.py</span></code></a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#patterns-you-ll-use-often">Patterns You&#8217;ll Use Often</a><ul>
@@ -354,7 +354,7 @@ locking in that the warning text actually points users at the replacement.</a></
   </div>
 </div><article class="yue" role="main">
           <section id="testing-guidance">
-<h1>Testing Guidance<a class="headerlink" href="#testing-guidance" title="Link to this heading">¶</a></h1>
+<h1>Testing Guidance<a class="headerlink" href="#testing-guidance" title="Link to this heading">#</a></h1>
 <!--date_created: sat-21-june-2025-->
 <!--date_updated: thurs-18-june-2026-->
 <p>DrumScript ships with a <a class="reference external" href="https://docs.pytest.org/">pytest</a> test suite organised
@@ -376,7 +376,7 @@ the suite. For a copy-pasteable command reference, see the
 <!--- - **[]()**-->
 <hr class="docutils" />
 <section id="the-test-pyramid">
-<h2>The Test Pyramid<a class="headerlink" href="#the-test-pyramid" title="Link to this heading">¶</a></h2>
+<h2>The Test Pyramid<a class="headerlink" href="#the-test-pyramid" title="Link to this heading">#</a></h2>
 <p><a class="reference internal" href="#testing-guidance"><em>back to top</em></a></p>
 <p>DrumScript follows the classic <a class="reference external" href="https://martinfowler.com/articles/practical-test-pyramid.html">test pyramid</a>:</p>
 <div class="table-wrapper colwidths-auto docutils container">
@@ -420,7 +420,7 @@ when something fails. Unit tests catch <em>most</em> bugs <em>much</em> faster.<
 </section>
 <hr class="docutils" />
 <section id="suite-layout">
-<h2>Suite Layout<a class="headerlink" href="#suite-layout" title="Link to this heading">¶</a></h2>
+<h2>Suite Layout<a class="headerlink" href="#suite-layout" title="Link to this heading">#</a></h2>
 <p><a class="reference internal" href="#testing-guidance"><em>back to top</em></a></p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span data-line="1">tests/
 </span><span data-line="2">├── conftest.py              ← shared fixtures (auto-discovered)
@@ -452,7 +452,7 @@ when adding new files.</p>
 </section>
 <hr class="docutils" />
 <section id="markers">
-<h2>Markers<a class="headerlink" href="#markers" title="Link to this heading">¶</a></h2>
+<h2>Markers<a class="headerlink" href="#markers" title="Link to this heading">#</a></h2>
 <p>Two custom markers are defined in <code class="docutils literal notranslate"><span class="pre">pyproject.toml</span></code> (under <code class="docutils literal notranslate"><span class="pre">[tool.pytest.ini_options]</span></code>):</p>
 <p><code class="docutils literal notranslate"><span class="pre">&#64;pytest.mark.slow</span></code>
 : Tests that take more than a second or two. Skipped by default during
@@ -479,9 +479,9 @@ If you add a new marker category, register it in <code class="docutils literal n
 </section>
 <hr class="docutils" />
 <section id="writing-a-new-test">
-<h2>Writing a New Test<a class="headerlink" href="#writing-a-new-test" title="Link to this heading">¶</a></h2>
+<h2>Writing a New Test<a class="headerlink" href="#writing-a-new-test" title="Link to this heading">#</a></h2>
 <section id="pick-the-right-layer">
-<h3>1. Pick the right layer<a class="headerlink" href="#pick-the-right-layer" title="Link to this heading">¶</a></h3>
+<h3>1. Pick the right layer<a class="headerlink" href="#pick-the-right-layer" title="Link to this heading">#</a></h3>
 <p>Ask yourself: <em>does my test need to touch the filesystem, run a subprocess, or
 load audio that takes more than 100ms?</em></p>
 <ul class="simple">
@@ -491,7 +491,7 @@ load audio that takes more than 100ms?</em></p>
 </ul>
 </section>
 <section id="follow-the-file-conventions">
-<h3>2. Follow the file conventions<a class="headerlink" href="#follow-the-file-conventions" title="Link to this heading">¶</a></h3>
+<h3>2. Follow the file conventions<a class="headerlink" href="#follow-the-file-conventions" title="Link to this heading">#</a></h3>
 <ul class="simple">
 <li><p>Filename: <code class="docutils literal notranslate"><span class="pre">test_*.py</span></code></p></li>
 <li><p>Class names: <code class="docutils literal notranslate"><span class="pre">Test*</span></code></p></li>
@@ -501,7 +501,7 @@ treats each method as a separate test.</p></li>
 </ul>
 </section>
 <section id="use-arrange-act-assert">
-<h3>3. Use Arrange / Act / Assert<a class="headerlink" href="#use-arrange-act-assert" title="Link to this heading">¶</a></h3>
+<h3>3. Use Arrange / Act / Assert<a class="headerlink" href="#use-arrange-act-assert" title="Link to this heading">#</a></h3>
 <p>Every test should follow this shape:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="k">def</span><span class="w"> </span><span class="nf">test_normalises_to_unit_peak</span><span class="p">():</span>
 </span><span data-line="2">    <span class="c1"># Arrange — set up inputs</span>
@@ -518,7 +518,7 @@ treats each method as a separate test.</p></li>
 writing more than one <em>act</em> in a single test, split it into two.</p>
 </section>
 <section id="use-tmp-path-for-file-output">
-<h3>4. Use <code class="docutils literal notranslate"><span class="pre">tmp_path</span></code> for file output<a class="headerlink" href="#use-tmp-path-for-file-output" title="Link to this heading">¶</a></h3>
+<h3>4. Use <code class="docutils literal notranslate"><span class="pre">tmp_path</span></code> for file output<a class="headerlink" href="#use-tmp-path-for-file-output" title="Link to this heading">#</a></h3>
 <p>Pytest gives you a fresh temp directory per test, automatically cleaned up.
 <strong>Always use it</strong> instead of writing to the working directory or hardcoded
 paths.</p>
@@ -531,7 +531,7 @@ paths.</p>
 </div>
 </section>
 <section id="reuse-fixtures-from-conftest-py">
-<h3>5. Reuse fixtures from <code class="docutils literal notranslate"><span class="pre">conftest.py</span></code><a class="headerlink" href="#reuse-fixtures-from-conftest-py" title="Link to this heading">¶</a></h3>
+<h3>5. Reuse fixtures from <code class="docutils literal notranslate"><span class="pre">conftest.py</span></code><a class="headerlink" href="#reuse-fixtures-from-conftest-py" title="Link to this heading">#</a></h3>
 <p>The shared fixtures already cover most needs:</p>
 <div class="table-wrapper colwidths-auto docutils container">
 <table class="docutils align-default">
@@ -568,10 +568,10 @@ Single-use fixtures belong in the test file itself.</p>
 </section>
 <hr class="docutils" />
 <section id="patterns-you-ll-use-often">
-<h2>Patterns You’ll Use Often<a class="headerlink" href="#patterns-you-ll-use-often" title="Link to this heading">¶</a></h2>
+<h2>Patterns You’ll Use Often<a class="headerlink" href="#patterns-you-ll-use-often" title="Link to this heading">#</a></h2>
 <p><a class="reference internal" href="#testing-guidance"><em>back to top</em></a></p>
 <section id="parametrised-tests">
-<h3>Parametrised tests<a class="headerlink" href="#parametrised-tests" title="Link to this heading">¶</a></h3>
+<h3>Parametrised tests<a class="headerlink" href="#parametrised-tests" title="Link to this heading">#</a></h3>
 <p>When the same logic needs to be checked against many inputs, use
 <code class="docutils literal notranslate"><span class="pre">&#64;pytest.mark.parametrize</span></code> rather than copying the test:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">parametrize</span><span class="p">(</span><span class="s2">&quot;input_beats,subdivision,expected&quot;</span><span class="p">,</span> <span class="p">[</span>
@@ -588,7 +588,7 @@ Single-use fixtures belong in the test file itself.</p>
 per-case pass/fail reporting.</p>
 </section>
 <section id="approximate-snapshot-tests-for-dsp-code">
-<h3>Approximate snapshot tests for DSP code<a class="headerlink" href="#approximate-snapshot-tests-for-dsp-code" title="Link to this heading">¶</a></h3>
+<h3>Approximate snapshot tests for DSP code<a class="headerlink" href="#approximate-snapshot-tests-for-dsp-code" title="Link to this heading">#</a></h3>
 <p>DSP algorithms (tempo detection, onset detection, etc.) produce <em>approximate</em>
 results. Direct equality assertions are too brittle. Use tolerance bands
 instead:</p>
@@ -602,14 +602,14 @@ instead:</p>
 </div>
 </section>
 <section id="mocking-subprocess-calls">
-<h3>Mocking subprocess calls<a class="headerlink" href="#mocking-subprocess-calls" title="Link to this heading">¶</a></h3>
+<h3>Mocking subprocess calls<a class="headerlink" href="#mocking-subprocess-calls" title="Link to this heading">#</a></h3>
 <p>The unit tests for <code class="docutils literal notranslate"><span class="pre">stem_splitter</span></code> don’t actually run Demucs — that would be
 too slow. Instead, they mock <code class="docutils literal notranslate"><span class="pre">subprocess.run</span></code> and verify the <em>command being
 constructed</em>. The real Demucs run lives in
 <code class="docutils literal notranslate"><span class="pre">tests/integration/test_stem_splitter_real.py</span></code>.</p>
 </section>
 <section id="asserting-on-warnings">
-<h3>Asserting on warnings<a class="headerlink" href="#asserting-on-warnings" title="Link to this heading">¶</a></h3>
+<h3>Asserting on warnings<a class="headerlink" href="#asserting-on-warnings" title="Link to this heading">#</a></h3>
 <p>When testing deprecated APIs or other code paths that should emit warnings,
 use <code class="docutils literal notranslate"><span class="pre">pytest.warns()</span></code> rather than <code class="docutils literal notranslate"><span class="pre">try</span></code>/<code class="docutils literal notranslate"><span class="pre">except</span></code>:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="k">def</span><span class="w"> </span><span class="nf">test_deprecated_param_warns</span><span class="p">():</span>
@@ -621,10 +621,10 @@ use <code class="docutils literal notranslate"><span class="pre">pytest.warns()<
 </section>
 <section id="the-match-argument-is-a-regex-against-the-warning-message-useful-for-locking-in-that-the-warning-text-actually-points-users-at-the-replacement">
 <h2>The <code class="docutils literal notranslate"><span class="pre">match</span></code> argument is a regex against the warning message — useful for
-locking in that the warning text actually points users at the replacement.<a class="headerlink" href="#the-match-argument-is-a-regex-against-the-warning-message-useful-for-locking-in-that-the-warning-text-actually-points-users-at-the-replacement" title="Link to this heading">¶</a></h2>
+locking in that the warning text actually points users at the replacement.<a class="headerlink" href="#the-match-argument-is-a-regex-against-the-warning-message-useful-for-locking-in-that-the-warning-text-actually-points-users-at-the-replacement" title="Link to this heading">#</a></h2>
 </section>
 <section id="regression-tests">
-<h2>Regression tests<a class="headerlink" href="#regression-tests" title="Link to this heading">¶</a></h2>
+<h2>Regression tests<a class="headerlink" href="#regression-tests" title="Link to this heading">#</a></h2>
 <p><a class="reference internal" href="#testing-guidance"><em>back to top</em></a></p>
 <p>Some test files exist specifically to lock in behaviour that was previously
 inconsistent, ambiguous, or breaking. They sit alongside the normal unit tests
@@ -647,7 +647,7 @@ explaining <em>why</em> the test exists so it isn’t deleted by accident later.
 </section>
 <hr class="docutils" />
 <section id="coverage-reports">
-<h2>Coverage Reports<a class="headerlink" href="#coverage-reports" title="Link to this heading">¶</a></h2>
+<h2>Coverage Reports<a class="headerlink" href="#coverage-reports" title="Link to this heading">#</a></h2>
 <p>Once <code class="docutils literal notranslate"><span class="pre">pytest-cov</span></code> is installed (it’s part of the <code class="docutils literal notranslate"><span class="pre">dev</span></code> group), you can see
 which lines of source code your tests are exercising:</p>
 <div class="highlight-zsh notranslate"><div class="highlight"><pre><span></span><span data-line="1">pytest<span class="w"> </span>--cov<span class="o">=</span>drumscript<span class="w"> </span>--cov-report<span class="o">=</span>term-missing
@@ -664,7 +664,7 @@ better than total coverage.</p>
 </section>
 <hr class="docutils" />
 <section id="common-pitfalls">
-<h2>Common Pitfalls<a class="headerlink" href="#common-pitfalls" title="Link to this heading">¶</a></h2>
+<h2>Common Pitfalls<a class="headerlink" href="#common-pitfalls" title="Link to this heading">#</a></h2>
 <ol class="arabic simple">
 <li><p><strong>Don’t test third-party libraries.</strong> Test how <em>your code uses them</em>. An
 assertion like <code class="docutils literal notranslate"><span class="pre">assert</span> <span class="pre">librosa.load(&quot;x.wav&quot;)</span></code> is testing librosa, not
@@ -685,7 +685,7 @@ inside tests — pytest handles this for you.</p></li>
 </section>
 <hr class="docutils" />
 <section id="continuous-integration">
-<h2>Continuous Integration<a class="headerlink" href="#continuous-integration" title="Link to this heading">¶</a></h2>
+<h2>Continuous Integration<a class="headerlink" href="#continuous-integration" title="Link to this heading">#</a></h2>
 <p>CI runs via GitHub Actions on every push and pull request. The current
 configuration:</p>
 <ul class="simple">
@@ -699,7 +699,7 @@ a pull request so the feedback loop is fast.</p>
 </section>
 <hr class="docutils" />
 <section id="see-also">
-<h2>See Also<a class="headerlink" href="#see-also" title="Link to this heading">¶</a></h2>
+<h2>See Also<a class="headerlink" href="#see-also" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p><a class="reference external" href="https://github.com/DrumScript/DrumScript/tree/main/tests#readme">Tests README</a> — copy-pasteable command reference</p></li>
 <li><p><a class="reference internal" href="contributor_guidance.html"><span class="std std-doc">Contributor Guidance</span></a></p></li>
@@ -908,9 +908,9 @@ Tempogram saved to: `DrumScript/visuals/tempogram.png`
   </p>
 </div>
       <div class="sy-foot-socials">
-<a href="https://github.com/DrumScript/DrumScript" aria-label="GitHub">
-  <iconify-icon icon="simple-icons:github"></iconify-icon>
-</a></div>
+  <a href="https://github.com/DrumScript/DrumScript" aria-label="GitHub">
+    <iconify-icon icon="simple-icons:github"></iconify-icon>
+  </a></div>
     </div>
   </div>
 </footer>

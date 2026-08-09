@@ -6,7 +6,7 @@
     function setColorMode(t){let e=document.documentElement;e.setAttribute("data-color-mode",t);let a=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches,s=t;"auto"===t&&(s=a?"dark":"light"),"light"===s?(e.classList.remove("dark"),e.classList.add("light")):(e.classList.remove("light"),e.classList.add("dark"))}
     setColorMode(localStorage._theme||"auto");
   </script><link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=e1a1ceaf" />
-    <link rel="stylesheet" type="text/css" href="../_static/shibuya.css?v=9454f7d5" />
+    <link rel="stylesheet" type="text/css" href="../_static/shibuya.css?v=2ceb65ce" />
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
     <link media="print" rel="stylesheet" type="text/css" href="../_static/print.css?v=20ff2c19" />
     <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=132fcf90" />
@@ -240,7 +240,7 @@ data-aria-dark="Switch to auto color mode">
       <i class="i-lucide close"></i>
     </button>
     <div class="sy-scrollbar sy-rside-inner px-6 xl:top-16 xl:sticky xl:pl-0 pt-6 pb-4"><div class="localtoc"><h3>On this page</h3><ul>
-<li><a class="reference internal" href="#how-does-the-estimate-tempo-function-work-in-audio-processor-audio-loader-py-script">How does the <code class="docutils literal notranslate"><span class="pre">estimate_tempo</span></code> function work in <code class="docutils literal notranslate">audio_loader.py</span></code> script?</a><ul>
+<li><a class="reference internal" href="#how-does-the-estimate-tempo-function-work-in-audio-processor-audio-loader-py-script">How does the <code class="docutils literal notranslate"><span class="pre">estimate_tempo</span></code> function work in <code class="docutils literal notranslate"><span class="pre">audio_processor.audio_loader.py</span></code> script?</a><ul>
 <li><a class="reference internal" href="#what-the-function-does-step-by-step">What the Function Does, Step-by-Step</a></li>
 </ul>
 </li>
@@ -334,9 +334,9 @@ data-aria-dark="Switch to auto color mode">
   </div>
 </div><article class="yue" role="main">
           <section id="automatic-tempo-detection-atd">
-<h1>Automatic Tempo Detection (ATD)<a class="headerlink" href="#automatic-tempo-detection-atd" title="Link to this heading">¶</a></h1>
+<h1>Automatic Tempo Detection (ATD)<a class="headerlink" href="#automatic-tempo-detection-atd" title="Link to this heading">#</a></h1>
 <section id="how-does-the-estimate-tempo-function-work-in-audio-processor-audio-loader-py-script">
-<h2>How does the <code class="docutils literal notranslate"><span class="pre">estimate_tempo</span></code> function work in <code class="docutils literal notranslate"><span class="pre">audio_processor.audio_loader.py</span></code> script?<a class="headerlink" href="#how-does-the-estimate-tempo-function-work-in-audio-processor-audio-loader-py-script" title="Link to this heading">¶</a></h2>
+<h2>How does the <code class="docutils literal notranslate"><span class="pre">estimate_tempo</span></code> function work in <code class="docutils literal notranslate"><span class="pre">audio_processor.audio_loader.py</span></code> script?<a class="headerlink" href="#how-does-the-estimate-tempo-function-work-in-audio-processor-audio-loader-py-script" title="Link to this heading">#</a></h2>
 <!--date_created:sun-07-sept-2025-->
 <!--date_updated:sun-07-sept-2025-->
 <hr class="docutils" />
@@ -344,7 +344,7 @@ data-aria-dark="Switch to auto color mode">
 <p>Here’s a more detailed breakdown of what it does and why it’s so effective.</p>
 <hr class="docutils" />
 <section id="what-the-function-does-step-by-step">
-<h3>What the Function Does, Step-by-Step<a class="headerlink" href="#what-the-function-does-step-by-step" title="Link to this heading">¶</a></h3>
+<h3>What the Function Does, Step-by-Step<a class="headerlink" href="#what-the-function-does-step-by-step" title="Link to this heading">#</a></h3>
 <p>This function takes a fundamentally different and more robust approach than the others.</p>
 <ol class="arabic simple">
 <li><p><strong>Creates an “Energy Curve”:</strong> First, it scans the entire audio file and creates an <strong>onset strength envelope</strong>. This is a continuous curve where the peaks represent moments of high rhythmic energy, like a drum hit.</p></li>
@@ -356,7 +356,7 @@ data-aria-dark="Switch to auto color mode">
 </section>
 <hr class="docutils" />
 <section id="why-this-method-is-so-effective">
-<h2>Why This Method is So Effective<a class="headerlink" href="#why-this-method-is-so-effective" title="Link to this heading">¶</a></h2>
+<h2>Why This Method is So Effective<a class="headerlink" href="#why-this-method-is-so-effective" title="Link to this heading">#</a></h2>
 <p>The reason this “Tempogram-First” method works so well on complex songs is because it has a <strong>global perspective</strong>.</p>
 <p>The other methods were more “local.” They looked at the time between individual drum hits and could be easily fooled by a tricky local rhythm (like a triplet feel) that wasn’t representative of the whole song.</p>
 <p>This winning method, however, is like conducting a <strong>city-wide census instead of a small neighborhood poll</strong>. It analyzes the rhythmic evidence for all tempos across the entire track simultaneously. It can “see” that, while a triplet feel might be present in some sections, the evidence for the main 104 BPM pulse is much more consistent and powerful over the full duration of the song, and it correctly declares that one the winner.</p>
@@ -401,9 +401,9 @@ data-aria-dark="Switch to auto color mode">
   </p>
 </div>
       <div class="sy-foot-socials">
-<a href="https://github.com/DrumScript/DrumScript" aria-label="GitHub">
-  <iconify-icon icon="simple-icons:github"></iconify-icon>
-</a></div>
+  <a href="https://github.com/DrumScript/DrumScript" aria-label="GitHub">
+    <iconify-icon icon="simple-icons:github"></iconify-icon>
+  </a></div>
     </div>
   </div>
 </footer>

@@ -6,7 +6,7 @@
     function setColorMode(t){let e=document.documentElement;e.setAttribute("data-color-mode",t);let a=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches,s=t;"auto"===t&&(s=a?"dark":"light"),"light"===s?(e.classList.remove("dark"),e.classList.add("light")):(e.classList.remove("light"),e.classList.add("dark"))}
     setColorMode(localStorage._theme||"auto");
   </script><link rel="stylesheet" type="text/css" href="_static/pygments.css?v=e1a1ceaf" />
-    <link rel="stylesheet" type="text/css" href="_static/shibuya.css?v=9454f7d5" />
+    <link rel="stylesheet" type="text/css" href="_static/shibuya.css?v=2ceb65ce" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
     <link media="print" rel="stylesheet" type="text/css" href="_static/print.css?v=20ff2c19" />
     <link rel="stylesheet" type="text/css" href="_static/custom.css?v=132fcf90" />
@@ -358,7 +358,7 @@ data-aria-dark="Switch to auto color mode">
   </div>
 </div><article class="yue" role="main">
           <section id="changelog">
-<h1><strong>Changelog</strong><a class="headerlink" href="#changelog" title="Link to this heading">¶</a></h1>
+<h1><strong>Changelog</strong><a class="headerlink" href="#changelog" title="Link to this heading">#</a></h1>
 <!--date_added:thurs-28-may-2026-->
 <!--date:updated:sun-09-aug-2026-->
 <ul class="simple">
@@ -454,14 +454,14 @@ data-aria-dark="Switch to auto color mode">
 </ul>
 <hr class="docutils" />
 <section id="future-releases">
-<h2><em><strong>Future releases</strong></em><a class="headerlink" href="#future-releases" title="Link to this heading">¶</a></h2>
+<h2><em><strong>Future releases</strong></em><a class="headerlink" href="#future-releases" title="Link to this heading">#</a></h2>
 <p><em><a class="reference internal" href="#changelog">back</a></em></p>
 <p>Items listed below are fully implemented and <strong>published to pypi</strong> under an official version</p>
 <!--#### ***August 2026 and beyond***-->
 <section id="beta-release-target-late-2026">
-<h3><strong>[1.0.0] - Beta release - Target: late-2026</strong><a class="headerlink" href="#beta-release-target-late-2026" title="Link to this heading">¶</a></h3>
+<h3><strong>[1.0.0] - Beta release - Target: late-2026</strong><a class="headerlink" href="#beta-release-target-late-2026" title="Link to this heading">#</a></h3>
 <section id="id1">
-<h4><em>Additions</em><a class="headerlink" href="#id1" title="Link to this heading">¶</a></h4>
+<h4><em>Additions</em><a class="headerlink" href="#id1" title="Link to this heading">#</a></h4>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">output_midi</span></code>, <code class="docutils literal notranslate"><span class="pre">output_json</span></code>, <code class="docutils literal notranslate"><span class="pre">output_xml</span></code> flags to be added to <code class="docutils literal notranslate"><span class="pre">transcribe()</span></code> for multi-format export</p></li>
 <li><p>Expanded benchmark dataset coverage (ENST-Drums, MDB-Drums) building on the IDMT-SMT-Drums V2 foundation shipped in v0.1.6</p></li>
@@ -470,7 +470,7 @@ data-aria-dark="Switch to auto color mode">
 </ul>
 </section>
 <section id="id2">
-<h4><em>Changes</em><a class="headerlink" href="#id2" title="Link to this heading">¶</a></h4>
+<h4><em>Changes</em><a class="headerlink" href="#id2" title="Link to this heading">#</a></h4>
 <ul class="simple">
 <li><p>Transcription function docstrings to be updated to make clear that drum-only audio is expected as standard input</p></li>
 <li><p>README to be updated to clarify expected input for transcription functions</p></li>
@@ -493,7 +493,7 @@ data-aria-dark="Switch to auto color mode">
 </ul>
 </section>
 <section id="id3">
-<h4><em>Fixes</em><a class="headerlink" href="#id3" title="Link to this heading">¶</a></h4>
+<h4><em>Fixes</em><a class="headerlink" href="#id3" title="Link to this heading">#</a></h4>
 <ul class="simple">
 <li><p>Cymbal and hi-hat stem rendering: note tails and heads correctly aligned</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">main.py</span></code> structural bug: duplicated pipeline inside <code class="docutils literal notranslate"><span class="pre">except</span></code> block needs removing, error handling needs restructuring</p></li>
@@ -501,7 +501,7 @@ data-aria-dark="Switch to auto color mode">
 </ul>
 </section>
 <section id="id4">
-<h4><em>Tests</em><a class="headerlink" href="#id4" title="Link to this heading">¶</a></h4>
+<h4><em>Tests</em><a class="headerlink" href="#id4" title="Link to this heading">#</a></h4>
 <ul class="simple">
 <li><p><strong>Onset timing precision</strong>: investigate user feedback on score generation. Though quantisation is used, look at the extent to which slight imperfections in onset detection cause notes to be placed at incorrect positions in the score (e.g. snare hit at 0.503s instead of 0.500s generates spurious rests). https://github.com/DrumScript/DrumScript/issues/274</p></li>
 </ul>
@@ -514,12 +514,12 @@ data-aria-dark="Switch to auto color mode">
 </section>
 </section>
 <section id="august-2026">
-<h2><strong>[0.2.0] - August 2026</strong><a class="headerlink" href="#august-2026" title="Link to this heading">¶</a></h2>
+<h2><strong>[0.2.0] - August 2026</strong><a class="headerlink" href="#august-2026" title="Link to this heading">#</a></h2>
 <blockquote>
 <div><p><strong>First minor-version bump.</strong> Signals the start of the breaking-change track for <code class="docutils literal notranslate"><span class="pre">--full</span></code> flag (replaced by <code class="docutils literal notranslate"><span class="pre">--verbose</span></code>) ahead of v1.0.0 beta.</p>
 </div></blockquote>
 <section id="id5">
-<h3><em>Additions</em><a class="headerlink" href="#id5" title="Link to this heading">¶</a></h3>
+<h3><em>Additions</em><a class="headerlink" href="#id5" title="Link to this heading">#</a></h3>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">_TranscribeResult</span></code> deprecation shim: <code class="docutils literal notranslate"><span class="pre">transcribe()</span></code> non-verbose return is now a dict with <code class="docutils literal notranslate"><span class="pre">pdf_path</span></code>, <code class="docutils literal notranslate"><span class="pre">json_path</span></code>, and <code class="docutils literal notranslate"><span class="pre">midi_path</span></code> keys. Backwards-compatible as a string (returns PDF path with <code class="docutils literal notranslate"><span class="pre">DeprecationWarning</span></code>). String behaviour will be removed in v1.0.0.</p></li>
 <li><p>CHANGELOG reference added to README table of contents</p></li>
@@ -530,7 +530,7 @@ data-aria-dark="Switch to auto color mode">
 </ul>
 </section>
 <section id="id6">
-<h3><em>Changes</em><a class="headerlink" href="#id6" title="Link to this heading">¶</a></h3>
+<h3><em>Changes</em><a class="headerlink" href="#id6" title="Link to this heading">#</a></h3>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">transcribe()</span></code> return type: <code class="docutils literal notranslate"><span class="pre">str</span></code> → <code class="docutils literal notranslate"><span class="pre">_TranscribeResult</span></code> (dict subclass). See Added above for migration details.</p></li>
 <li><p>Standardised git tag naming convention to <code class="docutils literal notranslate"><span class="pre">vX.Y.Z</span></code></p></li>
@@ -541,7 +541,7 @@ data-aria-dark="Switch to auto color mode">
 </ul>
 </section>
 <section id="id7">
-<h3><em>Fixes</em><a class="headerlink" href="#id7" title="Link to this heading">¶</a></h3>
+<h3><em>Fixes</em><a class="headerlink" href="#id7" title="Link to this heading">#</a></h3>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">transcribe()</span></code> now exposes all output paths (PDF, JSON, MIDI) that <code class="docutils literal notranslate"><span class="pre">score_builder.build_score()</span></code> actually writes</p></li>
 <li><p>Dynamic version in documentation via <code class="docutils literal notranslate"><span class="pre">importlib.metadata</span></code></p></li>
@@ -553,13 +553,13 @@ data-aria-dark="Switch to auto color mode">
 </section>
 </section>
 <section id="june-2026">
-<h2><strong>[0.1.6] - June 2026</strong><a class="headerlink" href="#june-2026" title="Link to this heading">¶</a></h2>
+<h2><strong>[0.1.6] - June 2026</strong><a class="headerlink" href="#june-2026" title="Link to this heading">#</a></h2>
 <blockquote>
 <div><p><strong><code class="docutils literal notranslate"><span class="pre">v0.1.6</span></code> is the final v0.1.<em>x</em> release.</strong>
 After this, the next release jumps to v0.2.0 to signal the deprecation shim for the <code class="docutils literal notranslate"><span class="pre">full</span></code> → <code class="docutils literal notranslate"><span class="pre">verbose</span></code> removal.</p>
 </div></blockquote>
 <section id="id8">
-<h3><em>Additions</em><a class="headerlink" href="#id8" title="Link to this heading">¶</a></h3>
+<h3><em>Additions</em><a class="headerlink" href="#id8" title="Link to this heading">#</a></h3>
 <ul class="simple">
 <li><p>Deprecation shim for <code class="docutils literal notranslate"><span class="pre">full</span></code> parameter on the Python API:</p>
 <ul>
@@ -585,7 +585,7 @@ After this, the next release jumps to v0.2.0 to signal the deprecation shim for 
 </ul>
 </section>
 <section id="id9">
-<h3><em>Fixes</em><a class="headerlink" href="#id9" title="Link to this heading">¶</a></h3>
+<h3><em>Fixes</em><a class="headerlink" href="#id9" title="Link to this heading">#</a></h3>
 <ul class="simple">
 <li><p>Commented-out dead code removed from <code class="docutils literal notranslate"><span class="pre">drumscript/__init__.py</span></code> and <code class="docutils literal notranslate"><span class="pre">drumscript/main.py</span></code></p></li>
 <li><p>Flag inconsistency between <code class="docutils literal notranslate"><span class="pre">drumscript/main.py</span></code> and <code class="docutils literal notranslate"><span class="pre">drumscript/__init__.py</span></code> resolved: <code class="docutils literal notranslate"><span class="pre">argparse</span></code> in main block updated so the CLI flag is now <code class="docutils literal notranslate"><span class="pre">--full-song</span></code> (hyphenated, consistent with <code class="docutils literal notranslate"><span class="pre">--all-stems</span></code>). Auto-converts to <code class="docutils literal notranslate"><span class="pre">args.full_song</span></code> matching the Python API parameter name.</p></li>
@@ -593,9 +593,9 @@ After this, the next release jumps to v0.2.0 to signal the deprecation shim for 
 </section>
 </section>
 <section id="may-2026">
-<h2><strong>[0.1.5] - 25 May 2026</strong><a class="headerlink" href="#may-2026" title="Link to this heading">¶</a></h2>
+<h2><strong>[0.1.5] - 25 May 2026</strong><a class="headerlink" href="#may-2026" title="Link to this heading">#</a></h2>
 <section id="id10">
-<h3><em>Fixes</em><a class="headerlink" href="#id10" title="Link to this heading">¶</a></h3>
+<h3><em>Fixes</em><a class="headerlink" href="#id10" title="Link to this heading">#</a></h3>
 <ul class="simple">
 <li><p>Emergency fix: transcription outputs</p></li>
 <li><p>Updated docstrings to clarify expected input for transcription functions</p></li>
@@ -603,13 +603,13 @@ After this, the next release jumps to v0.2.0 to signal the deprecation shim for 
 </section>
 </section>
 <section id="id11">
-<h2><strong>[0.1.4] - 20 May 2026</strong><a class="headerlink" href="#id11" title="Link to this heading">¶</a></h2>
+<h2><strong>[0.1.4] - 20 May 2026</strong><a class="headerlink" href="#id11" title="Link to this heading">#</a></h2>
 <blockquote>
 <div><p><strong>First PyPI publication</strong></p>
 </div></blockquote>
 <p><strong>First release</strong></p>
 <section id="initial-public-alpha-release-to-pypi">
-<h3><em>Initial public alpha release to PyPI</em><a class="headerlink" href="#initial-public-alpha-release-to-pypi" title="Link to this heading">¶</a></h3>
+<h3><em>Initial public alpha release to PyPI</em><a class="headerlink" href="#initial-public-alpha-release-to-pypi" title="Link to this heading">#</a></h3>
 <ul class="simple">
 <li><p>End-to-end CLI pipeline: stem separation → onset detection → classification → score generation</p></li>
 <li><p>Drum classification (kick, snare, hi-hat open/closed, toms, crash, ride) using deterministic spectral analysis</p></li>
@@ -670,9 +670,9 @@ After this, the next release jumps to v0.2.0 to signal the deprecation shim for 
   </p>
 </div>
       <div class="sy-foot-socials">
-<a href="https://github.com/DrumScript/DrumScript" aria-label="GitHub">
-  <iconify-icon icon="simple-icons:github"></iconify-icon>
-</a></div>
+  <a href="https://github.com/DrumScript/DrumScript" aria-label="GitHub">
+    <iconify-icon icon="simple-icons:github"></iconify-icon>
+  </a></div>
     </div>
   </div>
 </footer>

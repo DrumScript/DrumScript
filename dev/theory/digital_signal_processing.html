@@ -6,7 +6,7 @@
     function setColorMode(t){let e=document.documentElement;e.setAttribute("data-color-mode",t);let a=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches,s=t;"auto"===t&&(s=a?"dark":"light"),"light"===s?(e.classList.remove("dark"),e.classList.add("light")):(e.classList.remove("light"),e.classList.add("dark"))}
     setColorMode(localStorage._theme||"auto");
   </script><link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=e1a1ceaf" />
-    <link rel="stylesheet" type="text/css" href="../_static/shibuya.css?v=9454f7d5" />
+    <link rel="stylesheet" type="text/css" href="../_static/shibuya.css?v=2ceb65ce" />
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
     <link media="print" rel="stylesheet" type="text/css" href="../_static/print.css?v=20ff2c19" />
     <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=132fcf90" />
@@ -332,10 +332,10 @@ data-aria-dark="Switch to auto color mode">
   </div>
 </div><article class="yue" role="main">
           <section id="digital-signal-processing-dsp">
-<h1>Digital Signal Processing (DSP)<a class="headerlink" href="#digital-signal-processing-dsp" title="Link to this heading">¶</a></h1>
+<h1>Digital Signal Processing (DSP)<a class="headerlink" href="#digital-signal-processing-dsp" title="Link to this heading">#</a></h1>
 <p><code class="docutils literal notranslate"><span class="pre">DrumScript</span></code> relies on three major pillars of <strong>Music Information Retrieval (MIR)</strong>: Source Separation, Onset Detection, and Tempo Estimation.</p>
 <section id="source-separation-demucs">
-<h2>1. Source Separation (<code class="docutils literal notranslate"><span class="pre">Demucs</span></code>)<a class="headerlink" href="#source-separation-demucs" title="Link to this heading">¶</a></h2>
+<h2>1. Source Separation (<code class="docutils literal notranslate"><span class="pre">Demucs</span></code>)<a class="headerlink" href="#source-separation-demucs" title="Link to this heading">#</a></h2>
 <p>Before transcription begins, we often need to isolate the drums from the rest of the band (guitars, vocals, etc.).</p>
 <p>We utilise the <strong>Demucs</strong> model, a state-of-the-art Hybrid Transformer architecture. Unlike older spectral masking techniques, Demucs operates in the waveform domain to cleanly separate instruments with minimal “bleeding.”</p>
 <ul class="simple">
@@ -344,7 +344,7 @@ data-aria-dark="Switch to auto color mode">
 </ul>
 </section>
 <section id="onset-detection">
-<h2>2. Onset Detection<a class="headerlink" href="#onset-detection" title="Link to this heading">¶</a></h2>
+<h2>2. Onset Detection<a class="headerlink" href="#onset-detection" title="Link to this heading">#</a></h2>
 <p>To transcribe a drum, we first need to know <em>when</em> it was hit. This is called <strong>Onset Detection</strong>.</p>
 <p>We analyze the <strong>Spectral Flux</strong>—essentially measuring how quickly the energy in the audio signal changes. A sudden spike in high-frequency energy usually indicates a percussive strike (a transient).</p>
 <ul class="simple">
@@ -353,7 +353,7 @@ data-aria-dark="Switch to auto color mode">
 </ul>
 </section>
 <section id="classification">
-<h2>3. Classification<a class="headerlink" href="#classification" title="Link to this heading">¶</a></h2>
+<h2>3. Classification<a class="headerlink" href="#classification" title="Link to this heading">#</a></h2>
 <p>Once a hit is detected, we classify it (Kick vs. Snare). DrumScript uses a <strong>Rule-Based Engine</strong> based on frequency centroids:</p>
 <ul class="simple">
 <li><p><strong>Kick:</strong> Low frequency energy (&lt; 100Hz).</p></li>
@@ -401,9 +401,9 @@ data-aria-dark="Switch to auto color mode">
   </p>
 </div>
       <div class="sy-foot-socials">
-<a href="https://github.com/DrumScript/DrumScript" aria-label="GitHub">
-  <iconify-icon icon="simple-icons:github"></iconify-icon>
-</a></div>
+  <a href="https://github.com/DrumScript/DrumScript" aria-label="GitHub">
+    <iconify-icon icon="simple-icons:github"></iconify-icon>
+  </a></div>
     </div>
   </div>
 </footer>

@@ -6,7 +6,7 @@
     function setColorMode(t){let e=document.documentElement;e.setAttribute("data-color-mode",t);let a=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches,s=t;"auto"===t&&(s=a?"dark":"light"),"light"===s?(e.classList.remove("dark"),e.classList.add("light")):(e.classList.remove("light"),e.classList.add("dark"))}
     setColorMode(localStorage._theme||"auto");
   </script><link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=e1a1ceaf" />
-    <link rel="stylesheet" type="text/css" href="../_static/shibuya.css?v=9454f7d5" />
+    <link rel="stylesheet" type="text/css" href="../_static/shibuya.css?v=2ceb65ce" />
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
     <link media="print" rel="stylesheet" type="text/css" href="../_static/print.css?v=20ff2c19" />
     <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=132fcf90" />
@@ -240,7 +240,7 @@ data-aria-dark="Switch to auto color mode">
       <i class="i-lucide close"></i>
     </button>
     <div class="sy-scrollbar sy-rside-inner px-6 xl:top-16 xl:sticky xl:pl-0 pt-6 pb-4"><div class="localtoc"><h3>On this page</h3><ul>
-<li><a class="reference internal" href="#primary-orchestrator-main-py"><strong>Primary Orchestrator (<code class="docutils literal notranslate">py</span></code>)</strong></a><ul>
+<li><a class="reference internal" href="#primary-orchestrator-main-py"><strong>Primary Orchestrator (<code class="docutils literal notranslate"><span class="pre">main.py</span></code>)</strong></a><ul>
 <li><a class="reference internal" href="#usage"><strong>Usage</strong></a></li>
 <li><a class="reference internal" href="#positional-arguments"><strong>Positional Arguments</strong></a></li>
 <li><a class="reference internal" href="#transcription-options"><strong>Transcription Options</strong></a></li>
@@ -345,32 +345,32 @@ data-aria-dark="Switch to auto color mode">
   </div>
 </div><article class="yue" role="main">
           <section id="drumscript-cli-reference">
-<h1><strong>DrumScript CLI Reference</strong><a class="headerlink" href="#drumscript-cli-reference" title="Link to this heading">¶</a></h1>
+<h1><strong>DrumScript CLI Reference</strong><a class="headerlink" href="#drumscript-cli-reference" title="Link to this heading">#</a></h1>
 <!--date_added:Sat20june2026-->
 <p>This document provides a comprehensive guide to the command-line interface for <strong>DrumScript</strong>. The primary entry point for the full pipeline is <code class="docutils literal notranslate"><span class="pre">main.py</span></code>, while individual modules can be run standalone for development and testing purposes.</p>
 <section id="primary-orchestrator-main-py">
-<h2><strong>Primary Orchestrator (<code class="docutils literal notranslate"><span class="pre">main.py</span></code>)</strong><a class="headerlink" href="#primary-orchestrator-main-py" title="Link to this heading">¶</a></h2>
+<h2><strong>Primary Orchestrator (<code class="docutils literal notranslate"><span class="pre">main.py</span></code>)</strong><a class="headerlink" href="#primary-orchestrator-main-py" title="Link to this heading">#</a></h2>
 <p>The <code class="docutils literal notranslate"><span class="pre">main.py</span></code> script orchestrates the end-to-end running of DrumScript, including stem separation, analysis, and score generation.</p>
 <section id="usage">
-<h3><strong>Usage</strong><a class="headerlink" href="#usage" title="Link to this heading">¶</a></h3>
+<h3><strong>Usage</strong><a class="headerlink" href="#usage" title="Link to this heading">#</a></h3>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span data-line="1">python<span class="w"> </span>drumscript/main.py<span class="w"> </span>&lt;audio_path&gt;<span class="w"> </span><span class="o">[</span>options<span class="o">]</span>
 </span></pre></div>
 </div>
 </section>
 <section id="positional-arguments">
-<h3><strong>Positional Arguments</strong><a class="headerlink" href="#positional-arguments" title="Link to this heading">¶</a></h3>
+<h3><strong>Positional Arguments</strong><a class="headerlink" href="#positional-arguments" title="Link to this heading">#</a></h3>
 <ul class="simple">
 <li><p><strong><code class="docutils literal notranslate"><span class="pre">audio_path</span></code></strong>: The file path to the audio file (e.g., <code class="docutils literal notranslate"><span class="pre">.mp3</span></code>, <code class="docutils literal notranslate"><span class="pre">.wav</span></code>) you wish to process.</p></li>
 </ul>
 </section>
 <section id="transcription-options">
-<h3><strong>Transcription Options</strong><a class="headerlink" href="#transcription-options" title="Link to this heading">¶</a></h3>
+<h3><strong>Transcription Options</strong><a class="headerlink" href="#transcription-options" title="Link to this heading">#</a></h3>
 <ul class="simple">
 <li><p><strong><code class="docutils literal notranslate"><span class="pre">--full-song</span></code></strong>: Instructs the pipeline to isolate the drum stem using Demucs before proceeding with transcription.</p></li>
 </ul>
 </section>
 <section id="stem-separation-options">
-<h3><strong>Stem Separation Options</strong><a class="headerlink" href="#stem-separation-options" title="Link to this heading">¶</a></h3>
+<h3><strong>Stem Separation Options</strong><a class="headerlink" href="#stem-separation-options" title="Link to this heading">#</a></h3>
 <ul class="simple">
 <li><p><strong><code class="docutils literal notranslate"><span class="pre">--drumless</span></code></strong>: Extracts a drumless backing track from the source audio.</p></li>
 <li><p><strong><code class="docutils literal notranslate"><span class="pre">--mute</span> <span class="pre">&lt;stem&gt;</span></code></strong>: Mutes specific stems (e.g., <code class="docutils literal notranslate"><span class="pre">bass</span></code>, <code class="docutils literal notranslate"><span class="pre">vocals</span></code>, <code class="docutils literal notranslate"><span class="pre">other</span></code>). This flag can be used multiple times in a single command.</p></li>
@@ -379,7 +379,7 @@ data-aria-dark="Switch to auto color mode">
 </ul>
 </section>
 <section id="notation-options">
-<h3><strong>Notation Options</strong><a class="headerlink" href="#notation-options" title="Link to this heading">¶</a></h3>
+<h3><strong>Notation Options</strong><a class="headerlink" href="#notation-options" title="Link to this heading">#</a></h3>
 <ul class="simple">
 <li><p><strong><code class="docutils literal notranslate"><span class="pre">--ts</span> <span class="pre">&lt;signature&gt;</span></code></strong>: Defines the time signature for the generated drum score. Defaults to <code class="docutils literal notranslate"><span class="pre">4/4</span></code>.</p></li>
 </ul>
@@ -387,24 +387,24 @@ data-aria-dark="Switch to auto color mode">
 </section>
 <hr class="docutils" />
 <section id="development-module-level-commands">
-<h2><strong>Development &amp; Module-Level Commands</strong><a class="headerlink" href="#development-module-level-commands" title="Link to this heading">¶</a></h2>
+<h2><strong>Development &amp; Module-Level Commands</strong><a class="headerlink" href="#development-module-level-commands" title="Link to this heading">#</a></h2>
 <p>Developers can run specific modules directly to test isolated components of the signal processing chain.</p>
 <section id="audio-loader">
-<h3><strong>Audio Loader</strong><a class="headerlink" href="#audio-loader" title="Link to this heading">¶</a></h3>
+<h3><strong>Audio Loader</strong><a class="headerlink" href="#audio-loader" title="Link to this heading">#</a></h3>
 <p>Used to verify audio loading and peak normalization.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span data-line="1">python<span class="w"> </span>-m<span class="w"> </span>drumscript.audio_processor.audio_loader<span class="w"> </span>&lt;audio_file_path&gt;
 </span></pre></div>
 </div>
 </section>
 <section id="tempo-detector">
-<h3><strong>Tempo Detector</strong><a class="headerlink" href="#tempo-detector" title="Link to this heading">¶</a></h3>
+<h3><strong>Tempo Detector</strong><a class="headerlink" href="#tempo-detector" title="Link to this heading">#</a></h3>
 <p>Estimates the BPM of a specific audio file using the tempogram-first method.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span data-line="1">python<span class="w"> </span>-m<span class="w"> </span>drumscript.audio_processor.tempo_detector<span class="w"> </span>&lt;audio_file_path&gt;
 </span></pre></div>
 </div>
 </section>
 <section id="stem-splitter-standalone">
-<h3><strong>Stem Splitter (Standalone)</strong><a class="headerlink" href="#stem-splitter-standalone" title="Link to this heading">¶</a></h3>
+<h3><strong>Stem Splitter (Standalone)</strong><a class="headerlink" href="#stem-splitter-standalone" title="Link to this heading">#</a></h3>
 <p>Directly triggers the Demucs-based separation engine.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span data-line="1">python<span class="w"> </span>-m<span class="w"> </span>drumscript.audio_processor.stem_splitter<span class="w"> </span>&lt;file&gt;<span class="w"> </span><span class="o">[</span>--drumless<span class="o">]</span><span class="w"> </span><span class="o">[</span>--mp3<span class="o">]</span><span class="w"> </span><span class="o">[</span>--all<span class="o">]</span>
 </span></pre></div>
@@ -415,7 +415,7 @@ data-aria-dark="Switch to auto color mode">
 </ul>
 </section>
 <section id="onset-detector">
-<h3><strong>Onset Detector</strong><a class="headerlink" href="#onset-detector" title="Link to this heading">¶</a></h3>
+<h3><strong>Onset Detector</strong><a class="headerlink" href="#onset-detector" title="Link to this heading">#</a></h3>
 <p>Primarily used for internal verification of the HPSS-based onset detection.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span data-line="1">python<span class="w"> </span>-m<span class="w"> </span>drumscript.audio_processor.onset_detector
 </span></pre></div>
@@ -425,7 +425,7 @@ data-aria-dark="Switch to auto color mode">
 </section>
 <hr class="docutils" />
 <section id="examples">
-<h2><strong>Examples</strong><a class="headerlink" href="#examples" title="Link to this heading">¶</a></h2>
+<h2><strong>Examples</strong><a class="headerlink" href="#examples" title="Link to this heading">#</a></h2>
 <p><strong>1. Transcribe a full song into sheet music (isolating drums first):</strong></p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span data-line="1">python<span class="w"> </span>drumscript/main.py<span class="w"> </span><span class="s2">&quot;audio_path.mp3&quot;</span><span class="w"> </span>--full-song
 </span></pre></div>
@@ -478,9 +478,9 @@ data-aria-dark="Switch to auto color mode">
   </p>
 </div>
       <div class="sy-foot-socials">
-<a href="https://github.com/DrumScript/DrumScript" aria-label="GitHub">
-  <iconify-icon icon="simple-icons:github"></iconify-icon>
-</a></div>
+  <a href="https://github.com/DrumScript/DrumScript" aria-label="GitHub">
+    <iconify-icon icon="simple-icons:github"></iconify-icon>
+  </a></div>
     </div>
   </div>
 </footer>

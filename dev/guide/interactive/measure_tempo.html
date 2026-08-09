@@ -6,7 +6,7 @@
     function setColorMode(t){let e=document.documentElement;e.setAttribute("data-color-mode",t);let a=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches,s=t;"auto"===t&&(s=a?"dark":"light"),"light"===s?(e.classList.remove("dark"),e.classList.add("light")):(e.classList.remove("light"),e.classList.add("dark"))}
     setColorMode(localStorage._theme||"auto");
   </script><link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=e1a1ceaf" />
-    <link rel="stylesheet" type="text/css" href="../../_static/shibuya.css?v=9454f7d5" />
+    <link rel="stylesheet" type="text/css" href="../../_static/shibuya.css?v=2ceb65ce" />
     <link rel="stylesheet" type="text/css" href="../../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
     <link media="print" rel="stylesheet" type="text/css" href="../../_static/print.css?v=20ff2c19" />
     <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=132fcf90" />
@@ -331,7 +331,7 @@ data-aria-dark="Switch to auto color mode">
   </div>
 </div><article class="yue" role="main">
           <section id="measure-tempo">
-<h1>Measure Tempo<a class="headerlink" href="#measure-tempo" title="Link to this heading">¶</a></h1>
+<h1>Measure Tempo<a class="headerlink" href="#measure-tempo" title="Link to this heading">#</a></h1>
 <p>DrumScript estimates the tempo (BPM) of any audio file using a <strong>spectral onset envelope</strong> approach.</p>
 <p>Under the hood, <code class="docutils literal notranslate"><span class="pre">ds.detect_tempo()</span></code> works by:</p>
 <ol class="arabic simple">
@@ -364,15 +364,15 @@ data-aria-dark="Switch to auto color mode">
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span data-line="1">Error loading audio file audio/test_track_1.wav: 
-</span></pre></div>
-</div>
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span data-line="1">/home/runner/work/DrumScript/DrumScript/drumscript/audio_processor/audio_loader.py:51: UserWarning: PySoundFile failed. Trying audioread instead.
 </span><span data-line="2">  audio_data, sample_rate = librosa.load(
 </span><span data-line="3">/home/runner/work/DrumScript/DrumScript/.venv/lib/python3.12/site-packages/librosa/core/audio.py:184: FutureWarning: librosa.core.audio.__audioread_load
 </span><span data-line="4">	Deprecated as of librosa version 0.10.0.
 </span><span data-line="5">	It will be removed in librosa version 1.0.
 </span><span data-line="6">  y, sr_native = __audioread_load(path, offset, duration, dtype)
+</span></pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span data-line="1">Error loading audio file audio/test_track_1.wav: 
 </span></pre></div>
 </div>
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="gt">---------------------------------------------------------------------------</span>
@@ -389,20 +389,20 @@ data-aria-dark="Switch to auto color mode">
 </span><span data-line="12"><span class="ne">--&gt; </span><span class="mi">209</span>     <span class="n">context</span> <span class="o">=</span> <span class="n">sf</span><span class="o">.</span><span class="n">SoundFile</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
 </span><span data-line="13"><span class="g g-Whitespace">    </span><span class="mi">211</span> <span class="k">with</span> <span class="n">context</span> <span class="k">as</span> <span class="n">sf_desc</span><span class="p">:</span>
 </span><span data-line="14">
-</span><span data-line="15"><span class="nn">File ~/work/DrumScript/DrumScript/.venv/lib/python3.12/site-packages/soundfile.py:690,</span> in <span class="ni">SoundFile.__init__</span><span class="nt">(self, file, mode, samplerate, channels, subtype, endian, format, closefd, compression_level, bitrate_mode)</span>
-</span><span data-line="16"><span class="g g-Whitespace">    </span><span class="mi">688</span> <span class="bp">self</span><span class="o">.</span><span class="n">_info</span> <span class="o">=</span> <span class="n">_create_info_struct</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="n">mode</span><span class="p">,</span> <span class="n">samplerate</span><span class="p">,</span> <span class="n">channels</span><span class="p">,</span>
-</span><span data-line="17"><span class="g g-Whitespace">    </span><span class="mi">689</span>                                  <span class="nb">format</span><span class="p">,</span> <span class="n">subtype</span><span class="p">,</span> <span class="n">endian</span><span class="p">)</span>
-</span><span data-line="18"><span class="ne">--&gt; </span><span class="mi">690</span> <span class="bp">self</span><span class="o">.</span><span class="n">_file</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_open</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="n">mode_int</span><span class="p">,</span> <span class="n">closefd</span><span class="p">)</span>
-</span><span data-line="19"><span class="g g-Whitespace">    </span><span class="mi">691</span> <span class="k">if</span> <span class="nb">set</span><span class="p">(</span><span class="n">mode</span><span class="p">)</span><span class="o">.</span><span class="n">issuperset</span><span class="p">(</span><span class="s1">&#39;r+&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">seekable</span><span class="p">():</span>
-</span><span data-line="20"><span class="g g-Whitespace">    </span><span class="mi">692</span>     <span class="c1"># Move write position to 0 (like in Python file objects)</span>
+</span><span data-line="15"><span class="nn">File ~/work/DrumScript/DrumScript/.venv/lib/python3.12/site-packages/soundfile.py:708,</span> in <span class="ni">SoundFile.__init__</span><span class="nt">(self, file, mode, samplerate, channels, subtype, endian, format, closefd, compression_level, bitrate_mode)</span>
+</span><span data-line="16"><span class="g g-Whitespace">    </span><span class="mi">706</span> <span class="bp">self</span><span class="o">.</span><span class="n">_info</span> <span class="o">=</span> <span class="n">_create_info_struct</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="n">mode</span><span class="p">,</span> <span class="n">samplerate</span><span class="p">,</span> <span class="n">channels</span><span class="p">,</span>
+</span><span data-line="17"><span class="g g-Whitespace">    </span><span class="mi">707</span>                                  <span class="nb">format</span><span class="p">,</span> <span class="n">subtype</span><span class="p">,</span> <span class="n">endian</span><span class="p">)</span>
+</span><span data-line="18"><span class="ne">--&gt; </span><span class="mi">708</span> <span class="bp">self</span><span class="o">.</span><span class="n">_file</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_open</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="n">mode_int</span><span class="p">,</span> <span class="n">closefd</span><span class="p">)</span>
+</span><span data-line="19"><span class="g g-Whitespace">    </span><span class="mi">709</span> <span class="k">if</span> <span class="nb">set</span><span class="p">(</span><span class="n">mode</span><span class="p">)</span><span class="o">.</span><span class="n">issuperset</span><span class="p">(</span><span class="s1">&#39;r+&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">seekable</span><span class="p">():</span>
+</span><span data-line="20"><span class="g g-Whitespace">    </span><span class="mi">710</span>     <span class="c1"># Move write position to 0 (like in Python file objects)</span>
 </span><span data-line="21">
-</span><span data-line="22"><span class="nn">File ~/work/DrumScript/DrumScript/.venv/lib/python3.12/site-packages/soundfile.py:1265,</span> in <span class="ni">SoundFile._open</span><span class="nt">(self, file, mode_int, closefd)</span>
-</span><span data-line="23"><span class="g g-Whitespace">   </span><span class="mi">1264</span>     <span class="n">err</span> <span class="o">=</span> <span class="n">_snd</span><span class="o">.</span><span class="n">sf_error</span><span class="p">(</span><span class="n">file_ptr</span><span class="p">)</span>
-</span><span data-line="24"><span class="ne">-&gt; </span><span class="mi">1265</span>     <span class="k">raise</span> <span class="n">LibsndfileError</span><span class="p">(</span><span class="n">err</span><span class="p">,</span> <span class="n">prefix</span><span class="o">=</span><span class="s2">&quot;Error opening </span><span class="si">{0!r}</span><span class="s2">: &quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
-</span><span data-line="25"><span class="g g-Whitespace">   </span><span class="mi">1266</span> <span class="k">if</span> <span class="n">mode_int</span> <span class="o">==</span> <span class="n">_snd</span><span class="o">.</span><span class="n">SFM_WRITE</span><span class="p">:</span>
-</span><span data-line="26"><span class="g g-Whitespace">   </span><span class="mi">1267</span>     <span class="c1"># Due to a bug in libsndfile version &lt;= 1.0.25, frames != 0</span>
-</span><span data-line="27"><span class="g g-Whitespace">   </span><span class="mi">1268</span>     <span class="c1"># when opening a named pipe in SFM_WRITE mode.</span>
-</span><span data-line="28"><span class="g g-Whitespace">   </span><span class="mi">1269</span>     <span class="c1"># See http://github.com/erikd/libsndfile/issues/77.</span>
+</span><span data-line="22"><span class="nn">File ~/work/DrumScript/DrumScript/.venv/lib/python3.12/site-packages/soundfile.py:1296,</span> in <span class="ni">SoundFile._open</span><span class="nt">(self, file, mode_int, closefd)</span>
+</span><span data-line="23"><span class="g g-Whitespace">   </span><span class="mi">1295</span>         <span class="n">err</span> <span class="o">=</span> <span class="n">_snd</span><span class="o">.</span><span class="n">sf_error</span><span class="p">(</span><span class="n">file_ptr</span><span class="p">)</span>
+</span><span data-line="24"><span class="ne">-&gt; </span><span class="mi">1296</span>         <span class="k">raise</span> <span class="n">LibsndfileError</span><span class="p">(</span><span class="n">err</span><span class="p">,</span> <span class="n">prefix</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;Error opening </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">!r}</span><span class="s2">: &quot;</span><span class="p">)</span>
+</span><span data-line="25"><span class="g g-Whitespace">   </span><span class="mi">1297</span> <span class="k">if</span> <span class="n">mode_int</span> <span class="o">==</span> <span class="n">_snd</span><span class="o">.</span><span class="n">SFM_WRITE</span><span class="p">:</span>
+</span><span data-line="26"><span class="g g-Whitespace">   </span><span class="mi">1298</span>     <span class="c1"># Due to a bug in libsndfile version &lt;= 1.0.25, frames != 0</span>
+</span><span data-line="27"><span class="g g-Whitespace">   </span><span class="mi">1299</span>     <span class="c1"># when opening a named pipe in SFM_WRITE mode.</span>
+</span><span data-line="28"><span class="g g-Whitespace">   </span><span class="mi">1300</span>     <span class="c1"># See http://github.com/erikd/libsndfile/issues/77.</span>
 </span><span data-line="29">
 </span><span data-line="30"><span class="ne">LibsndfileError</span>: Error opening &#39;audio/test_track_1.wav&#39;: Format not recognised.
 </span><span data-line="31">
@@ -521,9 +521,9 @@ data-aria-dark="Switch to auto color mode">
   </p>
 </div>
       <div class="sy-foot-socials">
-<a href="https://github.com/DrumScript/DrumScript" aria-label="GitHub">
-  <iconify-icon icon="simple-icons:github"></iconify-icon>
-</a></div>
+  <a href="https://github.com/DrumScript/DrumScript" aria-label="GitHub">
+    <iconify-icon icon="simple-icons:github"></iconify-icon>
+  </a></div>
     </div>
   </div>
 </footer>

@@ -6,7 +6,7 @@
     function setColorMode(t){let e=document.documentElement;e.setAttribute("data-color-mode",t);let a=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches,s=t;"auto"===t&&(s=a?"dark":"light"),"light"===s?(e.classList.remove("dark"),e.classList.add("light")):(e.classList.remove("light"),e.classList.add("dark"))}
     setColorMode(localStorage._theme||"auto");
   </script><link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=e1a1ceaf" />
-    <link rel="stylesheet" type="text/css" href="../_static/shibuya.css?v=9454f7d5" />
+    <link rel="stylesheet" type="text/css" href="../_static/shibuya.css?v=2ceb65ce" />
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
     <link media="print" rel="stylesheet" type="text/css" href="../_static/print.css?v=20ff2c19" />
     <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=132fcf90" />
@@ -342,18 +342,18 @@ data-aria-dark="Switch to auto color mode">
   </div>
 </div><article class="yue" role="main">
           <section id="v0-2-0-alpha">
-<h1>v0.2.0 (Alpha)<a class="headerlink" href="#v0-2-0-alpha" title="Link to this heading">¶</a></h1>
+<h1>v0.2.0 (Alpha)<a class="headerlink" href="#v0-2-0-alpha" title="Link to this heading">#</a></h1>
 <p><em>Release Date: August 2026</em></p>
 <section id="important-note">
-<h2>Important Note<a class="headerlink" href="#important-note" title="Link to this heading">¶</a></h2>
+<h2>Important Note<a class="headerlink" href="#important-note" title="Link to this heading">#</a></h2>
 <blockquote>
 <div><p><strong>First minor-version bump.</strong> Signals the start of the breaking-change track for the <code class="docutils literal notranslate"><span class="pre">--full</span></code> flag (replaced by <code class="docutils literal notranslate"><span class="pre">--verbose</span></code>) ahead of v1.0.0 beta.</p>
 </div></blockquote>
 </section>
 <section id="highlights">
-<h2>Highlights<a class="headerlink" href="#highlights" title="Link to this heading">¶</a></h2>
+<h2>Highlights<a class="headerlink" href="#highlights" title="Link to this heading">#</a></h2>
 <section id="multi-format-transcription-output-with-backwards-compatible-deprecation-shim">
-<h3>Multi-format transcription output with backwards-compatible deprecation shim<a class="headerlink" href="#multi-format-transcription-output-with-backwards-compatible-deprecation-shim" title="Link to this heading">¶</a></h3>
+<h3>Multi-format transcription output with backwards-compatible deprecation shim<a class="headerlink" href="#multi-format-transcription-output-with-backwards-compatible-deprecation-shim" title="Link to this heading">#</a></h3>
 <p><code class="docutils literal notranslate"><span class="pre">transcribe()</span></code> now returns a dict with <code class="docutils literal notranslate"><span class="pre">pdf_path</span></code>, <code class="docutils literal notranslate"><span class="pre">json_path</span></code>, and <code class="docutils literal notranslate"><span class="pre">midi_path</span></code> keys, so users can see all the files that were actually written. Previously, <code class="docutils literal notranslate"><span class="pre">score_builder.build_score()</span></code> silently wrote JSON and MIDI files alongside the PDF, but <code class="docutils literal notranslate"><span class="pre">transcribe()</span></code> only returned the PDF path.</p>
 <p>For backwards compatibility, using the return value as a string still works (returns the PDF path) but emits a <code class="docutils literal notranslate"><span class="pre">DeprecationWarning</span></code>. String behaviour will be removed in v1.0.0.</p>
 <p><strong>Migration:</strong></p>
@@ -370,12 +370,12 @@ data-aria-dark="Switch to auto color mode">
 </div>
 </section>
 <section id="versioned-documentation">
-<h3>Versioned documentation<a class="headerlink" href="#versioned-documentation" title="Link to this heading">¶</a></h3>
+<h3>Versioned documentation<a class="headerlink" href="#versioned-documentation" title="Link to this heading">#</a></h3>
 <p>Documentation now deploys to version-specific folders on GitHub Pages. A version dropdown in the navbar lets users switch between <code class="docutils literal notranslate"><span class="pre">latest</span></code>, <code class="docutils literal notranslate"><span class="pre">dev</span></code>, and archived releases (e.g. <code class="docutils literal notranslate"><span class="pre">v0.1.6</span></code>).</p>
 </section>
 </section>
 <section id="new-features">
-<h2>New Features<a class="headerlink" href="#new-features" title="Link to this heading">¶</a></h2>
+<h2>New Features<a class="headerlink" href="#new-features" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">_TranscribeResult</span></code> deprecation shim class — dict subclass with <code class="docutils literal notranslate"><span class="pre">__str__</span></code> and <code class="docutils literal notranslate"><span class="pre">__fspath__</span></code> that emit <code class="docutils literal notranslate"><span class="pre">DeprecationWarning</span></code> when used as a string. Smooth migration path from v0.1.x string return to v1.0.0 dict return.</p></li>
 <li><p>Versioned documentation deployment via <code class="docutils literal notranslate"><span class="pre">docs.yml</span></code> workflow: tag pushes deploy to <code class="docutils literal notranslate"><span class="pre">/vX.Y.Z/</span></code> and <code class="docutils literal notranslate"><span class="pre">/latest/</span></code>, <code class="docutils literal notranslate"><span class="pre">release/*</span></code> branches deploy to <code class="docutils literal notranslate"><span class="pre">/dev/</span></code>, <code class="docutils literal notranslate"><span class="pre">main</span></code> deploys to <code class="docutils literal notranslate"><span class="pre">/latest/</span></code></p></li>
@@ -385,7 +385,7 @@ data-aria-dark="Switch to auto color mode">
 </ul>
 </section>
 <section id="fixes-improvements">
-<h2>Fixes &amp; Improvements<a class="headerlink" href="#fixes-improvements" title="Link to this heading">¶</a></h2>
+<h2>Fixes &amp; Improvements<a class="headerlink" href="#fixes-improvements" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">transcribe()</span></code> now exposes all output paths (PDF, JSON, MIDI) that <code class="docutils literal notranslate"><span class="pre">score_builder.build_score()</span></code> actually writes</p></li>
 <li><p>Dynamic version in documentation via <code class="docutils literal notranslate"><span class="pre">importlib.metadata</span></code> — no longer hardcoded</p></li>
@@ -401,7 +401,7 @@ data-aria-dark="Switch to auto color mode">
 </ul>
 </section>
 <section id="contributors">
-<h2>Contributors<a class="headerlink" href="#contributors" title="Link to this heading">¶</a></h2>
+<h2>Contributors<a class="headerlink" href="#contributors" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>&#64;victoria-mckinney</p></li>
 <li><p>&#64;drumscript-admin</p></li>
@@ -446,9 +446,9 @@ data-aria-dark="Switch to auto color mode">
   </p>
 </div>
       <div class="sy-foot-socials">
-<a href="https://github.com/DrumScript/DrumScript" aria-label="GitHub">
-  <iconify-icon icon="simple-icons:github"></iconify-icon>
-</a></div>
+  <a href="https://github.com/DrumScript/DrumScript" aria-label="GitHub">
+    <iconify-icon icon="simple-icons:github"></iconify-icon>
+  </a></div>
     </div>
   </div>
 </footer>

@@ -6,7 +6,7 @@
     function setColorMode(t){let e=document.documentElement;e.setAttribute("data-color-mode",t);let a=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches,s=t;"auto"===t&&(s=a?"dark":"light"),"light"===s?(e.classList.remove("dark"),e.classList.add("light")):(e.classList.remove("light"),e.classList.add("dark"))}
     setColorMode(localStorage._theme||"auto");
   </script><link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=e1a1ceaf" />
-    <link rel="stylesheet" type="text/css" href="../_static/shibuya.css?v=9454f7d5" />
+    <link rel="stylesheet" type="text/css" href="../_static/shibuya.css?v=2ceb65ce" />
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
     <link media="print" rel="stylesheet" type="text/css" href="../_static/print.css?v=20ff2c19" />
     <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=132fcf90" />
@@ -242,8 +242,8 @@ data-aria-dark="Switch to auto color mode">
     <div class="sy-scrollbar sy-rside-inner px-6 xl:top-16 xl:sticky xl:pl-0 pt-6 pb-4"><div class="localtoc"><h3>On this page</h3><ul>
 <li><a class="reference internal" href="#release-plan">Release Plan</a><ul>
 <li><a class="reference internal" href="#alpha-priorities-v0-3-0-v0-9-0">Alpha Priorities (v0.3.0 &#8211; v0.9.0)</a></li>
-<li><a class="reference internal" href="#beta-priorities-0-9-x-0-9-9">Beta Priorities <code class="docutils literal notranslate">9.x</span></code> &#8211; <code class="docutils literal notranslate">9.9</span></code></a></li>
-<li><a class="reference internal" href="#stable-version-1-0-0-and-beyond">Stable Version <code class="docutils literal notranslate">0.0</span></code> and Beyond</a></li>
+<li><a class="reference internal" href="#beta-priorities-0-9-x-0-9-9">Beta Priorities <code class="docutils literal notranslate"><span class="pre">0.9.x</span></code> &#8211; <code class="docutils literal notranslate"><span class="pre">0.9.9</span></code></a></li>
+<li><a class="reference internal" href="#stable-version-1-0-0-and-beyond">Stable Version <code class="docutils literal notranslate"><span class="pre">1.0.0</span></code> and Beyond</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#how-to-get-involved">How to Get Involved</a></li>
@@ -337,7 +337,7 @@ data-aria-dark="Switch to auto color mode">
   </div>
 </div><article class="yue" role="main">
           <section id="roadmap-for-drumscript">
-<h1>Roadmap for <code class="docutils literal notranslate"><span class="pre">DrumScript</span></code><a class="headerlink" href="#roadmap-for-drumscript" title="Link to this heading">¶</a></h1>
+<h1>Roadmap for <code class="docutils literal notranslate"><span class="pre">DrumScript</span></code><a class="headerlink" href="#roadmap-for-drumscript" title="Link to this heading">#</a></h1>
 <!--date_created: thurs-21-may-2026-->
 <!--date_updated: sat-20-june-2026-->
 <blockquote>
@@ -357,7 +357,7 @@ From <strong>01 June 2026 to 31 August</strong> alpha testing is under way.</p>
 </ul>
 <hr class="docutils" />
 <section id="release-plan">
-<h2>Release Plan<a class="headerlink" href="#release-plan" title="Link to this heading">¶</a></h2>
+<h2>Release Plan<a class="headerlink" href="#release-plan" title="Link to this heading">#</a></h2>
 <div class="table-wrapper colwidths-auto docutils container">
 <table class="docutils align-default">
 <thead>
@@ -403,7 +403,7 @@ From <strong>01 June 2026 to 31 August</strong> alpha testing is under way.</p>
 </ul>
 <hr class="docutils" />
 <section id="alpha-priorities-v0-3-0-v0-9-0">
-<h3>Alpha Priorities (v0.3.0 – v0.9.0)<a class="headerlink" href="#alpha-priorities-v0-3-0-v0-9-0" title="Link to this heading">¶</a></h3>
+<h3>Alpha Priorities (v0.3.0 – v0.9.0)<a class="headerlink" href="#alpha-priorities-v0-3-0-v0-9-0" title="Link to this heading">#</a></h3>
 <p><strong>What we’re focused on during the alpha:</strong></p>
 <ul class="simple">
 <li><p>Expanding test coverage across <strong>genres</strong>, <strong>kit types</strong>, and <strong>recording conditions</strong></p></li>
@@ -417,11 +417,11 @@ From <strong>01 June 2026 to 31 August</strong> alpha testing is under way.</p>
 </ul>
 </section>
 <section id="beta-priorities-0-9-x-0-9-9">
-<h3>Beta Priorities <code class="docutils literal notranslate"><span class="pre">0.9.x</span></code> – <code class="docutils literal notranslate"><span class="pre">0.9.9</span></code><a class="headerlink" href="#beta-priorities-0-9-x-0-9-9" title="Link to this heading">¶</a></h3>
+<h3>Beta Priorities <code class="docutils literal notranslate"><span class="pre">0.9.x</span></code> – <code class="docutils literal notranslate"><span class="pre">0.9.9</span></code><a class="headerlink" href="#beta-priorities-0-9-x-0-9-9" title="Link to this heading">#</a></h3>
 <p><strong>Immediately prior to release of DrumScript v1.0.0 some goals will be small fixes to ensure robustness, testing the UI, integrating the UI with current CI/CD pipelines</strong></p>
 </section>
 <section id="stable-version-1-0-0-and-beyond">
-<h3>Stable Version <code class="docutils literal notranslate"><span class="pre">1.0.0</span></code> and Beyond<a class="headerlink" href="#stable-version-1-0-0-and-beyond" title="Link to this heading">¶</a></h3>
+<h3>Stable Version <code class="docutils literal notranslate"><span class="pre">1.0.0</span></code> and Beyond<a class="headerlink" href="#stable-version-1-0-0-and-beyond" title="Link to this heading">#</a></h3>
 <ol class="arabic simple">
 <li><p><strong>Smarter classification across genres and kits</strong></p></li>
 </ol>
@@ -471,7 +471,7 @@ transient were both being classified.ate transcription and meaningful notatio</p
 </section>
 <hr class="docutils" />
 <section id="how-to-get-involved">
-<h2>How to Get Involved<a class="headerlink" href="#how-to-get-involved" title="Link to this heading">¶</a></h2>
+<h2>How to Get Involved<a class="headerlink" href="#how-to-get-involved" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p><strong>Report bugs or edge cases:</strong> <a class="reference external" href="https://github.com/DrumScript/DrumScript/issues">GitHub Issues</a></p></li>
 <li><p><strong>Suggest features:</strong> <a class="reference external" href="https://github.com/DrumScript/DrumScript/issues/new?template=feature_request.md">Feature Request template</a></p></li>
@@ -481,7 +481,7 @@ transient were both being classified.ate transcription and meaningful notatio</p
 </ul>
 </section>
 <section id="similar-projects">
-<h2>Similar Projects<a class="headerlink" href="#similar-projects" title="Link to this heading">¶</a></h2>
+<h2>Similar Projects<a class="headerlink" href="#similar-projects" title="Link to this heading">#</a></h2>
 <p>No affiliation as yet, however.</p>
 <ul class="simple">
 <li><p><strong><a class="reference external" href="https://librosa.org/">librosa</a></strong> — The spectral analysis library that powers DrumScript’s onset detection and feature extraction.</p></li>
@@ -532,9 +532,9 @@ transient were both being classified.ate transcription and meaningful notatio</p
   </p>
 </div>
       <div class="sy-foot-socials">
-<a href="https://github.com/DrumScript/DrumScript" aria-label="GitHub">
-  <iconify-icon icon="simple-icons:github"></iconify-icon>
-</a></div>
+  <a href="https://github.com/DrumScript/DrumScript" aria-label="GitHub">
+    <iconify-icon icon="simple-icons:github"></iconify-icon>
+  </a></div>
     </div>
   </div>
 </footer>

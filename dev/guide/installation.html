@@ -6,7 +6,7 @@
     function setColorMode(t){let e=document.documentElement;e.setAttribute("data-color-mode",t);let a=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches,s=t;"auto"===t&&(s=a?"dark":"light"),"light"===s?(e.classList.remove("dark"),e.classList.add("light")):(e.classList.remove("light"),e.classList.add("dark"))}
     setColorMode(localStorage._theme||"auto");
   </script><link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=e1a1ceaf" />
-    <link rel="stylesheet" type="text/css" href="../_static/shibuya.css?v=9454f7d5" />
+    <link rel="stylesheet" type="text/css" href="../_static/shibuya.css?v=2ceb65ce" />
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
     <link media="print" rel="stylesheet" type="text/css" href="../_static/print.css?v=20ff2c19" />
     <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=132fcf90" />
@@ -338,7 +338,7 @@ data-aria-dark="Switch to auto color mode">
           <p># Installation</p>
 <!--date_updated:tues-12-may-2026-->
 <section id="prerequisites">
-<h1>Prerequisites<a class="headerlink" href="#prerequisites" title="Link to this heading">¶</a></h1>
+<h1>Prerequisites<a class="headerlink" href="#prerequisites" title="Link to this heading">#</a></h1>
 <ul class="simple">
 <li><p><strong>Python:</strong> 3.9 or higher</p></li>
 <li><p><strong>System Tools:</strong> <code class="docutils literal notranslate"><span class="pre">FFmpeg</span></code> (for users uploading <code class="docutils literal notranslate"><span class="pre">.mp3</span></code>)</p></li>
@@ -362,17 +362,17 @@ data-aria-dark="Switch to auto color mode">
 </div></blockquote>
 </section>
 <section id="standard-installation">
-<h1>Standard Installation<a class="headerlink" href="#standard-installation" title="Link to this heading">¶</a></h1>
+<h1>Standard Installation<a class="headerlink" href="#standard-installation" title="Link to this heading">#</a></h1>
 <p>The easiest way to install DrumScript is via pip:</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span><span data-line="1">uv pip install drumscript
 </span></pre></div>
 </div>
 </section>
 <section id="installing-external-dependencies">
-<h1>Installing External Dependencies<a class="headerlink" href="#installing-external-dependencies" title="Link to this heading">¶</a></h1>
+<h1>Installing External Dependencies<a class="headerlink" href="#installing-external-dependencies" title="Link to this heading">#</a></h1>
 <p><strong>DrumScript requires <code class="docutils literal notranslate"><span class="pre">FFmpeg</span></code> for audio processing <code class="docutils literal notranslate"><span class="pre">.mp3</span></code></strong></p>
 <section id="installation-of-ffmpeg">
-<h2>Installation of <code class="docutils literal notranslate"><span class="pre">FFmpeg</span></code><a class="headerlink" href="#installation-of-ffmpeg" title="Link to this heading">¶</a></h2>
+<h2>Installation of <code class="docutils literal notranslate"><span class="pre">FFmpeg</span></code><a class="headerlink" href="#installation-of-ffmpeg" title="Link to this heading">#</a></h2>
 <p><strong>macOS/Linux</strong>
 The standard way to install FFmpeg on macOS/Linux is using <strong>Homebrew</strong>, which automatically sets up the system path for you.</p>
 <ol class="arabic">
@@ -400,7 +400,7 @@ The standard way to install FFmpeg on macOS/Linux is using <strong>Homebrew</str
 </ol>
 </section>
 <section id="verify-installation-of-ffmpeg">
-<h2>Verify Installation of <code class="docutils literal notranslate"><span class="pre">FFmpeg</span></code><a class="headerlink" href="#verify-installation-of-ffmpeg" title="Link to this heading">¶</a></h2>
+<h2>Verify Installation of <code class="docutils literal notranslate"><span class="pre">FFmpeg</span></code><a class="headerlink" href="#verify-installation-of-ffmpeg" title="Link to this heading">#</a></h2>
 <p>To confirm <code class="docutils literal notranslate"><span class="pre">FFmpeg</span></code> is correctly added to your system path, open a new Terminal (or Command Prompt for Windows users) and run:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span data-line="1">ffmpeg<span class="w"> </span>-version
 </span></pre></div>
@@ -448,9 +448,9 @@ The standard way to install FFmpeg on macOS/Linux is using <strong>Homebrew</str
   </p>
 </div>
       <div class="sy-foot-socials">
-<a href="https://github.com/DrumScript/DrumScript" aria-label="GitHub">
-  <iconify-icon icon="simple-icons:github"></iconify-icon>
-</a></div>
+  <a href="https://github.com/DrumScript/DrumScript" aria-label="GitHub">
+    <iconify-icon icon="simple-icons:github"></iconify-icon>
+  </a></div>
     </div>
   </div>
 </footer>

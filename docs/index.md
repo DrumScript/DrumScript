@@ -1,9 +1,11 @@
 # `DrumScript` Documentation
 
 <!--date_created:tuesday-30-december-2025-->
-<!--date_updated:sat-27-june-2026-->
+<!--date_updated:sun-09-august-2026-->
 
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1eDVXc3d6ezmorxINOjzldRPSC3emTl2I)
+
+> **[repo stats](https://github.com/DrumScript/DrumScript/blob/github-repo-stats/DrumScript/DrumScript/latest-report/report.pdf)**
 
 **DrumScript** is an open-source Python library and CLI tool designed for drummers and audio engineers.  DrumScript's classification engine is **deterministic**. While its core mission is **Automatic Drum Transcription (ADT)** (converting drum recordings into sheet music), it also functions as a powerful **Audio Toolbox** for extracting drums from polyphonic tracks, creating backing tracks, and analysing rhythm.
 

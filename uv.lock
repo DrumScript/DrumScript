@@ -1182,10 +1182,6 @@ dev = [
     { name = "ruff" },
     { name = "shibuya", version = "2025.10.21", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
     { name = "shibuya", version = "2026.7.12", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.10'" },
-]
-
-[package.dev-dependencies]
-dev = [
     { name = "twine", version = "6.2.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
     { name = "twine", version = "7.0.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.10'" },
 ]
@@ -1209,17 +1205,15 @@ requires-dist = [
     { name = "pytest-cov", marker = "extra == 'dev'", specifier = ">=7.1.0" },
     { name = "reportlab" },
     { name = "requests", marker = "extra == 'dev'", specifier = ">=2.32.5" },
-    { name = "ruff", marker = "extra == 'dev'", specifier = ">=0.15.11,<0.16" },
+    { name = "ruff", marker = "extra == 'dev'", specifier = ">=0.15.11" },
     { name = "scipy" },
     { name = "shibuya", marker = "extra == 'dev'", specifier = ">=2025.10.21" },
     { name = "soundfile" },
     { name = "torch", specifier = ">=2.4,<2.9" },
     { name = "torchaudio", specifier = ">=2.4,<2.9" },
+    { name = "twine", marker = "extra == 'dev'", specifier = ">=6.2.0" },
 ]
 provides-extras = ["dev"]
-
-[package.metadata.requires-dev]
-dev = [{ name = "twine", specifier = ">=6.2.0" }]
 
 [[package]]
 name = "einops"

@@ -255,6 +255,7 @@ data-aria-dark="Switch to auto color mode">
 <li><a class="reference internal" href="#parametrised-tests">Parametrised tests</a></li>
 <li><a class="reference internal" href="#approximate-snapshot-tests-for-dsp-code">Approximate snapshot tests for DSP code</a></li>
 <li><a class="reference internal" href="#mocking-subprocess-calls">Mocking subprocess calls</a></li>
+<li><a class="reference internal" href="#knowing-what-mocking-cannot-prove">Knowing what mocking cannot prove</a></li>
 <li><a class="reference internal" href="#asserting-on-warnings">Asserting on warnings</a></li>
 </ul>
 </li>
@@ -356,7 +357,7 @@ locking in that the warning text actually points users at the replacement.</a></
           <section id="testing-guidance">
 <h1>Testing Guidance<a class="headerlink" href="#testing-guidance" title="Link to this heading">#</a></h1>
 <!--date_created: sat-21-june-2025-->
-<!--date_updated: thurs-18-june-2026-->
+<!--date_updated: sun-09-august-2026-->
 <p>DrumScript ships with a <a class="reference external" href="https://docs.pytest.org/">pytest</a> test suite organised
 around a clear separation between <strong>fast unit tests</strong> and <strong>slower integration
 tests</strong>. This page covers the <em>philosophy</em> and <em>contribution conventions</em> for
@@ -384,22 +385,27 @@ the suite. For a copy-pasteable command reference, see the
 <thead>
 <tr class="row-odd"><th class="head"><p>Layer</p></th>
 <th class="head"><p>Speed</p></th>
-<th class="head"><p>Volume (as of v0.1.6)</p></th>
+<th class="head"><p>Volume (as of v0.2.0)</p></th>
 <th class="head"><p>What it covers</p></th>
 </tr>
 </thead>
 <tbody>
 <tr class="row-even"><td><p><strong>Unit</strong></p></td>
 <td><p>milliseconds</p></td>
-<td><p>~131 cases across 11 files</p></td>
+<td><p>~138 cases across 11 files</p></td>
 <td><p>Pure functions, helper logic, no I/O</p></td>
 </tr>
-<tr class="row-odd"><td><p><strong>Integration</strong></p></td>
-<td><p>seconds–minutes</p></td>
-<td><p>~8 cases</p></td>
-<td><p>Real Demucs runs, real ffmpeg, real files</p></td>
+<tr class="row-odd"><td><p><strong>Integration (fast)</strong></p></td>
+<td><p>seconds</p></td>
+<td><p>~12 cases</p></td>
+<td><p>Real audio and real file writes, no Demucs</p></td>
 </tr>
-<tr class="row-even"><td><p><strong>End-to-end</strong></p></td>
+<tr class="row-even"><td><p><strong>Integration (slow)</strong></p></td>
+<td><p>seconds–minutes</p></td>
+<td><p>~11 cases</p></td>
+<td><p>Real Demucs runs, real ffmpeg</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>End-to-end</strong></p></td>
 <td><p>minutes</p></td>
 <td><p>very few</p></td>
 <td><p>Full pipeline: audio → MIDI/PDF/XML</p></td>
@@ -407,10 +413,17 @@ the suite. For a copy-pasteable command reference, see the
 </tbody>
 </table>
 </div>
-<p>The dev loop (<code class="docutils literal notranslate"><span class="pre">pytest</span> <span class="pre">-m</span> <span class="pre">&quot;not</span> <span class="pre">slow&quot;</span></code>) runs only the unit layer, which finishes
-in well under 10 seconds. Integration tests are opt-in, so they don’t slow
-down day-to-day development but can be triggered before a release with a plain
-<code class="docutils literal notranslate"><span class="pre">pytest</span></code>.</p>
+<p>The dev loop (<code class="docutils literal notranslate"><span class="pre">pytest</span> <span class="pre">-m</span> <span class="pre">&quot;not</span> <span class="pre">slow&quot;</span></code>) runs the unit layer <strong>and</strong> the fast
+integration layer. The unit layer finishes in well under 10 seconds; the fast
+integration tier adds roughly 30 seconds because it really loads audio and
+really writes PDF/JSON/MIDI to disk.</p>
+<p>That tier exists because mocking has a blind spot. <code class="docutils literal notranslate"><span class="pre">tests/unit/test_transcribe.py</span></code>
+mocks <code class="docutils literal notranslate"><span class="pre">build_score</span></code>, so it can only prove <em>“transcribe() reports whatever
+build_score told it”</em> — it can never prove the files landed on disk. The fast
+integration tests close that gap, and because they don’t need model weights they
+can run in CI on every push.</p>
+<p>The slow tier (real Demucs) stays opt-in and is triggered before a release with
+a plain <code class="docutils literal notranslate"><span class="pre">pytest</span></code>.</p>
 <div class="tip admonition">
 <p class="admonition-title">Why this matters</p>
 <p>Trying to test everything end-to-end is the most common testing mistake. It
@@ -442,8 +455,9 @@ when something fails. Unit tests catch <em>most</em> bugs <em>much</em> faster.<
 </span><span data-line="18">    ├── test_stem_splitter_helpers.py
 </span><span data-line="19">    ├── test_tempo_detector.py
 </span><span data-line="20">    └── test_transcribe.py
-</span><span data-line="21">└── integration/             ← Demucs / ffmpeg / files (slow)
-</span><span data-line="22">    └── test_stem_splitter_real.py
+</span><span data-line="21">└── integration/             ← real files; Demucs/ffmpeg where noted
+</span><span data-line="22">    ├── test_stem_splitter_real.py   ← all cases require Demucs (slow)
+</span><span data-line="23">    └── test_transcribe_real.py      ← 12 cases need no Demucs, 3 do
 </span></pre></div>
 </div>
 <p>Tests are auto-discovered by pytest — any file matching <code class="docutils literal notranslate"><span class="pre">test_*.py</span></code> under
@@ -607,6 +621,22 @@ instead:</p>
 too slow. Instead, they mock <code class="docutils literal notranslate"><span class="pre">subprocess.run</span></code> and verify the <em>command being
 constructed</em>. The real Demucs run lives in
 <code class="docutils literal notranslate"><span class="pre">tests/integration/test_stem_splitter_real.py</span></code>.</p>
+</section>
+<section id="knowing-what-mocking-cannot-prove">
+<h3>Knowing what mocking cannot prove<a class="headerlink" href="#knowing-what-mocking-cannot-prove" title="Link to this heading">#</a></h3>
+<p>Mocking buys speed but hides whole classes of bug. <code class="docutils literal notranslate"><span class="pre">tests/unit/test_transcribe.py</span></code>
+mocks <code class="docutils literal notranslate"><span class="pre">build_score</span></code>, so it verifies the <em>contract between</em> <code class="docutils literal notranslate"><span class="pre">transcribe()</span></code> and
+<code class="docutils literal notranslate"><span class="pre">build_score()</span></code> — not that any file was written. Two v0.2.0 bugs sat squarely in
+that blind spot:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">transcribe()</span></code> reported PDF/JSON/MIDI paths unconditionally, including files
+whose export had failed.</p></li>
+<li><p>The CLI’s stem flags were only reachable from inside an <code class="docutils literal notranslate"><span class="pre">except</span></code> handler, so
+<code class="docutils literal notranslate"><span class="pre">--drumless</span></code> silently produced nothing on the happy path.</p></li>
+</ul>
+<p>Neither was visible to a mocked test. Both are now covered by
+<code class="docutils literal notranslate"><span class="pre">tests/integration/test_transcribe_real.py</span></code>. The rule of thumb: if a change
+alters <em>what ends up on disk</em>, a unit test alone is not enough.</p>
 </section>
 <section id="asserting-on-warnings">
 <h3>Asserting on warnings<a class="headerlink" href="#asserting-on-warnings" title="Link to this heading">#</a></h3>

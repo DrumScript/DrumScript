@@ -74,6 +74,8 @@
 * Fixed `create_backing_track` runbook; replaced and tidied functions in drumscript_interactive_notebook on Colab
 * `ds.transcribe()` non-verbose return now exposes all output paths (PDF, JSON, MIDI) instead of only the PDF path. Previously, `score_builder.build_score()` silently wrote JSON and MIDI files but `transcribe()` only returned the PDF path — users had no way of knowing the other files existed
 * Investigated `drumscript/main.py` (~line 26) `.wav` comment: comment was misleading — referred to stem output format, not input format. Clarified to reflect actual behaviour
+* `ds.transcribe()` now reports only the output files that were actually written. `score_builder.build_score()` exports JSON, PDF and MIDI in three independent `try`/`except` blocks, so a failure in one does not stop the others — but it returned `None`, giving callers no way to tell which succeeded. `transcribe()` therefore advertised all three paths unconditionally, including files never written to disk. `build_score()` now returns a dict of the paths it successfully wrote, and `transcribe()` reports that; a non-dict return (older `build_score`, or a test double) falls back to the computed paths so existing callers are unaffected
+* `release.yml` version-bump `sed` anchored to leading whitespace. The previous pattern matched any line containing `__version__ = "X.Y.Z"`, so it rewrote the commented-out historical line alongside the live fallback in `drumscript/__init__.py`, destroying the record of the previous version on every release. Also tightened `[0-9]*` to `[0-9]\+` so it cannot match an empty version string
 
 > ### *Tests*
 
@@ -81,6 +83,7 @@
 * Fixed Sphinx build errors for documentation
 * Amended structure of index in [README.md](README.md) and added missing H2 headers
 * Investigated `main.py` `.wav` comment and input/output format behaviour: confirmed `load_audio()` supports any format librosa can decode (wav, mp3, flac, ogg); ffmpeg only required for MP3 input decoding and MP3 stem output
+* Added 4 tests to `tests/unit/test_transcribe.py` (16 → 20) covering written-path reporting: failed export omits its path, all-success reports all three, `None` return falls back to computed paths, verbose dict reflects the same
 
 ---
 

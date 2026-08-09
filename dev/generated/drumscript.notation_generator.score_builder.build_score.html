@@ -357,6 +357,14 @@ data-aria-dark="Switch to auto color mode">
 <li><p><strong>time_signature</strong> (<em>str</em><em>, </em><em>optional</em>) – Time signature string (e.g., “4/4”).</p></li>
 </ul>
 </dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Mapping of the files that were <strong>successfully written</strong>, with keys
+<code class="docutils literal notranslate"><span class="pre">pdf_path</span></code>, <code class="docutils literal notranslate"><span class="pre">json_path</span></code> and <code class="docutils literal notranslate"><span class="pre">midi_path</span></code>. A key is absent if that
+export failed, so callers can report only files that actually exist.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict[str, str]</p>
+</dd>
 </dl>
 </dd></dl>
 

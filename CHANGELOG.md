@@ -65,6 +65,7 @@
 * Updated `docs/guide/usage.md` section 6 with new `transcribe()` return type examples; filled in previously empty Extract Backing Track and Extract Drum-Only Audio sections
 * Added repository statistics link to `docs/index.md` homepage
 * Consolidated `twine` into the `dev` optional-dependency group in `pyproject.toml`; removed the now-redundant `[dependency-groups]` section
+* Excluded markdown from ruff via `extend-exclude = ["*.md"]` in `pyproject.toml`. ruff >=0.16 formats Python code blocks inside `.md` files by default, which reflows deliberate one-liner snippets (e.g. `import platform; print(...)`) and collapses readable multi-line examples. No-op on the currently locked ruff 0.15.22; prevents CI breaking on a future `uv lock --upgrade`
 
 > ### *Fixes*
 
@@ -75,6 +76,8 @@
 * Investigated `drumscript/main.py` (~line 26) `.wav` comment: comment was misleading — referred to stem output format, not input format. Clarified to reflect actual behaviour
 * `ds.transcribe()` now reports only the output files that were actually written. `score_builder.build_score()` exports JSON, PDF and MIDI in three independent `try`/`except` blocks, so a failure in one does not stop the others — but it returned `None`, giving callers no way to tell which succeeded. `transcribe()` therefore advertised all three paths unconditionally, including files never written to disk. `build_score()` now returns a dict of the paths it successfully wrote, and `transcribe()` reports that; a non-dict return (older `build_score`, or a test double) falls back to the computed paths so existing callers are unaffected
 * `release.yml` version-bump `sed` anchored to leading whitespace. The previous pattern matched any line containing `__version__ = "X.Y.Z"`, so it rewrote the commented-out historical line alongside the live fallback in `drumscript/__init__.py`, destroying the record of the previous version on every release. Also tightened `[0-9]*` to `[0-9]\+` so it cannot match an empty version string
+* CLI stem flags (`--drumless`, `--all-stems`, `--mute`) now work on the happy path. `separate_audio()` was only ever called from inside the `except` handler in `drumscript/main.py`, so `drumscript song.mp3 --drumless` ran the transcription pipeline, succeeded, and exited without producing a backing track — silently, with no error. Stem handling moved into the primary `try` block: full separation for stem flags, the cheaper `extract_drum_stem()` for `--full-song` alone, and both combined when transcription follows separation. The Python API (`ds.extract_stems()`) was never affected
+* Removed the unreachable second `except Exception` clause in `drumscript/main.py`. The handler above it already caught `Exception`, so it could never run; the duplicated pipeline that lived inside the first handler also propagated exceptions uncaught, since a sibling `except` cannot catch them. Both blocks commented out rather than deleted, per project convention
 
 > ### *Tests*
 
@@ -83,6 +86,7 @@
 * Amended structure of index in [README.md](README.md) and added missing H2 headers
 * Investigated `main.py` `.wav` comment and input/output format behaviour: confirmed `load_audio()` supports any format librosa can decode (wav, mp3, flac, ogg); ffmpeg only required for MP3 input decoding and MP3 stem output
 * Added 4 tests to `tests/unit/test_transcribe.py` (16 → 20) covering written-path reporting: failed export omits its path, all-success reports all three, `None` return falls back to computed paths, verbose dict reflects the same
+* Added `tests/integration/test_transcribe_real.py` (15 tests) with real end-to-end coverage, nothing mocked. Fast tier (12 tests, drum-only audio, no Demucs) verifies `transcribe()` writes PDF/JSON/MIDI to disk, the JSON parses, the `_TranscribeResult` deprecation shim and `__fspath__` work, and `build_score()` reports only files that exist — marked `integration` but not `slow`, so it runs in CI under `pytest -m "not slow"`. Slow tier (3 tests, requires Demucs) covers the CLI stem flags including `--drumless` producing a backing track without a score
 
 ---
 

@@ -120,6 +120,7 @@ addopts = "-v --tb=short --strict-markers --ignore=local_tests/classification_en
 
 # --- RUFF CONFIGURATION ---
 [tool.ruff]
+extend-exclude = ["*.md"]
 # Set the maximum line length
 line-length = 150
 # Target Python 3.9 as minimum supported version
@@ -134,5 +135,3 @@ ignore = []
 # Enforce double quotes and standard spacing (Black-compatible)
 quote-style = "double"
 indent-style = "space"
-
-

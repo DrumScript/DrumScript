@@ -57,6 +57,7 @@
 * Updated `README.md` Quick Start examples to use new dict-based `transcribe()` return with deprecation note
 * Updated `docs/guide/usage.md` section 6 with new `transcribe()` return type examples; filled in previously empty Extract Backing Track and Extract Drum-Only Audio sections
 * Added repository statistics link to `docs/index.md` homepage
+* Updated `docs/conf.py` banner text for v0.2.0 to reflect multi-format transcription output
 
 > ### *Additions*
 

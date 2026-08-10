@@ -82,6 +82,16 @@ def build_score(
     pdf_filepath = f"{base_path}.pdf"
     midi_filepath = f"{base_path}.mid"
 
+    # Ensure the destination directory exists before any export runs.
+    # midi_exporter and xml_exporter each create it themselves, but the JSON
+    # write below and pdf_exporter do not — so running from a directory that
+    # has no `outputs/` (e.g. a pip-installed user invoking the CLI anywhere
+    # other than the repo root) silently produced a MIDI file and nothing else.
+    # Creating it centrally here fixes every caller, CLI and Python API alike.
+    parent_dir = os.path.dirname(base_path)
+    if parent_dir:
+        os.makedirs(parent_dir, exist_ok=True)
+
     # Records only the exports that actually succeed. Each export below is
     # individually fault-tolerant, so a MIDI failure must not stop the PDF
     # being reported. Returning this lets callers (e.g. ds.transcribe) avoid

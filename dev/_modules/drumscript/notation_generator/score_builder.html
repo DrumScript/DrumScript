@@ -384,65 +384,75 @@ data-aria-dark="Switch to auto color mode">
 </span><span data-line="82">    <span class="n">pdf_filepath</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">base_path</span><span class="si">}</span><span class="s2">.pdf&quot;</span>
 </span><span data-line="83">    <span class="n">midi_filepath</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">base_path</span><span class="si">}</span><span class="s2">.mid&quot;</span>
 </span><span data-line="84">
-</span><span data-line="85">    <span class="c1"># Records only the exports that actually succeed. Each export below is</span>
-</span><span data-line="86">    <span class="c1"># individually fault-tolerant, so a MIDI failure must not stop the PDF</span>
-</span><span data-line="87">    <span class="c1"># being reported. Returning this lets callers (e.g. ds.transcribe) avoid</span>
-</span><span data-line="88">    <span class="c1"># advertising a path to a file that was never written.</span>
-</span><span data-line="89">    <span class="n">written_paths</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
-</span><span data-line="90">
-</span><span data-line="91">    <span class="c1"># 2. Save Transcription Data to JSON</span>
-</span><span data-line="92">    <span class="c1"># This file serves as the &quot;Source of Truth&quot; for the PDF renderer.</span>
-</span><span data-line="93">    <span class="k">try</span><span class="p">:</span>
-</span><span data-line="94">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Saving to: </span><span class="si">{</span><span class="n">json_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-</span><span data-line="95">        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">json_path</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-</span><span data-line="96">            <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">detected_events</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
-</span><span data-line="97">        <span class="n">written_paths</span><span class="p">[</span><span class="s2">&quot;json_path&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">json_path</span>
-</span><span data-line="98">    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-</span><span data-line="99">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot; Warning: Could not save JSON transcription: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span data-line="85">    <span class="c1"># Ensure the destination directory exists before any export runs.</span>
+</span><span data-line="86">    <span class="c1"># midi_exporter and xml_exporter each create it themselves, but the JSON</span>
+</span><span data-line="87">    <span class="c1"># write below and pdf_exporter do not — so running from a directory that</span>
+</span><span data-line="88">    <span class="c1"># has no `outputs/` (e.g. a pip-installed user invoking the CLI anywhere</span>
+</span><span data-line="89">    <span class="c1"># other than the repo root) silently produced a MIDI file and nothing else.</span>
+</span><span data-line="90">    <span class="c1"># Creating it centrally here fixes every caller, CLI and Python API alike.</span>
+</span><span data-line="91">    <span class="n">parent_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">base_path</span><span class="p">)</span>
+</span><span data-line="92">    <span class="k">if</span> <span class="n">parent_dir</span><span class="p">:</span>
+</span><span data-line="93">        <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">parent_dir</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span><span data-line="94">
+</span><span data-line="95">    <span class="c1"># Records only the exports that actually succeed. Each export below is</span>
+</span><span data-line="96">    <span class="c1"># individually fault-tolerant, so a MIDI failure must not stop the PDF</span>
+</span><span data-line="97">    <span class="c1"># being reported. Returning this lets callers (e.g. ds.transcribe) avoid</span>
+</span><span data-line="98">    <span class="c1"># advertising a path to a file that was never written.</span>
+</span><span data-line="99">    <span class="n">written_paths</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
 </span><span data-line="100">
-</span><span data-line="101">    <span class="c1"># 3. Generate Visual PDF (Directly from Data)</span>
-</span><span data-line="102">    <span class="k">try</span><span class="p">:</span>
-</span><span data-line="103">        <span class="c1"># generate_custom_pdf(</span>
-</span><span data-line="104">        <span class="n">export_pdf</span><span class="p">(</span>
-</span><span data-line="105">            <span class="n">detected_events</span><span class="o">=</span><span class="n">detected_events</span><span class="p">,</span>
-</span><span data-line="106">            <span class="c1"># OLD: output_path=output_path,</span>
-</span><span data-line="107">            <span class="n">output_path</span><span class="o">=</span><span class="n">pdf_filepath</span><span class="p">,</span>  <span class="c1"># Updated to explicitly map to .pdf</span>
-</span><span data-line="108">            <span class="n">tempo</span><span class="o">=</span><span class="n">tempo</span><span class="p">,</span>
-</span><span data-line="109">            <span class="n">time_signature</span><span class="o">=</span><span class="n">time_signature</span><span class="p">,</span>
-</span><span data-line="110">        <span class="p">)</span>
-</span><span data-line="111">        <span class="n">written_paths</span><span class="p">[</span><span class="s2">&quot;pdf_path&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pdf_filepath</span>
-</span><span data-line="112">
-</span><span data-line="113">    <span class="c1"># Success message is handled inside generate_custom_pdf/export_pdf in pdf_exporter.py</span>
-</span><span data-line="114">    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-</span><span data-line="115">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;PDF Export Failed: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-</span><span data-line="116">        <span class="kn">import</span><span class="w"> </span><span class="nn">traceback</span>
-</span><span data-line="117">
-</span><span data-line="118">        <span class="n">traceback</span><span class="o">.</span><span class="n">print_exc</span><span class="p">()</span>
-</span><span data-line="119">
-</span><span data-line="120">    <span class="c1"># 4. Generate MIDI File</span>
-</span><span data-line="121">    <span class="k">try</span><span class="p">:</span>
-</span><span data-line="122">        <span class="n">export_to_midi</span><span class="p">(</span>
-</span><span data-line="123">            <span class="n">classified_events</span><span class="o">=</span><span class="n">detected_events</span><span class="p">,</span>
-</span><span data-line="124">            <span class="n">output_path</span><span class="o">=</span><span class="n">midi_filepath</span><span class="p">,</span>  <span class="c1"># Updated to explicitly map to .mid</span>
-</span><span data-line="125">            <span class="n">tempo</span><span class="o">=</span><span class="n">tempo</span><span class="p">,</span>
-</span><span data-line="126">        <span class="p">)</span>
-</span><span data-line="127">        <span class="n">written_paths</span><span class="p">[</span><span class="s2">&quot;midi_path&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">midi_filepath</span>
-</span><span data-line="128">    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-</span><span data-line="129">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;MIDI Export Failed: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-</span><span data-line="130">        <span class="kn">import</span><span class="w"> </span><span class="nn">traceback</span>
-</span><span data-line="131">
-</span><span data-line="132">        <span class="n">traceback</span><span class="o">.</span><span class="n">print_exc</span><span class="p">()</span>
-</span><span data-line="133">
-</span><span data-line="134">    <span class="k">return</span> <span class="n">written_paths</span></div>
+</span><span data-line="101">    <span class="c1"># 2. Save Transcription Data to JSON</span>
+</span><span data-line="102">    <span class="c1"># This file serves as the &quot;Source of Truth&quot; for the PDF renderer.</span>
+</span><span data-line="103">    <span class="k">try</span><span class="p">:</span>
+</span><span data-line="104">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Saving to: </span><span class="si">{</span><span class="n">json_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span data-line="105">        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">json_path</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+</span><span data-line="106">            <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">detected_events</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+</span><span data-line="107">        <span class="n">written_paths</span><span class="p">[</span><span class="s2">&quot;json_path&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">json_path</span>
+</span><span data-line="108">    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+</span><span data-line="109">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot; Warning: Could not save JSON transcription: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span data-line="110">
+</span><span data-line="111">    <span class="c1"># 3. Generate Visual PDF (Directly from Data)</span>
+</span><span data-line="112">    <span class="k">try</span><span class="p">:</span>
+</span><span data-line="113">        <span class="c1"># generate_custom_pdf(</span>
+</span><span data-line="114">        <span class="n">export_pdf</span><span class="p">(</span>
+</span><span data-line="115">            <span class="n">detected_events</span><span class="o">=</span><span class="n">detected_events</span><span class="p">,</span>
+</span><span data-line="116">            <span class="c1"># OLD: output_path=output_path,</span>
+</span><span data-line="117">            <span class="n">output_path</span><span class="o">=</span><span class="n">pdf_filepath</span><span class="p">,</span>  <span class="c1"># Updated to explicitly map to .pdf</span>
+</span><span data-line="118">            <span class="n">tempo</span><span class="o">=</span><span class="n">tempo</span><span class="p">,</span>
+</span><span data-line="119">            <span class="n">time_signature</span><span class="o">=</span><span class="n">time_signature</span><span class="p">,</span>
+</span><span data-line="120">        <span class="p">)</span>
+</span><span data-line="121">        <span class="n">written_paths</span><span class="p">[</span><span class="s2">&quot;pdf_path&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pdf_filepath</span>
+</span><span data-line="122">
+</span><span data-line="123">    <span class="c1"># Success message is handled inside generate_custom_pdf/export_pdf in pdf_exporter.py</span>
+</span><span data-line="124">    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+</span><span data-line="125">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;PDF Export Failed: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span data-line="126">        <span class="kn">import</span><span class="w"> </span><span class="nn">traceback</span>
+</span><span data-line="127">
+</span><span data-line="128">        <span class="n">traceback</span><span class="o">.</span><span class="n">print_exc</span><span class="p">()</span>
+</span><span data-line="129">
+</span><span data-line="130">    <span class="c1"># 4. Generate MIDI File</span>
+</span><span data-line="131">    <span class="k">try</span><span class="p">:</span>
+</span><span data-line="132">        <span class="n">export_to_midi</span><span class="p">(</span>
+</span><span data-line="133">            <span class="n">classified_events</span><span class="o">=</span><span class="n">detected_events</span><span class="p">,</span>
+</span><span data-line="134">            <span class="n">output_path</span><span class="o">=</span><span class="n">midi_filepath</span><span class="p">,</span>  <span class="c1"># Updated to explicitly map to .mid</span>
+</span><span data-line="135">            <span class="n">tempo</span><span class="o">=</span><span class="n">tempo</span><span class="p">,</span>
+</span><span data-line="136">        <span class="p">)</span>
+</span><span data-line="137">        <span class="n">written_paths</span><span class="p">[</span><span class="s2">&quot;midi_path&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">midi_filepath</span>
+</span><span data-line="138">    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+</span><span data-line="139">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;MIDI Export Failed: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span data-line="140">        <span class="kn">import</span><span class="w"> </span><span class="nn">traceback</span>
+</span><span data-line="141">
+</span><span data-line="142">        <span class="n">traceback</span><span class="o">.</span><span class="n">print_exc</span><span class="p">()</span>
+</span><span data-line="143">
+</span><span data-line="144">    <span class="k">return</span> <span class="n">written_paths</span></div>
 
-</span><span data-line="135">
-</span><span data-line="136">
-</span><span data-line="137"><span class="c1"># --------------------------------------------------------------------------uncomment during testing</span>
-</span><span data-line="138"><span class="c1"># from datetime import datetime</span>
-</span><span data-line="139"><span class="c1"># print(&quot;\n# ------------------------------------------------------------------------------------&quot;)</span>
-</span><span data-line="140"><span class="c1"># datetimestamp = datetime.now()</span>
-</span><span data-line="141"><span class="c1"># print(f&#39;\ndate/time: {datetimestamp}&#39;)</span>
-</span><span data-line="142"><span class="c1"># --------------------------------------------------------------------------------------------------</span>
+</span><span data-line="145">
+</span><span data-line="146">
+</span><span data-line="147"><span class="c1"># --------------------------------------------------------------------------uncomment during testing</span>
+</span><span data-line="148"><span class="c1"># from datetime import datetime</span>
+</span><span data-line="149"><span class="c1"># print(&quot;\n# ------------------------------------------------------------------------------------&quot;)</span>
+</span><span data-line="150"><span class="c1"># datetimestamp = datetime.now()</span>
+</span><span data-line="151"><span class="c1"># print(f&#39;\ndate/time: {datetimestamp}&#39;)</span>
+</span><span data-line="152"><span class="c1"># --------------------------------------------------------------------------------------------------</span>
 </span></pre></div>
         </article><button class="back-to-top" type="button">
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">

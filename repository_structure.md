@@ -1,4 +1,3 @@
-
 ## `DrumScript` Python Package Structure
 
 <!--date_created: weds-25-oct-2025-->

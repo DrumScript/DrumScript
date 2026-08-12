@@ -2,7 +2,7 @@
 ## `DrumScript` Python Package Structure
 
 <!--date_created: weds-25-oct-2025-->
-<!--date_edited: tues-28-july-2026--->
+<!--date_edited: wwds-12-august-2026--->
 
 ```markdown
 DrumScript/                          # Project root
@@ -47,11 +47,11 @@ DrumScript/                          # Project root
 │   │
 │   ├── notation_generator/          # Generates musical notation (`.json`), (`.midi`) and sheet music (`.pdf`) from audio provided.
 │   │   ├── __init__.py
+│   │   ├── constants.py             # Single-source of truth for constants such as `SAMPLE_RATE`, `N_FFT` used globally through `DrumScript`
 │   │   ├── score_builder.py
 │   │   ├── pdf_exporter.py
 │   │   ├── midi_exporter.py
-│   │   ├── xml_exporter.py
-│   │   └── constants.py             # Single-source of truth for constants such as `SAMPLE_RATE`, `N_FFT` used globally through `DrumScript`
+│   │   └── xml_exporter.py
 │   └── utils
 │       ├── __init__.py
 │       ├── config.py

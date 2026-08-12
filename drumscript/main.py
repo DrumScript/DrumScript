@@ -298,13 +298,20 @@ def main(
     #     traceback.print_exc()
 
 
-if __name__ == "__main__":
-    # from datetime import datetime
-    # print("\n# ------------------------------------------------------------------------------------")
-    # datetimestamp = datetime.now()
-    # print(f'\ndate/time: {datetimestamp}')
-    # print(f'start: {datetimestamp:%Y-%m-%d %H:%M:%S}')
+def build_parser() -> argparse.ArgumentParser:
+    """Build the DrumScript CLI argument parser.
 
+    Extracted to module level so both entry points share a single definition:
+
+    * the ``drumscript`` console script (via :func:`cli`), and
+    * ``python -m drumscript.main``.
+
+    It also lets ``tests/unit/test_cli_args.py`` import the real parser instead
+    of mirroring it, so those tests cannot silently drift from reality.
+
+    :return: The configured argument parser.
+    :rtype: argparse.ArgumentParser
+    """
     parser = argparse.ArgumentParser(description="DrumScript: Audio to Sheet Music & Stem Splitter")
 
     parser.add_argument("input_audio_path", type=str, help="Path to the audio file")
@@ -325,7 +332,21 @@ if __name__ == "__main__":
     # Notation arguments
     parser.add_argument("--ts", type=str, default="4/4", help="Time signature (default: 4/4)")
 
-    args = parser.parse_args()
+    return parser
+
+
+def cli(argv: list = None) -> None:
+    """Console-script entry point for the ``drumscript`` command.
+
+    This is what ``[project.scripts]`` in ``pyproject.toml`` points at. It
+    parses the command line and forwards to :func:`main`, which takes explicit
+    keyword arguments and so cannot serve as an entry point on its own.
+
+    :param argv: Argument list to parse. Defaults to ``sys.argv[1:]``. Passing
+        it explicitly makes the CLI testable without patching ``sys.argv``.
+    :type argv: list, optional
+    """
+    args = build_parser().parse_args(argv)
 
     main(
         input_audio_path=args.input_audio_path,
@@ -337,6 +358,59 @@ if __name__ == "__main__":
         is_rudiment=args.rudiment,
         output_format=args.format,
     )
+
+
+if __name__ == "__main__":
+    # from datetime import datetime
+    # print("\n# ------------------------------------------------------------------------------------")
+    # datetimestamp = datetime.now()
+    # print(f'\ndate/time: {datetimestamp}')
+    # print(f'start: {datetimestamp:%Y-%m-%d %H:%M:%S}')
+
+    cli()
+
+    # ----------------------------------------------------------------------
+    # SUPERSEDED (v0.2.0): argparse was built inline here, inside the
+    # `if __name__ == "__main__":` guard. That guard never runs when the
+    # module is imported — which is exactly what the `drumscript` console
+    # script does. The installed CLI therefore raised
+    #     TypeError: main() missing 1 required positional argument
+    # on every invocation. Parsing now lives in build_parser()/cli() at
+    # module level so both entry points share one definition.
+    # Kept per project convention.
+    # ----------------------------------------------------------------------
+    # parser = argparse.ArgumentParser(description="DrumScript: Audio to Sheet Music & Stem Splitter")
+    #
+    # parser.add_argument("input_audio_path", type=str, help="Path to the audio file")
+    #
+    # parser.add_argument("--full-song", action="store_true", help="Transcribe the full song (isolates drums first)")
+    #
+    # # Stem Splitter arguments
+    # parser.add_argument(
+    #     "--drumless", action="store_true", help="Extract a drumless backing track. Saves both the backing track and the drum-only audio"
+    # )
+    # parser.add_argument("--mute", type=str, action="append", help="Mute specific stems (e.g. --mute bass). Can be used multiple times.")
+    # parser.add_argument("--all-stems", action="store_true", help="Export all individual stems")
+    # parser.add_argument("--format", type=str, default="wav", choices=["wav", "mp3"], help="Output format for stems (default: wav)")
+    #
+    # # Add argument for triggering simpler orchestration function in classify_rudiment_events() function
+    # parser.add_argument("--rudiment", action="store_true", help="Optimise classification for isolated single beats, rudiments, or paradiddles.")
+    #
+    # # Notation arguments
+    # parser.add_argument("--ts", type=str, default="4/4", help="Time signature (default: 4/4)")
+    #
+    # args = parser.parse_args()
+    #
+    # main(
+    #     input_audio_path=args.input_audio_path,
+    #     full_song=args.full_song,
+    #     time_signature=args.ts,
+    #     drumless=args.drumless,
+    #     mute=args.mute,
+    #     all_stems=args.all_stems,
+    #     is_rudiment=args.rudiment,
+    #     output_format=args.format,
+    # )
     # LEGACY (KEEP FOR ALPHA, IE FOR NOW):
     # (1)
     #     main(

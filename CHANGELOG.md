@@ -1,7 +1,7 @@
 # **Changelog**
 
 <!--date_added:thurs-28-may-2026-->
-<!--date:updated:mon-10-aug-2026-->
+<!--date:updated:thurs-13-aug-2026-->
 
 
 * All notable changes related to the repository and pypi distribution of `DrumScript` will be documented here

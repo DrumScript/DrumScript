@@ -347,26 +347,26 @@ data-aria-dark="Switch to auto color mode">
           <section id="usage-guide">
 <h1>Usage Guide<a class="headerlink" href="#usage-guide" title="Link to this heading">#</a></h1>
 <!--date_updated:sat-17-january-2026-->
-<!--date_updated:tues-04-august-2026-->
+<!--date_updated:sat-15-august-2026-->
 <section id="quick-start">
 <h2>Quick Start<a class="headerlink" href="#quick-start" title="Link to this heading">#</a></h2>
 <!--`DrumScript` accepts the default format of `.wav` if the `--mp3` flag is not specified.-->
 <section id="audio-loading">
 <h3>1. <strong>Audio Loading</strong><a class="headerlink" href="#audio-loading" title="Link to this heading">#</a></h3>
-<p>Load and normalise audio files for analysis. The <code class="docutils literal notranslate"><span class="pre">AudioLoader</span></code> handles mono conversion and peak normalisation automatically.</p>
+<p>Load and normalise audio files for analysis. The <code class="docutils literal notranslate"><span class="pre">load_audio</span></code> handles mono conversion and peak normalisation automatically.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="kn">import</span><span class="w"> </span><span class="nn">drumscript</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">ds</span>
 </span><span data-line="2"><span class="n">load_audio</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">load_audio</span><span class="p">(</span><span class="s2">&quot;audio_path.wav&quot;</span><span class="p">)</span> <span class="c1"># 1. Load your audio into an .env</span>
 </span></pre></div>
 </div>
 <!--#### **Audio Loading**
 
-Load and normalise audio files for analysis. The `AudioLoader` handles mono conversion and peak normalisation automatically.
+Load and normalise audio files for analysis. The `load_audio` handles mono conversion and peak normalisation automatically.
 
 ```python
 import drumscript as ds
-from drumscript.audio_processor.audio_loader import AudioLoader
+from drumscript.audio_processor.audio_loader import load_audio
 # Load audio (returns audio time series and sample rate)
-y, sr = ds.AudioLoader("audio_path.wav") 
+y, sr = ds.load_audio("audio_path.wav") 
 ```-->
 </section>
 <section id="extract-drums-from-any-song">
@@ -482,11 +482,11 @@ y, sr = ds.AudioLoader("audio_path.wav")
 </section>
 <section id="id1">
 <h4><strong>Audio Loading</strong><a class="headerlink" href="#id1" title="Link to this heading">#</a></h4>
-<p>Load and normalise audio files for analysis. The <code class="docutils literal notranslate"><span class="pre">AudioLoader</span></code> handles mono conversion and peak normalisation automatically.</p>
+<p>Load and normalise audio files for analysis. The <code class="docutils literal notranslate"><span class="pre">load_audio</span></code> handles mono conversion and peak normalisation automatically.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="kn">import</span><span class="w"> </span><span class="nn">drumscript</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">ds</span>
-</span><span data-line="2"><span class="kn">from</span><span class="w"> </span><span class="nn">drumscript.audio_processor.audio_loader</span><span class="w"> </span><span class="kn">import</span> <span class="n">AudioLoader</span>
+</span><span data-line="2"><span class="kn">from</span><span class="w"> </span><span class="nn">drumscript.audio_processor.audio_loader</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_audio</span>
 </span><span data-line="3"><span class="c1"># Load audio (returns audio time series and sample rate)</span>
-</span><span data-line="4"><span class="n">y</span><span class="p">,</span> <span class="n">sr</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">AudioLoader</span><span class="p">(</span><span class="s2">&quot;audio_path.wav&quot;</span><span class="p">)</span> 
+</span><span data-line="4"><span class="n">y</span><span class="p">,</span> <span class="n">sr</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">load_audio</span><span class="p">(</span><span class="s2">&quot;audio_path.wav&quot;</span><span class="p">)</span> 
 </span></pre></div>
 </div>
 </section>

@@ -1,7 +1,7 @@
 # Usage Guide
 
 <!--date_updated:sat-17-january-2026-->
-<!--date_updated:tues-04-august-2026-->
+<!--date_updated:sat-15-august-2026-->
 
 ## Quick Start
 
@@ -9,7 +9,7 @@
 
 ### 1. **Audio Loading**
  
-Load and normalise audio files for analysis. The `AudioLoader` handles mono conversion and peak normalisation automatically.
+Load and normalise audio files for analysis. The `load_audio` handles mono conversion and peak normalisation automatically.
 
 ```python
 import drumscript as ds
@@ -18,13 +18,13 @@ load_audio = ds.load_audio("audio_path.wav") # 1. Load your audio into an .env
 
 <!--#### **Audio Loading**
 
-Load and normalise audio files for analysis. The `AudioLoader` handles mono conversion and peak normalisation automatically.
+Load and normalise audio files for analysis. The `load_audio` handles mono conversion and peak normalisation automatically.
 
 ```python
 import drumscript as ds
-from drumscript.audio_processor.audio_loader import AudioLoader
+from drumscript.audio_processor.audio_loader import load_audio
 # Load audio (returns audio time series and sample rate)
-y, sr = ds.AudioLoader("audio_path.wav") 
+y, sr = ds.load_audio("audio_path.wav") 
 ```-->
 
 ### 2. **Extract Drums From Any Song**
@@ -146,13 +146,13 @@ print(f"Drum stem saved at: {drum_track_path}")
 
 #### **Audio Loading**
 
-Load and normalise audio files for analysis. The `AudioLoader` handles mono conversion and peak normalisation automatically.
+Load and normalise audio files for analysis. The `load_audio` handles mono conversion and peak normalisation automatically.
 
 ```python
 import drumscript as ds
-from drumscript.audio_processor.audio_loader import AudioLoader
+from drumscript.audio_processor.audio_loader import load_audio
 # Load audio (returns audio time series and sample rate)
-y, sr = ds.AudioLoader("audio_path.wav") 
+y, sr = ds.load_audio("audio_path.wav") 
 ```
 
 #### Extract Backing Track

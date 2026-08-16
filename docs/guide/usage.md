@@ -13,7 +13,7 @@ Load and normalise audio files for analysis. The `load_audio` handles mono conve
 
 ```python
 import drumscript as ds
-load_audio = ds.load_audio("audio_path.wav") # 1. Load your audio into an .env
+y, sr = ds.load_audio("audio_path.wav")   # y = audio samples, sr = sample rate
 ```
 
 <!--#### **Audio Loading**
@@ -43,13 +43,15 @@ extract_drums = ds.extract_drum_stem("audio_path.wav", output_dir="path_to_outpu
 Want to jam along? Remove the drums from your favourite song:
 
 ```zsh
-python -m ds.main "audio_path.wav" --drumless 
+drumscript "audio_path.wav" --drumless
+# or, without installing the console script:
+python -m drumscript.main "audio_path.wav" --drumless
 ```
-
 ```python
 import drumscript as ds
-backing_track = ds.main("audio_path.wav", "--drumless")
+backing_track = ds.extract_stems("audio_path.wav", drumless=True, verbose=True)
 ```
+
 > `DrumScript` will save the output to `outputs/` folder in your current working directory if `output_dir` is not specified.
 
 
@@ -65,17 +67,16 @@ python -m drumscript.main "audio_path.mp3" --all-stems --format mp3
 
 ### 5. Custom Time Signatures (`--ts`)
 
-By default, `DrumScript` assumes `4_4` time. You can override this for waltzes or complex meters:
+By default, `DrumScript` assumes `4/4` time. You can override this for waltzes or complex meters:
 
 ```zsh
 # Transcribe a waltz
-python -m drumscript.main "audio_path.wav" --ts 3_4
+drumscript "audio_path.wav" --ts 3/4
 
-# Transcribe 6_8 time
-python -m drumscript.main "audio_path.wav" --ts 6_8
-
-> 
+# Transcribe 6/8 time
+drumscript "audio_path.wav" --ts 6/8
 ```
+
 <!--You can also use DrumScript directly from your terminal:-->
 
 ### 6. Full Audio to PDF Transcription (`--full-song`)

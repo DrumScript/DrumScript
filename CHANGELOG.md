@@ -1,7 +1,7 @@
 # **Changelog**
 
 <!--date_added:thurs-28-may-2026-->
-<!--date:updated:thurs-13-aug-2026-->
+<!--date:updated:sun-16-august-->
 
 
 * All notable changes related to the repository and pypi distribution of `DrumScript` will be documented here
@@ -79,6 +79,7 @@
 * CLI stem flags (`--drumless`, `--all-stems`, `--mute`) now work on the happy path. `separate_audio()` was only ever called from inside the `except` handler in `drumscript/main.py`, so `drumscript song.mp3 --drumless` ran the transcription pipeline, succeeded, and exited without producing a backing track — silently, with no error. Stem handling moved into the primary `try` block: full separation for stem flags, the cheaper `extract_drum_stem()` for `--full-song` alone, and both combined when transcription follows separation. The Python API (`ds.extract_stems()`) was never affected
 * Removed the unreachable second `except Exception` clause in `drumscript/main.py`. The handler above it already caught `Exception`, so it could never run; the duplicated pipeline that lived inside the first handler also propagated exceptions uncaught, since a sibling `except` cannot catch them. Both blocks commented out rather than deleted, per project convention
 * `build_score()` now creates the output directory before exporting. `midi_exporter` and `xml_exporter` each created it themselves, but the JSON write and `pdf_exporter` did not — so running the CLI from any directory without an `outputs/` folder (e.g. a pip-installed user working outside the repo root) silently produced a MIDI file and nothing else, with only warning prints and no failure exit code. Creating it centrally in `build_score()` fixes every caller, CLI and Python API alike. Caught by the new integration tests, which run in a clean temporary directory
+* amended `ds.AudioLoader` references in `docs/guide/usage.md` and fixed to reflect correct version `ds.audio_loader`
 
 > ### *Tests*
 

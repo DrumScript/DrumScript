@@ -355,7 +355,7 @@ data-aria-dark="Switch to auto color mode">
 <h3>1. <strong>Audio Loading</strong><a class="headerlink" href="#audio-loading" title="Link to this heading">#</a></h3>
 <p>Load and normalise audio files for analysis. The <code class="docutils literal notranslate"><span class="pre">load_audio</span></code> handles mono conversion and peak normalisation automatically.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="kn">import</span><span class="w"> </span><span class="nn">drumscript</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">ds</span>
-</span><span data-line="2"><span class="n">load_audio</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">load_audio</span><span class="p">(</span><span class="s2">&quot;audio_path.wav&quot;</span><span class="p">)</span> <span class="c1"># 1. Load your audio into an .env</span>
+</span><span data-line="2"><span class="n">y</span><span class="p">,</span> <span class="n">sr</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">load_audio</span><span class="p">(</span><span class="s2">&quot;audio_path.wav&quot;</span><span class="p">)</span>   <span class="c1"># y = audio samples, sr = sample rate</span>
 </span></pre></div>
 </div>
 <!--#### **Audio Loading**
@@ -383,11 +383,13 @@ y, sr = ds.load_audio("audio_path.wav")
 <section id="create-drumless-backing-track-drumless">
 <h3>3. <strong>Create Drumless Backing Track (<code class="docutils literal notranslate"><span class="pre">--drumless</span></code>)</strong><a class="headerlink" href="#create-drumless-backing-track-drumless" title="Link to this heading">#</a></h3>
 <p>Want to jam along? Remove the drums from your favourite song:</p>
-<div class="highlight-zsh notranslate"><div class="highlight"><pre><span></span><span data-line="1">python<span class="w"> </span>-m<span class="w"> </span>ds.main<span class="w"> </span><span class="s2">&quot;audio_path.wav&quot;</span><span class="w"> </span>--drumless<span class="w"> </span>
+<div class="highlight-zsh notranslate"><div class="highlight"><pre><span></span><span data-line="1">drumscript<span class="w"> </span><span class="s2">&quot;audio_path.wav&quot;</span><span class="w"> </span>--drumless
+</span><span data-line="2"><span class="c1"># or, without installing the console script:</span>
+</span><span data-line="3">python<span class="w"> </span>-m<span class="w"> </span>drumscript.main<span class="w"> </span><span class="s2">&quot;audio_path.wav&quot;</span><span class="w"> </span>--drumless
 </span></pre></div>
 </div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="kn">import</span><span class="w"> </span><span class="nn">drumscript</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">ds</span>
-</span><span data-line="2"><span class="n">backing_track</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">main</span><span class="p">(</span><span class="s2">&quot;audio_path.wav&quot;</span><span class="p">,</span> <span class="s2">&quot;--drumless&quot;</span><span class="p">)</span>
+</span><span data-line="2"><span class="n">backing_track</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">extract_stems</span><span class="p">(</span><span class="s2">&quot;audio_path.wav&quot;</span><span class="p">,</span> <span class="n">drumless</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </span></pre></div>
 </div>
 <blockquote>
@@ -406,14 +408,12 @@ y, sr = ds.load_audio("audio_path.wav")
 </section>
 <section id="custom-time-signatures-ts">
 <h3>5. Custom Time Signatures (<code class="docutils literal notranslate"><span class="pre">--ts</span></code>)<a class="headerlink" href="#custom-time-signatures-ts" title="Link to this heading">#</a></h3>
-<p>By default, <code class="docutils literal notranslate"><span class="pre">DrumScript</span></code> assumes <code class="docutils literal notranslate"><span class="pre">4_4</span></code> time. You can override this for waltzes or complex meters:</p>
+<p>By default, <code class="docutils literal notranslate"><span class="pre">DrumScript</span></code> assumes <code class="docutils literal notranslate"><span class="pre">4/4</span></code> time. You can override this for waltzes or complex meters:</p>
 <div class="highlight-zsh notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="c1"># Transcribe a waltz</span>
-</span><span data-line="2">python<span class="w"> </span>-m<span class="w"> </span>drumscript.main<span class="w"> </span><span class="s2">&quot;audio_path.wav&quot;</span><span class="w"> </span>--ts<span class="w"> </span>3_4
+</span><span data-line="2">drumscript<span class="w"> </span><span class="s2">&quot;audio_path.wav&quot;</span><span class="w"> </span>--ts<span class="w"> </span><span class="m">3</span>/4
 </span><span data-line="3">
-</span><span data-line="4"><span class="c1"># Transcribe 6_8 time</span>
-</span><span data-line="5">python<span class="w"> </span>-m<span class="w"> </span>drumscript.main<span class="w"> </span><span class="s2">&quot;audio_path.wav&quot;</span><span class="w"> </span>--ts<span class="w"> </span>6_8
-</span><span data-line="6">
-</span><span data-line="7">&gt;<span class="w"> </span>
+</span><span data-line="4"><span class="c1"># Transcribe 6/8 time</span>
+</span><span data-line="5">drumscript<span class="w"> </span><span class="s2">&quot;audio_path.wav&quot;</span><span class="w"> </span>--ts<span class="w"> </span><span class="m">6</span>/8
 </span></pre></div>
 </div>
 <!--You can also use DrumScript directly from your terminal:-->

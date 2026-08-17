@@ -1,7 +1,7 @@
 # Usage Guide
 
 <!--date_updated:sat-17-january-2026-->
-<!--date_updated:sat-15-august-2026-->
+<!--date_updated:sun-16-august-2026-->
 
 ## Quick Start
 
@@ -36,7 +36,7 @@ import drumscript as ds
 extract_drums = ds.extract_drum_stem("audio_path.wav", output_dir="path_to_output_dir/") # 2. Extract drums from a song and save to local path that you can specify
 ```
 
-> `DrumScript` will save the output to an `outputs/` folder in your current working directory if `output_dir` is not specified.
+> `extract_drum_stem()` writes to your **current working directory** if `output_dir` is not specified.
 
 ### 3. **Create Drumless Backing Track (`--drumless`)**
 
@@ -50,9 +50,12 @@ python -m drumscript.main "audio_path.wav" --drumless
 ```python
 import drumscript as ds
 backing_track = ds.extract_stems("audio_path.wav", drumless=True, verbose=True)
+print(f"Files written to: {backing_track['output_directory']}")
 ```
 
-> `DrumScript` will save the output to `outputs/` folder in your current working directory if `output_dir` is not specified.
+> `extract_stems()` writes to a `stems/` folder in your current working directory if `output_dir` is not specified.
+>
+> The verbose dict returns `status`, `drum_stem_path`, `original_file` and `output_directory`. The backing track itself is named `<input>_no_drums.<format>` inside `output_directory` — its path is not yet returned directly. See the [CHANGELOG](../changelog.md) for the planned fix.
 
 
 ### 4. Extracting Stems (`--all-stems`)
@@ -76,6 +79,8 @@ drumscript "audio_path.wav" --ts 3/4
 # Transcribe 6/8 time
 drumscript "audio_path.wav" --ts 6/8
 ```
+
+> Use a forward slash. Any other form — including underscores like `3_4` — silently falls back to 4/4 with no warning.
 
 <!--You can also use DrumScript directly from your terminal:-->
 
@@ -116,8 +121,31 @@ print(f"MIDI: {result['midi_path']}")
 
 #### **Audio Transcription**
 
-To run the full transcription pipeline on an audio file, use the main entry point. This will load the audio, separate the drums (if needed), classify hits, and generate a PDF score.
+To run the full transcription pipeline on an audio file, use `transcribe()`. This will load the audio, separate the drums (if needed), classify hits, and generate PDF, JSON and MIDI output.
 
+```python
+import drumscript as ds
+
+result = ds.transcribe("audio_path.wav")
+print(result["pdf_path"])
+```
+
+The CLI equivalent — `main()` is the orchestration function behind it, and takes the input path as its first argument:
+
+```zsh
+drumscript "audio_path.wav"
+```
+
+```python
+from drumscript.main import main
+
+main("audio_path.wav")               # drum-only input
+main("audio_path.mp3", full_song=True)   # full song: separate drums first
+```
+
+<!-- SUPERSEDED (v0.2.0): documented `main()` with no arguments and
+     "follow the interactive prompts". main() requires input_audio_path
+     and has no prompts; calling it bare raises TypeError.
 ```python
 from drumscript.main import main
 
@@ -125,11 +153,43 @@ from drumscript.main import main
 main()
 # Follow the interactive prompts to provide the input file path.
 ```
+-->
 
 #### **Stem Splitting**
 
-Isolate the drum track from a full music mix using the `StemSplitter` class. This is useful if you want to process the drum audio separately.
+Isolate the drum track from a full music mix using `extract_drum_stem()`, or run a full separation with `separate_audio()`. Both are module-level functions — there is no class to instantiate.
 
+```python
+from drumscript.audio_processor.stem_splitter import extract_drum_stem
+
+# Returns the path to the isolated drum track
+drum_track_path = extract_drum_stem(
+    audio_path="audio_path.mp3",
+    output_dir="output/",
+)
+
+print(f"Drum stem saved at: {drum_track_path}")
+```
+
+For full separation with backing-track and per-stem options:
+
+```python
+from drumscript.audio_processor.stem_splitter import separate_audio
+
+results = separate_audio(
+    audio_path="audio_path.mp3",
+    output_format="wav",
+    drumless=True,
+    all_stems=False,
+    output_dir="output/",
+)
+
+print(results)   # dict of every file written, including "mix"
+```
+
+<!-- SUPERSEDED (v0.2.0): documented a `StemSplitter` class with a
+     `split_drums()` method. No such class exists — stem_splitter.py
+     exposes module-level functions only.
 ```python
 from drumscript.audio_processor.stem_splitter import StemSplitter
 
@@ -144,6 +204,7 @@ drum_track_path = splitter.split_drums(
 
 print(f"Drum stem saved at: {drum_track_path}")
 ```
+-->
 
 #### **Audio Loading**
 
@@ -157,6 +218,47 @@ y, sr = ds.load_audio("audio_path.wav")
 ```
 
 #### Extract Backing Track
-<!--TO DO: Add content-->
+
+Create a drumless track to play along to. Works on any polyphonic audio.
+
+```python
+import drumscript as ds
+
+result = ds.extract_stems("full_song.wav", drumless=True, verbose=True)
+print(f"Written to: {result['output_directory']}")
+```
+
+The backing track is saved as `<input>_no_drums.wav` inside that directory, alongside the isolated drums as `<input>_only_drums.wav`.
+
+**CLI equivalent:**
+
+```zsh
+drumscript "full_song.wav" --drumless
+drumscript "full_song.mp3" --drumless --format mp3   # MP3 output needs ffmpeg
+```
+
+You can mute any stem, not just drums:
+
+```zsh
+drumscript "full_song.wav" --mute bass
+drumscript "full_song.wav" --mute bass --mute vocals
+```
+
 #### Extract Drum-Only Audio
-<!--TO DO: Add content-->
+
+Pull just the drum track out of a full mix — useful for studying a groove, or for feeding into transcription separately.
+
+```python
+import drumscript as ds
+
+drum_path = ds.extract_stems("full_song.wav")
+print(f"Drum stem: {drum_path}")
+```
+
+**CLI equivalent:**
+
+```zsh
+drumscript "full_song.mp3" --full-song
+```
+
+> `--full-song` extracts the drums **and** transcribes them. To get the stem without a score, use the Python API above, or `--all-stems` to export all four.

@@ -243,7 +243,7 @@ data-aria-dark="Switch to auto color mode">
 <li><a class="reference internal" href="#">Glossary of Terms</a><ul>
 <li><a class="reference internal" href="#python-libraries-classes"><strong>Python Libraries &amp; Classes</strong></a><ul>
 <li><a class="reference internal" href="#librosa"><code class="docutils literal notranslate"><span class="pre">Librosa</span></code></a></li>
-<li><a class="reference internal" href="#stemsplitter"><code class="docutils literal notranslate"><span class="pre">StemSplitter</span></code></a></li>
+<li><a class="reference internal" href="#stem-splitter"><code class="docutils literal notranslate"><span class="pre">stem_splitter</span></code></a></li>
 <li><a class="reference internal" href="#demucs"><code class="docutils literal notranslate"><span class="pre">Demucs</span></code></a></li>
 </ul>
 </li>
@@ -348,8 +348,8 @@ data-aria-dark="Switch to auto color mode">
 </div><article class="yue" role="main">
           <section id="glossary-of-terms">
 <h1>Glossary of Terms<a class="headerlink" href="#glossary-of-terms" title="Link to this heading">#</a></h1>
-<!--date_created:03-july-2025-->
-<!--date_updated:sat-27-june-2026-->
+<!--date_created:thurs-03-july-2025-->
+<!--date_updated:sun-16-august-2026-->
 <section id="python-libraries-classes">
 <h2><strong>Python Libraries &amp; Classes</strong><a class="headerlink" href="#python-libraries-classes" title="Link to this heading">#</a></h2>
 <section id="librosa">
@@ -372,25 +372,48 @@ data-aria-dark="Switch to auto color mode">
 </ul>
 <p>In <code class="docutils literal notranslate"><span class="pre">DrumScript</span></code>, <code class="docutils literal notranslate"><span class="pre">librosa</span></code> is crucial because it’s the underlying library that <code class="docutils literal notranslate"><span class="pre">audio_loader.py</span></code>, <code class="docutils literal notranslate"><span class="pre">feature_extractor.py</span></code>, and <code class="docutils literal notranslate"><span class="pre">onset_detector.py</span></code> use to actually perform the <strong>low-level audio processing</strong> and extract the characteristics of your <strong>drum sound</strong> and <strong>audio recordings</strong>. <code class="docutils literal notranslate"><span class="pre">Librosa</span></code>’s beat and tempo detection functions are specifically used in the <code class="docutils literal notranslate"><span class="pre">tempo_detector.py</span></code> and <code class="docutils literal notranslate"><span class="pre">tempogram.py</span></code> scripts.</p>
 </section>
-<section id="stemsplitter">
-<h3><code class="docutils literal notranslate"><span class="pre">StemSplitter</span></code><a class="headerlink" href="#stemsplitter" title="Link to this heading">#</a></h3>
+<section id="stem-splitter">
+<h3><code class="docutils literal notranslate"><span class="pre">stem_splitter</span></code><a class="headerlink" href="#stem-splitter" title="Link to this heading">#</a></h3>
 <blockquote>
-<div><p><strong>Class</strong></p>
+<div><p><strong>Module</strong></p>
 </div></blockquote>
 <ul class="simple">
-<li><p><strong>Meaning:</strong> A class within <code class="docutils literal notranslate"><span class="pre">drumscript.audio_processor</span></code> responsible for separating source audio into distinct stems (drums, bass, vocals, other). It utilizes the <code class="docutils literal notranslate"><span class="pre">Demucs</span></code> model to perform high-quality source separation.</p></li>
-<li><p><strong>Key Method:</strong> <code class="docutils literal notranslate"><span class="pre">split_drums(input_file,</span> <span class="pre">output_dir)</span></code> - Specifically targets and returns the file path of the isolated drum track.</p></li>
+<li><p><strong>Meaning:</strong> A module within <code class="docutils literal notranslate"><span class="pre">drumscript.audio_processor</span></code> responsible for separating source audio into distinct stems (drums, bass, vocals, other). It uses the <code class="docutils literal notranslate"><span class="pre">Demucs</span></code> model to perform high-quality source separation. It exposes <strong>module-level functions</strong>, not a class.</p></li>
+<li><p><strong>Key functions:</strong></p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">extract_drum_stem(audio_path,</span> <span class="pre">output_dir=None)</span></code> — returns the file path of the isolated drum track.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">separate_audio(audio_path,</span> <span class="pre">output_format=&quot;wav&quot;,</span> <span class="pre">drumless=False,</span> <span class="pre">mute=None,</span> <span class="pre">all_stems=False,</span> <span class="pre">output_dir=None)</span></code> — full separation; returns a dict of every file written.</p></li>
+</ul>
+</li>
 </ul>
 <blockquote>
 <div><ul>
 <li><p><strong>Example:</strong></p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="n">splitter</span> <span class="o">=</span> <span class="n">StemSplitter</span><span class="p">()</span>
-</span><span data-line="2"><span class="n">drum_path</span> <span class="o">=</span> <span class="n">splitter</span><span class="o">.</span><span class="n">split_drums</span><span class="p">(</span><span class="o">*</span><span class="n">song</span><span class="o">.</span><span class="n">mp3</span><span class="o">*</span><span class="p">,</span> <span class="o">*./</span><span class="n">stems</span><span class="o">*</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="kn">from</span><span class="w"> </span><span class="nn">drumscript.audio_processor.stem_splitter</span><span class="w"> </span><span class="kn">import</span> <span class="n">extract_drum_stem</span>
+</span><span data-line="2"><span class="n">drum_path</span> <span class="o">=</span> <span class="n">extract_drum_stem</span><span class="p">(</span><span class="s2">&quot;song.mp3&quot;</span><span class="p">,</span> <span class="n">output_dir</span><span class="o">=</span><span class="s2">&quot;./stems&quot;</span><span class="p">)</span>
 </span></pre></div>
 </div>
 </li>
 </ul>
 </div></blockquote>
+<!-- SUPERSEDED (v0.2.0): this entry described a `StemSplitter` class with a
+     `split_drums()` method. No such class exists or has ever existed;
+     stem_splitter.py has only module-level functions.
+
+### `StemSplitter`
+
+> **Class**
+
+* **Meaning:** A class within `drumscript.audio_processor` responsible for separating source audio into distinct stems (drums, bass, vocals, other). It utilizes the `Demucs` model to perform high-quality source separation.
+* **Key Method:** `split_drums(input_file, output_dir)` - Specifically targets and returns the file path of the isolated drum track.
+
+>
+> * **Example:**
+>   ```python
+>   splitter = StemSplitter()
+>   drum_path = splitter.split_drums(*song.mp3*, *./stems*)
+>   ```
+-->
 </section>
 <section id="demucs">
 <h3><code class="docutils literal notranslate"><span class="pre">Demucs</span></code><a class="headerlink" href="#demucs" title="Link to this heading">#</a></h3>
@@ -465,7 +488,8 @@ In `DrumScript`, `MuseScore` is crucial because `music21` can be configured to u
 <div><p>If <code class="docutils literal notranslate"><span class="pre">hop_length=512</span></code>, the window (or <code class="docutils literal notranslate"><span class="pre">object_event</span></code>) moves <strong>512 samples to the right</strong> for the next analysis, overlapping with the previous window (<code class="docutils literal notranslate"><span class="pre">object_event</span></code>).</p>
 </div></blockquote>
 <ul class="simple">
-<li><p>Playing around with the <code class="docutils literal notranslate"><span class="pre">hop_length</span></code> is often crucial for finding the right split of intervals in a given audio sample.  The <code class="docutils literal notranslate"><span class="pre">hop_length</span></code> also depends on the <code class="docutils literal notranslate"><span class="pre">SAMPLE_RATE</span></code> defined  (in the case of <code class="docutils literal notranslate"><span class="pre">DrumScript</span></code> we have chosen a <code class="docutils literal notranslate"><span class="pre">sample_rate=441000</span></code> across the library)</p></li>
+<li><p><strong>DrumScript uses <code class="docutils literal notranslate"><span class="pre">HOP_LENGTH</span> <span class="pre">=</span> <span class="pre">128</span></code></strong>, not 512. At 44100 Hz that gives a time resolution of ~2.9 ms — fine enough to separate individual drum hits. It is set in <code class="docutils literal notranslate"><span class="pre">drumscript/notation_generator/constants.py</span></code>.</p></li>
+<li><p>Playing around with the <code class="docutils literal notranslate"><span class="pre">hop_length</span></code> is often crucial for finding the right split of intervals in a given audio sample.  The <code class="docutils literal notranslate"><span class="pre">hop_length</span></code> also depends on the <code class="docutils literal notranslate"><span class="pre">SAMPLE_RATE</span></code> defined  (in the case of <code class="docutils literal notranslate"><span class="pre">DrumScript</span></code> we have chosen a <code class="docutils literal notranslate"><span class="pre">SAMPLE_RATE</span> <span class="pre">=</span> <span class="pre">44100</span></code> across the library, defined in <code class="docutils literal notranslate"><span class="pre">drumscript/notation_generator/constants.py</span></code>)</p></li>
 </ul>
 <blockquote>
 <div><p>There us a <strong>more detailed explanation of <code class="docutils literal notranslate"><span class="pre">hop_length</span></code></strong>, along with calculated examples in the <strong><a class="reference internal" href="#README.md#faqs"><span class="xref myst">README.md</span></a></strong></p>

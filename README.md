@@ -187,8 +187,9 @@ print(f"MIDI: {result['midi_path']}")
 import drumscript as ds
 
 # Load at native sample rate (for notebooks / exploration)
-audio_file = ds.load_audio("drum_audio.wav")
-print(f"Sample rate: {sr} Hz, Duration: {len(audio)/sr:.1f}s")
+audio, sr = ds.load_audio("drum_audio.wav")
+# print(f"Sample rate: {sr} Hz, Duration: {len(audio)/sr:.1f}s")
+print(f"Sample rate: {audio_file[1]} Hz, Duration: {len(audio_file[0])/audio_file[1]:.1f}s")
 
 # Detect tempo
 bpm = ds.detect_tempo("drum_audio.wav")
@@ -218,7 +219,8 @@ remove_drums = ds.extract_stems("full_song.wav",
     drumless=True,
     verbose=True,
 )
-print(f"Backing track: {results['mix']}")
+print(f"Files written to: {remove_drums['output_directory']}")
+# The backing track is saved as <input>_no_drums.wav in that directory.
 ```
 
 ---

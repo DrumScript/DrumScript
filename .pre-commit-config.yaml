@@ -20,3 +20,8 @@ repos:
         # Defaults to detecting from the shebang line, which is fine
         # for our scripts (they use #!/usr/bin/env bash or #!/bin/bash).
         # args: ["--shell=bash"]
+        
+  - repo: https://github.com/kynan/nbstripout
+    rev: 0.7.1
+    hooks:
+      - id: nbstripout

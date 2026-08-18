@@ -1,0 +1,112 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "id": "0",
+   "metadata": {},
+   "source": [
+    "# Extract Drums from a Song\n",
+    "\n",
+    "Sometimes a mix is so dense you can't quite hear what the drummer is doing.\n",
+    "\n",
+    "`DrumScript` uses [Demucs](https://github.com/adefossez/demucs), a deep-learning source separation model, to isolate the **drum stem** from a full polyphonic audio track. Demucs splits audio into four stems: *drums*, *bass*, *vocals*, and *other*. DrumScript then returns the path to the isolated drum track.\n",
+    "\n",
+    "This is useful for:\n",
+    "- Feeding a clean drum stem into `ds.transcribe()` for more accurate transcription.\n",
+    "- Listening to the drum part in isolation for practice or analysis.\n",
+    "\n",
+    "*(Note: We are using a copyright-free synthetic track for this demonstration.)*\n",
+    "\n",
+    "<!--date_created:fri-27-feb-2026-->\n",
+    "<!--date_updated:tues-19-august-2026-->\n",
+    "\n",
+    "---"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "1",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "from IPython.display import Audio, display\n",
+    "\n",
+    "import drumscript as ds\n",
+    "\n",
+    "# Load audio\n",
+    "audio_file_path = \"audio/test_track_1.wav\"\n",
+    "audio_file = ds.load_audio(audio_file_path)\n",
+    "print(\"Audio loaded!\")\n",
+    "display(Audio(audio_file_path))"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "2",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# Extract stems\n",
+    "output_files = ds.extract_stems(\n",
+    "    audio_path=audio_file_path,  # Pass the file path, not the loaded audio\n",
+    "    output_dir=\"stems/\",\n",
+    ")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "3",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "print(f\"Isolated drum stem saved to: {output_files}\")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "4",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# 3. Create the in-browser playable widget for the extracted drum stem\n",
+    "print(\"\\nExtracted Drum Stem:\")\n",
+    "# display(Audio(output_files['drums']))   # NOTE: won't work — extract_stems returns a path string, not a dict\n",
+    "display(Audio(output_files))"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "5",
+   "metadata": {},
+   "source": [
+    "---\n",
+    "<!--END-->"
+   ]
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "drumscript (3.12.12)",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.12.12"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 5
+}

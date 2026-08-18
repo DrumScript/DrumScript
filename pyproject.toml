@@ -44,6 +44,7 @@ dependencies = [
     "librosa",
     "matplotlib",
     "music21",
+    "nbstripout[dev]>=0.8.2",
     "numba",
     "numpy<2",
     "pretty-midi",
@@ -74,7 +75,8 @@ dev = [
   "ipywidgets>=8.1.8",
   "requests>=2.32.5",
   "ruff>=0.15.11",
-  "twine>=6.2.0"
+  "twine>=6.2.0",
+  "nbstripout>=0.8.2",
 ]
 
 [project.scripts]

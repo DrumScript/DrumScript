@@ -2,7 +2,7 @@ repos:
     ## add ruff hook
   - repo: https://github.com/astral-sh/ruff-pre-commit
     # Match the version you specified in the pyproject.toml
-    rev: v0.15.11 
+    rev: v0.16.3 
     hooks:
       # Run the linter and sort imports
       - id: ruff

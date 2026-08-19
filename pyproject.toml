@@ -44,7 +44,6 @@ dependencies = [
     "librosa",
     "matplotlib",
     "music21",
-    "nbstripout[dev]>=0.8.2",
     "numba",
     "numpy<2",
     "pretty-midi",

@@ -1,5 +1,7 @@
 # Release Notes
 
+<!--date_updated:tues-04-aug-2026-->
+
 This page details the history of changes, improvements, and bug fixes in `DrumScript`.
 
 ```{toctree}

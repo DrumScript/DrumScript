@@ -127,16 +127,16 @@ Items listed below are fully implemented and **published to pypi** under an offi
 - Refactor `main.py` argparse block into a `build_parser()` function so `tests/unit/test_cli_args.py` can import the real parser instead of mirroring it
 - Clarify in docs/docstrings that input format is not limited to .wav/.mp3 — any format librosa (+ ffmpeg) supports works. ffmpeg is only required for MP3 input decoding and MP3 stem output
 >
-  ***breaking***
-- `full` parameter removed entirely from `transcribe()`, `extract_stems()`, and `detect_tempo()`. Users must use `verbose` instead. 
-- This was implemented as a deprecation shim in [v0.1.6 release](#016---june-2026)
-- Deprecation warning for `--full= flag` will be removed
-- `tests/unit/test_deprecation_warnings.py` deleted (or flipped to assert `full` now raises `TypeError`)
-- From 1.0.0 (beta) the flag `verbose=` will provide dictionary-based outputs, ie for cli-users and developers.
-- This change, originally, was made in  [v0.1.6 release](#016---june-2026) to prevent confusion between `--full` flag outputting verbose in drumscript wrappers and the `full=true` functionality for specifying within `transcribe()` function that the input audio is polyphonic (non-drum-only) and therefore requires Demucs extraction *prior* to applying DrumScript's deterministic classification model for transcription. 
-- As a side note, and for completeness, DrumScript functions default to drum-audio only inputs. User must indicate if the input_audio is not solo drum audio.
-- `_TranscribeResult` string compatibility removed — `transcribe()` returns a plain `dict`
-- `docs/guide/usage.md`: the silent 4/4 fallback in `pdf_exporter.py` line 138 is a code smell independent of the docs — a user typo like `--ts 44` also silently becomes 4/4. A `print` warning in that `except ValueError` would be a small improvement on documentation #297
+  *(breaking)*
+  *  `full` parameter removed entirely from `transcribe()`, `extract_stems()`, and `detect_tempo()`. Users must use `verbose` instead. 
+  *  This was implemented as a deprecation shim in [v0.1.6 release](#016---june-2026)
+  *  Deprecation warning for `--full= flag` will be removed
+  *  `tests/unit/test_deprecation_warnings.py` deleted (or flipped to assert `full` now raises `TypeError`)
+  *  From 1.0.0 (beta) the flag `verbose=` will provide dictionary-based outputs, ie for cli-users and developers.
+  *  This change, originally, was made in  [v0.1.6 release](#016---june-2026) to prevent confusion between `--full` flag outputting verbose in drumscript wrappers and the `full=true` functionality for specifying within `transcribe()` function that the input audio is polyphonic (non-drum-only) and therefore requires Demucs extraction *prior* to applying DrumScript's deterministic classification model for transcription. 
+  *  As a side note, and for completeness, DrumScript functions default to drum-audio only inputs. User must indicate if the input_audio is not solo drum audio.
+  *  `_TranscribeResult` string compatibility removed — `transcribe()` returns a plain `dict`
+  *  `docs/guide/usage.md`: the silent 4/4 fallback in `pdf_exporter.py` line 138 is a code smell independent of the docs — a user typo like `--ts 44` also silently becomes 4/4. A `print` warning in that `except ValueError` would be a small improvement on documentation #297
 >
 ###### *Fixes*
 - Cymbal and hi-hat stem rendering: note tails and heads correctly aligned

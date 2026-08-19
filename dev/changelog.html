@@ -360,7 +360,7 @@ data-aria-dark="Switch to auto color mode">
           <section id="changelog">
 <h1><strong>Changelog</strong><a class="headerlink" href="#changelog" title="Link to this heading">#</a></h1>
 <!--date_added:thurs-28-may-2026-->
-<!--date:updated:tues-18-august-2026-->
+<!--date:updated:weds-19-august-2026-->
 <ul class="simple">
 <li><p>All notable changes related to the repository and pypi distribution of <code class="docutils literal notranslate"><span class="pre">DrumScript</span></code> will be documented here</p></li>
 <li><p>Format follows <strong><a class="reference external" href="https://keepachangelog.com/en/1.0.0/">Keep a Changelog</a></strong> and <strong><a class="reference external" href="https://semver.org/">Semantic Versioning</a></strong>.</p></li>
@@ -418,6 +418,7 @@ data-aria-dark="Switch to auto color mode">
 <li><p><code class="docutils literal notranslate"><span class="pre">_TranscribeResult</span></code> deprecation shim class in <code class="docutils literal notranslate"><span class="pre">drumscript/__init__.py</span></code>: dict subclass with <code class="docutils literal notranslate"><span class="pre">__str__</span></code> and <code class="docutils literal notranslate"><span class="pre">__fspath__</span></code> methods that emit <code class="docutils literal notranslate"><span class="pre">DeprecationWarning</span></code> when the return value of <code class="docutils literal notranslate"><span class="pre">transcribe()</span></code> is used as a string. Provides smooth migration path from v0.1.x string return to v1.0.0 dict return.</p></li>
 <li><p>Added <code class="docutils literal notranslate"><span class="pre">scripts/verify_release.sh</span></code> — 56-check release verification script covering every documented CLI command and public API function, run in a clean temporary directory to catch environment assumptions (e.g. the missing-<code class="docutils literal notranslate"><span class="pre">outputs/</span></code> bug)</p></li>
 <li><p>Added <code class="docutils literal notranslate"><span class="pre">scripts/close_issues_v020.sh</span></code> — batch <code class="docutils literal notranslate"><span class="pre">gh</span> <span class="pre">issue</span> <span class="pre">close</span></code> script (with per-issue comments) for the GitHub issues resolved in v0.2.0</p></li>
+<li><p>Added timeout to jobs block in <code class="docutils literal notranslate"><span class="pre">tests.yml</span></code> and add <code class="docutils literal notranslate"><span class="pre">--no-install-recommend</span></code> to linux system dependencies job to prevent <code class="docutils literal notranslate"><span class="pre">apt-get</span></code> issues in workflow</p></li>
 </ul>
 <blockquote>
 <div><p class="rubric" id="changes"><em>Changes</em></p>

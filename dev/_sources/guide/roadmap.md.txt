@@ -1,11 +1,11 @@
 # Roadmap for `DrumScript`
 
 <!--date_created: thurs-21-may-2026-->
-<!--date_updated: sat-20-june-2026-->
+<!--date_updated: weds-19-august-2026-->
 
 > DrumScript follows [Semantic Versioning](https://semver.org/).
 > The current phase is **Alpha** (`v{{version}}`) — the classification model and score generation/ API is out for testing. 
-> From **01 June 2026 to 31 August** alpha testing is under way.
+> The alpha phase began on **1st June 2026 and is ongoing** — no fixed end date. Beta (`1.0.0`) follows once the API stabilises and the classification model is validated against standard ADT benchmarks.
 
 * **[Release plan](#release-phases)**
     - **[Alpha priorities](#alpha-priorities-v030--v090)**
@@ -19,9 +19,9 @@
 
 | Phase | Versions | Target Window | What to Expect |
 |-------|----------|---------------|----------------|
-| **Pre-Alpha** | `0.1.0` – `0.9.0` | June 2025 - May 2026 | Core pipeline works end-to-end. API may change between releases. Built in isolation |
-| **Alpha** (current) | `0.1.0` – `0.9.0` | **June – August 2026** | Core pipeline works end-to-end. API may change between releases. Feedback sought. Cross off some of the **[Issues](https://github.com/DrumScript/DrumScript/issues)** added in pre-Alpha |
-| **Beta** | `0.9.x` – `0.9.9` | September 2026 onwards | API locked for each minor version. Focus on accuracy, edge cases, and evaluation against standard ADT datasets.  Release **free-to-use** `WebGPU/WASM/ONNX` UI for non-coders|
+| **Pre-Alpha** | `0.1.0` – `0.9.0` | **June 2025 - May 2026** | Core pipeline works end-to-end. API may change between releases. Built in isolation |
+| **Alpha** (current) | `0.1.0` – `0.9.0` | **June 2026 – ongoing** | Core pipeline works end-to-end. API may change between releases. Feedback sought. Cross off some of the **[Issues](https://github.com/DrumScript/DrumScript/issues)** added in pre-Alpha |
+| **Beta** | `0.9.x` – `0.9.9` | Follows alpha (API-stability gated) | API locked for each minor version. Focus on accuracy, edge cases, and evaluation against standard ADT datasets. Release **free-to-use** `WebGPU/WASM/ONNX` UI for non-coders |
 | **Stable** | `1.0.0` | *tbc* | Public API frozen. Breaking changes only in major versions. Community-owned tool. Publication of paper in journal to announce release |
 
 

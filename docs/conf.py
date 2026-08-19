@@ -47,6 +47,7 @@ myst_substitutions = {
 }
 
 myst_enable_extensions = ["substitution", "colon_fence"]
+nb_execution_mode = "off"
 
 # Generate the stub pages automatically
 autosummary_generate = True
@@ -100,10 +101,11 @@ html_context = {
     # Shibuya expects `versions` as a list of (label, url) tuples and
     # `current_version` as a string. URLs are relative to the docs root.
     # Update this list when adding new tagged releases.
-    # "current_version": f"v{ds.__version__}",
+    "current_version": f"v{ds.__version__}",
     "versions": [
         ("latest", "/DrumScript/latest/"),
         ("dev", "/DrumScript/dev/"),
+        ("v0.2.0", "/DrumScript/v0.2.0/"),
         ("v0.1.6", "/DrumScript/v0.1.6/"),
     ],
 }

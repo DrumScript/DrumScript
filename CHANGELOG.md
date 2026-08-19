@@ -1,7 +1,7 @@
 # **Changelog**
 
 <!--date_added:thurs-28-may-2026-->
-<!--date:updated:tues-18-august-2026-->
+<!--date:updated:weds-19-august-2026-->
 
 
 * All notable changes related to the repository and pypi distribution of `DrumScript` will be documented here
@@ -54,6 +54,7 @@
 * `_TranscribeResult` deprecation shim class in `drumscript/__init__.py`: dict subclass with `__str__` and `__fspath__` methods that emit `DeprecationWarning` when the return value of `transcribe()` is used as a string. Provides smooth migration path from v0.1.x string return to v1.0.0 dict return.
 * Added `scripts/verify_release.sh` — 56-check release verification script covering every documented CLI command and public API function, run in a clean temporary directory to catch environment assumptions (e.g. the missing-`outputs/` bug)
 * Added `scripts/close_issues_v020.sh` — batch `gh issue close` script (with per-issue comments) for the GitHub issues resolved in v0.2.0
+* Added timeout to jobs block in `tests.yml` and add `--no-install-recommend` to linux system dependencies job to prevent `apt-get` issues in workflow
 
 > ### *Changes*
 

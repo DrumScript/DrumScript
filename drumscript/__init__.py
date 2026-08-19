@@ -61,6 +61,48 @@ def _resolve_verbose_flag(full, verbose, function_name):
     return verbose
 
 
+# ---------------------------------------------------------------------------
+# Internal: backwards-compatible return type for transcribe() (v0.2.0)
+# ---------------------------------------------------------------------------
+#
+# v0.1.x returned str(pdf_path) from transcribe() in non-verbose mode.
+# v0.2.0 returns a dict with pdf_path, json_path, and midi_path so users
+# can see all the files that were actually written.
+#
+# _TranscribeResult is a dict subclass that also behaves like a string
+# (returning the PDF path) so existing code like:
+#     pdf = ds.transcribe("drums.wav")
+#     print(pdf)
+# keeps working but emits a DeprecationWarning.
+#
+# Removal target: v1.0.0 — transcribe() will return a plain dict.
+
+
+class _TranscribeResult(dict):
+    """Dict that also behaves as a string (the PDF path) for backwards compat.
+
+    v0.1.x returned ``str(pdf_path)`` from ``transcribe()``. v0.2.0 returns
+    this dict subclass so existing ``pdf = ds.transcribe(...)`` code keeps
+    working while we migrate users to dict access.
+
+    Removal target: v1.0.0 — ``transcribe()`` will return a plain dict.
+    """
+
+    def __str__(self):
+        warnings.warn(
+            "transcribe() now returns a dict with 'pdf_path', 'json_path', "
+            "and 'midi_path' keys. Using the return value as a string is "
+            "deprecated and will stop working in DrumScript v1.0.0. "
+            "Use result['pdf_path'] instead.",
+            DeprecationWarning,
+            stacklevel=2,
+        )
+        return self["pdf_path"]
+
+    def __fspath__(self):
+        return str(self)
+
+
 # 2. Create (user-friendly) wrappers
 # def extract_stems(audio_path, output_dir=None, output_format="wav", drumless=False, mute=None, all_stems=False, full=False):
 def extract_stems(
@@ -123,7 +165,7 @@ def extract_stems(
            "my_song.mp3",
            drumless=True,
            output_format="mp3",
-           # full=True, # LEGACY CODE FROM V0.1.5 (--full flag replaced with deprecation shim, in place of --verbose)
+           # full=True, # LEGACY CODE FROM V0.1.5 (--full flag replaced with deprecation shim, in place of --verbose)
            verbose=True
        )
        print(f"Backing track saved to: {results['mix']}")
@@ -158,7 +200,7 @@ def extract_stems(
     # "output_directory": str(output_dir)}
 
     drum_path = results.get("drums") or results.get("drums_stem")
-    # if full: # LEGACY CODE FROM V0.1.5 (--full flag replaced with deprecation shim, in place of --verbose)
+    # if full: # LEGACY CODE FROM V0.1.5 (--full flag replaced with deprecation shim, in place of --verbose)
     #   return {
     #       "status": "success",
     #       "drum_stem_path": drum_path,
@@ -175,7 +217,7 @@ def extract_stems(
         }
     return drum_path
 
-    # if full: # LEGACY CODE FROM V0.1.5 (--full flag replaced with deprecation shim, in place of --verbose)
+    # if full: # LEGACY CODE FROM V0.1.5 (--full flag replaced with deprecation shim, in place of --verbose)
     #   return {
     #       "status": "success",
     #       "drum_stem_path": results.get("drums") or results.get("drums_stem"),
@@ -254,7 +296,7 @@ def transcribe(
     is_rudiment=False,
     output_dir="outputs",
     output_filename=None,
-    # full=False, # LEGACY CODE FROM V0.1.5 (--full flag replaced with deprecation shim, in place of --verbose)
+    # full=False, # LEGACY CODE FROM V0.1.5 (--full flag replaced with deprecation shim, in place of --verbose)
     verbose=False,
     full=None,
 ):
@@ -262,7 +304,7 @@ def transcribe(
     Run the full DrumScript transcription pipeline end-to-end.
 
     Loads audio → optionally extracts the drum stem → detects tempo and onsets →
-    classifies hits → builds the score → writes PDF output.
+    classifies hits → builds the score → writes PDF, JSON, and MIDI output.
 
     :param audio_path: Path to the input audio file (full song or isolated drum stem).
     :type audio_path: str
@@ -274,22 +316,25 @@ def transcribe(
     :param is_rudiment: If True, use the simpler classifier optimised for isolated
         single beats and rudiments rather than full polyphonic drum patterns.
     :type is_rudiment: bool, optional
-    :param output_dir: Directory to save the PDF output. Created if it doesn't exist.
+    :param output_dir: Directory to save output files. Created if it doesn't exist.
         Defaults to 'outputs/'.
     :type output_dir: str, optional
     :param output_filename: Output filename without extension. Defaults to
         '<input_stem>_transcription'.
     :type output_filename: str, optional
     :param verbose: If True, return a dict with all intermediate results (tempo, onsets,
-        events, paths) instead of just the PDF path.
+        events, paths) instead of just the output paths.
     :type verbose: bool, optional
     :param full: **Deprecated** since v0.1.6, will be removed in v1.0.0. Use ``verbose``
         instead. Passing ``full=True`` still works but emits a ``DeprecationWarning``.
         Note: this is unrelated to ``full_song``, which controls stem separation.
     :type full: bool, optional
 
-    :return: Path to the generated PDF, or a dict of full results if ``verbose=True``.
-    :rtype: str or dict
+    :return: A dict with ``pdf_path``, ``json_path``, and ``midi_path`` keys
+        (backwards-compatible as a string via the PDF path until v1.0.0).
+        If ``verbose=True``, returns an extended dict with tempo, onsets,
+        events, and other intermediate results.
+    :rtype: _TranscribeResult or dict
 
     **Examples:**
 
@@ -298,7 +343,10 @@ def transcribe(
     .. code-block:: python
 
        import drumscript as ds
-       pdf = ds.transcribe("drum_loop.wav")
+       result = ds.transcribe("drum_loop.wav")
+       print(result["pdf_path"])   # PDF sheet music
+       print(result["json_path"])  # raw transcription data
+       print(result["midi_path"])  # MIDI file for DAW import
 
     Full song with stem separation, custom output, full results:
 
@@ -309,7 +357,7 @@ def transcribe(
            full_song=True,
            time_signature="6/8",
            output_dir="./my_transcriptions",
-           # full=True, # LEGACY CODE FROM V0.1.5 (--full flag replaced with deprecation shim, in place of --verbose)
+           # full=True, # LEGACY CODE FROM V0.1.5 (--full flag replaced with deprecation shim, in place of --verbose)
            verbose=True
        )
        print(f"PDF: {result['pdf_path']}")
@@ -366,6 +414,8 @@ def transcribe(
     output_dir.mkdir(parents=True, exist_ok=True)
     fname = output_filename or f"{input_stem}_transcription"
     pdf_path = output_dir / f"{fname}.pdf"
+    json_path = output_dir / f"{fname}.json"
+    midi_path = output_dir / f"{fname}.mid"
 
     print(f"...Building score: {pdf_path}")
     score_builder.build_score(
@@ -380,6 +430,8 @@ def transcribe(
     if verbose:
         return {
             "pdf_path": str(pdf_path),
+            "json_path": str(json_path),
+            "midi_path": str(midi_path),
             "audio_path": audio_path,
             "drum_stem_path": working_path if full_song else None,
             "tempo": tempo,
@@ -388,7 +440,14 @@ def transcribe(
             "time_signature": time_signature,
             "sample_rate": sr,
         }
-    return str(pdf_path)
+    # return str(pdf_path)  # LEGACY: v0.1.x returned only the PDF path as a string
+    return _TranscribeResult(
+        {
+            "pdf_path": str(pdf_path),
+            "json_path": str(json_path),
+            "midi_path": str(midi_path),
+        }
+    )
 
 
 def export_pdf(score, output_path=None, **kwargs):
@@ -519,4 +578,4 @@ __all__ = [
 try:
     __version__ = importlib.metadata.version("drumscript")
 except importlib.metadata.PackageNotFoundError:
-    __version__ = "0.1.6"
+    __version__ = "0.2.0"

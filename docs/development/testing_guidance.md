@@ -1,7 +1,7 @@
 # Testing Guidance
 
 <!--date_created: sat-21-june-2025-->
-<!--date_updated: thurs-18-june-2026-->
+<!--date_updated: sun-09-august-2026-->
 
 DrumScript ships with a [pytest](https://docs.pytest.org/) test suite organised
 around a clear separation between **fast unit tests** and **slower integration
@@ -28,16 +28,26 @@ the suite. For a copy-pasteable command reference, see the
 
 DrumScript follows the classic [test pyramid](https://martinfowler.com/articles/practical-test-pyramid.html):
 
-| Layer | Speed | Volume (as of v0.1.6) | What it covers |
+| Layer | Speed | Volume (as of v0.2.0) | What it covers |
 |---|---|---|---|
-| **Unit** | milliseconds | ~131 cases across 11 files | Pure functions, helper logic, no I/O |
-| **Integration** | seconds–minutes | ~8 cases | Real Demucs runs, real ffmpeg, real files |
+| **Unit** | milliseconds | ~138 cases across 11 files | Pure functions, helper logic, no I/O |
+| **Integration (fast)** | seconds | ~12 cases | Real audio and real file writes, no Demucs |
+| **Integration (slow)** | seconds–minutes | ~11 cases | Real Demucs runs, real ffmpeg |
 | **End-to-end** | minutes | very few | Full pipeline: audio → MIDI/PDF/XML |
 
-The dev loop (`pytest -m "not slow"`) runs only the unit layer, which finishes
-in well under 10 seconds. Integration tests are opt-in, so they don't slow
-down day-to-day development but can be triggered before a release with a plain
-`pytest`.
+The dev loop (`pytest -m "not slow"`) runs the unit layer **and** the fast
+integration layer. The unit layer finishes in well under 10 seconds; the fast
+integration tier adds roughly 30 seconds because it really loads audio and
+really writes PDF/JSON/MIDI to disk.
+
+That tier exists because mocking has a blind spot. `tests/unit/test_transcribe.py`
+mocks `build_score`, so it can only prove *"transcribe() reports whatever
+build_score told it"* — it can never prove the files landed on disk. The fast
+integration tests close that gap, and because they don't need model weights they
+can run in CI on every push.
+
+The slow tier (real Demucs) stays opt-in and is triggered before a release with
+a plain `pytest`.
 
 ```{admonition} Why this matters
 :class: tip
@@ -71,8 +81,9 @@ tests/
     ├── test_stem_splitter_helpers.py
     ├── test_tempo_detector.py
     └── test_transcribe.py
-└── integration/             ← Demucs / ffmpeg / files (slow)
-    └── test_stem_splitter_real.py
+└── integration/             ← real files; Demucs/ffmpeg where noted
+    ├── test_stem_splitter_real.py   ← all cases require Demucs (slow)
+    └── test_transcribe_real.py      ← 12 cases need no Demucs, 3 do
 ```
 
 Tests are auto-discovered by pytest — any file matching `test_*.py` under
@@ -226,6 +237,22 @@ The unit tests for `stem_splitter` don't actually run Demucs — that would be
 too slow. Instead, they mock `subprocess.run` and verify the *command being
 constructed*. The real Demucs run lives in
 `tests/integration/test_stem_splitter_real.py`.
+
+### Knowing what mocking cannot prove
+
+Mocking buys speed but hides whole classes of bug. `tests/unit/test_transcribe.py`
+mocks `build_score`, so it verifies the *contract between* `transcribe()` and
+`build_score()` — not that any file was written. Two v0.2.0 bugs sat squarely in
+that blind spot:
+
+- `transcribe()` reported PDF/JSON/MIDI paths unconditionally, including files
+  whose export had failed.
+- The CLI's stem flags were only reachable from inside an `except` handler, so
+  `--drumless` silently produced nothing on the happy path.
+
+Neither was visible to a mocked test. Both are now covered by
+`tests/integration/test_transcribe_real.py`. The rule of thumb: if a change
+alters *what ends up on disk*, a unit test alone is not enough.
 
 ### Asserting on warnings
 

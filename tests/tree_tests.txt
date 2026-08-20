@@ -2,7 +2,9 @@ tests/
 ├── README.md
 ├── conftest.py
 ├── integration
-│   └── test_stem_splitter_real.py
+│   ├── test_stem_splitter_real.py
+│   └── test_transcribe_real.py
+├── tree_tests.txt
 └── unit
     ├── __init__.py
     ├── test_audio_loader.py
@@ -17,4 +19,4 @@ tests/
     ├── test_tempo_detector.py
     └── test_transcribe.py
 
-3 directories, 15 files
+3 directories, 17 files

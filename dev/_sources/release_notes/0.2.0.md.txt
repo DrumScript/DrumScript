@@ -1,12 +1,12 @@
 # v0.2.0 (Alpha)
 
-<!--date_updated:weds-19-august-2026-->
+<!--date_updated:thurs-20-august-2026-->
 
-*Release Date: August 2026*
+*Release Date: 20 August 2026*
 
 ## Important Note
 
-> **First minor-version bump.** Signals the start of the breaking-change track for the `--full` flag (replaced by `--verbose`) ahead of v1.0.0 beta.
+> **First minor-version bump.** Introduces `_TranscribeResult` — a dict-return with a string-compatible deprecation shim — and continues the `full` → `verbose` migration begun in v0.1.6. Both string-return and `full=` will be removed in v1.0.0.
 
 > **Release plan updated** Alpha phased was scheduled to run for **three months** from **01 June 2026 - 31 August 2026 inclusive**.  The alpha phase began in **June 2026** and is ongoing; we expect it to run through late 2026 and into 2027 — Beta (`1.0.0`) is targeted on API stability and benchmark validation rather than a fixed calendar date. In the meantime, we are reaching out to communities, both musicians and academics alike, to find people to test  - and hopefully improve - the deterministic classification model. For more info on where this is headed see **[roadmap](guide/roadmap.md)** or **https://github.com/orgs/DrumScript/discussions**
 
@@ -92,6 +92,9 @@ Documentation now deploys to version-specific folders on GitHub Pages. A version
 * amended `ds.AudioLoader` references in `docs/guide/usage.md` and fixed to reflect correct version `ds.load_audio`
 * `git-lfs` install instructions added to the `README.md` System Dependencies section — previously undocumented, which left first-time contributors with confusing Git LFS pointer files instead of the example audio. (#272)
 * Confirmed `onset_detector.py` standalone mode takes a user-supplied audio path (`python -m drumscript.audio_processor.onset_detector <audio_file>`) rather than hardcoded test paths, and documented it in `cli_reference.md`. (#102)
+* Removed accidental `nbstripout` from core runtime dependencies. `uv add nbstripout` landed it in the main `dependencies` array of `pyproject.toml` with a malformed `[dev]` extra marker (`nbstripout[dev]>=0.8.2`), which would have made every `pip install drumscript` pull a Git/notebook dev tool as a runtime dependency. Caught in pre-release wheel-metadata inspection; nbstripout retained correctly under `[project.optional-dependencies].dev` only.
+* Added `nbstripout` as a pre-commit hook (`kynan/nbstripout` rev `0.7.1`) and dev dependency, to prevent Jupyter notebooks in `docs/guide/interactive/` from committing embedded audio outputs. Fixes the `docs.yml` deploy failure caused by `<input>.ipynb` files ballooning to 100+ MB when `display(Audio(...))` cells base64-inlined the audio into saved outputs, breaching GitHub's push size limit.
+* Aligned `ruff` pre-commit hook rev with the locked ruff version (`v0.15.11` → `v0.15.22`) in `.pre-commit-config.yaml`. Both were `<0.16` so the markdown-format issue didn't bite, but the drift meant local pre-commit and CI could format Python differently on the boundary of a ruff upgrade.
 >
 > ### *Tests*
 >
@@ -102,6 +105,10 @@ Documentation now deploys to version-specific folders on GitHub Pages. A version
 * Added 4 tests to `tests/unit/test_transcribe.py` (16 → 20) covering written-path reporting: failed export omits its path, all-success reports all three, `None` return falls back to computed paths, verbose dict reflects the same
 * Added `tests/integration/test_transcribe_real.py` (15 tests) with real end-to-end coverage, nothing mocked. Fast tier (12 tests, drum-only audio, no Demucs) verifies `transcribe()` writes PDF/JSON/MIDI to disk, the JSON parses, the `_TranscribeResult` deprecation shim and `__fspath__` work, and `build_score()` reports only files that exist — marked `integration` but not `slow`, so it runs in CI under `pytest -m "not slow"`. Slow tier (3 tests, requires Demucs) covers the CLI stem flags including `--drumless` producing a backing track without a score
 
+## Known follow-ups
+
+* `ds.extract_stems(drumless=True, verbose=True)` creates a drumless backing track but does not return its path. The file is on disk (as `<input>_no_drums.<ext>` inside `output_directory`), but callers have to reconstruct the path. v0.2.0 ships a doc-only workaround; v0.2.1 will expose a `backing_track_path` key. (#266)
+* 
 ---
 
 ## Contributors

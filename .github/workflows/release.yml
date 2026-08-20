@@ -76,9 +76,12 @@ jobs:
         run: |
           sed -i "s/^version = \".*\"/version = \"${{ env.VERSION }}\"/" pyproject.toml
 
-      - name: Bump drumscript/__init__.py
+      - name: Bump drumscript/__init__.py fallback version
         run: |
-          sed -i "s/^__version__ = \".*\"/__version__ = \"${{ env.VERSION }}\"/" drumscript/__init__.py
+          # Leading-whitespace anchor: matches the indented fallback inside the
+          # except block, but NOT the commented-out historical line
+          # (`# __version__ = "0.1.6"`), which is preserved as a record.
+          sed -i 's/^\( *\)__version__ = "[0-9]\+\.[0-9]\+\.[0-9]\+"/\1__version__ = "${{ env.VERSION }}"/' drumscript/__init__.py
 
       - name: Bump docs/versions.json
         run: |

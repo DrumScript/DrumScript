@@ -1,8 +1,7 @@
 # **`DrumScript`**
 
 <!--date_created: sun-15-june-2025-->
-<!--date_edited: fri-31-july-2026--->
-
+<!--date_edited: weds-19-august-2026--->
 
 **DrumScript** is an open-source Python library and CLI tool for drum audio analysis and transcription. Give it a recording — a full mix or an isolated drum stem — and it will generate PDF sheet music, MIDI files, and MusicXML output. The `DrumScript` model is a **deterministic classifier**, and doesn't use AI/machine learning. Built for drummers and by drummers, it is - and always will be - an open-source community tool.
 
@@ -29,13 +28,14 @@
 - **[Benchmarking](#benchmarking)**
 - **[Traffic](#traffic)**
 - **[FAQs](#faqs)**
+- **[Changelog](CHANGELOG.md)**
 - **[Acknowledgements](#acknowledgements)**
-- **[License](#license)**
 - **[Similar projects](#similar-projects)**
+- **[License](#license)**
 
 ---
 
-#### **Public Alpha (v0.1.4+) — June to August 2026**
+#### **Public Alpha (v0.1.4+) — ongoing since June 2026**
 
  - We're looking for early adopters and feedback
  - [Feedback on the classification model](https://github.com/DrumScript/DrumScript/issues), and help shape v1.0.0.
@@ -71,6 +71,7 @@ See [`repository_structure.md`](repository_structure.md) for the full project la
 
 ```
 DrumScript/
+├── benchmarks/                 # mir_eval scripts for benchmarking DrumScript 
 ├── drumscript/                 # Main source package
 │   ├── __init__.py             # Public API (transcribe, load_audio, etc.)
 │   ├── main.py                 # CLI entry point
@@ -81,7 +82,7 @@ DrumScript/
 │   └── utils/                  # Helpers (ffmpeg installer, research scripts)
 ├── benchmarks/                 # Evaluation runners (see benchmarks/README.md)
 ├── docs/                       # Sphinx documentation
-├── tests/                      # pytest test suite (131 unit + 8 integration)
+├── tests/                      # pytest test suite (138 unit + 23 integration)
 ├── .github/workflows/          # CI/CD (tests, build, publish, docs)
 ├── pyproject.toml              # Package metadata and dependencies
 └── uv.lock                     # Pinned dependency versions
@@ -160,18 +161,25 @@ DrumScript manages all dependencies via [`pyproject.toml`](pyproject.toml) using
 ```python
 import drumscript as ds
 
-# Transcribe an isolated drum stem → PDF
-pdf_path = ds.transcribe("drum_audio.wav")
+# Transcribe an isolated drum stem → PDF + JSON + MIDI
+result = ds.transcribe("drum_audio.wav")
+print(result["pdf_path"])   # PDF sheet music
+print(result["json_path"])  # raw transcription data (JSON)
+print(result["midi_path"])  # MIDI file for DAW import
 
 # Transcribe a full song (separates drums automatically)
-pdf_path = ds.transcribe("full_song.mp3") # drum only audio
-pdf_path = ds.transcribe("full_song.mp3", full_song=True) # full song, tells DrumScript to extract the drums first and then transcribe
+result = ds.transcribe("full_song.mp3") # drum only audio
+result = ds.transcribe("full_song.mp3", full_song=True) # full song, tells DrumScript to extract the drums first and then transcribe
 
-# Get all intermediate results
+# Get all intermediate results (tempo, onsets, events, etc.)
 result = ds.transcribe("drum_audio.wav", verbose=True)
 print(f"Tempo: {result['tempo']:.1f} BPM")
 print(f"Events: {len(result['events'])}")
+print(f"PDF: {result['pdf_path']}")
+print(f"MIDI: {result['midi_path']}")
 ```
+
+> **Note (v0.2.0):** `transcribe()` now returns a dict with `pdf_path`, `json_path`, and `midi_path` keys. Using the return value as a plain string (e.g. `pdf = ds.transcribe(...)`) still works but is deprecated and will be removed in v1.0.0. Use `result["pdf_path"]` instead.
 
 ### Load and explore audio
 
@@ -179,8 +187,9 @@ print(f"Events: {len(result['events'])}")
 import drumscript as ds
 
 # Load at native sample rate (for notebooks / exploration)
-audio_file = ds.load_audio("drum_audio.wav")
-print(f"Sample rate: {sr} Hz, Duration: {len(audio)/sr:.1f}s")
+audio, sr = ds.load_audio("drum_audio.wav")
+# print(f"Sample rate: {sr} Hz, Duration: {len(audio)/sr:.1f}s")
+print(f"Sample rate: {audio_file[1]} Hz, Duration: {len(audio_file[0])/audio_file[1]:.1f}s")
 
 # Detect tempo
 bpm = ds.detect_tempo("drum_audio.wav")
@@ -210,7 +219,8 @@ remove_drums = ds.extract_stems("full_song.wav",
     drumless=True,
     verbose=True,
 )
-print(f"Backing track: {results['mix']}")
+print(f"Files written to: {remove_drums['output_directory']}")
+# The backing track is saved as <input>_no_drums.wav in that directory.
 ```
 
 ---
@@ -282,7 +292,7 @@ We welcome contributions! DrumScript is intended to be a community-owned project
 **[hello.drumscript@gmail.com](mailto:hello.drumscript@gmail.com)**
 
 ## Alpha Priorities (v0.0.4 < v1.0.0) 
-The alpha phase runs between 01 June and 31 August 2026
+The alpha phase began June 2026. We expect it to run through late 2026 and into 2027 — beta is targeted on API stability and benchmark validation rather than a fixed calendar date.
 
 **What works today:**
 
@@ -385,18 +395,7 @@ DrumScript's own classification engine is **fully deterministic** — it uses ph
 2. **[librosa](https://librosa.org/)** — For foundational audio processing tools.
 3. **[@nanaoto](https://github.com/nanaoto)** — For building the `mir_eval` benchmarking infrastructure and IDMT-SMT-Drums V2 adapter (PR [#273](https://github.com/DrumScript/DrumScript/pull/273)).
 
----
 
-## License
-*[back](#drumscript)*
-
-**[Apache License 2.0](LICENSE)**
-
-**Copyright 2026 DrumScript**
-
-                                 Apache License
-                           Version 2.0, January 2004
-                        http://www.apache.org/licenses/
 
 ---
 ## Similar Projects
@@ -413,5 +412,19 @@ DrumScript has no affiliation with any of the projects below. They are listed fo
 * **[onset_db](https://github.com/CPJKU/onset_db)** - Provides a dataset of annotated musical onsets for tuning and evaluating audio detection algorithms. Maintained by JKU Linz.
 
 ---
+
+## License
+*[back](#drumscript)*
+
+**[Apache License 2.0](LICENSE)**
+
+**Copyright 2026 DrumScript**
+
+                                 Apache License
+                           Version 2.0, January 2004
+                        http://www.apache.org/licenses/
+
+---
+
 
 <!--END-->

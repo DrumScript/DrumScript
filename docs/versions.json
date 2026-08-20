@@ -1,5 +1,10 @@
 {
   "list": [
+
+    {
+      "name": "0.2.0 (Alpha) (Pypi)",
+      "version": "0.2.0"
+    },
     {
       "name": "0.1.6 (Alpha) (Pypi)",
       "version": "0.1.6"

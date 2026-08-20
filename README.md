@@ -1,7 +1,7 @@
 # **`DrumScript`**
 
 <!--date_created: sun-15-june-2025-->
-<!--date_edited: weds-19-august-2026--->
+<!--date_edited: thurd-20-august-2026--->
 
 **DrumScript** is an open-source Python library and CLI tool for drum audio analysis and transcription. Give it a recording — a full mix or an isolated drum stem — and it will generate PDF sheet music, MIDI files, and MusicXML output. The `DrumScript` model is a **deterministic classifier**, and doesn't use AI/machine learning. Built for drummers and by drummers, it is - and always will be - an open-source community tool.
 
@@ -53,13 +53,17 @@
 
 **Example 1: Simple groove**
 
-![DrumScript transcription output](./docs/_static/test_wav.png)
+<!---![DrumScript transcription output](./docs/_static/test_wav.png)-->
+![DrumScript transcription output](https://raw.githubusercontent.com/DrumScript/DrumScript/main//docs/_static/test_wav.png)
 
 **Example 2: A well-known Sabbath song**
 
-![DrumScript transcription output](./docs/_static/iron_man_1.png)
-![DrumScript transcription output](./docs/_static/iron_man_2.png)
-![DrumScript transcription output](./docs/_static/iron_man_3.png)
+<!---![DrumScript transcription output](./docs/_static/iron_man_1.png)--->
+<!---![DrumScript transcription output](./docs/_static/iron_man_2.png)--->
+<!---![DrumScript transcription output](./docs/_static/iron_man_3.png)--->
+![DrumScript transcription output](https://raw.githubusercontent.com/DrumScript/DrumScript/main/docs/_static/iron_man_1.png)
+![DrumScript transcription output](https://raw.githubusercontent.com/DrumScript/DrumScript/main/docs/_static/iron_man_2.png)
+![DrumScript transcription output](https://raw.githubusercontent.com/DrumScript/DrumScript/main/docs/_static/iron_man_3.png)
 
 ---
 

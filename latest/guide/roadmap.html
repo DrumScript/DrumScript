@@ -2,11 +2,11 @@
 <html lang="en" data-accent-color="violet" data-content_root="../">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Roadmap for DrumScript - DrumScript 0.1.6 documentation</title><link rel="author" title="About these documents" href="../about.html" /><link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="DrumScript Security Policy" href="security.html" /><link rel="prev" title="Glossary of Terms" href="glossary.html" /><script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Roadmap for DrumScript - DrumScript 0.2.0 documentation</title><link rel="author" title="About these documents" href="../about.html" /><link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="DrumScript Security Policy" href="security.html" /><link rel="prev" title="Glossary of Terms" href="glossary.html" /><script>
     function setColorMode(t){let e=document.documentElement;e.setAttribute("data-color-mode",t);let a=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches,s=t;"auto"===t&&(s=a?"dark":"light"),"light"===s?(e.classList.remove("dark"),e.classList.add("light")):(e.classList.remove("light"),e.classList.add("dark"))}
     setColorMode(localStorage._theme||"auto");
   </script><link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=e1a1ceaf" />
-    <link rel="stylesheet" type="text/css" href="../_static/shibuya.css?v=9454f7d5" />
+    <link rel="stylesheet" type="text/css" href="../_static/shibuya.css?v=2ceb65ce" />
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
     <link media="print" rel="stylesheet" type="text/css" href="../_static/print.css?v=20ff2c19" />
     <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=132fcf90" />
@@ -25,7 +25,7 @@
   </head>
 <body><div class="announcement">
     <div class="announcement-inner">
-      <p>DrumScript v0.1.6 now available: with mir_eval benchmarking</p>
+      <p>DrumScript v0.2.0 now available: with mir_eval benchmarking</p>
       <button class="announcement-close" aria-label="Close announcement">
         <i class="i-lucide close"></i>
       </button>
@@ -46,7 +46,7 @@
 </form><div class="nav-versions">
     <button type="button" aria-label="Versions">
       <span class="md:hidden">Versions</span>
-      <span class="hidden md:inline">v0.1.6</span>
+      <span class="hidden md:inline">v0.2.0</span>
       <i class="i-lucide chevron-down"></i>
     </button>
     <div class="nav-versions-choices"><ul><li><a href="/DrumScript/latest/">latest</a></li><li><a href="/DrumScript/dev/">dev</a></li><li><a href="/DrumScript/v0.2.0/">v0.2.0</a></li><li><a href="/DrumScript/v0.1.6/">v0.1.6</a></li></ul></div>
@@ -193,6 +193,7 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l2"><a class="reference internal" href="../release_notes/0.1.4.html">v0.1.4 (Alpha)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../release_notes/0.1.5.html">v0.1.5 (Alpha)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../release_notes/0.1.6.html">v0.1.6 (Alpha)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes/0.2.0.html">v0.2.0 (Alpha)</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../changelog.html"><strong>Changelog</strong></a></li>
@@ -241,8 +242,8 @@ data-aria-dark="Switch to auto color mode">
     <div class="sy-scrollbar sy-rside-inner px-6 xl:top-16 xl:sticky xl:pl-0 pt-6 pb-4"><div class="localtoc"><h3>On this page</h3><ul>
 <li><a class="reference internal" href="#release-plan">Release Plan</a><ul>
 <li><a class="reference internal" href="#alpha-priorities-v0-3-0-v0-9-0">Alpha Priorities (v0.3.0 &#8211; v0.9.0)</a></li>
-<li><a class="reference internal" href="#beta-priorities-0-9-x-0-9-9">Beta Priorities <code class="docutils literal notranslate">9.x</span></code> &#8211; <code class="docutils literal notranslate">9.9</span></code></a></li>
-<li><a class="reference internal" href="#stable-version-1-0-0-and-beyond">Stable Version <code class="docutils literal notranslate">0.0</span></code> and Beyond</a></li>
+<li><a class="reference internal" href="#beta-priorities-0-9-x-0-9-9">Beta Priorities <code class="docutils literal notranslate"><span class="pre">0.9.x</span></code> &#8211; <code class="docutils literal notranslate"><span class="pre">0.9.9</span></code></a></li>
+<li><a class="reference internal" href="#stable-version-1-0-0-and-beyond">Stable Version <code class="docutils literal notranslate"><span class="pre">1.0.0</span></code> and Beyond</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#how-to-get-involved">How to Get Involved</a></li>
@@ -336,13 +337,13 @@ data-aria-dark="Switch to auto color mode">
   </div>
 </div><article class="yue" role="main">
           <section id="roadmap-for-drumscript">
-<h1>Roadmap for <code class="docutils literal notranslate"><span class="pre">DrumScript</span></code><a class="headerlink" href="#roadmap-for-drumscript" title="Link to this heading">¶</a></h1>
+<h1>Roadmap for <code class="docutils literal notranslate"><span class="pre">DrumScript</span></code><a class="headerlink" href="#roadmap-for-drumscript" title="Link to this heading">#</a></h1>
 <!--date_created: thurs-21-may-2026-->
-<!--date_updated: sat-20-june-2026-->
+<!--date_updated: weds-19-august-2026-->
 <blockquote>
 <div><p>DrumScript follows <a class="reference external" href="https://semver.org/">Semantic Versioning</a>.
 The current phase is <strong>Alpha</strong> (<code class="docutils literal notranslate"><span class="pre">v{{version}}</span></code>) — the classification model and score generation/ API is out for testing.
-From <strong>01 June 2026 to 31 August</strong> alpha testing is under way.</p>
+The alpha phase began on <strong>1st June 2026 and is ongoing</strong> — no fixed end date. Beta (<code class="docutils literal notranslate"><span class="pre">1.0.0</span></code>) follows once the API stabilises and the classification model is validated against standard ADT benchmarks.</p>
 </div></blockquote>
 <ul class="simple">
 <li><p><strong><a class="reference internal" href="#release-phases"><span class="xref myst">Release plan</span></a></strong></p>
@@ -356,7 +357,7 @@ From <strong>01 June 2026 to 31 August</strong> alpha testing is under way.</p>
 </ul>
 <hr class="docutils" />
 <section id="release-plan">
-<h2>Release Plan<a class="headerlink" href="#release-plan" title="Link to this heading">¶</a></h2>
+<h2>Release Plan<a class="headerlink" href="#release-plan" title="Link to this heading">#</a></h2>
 <div class="table-wrapper colwidths-auto docutils container">
 <table class="docutils align-default">
 <thead>
@@ -369,18 +370,18 @@ From <strong>01 June 2026 to 31 August</strong> alpha testing is under way.</p>
 <tbody>
 <tr class="row-even"><td><p><strong>Pre-Alpha</strong></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">0.1.0</span></code> – <code class="docutils literal notranslate"><span class="pre">0.9.0</span></code></p></td>
-<td><p>June 2025 - May 2026</p></td>
+<td><p><strong>June 2025 - May 2026</strong></p></td>
 <td><p>Core pipeline works end-to-end. API may change between releases. Built in isolation</p></td>
 </tr>
 <tr class="row-odd"><td><p><strong>Alpha</strong> (current)</p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">0.1.0</span></code> – <code class="docutils literal notranslate"><span class="pre">0.9.0</span></code></p></td>
-<td><p><strong>June – August 2026</strong></p></td>
+<td><p><strong>June 2026 – ongoing</strong></p></td>
 <td><p>Core pipeline works end-to-end. API may change between releases. Feedback sought. Cross off some of the <strong><a class="reference external" href="https://github.com/DrumScript/DrumScript/issues">Issues</a></strong> added in pre-Alpha</p></td>
 </tr>
 <tr class="row-even"><td><p><strong>Beta</strong></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">0.9.x</span></code> – <code class="docutils literal notranslate"><span class="pre">0.9.9</span></code></p></td>
-<td><p>September 2026 onwards</p></td>
-<td><p>API locked for each minor version. Focus on accuracy, edge cases, and evaluation against standard ADT datasets.  Release <strong>free-to-use</strong> <code class="docutils literal notranslate"><span class="pre">WebGPU/WASM/ONNX</span></code> UI for non-coders</p></td>
+<td><p>Follows alpha (API-stability gated)</p></td>
+<td><p>API locked for each minor version. Focus on accuracy, edge cases, and evaluation against standard ADT datasets. Release <strong>free-to-use</strong> <code class="docutils literal notranslate"><span class="pre">WebGPU/WASM/ONNX</span></code> UI for non-coders</p></td>
 </tr>
 <tr class="row-odd"><td><p><strong>Stable</strong></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">1.0.0</span></code></p></td>
@@ -402,7 +403,7 @@ From <strong>01 June 2026 to 31 August</strong> alpha testing is under way.</p>
 </ul>
 <hr class="docutils" />
 <section id="alpha-priorities-v0-3-0-v0-9-0">
-<h3>Alpha Priorities (v0.3.0 – v0.9.0)<a class="headerlink" href="#alpha-priorities-v0-3-0-v0-9-0" title="Link to this heading">¶</a></h3>
+<h3>Alpha Priorities (v0.3.0 – v0.9.0)<a class="headerlink" href="#alpha-priorities-v0-3-0-v0-9-0" title="Link to this heading">#</a></h3>
 <p><strong>What we’re focused on during the alpha:</strong></p>
 <ul class="simple">
 <li><p>Expanding test coverage across <strong>genres</strong>, <strong>kit types</strong>, and <strong>recording conditions</strong></p></li>
@@ -416,11 +417,11 @@ From <strong>01 June 2026 to 31 August</strong> alpha testing is under way.</p>
 </ul>
 </section>
 <section id="beta-priorities-0-9-x-0-9-9">
-<h3>Beta Priorities <code class="docutils literal notranslate"><span class="pre">0.9.x</span></code> – <code class="docutils literal notranslate"><span class="pre">0.9.9</span></code><a class="headerlink" href="#beta-priorities-0-9-x-0-9-9" title="Link to this heading">¶</a></h3>
+<h3>Beta Priorities <code class="docutils literal notranslate"><span class="pre">0.9.x</span></code> – <code class="docutils literal notranslate"><span class="pre">0.9.9</span></code><a class="headerlink" href="#beta-priorities-0-9-x-0-9-9" title="Link to this heading">#</a></h3>
 <p><strong>Immediately prior to release of DrumScript v1.0.0 some goals will be small fixes to ensure robustness, testing the UI, integrating the UI with current CI/CD pipelines</strong></p>
 </section>
 <section id="stable-version-1-0-0-and-beyond">
-<h3>Stable Version <code class="docutils literal notranslate"><span class="pre">1.0.0</span></code> and Beyond<a class="headerlink" href="#stable-version-1-0-0-and-beyond" title="Link to this heading">¶</a></h3>
+<h3>Stable Version <code class="docutils literal notranslate"><span class="pre">1.0.0</span></code> and Beyond<a class="headerlink" href="#stable-version-1-0-0-and-beyond" title="Link to this heading">#</a></h3>
 <ol class="arabic simple">
 <li><p><strong>Smarter classification across genres and kits</strong></p></li>
 </ol>
@@ -470,7 +471,7 @@ transient were both being classified.ate transcription and meaningful notatio</p
 </section>
 <hr class="docutils" />
 <section id="how-to-get-involved">
-<h2>How to Get Involved<a class="headerlink" href="#how-to-get-involved" title="Link to this heading">¶</a></h2>
+<h2>How to Get Involved<a class="headerlink" href="#how-to-get-involved" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p><strong>Report bugs or edge cases:</strong> <a class="reference external" href="https://github.com/DrumScript/DrumScript/issues">GitHub Issues</a></p></li>
 <li><p><strong>Suggest features:</strong> <a class="reference external" href="https://github.com/DrumScript/DrumScript/issues/new?template=feature_request.md">Feature Request template</a></p></li>
@@ -480,7 +481,7 @@ transient were both being classified.ate transcription and meaningful notatio</p
 </ul>
 </section>
 <section id="similar-projects">
-<h2>Similar Projects<a class="headerlink" href="#similar-projects" title="Link to this heading">¶</a></h2>
+<h2>Similar Projects<a class="headerlink" href="#similar-projects" title="Link to this heading">#</a></h2>
 <p>No affiliation as yet, however.</p>
 <ul class="simple">
 <li><p><strong><a class="reference external" href="https://librosa.org/">librosa</a></strong> — The spectral analysis library that powers DrumScript’s onset detection and feature extraction.</p></li>
@@ -531,13 +532,13 @@ transient were both being classified.ate transcription and meaningful notatio</p
   </p>
 </div>
       <div class="sy-foot-socials">
-<a href="https://github.com/DrumScript/DrumScript" aria-label="GitHub">
-  <iconify-icon icon="simple-icons:github"></iconify-icon>
-</a></div>
+  <a href="https://github.com/DrumScript/DrumScript" aria-label="GitHub">
+    <iconify-icon icon="simple-icons:github"></iconify-icon>
+  </a></div>
     </div>
   </div>
 </footer>
-      <script src="../_static/documentation_options.js?v=6e0256f3"></script>
+      <script src="../_static/documentation_options.js?v=938c9ccc"></script>
       <script src="../_static/doctools.js?v=fd6eb6e6"></script>
       <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script src="../_static/shibuya.js?v=50760d75"></script></body>

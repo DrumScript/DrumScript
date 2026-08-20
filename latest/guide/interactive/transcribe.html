@@ -2,11 +2,11 @@
 <html lang="en" data-accent-color="violet" data-content_root="../../">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Transcribe a Drum Track - DrumScript 0.1.6 documentation</title><link rel="author" title="About these documents" href="../../about.html" /><link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" /><link rel="next" title="Bibliography &amp; References" href="../../theory/bibliography.html" /><link rel="prev" title="Measure Tempo" href="measure_tempo.html" /><script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Transcribe a Drum Track - DrumScript 0.2.0 documentation</title><link rel="author" title="About these documents" href="../../about.html" /><link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" /><link rel="next" title="Bibliography &amp; References" href="../../theory/bibliography.html" /><link rel="prev" title="Measure Tempo" href="measure_tempo.html" /><script>
     function setColorMode(t){let e=document.documentElement;e.setAttribute("data-color-mode",t);let a=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches,s=t;"auto"===t&&(s=a?"dark":"light"),"light"===s?(e.classList.remove("dark"),e.classList.add("light")):(e.classList.remove("light"),e.classList.add("dark"))}
     setColorMode(localStorage._theme||"auto");
   </script><link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=e1a1ceaf" />
-    <link rel="stylesheet" type="text/css" href="../../_static/shibuya.css?v=9454f7d5" />
+    <link rel="stylesheet" type="text/css" href="../../_static/shibuya.css?v=2ceb65ce" />
     <link rel="stylesheet" type="text/css" href="../../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
     <link media="print" rel="stylesheet" type="text/css" href="../../_static/print.css?v=20ff2c19" />
     <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=132fcf90" />
@@ -25,7 +25,7 @@
   </head>
 <body><div class="announcement">
     <div class="announcement-inner">
-      <p>DrumScript v0.1.6 now available: with mir_eval benchmarking</p>
+      <p>DrumScript v0.2.0 now available: with mir_eval benchmarking</p>
       <button class="announcement-close" aria-label="Close announcement">
         <i class="i-lucide close"></i>
       </button>
@@ -46,7 +46,7 @@
 </form><div class="nav-versions">
     <button type="button" aria-label="Versions">
       <span class="md:hidden">Versions</span>
-      <span class="hidden md:inline">v0.1.6</span>
+      <span class="hidden md:inline">v0.2.0</span>
       <i class="i-lucide chevron-down"></i>
     </button>
     <div class="nav-versions-choices"><ul><li><a href="/DrumScript/latest/">latest</a></li><li><a href="/DrumScript/dev/">dev</a></li><li><a href="/DrumScript/v0.2.0/">v0.2.0</a></li><li><a href="/DrumScript/v0.1.6/">v0.1.6</a></li></ul></div>
@@ -193,6 +193,7 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l2"><a class="reference internal" href="../../release_notes/0.1.4.html">v0.1.4 (Alpha)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../release_notes/0.1.5.html">v0.1.5 (Alpha)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../release_notes/0.1.6.html">v0.1.6 (Alpha)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../release_notes/0.2.0.html">v0.2.0 (Alpha)</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../changelog.html"><strong>Changelog</strong></a></li>
@@ -240,8 +241,11 @@ data-aria-dark="Switch to auto color mode">
     </button>
     <div class="sy-scrollbar sy-rside-inner px-6 xl:top-16 xl:sticky xl:pl-0 pt-6 pb-4"><div class="localtoc"><h3>On this page</h3><ul>
 <li><a class="reference internal" href="#drum-only-audio-vs-full-songs">Drum-only audio vs. full songs</a></li>
-<li><a class="reference internal" href="#transcribing-an-isolated-drum-stem-default">1. Transcribing an isolated drum stem (default)</a></li>
-<li><a class="reference internal" href="#output-drum-only">Output (Drum Only)</a></li>
+<li><a class="reference internal" href="#transcribing-an-isolated-drum-stem-default">1. Transcribing an isolated drum stem (default)</a><ul>
+<li><a class="reference internal" href="#ds-transcribe-automatically-outputs-pdf-xml-and-json-as-standard">&gt; <code class="docutils literal notranslate"><span class="pre">ds.transcribe()</span></code> automatically outputs <code class="docutils literal notranslate"><span class="pre">.pdf</span></code>, <code class="docutils literal notranslate"><span class="pre">.xml</span></code> and <code class="docutils literal notranslate"><span class="pre">.json</span></code> as standard</a></li>
+<li><a class="reference internal" href="#or-just-choose-one-output-ie-pdf"><em>&#8230; or just choose one output (ie pdf):</em></a></li>
+</ul>
+</li>
 </ul>
 </div><a class="js-repo-stats repo-stats flex items-center" href="https://github.com/DrumScript/DrumScript"
   data-type="github" data-user="DrumScript" data-repo="DrumScript">
@@ -335,7 +339,7 @@ data-aria-dark="Switch to auto color mode">
   </div>
 </div><article class="yue" role="main">
           <section id="transcribe-a-drum-track">
-<h1>Transcribe a Drum Track<a class="headerlink" href="#transcribe-a-drum-track" title="Link to this heading">¶</a></h1>
+<h1>Transcribe a Drum Track<a class="headerlink" href="#transcribe-a-drum-track" title="Link to this heading">#</a></h1>
 <p>This is the core DrumScript pipeline: give it an audio file and it generates <strong>PDF sheet music</strong>.</p>
 <p><code class="docutils literal notranslate"><span class="pre">ds.transcribe()</span></code> runs the full end-to-end pipeline:</p>
 <ol class="arabic simple">
@@ -346,7 +350,7 @@ data-aria-dark="Switch to auto color mode">
 <li><p><strong>Build &amp; export</strong> a PDF score with dual-voice notation (cymbals stems-up, drums stems-down).</p></li>
 </ol>
 <section id="drum-only-audio-vs-full-songs">
-<h2>Drum-only audio vs. full songs<a class="headerlink" href="#drum-only-audio-vs-full-songs" title="Link to this heading">¶</a></h2>
+<h2>Drum-only audio vs. full songs<a class="headerlink" href="#drum-only-audio-vs-full-songs" title="Link to this heading">#</a></h2>
 <p><strong>By default, <code class="docutils literal notranslate"><span class="pre">ds.transcribe()</span></code> expects an isolated drum stem</strong> — i.e. audio that contains drums only, with no bass, vocals, or other instruments.</p>
 <ul class="simple">
 <li><p>For an <strong>isolated drum stem</strong>, call <code class="docutils literal notranslate"><span class="pre">ds.transcribe(path)</span></code> directly. <em>(This is the default.)</em></p></li>
@@ -355,11 +359,11 @@ data-aria-dark="Switch to auto color mode">
 <p>Both cases are demonstrated below.</p>
 <p><em>(Note: We are using copyright-free synthetic tracks for these demonstrations.)</em></p>
 <!--date_created:sat-16-may-2026-->
-<!--date_updated:mon-01-june-2026-->
+<!--date_updated:tues-18-june-2026-->
 </section>
 <hr class="docutils" />
 <section id="transcribing-an-isolated-drum-stem-default">
-<h2>1. Transcribing an isolated drum stem (default)<a class="headerlink" href="#transcribing-an-isolated-drum-stem-default" title="Link to this heading">¶</a></h2>
+<h2>1. Transcribing an isolated drum stem (default)<a class="headerlink" href="#transcribing-an-isolated-drum-stem-default" title="Link to this heading">#</a></h2>
 <p>Use this path when your input is already drum-only — for example, a stem exported from a DAW, or a drum recording captured in isolation.</p>
 <p>No special flags are needed: just call <code class="docutils literal notranslate"><span class="pre">ds.transcribe(path)</span></code>.</p>
 <div class="cell docutils container">
@@ -377,24 +381,44 @@ data-aria-dark="Switch to auto color mode">
 </div>
 </div>
 </div>
+<section id="ds-transcribe-automatically-outputs-pdf-xml-and-json-as-standard">
+<h3>&gt; <code class="docutils literal notranslate"><span class="pre">ds.transcribe()</span></code> automatically outputs <code class="docutils literal notranslate"><span class="pre">.pdf</span></code>, <code class="docutils literal notranslate"><span class="pre">.xml</span></code> and <code class="docutils literal notranslate"><span class="pre">.json</span></code> as standard<a class="headerlink" href="#ds-transcribe-automatically-outputs-pdf-xml-and-json-as-standard" title="Link to this heading">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="c1"># Drum-only transcription — no `full_song` flag needed.</span>
 </span><span data-line="2"><span class="c1"># Outputs are saved to the specified output_dir.</span>
-</span><span data-line="3"><span class="n">drum_only_result</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">transcribe</span><span class="p">(</span>
+</span><span data-line="3"><span class="n">output_files</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">transcribe</span><span class="p">(</span>
 </span><span data-line="4">    <span class="n">audio_path</span><span class="o">=</span><span class="n">drum_only_path</span><span class="p">,</span>
 </span><span data-line="5">    <span class="n">output_dir</span><span class="o">=</span><span class="s2">&quot;transcription&quot;</span><span class="p">,</span>
 </span><span data-line="6"><span class="p">)</span>
 </span><span data-line="7">
-</span><span data-line="8"><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Drum-only transcription complete. File generated:&quot;</span><span class="p">,</span> <span class="n">drum_only_result</span><span class="p">)</span>
+</span><span data-line="8"><span class="c1"># transcribe() returns a dict with the paths to all three outputs (v0.2.0+)</span>
+</span><span data-line="9"><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Drum-only transcription complete!&quot;</span><span class="p">)</span>
+</span><span data-line="10"><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  PDF sheet music:  </span><span class="si">{</span><span class="n">output_files</span><span class="p">[</span><span class="s1">&#39;pdf_path&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span data-line="11"><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  MIDI (for DAWs):  </span><span class="si">{</span><span class="n">output_files</span><span class="p">[</span><span class="s1">&#39;midi_path&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span data-line="12"><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  JSON (raw data):  </span><span class="si">{</span><span class="n">output_files</span><span class="p">[</span><span class="s1">&#39;json_path&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </span></pre></div>
 </div>
 </div>
 </div>
 </section>
+<section id="or-just-choose-one-output-ie-pdf">
+<h3><em>… or just choose one output (ie pdf):</em><a class="headerlink" href="#or-just-choose-one-output-ie-pdf" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="c1"># Drum-only transcription — no `full_song` flag needed.</span>
+</span><span data-line="2"><span class="c1"># Outputs are saved to the specified output_dir.</span>
+</span><span data-line="3"><span class="n">output_files</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">transcribe</span><span class="p">(</span>
+</span><span data-line="4">    <span class="n">audio_path</span><span class="o">=</span><span class="n">drum_only_path</span><span class="p">,</span>
+</span><span data-line="5">    <span class="n">output_dir</span><span class="o">=</span><span class="s2">&quot;transcription&quot;</span><span class="p">,</span>
+</span><span data-line="6"><span class="p">)</span>
+</span><span data-line="7">
+</span><span data-line="8"><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Drum-only transcription complete. PDF generated:&quot;</span><span class="p">,</span> <span class="n">output_files</span><span class="p">[</span><span class="s2">&quot;pdf_path&quot;</span><span class="p">])</span>
+</span></pre></div>
+</div>
+</div>
+</div>
 <hr class="docutils" />
-<section id="output-drum-only">
-<h2>Output (Drum Only)<a class="headerlink" href="#output-drum-only" title="Link to this heading">¶</a></h2>
 <blockquote>
 <div><p><strong>Please note:</strong> If no <code class="docutils literal notranslate"><span class="pre">output_dir</span></code> is specified when running <code class="docutils literal notranslate"><span class="pre">ds.transcribe()</span></code> the default save location is the <code class="docutils literal notranslate"><span class="pre">outputs/</span></code> directory.</p>
 </div></blockquote>
@@ -403,6 +427,7 @@ data-aria-dark="Switch to auto color mode">
 <p><img alt="Page 1" src="../../_images/transcription-test_wav.png" /></p>
 <hr class="docutils" />
 <!--END--></section>
+</section>
 </section>
 
         </article><button class="back-to-top" type="button">
@@ -442,13 +467,13 @@ data-aria-dark="Switch to auto color mode">
   </p>
 </div>
       <div class="sy-foot-socials">
-<a href="https://github.com/DrumScript/DrumScript" aria-label="GitHub">
-  <iconify-icon icon="simple-icons:github"></iconify-icon>
-</a></div>
+  <a href="https://github.com/DrumScript/DrumScript" aria-label="GitHub">
+    <iconify-icon icon="simple-icons:github"></iconify-icon>
+  </a></div>
     </div>
   </div>
 </footer>
-      <script src="../../_static/documentation_options.js?v=6e0256f3"></script>
+      <script src="../../_static/documentation_options.js?v=938c9ccc"></script>
       <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
       <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script src="../../_static/shibuya.js?v=50760d75"></script></body>

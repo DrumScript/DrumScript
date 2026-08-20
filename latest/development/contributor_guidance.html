@@ -2,11 +2,11 @@
 <html lang="en" data-accent-color="violet" data-content_root="../">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Contributing to DrumScript - DrumScript 0.1.6 documentation</title><link rel="author" title="About these documents" href="../about.html" /><link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Documentation" href="documentation.html" /><link rel="prev" title="Code of Conduct for DrumScript" href="code_of_conduct.html" /><script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Contributing to DrumScript - DrumScript 0.2.0 documentation</title><link rel="author" title="About these documents" href="../about.html" /><link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Documentation" href="documentation.html" /><link rel="prev" title="Code of Conduct for DrumScript" href="code_of_conduct.html" /><script>
     function setColorMode(t){let e=document.documentElement;e.setAttribute("data-color-mode",t);let a=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches,s=t;"auto"===t&&(s=a?"dark":"light"),"light"===s?(e.classList.remove("dark"),e.classList.add("light")):(e.classList.remove("light"),e.classList.add("dark"))}
     setColorMode(localStorage._theme||"auto");
   </script><link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=e1a1ceaf" />
-    <link rel="stylesheet" type="text/css" href="../_static/shibuya.css?v=9454f7d5" />
+    <link rel="stylesheet" type="text/css" href="../_static/shibuya.css?v=2ceb65ce" />
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
     <link media="print" rel="stylesheet" type="text/css" href="../_static/print.css?v=20ff2c19" />
     <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=132fcf90" />
@@ -25,7 +25,7 @@
   </head>
 <body><div class="announcement">
     <div class="announcement-inner">
-      <p>DrumScript v0.1.6 now available: with mir_eval benchmarking</p>
+      <p>DrumScript v0.2.0 now available: with mir_eval benchmarking</p>
       <button class="announcement-close" aria-label="Close announcement">
         <i class="i-lucide close"></i>
       </button>
@@ -46,7 +46,7 @@
 </form><div class="nav-versions">
     <button type="button" aria-label="Versions">
       <span class="md:hidden">Versions</span>
-      <span class="hidden md:inline">v0.1.6</span>
+      <span class="hidden md:inline">v0.2.0</span>
       <i class="i-lucide chevron-down"></i>
     </button>
     <div class="nav-versions-choices"><ul><li><a href="/DrumScript/latest/">latest</a></li><li><a href="/DrumScript/dev/">dev</a></li><li><a href="/DrumScript/v0.2.0/">v0.2.0</a></li><li><a href="/DrumScript/v0.1.6/">v0.1.6</a></li></ul></div>
@@ -193,6 +193,7 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l2"><a class="reference internal" href="../release_notes/0.1.4.html">v0.1.4 (Alpha)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../release_notes/0.1.5.html">v0.1.5 (Alpha)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../release_notes/0.1.6.html">v0.1.6 (Alpha)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes/0.2.0.html">v0.2.0 (Alpha)</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../changelog.html"><strong>Changelog</strong></a></li>
@@ -355,12 +356,12 @@ data-aria-dark="Switch to auto color mode">
   </div>
 </div><article class="yue" role="main">
           <section id="contributing-to-drumscript">
-<h1>Contributing to <code class="docutils literal notranslate"><span class="pre">DrumScript</span></code><a class="headerlink" href="#contributing-to-drumscript" title="Link to this heading">¶</a></h1>
+<h1>Contributing to <code class="docutils literal notranslate"><span class="pre">DrumScript</span></code><a class="headerlink" href="#contributing-to-drumscript" title="Link to this heading">#</a></h1>
 <!--date_created: thurs-03-jul-2025 -->
 <!--date_updated: weds-21-jan-2026 -->
 <hr class="docutils" />
 <section id="table-of-contents">
-<h2>Table of Contents<a class="headerlink" href="#table-of-contents" title="Link to this heading">¶</a></h2>
+<h2>Table of Contents<a class="headerlink" href="#table-of-contents" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p><a class="reference internal" href="#the-deterministic-mission">The Deterministic Mission</a></p></li>
 <li><p><a class="reference internal" href="#releasing-and-publishing-maintainer-guide"><span class="xref myst">Releasing and Publishing (Maintainer Guide)</span></a></p>
@@ -386,7 +387,7 @@ Please note that this project is released with a contributor <strong><code class
 </section>
 <hr class="docutils" />
 <section id="the-deterministic-mission">
-<h2>The Deterministic Mission<a class="headerlink" href="#the-deterministic-mission" title="Link to this heading">¶</a></h2>
+<h2>The Deterministic Mission<a class="headerlink" href="#the-deterministic-mission" title="Link to this heading">#</a></h2>
 <p><em><a class="reference internal" href="#contributing-to-drumscript">back to top</a></em></p>
 <p><em>Why we aren’t using deep learning (for now).</em></p>
 <p><strong>DrumScript is pivoting to a rule-based, deterministic classification engine.</strong></p>
@@ -403,15 +404,15 @@ We have the skeleton (stem splitting, tempo detection, onset detection). We need
 </section>
 <hr class="docutils" />
 <section id="codeowners">
-<h2><code class="docutils literal notranslate"><span class="pre">CODEOWNERS</span></code><a class="headerlink" href="#codeowners" title="Link to this heading">¶</a></h2>
+<h2><code class="docutils literal notranslate"><span class="pre">CODEOWNERS</span></code><a class="headerlink" href="#codeowners" title="Link to this heading">#</a></h2>
 <p>We use the GitHub tool of assigning code ‘owners’ to the <code class="docutils literal notranslate"><span class="pre">DrumScript</span></code> repository. In the earliest release phases for the library only founding users will be on the <code class="docutils literal notranslate"><span class="pre">CODEOWNERS</span></code> documentation; but as people volunteer to contribute we will expand the scope of the <code class="docutils literal notranslate"><span class="pre">CODEOWNERS</span></code> doc. See <a class="reference external" href="https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners">GitHub CODEOWNERS guidance</a> for more information, or if this will be your first time contributing to an open-source project.</p>
 </section>
 <hr class="docutils" />
 <section id="how-to-get-started">
-<h2>How to Get Started<a class="headerlink" href="#how-to-get-started" title="Link to this heading">¶</a></h2>
+<h2>How to Get Started<a class="headerlink" href="#how-to-get-started" title="Link to this heading">#</a></h2>
 <p><em><a class="reference internal" href="#contributing-to-drumscript">back to top</a></em></p>
 <section id="prerequisites">
-<h3>1. Prerequisites<a class="headerlink" href="#prerequisites" title="Link to this heading">¶</a></h3>
+<h3>1. Prerequisites<a class="headerlink" href="#prerequisites" title="Link to this heading">#</a></h3>
 <p>Before you begin, ensure you have the following installed:</p>
 <ul class="simple">
 <li><p><strong>Git:</strong> For version control.</p></li>
@@ -428,7 +429,7 @@ We have the skeleton (stem splitting, tempo detection, onset detection). We need
 </div></blockquote>
 </section>
 <section id="clone-the-repository">
-<h3>2. Clone the Repository<a class="headerlink" href="#clone-the-repository" title="Link to this heading">¶</a></h3>
+<h3>2. Clone the Repository<a class="headerlink" href="#clone-the-repository" title="Link to this heading">#</a></h3>
 <p>Start by cloning the <code class="docutils literal notranslate"><span class="pre">DrumScript</span></code> repository to your local machine:</p>
 <div class="highlight-zsh notranslate"><div class="highlight"><pre><span></span><span data-line="1">git<span class="w"> </span>clone<span class="w"> </span>https://github.com/DrumScript/DrumScript.git
 </span><span data-line="2"><span class="nb">cd</span><span class="w"> </span>DrumScript
@@ -436,7 +437,7 @@ We have the skeleton (stem splitting, tempo detection, onset detection). We need
 </div>
 </section>
 <section id="set-up-your-development-environment">
-<h3>3. Set Up Your Development Environment<a class="headerlink" href="#set-up-your-development-environment" title="Link to this heading">¶</a></h3>
+<h3>3. Set Up Your Development Environment<a class="headerlink" href="#set-up-your-development-environment" title="Link to this heading">#</a></h3>
 <p>We use <code class="docutils literal notranslate"><span class="pre">uv</span></code> to manage our virtual environment and dependencies. We recommend installing the package in <strong>editable mode</strong> so changes you make are immediately reflected when you run tests.</p>
 <div class="highlight-zsh notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="c1"># 1. Create a virtual environment</span>
 </span><span data-line="2">uv<span class="w"> </span>venv
@@ -468,7 +469,7 @@ We have the skeleton (stem splitting, tempo detection, onset detection). We need
 </div>
 </section>
 <section id="verify-setup">
-<h3>4. Verify Setup<a class="headerlink" href="#verify-setup" title="Link to this heading">¶</a></h3>
+<h3>4. Verify Setup<a class="headerlink" href="#verify-setup" title="Link to this heading">#</a></h3>
 <p>Run the local interface test to ensure your environment handles imports correctly:</p>
 <div class="highlight-zsh notranslate"><div class="highlight"><pre><span></span><span data-line="1">uv<span class="w"> </span>run<span class="w"> </span>python<span class="w"> </span>local_tests/drumscript_lite/test_local_interface.py
 </span></pre></div>
@@ -477,7 +478,7 @@ We have the skeleton (stem splitting, tempo detection, onset detection). We need
 </section>
 <hr class="docutils" />
 <section id="development-workflow">
-<h2>Development Workflow<a class="headerlink" href="#development-workflow" title="Link to this heading">¶</a></h2>
+<h2>Development Workflow<a class="headerlink" href="#development-workflow" title="Link to this heading">#</a></h2>
 <p>We follow a <strong>Feature Branch</strong> workflow. We generally do not commit directly to <code class="docutils literal notranslate"><span class="pre">main</span></code>.</p>
 <ol class="arabic">
 <li><p><strong>Sync with Main:</strong></p>
@@ -506,7 +507,7 @@ Push your local branch to the remote</p>
 </section>
 <hr class="docutils" />
 <section id="forking-drumscript">
-<h2>Forking <code class="docutils literal notranslate"><span class="pre">DrumScript</span></code><a class="headerlink" href="#forking-drumscript" title="Link to this heading">¶</a></h2>
+<h2>Forking <code class="docutils literal notranslate"><span class="pre">DrumScript</span></code><a class="headerlink" href="#forking-drumscript" title="Link to this heading">#</a></h2>
 <p>You can also contribute to <code class="docutils literal notranslate"><span class="pre">DrumScript</span></code> using forks <a class="reference external" href="http://github.com/DrumScript/DrumScript/">main repository</a> on GitHub:</p>
 <ol class="arabic">
 <li><p>Fork the <a class="reference external" href="http://github.com/DrumScript/DrumScript/">project repository</a>:</p>
@@ -595,10 +596,10 @@ Push your local branch to the remote</p>
 </section>
 <hr class="docutils" />
 <section id="version-management-release-strategy">
-<h2>Version Management &amp; Release Strategy<a class="headerlink" href="#version-management-release-strategy" title="Link to this heading">¶</a></h2>
+<h2>Version Management &amp; Release Strategy<a class="headerlink" href="#version-management-release-strategy" title="Link to this heading">#</a></h2>
 <p>We strive to keep <code class="docutils literal notranslate"><span class="pre">DrumScript</span></code> stable for users. To achieve this, we follow <strong>Semantic Versioning (SemVer)</strong> and a grouped release strategy.</p>
 <section id="how-we-number-releases-x-y-z">
-<h3>How we number releases (X.Y.Z)<a class="headerlink" href="#how-we-number-releases-x-y-z" title="Link to this heading">¶</a></h3>
+<h3>How we number releases (X.Y.Z)<a class="headerlink" href="#how-we-number-releases-x-y-z" title="Link to this heading">#</a></h3>
 <ul class="simple">
 <li><p><strong>Major (X.0.0):</strong> Breaking changes. (e.g., Changing the function name from <code class="docutils literal notranslate"><span class="pre">stem_split</span></code> to <code class="docutils literal notranslate"><span class="pre">extract_stems</span></code>).</p></li>
 <li><p><strong>Minor (0.Y.0):</strong> New features that don’t break existing code. (e.g., Adding a new detection algorithm for Crash Cymbals).</p></li>
@@ -606,7 +607,7 @@ Push your local branch to the remote</p>
 </ul>
 </section>
 <section id="when-do-we-release">
-<h3>When do we release?<a class="headerlink" href="#when-do-we-release" title="Link to this heading">¶</a></h3>
+<h3>When do we release?<a class="headerlink" href="#when-do-we-release" title="Link to this heading">#</a></h3>
 <p>We do <strong>not</strong> publish a new PyPI package for every single bug fix.</p>
 <ol class="arabic simple">
 <li><p><strong>Development:</strong> Fixes and features are merged into <code class="docutils literal notranslate"><span class="pre">main</span></code> continuously.</p></li>
@@ -619,12 +620,12 @@ You don’t need to worry about bumping the version number in <code class="docut
 </section>
 <hr class="docutils" />
 <section id="releasing-and-publishing">
-<h2>Releasing and Publishing<a class="headerlink" href="#releasing-and-publishing" title="Link to this heading">¶</a></h2>
+<h2>Releasing and Publishing<a class="headerlink" href="#releasing-and-publishing" title="Link to this heading">#</a></h2>
 <p><em><a class="reference internal" href="#contributing-to-drumscript">back to top</a></em></p>
 <p>This section explains how to create a new release of <code class="docutils literal notranslate"><span class="pre">DrumScript</span></code> and publish it to PyPI.</p>
 <p>There are two ways to do this. You can use your command line interface (CLI) to tag manually, or you can use the automated GitHub Action (<code class="docutils literal notranslate"><span class="pre">release.yml</span></code>).</p>
 <section id="naming-convention-for-tags">
-<h3>Naming Convention for Tags<a class="headerlink" href="#naming-convention-for-tags" title="Link to this heading">¶</a></h3>
+<h3>Naming Convention for Tags<a class="headerlink" href="#naming-convention-for-tags" title="Link to this heading">#</a></h3>
 <p><em><a class="reference internal" href="#contributing-to-drumscript">back to top</a></em>
 Whenever you create a release, you must use a specific naming format for the tag. The format is <code class="docutils literal notranslate"><span class="pre">vX.Y.Z</span></code>.</p>
 <ul class="simple">
@@ -636,7 +637,7 @@ Whenever you create a release, you must use a specific naming format for the tag
 </ul>
 </section>
 <section id="option-1-releasing-from-the-command-line-cli">
-<h3>Option 1: Releasing from the Command Line (CLI)<a class="headerlink" href="#option-1-releasing-from-the-command-line-cli" title="Link to this heading">¶</a></h3>
+<h3>Option 1: Releasing from the Command Line (CLI)<a class="headerlink" href="#option-1-releasing-from-the-command-line-cli" title="Link to this heading">#</a></h3>
 <p><em><a class="reference internal" href="#contributing-to-drumscript">back to top</a></em>
 Use these simple steps if you want to manually tag your code from your terminal and trigger the <code class="docutils literal notranslate"><span class="pre">publish.yml</span></code> workflow.</p>
 <ol class="arabic">
@@ -673,7 +674,7 @@ Use these simple steps if you want to manually tag your code from your terminal 
 </ul>
 </section>
 <section id="option-2-releasing-using-the-github-actions-automator">
-<h3>Option 2: Releasing using the GitHub Actions Automator<a class="headerlink" href="#option-2-releasing-using-the-github-actions-automator" title="Link to this heading">¶</a></h3>
+<h3>Option 2: Releasing using the GitHub Actions Automator<a class="headerlink" href="#option-2-releasing-using-the-github-actions-automator" title="Link to this heading">#</a></h3>
 <p><em><a class="reference internal" href="#contributing-to-drumscript">back to top</a></em></p>
 <p>Use this option if you want GitHub to do the version bumping and tagging for you, using your <code class="docutils literal notranslate"><span class="pre">release.yml</span></code> file.</p>
 <ol class="arabic simple">
@@ -691,7 +692,7 @@ Use these simple steps if you want to manually tag your code from your terminal 
 </section>
 </section>
 <section id="pull-request-process">
-<h2>Pull Request Process<a class="headerlink" href="#pull-request-process" title="Link to this heading">¶</a></h2>
+<h2>Pull Request Process<a class="headerlink" href="#pull-request-process" title="Link to this heading">#</a></h2>
 <p><em><a class="reference internal" href="#contributing-to-drumscript">back to top</a></em></p>
 <ol class="arabic simple">
 <li><p>Create a new branch (e.g., <code class="docutils literal notranslate"><span class="pre">feature/snare-detection</span></code> or <code class="docutils literal notranslate"><span class="pre">fix/tempo-bug</span></code>).</p></li>
@@ -704,7 +705,7 @@ Use these simple steps if you want to manually tag your code from your terminal 
 </section>
 <hr class="docutils" />
 <section id="coding-standards">
-<h2>Coding Standards<a class="headerlink" href="#coding-standards" title="Link to this heading">¶</a></h2>
+<h2>Coding Standards<a class="headerlink" href="#coding-standards" title="Link to this heading">#</a></h2>
 <p>To maintain consistency, please adhere to the following:</p>
 <ul class="simple">
 <li><p><strong>Python Style:</strong> Follow <a class="reference external" href="https://www.python.org/dev/peps/pep-0008/">PEP 8</a>.</p></li>
@@ -718,7 +719,7 @@ Use these simple steps if you want to manually tag your code from your terminal 
 </section>
 <hr class="docutils" />
 <section id="reporting-issues">
-<h2>Reporting Issues<a class="headerlink" href="#reporting-issues" title="Link to this heading">¶</a></h2>
+<h2>Reporting Issues<a class="headerlink" href="#reporting-issues" title="Link to this heading">#</a></h2>
 <p><em><a class="reference internal" href="#contributing-to-drumscript">back to top</a></em></p>
 <p>If you find a bug, please open an issue on the <a class="reference external" href="https://github.com/DrumScript/DrumScript/issues">GitHub Issues page</a>.</p>
 <ul class="simple">
@@ -741,7 +742,7 @@ or <a class="reference external" href="https://github.com/DrumScript/DrumScript/
 </section>
 <hr class="docutils" />
 <section id="questions-support">
-<h2>Questions &amp; Support<a class="headerlink" href="#questions-support" title="Link to this heading">¶</a></h2>
+<h2>Questions &amp; Support<a class="headerlink" href="#questions-support" title="Link to this heading">#</a></h2>
 <p><em><a class="reference internal" href="#contributing-to-drumscript">back to top</a></em></p>
 <p>If you have questions, feel free to reach out at <strong><a class="reference external" href="mailto:hello&#46;drumscript&#37;&#52;&#48;gmail&#46;com">hello<span>&#46;</span>drumscript<span>&#64;</span>gmail<span>&#46;</span>com</a></strong>.</p>
 <p>Thank you for helping us build <code class="docutils literal notranslate"><span class="pre">DrumScript</span></code>! 🥁🚀 :D</p>
@@ -786,13 +787,13 @@ or <a class="reference external" href="https://github.com/DrumScript/DrumScript/
   </p>
 </div>
       <div class="sy-foot-socials">
-<a href="https://github.com/DrumScript/DrumScript" aria-label="GitHub">
-  <iconify-icon icon="simple-icons:github"></iconify-icon>
-</a></div>
+  <a href="https://github.com/DrumScript/DrumScript" aria-label="GitHub">
+    <iconify-icon icon="simple-icons:github"></iconify-icon>
+  </a></div>
     </div>
   </div>
 </footer>
-      <script src="../_static/documentation_options.js?v=6e0256f3"></script>
+      <script src="../_static/documentation_options.js?v=938c9ccc"></script>
       <script src="../_static/doctools.js?v=fd6eb6e6"></script>
       <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script src="../_static/shibuya.js?v=50760d75"></script></body>

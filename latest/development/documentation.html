@@ -2,11 +2,11 @@
 <html lang="en" data-accent-color="violet" data-content_root="../">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Documentation - DrumScript 0.1.6 documentation</title><link rel="author" title="About these documents" href="../about.html" /><link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Testing Guidance" href="testing_guidance.html" /><link rel="prev" title="Contributing to DrumScript" href="contributor_guidance.html" /><script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Documentation - DrumScript 0.2.0 documentation</title><link rel="author" title="About these documents" href="../about.html" /><link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Testing Guidance" href="testing_guidance.html" /><link rel="prev" title="Contributing to DrumScript" href="contributor_guidance.html" /><script>
     function setColorMode(t){let e=document.documentElement;e.setAttribute("data-color-mode",t);let a=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches,s=t;"auto"===t&&(s=a?"dark":"light"),"light"===s?(e.classList.remove("dark"),e.classList.add("light")):(e.classList.remove("light"),e.classList.add("dark"))}
     setColorMode(localStorage._theme||"auto");
   </script><link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=e1a1ceaf" />
-    <link rel="stylesheet" type="text/css" href="../_static/shibuya.css?v=9454f7d5" />
+    <link rel="stylesheet" type="text/css" href="../_static/shibuya.css?v=2ceb65ce" />
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
     <link media="print" rel="stylesheet" type="text/css" href="../_static/print.css?v=20ff2c19" />
     <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=132fcf90" />
@@ -25,7 +25,7 @@
   </head>
 <body><div class="announcement">
     <div class="announcement-inner">
-      <p>DrumScript v0.1.6 now available: with mir_eval benchmarking</p>
+      <p>DrumScript v0.2.0 now available: with mir_eval benchmarking</p>
       <button class="announcement-close" aria-label="Close announcement">
         <i class="i-lucide close"></i>
       </button>
@@ -46,7 +46,7 @@
 </form><div class="nav-versions">
     <button type="button" aria-label="Versions">
       <span class="md:hidden">Versions</span>
-      <span class="hidden md:inline">v0.1.6</span>
+      <span class="hidden md:inline">v0.2.0</span>
       <i class="i-lucide chevron-down"></i>
     </button>
     <div class="nav-versions-choices"><ul><li><a href="/DrumScript/latest/">latest</a></li><li><a href="/DrumScript/dev/">dev</a></li><li><a href="/DrumScript/v0.2.0/">v0.2.0</a></li><li><a href="/DrumScript/v0.1.6/">v0.1.6</a></li></ul></div>
@@ -193,6 +193,7 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l2"><a class="reference internal" href="../release_notes/0.1.4.html">v0.1.4 (Alpha)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../release_notes/0.1.5.html">v0.1.5 (Alpha)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../release_notes/0.1.6.html">v0.1.6 (Alpha)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes/0.2.0.html">v0.2.0 (Alpha)</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../changelog.html"><strong>Changelog</strong></a></li>
@@ -333,10 +334,10 @@ data-aria-dark="Switch to auto color mode">
   </div>
 </div><article class="yue" role="main">
           <section id="documentation">
-<h1>Documentation<a class="headerlink" href="#documentation" title="Link to this heading">¶</a></h1>
+<h1>Documentation<a class="headerlink" href="#documentation" title="Link to this heading">#</a></h1>
 <p>We use <a class="reference external" href="https://www.sphinx-doc.org/en/master/"><code class="docutils literal notranslate"><span class="pre">Sphinx</span></code></a> for <code class="docutils literal notranslate"><span class="pre">DrumScript</span></code> documentation. We use the <a class="reference external" href="https://shibuya.lepture.com/"><code class="docutils literal notranslate"><span class="pre">Shibuya</span></code></a> Sphinx theme for layout.</p>
 <section id="drumscript-documentation-structure">
-<h2><code class="docutils literal notranslate"><span class="pre">DrumScript</span></code> documentation structure<a class="headerlink" href="#drumscript-documentation-structure" title="Link to this heading">¶</a></h2>
+<h2><code class="docutils literal notranslate"><span class="pre">DrumScript</span></code> documentation structure<a class="headerlink" href="#drumscript-documentation-structure" title="Link to this heading">#</a></h2>
 <p>See <a class="reference download internal" download="" href="../_downloads/467503e129ea4e152e7860928a5adad1/FOLDER_STRUCTURE.txt"><span class="xref download myst"><code class="docutils literal notranslate"><span class="pre">here</span></code></span></a> and below</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span><span data-line="1">DrumScript Documentation Structure
 </span><span data-line="2">==================================
@@ -362,7 +363,7 @@ data-aria-dark="Switch to auto color mode">
 </div>
 </section>
 <section id="setup-your-development-environment">
-<h2>Setup your development environment<a class="headerlink" href="#setup-your-development-environment" title="Link to this heading">¶</a></h2>
+<h2>Setup your development environment<a class="headerlink" href="#setup-your-development-environment" title="Link to this heading">#</a></h2>
 <ol class="arabic simple">
 <li><p>Clone DrumScript repo</p></li>
 <li><p>Use <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">checkout</span> <span class="pre">-b</span> <span class="pre">feature/update_sphinx_docs</span></code>. Github will switch you to the <code class="docutils literal notranslate"><span class="pre">feature/update_sphinx_docs</span></code> branch. NOTE: <code class="docutils literal notranslate"><span class="pre">feature/update_sphinx_docs</span></code> is indicative of branch name. Please always use a subfolder, ie <code class="docutils literal notranslate"><span class="pre">build/</span></code>, <code class="docutils literal notranslate"><span class="pre">2.1.x/</span></code>, <code class="docutils literal notranslate"><span class="pre">feature/</span></code> etc depending on your changes</p></li>
@@ -377,7 +378,7 @@ data-aria-dark="Switch to auto color mode">
 </ol>
 </section>
 <section id="about-testing-the-documentation">
-<h2>About testing the documentation<a class="headerlink" href="#about-testing-the-documentation" title="Link to this heading">¶</a></h2>
+<h2>About testing the documentation<a class="headerlink" href="#about-testing-the-documentation" title="Link to this heading">#</a></h2>
 <blockquote>
 <div><p><strong>Always</strong> test local rendering before submitting changes for review in your PR.</p>
 </div></blockquote>
@@ -390,7 +391,7 @@ data-aria-dark="Switch to auto color mode">
 <p>Images are stored in <code class="docutils literal notranslate"><span class="pre">docs/_static</span></code>.</p>
 </section>
 <section id="how-to-re-build-the-documentation">
-<h2>How to re-build the documentation<a class="headerlink" href="#how-to-re-build-the-documentation" title="Link to this heading">¶</a></h2>
+<h2>How to re-build the documentation<a class="headerlink" href="#how-to-re-build-the-documentation" title="Link to this heading">#</a></h2>
 <ol class="arabic simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">cd</span> <span class="pre">docs</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">rm</span> <span class="pre">-rf</span> <span class="pre">_build</span></code></p></li>
@@ -398,7 +399,7 @@ data-aria-dark="Switch to auto color mode">
 </ol>
 </section>
 <section id="render-locally-opens-in-browser">
-<h2>Render locally (opens in browser)<a class="headerlink" href="#render-locally-opens-in-browser" title="Link to this heading">¶</a></h2>
+<h2>Render locally (opens in browser)<a class="headerlink" href="#render-locally-opens-in-browser" title="Link to this heading">#</a></h2>
 <ol class="arabic simple">
 <li><p>Ensure you are in the root directory (<code class="docutils literal notranslate"><span class="pre">DrumScript/</span></code>)</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">open</span> <span class="pre">docs/_build/html/index.html</span></code></p></li>
@@ -444,13 +445,13 @@ data-aria-dark="Switch to auto color mode">
   </p>
 </div>
       <div class="sy-foot-socials">
-<a href="https://github.com/DrumScript/DrumScript" aria-label="GitHub">
-  <iconify-icon icon="simple-icons:github"></iconify-icon>
-</a></div>
+  <a href="https://github.com/DrumScript/DrumScript" aria-label="GitHub">
+    <iconify-icon icon="simple-icons:github"></iconify-icon>
+  </a></div>
     </div>
   </div>
 </footer>
-      <script src="../_static/documentation_options.js?v=6e0256f3"></script>
+      <script src="../_static/documentation_options.js?v=938c9ccc"></script>
       <script src="../_static/doctools.js?v=fd6eb6e6"></script>
       <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script src="../_static/shibuya.js?v=50760d75"></script></body>

@@ -1,4 +1,4 @@
-# DrumScript/notation_generator/score_builder.py
+# DrumScript/drumscript/notation_generator/score_builder.py
 
 """
 Module to build the final score from classified events.
@@ -40,6 +40,11 @@ def build_score(
     :type quantization_subdivision: int, optional
     :param time_signature: Time signature string (e.g., "4/4").
     :type time_signature: str, optional
+
+    :return: Mapping of the files that were **successfully written**, with keys
+        ``pdf_path``, ``json_path`` and ``midi_path``. A key is absent if that
+        export failed, so callers can report only files that actually exist.
+    :rtype: dict[str, str]
     """
 
     print(f"--- Building Score for: {output_path} [Time Sig: {time_signature}] ---")
@@ -77,12 +82,29 @@ def build_score(
     pdf_filepath = f"{base_path}.pdf"
     midi_filepath = f"{base_path}.mid"
 
+    # Ensure the destination directory exists before any export runs.
+    # midi_exporter and xml_exporter each create it themselves, but the JSON
+    # write below and pdf_exporter do not — so running from a directory that
+    # has no `outputs/` (e.g. a pip-installed user invoking the CLI anywhere
+    # other than the repo root) silently produced a MIDI file and nothing else.
+    # Creating it centrally here fixes every caller, CLI and Python API alike.
+    parent_dir = os.path.dirname(base_path)
+    if parent_dir:
+        os.makedirs(parent_dir, exist_ok=True)
+
+    # Records only the exports that actually succeed. Each export below is
+    # individually fault-tolerant, so a MIDI failure must not stop the PDF
+    # being reported. Returning this lets callers (e.g. ds.transcribe) avoid
+    # advertising a path to a file that was never written.
+    written_paths: dict[str, str] = {}
+
     # 2. Save Transcription Data to JSON
     # This file serves as the "Source of Truth" for the PDF renderer.
     try:
         print(f"Saving to: {json_path}")
         with open(json_path, "w") as f:
             json.dump(detected_events, f, indent=4)
+        written_paths["json_path"] = json_path
     except Exception as e:
         print(f" Warning: Could not save JSON transcription: {e}")
 
@@ -96,6 +118,7 @@ def build_score(
             tempo=tempo,
             time_signature=time_signature,
         )
+        written_paths["pdf_path"] = pdf_filepath
 
     # Success message is handled inside generate_custom_pdf/export_pdf in pdf_exporter.py
     except Exception as e:
@@ -111,11 +134,14 @@ def build_score(
             output_path=midi_filepath,  # Updated to explicitly map to .mid
             tempo=tempo,
         )
+        written_paths["midi_path"] = midi_filepath
     except Exception as e:
         print(f"MIDI Export Failed: {e}")
         import traceback
 
         traceback.print_exc()
+
+    return written_paths
 
 
 # --------------------------------------------------------------------------uncomment during testing

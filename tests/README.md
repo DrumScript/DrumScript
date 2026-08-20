@@ -1,7 +1,7 @@
 # DrumScript Tests
 
 <!--date_added:weds-29-apr-2026-->
-<!--date_updated:thurs-18-june-2026-->
+<!--date_updated:sun-09-aug-2026-->
 
 This directory contains the pytest test suite for `DrumScript`.
 
@@ -30,16 +30,25 @@ DrumScript/
     │   ├── test_onset_detector.py          ←  7 tests
     │   ├── test_stem_splitter_helpers.py    ← 17 tests (includes regression)
     │   ├── test_tempo_detector.py          ←  6 tests
-    │   └── test_transcribe.py              ← 13 tests
-    └── integration/                        ← real Demucs / ffmpeg / files (slow)
+    │   └── test_transcribe.py              ← 20 tests
+    └── integration/                        ← real files; Demucs/ffmpeg where noted
         ├── __init__.py
-        └── test_stem_splitter_real.py      ←  8 tests
+        ├── test_stem_splitter_real.py      ←  8 tests (all require Demucs)
+        └── test_transcribe_real.py         ← 15 tests (added v0.2.0)
+                                                12 need no Demucs, 3 do
 ```
 
 > **Note:** Counts above reflect pytest's collected case count, ie parametrised
-> tests are expanded into their individual cases. Unit total: **131** cases
+> tests are expanded into their individual cases. Unit total: **138** cases
 > across **11** files. 
-> Integration total: **8** cases.
+> Integration total: **23** cases across **2** files.
+
+> **Not all integration tests are slow.** The 12 Demucs-free cases in
+> `test_transcribe_real.py` are marked `integration` but **not** `slow`, so they
+> still run under `pytest -m "not slow"` — and therefore in CI. They give the
+> v0.2.0 `_TranscribeResult` change real end-to-end coverage (files genuinely
+> written to disk) without needing model weights. Expect them to add roughly
+> 30 seconds to a "fast" run.
 
 
 ---
@@ -129,7 +138,20 @@ For one-off direct pytest runs, see [Quick start](#quick-start).
 Tests can be tagged with custom markers (defined in `pyproject.toml`):
 
 - `@pytest.mark.slow` — skip by default during development
-- `@pytest.mark.integration` — requires Demucs/ffmpeg installed
+- `@pytest.mark.integration` — touches real files, not mocked
+
+The two are independent, which matters. A test can be `integration` without
+being `slow`: it does real work (real audio, real file writes) but finishes in
+seconds because it never invokes Demucs. Those still run in the fast loop.
+
+| Marks | Example | Runs under `-m "not slow"`? |
+|---|---|---|
+| neither | `tests/unit/*` | Yes |
+| `integration` only | `test_transcribe_real.py` (12 cases) | Yes |
+| `integration` + `slow` | `test_stem_splitter_real.py`, and 3 cases in `test_transcribe_real.py` | No |
+
+Tests needing the `demucs` CLI also carry a `skipif` so they degrade to a clean
+skip rather than a noisy failure when it isn't on `PATH`.
 
 Run only fast tests:
 
@@ -147,7 +169,10 @@ pytest -m integration
 ## Adding a new test file
 
 
-1. Place it under `tests/unit/` (or `tests/integration/` if it's slow).
+1. Place it under `tests/unit/` if everything heavy is mocked, or
+   `tests/integration/` if it touches real files, audio, or subprocesses.
+   If it's an integration test that does *not* need Demucs, mark it
+   `integration` only — leave `slow` off so it still runs in CI.
 2. Name the file `test_*.py`. The runner script auto-discovers anything
    matching this pattern; no extra wiring required.
 3. Group related tests in a `Test*` class with `test_*` methods.
@@ -179,6 +204,14 @@ decision:
 - `test_deprecation_warnings.py` — locks in the `full` → `verbose` shim
   behaviour on the Python API. Delete (or flip) this when `full` is removed
   in v1.0.0.
+- `test_transcribe.py::TestTranscribeWrittenPaths` — locks in that
+  `transcribe()` reports only the files `build_score()` actually wrote. Before
+  v0.2.0 all three paths were returned unconditionally, including files that
+  failed to write.
+- `test_transcribe_real.py::TestCliStemFlagsReal::test_drumless_produces_backing_track_and_no_score`
+  — locks in the v0.2.0 fix where `--drumless` / `--all-stems` / `--mute` were
+  only reachable from inside an `except` handler, so they silently did nothing
+  on the happy path. Requires Demucs.
 
 ---
 

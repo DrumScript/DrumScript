@@ -48,7 +48,6 @@ Audio Processing
 
    drumscript.audio_processor.audio_loader
    drumscript.audio_processor.stem_splitter
-   drumscript.audio_processor.stem_splitter.extract_stems
    drumscript.audio_processor.stem_splitter.extract_drum_stem
    drumscript.audio_processor.stem_splitter.mix_stems
    drumscript.audio_processor.stem_splitter.separate_audio

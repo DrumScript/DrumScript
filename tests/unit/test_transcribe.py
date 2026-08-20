@@ -297,3 +297,78 @@ class TestTranscribeErrors:
                 str(tmp_path / "does_not_exist.wav"),
                 output_dir=str(tmp_path),
             )
+
+
+# =============================================================================
+# Written-path reporting (build_score fault tolerance)
+# =============================================================================
+
+
+class TestTranscribeWrittenPaths:
+    """``transcribe()`` reports only the files ``build_score()`` actually wrote.
+
+    ``build_score()`` exports JSON, PDF and MIDI independently, each wrapped in
+    its own try/except. A failure in one does not stop the others — so the paths
+    ``transcribe()`` computes are not guaranteed to exist. ``build_score()``
+    returns the subset it succeeded in writing, and ``transcribe()`` reports that.
+    """
+
+    def test_omits_path_when_that_export_failed(self, drum_wav, tmp_path, mock_pipeline):
+        """A failed MIDI export should leave midi_path out of the result."""
+        from drumscript import transcribe
+
+        base = str(tmp_path / "test_drum_transcription")
+        # build_score reports PDF + JSON only: the MIDI export raised.
+        mock_pipeline["build"].return_value = {
+            "pdf_path": f"{base}.pdf",
+            "json_path": f"{base}.json",
+        }
+
+        result = transcribe(drum_wav, output_dir=str(tmp_path))
+
+        assert result["pdf_path"] == f"{base}.pdf"
+        assert result["json_path"] == f"{base}.json"
+        assert "midi_path" not in result
+
+    def test_reports_all_three_when_all_exports_succeed(self, drum_wav, tmp_path, mock_pipeline):
+        from drumscript import transcribe
+
+        base = str(tmp_path / "test_drum_transcription")
+        mock_pipeline["build"].return_value = {
+            "pdf_path": f"{base}.pdf",
+            "json_path": f"{base}.json",
+            "midi_path": f"{base}.mid",
+        }
+
+        result = transcribe(drum_wav, output_dir=str(tmp_path))
+
+        assert result["pdf_path"] == f"{base}.pdf"
+        assert result["json_path"] == f"{base}.json"
+        assert result["midi_path"] == f"{base}.mid"
+
+    def test_falls_back_when_build_score_returns_none(self, drum_wav, tmp_path, mock_pipeline):
+        """Older build_score returned None — fall back to the computed paths."""
+        from drumscript import transcribe
+
+        mock_pipeline["build"].return_value = None
+
+        result = transcribe(drum_wav, output_dir=str(tmp_path))
+
+        assert result["pdf_path"].endswith(".pdf")
+        assert result["json_path"].endswith(".json")
+        assert result["midi_path"].endswith(".mid")
+
+    def test_verbose_dict_also_reflects_written_paths(self, drum_wav, tmp_path, mock_pipeline):
+        from drumscript import transcribe
+
+        base = str(tmp_path / "test_drum_transcription")
+        mock_pipeline["build"].return_value = {
+            "pdf_path": f"{base}.pdf",
+            "json_path": f"{base}.json",
+        }
+
+        result = transcribe(drum_wav, output_dir=str(tmp_path), verbose=True)
+
+        assert result["pdf_path"] == f"{base}.pdf"
+        assert result["midi_path"] is None
+        assert result["tempo"] == pytest.approx(120.0)

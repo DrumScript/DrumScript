@@ -8,7 +8,7 @@ version = "0.2.0"
 description = "A Python package to convert drum audio to sheet music."
 license = "Apache-2.0"
 readme = "README.md"
-requires-python = ">=3.9,<3.14"
+requires-python = ">=3.9,<3.13"
 authors = [
   { name="drumscript-admin", email="hello.drumscript@gmail.com" },
 ]

@@ -1,7 +1,7 @@
 # **Changelog**
 
 <!--date_added:thurs-28-may-2026-->
-<!--date:updated:weds-19-august-2026-->
+<!--date:updated:fri-21-august-2026-->
 
 
 * All notable changes related to the repository and pypi distribution of `DrumScript` will be documented here
@@ -28,10 +28,69 @@
 *[back](#changelog)*
 
 *forthcoming/in progress* 
-***expected pypi release:** august-2026*
 
 > Items listed below are **currently in development** but **have not been distributed on PyPi**
+> ### *Fixes*
 
+* **Python 3.13 not supported.** DrumScript pins `numpy<2`, and numpy 1.x has no cp313 wheels on PyPI. This caused `pip install drumscript` on Python 3.13 to fall back to a source build (which requires a C toolchain most users don't have), producing a confusing `Compiler cc cannot compile programs` error rather than a clear "unsupported Python version" message. `requires-python` lowered from `<3.14` to `<3.13` in `pyproject.toml`. Python 3.13 support planned once DrumScript migrates to `numpy>=2` (see [#303](https://github.com/DrumScript/DrumScript/issues/303)).
+
+---
+
+### ***Future releases***
+*[back](#changelog)*
+
+Items listed below are fully implemented and **published to pypi** under an official version
+
+<!--#### ***August 2026 and beyond***-->
+
+##### **[1.0.0] - Beta release - Target: late-2026**
+>
+###### *Additions*
+- `output_midi`, `output_json`, `output_xml` flags to be added to `transcribe()` for multi-format export
+- Expanded benchmark dataset coverage (ENST-Drums, MDB-Drums) building on the IDMT-SMT-Drums V2 foundation shipped in v0.1.6
+- Code-to-DrumScript label mapping expanded beyond `KD`/`SD`/`HH` to cover full-kit classes (toms, crash, ride)
+- Repository statistics badge (shields.io endpoint) for README and docs homepage: extend `repo-stats.yml` to write a small JSON (`schemaVersion`, `label`, `message`, `color`) to the `github-repo-stats` branch on each daily run, so shields.io can render live view/clone counts rather than a static link #296
+- Check compatibility for Python 3.13 (#299)
+>
+###### *Changes*
+- Transcription function docstrings to be updated to make clear that drum-only audio is expected as standard input
+- README to be updated to clarify expected input for transcription functions
+- Example notebooks to be updated to reflect expected drum-only audio input
+- Better audio samples needed for runbooks — not synthetic, which has created messy outputs
+- Runbook presentation to be tidied: one variable per line, properly tested
+- Improve documentation: clearer docstrings for the `rudiment` flag/functionality
+- Check if `is_rudiment` applies to `score_builder` function — is it relevant, per `drumscript/main.py`?
+- Refactor `main.py` argparse block into a `build_parser()` function so `tests/unit/test_cli_args.py` can import the real parser instead of mirroring it
+- Clarify in docs/docstrings that input format is not limited to .wav/.mp3 — any format librosa (+ ffmpeg) supports works. ffmpeg is only required for MP3 input decoding and MP3 stem output
+>
+  *(breaking)*
+  *  `full` parameter removed entirely from `transcribe()`, `extract_stems()`, and `detect_tempo()`. Users must use `verbose` instead. 
+  *  This was implemented as a deprecation shim in [v0.1.6 release](#016---june-2026)
+  *  Deprecation warning for `--full= flag` will be removed
+  *  `tests/unit/test_deprecation_warnings.py` deleted (or flipped to assert `full` now raises `TypeError`)
+  *  From 1.0.0 (beta) the flag `verbose=` will provide dictionary-based outputs, ie for cli-users and developers.
+  *  This change, originally, was made in  [v0.1.6 release](#016---june-2026) to prevent confusion between `--full` flag outputting verbose in drumscript wrappers and the `full=true` functionality for specifying within `transcribe()` function that the input audio is polyphonic (non-drum-only) and therefore requires Demucs extraction *prior* to applying DrumScript's deterministic classification model for transcription. 
+  *  As a side note, and for completeness, DrumScript functions default to drum-audio only inputs. User must indicate if the input_audio is not solo drum audio.
+  *  `_TranscribeResult` string compatibility removed — `transcribe()` returns a plain `dict`
+  *  `docs/guide/usage.md`: the silent 4/4 fallback in `pdf_exporter.py` line 138 is a code smell independent of the docs — a user typo like `--ts 44` also silently becomes 4/4. A `print` warning in that `except ValueError` would be a small improvement on documentation #297
+>
+###### *Fixes*
+- Cymbal and hi-hat stem rendering: note tails and heads correctly aligned
+- `main.py` structural bug: duplicated pipeline inside `except` block needs removing, error handling needs restructuring
+- `ds.transcribe()` return value only references PDF path, but `score_builder.build_score()` silently writes JSON + MIDI too. Output behaviour needs documenting clearly and aligning between CLI and Python API
+- `ds.extract_stems(verbose=True)` does not return the backing-track path (#266). It calls `separate_audio()`, whose dict includes the backing-track path under `mix`, but then discards that dict and builds its own (`status`, `drum_stem_path`, `original_file`, `output_directory`) — dropping the one path the user asked for when calling with `drumless=True`. The backing track is created on disk but its location is never reported, so the caller has to reconstruct it from `output_directory` plus the `<input>_no_drums.<ext>` naming convention. Fix: carry the path through from `separate_audio()` under a readable key, `backing_track_path` (rather than reintroducing the terse `mix`), and update the README backing-track example to use it. Keeps the readable key names introduced in v0.2.0 while restoring the missing path (#298)
+>
+###### *Tests*
+- **Onset timing precision**: investigate user feedback on score generation. Though quantisation is used, look at the extent to which slight imperfections in onset detection cause notes to be placed at incorrect positions in the score (e.g. snare hit at 0.503s instead of 0.500s generates spurious rests). https://github.com/DrumScript/DrumScript/issues/274
+>
+
+---
+>
+> ## **Released**
+*[back](#changelog)*
+
+### **[0.2.0] - August 2026**
+>
 
 > **First minor-version bump**
 > 
@@ -99,88 +158,6 @@
 * Added 4 tests to `tests/unit/test_transcribe.py` (16 → 20) covering written-path reporting: failed export omits its path, all-success reports all three, `None` return falls back to computed paths, verbose dict reflects the same
 * Added `tests/integration/test_transcribe_real.py` (15 tests) with real end-to-end coverage, nothing mocked. Fast tier (12 tests, drum-only audio, no Demucs) verifies `transcribe()` writes PDF/JSON/MIDI to disk, the JSON parses, the `_TranscribeResult` deprecation shim and `__fspath__` work, and `build_score()` reports only files that exist — marked `integration` but not `slow`, so it runs in CI under `pytest -m "not slow"`. Slow tier (3 tests, requires Demucs) covers the CLI stem flags including `--drumless` producing a backing track without a score
 
----
-
-### ***Future releases***
-*[back](#changelog)*
-
-Items listed below are fully implemented and **published to pypi** under an official version
-
-<!--#### ***August 2026 and beyond***-->
-
-##### **[1.0.0] - Beta release - Target: late-2026**
->
-###### *Additions*
-- `output_midi`, `output_json`, `output_xml` flags to be added to `transcribe()` for multi-format export
-- Expanded benchmark dataset coverage (ENST-Drums, MDB-Drums) building on the IDMT-SMT-Drums V2 foundation shipped in v0.1.6
-- Code-to-DrumScript label mapping expanded beyond `KD`/`SD`/`HH` to cover full-kit classes (toms, crash, ride)
-- Repository statistics badge (shields.io endpoint) for README and docs homepage: extend `repo-stats.yml` to write a small JSON (`schemaVersion`, `label`, `message`, `color`) to the `github-repo-stats` branch on each daily run, so shields.io can render live view/clone counts rather than a static link #296
-- Check compatibility for Python 3.13 (#299)
->
-###### *Changes*
-- Transcription function docstrings to be updated to make clear that drum-only audio is expected as standard input
-- README to be updated to clarify expected input for transcription functions
-- Example notebooks to be updated to reflect expected drum-only audio input
-- Better audio samples needed for runbooks — not synthetic, which has created messy outputs
-- Runbook presentation to be tidied: one variable per line, properly tested
-- Improve documentation: clearer docstrings for the `rudiment` flag/functionality
-- Check if `is_rudiment` applies to `score_builder` function — is it relevant, per `drumscript/main.py`?
-- Refactor `main.py` argparse block into a `build_parser()` function so `tests/unit/test_cli_args.py` can import the real parser instead of mirroring it
-- Clarify in docs/docstrings that input format is not limited to .wav/.mp3 — any format librosa (+ ffmpeg) supports works. ffmpeg is only required for MP3 input decoding and MP3 stem output
->
-  *(breaking)*
-  *  `full` parameter removed entirely from `transcribe()`, `extract_stems()`, and `detect_tempo()`. Users must use `verbose` instead. 
-  *  This was implemented as a deprecation shim in [v0.1.6 release](#016---june-2026)
-  *  Deprecation warning for `--full= flag` will be removed
-  *  `tests/unit/test_deprecation_warnings.py` deleted (or flipped to assert `full` now raises `TypeError`)
-  *  From 1.0.0 (beta) the flag `verbose=` will provide dictionary-based outputs, ie for cli-users and developers.
-  *  This change, originally, was made in  [v0.1.6 release](#016---june-2026) to prevent confusion between `--full` flag outputting verbose in drumscript wrappers and the `full=true` functionality for specifying within `transcribe()` function that the input audio is polyphonic (non-drum-only) and therefore requires Demucs extraction *prior* to applying DrumScript's deterministic classification model for transcription. 
-  *  As a side note, and for completeness, DrumScript functions default to drum-audio only inputs. User must indicate if the input_audio is not solo drum audio.
-  *  `_TranscribeResult` string compatibility removed — `transcribe()` returns a plain `dict`
-  *  `docs/guide/usage.md`: the silent 4/4 fallback in `pdf_exporter.py` line 138 is a code smell independent of the docs — a user typo like `--ts 44` also silently becomes 4/4. A `print` warning in that `except ValueError` would be a small improvement on documentation #297
->
-###### *Fixes*
-- Cymbal and hi-hat stem rendering: note tails and heads correctly aligned
-- `main.py` structural bug: duplicated pipeline inside `except` block needs removing, error handling needs restructuring
-- `ds.transcribe()` return value only references PDF path, but `score_builder.build_score()` silently writes JSON + MIDI too. Output behaviour needs documenting clearly and aligning between CLI and Python API
-- `ds.extract_stems(verbose=True)` does not return the backing-track path (#266). It calls `separate_audio()`, whose dict includes the backing-track path under `mix`, but then discards that dict and builds its own (`status`, `drum_stem_path`, `original_file`, `output_directory`) — dropping the one path the user asked for when calling with `drumless=True`. The backing track is created on disk but its location is never reported, so the caller has to reconstruct it from `output_directory` plus the `<input>_no_drums.<ext>` naming convention. Fix: carry the path through from `separate_audio()` under a readable key, `backing_track_path` (rather than reintroducing the terse `mix`), and update the README backing-track example to use it. Keeps the readable key names introduced in v0.2.0 while restoring the missing path (#298)
->
-###### *Tests*
-- **Onset timing precision**: investigate user feedback on score generation. Though quantisation is used, look at the extent to which slight imperfections in onset detection cause notes to be placed at incorrect positions in the score (e.g. snare hit at 0.503s instead of 0.500s generates spurious rests). https://github.com/DrumScript/DrumScript/issues/274
->
-
----
->
-> ## **Released**
-*[back](#changelog)*
-
-### **[0.2.0] - August 2026**
->
-> **First minor-version bump.** Signals the start of the breaking-change track for `--full` flag (replaced by `--verbose`) ahead of v1.0.0 beta.
->
-#### *Additions*
-- `_TranscribeResult` deprecation shim: `transcribe()` non-verbose return is now a dict with `pdf_path`, `json_path`, and `midi_path` keys. Backwards-compatible as a string (returns PDF path with `DeprecationWarning`). String behaviour will be removed in v1.0.0.
-- CHANGELOG reference added to README table of contents
-- Versioned documentation deployment via `docs.yml` GitHub Actions workflow (#283, #132)
-- Version dropdown in Shibuya documentation navbar (#183, #281)
-- Repository traffic statistics workflow (`repo-stats.yml`)
-- Repository statistics link on Sphinx documentation homepage
->
-#### *Changes*
-- `transcribe()` return type: `str` → `_TranscribeResult` (dict subclass). See Added above for migration details.
-- Standardised git tag naming convention to `vX.Y.Z`
-- Documentation banner updated for v0.2.0: - Dark mode banner CSS improved for readability
-- Updated `tests/unit/test_transcribe.py` to reflect `_TranscribeResult` return type: replaced string assertions with dict key checks, added tests for deprecation warning on string usage, added test for verbose dict including `json_path` and `midi_path`
-- Updated README and Sphinx usage guide examples for new `transcribe()` return type
-- Filled in previously empty Extract Backing Track and Extract Drum-Only Audio sections in `docs/guide/usage.md`
->
-#### *Fixes*
-- `transcribe()` now exposes all output paths (PDF, JSON, MIDI) that `score_builder.build_score()` actually writes
-- Dynamic version in documentation via `importlib.metadata`
-- `pyproject.toml` version corrected from `v0.1.5` to `v0.1.6`
-- Sphinx build errors resolved
-- `create_backing_track` runbook fixed
-- `main.py` line 26 `.wav` comment clarified (was misleading — referred to output format, not input)
 >
 ### **[0.1.6] - June 2026**
 >

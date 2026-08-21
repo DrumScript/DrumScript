@@ -2,7 +2,7 @@
 <html lang="en" data-accent-color="violet" data-content_root="./">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"><title>DrumScript 0.2.0 documentation</title><link rel="author" title="About these documents" href="about.html" /><link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="About DrumScript" href="about.html" /><script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"><title>DrumScript 0.2.1 documentation</title><link rel="author" title="About these documents" href="about.html" /><link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="About DrumScript" href="about.html" /><script>
     function setColorMode(t){let e=document.documentElement;e.setAttribute("data-color-mode",t);let a=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches,s=t;"auto"===t&&(s=a?"dark":"light"),"light"===s?(e.classList.remove("dark"),e.classList.add("light")):(e.classList.remove("light"),e.classList.add("dark"))}
     setColorMode(localStorage._theme||"auto");
   </script><link rel="stylesheet" type="text/css" href="_static/pygments.css?v=e1a1ceaf" />
@@ -25,7 +25,7 @@
   </head>
 <body><div class="announcement">
     <div class="announcement-inner">
-      <p>DrumScript v0.2.0 now available: with mir_eval benchmarking</p>
+      <p>DrumScript v0.2.1 now available: with mir_eval benchmarking</p>
       <button class="announcement-close" aria-label="Close announcement">
         <i class="i-lucide close"></i>
       </button>
@@ -46,7 +46,7 @@
 </form><div class="nav-versions">
     <button type="button" aria-label="Versions">
       <span class="md:hidden">Versions</span>
-      <span class="hidden md:inline">v0.2.0</span>
+      <span class="hidden md:inline">v0.2.1</span>
       <i class="i-lucide chevron-down"></i>
     </button>
     <div class="nav-versions-choices"><ul><li><a href="/DrumScript/latest/">latest</a></li><li><a href="/DrumScript/dev/">dev</a></li><li><a href="/DrumScript/v0.2.0/">v0.2.0</a></li><li><a href="/DrumScript/v0.1.6/">v0.1.6</a></li></ul></div>
@@ -194,6 +194,7 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l2"><a class="reference internal" href="release_notes/0.1.5.html">v0.1.5 (Alpha)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="release_notes/0.1.6.html">v0.1.6 (Alpha)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="release_notes/0.2.0.html">v0.2.0 (Alpha)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release_notes/0.2.1.html">DrumScript v0.2.1 — Python 3.13 install fix</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="changelog.html"><strong>Changelog</strong></a></li>
@@ -385,7 +386,7 @@ data-aria-dark="Switch to auto color mode">
 </div>
 <p><em>^ <code class="docutils literal notranslate"><span class="pre">.mp3</span></code> requires <code class="docutils literal notranslate"><span class="pre">.ffmpeg</span></code> (<code class="docutils literal notranslate"><span class="pre">brew</span> <span class="pre">install</span> <span class="pre">ffmpeg</span></code>)</em></p>
 <p>Unlike most ADT systems, DrumScript’s classification engine is <strong>deterministic</strong>. <code class="docutils literal notranslate"><span class="pre">DrumScript</span></code> combines physics-derived spectral analysis: fundamental frequency, spectral centroid, energy ratios, and decay characteristics, applied through a rule-based pipeline built on <code class="docutils literal notranslate"><span class="pre">librosa</span></code> and <code class="docutils literal notranslate"><span class="pre">Demucs</span></code>. It also functions as a general-purpose audio toolbox: stem separation, drumless/bassless backing track generation, and tempo detection.</p>
-<p>The project was born from one working drummer’s desire to make playing drums more fun and in an accessible way - it’s taken almost a year to build. <strong>v0.2.0</strong> is part of the the <strong>Alpha release</strong>. The alpha phase began in <strong>June 2026</strong> and is ongoing; we expect it to run through late 2026 and into 2027 — Beta (<code class="docutils literal notranslate"><span class="pre">1.0.0</span></code>) is targeted on API stability and benchmark validation rather than a fixed calendar date. In the meantime, we are reaching out to communities, both musicians and academics alike, to find people to test  - and hopefully improve - the deterministic classification model. For more info on where this is headed see <strong><a class="reference internal" href="guide/roadmap.html"><span class="std std-doc">roadmap</span></a></strong> or <strong>https://github.com/orgs/DrumScript/discussions</strong></p>
+<p>The project was born from one working drummer’s desire to make playing drums more fun and in an accessible way - it’s taken almost a year to build. <strong>v0.2.1</strong> is part of the the <strong>Alpha release</strong>. The alpha phase began in <strong>June 2026</strong> and is ongoing; we expect it to run through late 2026 and into 2027 — Beta (<code class="docutils literal notranslate"><span class="pre">1.0.0</span></code>) is targeted on API stability and benchmark validation rather than a fixed calendar date. In the meantime, we are reaching out to communities, both musicians and academics alike, to find people to test  - and hopefully improve - the deterministic classification model. For more info on where this is headed see <strong><a class="reference internal" href="guide/roadmap.html"><span class="std std-doc">roadmap</span></a></strong> or <strong>https://github.com/orgs/DrumScript/discussions</strong></p>
 <section id="what-can-drumscript-do">
 <h2><strong>What can DrumScript do?</strong><a class="headerlink" href="#what-can-drumscript-do" title="Link to this heading">#</a></h2>
 <section id="audio-to-sheet-music-transcription">
@@ -575,7 +576,7 @@ In the meantime, if you would like to be involved, get in touch! 🥁🚀</p>
     </div>
   </div>
 </footer>
-      <script src="_static/documentation_options.js?v=938c9ccc"></script>
+      <script src="_static/documentation_options.js?v=37f418d5"></script>
       <script src="_static/doctools.js?v=fd6eb6e6"></script>
       <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script src="_static/shibuya.js?v=50760d75"></script></body>

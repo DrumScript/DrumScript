@@ -1,7 +1,7 @@
 # Roadmap for `DrumScript`
 
 <!--date_created: thurs-21-may-2026-->
-<!--date_updated: weds-19-august-2026-->
+<!--date_updated: sat-22-august-2026-->
 
 > DrumScript follows [Semantic Versioning](https://semver.org/).
 > The current phase is **Alpha** (`v{{version}}`) — the classification model and score generation/ API is out for testing. 
@@ -120,5 +120,6 @@ No affiliation as yet, however.
 * **[basic-pitch][**https://github.com/spotify/basic-pitch]** - A lightweight yet powerful audio-to-MIDI converter with pitch bend detection (better for non-percussive audio)
 * **[mir_eval](https://github.com/mir-evaluation/mir_eval)** — Standard evaluation metrics for music information retrieval tasks.
 * **[onset_db](https://github.com/CPJKU/onset_db)** - Provides a dataset of annotated musical onsets for tuning and evaluating audio detection algorithms. Maintained by JKU Linz.
+* **[DrumBurp](https://github.com/Whatang/DrumBurp)** -  DrumBurp is a desktop GUI drum tab editor created by Michael Thomas (whatang) between 2011–2019. It's a PyQt desktop application for manually writing drum notation — you type in notes by hand, specifying which drum, when, and how you hit it. It is not a transcription tool.
 
 ---

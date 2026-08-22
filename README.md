@@ -1,7 +1,7 @@
 # **`DrumScript`**
 
 <!--date_created: sun-15-june-2025-->
-<!--date_edited: thurd-20-august-2026--->
+<!--date_edited: sat-22-august-2026--->
 
 **DrumScript** is an open-source Python library and CLI tool for drum audio analysis and transcription. Give it a recording — a full mix or an isolated drum stem — and it will generate PDF sheet music, MIDI files, and MusicXML output. The `DrumScript` model is a **deterministic classifier**, and doesn't use AI/machine learning. Built for drummers and by drummers, it is - and always will be - an open-source community tool.
 
@@ -414,6 +414,7 @@ DrumScript has no affiliation with any of the projects below. They are listed fo
 * **[basic-pitch](https://github.com/spotify/basic-pitch)** — A lightweight yet powerful audio-to-MIDI converter with pitch bend detection (better for non-percussive audio). Maintained by Spotify.
 * **[mir_eval](https://github.com/mir-evaluation/mir_eval)** — Standard evaluation metrics for music information retrieval tasks.
 * **[onset_db](https://github.com/CPJKU/onset_db)** - Provides a dataset of annotated musical onsets for tuning and evaluating audio detection algorithms. Maintained by JKU Linz.
+* **[DrumBurp](https://github.com/Whatang/DrumBurp)** -  DrumBurp is a desktop GUI drum tab editor created by Michael Thomas (whatang) between 2011–2019. It's a PyQt desktop application for manually writing drum notation — you type in notes by hand, specifying which drum, when, and how you hit it. It is not a transcription tool.
 
 ---
 

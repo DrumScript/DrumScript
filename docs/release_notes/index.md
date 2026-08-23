@@ -4,7 +4,6 @@
 
 This page details the history of changes, improvements, and bug fixes in `DrumScript`.
 
-0.2.1
 ```{toctree}
 :maxdepth: 1
 :caption: Versions

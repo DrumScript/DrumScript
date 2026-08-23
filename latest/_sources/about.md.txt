@@ -1,7 +1,7 @@
 # About DrumScript
 
 <!--date_updated:tues-30-dec-2025-->
-<!--date_updated:fri-22-may-2026-->
+<!--date_updated:sun-23-aug-2026-->
 
 ---
 
@@ -45,3 +45,5 @@ Check out the [GitHub Repository](https://github.com/DrumScript/DrumScript) or t
 **hello.drumscript@gmail.com**
 
 Please also get involved at: **[Discussions](https://github.com/orgs/DrumScript/discussions)**
+
+> DrumScript is developed by a small part-time team. Like most modern software, it's built with the help of good tooling, but all the decisions at code-level are human.

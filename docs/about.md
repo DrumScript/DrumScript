@@ -52,7 +52,7 @@ Please also get involved at: **[Discussions](https://github.com/orgs/DrumScript/
 > * `DrumScript` is developed by part-timers who have full-time jobs and, like most modern software, it's built with the help of good tooling and occasional use of LLM for debugging and refining website content, but all the decisions are human-reviewed more than once at every step.
 > * The deterministic classification model (classify.py) has been built from a relatively small dataset covering different genres, but with a notable focus on **fast-paced, technical death metal** songs and drumming
 > * The prioritisation of speed versus accuracy means the score generation needs work. 
-> * Moreover, as our [roadmap](./docs/guide/roadmap.md) points out, increasing DrumScript's accuracy for all genres and drumming styles
+> * Moreover, as our [roadmap](./docs/guide/roadmap.md) points out, increasing DrumScript's accuracy for all genres and drumming styles, including better score generation is an important long-term goal
 > * The core classification model does NOT use machine learning in classifying onset_events into drum parts. This is what makes the DrumScript package unique: it uses physics-only derived and measured inputs based on the individual features of each part of the drumkit. 
 > * The PDF generation uses ReportLab to build a custom PDF; it does not use librosa or MuseScore
 > * Accuracy of onset detection, sonic properties of deterministic model and score generation are the three main areas we need to improve. 

@@ -243,9 +243,9 @@ data-aria-dark="Switch to auto color mode">
     <div class="sy-scrollbar sy-rside-inner px-6 xl:top-16 xl:sticky xl:pl-0 pt-6 pb-4"><div class="localtoc"><h3>On this page</h3><ul>
 <li><a class="reference internal" href="#future-releases"><em><strong>Future releases</strong></em></a><ul>
 <li><a class="reference internal" href="#beta-release-target-late-2026"><strong>[1.0.0] - Beta release - Target: late-2026</strong></a><ul>
-<li><a class="reference internal" href="#additions"><em>Additions</em></a></li>
+<li><a class="reference internal" href="#id1"><em>Additions</em></a></li>
 <li><a class="reference internal" href="#changes"><em>Changes</em></a></li>
-<li><a class="reference internal" href="#id1"><em>Fixes</em></a></li>
+<li><a class="reference internal" href="#id2"><em>Fixes</em></a></li>
 <li><a class="reference internal" href="#tests"><em>Tests</em></a></li>
 </ul>
 </li>
@@ -253,15 +253,15 @@ data-aria-dark="Switch to auto color mode">
 </li>
 <li><a class="reference internal" href="#august-2026"><strong>[0.2.0] - August 2026</strong></a></li>
 <li><a class="reference internal" href="#june-2026"><strong>[0.1.6] - June 2026</strong></a><ul>
-<li><a class="reference internal" href="#id6"><em>Additions</em></a></li>
-<li><a class="reference internal" href="#id7"><em>Fixes</em></a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#may-2026"><strong>[0.1.5] - 25 May 2026</strong></a><ul>
+<li><a class="reference internal" href="#id7"><em>Additions</em></a></li>
 <li><a class="reference internal" href="#id8"><em>Fixes</em></a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#id9"><strong>[0.1.4] - 20 May 2026</strong></a><ul>
+<li><a class="reference internal" href="#may-2026"><strong>[0.1.5] - 25 May 2026</strong></a><ul>
+<li><a class="reference internal" href="#id9"><em>Fixes</em></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id10"><strong>[0.1.4] - 20 May 2026</strong></a><ul>
 <li><a class="reference internal" href="#initial-public-alpha-release-to-pypi"><em>Initial public alpha release to PyPI</em></a></li>
 </ul>
 </li>
@@ -356,7 +356,7 @@ data-aria-dark="Switch to auto color mode">
           <section id="changelog">
 <h1><strong>Changelog</strong><a class="headerlink" href="#changelog" title="Link to this heading">#</a></h1>
 <!--date_added:thurs-28-may-2026-->
-<!--date:updated:fri-21-august-2026-->
+<!--date:updated:mon-24-august-2026-->
 <ul class="simple">
 <li><p>All notable changes related to the repository and pypi distribution of <code class="docutils literal notranslate"><span class="pre">DrumScript</span></code> will be documented here</p></li>
 <li><p>Format follows <strong><a class="reference external" href="https://keepachangelog.com/en/1.0.0/">Keep a Changelog</a></strong> and <strong><a class="reference external" href="https://semver.org/">Semantic Versioning</a></strong>.</p></li>
@@ -386,7 +386,15 @@ data-aria-dark="Switch to auto color mode">
 <p><em>forthcoming/in progress</em></p>
 <blockquote>
 <div><p>Items listed below are <strong>currently in development</strong> but <strong>have not been distributed on PyPi</strong></p>
-<p class="rubric" id="fixes"><em>Fixes</em></p>
+</div></blockquote>
+<blockquote>
+<div><p class="rubric" id="additions"><em>Additions</em></p>
+</div></blockquote>
+<ul class="simple">
+<li><p>added blurb to <code class="docutils literal notranslate"><span class="pre">README.md</span></code>, <code class="docutils literal notranslate"><span class="pre">docs/index.md</span></code> and <code class="docutils literal notranslate"><span class="pre">docs/about.md</span></code> about build process and current development people</p></li>
+</ul>
+<blockquote>
+<div><p class="rubric" id="fixes"><em>Fixes</em></p>
 </div></blockquote>
 <ul class="simple">
 <li><p><strong>Python 3.13 not supported.</strong> DrumScript pins <code class="docutils literal notranslate"><span class="pre">numpy&lt;2</span></code>, and numpy 1.x has no cp313 wheels on PyPI. This caused <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">drumscript</span></code> on Python 3.13 to fall back to a source build (which requires a C toolchain most users don’t have), producing a confusing <code class="docutils literal notranslate"><span class="pre">Compiler</span> <span class="pre">cc</span> <span class="pre">cannot</span> <span class="pre">compile</span> <span class="pre">programs</span></code> error rather than a clear “unsupported Python version” message. <code class="docutils literal notranslate"><span class="pre">requires-python</span></code> lowered from <code class="docutils literal notranslate"><span class="pre">&lt;3.14</span></code> to <code class="docutils literal notranslate"><span class="pre">&lt;3.13</span></code> in <code class="docutils literal notranslate"><span class="pre">pyproject.toml</span></code>. Python 3.13 support planned once DrumScript migrates to <code class="docutils literal notranslate"><span class="pre">numpy&gt;=2</span></code> (see <a class="reference external" href="https://github.com/DrumScript/DrumScript/issues/303">#303</a>).</p></li>
@@ -399,8 +407,8 @@ data-aria-dark="Switch to auto color mode">
 <!--#### ***August 2026 and beyond***-->
 <section id="beta-release-target-late-2026">
 <h3><strong>[1.0.0] - Beta release - Target: late-2026</strong><a class="headerlink" href="#beta-release-target-late-2026" title="Link to this heading">#</a></h3>
-<section id="additions">
-<h4><em>Additions</em><a class="headerlink" href="#additions" title="Link to this heading">#</a></h4>
+<section id="id1">
+<h4><em>Additions</em><a class="headerlink" href="#id1" title="Link to this heading">#</a></h4>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">output_midi</span></code>, <code class="docutils literal notranslate"><span class="pre">output_json</span></code>, <code class="docutils literal notranslate"><span class="pre">output_xml</span></code> flags to be added to <code class="docutils literal notranslate"><span class="pre">transcribe()</span></code> for multi-format export</p></li>
 <li><p>Expanded benchmark dataset coverage (ENST-Drums, MDB-Drums) building on the IDMT-SMT-Drums V2 foundation shipped in v0.1.6</p></li>
@@ -437,8 +445,8 @@ data-aria-dark="Switch to auto color mode">
 <li><p><code class="docutils literal notranslate"><span class="pre">docs/guide/usage.md</span></code>: the silent 4/4 fallback in <code class="docutils literal notranslate"><span class="pre">pdf_exporter.py</span></code> line 138 is a code smell independent of the docs — a user typo like <code class="docutils literal notranslate"><span class="pre">--ts</span> <span class="pre">44</span></code> also silently becomes 4/4. A <code class="docutils literal notranslate"><span class="pre">print</span></code> warning in that <code class="docutils literal notranslate"><span class="pre">except</span> <span class="pre">ValueError</span></code> would be a small improvement on documentation #297</p></li>
 </ul>
 </section>
-<section id="id1">
-<h4><em>Fixes</em><a class="headerlink" href="#id1" title="Link to this heading">#</a></h4>
+<section id="id2">
+<h4><em>Fixes</em><a class="headerlink" href="#id2" title="Link to this heading">#</a></h4>
 <ul class="simple">
 <li><p>Cymbal and hi-hat stem rendering: note tails and heads correctly aligned</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">main.py</span></code> structural bug: duplicated pipeline inside <code class="docutils literal notranslate"><span class="pre">except</span></code> block needs removing, error handling needs restructuring</p></li>
@@ -464,7 +472,7 @@ data-aria-dark="Switch to auto color mode">
 <blockquote>
 <div><p><strong>First minor-version bump</strong></p>
 <p>Signals the start of the breaking-change track for –full flag (replaced by –verbose) ahead of v1.0.0 beta.–&gt;</p>
-<p class="rubric" id="id2"><em>Additions</em></p>
+<p class="rubric" id="id3"><em>Additions</em></p>
 </div></blockquote>
 <ul class="simple">
 <li><p>Versioned documentation deployment via <code class="docutils literal notranslate"><span class="pre">docs.yml</span></code> GitHub Actions workflow (<code class="docutils literal notranslate"><span class="pre">docs/versioned-deploy</span></code> branch):</p>
@@ -488,7 +496,7 @@ data-aria-dark="Switch to auto color mode">
 <li><p>Added timeout to jobs block in <code class="docutils literal notranslate"><span class="pre">tests.yml</span></code> and add <code class="docutils literal notranslate"><span class="pre">--no-install-recommend</span></code> to linux system dependencies job to prevent <code class="docutils literal notranslate"><span class="pre">apt-get</span></code> issues in workflow</p></li>
 </ul>
 <blockquote>
-<div><p class="rubric" id="id3"><em>Changes</em></p>
+<div><p class="rubric" id="id4"><em>Changes</em></p>
 </div></blockquote>
 <ul class="simple">
 <li><p>Updated table ordering in <code class="docutils literal notranslate"><span class="pre">docs/index.md</span></code> to match right sidebar ordering and added missing sidebar navigation point for tempogram-detection</p></li>
@@ -508,7 +516,7 @@ data-aria-dark="Switch to auto color mode">
 <li><p>updated <code class="docutils literal notranslate"><span class="pre">transcribe.py</span></code> and <code class="docutils literal notranslate"><span class="pre">extract_stems.py</span></code> notebooks/runbooks, as well as audited the Colab notebook https://colab.research.google.com/drive/15yBGu6WURPyiH-sEQ82g_2T2wKqiIPsq#scrollTo=qpnuXCSle5V0</p></li>
 </ul>
 <blockquote>
-<div><p class="rubric" id="id4"><em>Fixes</em></p>
+<div><p class="rubric" id="id5"><em>Fixes</em></p>
 </div></blockquote>
 <ul class="simple">
 <li><p>Adjusted documentation so that when version appears in documentation it is no longer hardcoded, but linked to <code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">importlib.metadata</span></code> in <code class="docutils literal notranslate"><span class="pre">drumscript/__init__.py</span></code> [Reduces maintenance burden on contributors]</p></li>
@@ -526,7 +534,7 @@ data-aria-dark="Switch to auto color mode">
 <li><p>Confirmed <code class="docutils literal notranslate"><span class="pre">onset_detector.py</span></code> standalone mode takes a user-supplied audio path (<code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">-m</span> <span class="pre">drumscript.audio_processor.onset_detector</span> <span class="pre">&lt;audio_file&gt;</span></code>) rather than hardcoded test paths, and documented it in <code class="docutils literal notranslate"><span class="pre">cli_reference.md</span></code>. (#102)</p></li>
 </ul>
 <blockquote>
-<div><p class="rubric" id="id5"><em>Tests</em></p>
+<div><p class="rubric" id="id6"><em>Tests</em></p>
 </div></blockquote>
 <ul class="simple">
 <li><p>Did full audit of all <code class="docutils literal notranslate"><span class="pre">drumscript</span></code> code to ensure <code class="docutils literal notranslate"><span class="pre">full-flag</span></code> / <code class="docutils literal notranslate"><span class="pre">full_flag</span></code> consistency throughout, following v0.1.6 release fix replacing <code class="docutils literal notranslate"><span class="pre">full=True</span></code> with <code class="docutils literal notranslate"><span class="pre">verbose=True</span></code> (<code class="docutils literal notranslate"><span class="pre">DeprecationShim</span></code>)</p></li>
@@ -543,8 +551,8 @@ data-aria-dark="Switch to auto color mode">
 <div><p><strong><code class="docutils literal notranslate"><span class="pre">v0.1.6</span></code> is the final v0.1.<em>x</em> release.</strong>
 After this, the next release jumps to v0.2.0 to signal the deprecation shim for the <code class="docutils literal notranslate"><span class="pre">full</span></code> → <code class="docutils literal notranslate"><span class="pre">verbose</span></code> removal.</p>
 </div></blockquote>
-<section id="id6">
-<h3><em>Additions</em><a class="headerlink" href="#id6" title="Link to this heading">#</a></h3>
+<section id="id7">
+<h3><em>Additions</em><a class="headerlink" href="#id7" title="Link to this heading">#</a></h3>
 <ul class="simple">
 <li><p>Deprecation shim for <code class="docutils literal notranslate"><span class="pre">full</span></code> parameter on the Python API:</p>
 <ul>
@@ -569,8 +577,8 @@ After this, the next release jumps to v0.2.0 to signal the deprecation shim for 
 <li><p>New unit test file <code class="docutils literal notranslate"><span class="pre">tests/unit/test_cli_args.py</span></code> (4 tests)</p></li>
 </ul>
 </section>
-<section id="id7">
-<h3><em>Fixes</em><a class="headerlink" href="#id7" title="Link to this heading">#</a></h3>
+<section id="id8">
+<h3><em>Fixes</em><a class="headerlink" href="#id8" title="Link to this heading">#</a></h3>
 <ul class="simple">
 <li><p>Commented-out dead code removed from <code class="docutils literal notranslate"><span class="pre">drumscript/__init__.py</span></code> and <code class="docutils literal notranslate"><span class="pre">drumscript/main.py</span></code></p></li>
 <li><p>Flag inconsistency between <code class="docutils literal notranslate"><span class="pre">drumscript/main.py</span></code> and <code class="docutils literal notranslate"><span class="pre">drumscript/__init__.py</span></code> resolved: <code class="docutils literal notranslate"><span class="pre">argparse</span></code> in main block updated so the CLI flag is now <code class="docutils literal notranslate"><span class="pre">--full-song</span></code> (hyphenated, consistent with <code class="docutils literal notranslate"><span class="pre">--all-stems</span></code>). Auto-converts to <code class="docutils literal notranslate"><span class="pre">args.full_song</span></code> matching the Python API parameter name.</p></li>
@@ -579,8 +587,8 @@ After this, the next release jumps to v0.2.0 to signal the deprecation shim for 
 </section>
 <section id="may-2026">
 <h2><strong>[0.1.5] - 25 May 2026</strong><a class="headerlink" href="#may-2026" title="Link to this heading">#</a></h2>
-<section id="id8">
-<h3><em>Fixes</em><a class="headerlink" href="#id8" title="Link to this heading">#</a></h3>
+<section id="id9">
+<h3><em>Fixes</em><a class="headerlink" href="#id9" title="Link to this heading">#</a></h3>
 <ul class="simple">
 <li><p>Emergency fix: transcription outputs</p></li>
 <li><p>Updated docstrings to clarify expected input for transcription functions</p></li>
@@ -589,8 +597,8 @@ After this, the next release jumps to v0.2.0 to signal the deprecation shim for 
 <div></div></blockquote>
 </section>
 </section>
-<section id="id9">
-<h2><strong>[0.1.4] - 20 May 2026</strong><a class="headerlink" href="#id9" title="Link to this heading">#</a></h2>
+<section id="id10">
+<h2><strong>[0.1.4] - 20 May 2026</strong><a class="headerlink" href="#id10" title="Link to this heading">#</a></h2>
 <blockquote>
 <div><p><strong>First PyPI publication</strong></p>
 </div></blockquote>

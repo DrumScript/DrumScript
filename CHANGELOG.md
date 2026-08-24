@@ -15,8 +15,6 @@
   > - **Fixed** — bug fixes
   > - **Security** — vulnerability fixes
 
-<!-->>> $$new -> fixes$$-->
-
 
 - **[Unreleased](#unreleased)**
 - **[Released](#released)**

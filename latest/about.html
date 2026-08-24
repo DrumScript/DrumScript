@@ -336,7 +336,7 @@ data-aria-dark="Switch to auto color mode">
           <section id="about-drumscript">
 <h1>About DrumScript<a class="headerlink" href="#about-drumscript" title="Link to this heading">#</a></h1>
 <!--date_updated:tues-30-dec-2025-->
-<!--date_updated:sun-23-aug-2026-->
+<!--date_updated:mon-24-aug-2026-->
 <hr class="docutils" />
 <section id="the-origin-story">
 <h2>The Origin Story<a class="headerlink" href="#the-origin-story" title="Link to this heading">#</a></h2>
@@ -378,8 +378,17 @@ data-aria-dark="Switch to auto color mode">
 </ul>
 <p><strong>hello.drumscript&#64;gmail.com</strong></p>
 <p>Please also get involved at: <strong><a class="reference external" href="https://github.com/orgs/DrumScript/discussions">Discussions</a></strong></p>
+<p><strong>DrumScript</strong> is an open-source Python library and CLI tool for drum audio analysis and transcription. Give it a recording — a full mix or an isolated drum stem — and it will generate PDF sheet music, MIDI files, and MusicXML output. The <code class="docutils literal notranslate"><span class="pre">DrumScript</span></code> model is a <strong>deterministic classifier</strong>, and doesn’t use AI/machine learning. Built for drummers and by drummers, it is - and always will be - an open-source community tool. The alpha has been running since <strong>01 June 2026</strong> and will be ongoing until we make the model and transcription process more accurate.</p>
+<p><strong>Disclaimer</strong></p>
 <blockquote>
-<div><p>DrumScript is developed by a small part-time team. Like most modern software, it’s built with the help of good tooling, but all the decisions at code-level are human.</p>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">DrumScript</span></code> is developed by part-timers who have full-time jobs and, like most modern software, it’s built with the help of good tooling and occasional use of LLM for debugging and refined website content, but all the decisions are human-reviewed more than once at every step.</p></li>
+<li><p>The core classification model does NOT use machine learning in classifying onset_events into drum parts. This is what makes the DrumScript package unique: it uses physics-only derived and measured inputs based on the individual features of each part of the drumkit.</p></li>
+<li><p>The PDF generation uses ReportLab to build a custom PDF; it does not use librosa or MuseScore</p></li>
+<li><p>Accuracy of onset detection, sonic properties of deterministic model and score generation are the three main areas we need to improve.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">GitActions[Bot]</span></code> is used in the automated daily workflow that gathers repository statistics: <a class="reference external" href="https://github.com/DrumScript/DrumScript/blob/github-repo-stats/DrumScript/DrumScript/latest-report/report.pdf"><strong>repo-stats</strong></a></p></li>
+<li><p>If you feel any part of this hasn’t been made clear, then please raise it in the <strong><a class="reference external" href="https://github.com/orgs/DrumScript/discussions">Discussions</a></strong></p></li>
+</ul>
 </div></blockquote>
 </section>
 </section>

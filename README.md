@@ -1,11 +1,18 @@
 # **`DrumScript`**
 
 <!--date_created: sun-15-june-2025-->
-<!--date_edited: sun-23-august-2026--->
+<!--date_edited: mon-24-august-2026--->
 
-**DrumScript** is an open-source Python library and CLI tool for drum audio analysis and transcription. Give it a recording — a full mix or an isolated drum stem — and it will generate PDF sheet music, MIDI files, and MusicXML output. The `DrumScript` model is a **deterministic classifier**, and doesn't use AI/machine learning. Built for drummers and by drummers, it is - and always will be - an open-source community tool.
+**DrumScript** is an open-source Python library and CLI tool for drum audio analysis and transcription. Give it a recording — a full mix or an isolated drum stem — and it will generate PDF sheet music, MIDI files, and MusicXML output. The `DrumScript` model is a **deterministic classifier**, and doesn't use AI/machine learning. Built for drummers and by drummers, it is - and always will be - an open-source community tool. The alpha has been running since **01 June 2026** and will be ongoing until we make the model and transcription process more accurate. 
 
-> `DrumScript` is developed by a small part-time team. Like most modern software, it's built with the help of good tooling, but all the decisions at code-level are human.
+**Disclaimer**
+> * `DrumScript` is developed by part-timers who have full-time jobs and, like most modern software, it's built with the help of good tooling and occasional use of LLM for debugging and refined website content, but all the decisions are human-reviewed more than once at every step.
+> * The core classification model does NOT use machine learning in classifying onset_events into drum parts. This is what makes the DrumScript package unique: it uses physics-only derived and measured inputs based on the individual features of each part of the drumkit. 
+> * The PDF generation uses ReportLab to build a custom PDF; it does not use librosa or MuseScore
+> * Accuracy of onset detection, sonic properties of deterministic model and score generation are the three main areas we need to improve. 
+> * `GitActions[Bot]` is used in the automated daily workflow that gathers repository statistics: [**repo-stats**](https://github.com/DrumScript/DrumScript/blob/github-repo-stats/DrumScript/DrumScript/latest-report/report.pdf)
+> * If you feel any part of this hasn't been made clear, then please raise it in the **[Discussions](https://github.com/orgs/DrumScript/discussions)**
+
 
 > **Python >=3.9**
 
@@ -290,6 +297,7 @@ drumscript snare_hit.wav --rudiment
 We welcome contributions! DrumScript is intended to be a community-owned project. You can also refer to detailed contributor guidance **[here](./docs/development/contributor_guidance.md)**
 
 - **[Open an Issue](https://github.com/DrumScript/DrumScript/issues/new)** for bugs or feature requests.
+- **[Discussions](https://github.com/orgs/DrumScript/discussions)** for discussions
 - **[Submit a Pull Request](https://github.com/DrumScript/DrumScript/pulls)** for code changes.
 - See **[CONTRIBUTING.md](CONTRIBUTING.md)** for the full contributor guide.
 
@@ -364,7 +372,7 @@ Results are archived to `outputs/benchmarks/idmt/` with per-file metrics, summar
 ## Traffic
 *[back](#drumscript)*
 
-We collate usage over time for performance-monitoring. Live repository statistics — updated daily:
+We collate usage over time for performance-monitoring. Repository statistics — updated daily:
 
 - [**View Report (PDF)**](https://github.com/DrumScript/DrumScript/blob/github-repo-stats/DrumScript/DrumScript/latest-report/report.pdf)
 <!--- [**View Report (HTML)**](https://github.com/DrumScript/DrumScript/blob/github-repo-stats/DrumScript/DrumScript/latest-report/report.html)

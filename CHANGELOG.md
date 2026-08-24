@@ -1,7 +1,7 @@
 # **Changelog**
 
 <!--date_added:thurs-28-may-2026-->
-<!--date:updated:fri-21-august-2026-->
+<!--date:updated:mon-24-august-2026-->
 
 
 * All notable changes related to the repository and pypi distribution of `DrumScript` will be documented here
@@ -30,9 +30,14 @@
 *forthcoming/in progress* 
 
 > Items listed below are **currently in development** but **have not been distributed on PyPi**
+
+> ### *Additions*
+* added blurb to `README.md`, `docs/index.md` and `docs/about.md` about build process and current development people
+
 > ### *Fixes*
 
 * **Python 3.13 not supported.** DrumScript pins `numpy<2`, and numpy 1.x has no cp313 wheels on PyPI. This caused `pip install drumscript` on Python 3.13 to fall back to a source build (which requires a C toolchain most users don't have), producing a confusing `Compiler cc cannot compile programs` error rather than a clear "unsupported Python version" message. `requires-python` lowered from `<3.14` to `<3.13` in `pyproject.toml`. Python 3.13 support planned once DrumScript migrates to `numpy>=2` (see [#303](https://github.com/DrumScript/DrumScript/issues/303)).
+
 
 ---
 

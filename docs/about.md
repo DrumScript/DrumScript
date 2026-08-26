@@ -1,14 +1,14 @@
 # About DrumScript
 
 <!--date_updated:tues-30-dec-2025-->
-<!--date_updated:mon-24-aug-2026-->
+<!--date_updated:weds-25-aug-2026-->
 
 ---
 
 ## The Origin Story
 **DrumScript was born from a simple frustration: sheet music for drums is inaccessible.**
 
-For piano or guitar, converting MIDI to notation is a solved problem. But for drummers, the landscape is different. Most "transcription" tools are black boxes that cost money, require cloud uploads, or output messy MIDI files that look nothing like standard drum notation. As a drummer, I wanted a tool that could listen to a track and hand me a chart I could actually read on the stand. I didn't want a "piano roll" — I wanted a **score**.
+For piano or guitar, converting MIDI to notation is a solved problem. But for drummers, the landscape is different. Most "transcription" tools are black boxes that cost money, require cloud uploads, or output messy MIDI files that look nothing like standard drum notation. As a drummer, I wanted a tool that could listen to a track and hand me a chart I could actually read on the stand. I didn't want a "piano roll" - I wanted a **score**.
 
 When I couldn't find a free, open-source tool that prioritised *readability* over raw MIDI data, I decided to build one. Over time I became really interested in **Digital Signal Processing (DSP)**, **Sound Engineering** and **Automatic Transcription** in both theory and practise.  I discovered the field of **Music Information Retrieval**, communities like **[International Society for Music Information Retrieval (ISMIR)](https://ismir.net/)**, and so have a working interest in the theory of these fields.
 
@@ -46,7 +46,7 @@ Check out the [GitHub Repository](https://github.com/DrumScript/DrumScript) or t
 
 Please also get involved at: **[Discussions](https://github.com/orgs/DrumScript/discussions)**
 
-**DrumScript** is an open-source Python library and CLI tool for drum audio analysis and transcription. Give it a recording — a full mix or an isolated drum stem — and it will generate PDF sheet music, MIDI files, and MusicXML output. The `DrumScript` model is a **deterministic classifier**, and doesn't use AI/machine learning. Built for drummers and by drummers, it is - and always will be - an open-source community tool. The alpha has been running since **01 June 2026** and will be ongoing until we make the model and transcription process more accurate. 
+**DrumScript** is an open-source Python library and CLI tool for drum audio analysis and transcription. Give it a recording - a full mix or an isolated drum stem - and it will generate PDF sheet music, MIDI files, and MusicXML output. The `DrumScript` model is a **deterministic classifier**, and doesn't use AI/machine learning. Built for drummers and by drummers, it is - and always will be - an open-source community tool. The alpha has been running since **01 June 2026** and will be ongoing until we make the model and transcription process more accurate. 
 
 **Disclaimer**
 > * `DrumScript` is developed by part-timers who have full-time jobs and, like most modern software, it's built with the help of good tooling and occasional use of LLM for debugging and refining website content, but all the decisions are human-reviewed more than once at every step.

@@ -75,7 +75,7 @@ def main(
                 else:
                     print("Warning: Drums stem was not found in separation results. Using original.")
             else:
-                # Stems only — no transcription was asked for.
+                # Stems only - no transcription was asked for.
                 print("Stem processing complete. Exiting (Transcription not requested).")
                 return
 
@@ -372,7 +372,7 @@ if __name__ == "__main__":
     # ----------------------------------------------------------------------
     # SUPERSEDED (v0.2.0): argparse was built inline here, inside the
     # `if __name__ == "__main__":` guard. That guard never runs when the
-    # module is imported — which is exactly what the `drumscript` console
+    # module is imported - which is exactly what the `drumscript` console
     # script does. The installed CLI therefore raised
     #     TypeError: main() missing 1 required positional argument
     # on every invocation. Parsing now lives in build_parser()/cli() at

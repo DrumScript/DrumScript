@@ -194,7 +194,7 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l2"><a class="reference internal" href="../release_notes/0.1.5.html">v0.1.5 (Alpha)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../release_notes/0.1.6.html">v0.1.6 (Alpha)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../release_notes/0.2.0.html">v0.2.0 (Alpha)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../release_notes/0.2.1.html">DrumScript v0.2.1 — Python 3.13 install fix</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes/0.2.1.html">DrumScript v0.2.1 - Python 3.13 install fix</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../changelog.html"><strong>Changelog</strong></a></li>
@@ -341,19 +341,19 @@ data-aria-dark="Switch to auto color mode">
           <section id="stem-splitter">
 <h1>Stem-Splitter<a class="headerlink" href="#stem-splitter" title="Link to this heading">#</a></h1>
 <!--date_createdthurs-07-may-2026-->
-<!--date_updated:sat-27-june-2026-->
+<!--date_updated:weds-25-aug-2026-->
 <hr class="docutils" />
 <section id="how-does-the-stem-splitter-module-audio-processor-stem-splitter-py-work">
 <h2>How does the stem-splitter module (<code class="docutils literal notranslate"><span class="pre">audio_processor/stem_splitter.py</span></code>) work?<a class="headerlink" href="#how-does-the-stem-splitter-module-audio-processor-stem-splitter-py-work" title="Link to this heading">#</a></h2>
-<p>In simple terms, the <strong>stem-splitter</strong> takes a full polyphonic song and pulls it apart into its individual instrumental layers — drums, bass, vocals, and “other” — using the <strong>Demucs</strong> source separation model. From there, those isolated layers can be saved individually, recombined into custom mixes (e.g. a drumless backing track), or fed into the rest of the DrumScript transcription pipeline.</p>
+<p>In simple terms, the <strong>stem-splitter</strong> takes a full polyphonic song and pulls it apart into its individual instrumental layers - drums, bass, vocals, and “other” - using the <strong>Demucs</strong> source separation model. From there, those isolated layers can be saved individually, recombined into custom mixes (e.g. a drumless backing track), or fed into the rest of the DrumScript transcription pipeline.</p>
 <p>Here’s a more detailed breakdown of what it does and why it’s designed this way.</p>
 <section id="what-the-module-does">
 <h3>What the Module Does<a class="headerlink" href="#what-the-module-does" title="Link to this heading">#</a></h3>
 <ol class="arabic simple">
-<li><p><strong>Receives a full audio mix</strong> — any <code class="docutils literal notranslate"><span class="pre">.wav</span></code> or <code class="docutils literal notranslate"><span class="pre">.mp3</span></code> file containing a complete song.</p></li>
+<li><p><strong>Receives a full audio mix</strong> - any <code class="docutils literal notranslate"><span class="pre">.wav</span></code> or <code class="docutils literal notranslate"><span class="pre">.mp3</span></code> file containing a complete song.</p></li>
 <li><p><strong>Runs Demucs in a subprocess</strong>, using the high-quality 4-stem <code class="docutils literal notranslate"><span class="pre">htdemucs</span></code> model. Calling Demucs via its CLI (rather than importing it as a Python library) keeps Demucs’s heavy dependencies (PyTorch, torchaudio, torchcodec) outside the core DrumScript Python process.</p></li>
 <li><p><strong>Demucs writes four raw WAV stems to a temporary directory:</strong> <code class="docutils literal notranslate"><span class="pre">drums.wav</span></code>, <code class="docutils literal notranslate"><span class="pre">bass.wav</span></code>, <code class="docutils literal notranslate"><span class="pre">vocals.wav</span></code>, and <code class="docutils literal notranslate"><span class="pre">other.wav</span></code>.</p></li>
-<li><p><strong>Reads each stem back in as a NumPy array</strong> using <code class="docutils literal notranslate"><span class="pre">soundfile</span></code>. This step is deliberately ffmpeg-free for WAV — only the MP3 export path further down ever needs ffmpeg.</p></li>
+<li><p><strong>Reads each stem back in as a NumPy array</strong> using <code class="docutils literal notranslate"><span class="pre">soundfile</span></code>. This step is deliberately ffmpeg-free for WAV - only the MP3 export path further down ever needs ffmpeg.</p></li>
 <li><p><strong>Decides what to do with the stems</strong>, based on which flags were passed:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">drumless=True</span></code> → mix every stem <strong>except</strong> drums into a backing track, and save the drums stem on its own.</p></li>
@@ -371,8 +371,8 @@ data-aria-dark="Switch to auto color mode">
 <h3>Why This Approach<a class="headerlink" href="#why-this-approach" title="Link to this heading">#</a></h3>
 <p>DrumScript uses Demucs as a <strong>pre-processor</strong>, not as part of its own classification engine. This separation of concerns is deliberate:</p>
 <ul class="simple">
-<li><p><strong>Source separation and drum classification are different problems.</strong> Isolating a drum track from a polyphonic mix requires learning what “drums” sound like across many recording conditions, kits, and genres — a problem deep learning solves well. Drum <em>classification</em> (kick vs snare vs hi-hat etc.), by contrast, is a problem DrumScript solves with deterministic, physics-based rules.</p></li>
-<li><p><strong>Demucs is treated as a black box that produces a WAV file.</strong> From DrumScript’s perspective, the output of the stem-splitter is just another audio file. Everything downstream — onset detection, feature extraction, classification, score-building — runs on that file deterministically.</p></li>
+<li><p><strong>Source separation and drum classification are different problems.</strong> Isolating a drum track from a polyphonic mix requires learning what “drums” sound like across many recording conditions, kits, and genres - a problem deep learning solves well. Drum <em>classification</em> (kick vs snare vs hi-hat etc.), by contrast, is a problem DrumScript solves with deterministic, physics-based rules.</p></li>
+<li><p><strong>Demucs is treated as a black box that produces a WAV file.</strong> From DrumScript’s perspective, the output of the stem-splitter is just another audio file. Everything downstream - onset detection, feature extraction, classification, score-building - runs on that file deterministically.</p></li>
 </ul>
 <section id="key-design-choices">
 <h4>Key design choices<a class="headerlink" href="#key-design-choices" title="Link to this heading">#</a></h4>
@@ -384,7 +384,7 @@ data-aria-dark="Switch to auto color mode">
 </section>
 <section id="a-note-on-demucs-s-long-term-maintenance">
 <h4>A note on Demucs’s long-term maintenance<a class="headerlink" href="#a-note-on-demucs-s-long-term-maintenance" title="Link to this heading">#</a></h4>
-<p>The original Demucs project is no longer actively maintained by its original owners (Meta). Alexandre Défossez maintains an occasional <a class="reference external" href="https://github.com/adefossez/demucs">fork</a>. To insulate DrumScript against potential dependency drift, the project may eventually replace Demucs with its own lightweight stem-splitter — but for now, Demucs remains the simplest, highest-quality option available.</p>
+<p>The original Demucs project is no longer actively maintained by its original owners (Meta). Alexandre Défossez maintains an occasional <a class="reference external" href="https://github.com/adefossez/demucs">fork</a>. To insulate DrumScript against potential dependency drift, the project may eventually replace Demucs with its own lightweight stem-splitter - but for now, Demucs remains the simplest, highest-quality option available.</p>
 <hr class="docutils" />
 <!--END-->
 </section>

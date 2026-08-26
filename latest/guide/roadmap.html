@@ -194,7 +194,7 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l2"><a class="reference internal" href="../release_notes/0.1.5.html">v0.1.5 (Alpha)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../release_notes/0.1.6.html">v0.1.6 (Alpha)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../release_notes/0.2.0.html">v0.2.0 (Alpha)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../release_notes/0.2.1.html">DrumScript v0.2.1 — Python 3.13 install fix</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes/0.2.1.html">DrumScript v0.2.1 - Python 3.13 install fix</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../changelog.html"><strong>Changelog</strong></a></li>
@@ -340,11 +340,11 @@ data-aria-dark="Switch to auto color mode">
           <section id="roadmap-for-drumscript">
 <h1>Roadmap for <code class="docutils literal notranslate"><span class="pre">DrumScript</span></code><a class="headerlink" href="#roadmap-for-drumscript" title="Link to this heading">#</a></h1>
 <!--date_created: thurs-21-may-2026-->
-<!--date_updated: sat-22-august-2026-->
+<!--date_updated:weds-25-aug-2026-->
 <blockquote>
 <div><p>DrumScript follows <a class="reference external" href="https://semver.org/">Semantic Versioning</a>.
-The current phase is <strong>Alpha</strong> (<code class="docutils literal notranslate"><span class="pre">v{{version}}</span></code>) — the classification model and score generation/ API is out for testing.
-The alpha phase began on <strong>1st June 2026 and is ongoing</strong> — no fixed end date. Beta (<code class="docutils literal notranslate"><span class="pre">1.0.0</span></code>) follows once the API stabilises and the classification model is validated against standard ADT benchmarks.</p>
+The current phase is <strong>Alpha</strong> (<code class="docutils literal notranslate"><span class="pre">v{{version}}</span></code>) - the classification model and score generation/ API is out for testing.
+The alpha phase began on <strong>1st June 2026 and is ongoing</strong> - no fixed end date. Beta (<code class="docutils literal notranslate"><span class="pre">1.0.0</span></code>) follows once the API stabilises and the classification model is validated against standard ADT benchmarks.</p>
 </div></blockquote>
 <ul class="simple">
 <li><p><strong><a class="reference internal" href="#release-phases"><span class="xref myst">Release plan</span></a></strong></p>
@@ -427,10 +427,10 @@ The alpha phase began on <strong>1st June 2026 and is ongoing</strong> — no fi
 <li><p><strong>Smarter classification across genres and kits</strong></p></li>
 </ol>
 <ul class="simple">
-<li><p>The current frequency thresholds were derived from a small sample set and are essentially absolute values — they work well for a typical rock/pop kit but can struggle with jazz kits, piccolo snares, deep floor toms, and non-standard tunings.</p></li>
+<li><p>The current frequency thresholds were derived from a small sample set and are essentially absolute values - they work well for a typical rock/pop kit but can struggle with jazz kits, piccolo snares, deep floor toms, and non-standard tunings.</p></li>
 <li><p>The plan is to introduce a <strong>per-track calibration step</strong>: before the deterministic classifier runs, DrumScript would first characterise the kit as a whole (identify the frequency clusters present in a given track) and then classify hits relative to those clusters, rather than relying on fixed Hz bands.</p></li>
 </ul>
-<p>The working theory is that all drum kits have relative frequency relationships regardless of absolute tuning — making the system far more genre-agnostic.</p>
+<p>The working theory is that all drum kits have relative frequency relationships regardless of absolute tuning - making the system far more genre-agnostic.</p>
 <ol class="arabic simple" start="2">
 <li><p><strong>Richer organological modelling</strong></p></li>
 </ol>
@@ -459,15 +459,15 @@ transient were both being classified.ate transcription and meaningful notatio</p
 <ol class="arabic simple" start="4">
 <li><p>Broader stem separation uses</p></li>
 </ol>
-<p>The Demucs integration currently targets drummers, but the same pipeline can produce vocal-only, bass-only, or instrument-only extractions. These will be exposed as first-class features so the tool is useful to vocalists, bassists, and producers — not just drummers.</p>
+<p>The Demucs integration currently targets drummers, but the same pipeline can produce vocal-only, bass-only, or instrument-only extractions. These will be exposed as first-class features so the tool is useful to vocalists, bassists, and producers - not just drummers.</p>
 <ol class="arabic simple" start="5">
 <li><p>Browser-based zero-code UI</p></li>
 </ol>
-<p>A major goal: a browser deployment using WebGPU, WebAssembly, Pyodide, and ONNX Runtime so that DrumScript can run entirely client-side — no installation, no server, no account, no data leaves the user’s machine. The aim is a free, local-input/local-output tool that non-technical musicians can use without touching a terminal.</p>
+<p>A major goal: a browser deployment using WebGPU, WebAssembly, Pyodide, and ONNX Runtime so that DrumScript can run entirely client-side - no installation, no server, no account, no data leaves the user’s machine. The aim is a free, local-input/local-output tool that non-technical musicians can use without touching a terminal.</p>
 <ol class="arabic simple" start="6">
 <li><p>Formal evaluation and paper</p></li>
 </ol>
-<p>Benchmarking against standard ADT datasets using <code class="docutils literal notranslate"><span class="pre">mir_eval</span></code> metrics is now underway — the infrastructure shipped in v0.1.6 with IDMT-SMT-Drums V2 as the first verified benchmark. The write-up will target the <a class="reference external" href="https://transactions.ismir.net/">TISMIR</a> Educational Articles track covering the pipeline architecture, evaluation results, and design decisions.</p>
+<p>Benchmarking against standard ADT datasets using <code class="docutils literal notranslate"><span class="pre">mir_eval</span></code> metrics is now underway - the infrastructure shipped in v0.1.6 with IDMT-SMT-Drums V2 as the first verified benchmark. The write-up will target the <a class="reference external" href="https://transactions.ismir.net/">TISMIR</a> Educational Articles track covering the pipeline architecture, evaluation results, and design decisions.</p>
 </section>
 </section>
 <hr class="docutils" />
@@ -485,13 +485,13 @@ transient were both being classified.ate transcription and meaningful notatio</p
 <h2>Similar Projects<a class="headerlink" href="#similar-projects" title="Link to this heading">#</a></h2>
 <p>No affiliation as yet, however.</p>
 <ul class="simple">
-<li><p><strong><a class="reference external" href="https://librosa.org/">librosa</a></strong> — The spectral analysis library that powers DrumScript’s onset detection and feature extraction.</p></li>
-<li><p><strong><a class="reference external" href="https://github.com/adefossez/demucs">Demucs</a></strong> — The stem separation model we use for isolating drums from full mixes.</p></li>
-<li><p><strong><a class="reference external" href="https://github.com/tepreece/drumscript">tepreece/drumscript (Golang)</a></strong> — A <code class="docutils literal notranslate"><span class="pre">(Go)lang</span></code> MIDI drum pattern scripting language by Tom Preece. Different use case (composing drum patterns via script), different technology (MIDI output rather than audio transcription). If you’re looking to <em>write</em> drum patterns programmatically, check it out. Maintained by <a class="reference external" href="https://github.com/tepreece">&#64;tepreece</a></p></li>
+<li><p><strong><a class="reference external" href="https://librosa.org/">librosa</a></strong> - The spectral analysis library that powers DrumScript’s onset detection and feature extraction.</p></li>
+<li><p><strong><a class="reference external" href="https://github.com/adefossez/demucs">Demucs</a></strong> - The stem separation model we use for isolating drums from full mixes.</p></li>
+<li><p><strong><a class="reference external" href="https://github.com/tepreece/drumscript">tepreece/drumscript (Golang)</a></strong> - A <code class="docutils literal notranslate"><span class="pre">(Go)lang</span></code> MIDI drum pattern scripting language by Tom Preece. Different use case (composing drum patterns via script), different technology (MIDI output rather than audio transcription). If you’re looking to <em>write</em> drum patterns programmatically, check it out. Maintained by <a class="reference external" href="https://github.com/tepreece">&#64;tepreece</a></p></li>
 <li><p>**[basic-pitch][<strong>https://github.com/spotify/basic-pitch]</strong> - A lightweight yet powerful audio-to-MIDI converter with pitch bend detection (better for non-percussive audio)</p></li>
-<li><p><strong><a class="reference external" href="https://github.com/mir-evaluation/mir_eval">mir_eval</a></strong> — Standard evaluation metrics for music information retrieval tasks.</p></li>
+<li><p><strong><a class="reference external" href="https://github.com/mir-evaluation/mir_eval">mir_eval</a></strong> - Standard evaluation metrics for music information retrieval tasks.</p></li>
 <li><p><strong><a class="reference external" href="https://github.com/CPJKU/onset_db">onset_db</a></strong> - Provides a dataset of annotated musical onsets for tuning and evaluating audio detection algorithms. Maintained by JKU Linz.</p></li>
-<li><p><strong><a class="reference external" href="https://github.com/Whatang/DrumBurp">DrumBurp</a></strong> -  DrumBurp is a desktop GUI drum tab editor created by Michael Thomas (whatang) between 2011–2019. It’s a PyQt desktop application for manually writing drum notation — you type in notes by hand, specifying which drum, when, and how you hit it. It is not a transcription tool.</p></li>
+<li><p><strong><a class="reference external" href="https://github.com/Whatang/DrumBurp">DrumBurp</a></strong> -  DrumBurp is a desktop GUI drum tab editor created by Michael Thomas (whatang) between 2011–2019. It’s a PyQt desktop application for manually writing drum notation - you type in notes by hand, specifying which drum, when, and how you hit it. It is not a transcription tool.</p></li>
 </ul>
 <hr class="docutils" />
 </section>

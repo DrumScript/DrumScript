@@ -194,7 +194,7 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l2"><a class="reference internal" href="../release_notes/0.1.5.html">v0.1.5 (Alpha)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../release_notes/0.1.6.html">v0.1.6 (Alpha)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../release_notes/0.2.0.html">v0.2.0 (Alpha)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../release_notes/0.2.1.html">DrumScript v0.2.1 — Python 3.13 install fix</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes/0.2.1.html">DrumScript v0.2.1 - Python 3.13 install fix</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../changelog.html"><strong>Changelog</strong></a></li>
@@ -372,7 +372,7 @@ data-aria-dark="Switch to auto color mode">
 </span><span data-line="75"><span class="c1">#     print(pdf)</span>
 </span><span data-line="76"><span class="c1"># keeps working but emits a DeprecationWarning.</span>
 </span><span data-line="77"><span class="c1">#</span>
-</span><span data-line="78"><span class="c1"># Removal target: v1.0.0 — transcribe() will return a plain dict.</span>
+</span><span data-line="78"><span class="c1"># Removal target: v1.0.0 - transcribe() will return a plain dict.</span>
 </span><span data-line="79">
 </span><span data-line="80">
 </span><span data-line="81"><span class="k">class</span><span class="w"> </span><span class="nc">_TranscribeResult</span><span class="p">(</span><span class="nb">dict</span><span class="p">):</span>
@@ -382,7 +382,7 @@ data-aria-dark="Switch to auto color mode">
 </span><span data-line="85"><span class="sd">    this dict subclass so existing ``pdf = ds.transcribe(...)`` code keeps</span>
 </span><span data-line="86"><span class="sd">    working while we migrate users to dict access.</span>
 </span><span data-line="87">
-</span><span data-line="88"><span class="sd">    Removal target: v1.0.0 — ``transcribe()`` will return a plain dict.</span>
+</span><span data-line="88"><span class="sd">    Removal target: v1.0.0 - ``transcribe()`` will return a plain dict.</span>
 </span><span data-line="89"><span class="sd">    &quot;&quot;&quot;</span>
 </span><span data-line="90">
 </span><span data-line="91">    <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -725,7 +725,7 @@ data-aria-dark="Switch to auto color mode">
 </span><span data-line="420">    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;...Building score: </span><span class="si">{</span><span class="n">pdf_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </span><span data-line="421">    <span class="c1"># build_score() returns a mapping of the files it SUCCESSFULLY wrote. Each of</span>
 </span><span data-line="422">    <span class="c1"># its three exports (JSON/PDF/MIDI) is individually fault-tolerant, so a</span>
-</span><span data-line="423">    <span class="c1"># failure in one does not stop the others — but it also means a path we</span>
+</span><span data-line="423">    <span class="c1"># failure in one does not stop the others - but it also means a path we</span>
 </span><span data-line="424">    <span class="c1"># computed above may never have been written to disk.</span>
 </span><span data-line="425">    <span class="c1">#</span>
 </span><span data-line="426">    <span class="c1"># Prefer what build_score actually reports. If it returns something other</span>

@@ -13,8 +13,8 @@
 #      - The publish.yml workflow (triggered by the release) handles PyPI upload
 #
 # VERSIONING STRATEGY:
-#   0.x.y  = Alpha (current phase) — breaking changes between minors are OK
-#   1.0.0  = First stable release — public API is locked
+#   0.x.y  = Alpha (current phase) - breaking changes between minors are OK
+#   1.0.0  = First stable release - public API is locked
 #   See: https://semver.org
 
 name: Create Release
@@ -178,7 +178,7 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ env.TAG }}
-          name: "DrumScript ${{ env.TAG }}${{ inputs.summary && format(' — {0}', inputs.summary) || '' }}"
+          name: "DrumScript ${{ env.TAG }}${{ inputs.summary && format(' - {0}', inputs.summary) || '' }}"
           body_path: /tmp/changelog.md
           prerelease: ${{ inputs.release_type != 'Stable' }}
           generate_release_notes: true

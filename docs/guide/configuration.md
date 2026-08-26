@@ -1,6 +1,7 @@
 # Configuration
 
 <!--date_updated:sun-16-august-2026-->
+<!--date_updated:weds-25-aug-2026-->
 
 DrumScript's DSP behaviour is controlled by module-level constants rather than
 per-call parameters. This page documents what is actually configurable today.
@@ -29,7 +30,7 @@ Sensitivity is governed by two values set inside
 | `delta` | `0.05` | Detection threshold above the noise floor. Lower detects quieter hits (more false positives); higher misses ghost notes. |
 | lockout | `0.05` s | Minimum gap between two detected hits. Stops cymbal vibration from double-triggering. |
 
-Both are currently hardcoded. Exposing them as arguments is on the roadmap —
+Both are currently hardcoded. Exposing them as arguments is on the roadmap -
 see [the issue tracker](https://github.com/DrumScript/DrumScript/issues).
 
 ## Sample Rate and Hop Length
@@ -66,7 +67,7 @@ result["midi_path"]   # MIDI for DAW import
 MusicXML is not produced automatically. Export it separately with
 `ds.export_xml()`.
 
-> Per-format flags (`output_midi`, `output_json`, `output_xml`) are planned —
+> Per-format flags (`output_midi`, `output_json`, `output_xml`) are planned -
 > see the [CHANGELOG](../changelog.md).
 
 ## Stem Output Format
@@ -94,5 +95,5 @@ ds.transcribe("drum_audio.wav", time_signature="6/8")
 drumscript "drum_audio.wav" --ts 6/8
 ```
 
-> Use a forward slash (`3/4`, `6/8`). Any other form — including underscores
-> like `3_4` — silently falls back to 4/4 with no warning.
+> Use a forward slash (`3/4`, `6/8`). Any other form - including underscores
+> like `3_4` - silently falls back to 4/4 with no warning.

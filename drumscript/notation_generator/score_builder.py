@@ -84,7 +84,7 @@ def build_score(
 
     # Ensure the destination directory exists before any export runs.
     # midi_exporter and xml_exporter each create it themselves, but the JSON
-    # write below and pdf_exporter do not — so running from a directory that
+    # write below and pdf_exporter do not - so running from a directory that
     # has no `outputs/` (e.g. a pip-installed user invoking the CLI anywhere
     # other than the repo root) silently produced a MIDI file and nothing else.
     # Creating it centrally here fixes every caller, CLI and Python API alike.

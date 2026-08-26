@@ -1,7 +1,7 @@
 # **DrumScript CLI Reference**
 
 <!--date_added:sat-20-june-2026-->
-<!--date_updated:sun-16-august-2026-->
+<!--date_updated:weds-25-aug-2026-->
 
 This document provides a comprehensive guide to the command-line interface for **DrumScript**. The primary entry point is the `drumscript` console command, while individual modules can be run standalone for development and testing purposes.
 
@@ -43,7 +43,7 @@ python drumscript/main.py <audio_path> [options]     # only from the repo root
 
 ### **Notation Options**
 
-* **`--ts <signature>`**: Defines the time signature for the generated drum score. Defaults to `4/4`. Use a forward slash (`3/4`, `6/8`) — any other form, including underscores like `3_4`, silently falls back to 4/4.
+* **`--ts <signature>`**: Defines the time signature for the generated drum score. Defaults to `4/4`. Use a forward slash (`3/4`, `6/8`) - any other form, including underscores like `3_4`, silently falls back to 4/4.
 
 ---
 

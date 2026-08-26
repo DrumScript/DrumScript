@@ -55,7 +55,7 @@ print(f"Files written to: {backing_track['output_directory']}")
 
 > `extract_stems()` writes to a `stems/` folder in your current working directory if `output_dir` is not specified.
 >
-> The verbose dict returns `status`, `drum_stem_path`, `original_file` and `output_directory`. The backing track itself is named `<input>_no_drums.<format>` inside `output_directory` — its path is not yet returned directly. See the [CHANGELOG](../changelog.md) for the planned fix.
+> The verbose dict returns `status`, `drum_stem_path`, `original_file` and `output_directory`. The backing track itself is named `<input>_no_drums.<format>` inside `output_directory` - its path is not yet returned directly. See the [CHANGELOG](../changelog.md) for the planned fix.
 
 
 ### 4. Extracting Stems (`--all-stems`)
@@ -80,7 +80,7 @@ drumscript "audio_path.wav" --ts 3/4
 drumscript "audio_path.wav" --ts 6/8
 ```
 
-> Use a forward slash. Any other form — including underscores like `3_4` — silently falls back to 4/4 with no warning.
+> Use a forward slash. Any other form - including underscores like `3_4` - silently falls back to 4/4 with no warning.
 
 <!--You can also use DrumScript directly from your terminal:-->
 
@@ -130,7 +130,7 @@ result = ds.transcribe("audio_path.wav")
 print(result["pdf_path"])
 ```
 
-The CLI equivalent — `main()` is the orchestration function behind it, and takes the input path as its first argument:
+The CLI equivalent - `main()` is the orchestration function behind it, and takes the input path as its first argument:
 
 ```zsh
 drumscript "audio_path.wav"
@@ -157,7 +157,7 @@ main()
 
 #### **Stem Splitting**
 
-Isolate the drum track from a full music mix using `extract_drum_stem()`, or run a full separation with `separate_audio()`. Both are module-level functions — there is no class to instantiate.
+Isolate the drum track from a full music mix using `extract_drum_stem()`, or run a full separation with `separate_audio()`. Both are module-level functions - there is no class to instantiate.
 
 ```python
 from drumscript.audio_processor.stem_splitter import extract_drum_stem
@@ -188,7 +188,7 @@ print(results)   # dict of every file written, including "mix"
 ```
 
 <!-- SUPERSEDED (v0.2.0): documented a `StemSplitter` class with a
-     `split_drums()` method. No such class exists — stem_splitter.py
+     `split_drums()` method. No such class exists - stem_splitter.py
      exposes module-level functions only.
 ```python
 from drumscript.audio_processor.stem_splitter import StemSplitter
@@ -246,7 +246,7 @@ drumscript "full_song.wav" --mute bass --mute vocals
 
 #### Extract Drum-Only Audio
 
-Pull just the drum track out of a full mix — useful for studying a groove, or for feeding into transcription separately.
+Pull just the drum track out of a full mix - useful for studying a groove, or for feeding into transcription separately.
 
 ```python
 import drumscript as ds

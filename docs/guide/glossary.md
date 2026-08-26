@@ -1,7 +1,7 @@
 # Glossary of Terms
 
 <!--date_created:thurs-03-july-2025-->
-<!--date_updated:sun-16-august-2026-->
+<!--date_updated:weds-25-aug-2026-->
 
 ## **Python Libraries & Classes**
 
@@ -26,8 +26,8 @@ In `DrumScript`, `librosa` is crucial because it's the underlying library that `
 
 * **Meaning:** A module within `drumscript.audio_processor` responsible for separating source audio into distinct stems (drums, bass, vocals, other). It uses the `Demucs` model to perform high-quality source separation. It exposes **module-level functions**, not a class.
 * **Key functions:**
-  * `extract_drum_stem(audio_path, output_dir=None)` — returns the file path of the isolated drum track.
-  * `separate_audio(audio_path, output_format="wav", drumless=False, mute=None, all_stems=False, output_dir=None)` — full separation; returns a dict of every file written.
+  * `extract_drum_stem(audio_path, output_dir=None)` - returns the file path of the isolated drum track.
+  * `separate_audio(audio_path, output_format="wav", drumless=False, mute=None, all_stems=False, output_dir=None)` - full separation; returns a dict of every file written.
 
 >
 > * **Example:**
@@ -110,7 +110,7 @@ In `DrumScript`, `MuseScore` is crucial because `music21` can be configured to u
   * **Example:**
 > If `hop_length=512`, the window (or `object_event`) moves **512 samples to the right** for the next analysis, overlapping with the previous window (`object_event`).
 
-  * **DrumScript uses `HOP_LENGTH = 128`**, not 512. At 44100 Hz that gives a time resolution of ~2.9 ms — fine enough to separate individual drum hits. It is set in `drumscript/notation_generator/constants.py`.
+  * **DrumScript uses `HOP_LENGTH = 128`**, not 512. At 44100 Hz that gives a time resolution of ~2.9 ms - fine enough to separate individual drum hits. It is set in `drumscript/notation_generator/constants.py`.
 
   * Playing around with the `hop_length` is often crucial for finding the right split of intervals in a given audio sample.  The `hop_length` also depends on the `SAMPLE_RATE` defined  (in the case of `DrumScript` we have chosen a `SAMPLE_RATE = 44100` across the library, defined in `drumscript/notation_generator/constants.py`)
 

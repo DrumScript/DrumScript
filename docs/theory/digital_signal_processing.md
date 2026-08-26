@@ -1,5 +1,7 @@
 # Digital Signal Processing (DSP)
 
+<!--date_updated:weds-25-aug-2026-->
+
 `DrumScript` relies on three major pillars of **Music Information Retrieval (MIR)**: Source Separation, Onset Detection, and Tempo Estimation.
 
 ## 1. Source Separation (`Demucs`)
@@ -13,7 +15,7 @@ We utilise the **Demucs** model, a state-of-the-art Hybrid Transformer architect
 ## 2. Onset Detection
 To transcribe a drum, we first need to know *when* it was hit. This is called **Onset Detection**.
 
-We analyze the **Spectral Flux**—essentially measuring how quickly the energy in the audio signal changes. A sudden spike in high-frequency energy usually indicates a percussive strike (a transient).
+We analyze the **Spectral Flux**-essentially measuring how quickly the energy in the audio signal changes. A sudden spike in high-frequency energy usually indicates a percussive strike (a transient).
 
 * **Library:** We use `librosa` for spectral analysis.
 * **Reference:** [Real-Time Automatic Drum Transcription](references/Published_Real-Time_Automatic_Drum_Transcription.pdf)

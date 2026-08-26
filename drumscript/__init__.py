@@ -75,7 +75,7 @@ def _resolve_verbose_flag(full, verbose, function_name):
 #     print(pdf)
 # keeps working but emits a DeprecationWarning.
 #
-# Removal target: v1.0.0 — transcribe() will return a plain dict.
+# Removal target: v1.0.0 - transcribe() will return a plain dict.
 
 
 class _TranscribeResult(dict):
@@ -85,7 +85,7 @@ class _TranscribeResult(dict):
     this dict subclass so existing ``pdf = ds.transcribe(...)`` code keeps
     working while we migrate users to dict access.
 
-    Removal target: v1.0.0 — ``transcribe()`` will return a plain dict.
+    Removal target: v1.0.0 - ``transcribe()`` will return a plain dict.
     """
 
     def __str__(self):
@@ -420,7 +420,7 @@ def transcribe(
     print(f"...Building score: {pdf_path}")
     # build_score() returns a mapping of the files it SUCCESSFULLY wrote. Each of
     # its three exports (JSON/PDF/MIDI) is individually fault-tolerant, so a
-    # failure in one does not stop the others — but it also means a path we
+    # failure in one does not stop the others - but it also means a path we
     # computed above may never have been written to disk.
     #
     # Prefer what build_score actually reports. If it returns something other

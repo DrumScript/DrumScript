@@ -1,9 +1,9 @@
 # Installation
 
-<!--date_updated:tues-12-may-2026-->
+<!--date_updated:sun-16-august-2026-->
 
 ## Prerequisites
-* **Python:** 3.9 or higher
+* **Python:** 3.9 – 3.13 (`torch` is not yet compatible with 3.14)
 * **System Tools:** `FFmpeg` (for users uploading `.mp3`)
 
 ```bash
@@ -11,8 +11,8 @@ uv pip install drumscript
 ```
 
 ```bash
-# Install dependencies
-uv sync --all-groups
+# Install dependencies (contributors)
+uv sync --all-extras
 ```
 
 **Dependencies**

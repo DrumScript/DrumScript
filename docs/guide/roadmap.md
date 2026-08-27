@@ -1,11 +1,11 @@
 # Roadmap for `DrumScript`
 
 <!--date_created: thurs-21-may-2026-->
-<!--date_updated: sat-20-june-2026-->
+<!--date_updated:weds-25-aug-2026-->
 
 > DrumScript follows [Semantic Versioning](https://semver.org/).
-> The current phase is **Alpha** (`v{{version}}`) — the classification model and score generation/ API is out for testing. 
-> From **01 June 2026 to 31 August** alpha testing is under way.
+> The current phase is **Alpha** (`v{{version}}`) - the classification model and score generation/ API is out for testing. 
+> The alpha phase began on **1st June 2026 and is ongoing** - no fixed end date. Beta (`1.0.0`) follows once the API stabilises and the classification model is validated against standard ADT benchmarks.
 
 * **[Release plan](#release-phases)**
     - **[Alpha priorities](#alpha-priorities-v030--v090)**
@@ -19,9 +19,9 @@
 
 | Phase | Versions | Target Window | What to Expect |
 |-------|----------|---------------|----------------|
-| **Pre-Alpha** | `0.1.0` – `0.9.0` | June 2025 - May 2026 | Core pipeline works end-to-end. API may change between releases. Built in isolation |
-| **Alpha** (current) | `0.1.0` – `0.9.0` | **June – August 2026** | Core pipeline works end-to-end. API may change between releases. Feedback sought. Cross off some of the **[Issues](https://github.com/DrumScript/DrumScript/issues)** added in pre-Alpha |
-| **Beta** | `0.9.x` – `0.9.9` | September 2026 onwards | API locked for each minor version. Focus on accuracy, edge cases, and evaluation against standard ADT datasets.  Release **free-to-use** `WebGPU/WASM/ONNX` UI for non-coders|
+| **Pre-Alpha** | `0.1.0` – `0.9.0` | **June 2025 - May 2026** | Core pipeline works end-to-end. API may change between releases. Built in isolation |
+| **Alpha** (current) | `0.1.0` – `0.9.0` | **June 2026 – ongoing** | Core pipeline works end-to-end. API may change between releases. Feedback sought. Cross off some of the **[Issues](https://github.com/DrumScript/DrumScript/issues)** added in pre-Alpha |
+| **Beta** | `0.9.x` – `0.9.9` | Follows alpha (API-stability gated) | API locked for each minor version. Focus on accuracy, edge cases, and evaluation against standard ADT datasets. Release **free-to-use** `WebGPU/WASM/ONNX` UI for non-coders |
 | **Stable** | `1.0.0` | *tbc* | Public API frozen. Breaking changes only in major versions. Community-owned tool. Publication of paper in journal to announce release |
 
 
@@ -58,11 +58,11 @@
 
 1. **Smarter classification across genres and kits**
 
-* The current frequency thresholds were derived from a small sample set and are essentially absolute values — they work well for a typical rock/pop kit but can struggle with jazz kits, piccolo snares, deep floor toms, and non-standard tunings.
+* The current frequency thresholds were derived from a small sample set and are essentially absolute values - they work well for a typical rock/pop kit but can struggle with jazz kits, piccolo snares, deep floor toms, and non-standard tunings.
 
 * The plan is to introduce a **per-track calibration step**: before the deterministic classifier runs, DrumScript would first characterise the kit as a whole (identify the frequency clusters present in a given track) and then classify hits relative to those clusters, rather than relying on fixed Hz bands. 
 
-The working theory is that all drum kits have relative frequency relationships regardless of absolute tuning — making the system far more genre-agnostic.
+The working theory is that all drum kits have relative frequency relationships regardless of absolute tuning - making the system far more genre-agnostic.
 
 2. **Richer organological modelling**
 
@@ -89,15 +89,15 @@ The alpha treats every hit as equal. Future versions should handle:
 
 4.  Broader stem separation uses
 
-The Demucs integration currently targets drummers, but the same pipeline can produce vocal-only, bass-only, or instrument-only extractions. These will be exposed as first-class features so the tool is useful to vocalists, bassists, and producers — not just drummers.
+The Demucs integration currently targets drummers, but the same pipeline can produce vocal-only, bass-only, or instrument-only extractions. These will be exposed as first-class features so the tool is useful to vocalists, bassists, and producers - not just drummers.
 
 5. Browser-based zero-code UI
 
-A major goal: a browser deployment using WebGPU, WebAssembly, Pyodide, and ONNX Runtime so that DrumScript can run entirely client-side — no installation, no server, no account, no data leaves the user's machine. The aim is a free, local-input/local-output tool that non-technical musicians can use without touching a terminal.
+A major goal: a browser deployment using WebGPU, WebAssembly, Pyodide, and ONNX Runtime so that DrumScript can run entirely client-side - no installation, no server, no account, no data leaves the user's machine. The aim is a free, local-input/local-output tool that non-technical musicians can use without touching a terminal.
 
 6. Formal evaluation and paper
 
-Benchmarking against standard ADT datasets using `mir_eval` metrics is now underway — the infrastructure shipped in v0.1.6 with IDMT-SMT-Drums V2 as the first verified benchmark. The write-up will target the [TISMIR](https://transactions.ismir.net/) Educational Articles track covering the pipeline architecture, evaluation results, and design decisions.
+Benchmarking against standard ADT datasets using `mir_eval` metrics is now underway - the infrastructure shipped in v0.1.6 with IDMT-SMT-Drums V2 as the first verified benchmark. The write-up will target the [TISMIR](https://transactions.ismir.net/) Educational Articles track covering the pipeline architecture, evaluation results, and design decisions.
 
 ---
 
@@ -114,11 +114,12 @@ Benchmarking against standard ADT datasets using `mir_eval` metrics is now under
 
 No affiliation as yet, however. 
 
-* **[librosa](https://librosa.org/)** — The spectral analysis library that powers DrumScript's onset detection and feature extraction.
-* **[Demucs](https://github.com/adefossez/demucs)** — The stem separation model we use for isolating drums from full mixes.
-* **[tepreece/drumscript (Golang)](https://github.com/tepreece/drumscript)** — A `(Go)lang` MIDI drum pattern scripting language by Tom Preece. Different use case (composing drum patterns via script), different technology (MIDI output rather than audio transcription). If you're looking to *write* drum patterns programmatically, check it out. Maintained by [@tepreece](https://github.com/tepreece)
+* **[librosa](https://librosa.org/)** - The spectral analysis library that powers DrumScript's onset detection and feature extraction.
+* **[Demucs](https://github.com/adefossez/demucs)** - The stem separation model we use for isolating drums from full mixes.
+* **[tepreece/drumscript (Golang)](https://github.com/tepreece/drumscript)** - A `(Go)lang` MIDI drum pattern scripting language by Tom Preece. Different use case (composing drum patterns via script), different technology (MIDI output rather than audio transcription). If you're looking to *write* drum patterns programmatically, check it out. Maintained by [@tepreece](https://github.com/tepreece)
 * **[basic-pitch][**https://github.com/spotify/basic-pitch]** - A lightweight yet powerful audio-to-MIDI converter with pitch bend detection (better for non-percussive audio)
-* **[mir_eval](https://github.com/mir-evaluation/mir_eval)** — Standard evaluation metrics for music information retrieval tasks.
+* **[mir_eval](https://github.com/mir-evaluation/mir_eval)** - Standard evaluation metrics for music information retrieval tasks.
 * **[onset_db](https://github.com/CPJKU/onset_db)** - Provides a dataset of annotated musical onsets for tuning and evaluating audio detection algorithms. Maintained by JKU Linz.
+* **[DrumBurp](https://github.com/Whatang/DrumBurp)** -  DrumBurp is a desktop GUI drum tab editor created by Michael Thomas (whatang) between 2011–2019. It's a PyQt desktop application for manually writing drum notation - you type in notes by hand, specifying which drum, when, and how you hit it. It is not a transcription tool.
 
 ---

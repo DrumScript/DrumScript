@@ -1,25 +1,25 @@
 # Stem-Splitter
 
 <!--date_createdthurs-07-may-2026-->
-<!--date_updated:sat-27-june-2026-->
+<!--date_updated:weds-25-aug-2026-->
 
 ---
 
 ## How does the stem-splitter module (`audio_processor/stem_splitter.py`) work?
 
-In simple terms, the **stem-splitter** takes a full polyphonic song and pulls it apart into its individual instrumental layers — drums, bass, vocals, and "other" — using the **Demucs** source separation model. From there, those isolated layers can be saved individually, recombined into custom mixes (e.g. a drumless backing track), or fed into the rest of the DrumScript transcription pipeline.
+In simple terms, the **stem-splitter** takes a full polyphonic song and pulls it apart into its individual instrumental layers - drums, bass, vocals, and "other" - using the **Demucs** source separation model. From there, those isolated layers can be saved individually, recombined into custom mixes (e.g. a drumless backing track), or fed into the rest of the DrumScript transcription pipeline.
 
 Here's a more detailed breakdown of what it does and why it's designed this way.
 
 ### What the Module Does
 
-1.  **Receives a full audio mix** — any `.wav` or `.mp3` file containing a complete song.
+1.  **Receives a full audio mix** - any `.wav` or `.mp3` file containing a complete song.
 
 2.  **Runs Demucs in a subprocess**, using the high-quality 4-stem `htdemucs` model. Calling Demucs via its CLI (rather than importing it as a Python library) keeps Demucs's heavy dependencies (PyTorch, torchaudio, torchcodec) outside the core DrumScript Python process.
 
 3.  **Demucs writes four raw WAV stems to a temporary directory:** `drums.wav`, `bass.wav`, `vocals.wav`, and `other.wav`.
 
-4.  **Reads each stem back in as a NumPy array** using `soundfile`. This step is deliberately ffmpeg-free for WAV — only the MP3 export path further down ever needs ffmpeg.
+4.  **Reads each stem back in as a NumPy array** using `soundfile`. This step is deliberately ffmpeg-free for WAV - only the MP3 export path further down ever needs ffmpeg.
 
 5.  **Decides what to do with the stems**, based on which flags were passed:
     - `drumless=True` → mix every stem **except** drums into a backing track, and save the drums stem on its own.
@@ -37,9 +37,9 @@ Here's a more detailed breakdown of what it does and why it's designed this way.
 
 DrumScript uses Demucs as a **pre-processor**, not as part of its own classification engine. This separation of concerns is deliberate:
 
-- **Source separation and drum classification are different problems.** Isolating a drum track from a polyphonic mix requires learning what "drums" sound like across many recording conditions, kits, and genres — a problem deep learning solves well. Drum *classification* (kick vs snare vs hi-hat etc.), by contrast, is a problem DrumScript solves with deterministic, physics-based rules.
+- **Source separation and drum classification are different problems.** Isolating a drum track from a polyphonic mix requires learning what "drums" sound like across many recording conditions, kits, and genres - a problem deep learning solves well. Drum *classification* (kick vs snare vs hi-hat etc.), by contrast, is a problem DrumScript solves with deterministic, physics-based rules.
 
-- **Demucs is treated as a black box that produces a WAV file.** From DrumScript's perspective, the output of the stem-splitter is just another audio file. Everything downstream — onset detection, feature extraction, classification, score-building — runs on that file deterministically.
+- **Demucs is treated as a black box that produces a WAV file.** From DrumScript's perspective, the output of the stem-splitter is just another audio file. Everything downstream - onset detection, feature extraction, classification, score-building - runs on that file deterministically.
 
 #### Key design choices
 
@@ -51,7 +51,7 @@ DrumScript uses Demucs as a **pre-processor**, not as part of its own classifica
 
 #### A note on Demucs's long-term maintenance
 
-The original Demucs project is no longer actively maintained by its original owners (Meta). Alexandre Défossez maintains an occasional [fork](https://github.com/adefossez/demucs). To insulate DrumScript against potential dependency drift, the project may eventually replace Demucs with its own lightweight stem-splitter — but for now, Demucs remains the simplest, highest-quality option available.
+The original Demucs project is no longer actively maintained by its original owners (Meta). Alexandre Défossez maintains an occasional [fork](https://github.com/adefossez/demucs). To insulate DrumScript against potential dependency drift, the project may eventually replace Demucs with its own lightweight stem-splitter - but for now, Demucs remains the simplest, highest-quality option available.
 
 ---
 

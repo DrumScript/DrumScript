@@ -1,13 +1,25 @@
 # `DrumScript` Documentation
 
 <!--date_created:tuesday-30-december-2025-->
-<!--date_updated:mon-17-august-2026-->
+<!--date_updated:weds-25-august-2026-->
 
+<!-- **[repo stats](https://github.com/DrumScript/DrumScript/blob/github-repo-stats/DrumScript/DrumScript/latest-report/report.pdf)**-->
+ 
+**DrumScript** is an open-source Python library and CLI tool for drum audio analysis and transcription. Give it a recording - a full mix or an isolated drum stem - and it will generate PDF sheet music, MIDI files, and MusicXML output. The `DrumScript` model is a **deterministic classifier**, and doesn't use AI/machine learning. Built for drummers and by drummers, it is - and always will be - an open-source community tool. The alpha has been running since **01 June 2026** and will be ongoing until we make the model and transcription process more accurate. 
 
-> **[repo stats](https://github.com/DrumScript/DrumScript/blob/github-repo-stats/DrumScript/DrumScript/latest-report/report.pdf)**
- 
- **DrumScript** is an open-source Python library and CLI tool designed fordrummers and audio engineers.  DrumScript's classification engine is **deterministic**. While its core mission is **Automatic Drum Transcription (ADT)** (converting drum recordings into sheet music), it also functions as a powerful **Audio Toolbox** for extracting drums from polyphonic tracks, creating backing tracks, and analysing rhythm.
- 
+**Disclaimer**
+> * `DrumScript` is developed by part-timers who have full-time jobs and, like most modern software, it's built with the help of good tooling and occasional use of LLM for debugging and refining website content, but all the decisions are human-reviewed more than once at every step.
+> * The deterministic classification model (classify.py) has been built from a relatively small dataset covering different genres, but with a notable focus on **fast-paced, technical death metal** songs and drumming
+> * The prioritisation of speed versus accuracy means the score generation needs work. 
+> * Moreover, as our [roadmap](./docs/guide/roadmap.md) points out, increasing DrumScript's accuracy for all genres and drumming styles, including better score generation is an important long-term goal
+> * The core classification model does NOT use machine learning in classifying onset_events into drum parts. This is what makes the DrumScript package unique: it uses physics-only derived and measured inputs based on the individual features of each part of the drumkit. 
+> * The PDF generation uses ReportLab to build a custom PDF; it does not use librosa or MuseScore
+> * Accuracy of onset detection, sonic properties of deterministic model and score generation are the three main areas we need to improve. 
+> * `GitActions[Bot]` is used in the automated daily workflow that gathers repository statistics: [**repo-stats**](https://github.com/DrumScript/DrumScript/blob/github-repo-stats/DrumScript/DrumScript/latest-report/report.pdf)
+> * If you feel any part of this hasn't been made clear, then please raise it in the **[Discussions](https://github.com/orgs/DrumScript/discussions)**
+
+> **Python >=3.9, < 3.13**
+
 > **[Try DrumScript In Colab](https://colab.research.google.com/drive/15yBGu6WURPyiH-sEQ82g_2T2wKqiIPsq)**
 >
 > <a href="https://colab.research.google.com/drive/15yBGu6WURPyiH-sEQ82g_2T2wKqiIPsq" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
@@ -24,7 +36,7 @@
 
 Unlike most ADT systems, DrumScript's classification engine is **deterministic**. `DrumScript` combines physics-derived spectral analysis: fundamental frequency, spectral centroid, energy ratios, and decay characteristics, applied through a rule-based pipeline built on `librosa` and `Demucs`. It also functions as a general-purpose audio toolbox: stem separation, drumless/bassless backing track generation, and tempo detection. 
 
-The project was born from one working drummer's desire to make playing drums more fun and in an accessible way - it's taken almost a year to build. **v{{ version }}** is part of the the **Alpha release**. Between **01 June and 31 August 2026** we are reaching out to communities, both musicians and academics alike, to find people to test  - and hopefully improve - the deterministic classification model. For more info on where this is headed see **[roadmap](guide/roadmap.md)** or **https://github.com/orgs/DrumScript/discussions**
+The project was born from one working drummer's desire to make playing drums more fun and in an accessible way - it's taken almost a year to build. **v{{ version }}** is part of the the **Alpha release**. The alpha phase began in **June 2026** and is ongoing; we expect it to run through late 2026 and into 2027 - Beta (`1.0.0`) is targeted on API stability and benchmark validation rather than a fixed calendar date. In the meantime, we are reaching out to communities, both musicians and academics alike, to find people to test  - and hopefully improve - the deterministic classification model. For more info on where this is headed see **[roadmap](guide/roadmap.md)** or **https://github.com/orgs/DrumScript/discussions**
 
 ## **What can DrumScript do?**
 

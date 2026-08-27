@@ -15,7 +15,6 @@
 │       └── tests.yml
 ├── .gitignore
 ├── .pre-commit-config.yaml
-├── .python-version
 ├── CHANGELOG.md
 ├── CODE_OF_CONDUCT.md
 ├── CONTRIBUTING.md
@@ -92,20 +91,15 @@
 │           ├── measure_hat_frequency.py
 │           ├── measure_kick_frequency.py
 │           └── measure_snare_frequency.py
-├── public
-│   └── drumscript-0.1.6-py3-none-any.whl
 ├── pyproject.toml
 ├── repository_structure.md
-├── scripts
-│   ├── pypi.sh
-│   ├── run_tests.sh
-│   └── update_public_wheel.sh
 ├── tests
 │   ├── README.md
 │   ├── conftest.py
 │   ├── integration
-│   │   └── test_stem_splitter_real.py
-│   ├── tree_tests
+│   │   ├── test_stem_splitter_real.py
+│   │   └── test_transcribe_real.py
+│   ├── tree_tests.txt
 │   └── unit
 │       ├── __init__.py
 │       ├── test_audio_loader.py
@@ -120,8 +114,6 @@
 │       ├── test_tempo_detector.py
 │       └── test_transcribe.py
 ├── tree.txt
-├── uv.lock
-└── visuals
-    └── tempogram.png
+└── uv.lock
 
-25 directories, 100 files
+22 directories, 95 files

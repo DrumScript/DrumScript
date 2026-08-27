@@ -76,7 +76,7 @@ html_css_files = [
 # Shibuya Setup
 html_theme_options = {
     # Logos: Shibuya prefers the full relative path from docs folder
-    # "announcement": f"Alpha release — v{ds.__version__}",
+    # "announcement": f"Alpha release - v{ds.__version__}",
     "announcement": f"DrumScript v{ds.__version__} now available: with mir_eval benchmarking",
     "light_logo": "_static/logo-light.svg",
     "dark_logo": "_static/logo-dark.svg",
@@ -96,7 +96,7 @@ html_context = {
     "source_type": "github",
     "source_user": "DrumScript",
     "source_repo": "DrumScript",
-    # "versions_url": "/versions.json",  # Not used by Shibuya — kept for reference
+    # "versions_url": "/versions.json",  # Not used by Shibuya - kept for reference
     # ── Version switcher (Shibuya nav-versions.html) ───────────────
     # Shibuya expects `versions` as a list of (label, url) tuples and
     # `current_version` as a string. URLs are relative to the docs root.

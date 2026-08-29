@@ -21,7 +21,7 @@
 |-------|----------|---------------|----------------|
 | **Pre-Alpha** | `0.1.0` – `0.9.0` | **June 2025 - May 2026** | Core pipeline works end-to-end. API may change between releases. Built in isolation |
 | **Alpha** (current) | `0.1.0` – `0.9.0` | **June 2026 – ongoing** | Core pipeline works end-to-end. API may change between releases. Feedback sought. Cross off some of the **[Issues](https://github.com/DrumScript/DrumScript/issues)** added in pre-Alpha |
-| **Beta** | `0.9.x` – `0.9.9` | Follows alpha (API-stability gated) | API locked for each minor version. Focus on accuracy, edge cases, and evaluation against standard ADT datasets. Release **free-to-use** `WebGPU/WASM/ONNX` UI for non-coders |
+| **Beta** | `0.9.x` – `0.9.9` | Follows alpha (API-stability gated) | API locked for each minor version. Focus on accuracy, edge cases, and evaluation against standard ADT datasets. Release first version of **free-to-use** `WebGPU/WASM/ONNX` UI for non-coders |
 | **Stable** | `1.0.0` | *tbc* | Public API frozen. Breaking changes only in major versions. Community-owned tool. Publication of paper in journal to announce release |
 
 
@@ -58,9 +58,9 @@
 **3. Browser-based zero-code UI**
 > **A major goal before Beta**
 
- - We recognise DrumScript's place as a Python package excludes non-coders from using it, so it is a major goal to publish, alongside 1. and 2. a browser deployment using WebGPU/WebAssembly/Pyodide-or-Java/ONNX basd UI
+ - We recognise DrumScript's place as a Python package excludes non-coders from using it, so it is a major goal to publish, alongside 1. and 2. a browser deployment using WebGPU/WebAssembly/Pyodide-or-Java/ONNX-based UI
  - We want this to be **Free-to-use**
- - We also want it to run completely in-browser, so it **never stores your audio or data, including the outputsso that DrumScript can run entirely client-side - no installation, no server, no account, no data leaves the user's machine. The aim is a free, local-input/local-output tool that non-technical musicians can use without touching a terminal.
+ - We also want it to run completely in-browser, so it **never stores your audio or data, including the outputs so that DrumScript can run entirely client-side - no installation, no server, no account, no data leaves the user's machine. The aim is a free, local-input/local-output tool that non-technical musicians can use without touching a terminal.
 
 **Measurement**
 - Resuming the `mir_eval` benchmarking work (with [@nanaoto](https://github.com/nanaoto)); expanding dataset coverage (ENST-Drums, MDB-Drums) beyond the existing IDMT-SMT-Drums V2 adapter, and recalibrating classifier thresholds based on benchmark findings rather than by eye

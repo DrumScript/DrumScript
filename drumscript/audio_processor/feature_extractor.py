@@ -11,13 +11,6 @@ import numpy as np
 
 from drumscript.notation_generator.constants import HOP_LENGTH, N_FFT, ONSET_SLICE_DURATION_MS, SAMPLE_RATE, SEGMENT_LENGTH_SECONDS
 
-# from datetime import datetime
-
-# print("\n# ------------------------------------------------------------------------------------")
-# datetimestamp = datetime.now()
-# print(f'\ndate/time: {datetimestamp}')
-
-
 # Calculate the expected number of frames (timesteps) per segment
 # This calculation needs to be robust to ensure consistency with librosa's output.
 # librosa.stft typically returns 1 + (len(y) - n_fft) // hop_length frames.
@@ -41,44 +34,44 @@ TOTAL_FEATURES_PER_FRAME = N_MFCC + 3 + 3  # TOTAL_FEATURES_PER_FRAME = 47
 # --- Main Feature Extraction Functions ---
 
 
-def extract_features(audio_segment: np.ndarray, sr: int) -> dict[str, Any]:
+def extract_features(audio_path: np.ndarray, sr: int) -> dict[str, Any]:
     """
     Extracts a dictionary of features from a single audio segment.
     Features are returned as mean values over the segment's duration.
 
-    :param audio_segment: The audio data array.
-    :type audio_segment: np.ndarray
+    :param audio_path: The audio data array.
+    :type audio_path: np.ndarray
     :param sr: The sampling rate.
     :type sr: int
     :return: Dictionary of features (spectral_centroid, rms, mfccs, etc.).
     :rtype: Dict[str, Any]
     """
-    if audio_segment.size == 0:
+    if audio_path.size == 0:
         return None
 
     try:
         # --- Standard Features ---
-        # spectral_centroid = np.mean(librosa.feature.spectral_centroid(y=audio_segment, sr=sr))
-        spectral_centroid = np.mean(librosa.feature.spectral_centroid(y=audio_segment, sr=SAMPLE_RATE))
-        spectral_rolloff = np.mean(librosa.feature.spectral_rolloff(y=audio_segment, sr=SAMPLE_RATE))
-        # spectral_rolloff = np.mean(librosa.feature.spectral_rolloff(y=audio_segment, sr=sr))
-        rms = np.mean(librosa.feature.rms(y=audio_segment))
-        zcr = np.mean(librosa.feature.zero_crossing_rate(y=audio_segment))
-        # mfccs = np.mean(librosa.feature.mfcc(y=audio_segment, sr=sr, n_mfcc=N_MFCC), axis=1)
-        mfccs = np.mean(librosa.feature.mfcc(y=audio_segment, sr=SAMPLE_RATE, n_mfcc=N_MFCC), axis=1)
+        # spectral_centroid = np.mean(librosa.feature.spectral_centroid(y=audio_path, sr=sr))
+        spectral_centroid = np.mean(librosa.feature.spectral_centroid(y=audio_path, sr=SAMPLE_RATE))
+        spectral_rolloff = np.mean(librosa.feature.spectral_rolloff(y=audio_path, sr=SAMPLE_RATE))
+        # spectral_rolloff = np.mean(librosa.feature.spectral_rolloff(y=audio_path, sr=sr))
+        rms = np.mean(librosa.feature.rms(y=audio_path))
+        zcr = np.mean(librosa.feature.zero_crossing_rate(y=audio_path))
+        # mfccs = np.mean(librosa.feature.mfcc(y=audio_path, sr=sr, n_mfcc=N_MFCC), axis=1)
+        mfccs = np.mean(librosa.feature.mfcc(y=audio_path, sr=SAMPLE_RATE, n_mfcc=N_MFCC), axis=1)
 
         # --- Sustain Feature Calculation ---
         # Split the segment into two halves to measure energy decay.
-        half_point = len(audio_segment) // 2
-        first_half_rms = np.mean(librosa.feature.rms(y=audio_segment[:half_point]))
-        second_half_rms = np.mean(librosa.feature.rms(y=audio_segment[half_point:]))
+        half_point = len(audio_path) // 2
+        first_half_rms = np.mean(librosa.feature.rms(y=audio_path[:half_point]))
+        second_half_rms = np.mean(librosa.feature.rms(y=audio_path[half_point:]))
 
         # Calculate the ratio. Add a small epsilon to avoid division by zero.
         sustain_level = second_half_rms / (first_half_rms + 1e-6)
 
         # --- Band Energy Calculation (Based on Cheatsheet Logic) ---
         # Calculate Spectrogram magnitude
-        S = np.abs(librosa.stft(audio_segment, n_fft=N_FFT, hop_length=HOP_LENGTH))
+        S = np.abs(librosa.stft(audio_path, n_fft=N_FFT, hop_length=HOP_LENGTH))
 
         # Get frequency bins
         # fft_freqs = librosa.fft_frequencies(sr=sr, n_fft=N_FFT)
@@ -112,12 +105,12 @@ def extract_features(audio_segment: np.ndarray, sr: int) -> dict[str, Any]:
         return None
 
 
-def extract_features_for_onsets(y: np.ndarray, sr: int, onset_times: list[float]) -> list[dict[str, Any]]:
+def extract_features_for_onsets(audio_path: np.ndarray, sr: int, onset_times: list[float]) -> list[dict[str, Any]]:
     """
     Slices an audio array around each onset time and extracts features for each slice.
 
-    :param y: Full audio array.
-    :type y: np.ndarray
+    :param audio_path: Full audio array.
+    :type audio_path: np.ndarray
     :param sr: Sampling rate.
     :type sr: int
     :param onset_times: List of onset timestamps.
@@ -130,6 +123,7 @@ def extract_features_for_onsets(y: np.ndarray, sr: int, onset_times: list[float]
     all_features = []
     sr = SAMPLE_RATE
     # Calculate *half* the slice duration in samples
+
     half_slice_samples = int((ONSET_SLICE_DURATION_MS / 1000.0) * sr) // 2
 
     for time_sec in onset_times:
@@ -142,9 +136,9 @@ def extract_features_for_onsets(y: np.ndarray, sr: int, onset_times: list[float]
 
         # Boundary checks
         start_sample = max(0, start_sample)
-        end_sample = min(len(y), end_sample)
+        end_sample = min(len(audio_path), end_sample)
 
-        audio_slice = y[start_sample:end_sample]
+        audio_slice = audio_path[start_sample:end_sample]
 
         # Extract features for the slice
         features = extract_features(audio_slice, sr)
@@ -157,54 +151,9 @@ def extract_features_for_onsets(y: np.ndarray, sr: int, onset_times: list[float]
     return all_features
 
 
-# Uncomment to use, for clearer error logs
+# --------------------------------------------------------------------------uncomment during testing
+# from datetime import datetime
 # print("\n# ------------------------------------------------------------------------------------")
-
-"""# ALTERNATIVE FEATURE EXTRACTION FCT WITH PADDING TO PREVENT TOO HIGH NFFT ERRORS
-
-def extract_features(audio_segment: np.ndarray, sr: int = SAMPLE_RATE) -> dict:
-
-    #Extracts spectral features from a short audio segment (slice).
-    #Includes safety padding for very short segments to prevent crashes.
-
-
-    # --- SAFETY PADDING (The Fix) ---
-    # Ensure the segment is at least as long as N_FFT
-    if len(audio_segment) < N_FFT:
-        # Calculate how much silence we need to add
-        padding_needed = N_FFT - len(audio_segment)
-
-        # Pad with zeros (silence) on the right side only
-        # (mode='constant' defaults to 0)
-        audio_segment = np.pad(audio_segment, (0, padding_needed), mode='constant')
-
-    # --- Feature Extraction (High Quality) ---
-    try:
-        # Spectral Centroid (Brightness)
-        # We use the constants N_FFT and HOP_LENGTH here
-        spectral_centroid = librosa.feature.spectral_centroid(
-            y=audio_segment, sr=sr, n_fft=N_FFT, hop_length=HOP_LENGTH
-        )[0]
-
-        # Spectral Bandwidth (Width)
-        spectral_bandwidth = librosa.feature.spectral_bandwidth(
-            y=audio_segment, sr=sr, n_fft=N_FFT, hop_length=HOP_LENGTH
-        )[0]
-
-        # Zero Crossing Rate (Noisiness)
-        # Note: ZCR usually doesn't strictly depend on N_FFT but good to keep standard
-        zcr = librosa.feature.zero_crossing_rate(
-            y=audio_segment, hop_length=HOP_LENGTH
-        )[0]
-
-        # Return the mean (average) of these features for the single hit
-        return {
-            "sc": float(np.mean(spectral_centroid)),
-            "width": float(np.mean(spectral_bandwidth)),
-            "depth": float(np.mean(zcr)) # Mapping ZCR to 'depth' for your classifier
-        }
-
-    except Exception as e:
-        print(f"Warning: Feature extraction failed for segment of length {len(audio_segment)}: {e}")
-        # Return safe default values so the program doesn't crash
-        return {"sc": 0.0, "width": 0.0, "depth": 0.0}"""
+# datetimestamp = datetime.now()
+# print(f'\ndate/time: {datetimestamp}')
+# --------------------------------------------------------------------------------------------------

@@ -137,13 +137,11 @@ htdemucs/**
 # SCRIPTS, DEPLOYMENT & INFRASTRUCTURE
 # ==========================================
 aws_api.py
-backup.sh
-collect_code.sh
-deploy.sh
+*.sh
+!scripts/run_tests.sh
+scripts/*.md
 Dockerfile
 drumscript_full_review.txt
-public/
-public/pyodideWorker.js
 tree_full.txt
 ui.py
 
@@ -172,5 +170,4 @@ terraform/.terraform/providers/registry.terraform.io/hashicorp/aws/5.100.0/darwi
 # ==========================================
 
 app/
-scripts/update_public_wheel.sh
 drumscript_full_review.txt

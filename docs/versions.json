@@ -1,6 +1,30 @@
 {
   "list": [
     {
+      "name": "0.2.1 (Alpha)",
+      "version": "0.2.1"
+    },
+    {
+      "name": "0.2.0 (Alpha) (Pypi)",
+      "version": "0.2.0"
+    },
+    {
+      "name": "0.1.6 (Alpha) (Pypi)",
+      "version": "0.1.6"
+    },
+    {
+      "name": "0.1.5 (Alpha) (Pypi)",
+      "version": "0.1.5"
+    },
+    {
+      "name": "0.1.4 (Alpha) (First PyPi release)",
+      "version": "0.1.4"
+    },
+    {
+      "name": "0.1.3 (pre-Alpha)",
+      "version": "0.1.3"
+    },
+    {
       "name": "0.1.2 (pre-Alpha)",
       "version": "0.1.2"
     },

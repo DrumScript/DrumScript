@@ -1,4 +1,4 @@
-# DrumScript/notation_generator/score_builder.py
+# DrumScript/drumscript/notation_generator/score_builder.py
 
 """
 Module to build the final score from classified events.
@@ -13,19 +13,13 @@ from drumscript.notation_generator.midi_exporter import export_to_midi
 # from drumscript.notation_generator.pdf_exporter import generate_custom_pdf
 from drumscript.notation_generator.pdf_exporter import export_pdf
 
-# from datetime import datetime
-
-# print("\n# ------------------------------------------------------------------------------------")
-# datetimestamp = datetime.now()
-# print(f'\ndate/time: {datetimestamp}')
-
 
 def build_score(
     detected_events: list[dict[str, Any]],
     # tempo: int = 120,
     # tempo: int, # <-- forces the caller to provide tempo
     tempo: float,
-    output_filepath: str = "outputs/score.pdf",
+    output_path: str = "outputs/score.pdf",
     quantization_subdivision: int = 16,
     time_signature: str = "4/4",
 ):
@@ -33,22 +27,27 @@ def build_score(
     Builds a drum score by saving event data to JSON and rendering to PDF.
     # Builds a drum score by saving the event data to JSON and then
     # rendering it directly to PDF using the custom engine.
-    # This bypasses MusicXML entirely to ensure WYSWYG (What You See Is What You Get) results.
+    # This bypasses MusicXML entirely to ensure WYSIWYG (What You See Is What You Get) results.
     # Builds a drum score PDF, respecting the provided Time Signature, or assuming default 4/4 if not provided
 
     :param detected_events: List of classified drum events.
     :type detected_events: List[Dict[str, Any]]
     :param tempo: Tempo in BPM.
     :type tempo: int
-    :param output_filepath: Path to save the PDF.
-    :type output_filepath: str, optional
+    :param output_path: Path to save the PDF.
+    :type output_path: str, optional
     :param quantization_subdivision: Grid for quantization (e.g., 16 for 16th notes).
     :type quantization_subdivision: int, optional
     :param time_signature: Time signature string (e.g., "4/4").
     :type time_signature: str, optional
+
+    :return: Mapping of the files that were **successfully written**, with keys
+        ``pdf_path``, ``json_path`` and ``midi_path``. A key is absent if that
+        export failed, so callers can report only files that actually exist.
+    :rtype: dict[str, str]
     """
 
-    print(f"--- Building Score for: {output_filepath} [Time Sig: {time_signature}] ---")
+    print(f"--- Building Score for: {output_path} [Time Sig: {time_signature}] ---")
 
     # --- MUSICAL INTERPRETATION LOGIC ---
     # Drum algorithms often detect the "double time" tempo (e.g. 130 BPM instead of 65 BPM).
@@ -75,13 +74,29 @@ def build_score(
 
     # ----------------------------------------------------
     # 1. Prepare File Paths
-    # output_filepath e.g. "outputs/mysong.pdf"
-    base_path = os.path.splitext(output_filepath)[0]  # "outputs/mysong"
+    # output_path e.g. "outputs/mysong.pdf"
+    base_path = os.path.splitext(output_path)[0]  # "outputs/mysong"
     json_path = f"{base_path}.json"
 
     # NEW: Derive specific file paths from the base string
     pdf_filepath = f"{base_path}.pdf"
     midi_filepath = f"{base_path}.mid"
+
+    # Ensure the destination directory exists before any export runs.
+    # midi_exporter and xml_exporter each create it themselves, but the JSON
+    # write below and pdf_exporter do not - so running from a directory that
+    # has no `outputs/` (e.g. a pip-installed user invoking the CLI anywhere
+    # other than the repo root) silently produced a MIDI file and nothing else.
+    # Creating it centrally here fixes every caller, CLI and Python API alike.
+    parent_dir = os.path.dirname(base_path)
+    if parent_dir:
+        os.makedirs(parent_dir, exist_ok=True)
+
+    # Records only the exports that actually succeed. Each export below is
+    # individually fault-tolerant, so a MIDI failure must not stop the PDF
+    # being reported. Returning this lets callers (e.g. ds.transcribe) avoid
+    # advertising a path to a file that was never written.
+    written_paths: dict[str, str] = {}
 
     # 2. Save Transcription Data to JSON
     # This file serves as the "Source of Truth" for the PDF renderer.
@@ -89,6 +104,7 @@ def build_score(
         print(f"Saving to: {json_path}")
         with open(json_path, "w") as f:
             json.dump(detected_events, f, indent=4)
+        written_paths["json_path"] = json_path
     except Exception as e:
         print(f" Warning: Could not save JSON transcription: {e}")
 
@@ -97,11 +113,12 @@ def build_score(
         # generate_custom_pdf(
         export_pdf(
             detected_events=detected_events,
-            # OLD: output_filepath=output_filepath,
-            output_filepath=pdf_filepath,  # Updated to explicitly map to .pdf
+            # OLD: output_path=output_path,
+            output_path=pdf_filepath,  # Updated to explicitly map to .pdf
             tempo=tempo,
             time_signature=time_signature,
         )
+        written_paths["pdf_path"] = pdf_filepath
 
     # Success message is handled inside generate_custom_pdf/export_pdf in pdf_exporter.py
     except Exception as e:
@@ -114,14 +131,22 @@ def build_score(
     try:
         export_to_midi(
             classified_events=detected_events,
-            output_filepath=midi_filepath,  # Updated to explicitly map to .mid
+            output_path=midi_filepath,  # Updated to explicitly map to .mid
             tempo=tempo,
         )
+        written_paths["midi_path"] = midi_filepath
     except Exception as e:
         print(f"MIDI Export Failed: {e}")
         import traceback
 
         traceback.print_exc()
 
+    return written_paths
 
+
+# --------------------------------------------------------------------------uncomment during testing
+# from datetime import datetime
 # print("\n# ------------------------------------------------------------------------------------")
+# datetimestamp = datetime.now()
+# print(f'\ndate/time: {datetimestamp}')
+# --------------------------------------------------------------------------------------------------

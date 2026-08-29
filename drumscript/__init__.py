@@ -7,9 +7,10 @@ This top-level module exposes the primary high-level wrappers for end-to-end
 transcription, as well as the core low-level building blocks for custom DSP pipelines.
 """
 
+import importlib.metadata
 import pathlib
+import warnings
 
-# from pathlib import Path
 # 1. Import internal functions
 from .audio_processor.audio_loader import load_audio, normalise_audio
 from .audio_processor.feature_extractor import extract_features
@@ -22,9 +23,98 @@ from .notation_generator.constants import SAMPLE_RATE
 from .notation_generator.score_builder import build_score
 from .utils.ffmpeg_installer import install_ffmpeg
 
+# ---------------------------------------------------------------------------
+# Internal: deprecation shim for the `full` -> `verbose` rename (v0.1.6)
+# ---------------------------------------------------------------------------
+#
+# The `full` parameter is being renamed to `verbose` across all wrapper
+# functions to disambiguate it from the CLI's `--full-song` flag (different
+# meaning: stem separation vs return-detailed-dict).
+#
+# Behaviour:
+#   - If only `verbose` is passed -> use it directly, no warning.
+#   - If only `full` is passed    -> use it as `verbose`, emit DeprecationWarning.
+#   - If BOTH are passed          -> raise TypeError. Mixing the two is
+#                                    ambiguous and almost certainly a bug.
+#
+# Removal target: v1.0.0 (beta release).
 
-# 2. Create user-friendly wrappers
-def extract_stems(audio_path, output_dir=None, output_format="wav", drumless=False, mute=None, all_stems=False, full=False):
+
+def _resolve_verbose_flag(full, verbose, function_name):
+    """Resolve the deprecated ``full`` against the new ``verbose`` parameter.
+
+    See module-level note above for full behaviour. Returns the resolved bool.
+    """
+    if full is not None and verbose is not False:
+        raise TypeError(f"{function_name}() received both `full` (deprecated) and `verbose`. Pass only `verbose`.")
+
+    if full is not None:
+        warnings.warn(
+            f"`full` is deprecated in {function_name}() and will be removed in "
+            "DrumScript v1.0.0. Use `verbose` instead "
+            f"(e.g. `{function_name}(..., verbose=True)`).",
+            DeprecationWarning,
+            stacklevel=3,
+        )
+        return bool(full)
+
+    return verbose
+
+
+# ---------------------------------------------------------------------------
+# Internal: backwards-compatible return type for transcribe() (v0.2.0)
+# ---------------------------------------------------------------------------
+#
+# v0.1.x returned str(pdf_path) from transcribe() in non-verbose mode.
+# v0.2.0 returns a dict with pdf_path, json_path, and midi_path so users
+# can see all the files that were actually written.
+#
+# _TranscribeResult is a dict subclass that also behaves like a string
+# (returning the PDF path) so existing code like:
+#     pdf = ds.transcribe("drums.wav")
+#     print(pdf)
+# keeps working but emits a DeprecationWarning.
+#
+# Removal target: v1.0.0 - transcribe() will return a plain dict.
+
+
+class _TranscribeResult(dict):
+    """Dict that also behaves as a string (the PDF path) for backwards compat.
+
+    v0.1.x returned ``str(pdf_path)`` from ``transcribe()``. v0.2.0 returns
+    this dict subclass so existing ``pdf = ds.transcribe(...)`` code keeps
+    working while we migrate users to dict access.
+
+    Removal target: v1.0.0 - ``transcribe()`` will return a plain dict.
+    """
+
+    def __str__(self):
+        warnings.warn(
+            "transcribe() now returns a dict with 'pdf_path', 'json_path', "
+            "and 'midi_path' keys. Using the return value as a string is "
+            "deprecated and will stop working in DrumScript v1.0.0. "
+            "Use result['pdf_path'] instead.",
+            DeprecationWarning,
+            stacklevel=2,
+        )
+        return self["pdf_path"]
+
+    def __fspath__(self):
+        return str(self)
+
+
+# 2. Create (user-friendly) wrappers
+# def extract_stems(audio_path, output_dir=None, output_format="wav", drumless=False, mute=None, all_stems=False, full=False):
+def extract_stems(
+    audio_path,
+    output_dir=None,
+    output_format="wav",
+    drumless=False,
+    mute=None,
+    all_stems=False,
+    verbose=False,
+    full=None,
+):
     """
     Extracts drum stems and optionally separates the full track into constituent parts.
 
@@ -44,10 +134,14 @@ def extract_stems(audio_path, output_dir=None, output_format="wav", drumless=Fal
     :type mute: list, optional
     :param all_stems: If True, exports all separated stems individually.
     :type all_stems: bool, optional
-    :param full: If True, returns a detailed dictionary of all output paths.
+    :param verbose: If True, returns a detailed dictionary of all output paths instead
+        of just the drum stem path.
+    :type verbose: bool, optional
+    :param full: **Deprecated** since v0.1.6, will be removed in v1.0.0. Use ``verbose``
+        instead. Passing ``full=True`` still works but emits a ``DeprecationWarning``.
     :type full: bool, optional
 
-    :return: Path to the extracted file, or a dictionary of results if full=True.
+    :return: Path to the extracted file, or a dictionary of results if ``verbose=True``.
     :rtype: str or dict
 
     .. note::
@@ -71,10 +165,13 @@ def extract_stems(audio_path, output_dir=None, output_format="wav", drumless=Fal
            "my_song.mp3",
            drumless=True,
            output_format="mp3",
-           full=True
+           # full=True, # LEGACY CODE FROM V0.1.5 (--full flag replaced with deprecation shim, in place of --verbose)
+           verbose=True
        )
        print(f"Backing track saved to: {results['mix']}")
     """
+    verbose = _resolve_verbose_flag(full, verbose, "extract_stems")
+
     if output_dir is None:
         output_dir = pathlib.Path.cwd() / "stems"
     else:
@@ -82,28 +179,69 @@ def extract_stems(audio_path, output_dir=None, output_format="wav", drumless=Fal
 
     output_dir.mkdir(parents=True, exist_ok=True)
 
-    result_path = extract_drum_stem(audio_path, output_dir=str(output_dir))
+    # result_path = extract_drum_stem(audio_path, output_dir=str(output_dir))
+
+    # results = separate_audio(
+    #   audio_path=audio_path, output_format=output_format, drumless=drumless, mute=mute, all_stems=all_stems, output_dir=str(output_dir)
 
     results = separate_audio(
-        input_audio_path=audio_path, output_format=output_format, drumless=drumless, mute=mute, all_stems=all_stems, output_dir=str(output_dir)
+        audio_path=audio_path,
+        output_format=output_format,
+        drumless=drumless,
+        mute=mute,
+        all_stems=all_stems,
+        output_dir=str(output_dir),
     )
 
-    if full:
-        return {"status": "success", "drum_stem_path": result_path, "original_file": audio_path, "output_directory": str(output_dir)}
+    # drum_path = results.get("drums") or results.get("drums_stem")
 
-    return result_path or results.get("drums") or results.get("drums_stem")
+    # if full:
+    #   return {"status": "success", "drum_stem_path": result_path, "original_file": audio_path,
+    # "output_directory": str(output_dir)}
+
+    drum_path = results.get("drums") or results.get("drums_stem")
+    # if full: # LEGACY CODE FROM V0.1.5 (--full flag replaced with deprecation shim, in place of --verbose)
+    #   return {
+    #       "status": "success",
+    #       "drum_stem_path": drum_path,
+    #       "original_file": audio_path,
+    #       "output_directory": str(output_dir),
+    #  }
+    # return result_path or results.get("drums") or results.get("drums_stem")
+    if verbose:
+        return {
+            "status": "success",
+            "drum_stem_path": drum_path,
+            "original_file": audio_path,
+            "output_directory": str(output_dir),
+        }
+    return drum_path
+
+    # if full: # LEGACY CODE FROM V0.1.5 (--full flag replaced with deprecation shim, in place of --verbose)
+    #   return {
+    #       "status": "success",
+    #       "drum_stem_path": results.get("drums") or results.get("drums_stem"),
+    #       "original_file": audio_path,
+    #       "output_directory": str(output_dir),
+    #   }
+
+    # return results.get("drums") or results.get("drums_stem")
 
 
-def detect_tempo(audio_input, full=False):
+# def detect_tempo(audio_path, full=False):
+def detect_tempo(audio_path, verbose=False, full=None):
     """
     Estimates the global tempo (BPM) of a given audio file or pre-loaded audio array.
 
     This function utilizes spectral onset envelope detection to accurately
     estimate the global tempo of a percussive track.
 
-    :param audio_input: File path (str) OR a pre-loaded audio data array (np.ndarray).
-    :type audio_input: str or np.ndarray
-    :param full: Return a detailed stats dictionary instead of just the float if True.
+    :param audio_path: File path (str) OR a pre-loaded audio data array (np.ndarray).
+    :type audio_path: str or np.ndarray
+    :param verbose: Return a detailed stats dictionary instead of just the float if True.
+    :type verbose: bool, optional
+    :param full: **Deprecated** since v0.1.6, will be removed in v1.0.0. Use ``verbose``
+        instead. Passing ``full=True`` still works but emits a ``DeprecationWarning``.
     :type full: bool, optional
 
     :return: The estimated BPM, or a dictionary containing the BPM and sample rate.
@@ -128,20 +266,24 @@ def detect_tempo(audio_input, full=False):
     .. code-block:: python
 
        y, sr = ds.load_audio("drum_loop.wav")
-       stats = ds.detect_tempo(y, full=True)
+       # stats = ds.detect_tempo(y, full=True)
+       stats = ds.detect_tempo(y, verbose=True)
        print(stats['bpm'])
     """
-    if isinstance(audio_input, str):
-        y, sr = load_audio(audio_input, sr=SAMPLE_RATE)
-        # y, sr = load_audio(audio_input)
+    verbose = _resolve_verbose_flag(full, verbose, "detect_tempo")
+
+    if isinstance(audio_path, str):
+        y, sr = load_audio(audio_path, sr=SAMPLE_RATE)
+        # y, sr = load_audio(audio_path)
         y = normalise_audio(y)
     else:
-        y = audio_input
+        y = audio_path
         sr = SAMPLE_RATE
 
     bpm = _internal_estimate(y, sr)
 
-    if full:
+    # if full:
+    if verbose:
         return {"bpm": bpm, "sr": sr}
     return bpm
 
@@ -154,13 +296,15 @@ def transcribe(
     is_rudiment=False,
     output_dir="outputs",
     output_filename=None,
-    full=False,
+    # full=False, # LEGACY CODE FROM V0.1.5 (--full flag replaced with deprecation shim, in place of --verbose)
+    verbose=False,
+    full=None,
 ):
     """
     Run the full DrumScript transcription pipeline end-to-end.
 
     Loads audio → optionally extracts the drum stem → detects tempo and onsets →
-    classifies hits → builds the score → writes PDF output.
+    classifies hits → builds the score → writes PDF, JSON, and MIDI output.
 
     :param audio_path: Path to the input audio file (full song or isolated drum stem).
     :type audio_path: str
@@ -172,18 +316,25 @@ def transcribe(
     :param is_rudiment: If True, use the simpler classifier optimised for isolated
         single beats and rudiments rather than full polyphonic drum patterns.
     :type is_rudiment: bool, optional
-    :param output_dir: Directory to save the PDF output. Created if it doesn't exist.
+    :param output_dir: Directory to save output files. Created if it doesn't exist.
         Defaults to 'outputs/'.
     :type output_dir: str, optional
     :param output_filename: Output filename without extension. Defaults to
         '<input_stem>_transcription'.
     :type output_filename: str, optional
-    :param full: If True, return a dict with all intermediate results (tempo, onsets,
-        events, paths) instead of just the PDF path.
+    :param verbose: If True, return a dict with all intermediate results (tempo, onsets,
+        events, paths) instead of just the output paths.
+    :type verbose: bool, optional
+    :param full: **Deprecated** since v0.1.6, will be removed in v1.0.0. Use ``verbose``
+        instead. Passing ``full=True`` still works but emits a ``DeprecationWarning``.
+        Note: this is unrelated to ``full_song``, which controls stem separation.
     :type full: bool, optional
 
-    :return: Path to the generated PDF, or a dict of full results if full=True.
-    :rtype: str or dict
+    :return: A dict with ``pdf_path``, ``json_path``, and ``midi_path`` keys
+        (backwards-compatible as a string via the PDF path until v1.0.0).
+        If ``verbose=True``, returns an extended dict with tempo, onsets,
+        events, and other intermediate results.
+    :rtype: _TranscribeResult or dict
 
     **Examples:**
 
@@ -192,7 +343,10 @@ def transcribe(
     .. code-block:: python
 
        import drumscript as ds
-       pdf = ds.transcribe("drum_loop.wav")
+       result = ds.transcribe("drum_loop.wav")
+       print(result["pdf_path"])   # PDF sheet music
+       print(result["json_path"])  # raw transcription data
+       print(result["midi_path"])  # MIDI file for DAW import
 
     Full song with stem separation, custom output, full results:
 
@@ -203,12 +357,14 @@ def transcribe(
            full_song=True,
            time_signature="6/8",
            output_dir="./my_transcriptions",
-           full=True,
+           # full=True, # LEGACY CODE FROM V0.1.5 (--full flag replaced with deprecation shim, in place of --verbose)
+           verbose=True
        )
        print(f"PDF: {result['pdf_path']}")
        print(f"Detected tempo: {result['tempo']:.1f} BPM")
        print(f"Onsets: {len(result['onsets'])}")
     """
+    verbose = _resolve_verbose_flag(full, verbose, "transcribe")
     audio_path = str(audio_path)
     input_stem = pathlib.Path(audio_path).stem
 
@@ -254,24 +410,43 @@ def transcribe(
     ]
 
     # 6. Build & export
-    out_dir = pathlib.Path(output_dir)
-    out_dir.mkdir(parents=True, exist_ok=True)
+    output_dir = pathlib.Path(output_dir)
+    output_dir.mkdir(parents=True, exist_ok=True)
     fname = output_filename or f"{input_stem}_transcription"
-    pdf_path = out_dir / f"{fname}.pdf"
+    pdf_path = output_dir / f"{fname}.pdf"
+    json_path = output_dir / f"{fname}.json"
+    midi_path = output_dir / f"{fname}.mid"
 
     print(f"...Building score: {pdf_path}")
-    score_builder.build_score(
+    # build_score() returns a mapping of the files it SUCCESSFULLY wrote. Each of
+    # its three exports (JSON/PDF/MIDI) is individually fault-tolerant, so a
+    # failure in one does not stop the others - but it also means a path we
+    # computed above may never have been written to disk.
+    #
+    # Prefer what build_score actually reports. If it returns something other
+    # than a dict (e.g. an older build_score that returned None, or a test
+    # double), fall back to the computed paths so behaviour is unchanged.
+    written = score_builder.build_score(
         detected_events=detected_events,
         tempo=tempo,
-        output_filepath=str(pdf_path),
+        output_path=str(pdf_path),
         time_signature=time_signature,
     )
+    if not isinstance(written, dict):
+        written = {
+            "pdf_path": str(pdf_path),
+            "json_path": str(json_path),
+            "midi_path": str(midi_path),
+        }
     print("--- Done ---")
 
-    if full:
+    # if full:
+    if verbose:
         return {
-            "pdf_path": str(pdf_path),
-            "input_path": audio_path,
+            "pdf_path": written.get("pdf_path"),
+            "json_path": written.get("json_path"),
+            "midi_path": written.get("midi_path"),
+            "audio_path": audio_path,
             "drum_stem_path": working_path if full_song else None,
             "tempo": tempo,
             "onsets": onsets,
@@ -279,7 +454,8 @@ def transcribe(
             "time_signature": time_signature,
             "sample_rate": sr,
         }
-    return str(pdf_path)
+    # return str(pdf_path)  # LEGACY: v0.1.x returned only the PDF path as a string
+    return _TranscribeResult(written)
 
 
 def export_pdf(score, output_path=None, **kwargs):
@@ -310,7 +486,7 @@ def export_pdf(score, output_path=None, **kwargs):
        pdf_path = ds.export_pdf(score, output_path="./transcriptions/my_song.pdf")
     """
     if output_path is None:
-        # output_path = pathlib.Path.cwd() / "drum_score.pdf"
+        # output_path = pathlib.Path.cwd() / "drumscript.pdf"  # previously named `output_path = pathlib.Path.cwd() / "drum_score.pdf"``
         output_path = pathlib.Path.cwd() / "drumscript.pdf"
 
     return pdf_exporter.export_pdf(score, output_path=output_path, **kwargs)
@@ -342,10 +518,10 @@ def export_midi(score, output_path=None, **kwargs):
        midi_path = ds.export_midi(score, output_path="./midi_exports/my_song.mid")
     """
     if output_path is None:
-        # output_path = pathlib.Path.cwd() / "drum_score.mid"
+        # output_path = pathlib.Path.cwd() / "drumscript.mid"  # previously named `output_path = pathlib.Path.cwd() / "drum_score.mid"``
         output_path = pathlib.Path.cwd() / "drumscript.mid"
 
-    return midi_exporter.export_midi(score, output_path=output_path, **kwargs)
+    return midi_exporter.export_to_midi(score, output_path=output_path, **kwargs)
 
 
 def export_xml(score, output_path=None, **kwargs):
@@ -405,4 +581,9 @@ __all__ = [
     "install_ffmpeg",
 ]
 
-__version__ = "0.1.3"
+# __version__ = "0.1.6"
+
+try:
+    __version__ = importlib.metadata.version("drumscript")
+except importlib.metadata.PackageNotFoundError:
+    __version__ = "0.2.1"

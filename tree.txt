@@ -1,4 +1,5 @@
-.DrumScript
+.
+├── .gitattributes
 ├── .github
 │   ├── CODEOWNERS
 │   ├── ISSUE_TEMPLATE
@@ -9,17 +10,22 @@
 │       ├── docs.yml
 │       ├── publish.yml
 │       ├── release.yml
+│       ├── repo-stats.yml
 │       ├── test_build.yml
 │       └── tests.yml
 ├── .gitignore
 ├── .pre-commit-config.yaml
-├── .python-version
+├── CHANGELOG.md
 ├── CODE_OF_CONDUCT.md
 ├── CONTRIBUTING.md
 ├── LICENSE
 ├── MANIFEST.in
 ├── README.md
 ├── SECURITY.md
+├── benchmarks
+│   ├── README.md
+│   └── run.py
+├── collect_code.sh
 ├── docs
 │   ├── FOLDER_STRUCTURE.txt
 │   ├── _templates
@@ -27,13 +33,13 @@
 │   │       └── module.rst
 │   ├── about.md
 │   ├── api.rst
+│   ├── changelog.md -> ../CHANGELOG.md
 │   ├── conf.py
 │   ├── development
 │   │   ├── code_of_conduct.md
 │   │   ├── contributor_guidance.md
 │   │   ├── documentation.md
 │   │   └── testing_guidance.md
-│   ├── github_pages.sh
 │   ├── index.md
 │   ├── make.bat
 │   ├── theory
@@ -48,6 +54,10 @@
 │   │   ├── stem_splitter.py
 │   │   ├── tempo_detector.py
 │   │   └── tempogram.py
+│   ├── datasets
+│   │   ├── __init__.py
+│   │   ├── base.py
+│   │   └── idmt.py
 │   ├── drum_classifier
 │   │   ├── __init__.py
 │   │   ├── classify.py
@@ -64,7 +74,6 @@
 │   │   └── xml_exporter.py
 │   └── utils
 │       ├── __init__.py
-│       ├── config.py
 │       ├── ffmpeg_installer.py
 │       └── research
 │           ├── __init__.py
@@ -82,34 +91,29 @@
 │           ├── measure_hat_frequency.py
 │           ├── measure_kick_frequency.py
 │           └── measure_snare_frequency.py
-├── for_claude
-├── public
-│   ├── drumscript-0.1.3-py3-none-any copy.whl
-│   ├── drumscript-0.1.3-py3-none-any.whl
-│   └── pyodideWorker.js
 ├── pyproject.toml
 ├── repository_structure.md
-├── scripts
-│   └── run_tests.sh
 ├── tests
 │   ├── README.md
 │   ├── conftest.py
-│   ├── fixtures
-│   │   └── audio
 │   ├── integration
-│   │   └── test_stem_splitter_real.py
+│   │   ├── test_stem_splitter_real.py
+│   │   └── test_transcribe_real.py
+│   ├── tree_tests.txt
 │   └── unit
 │       ├── __init__.py
 │       ├── test_audio_loader.py
+│       ├── test_benchmarks_run.py
 │       ├── test_classify.py
+│       ├── test_cli_args.py
+│       ├── test_deprecation_warnings.py
 │       ├── test_helpers.py
+│       ├── test_idmt_dataset.py
 │       ├── test_onset_detector.py
 │       ├── test_stem_splitter_helpers.py
 │       ├── test_tempo_detector.py
 │       └── test_transcribe.py
 ├── tree.txt
-├── uv.lock
-└── visuals
-    └── tempogram.png
+└── uv.lock
 
-25 directories, 88 files
+22 directories, 95 files

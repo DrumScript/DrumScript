@@ -1,0 +1,116 @@
+name: Deploy Sphinx Docs
+
+on:
+  push:
+    branches: ["main", "release/*"]
+    tags: ["v*"]
+    #   - "docs/**"
+    #   - "drumscript/**"
+    #   - ".github/workflows/docs.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libsndfile1 libportaudio2 ffmpeg
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          version: "latest"
+
+      - name: Install package and dev dependencies
+        run: uv sync --extra dev
+
+
+      # ── Version routing ──────────────────────────────────────────
+      # Tag push (e.g. v0.2.0)       → VERSION_DIR=v0.2.0,        IS_RELEASE=true
+      # Main branch push             → VERSION_DIR=latest,         IS_RELEASE=false
+      # Release branch push          → VERSION_DIR=dev,            IS_RELEASE=false
+      #   (e.g. release/0.2.0)
+
+      - name: Determine version directory
+        run: |
+          if [[ $GITHUB_REF == refs/tags/* ]]; then
+            echo "VERSION_DIR=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
+            echo "IS_RELEASE=true" >> $GITHUB_ENV
+          elif [[ $GITHUB_REF == refs/heads/release/* ]]; then
+            # Release branches deploy to /dev/ (the "in development" docs)
+            echo "VERSION_DIR=dev" >> $GITHUB_ENV
+            echo "IS_RELEASE=false" >> $GITHUB_ENV
+          else
+            # Main branch deploys to /latest/ (the stable release docs)
+            echo "VERSION_DIR=latest" >> $GITHUB_ENV
+            echo "IS_RELEASE=false" >> $GITHUB_ENV
+          fi
+
+      - name: Build Sphinx
+        run: uv run sphinx-build -b html docs docs/_build/html
+
+
+      # ── Deploy 1: Version-specific folder ────────────────────────
+      # Tag push       → /v0.2.0/  (archived version)
+      # Main push      → /latest/  (stable release)
+      # Release/* push → /dev/     (in development)
+
+      - name: Deploy to version folder
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          personal_token: ${{ secrets.PAGES_DEPLOY_TOKEN }}
+          publish_dir: ./docs/_build/html
+          destination_dir: ${{ env.VERSION_DIR }}
+          keep_files: true
+
+      # ── Deploy 2: /latest/ folder (tag pushes only) ──────────────
+      # Mirrors the tagged release so /latest/ always = most recent release
+
+      - name: Deploy to /latest/ folder
+        if: env.IS_RELEASE == 'true'
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          personal_token: ${{ secrets.PAGES_DEPLOY_TOKEN }}
+          publish_dir: ./docs/_build/html
+          destination_dir: latest
+          keep_files: true
+
+      # ── Deploy 3: Root redirect (tag pushes only) ────────────────
+      # Generates index.html at root pointing to /latest/
+      # Only updates on tag pushes so the redirect is stable
+      
+      - name: Generate root redirect
+        if: env.IS_RELEASE == 'true'
+        run: |
+          mkdir -p /tmp/docs_redirect
+          cat > /tmp/docs_redirect/index.html << 'REDIRECT_EOF'
+          <!DOCTYPE html>
+          <html>
+            <head>
+              <meta http-equiv="refresh" content="0; url=latest/" />
+            </head>
+            <body>
+              <p>Redirecting to <a href="latest/">latest documentation</a>...</p>
+            </body>
+          </html>
+          REDIRECT_EOF
+
+      - name: Deploy root redirect
+        if: env.IS_RELEASE == 'true'
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          personal_token: ${{ secrets.PAGES_DEPLOY_TOKEN }}
+          publish_dir: /tmp/docs_redirect
+          keep_files: true
+          destination_dir: .

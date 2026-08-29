@@ -8,10 +8,6 @@ applications like Sibelius, Guitar Pro, Logic, Cubase, or MuseScore.
 
 from pathlib import Path
 
-# print("\n# ------------------------------------------------------------------------------------")
-# datetimestamp = datetime.now()
-# print(f'\ndate/time: {datetimestamp}')
-
 
 def export_xml(score, output_path=None):
     """
@@ -34,17 +30,25 @@ def export_xml(score, output_path=None):
 
     # Ensure the parent directory of the requested file path exists
     xml_path.parent.mkdir(parents=True, exist_ok=True)
-    output_filepath = str(xml_path)
+    output_path = str(xml_path)
 
-    print(f"Generating MusicXML: {output_filepath}")
+    print(f"Generating MusicXML: {output_path}")
 
     # 2. Use music21's built-in MusicXML writer
     try:
         # music21's score.write() natively handles the XML translation
-        score.write("musicxml", fp=output_filepath)
-        print(f"MusicXML successfully saved to: {output_filepath}")
-        return output_filepath
+        score.write("musicxml", fp=output_path)
+        print(f"MusicXML successfully saved to: {output_path}")
+        return output_path
 
     except Exception as e:
         print(f"Failed to generate MusicXML: {e}")
         return None
+
+
+# --------------------------------------------------------------------------uncomment during testing
+# from datetime import datetime
+# print("\n# ------------------------------------------------------------------------------------")
+# datetimestamp = datetime.now()
+# print(f'\ndate/time: {datetimestamp}')
+# --------------------------------------------------------------------------------------------------

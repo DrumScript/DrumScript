@@ -4,7 +4,7 @@
 
 
 <!--date_created:sun-07-sept-2025-->
-<!--date_updated:sun-07-sept-2025-->
+<!--date_updated:weds-25-aug-2026-->
 
 ---
 In simple terms, the **Tempo estimation function** works by creating a "poll" of all possible tempos in the song and picking the one with the most votes, making it very accurate for complex music.
@@ -22,7 +22,7 @@ This function takes a fundamentally different and more robust approach than the 
 
 3.  **Holds a "Tempo Election":** The function then sums up all the energy for each tempo across the entire song. This creates a single "poll" or bar chart, where each bar is a tempo (like 104 BPM, 105 BPM, etc.) and its height represents the total amount of evidence for that tempo in the music.
 
-4.  **Finds the Winner:** Finally, it looks at this poll and simply picks the tempo with the most accumulated energy—the tallest bar—as the winner.
+4.  **Finds the Winner:** Finally, it looks at this poll and simply picks the tempo with the most accumulated energy-the tallest bar-as the winner.
 
 ---
 ## Why This Method is So Effective

@@ -1,0 +1,44 @@
+name: Clean up preview docs
+
+# Removes the /preview/{branch}/ subfolder from gh-pages when a branch
+# is deleted (e.g. after merging a PR). Keeps gh-pages tidy.
+
+on:
+  delete:
+    # Fires when any branch is deleted. We filter to non-main branches
+    # in the job step since `branches` isn't supported for delete events.
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    # Only clean up preview folders, never main or gh-pages itself.
+    if: >
+      github.event.ref_type == 'branch' &&
+      github.event.ref != 'main' &&
+      github.event.ref != 'gh-pages'
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gh-pages
+          fetch-depth: 1
+
+      - name: Remove preview folder
+        run: |
+          BRANCH="${{ github.event.ref }}"
+          SAFE="${BRANCH//\//-}"
+          PREVIEW_DIR="preview/${SAFE}"
+
+          if [[ -d "${PREVIEW_DIR}" ]]; then
+            echo "Removing ${PREVIEW_DIR}"
+            rm -rf "${PREVIEW_DIR}"
+            git config user.name  "github-actions[bot]"
+            git config user.email "github-actions[bot]@users.noreply.github.com"
+            git add -A
+            git commit -m "chore: remove preview for deleted branch ${BRANCH}"
+            git push
+          else
+            echo "No preview folder found for ${BRANCH} (${PREVIEW_DIR}) — nothing to do"
+          fi

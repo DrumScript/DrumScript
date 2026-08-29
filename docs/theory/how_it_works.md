@@ -1,8 +1,8 @@
-# **How it works**
-<!--DrumScript-->
+# How it works
 
 <!--date_created: tues-24-june-2025-->
-<!--date_updated: thurs-11-dec-2025-->
+<!--date_updated: sat-27-june-2026-->
+
 **Description:** This document serves dual purpose:
 
 1) It outlines the purpose of **specific modules** in `DrumScript`, object-wise.
@@ -51,4 +51,5 @@ This is a **Utility and Testing Script**. It's designed to quickly visualise the
 
 
 ---
+
 <!--END---> 

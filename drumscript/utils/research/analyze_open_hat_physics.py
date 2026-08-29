@@ -1,15 +1,12 @@
+# drumscript/utils/research/analyze_open_hat_physics.py
+
 import glob
 import os
-from datetime import datetime
 from pathlib import Path
 
 import librosa
 import numpy as np
 import scipy.signal
-
-print("\n# ------------------------------------------------------------------------------------")
-datetimestamp = datetime.now()
-print(f"\ndate/time: {datetimestamp}")
 
 
 def analyze_open_hat_physics(file_path):
@@ -83,9 +80,15 @@ def main():
         avg_hfer = np.mean([r["hfer_7k"] for r in results])
 
         print("-" * 115)
-        print(f"AVERAGES                       | {avg_decay:.3f}      | {avg_cent:.0f}Hz      | {avg_hfer * 100:.1f}%        | --")
+        print(f"AVERAGES | {avg_decay:.3f} | {avg_cent:.0f}Hz| {avg_hfer * 100:.1f}% | --")
         print("-" * 115)
 
 
 if __name__ == "__main__":
+    # --------------------------------------------------------------------------uncomment during testing
+    # from datetime import datetime
+    # print("\n# ------------------------------------------------------------------------------------")
+    # datetimestamp = datetime.now()
+    # print(f'\ndate/time: {datetimestamp}')
+    # --------------------------------------------------------------------------------------------------
     main()

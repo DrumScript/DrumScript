@@ -1,80 +1,49 @@
 # **`DrumScript`**
 
 <!--date_created: sun-15-june-2025-->
-<!--date_edited: mon-24-august-2026--->
+<!--date_edited: sat-29-august-2026--->
 
-**DrumScript** is an open-source Python library and CLI tool for drum audio analysis and transcription. Give it a recording - a full mix or an isolated drum stem - and it will generate PDF sheet music, MIDI files, and MusicXML output. The `DrumScript` model is a **deterministic classifier**, and doesn't use AI/machine learning. Built for drummers and by drummers, it is - and always will be - an open-source community tool. The alpha has been running since **01 June 2026** and will be ongoing until we make the model and transcription process more accurate. 
+    Python >=3.9, < 3.13
+> 
+**DrumScript** is an open-source Python library and CLI tool for drum audio analysis and transcription. Give it a recording - a full mix or an isolated drum stem - and it will generate PDF sheet music, MIDI files, and MusicXML output. The `DrumScript` model is a **deterministic classifier**, and doesn't use AI/machine learning. Built for drummers and by drummers, it is - and always will be - an open-source community tool. The alpha has been running since **01 June 2026** and will be ongoing until we make the model and transcription process more accurate.  **[drumscript.github.io](https://drumscript.github.io/DrumScript/)**
 
-**Disclaimer**
-> * `DrumScript` is developed by part-timers who have full-time jobs and, like most modern software, it's built with the help of good tooling and occasional use of LLM for debugging and refining website content, but all the decisions are human-reviewed more than once at every step.
-> * The deterministic classification model (classify.py) has been built from a relatively small dataset covering different genres, but with a notable focus on **fast-paced, technical death metal** songs and drumming
-> * The prioritisation of speed versus accuracy means the score generation needs work. 
-> * Moreover, as our [roadmap](./docs/guide/roadmap.md) points out, increasing DrumScript's accuracy for all genres and drumming styles, including better score generation is an important long-term goal
+> #### `DrumScript` is a project in Development (*alpha*). Please [contribute](#contributing) to help us get to v1.0.0. No coding knowledge required, we are looking for testers too
+> 
+<!--**Workflow Status**-->
+
+[![Run Tests](https://github.com/DrumScript/DrumScript/actions/workflows/tests.yml/badge.svg?branch=main)](https://github.com/DrumScript/DrumScript/actions/workflows/tests.yml)
+>
+>
+<!-->> **[Try DrumScript In Colab](https://colab.research.google.com/drive/15yBGu6WURPyiH-sEQ82g_2T2wKqiIPsq)**-->
+>
+<a href="https://colab.research.google.com/drive/15yBGu6WURPyiH-sEQ82g_2T2wKqiIPsq" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open DrumScript In Colab"/></a>
+
+
+> ##### **Release Plan**
+
+Before we can publish a **confident v1.0.0 of `DrumScript` we need to:**
+  1. perfect the **DrumScript deterministic engine**: ie, the classification model and the score/PDF generation
+  2. build an in-browser, zero storage for input or output audio and **free-to-use** UI for non-coders
+
+
+| Phase | Versions | Target Window | What to Expect |
+|-------|----------|---------------|----------------|
+| **Pre-Alpha** | `0.1.0` – `0.9.0` | **June 2025 - May 2026** | Build. Core pipeline works end-to-end. API may change between releases. Built in isolation |
+| **Alpha** (current) | `0.1.0` – `0.9.0` | **June 2026 – ongoing** | Core pipeline works end-to-end. API may change between releases. Feedback sought. Cross off some of the **[Issues](https://github.com/DrumScript/DrumScript/issues)** added in pre-Alpha |
+| **Beta** | `0.9.x` – `0.9.9` | Follows alpha (API-stability gated) | API locked for each minor version. Focus on accuracy, edge cases, and evaluation against standard ADT datasets. Release **free-to-use** `WebGPU/WASM/ONNX` UI for non-coders |
+| **Stable** | `1.0.0` | *tbc* | Public API frozen. Breaking changes only in major versions. Community-owned tool. Publication of paper in journal to announce release |
+
+> **Disclaimer**
+>
+> * The deterministic classification model  - which consists of a set of rules (`classify.py` and metrics (`constants.py`)) has been built from a relatively small dataset covering different genres, but with a notable focus on **fast-paced** (technical death metal) songs and drumming (music taste of developers). **The prioritisation of speed versus accuracy in the build for score generation means the both score and pdf builders need work.**  Any more advanced drum notation theory (accents, etc) is naturally dependent on this. 
+>
+> * As our [roadmap](./docs/guide/roadmap.md) points out, **increasing DrumScript's accuracy for all genres and drumming styles**, such as jazz, funk is a key long-term goal. There will be, as such many mistakes in the pdfs and score generation.
 > * The core classification model does NOT use machine learning in classifying onset_events into drum parts. This is what makes the DrumScript package unique: it uses physics-only derived and measured inputs based on the individual features of each part of the drumkit. 
 > * The PDF generation uses ReportLab to build a custom PDF; it does not use librosa or MuseScore
 > * Accuracy of onset detection, sonic properties of deterministic model and score generation are the three main areas we need to improve. 
-> * `GitActions[Bot]` is used in the automated daily workflow that gathers repository statistics: [**repo-stats**](https://github.com/DrumScript/DrumScript/blob/github-repo-stats/DrumScript/DrumScript/latest-report/report.pdf)
+> * `GitActions[Bot]` is used in the automated daily workflow that gathers repository statistics: [**repo-stats**](https://github.com/DrumScript/DrumScript/blob/github-repo-stats/DrumScript/DrumScript/latest-report/report.pdf). It's an automated script set to trigger at a specific time daily, it's not a droid. 🤖
+> * `DrumScript` is developed by part-timers who have full-time jobs and, like most modern software, it's built with the help of good tooling and occasional use of LLM for debugging and refining website content, but all the decisions are human-reviewed more than once at every step.
 > * If you feel any part of this hasn't been made clear, then please raise it in the **[Discussions](https://github.com/orgs/DrumScript/discussions)**
-
-> **Python >=3.9, < 3.13**
-
-**Workflow Status**
-> 
-[![Run Tests](https://github.com/DrumScript/DrumScript/actions/workflows/tests.yml/badge.svg?branch=main)](https://github.com/DrumScript/DrumScript/actions/workflows/tests.yml)
->
-**[Documentation](https://drumscript.github.io/DrumScript/)**
->
-> **[Try DrumScript In Colab](https://colab.research.google.com/drive/15yBGu6WURPyiH-sEQ82g_2T2wKqiIPsq)**
->
-> <a href="https://colab.research.google.com/drive/15yBGu6WURPyiH-sEQ82g_2T2wKqiIPsq" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
-
-
-- **[Features](#features)**
-- **[Project Structure](#project-structure)**
-- **[Installation](#installation)**
-- **[Quick Start](#quick-start)**
-- **[CLI Usage](#cli-usage)**
-- **[Contributing](#contributing)**
-- **[Testing](#testing)**
-- **[Benchmarking](#benchmarking)**
-- **[Traffic](#traffic)**
-- **[FAQs](#faqs)**
-- **[Changelog](CHANGELOG.md)**
-- **[Acknowledgements](#acknowledgements)**
-- **[Similar projects](#similar-projects)**
-- **[License](#license)**
-
----
-
-#### **Public Alpha (v0.1.4+) - ongoing since June 2026**
-
- - We're looking for early adopters and feedback
- - [Feedback on the classification model](https://github.com/DrumScript/DrumScript/issues), and help shape v1.0.0.
- - In particular we are interested in hearing from everyone:: drummers (coding not required!), sound engineers and academics in Music Information Retrieval with an interest in deterministic drum/percussion classifications. 
- - For beta release, we are planning to (amongst other things) improve the classification model, fix any user-suggested bugs, implement user-suggested feature requests and **most importantly** build a **WebGPU/ONNX/WASM UI** that will be free to use for all.
-
-> See the **[Roadmap](https://drumscript.github.io/DrumScript/guide/roadmap.html)** for what's planned.
-
-#### **What it looks like**
-
-<!-- TODO: Replace with a GIF showing terminal output-->
-<!-- For now, this shows the PDF transcription output -->
-
-*Input: audio recording → Output: drum notation (PDF).
-
-**Example 1: Simple groove**
-
-<!---![DrumScript transcription output](./docs/_static/test_wav.png)-->
-![DrumScript transcription output](https://raw.githubusercontent.com/DrumScript/DrumScript/main//docs/_static/test_wav.png)
-
-**Example 2: A well-known Sabbath song**
-
-<!---![DrumScript transcription output](./docs/_static/iron_man_1.png)--->
-<!---![DrumScript transcription output](./docs/_static/iron_man_2.png)--->
-<!---![DrumScript transcription output](./docs/_static/iron_man_3.png)--->
-![DrumScript transcription output](https://raw.githubusercontent.com/DrumScript/DrumScript/main/docs/_static/iron_man_1.png)
-![DrumScript transcription output](https://raw.githubusercontent.com/DrumScript/DrumScript/main/docs/_static/iron_man_2.png)
-![DrumScript transcription output](https://raw.githubusercontent.com/DrumScript/DrumScript/main/docs/_static/iron_man_3.png)
 
 ---
 
@@ -116,10 +85,34 @@ DrumScript/
 - **Multiple Output Formats:** Export transcriptions to PDF sheet music, MIDI (`.mid`), and MusicXML (`.xml`) for import into DAWs and notation software (Logic Pro, Cubase, Ableton, MuseScore, Sibelius, etc.).
 - **Deterministic Classification:** DrumScript's core classification engine uses physics-based rules derived from acoustic analysis of real drum samples, not probabilistic AI/ML models.
 
-> **Note:** Some dependencies used by DrumScript (e.g. [Demucs](https://github.com/adefossez/demucs), [librosa](https://librosa.org/)) may internally use probabilistic methods. DrumScript's own classification engine is fully deterministic.
+> **Note:** Some dependencies used by DrumScript (e.g. [Demucs](https://github.com/adefossez/demucs), [librosa](https://librosa.org/)) may internally use probabilistic methods/machine learning/AI. 
+> DrumScript's classification engine is fully deterministic.
+
+
+### **What it looks like**
+
+> **NOTE:** `DrumScript` accepts drum-only audio as default. You can use `--full_song` (see **[Quick Start](#quick-start)** for worked examples) to *extract percussion/drum audio from a polyphonc song* using **[Demucs](https://github.com/adefossez/demucs)** (4-stem model). 
+
+<!-- TODO: Replace with a GIF showing terminal output-->
+<!-- For now, this shows the PDF transcription output -->
+
+*Input: audio recording → Output: drum notation (PDF).
+
+#### **Example 1: Simple groove**
+
+<!---![DrumScript transcription output](./docs/_static/test_wav.png)-->
+![DrumScript transcription output](https://raw.githubusercontent.com/DrumScript/DrumScript/main//docs/_static/test_wav.png)
+
+#### **Example 2: A well-known Sabbath song**
+
+<!---![DrumScript transcription output](./docs/_static/iron_man_1.png)--->
+<!---![DrumScript transcription output](./docs/_static/iron_man_2.png)--->
+<!---![DrumScript transcription output](./docs/_static/iron_man_3.png)--->
+![DrumScript transcription output](https://raw.githubusercontent.com/DrumScript/DrumScript/main/docs/_static/iron_man_1.png)
+![DrumScript transcription output](https://raw.githubusercontent.com/DrumScript/DrumScript/main/docs/_static/iron_man_2.png)
+![DrumScript transcription output](https://raw.githubusercontent.com/DrumScript/DrumScript/main/docs/_static/iron_man_3.png)
 
 ---
-
 
 
 ## Installation
@@ -314,7 +307,7 @@ The alpha phase began June 2026. We expect it to run through late 2026 and into 
 
 - End-to-end transcription pipeline: audio → onsets → classification → PDF / MIDI / MusicXML
 - Tempo detection via spectral onset envelope
-- Stem separation using Demucs (`htdemucs` 4-stem model)
+- Stem separation using [Demucs](https://github.com/adefossez/demucs) (`htdemucs` 4-stem model)
 - Drumless backing track generation
 - CLI and Python API
 

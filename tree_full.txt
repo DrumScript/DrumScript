@@ -1,0 +1,3169 @@
+.
+├── .gitattributes
+├── .github
+│   ├── CODEOWNERS
+│   ├── ISSUE_TEMPLATE
+│   │   ├── bug_report.md
+│   │   └── feature_request.md
+│   ├── PULL_REQUEST_TEMPLATE.md
+│   └── workflows
+│       ├── docs.yml
+│       ├── publish.yml
+│       ├── release.yml
+│       ├── repo-stats.yml
+│       ├── test_build.yml
+│       └── tests.yml
+├── .gitignore
+├── .pre-commit-config.yaml
+├── .python-version
+├── .ruff_cache
+│   ├── .gitignore
+│   ├── 0.15.11
+│   │   ├── 10618096932926680351
+│   │   ├── 1227543316970955484
+│   │   ├── 12544346663191673561
+│   │   ├── 12789719255757863526
+│   │   ├── 13067691747953159995
+│   │   ├── 13390221068629753940
+│   │   ├── 13399545993577059606
+│   │   ├── 1472855668842040719
+│   │   ├── 15134366633422998781
+│   │   ├── 1631286398151038350
+│   │   ├── 16371128362364916346
+│   │   ├── 16380520722816598564
+│   │   ├── 17982872754672411458
+│   │   ├── 1804148105889118348
+│   │   ├── 2730758063515179771
+│   │   ├── 4941991829229966719
+│   │   ├── 5125684219689246144
+│   │   ├── 8246735935786112192
+│   │   ├── 8295789144744896170
+│   │   └── 8770800195375340765
+│   ├── 0.15.13
+│   │   ├── 10506674133080364408
+│   │   ├── 14140668880862896520
+│   │   ├── 14908223518778599126
+│   │   ├── 18024630005611106195
+│   │   ├── 3183023158275482304
+│   │   ├── 4921589553645885424
+│   │   └── 5473343718933181034
+│   ├── 0.15.22
+│   │   ├── 10263642444638922982
+│   │   ├── 10716799352906824846
+│   │   ├── 14497904421411457213
+│   │   ├── 1479969828741506460
+│   │   ├── 16467665886735778748
+│   │   ├── 17852631358557307894
+│   │   ├── 2102356584163684380
+│   │   ├── 2742157145286725545
+│   │   ├── 2816654063495700050
+│   │   ├── 3891756147706638947
+│   │   ├── 6043018050956990249
+│   │   ├── 7010290764688347038
+│   │   ├── 7451464730725119704
+│   │   └── 9708623601420845265
+│   ├── 0.16.3
+│   │   ├── 14263132140316179108
+│   │   ├── 14314834932454634785
+│   │   ├── 17130340978749452134
+│   │   ├── 17328496899566989819
+│   │   ├── 18089236144955016295
+│   │   ├── 2651796538474550920
+│   │   └── 8627083388953410515
+│   └── CACHEDIR.TAG
+├── CHANGELOG.md
+├── CODE_OF_CONDUCT.md
+├── CONTRIBUTING.md
+├── DrumScript.egg-info
+│   ├── PKG-INFO
+│   ├── SOURCES.txt
+│   ├── dependency_links.txt
+│   ├── entry_points.txt
+│   ├── requires.txt
+│   └── top_level.txt
+├── LICENSE
+├── MANIFEST.in
+├── README.md
+├── SECURITY.md
+├── app
+│   ├── index.html
+│   ├── js
+│   │   ├── audio-io.js
+│   │   ├── demucs-chunking.js
+│   │   ├── demucs-worker.js
+│   │   ├── feature-detect.js
+│   │   ├── main.js
+│   │   └── pyodide-worker.js
+│   └── styles.css
+├── benchmarks
+│   ├── README.md
+│   └── run.py
+├── collect_code.sh
+├── dist
+│   ├── .gitignore
+│   ├── drumscript-0.2.0-py3-none-any.whl
+│   └── drumscript-0.2.0.tar.gz
+├── docs
+│   ├── FOLDER_STRUCTURE.txt
+│   ├── _build
+│   │   ├── doctrees
+│   │   │   ├── about.doctree
+│   │   │   ├── api.doctree
+│   │   │   ├── changelog.doctree
+│   │   │   ├── development
+│   │   │   │   ├── code_of_conduct.doctree
+│   │   │   │   ├── contributor_guidance.doctree
+│   │   │   │   ├── documentation.doctree
+│   │   │   │   └── testing_guidance.doctree
+│   │   │   ├── environment.pickle
+│   │   │   ├── generated
+│   │   │   │   ├── drumscript.audio_processor.audio_loader.doctree
+│   │   │   │   ├── drumscript.audio_processor.audio_loader.load_audio.doctree
+│   │   │   │   ├── drumscript.audio_processor.audio_loader.normalise_audio.doctree
+│   │   │   │   ├── drumscript.audio_processor.feature_extractor.doctree
+│   │   │   │   ├── drumscript.audio_processor.feature_extractor.extract_features.doctree
+│   │   │   │   ├── drumscript.audio_processor.feature_extractor.extract_features_for_onsets.doctree
+│   │   │   │   ├── drumscript.audio_processor.onset_detector.detect_onsets.doctree
+│   │   │   │   ├── drumscript.audio_processor.onset_detector.doctree
+│   │   │   │   ├── drumscript.audio_processor.stem_splitter.doctree
+│   │   │   │   ├── drumscript.audio_processor.stem_splitter.extract_drum_stem.doctree
+│   │   │   │   ├── drumscript.audio_processor.stem_splitter.mix_stems.doctree
+│   │   │   │   ├── drumscript.audio_processor.stem_splitter.separate_audio.doctree
+│   │   │   │   ├── drumscript.audio_processor.tempo_detector.doctree
+│   │   │   │   ├── drumscript.audio_processor.tempo_detector.estimate_tempo.doctree
+│   │   │   │   ├── drumscript.detect_tempo.doctree
+│   │   │   │   ├── drumscript.drum_classifier.classify.classify_event.doctree
+│   │   │   │   ├── drumscript.drum_classifier.classify.classify_events.doctree
+│   │   │   │   ├── drumscript.drum_classifier.classify.classify_idiophone.doctree
+│   │   │   │   ├── drumscript.drum_classifier.classify.classify_membranophone.doctree
+│   │   │   │   ├── drumscript.drum_classifier.classify.classify_rudiment_events.doctree
+│   │   │   │   ├── drumscript.drum_classifier.classify.doctree
+│   │   │   │   ├── drumscript.drum_classifier.classify.extract_features.doctree
+│   │   │   │   ├── drumscript.drum_classifier.classify.get_audio_slice.doctree
+│   │   │   │   ├── drumscript.export_midi.doctree
+│   │   │   │   ├── drumscript.export_pdf.doctree
+│   │   │   │   ├── drumscript.export_xml.doctree
+│   │   │   │   ├── drumscript.extract_stems.doctree
+│   │   │   │   ├── drumscript.notation_generator.constants.doctree
+│   │   │   │   ├── drumscript.notation_generator.helpers.calculate_cents_difference.doctree
+│   │   │   │   ├── drumscript.notation_generator.helpers.doctree
+│   │   │   │   ├── drumscript.notation_generator.helpers.format_drum_event.doctree
+│   │   │   │   ├── drumscript.notation_generator.helpers.get_note_duration_name.doctree
+│   │   │   │   ├── drumscript.notation_generator.helpers.round_to_nearest_subdivision.doctree
+│   │   │   │   ├── drumscript.notation_generator.midi_exporter.doctree
+│   │   │   │   ├── drumscript.notation_generator.midi_exporter.export_to_midi.doctree
+│   │   │   │   ├── drumscript.notation_generator.pdf_exporter.doctree
+│   │   │   │   ├── drumscript.notation_generator.pdf_exporter.draw_bar_line.doctree
+│   │   │   │   ├── drumscript.notation_generator.pdf_exporter.draw_clef.doctree
+│   │   │   │   ├── drumscript.notation_generator.pdf_exporter.draw_notehead.doctree
+│   │   │   │   ├── drumscript.notation_generator.pdf_exporter.draw_staff.doctree
+│   │   │   │   ├── drumscript.notation_generator.pdf_exporter.draw_time_signature.doctree
+│   │   │   │   ├── drumscript.notation_generator.pdf_exporter.export_pdf.doctree
+│   │   │   │   ├── drumscript.notation_generator.pdf_exporter.get_vertical_position.doctree
+│   │   │   │   ├── drumscript.notation_generator.score_builder.build_score.doctree
+│   │   │   │   ├── drumscript.notation_generator.score_builder.doctree
+│   │   │   │   ├── drumscript.notation_generator.xml_exporter.doctree
+│   │   │   │   ├── drumscript.notation_generator.xml_exporter.export_xml.doctree
+│   │   │   │   ├── drumscript.transcribe.doctree
+│   │   │   │   ├── drumscript.utils.ffmpeg_installer.doctree
+│   │   │   │   ├── drumscript.utils.ffmpeg_installer.install_ffmpeg.doctree
+│   │   │   │   └── drumscript.utils.ffmpeg_installer.is_ffmpeg_installed.doctree
+│   │   │   ├── guide
+│   │   │   │   ├── cli_reference.doctree
+│   │   │   │   ├── configuration.doctree
+│   │   │   │   ├── glossary.doctree
+│   │   │   │   ├── installation.doctree
+│   │   │   │   ├── interactive
+│   │   │   │   │   ├── create_backing_track.doctree
+│   │   │   │   │   ├── extract_drums.doctree
+│   │   │   │   │   ├── index.doctree
+│   │   │   │   │   ├── measure_tempo.doctree
+│   │   │   │   │   └── transcribe.doctree
+│   │   │   │   ├── roadmap.doctree
+│   │   │   │   ├── security.doctree
+│   │   │   │   └── usage.doctree
+│   │   │   ├── index.doctree
+│   │   │   ├── release_notes
+│   │   │   │   ├── 0.1.0.doctree
+│   │   │   │   ├── 0.1.1.doctree
+│   │   │   │   ├── 0.1.2.doctree
+│   │   │   │   ├── 0.1.3.doctree
+│   │   │   │   ├── 0.1.4.doctree
+│   │   │   │   ├── 0.1.5.doctree
+│   │   │   │   ├── 0.1.6.doctree
+│   │   │   │   ├── 0.2.0.doctree
+│   │   │   │   └── index.doctree
+│   │   │   └── theory
+│   │   │       ├── bibliography.doctree
+│   │   │       ├── digital_signal_processing.doctree
+│   │   │       ├── drum_notation_guide.doctree
+│   │   │       ├── how_it_works.doctree
+│   │   │       ├── percussion_frequencies.doctree
+│   │   │       ├── sources.doctree
+│   │   │       ├── stem_splitting.doctree
+│   │   │       └── tempo_estimation.doctree
+│   │   ├── html
+│   │   │   ├── .buildinfo
+│   │   │   ├── _downloads
+│   │   │   │   ├── 467503e129ea4e152e7860928a5adad1
+│   │   │   │   │   └── FOLDER_STRUCTURE.txt
+│   │   │   │   ├── 61fdbcc93496055dd3bfc8f7fbe13ce2
+│   │   │   │   │   └── midi_frequency_table.png
+│   │   │   │   ├── 88bb3f77d11f6b8fda759b3f2dcfea8b
+│   │   │   │   │   └── Master-Drum-Key_R2.pdf
+│   │   │   │   └── ed3705ba204b6b22ba17ba0859756d1a
+│   │   │   │       └── ffmpeg_installer.py
+│   │   │   ├── _images
+│   │   │   │   ├── basic_drum_notation_keys.png
+│   │   │   │   ├── basic_drumkit_keys.jpeg
+│   │   │   │   ├── infographic_g4m__repeat_signs.png
+│   │   │   │   ├── infographic_g4m__time_sigs_and_note_values.png
+│   │   │   │   ├── iron_man_1.png
+│   │   │   │   ├── iron_man_2.png
+│   │   │   │   ├── iron_man_3.png
+│   │   │   │   ├── notating_pitch.png
+│   │   │   │   ├── test_wav.png
+│   │   │   │   └── transcription-test_wav.png
+│   │   │   ├── _modules
+│   │   │   │   ├── drumscript
+│   │   │   │   │   ├── audio_processor
+│   │   │   │   │   │   ├── audio_loader.html
+│   │   │   │   │   │   ├── feature_extractor.html
+│   │   │   │   │   │   ├── onset_detector.html
+│   │   │   │   │   │   ├── stem_splitter.html
+│   │   │   │   │   │   └── tempo_detector.html
+│   │   │   │   │   ├── drum_classifier
+│   │   │   │   │   │   └── classify.html
+│   │   │   │   │   ├── notation_generator
+│   │   │   │   │   │   ├── helpers.html
+│   │   │   │   │   │   ├── midi_exporter.html
+│   │   │   │   │   │   ├── pdf_exporter.html
+│   │   │   │   │   │   ├── score_builder.html
+│   │   │   │   │   │   └── xml_exporter.html
+│   │   │   │   │   └── utils
+│   │   │   │   │       └── ffmpeg_installer.html
+│   │   │   │   ├── drumscript.html
+│   │   │   │   └── index.html
+│   │   │   ├── _sources
+│   │   │   │   ├── about.md.txt
+│   │   │   │   ├── api.rst.txt
+│   │   │   │   ├── changelog.md.txt
+│   │   │   │   ├── development
+│   │   │   │   │   ├── code_of_conduct.md.txt
+│   │   │   │   │   ├── contributor_guidance.md.txt
+│   │   │   │   │   ├── documentation.md.txt
+│   │   │   │   │   └── testing_guidance.md.txt
+│   │   │   │   ├── generated
+│   │   │   │   │   ├── drumscript.audio_processor.audio_loader.load_audio.rst.txt
+│   │   │   │   │   ├── drumscript.audio_processor.audio_loader.normalise_audio.rst.txt
+│   │   │   │   │   ├── drumscript.audio_processor.audio_loader.rst.txt
+│   │   │   │   │   ├── drumscript.audio_processor.feature_extractor.extract_features.rst.txt
+│   │   │   │   │   ├── drumscript.audio_processor.feature_extractor.extract_features_for_onsets.rst.txt
+│   │   │   │   │   ├── drumscript.audio_processor.feature_extractor.rst.txt
+│   │   │   │   │   ├── drumscript.audio_processor.onset_detector.detect_onsets.rst.txt
+│   │   │   │   │   ├── drumscript.audio_processor.onset_detector.rst.txt
+│   │   │   │   │   ├── drumscript.audio_processor.stem_splitter.extract_drum_stem.rst.txt
+│   │   │   │   │   ├── drumscript.audio_processor.stem_splitter.mix_stems.rst.txt
+│   │   │   │   │   ├── drumscript.audio_processor.stem_splitter.rst.txt
+│   │   │   │   │   ├── drumscript.audio_processor.stem_splitter.separate_audio.rst.txt
+│   │   │   │   │   ├── drumscript.audio_processor.tempo_detector.estimate_tempo.rst.txt
+│   │   │   │   │   ├── drumscript.audio_processor.tempo_detector.rst.txt
+│   │   │   │   │   ├── drumscript.detect_tempo.rst.txt
+│   │   │   │   │   ├── drumscript.drum_classifier.classify.classify_event.rst.txt
+│   │   │   │   │   ├── drumscript.drum_classifier.classify.classify_events.rst.txt
+│   │   │   │   │   ├── drumscript.drum_classifier.classify.classify_idiophone.rst.txt
+│   │   │   │   │   ├── drumscript.drum_classifier.classify.classify_membranophone.rst.txt
+│   │   │   │   │   ├── drumscript.drum_classifier.classify.classify_rudiment_events.rst.txt
+│   │   │   │   │   ├── drumscript.drum_classifier.classify.extract_features.rst.txt
+│   │   │   │   │   ├── drumscript.drum_classifier.classify.get_audio_slice.rst.txt
+│   │   │   │   │   ├── drumscript.drum_classifier.classify.rst.txt
+│   │   │   │   │   ├── drumscript.export_midi.rst.txt
+│   │   │   │   │   ├── drumscript.export_pdf.rst.txt
+│   │   │   │   │   ├── drumscript.export_xml.rst.txt
+│   │   │   │   │   ├── drumscript.extract_stems.rst.txt
+│   │   │   │   │   ├── drumscript.notation_generator.constants.rst.txt
+│   │   │   │   │   ├── drumscript.notation_generator.helpers.calculate_cents_difference.rst.txt
+│   │   │   │   │   ├── drumscript.notation_generator.helpers.format_drum_event.rst.txt
+│   │   │   │   │   ├── drumscript.notation_generator.helpers.get_note_duration_name.rst.txt
+│   │   │   │   │   ├── drumscript.notation_generator.helpers.round_to_nearest_subdivision.rst.txt
+│   │   │   │   │   ├── drumscript.notation_generator.helpers.rst.txt
+│   │   │   │   │   ├── drumscript.notation_generator.midi_exporter.export_to_midi.rst.txt
+│   │   │   │   │   ├── drumscript.notation_generator.midi_exporter.rst.txt
+│   │   │   │   │   ├── drumscript.notation_generator.pdf_exporter.draw_bar_line.rst.txt
+│   │   │   │   │   ├── drumscript.notation_generator.pdf_exporter.draw_clef.rst.txt
+│   │   │   │   │   ├── drumscript.notation_generator.pdf_exporter.draw_notehead.rst.txt
+│   │   │   │   │   ├── drumscript.notation_generator.pdf_exporter.draw_staff.rst.txt
+│   │   │   │   │   ├── drumscript.notation_generator.pdf_exporter.draw_time_signature.rst.txt
+│   │   │   │   │   ├── drumscript.notation_generator.pdf_exporter.export_pdf.rst.txt
+│   │   │   │   │   ├── drumscript.notation_generator.pdf_exporter.get_vertical_position.rst.txt
+│   │   │   │   │   ├── drumscript.notation_generator.pdf_exporter.rst.txt
+│   │   │   │   │   ├── drumscript.notation_generator.score_builder.build_score.rst.txt
+│   │   │   │   │   ├── drumscript.notation_generator.score_builder.rst.txt
+│   │   │   │   │   ├── drumscript.notation_generator.xml_exporter.export_xml.rst.txt
+│   │   │   │   │   ├── drumscript.notation_generator.xml_exporter.rst.txt
+│   │   │   │   │   ├── drumscript.transcribe.rst.txt
+│   │   │   │   │   ├── drumscript.utils.ffmpeg_installer.install_ffmpeg.rst.txt
+│   │   │   │   │   ├── drumscript.utils.ffmpeg_installer.is_ffmpeg_installed.rst.txt
+│   │   │   │   │   └── drumscript.utils.ffmpeg_installer.rst.txt
+│   │   │   │   ├── guide
+│   │   │   │   │   ├── cli_reference.md.txt
+│   │   │   │   │   ├── configuration.md.txt
+│   │   │   │   │   ├── glossary.md.txt
+│   │   │   │   │   ├── installation.md.txt
+│   │   │   │   │   ├── interactive
+│   │   │   │   │   │   ├── create_backing_track.ipynb.txt
+│   │   │   │   │   │   ├── extract_drums.ipynb.txt
+│   │   │   │   │   │   ├── index.md.txt
+│   │   │   │   │   │   ├── measure_tempo.ipynb.txt
+│   │   │   │   │   │   └── transcribe.ipynb.txt
+│   │   │   │   │   ├── roadmap.md.txt
+│   │   │   │   │   ├── security.md.txt
+│   │   │   │   │   └── usage.md.txt
+│   │   │   │   ├── index.md.txt
+│   │   │   │   ├── release_notes
+│   │   │   │   │   ├── 0.1.0.md.txt
+│   │   │   │   │   ├── 0.1.1.md.txt
+│   │   │   │   │   ├── 0.1.2.md.txt
+│   │   │   │   │   ├── 0.1.3.md.txt
+│   │   │   │   │   ├── 0.1.4.md.txt
+│   │   │   │   │   ├── 0.1.5.md.txt
+│   │   │   │   │   ├── 0.1.6.md.txt
+│   │   │   │   │   ├── 0.2.0.md.txt
+│   │   │   │   │   └── index.md.txt
+│   │   │   │   └── theory
+│   │   │   │       ├── bibliography.md.txt
+│   │   │   │       ├── digital_signal_processing.md.txt
+│   │   │   │       ├── drum_notation_guide.md.txt
+│   │   │   │       ├── how_it_works.md.txt
+│   │   │   │       ├── percussion_frequencies.md.txt
+│   │   │   │       ├── sources.md.txt
+│   │   │   │       ├── stem_splitting.md.txt
+│   │   │   │       └── tempo_estimation.md.txt
+│   │   │   ├── _static
+│   │   │   │   ├── base-stemmer.js
+│   │   │   │   ├── basic.css
+│   │   │   │   ├── custom.css
+│   │   │   │   ├── doctools.js
+│   │   │   │   ├── documentation_options.js
+│   │   │   │   ├── english-stemmer.js
+│   │   │   │   ├── file.png
+│   │   │   │   ├── iron_man_1.png
+│   │   │   │   ├── iron_man_2.png
+│   │   │   │   ├── iron_man_3.png
+│   │   │   │   ├── language_data.js
+│   │   │   │   ├── logo-dark.png
+│   │   │   │   ├── logo-dark.svg
+│   │   │   │   ├── logo-light.png
+│   │   │   │   ├── logo-light.svg
+│   │   │   │   ├── minus.png
+│   │   │   │   ├── mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css
+│   │   │   │   ├── plus.png
+│   │   │   │   ├── print.css
+│   │   │   │   ├── pygments.css
+│   │   │   │   ├── searchtools.js
+│   │   │   │   ├── shibuya.css
+│   │   │   │   ├── shibuya.js
+│   │   │   │   ├── sphinx_highlight.js
+│   │   │   │   ├── test_wav.png
+│   │   │   │   ├── transcription-pg1.png
+│   │   │   │   ├── transcription-pg2.png
+│   │   │   │   ├── transcription-test_wav.png
+│   │   │   │   └── transcription.pdf
+│   │   │   ├── about.html
+│   │   │   ├── api.html
+│   │   │   ├── changelog.html
+│   │   │   ├── development
+│   │   │   │   ├── code_of_conduct.html
+│   │   │   │   ├── contributor_guidance.html
+│   │   │   │   ├── documentation.html
+│   │   │   │   └── testing_guidance.html
+│   │   │   ├── generated
+│   │   │   │   ├── drumscript.audio_processor.audio_loader.html
+│   │   │   │   ├── drumscript.audio_processor.audio_loader.load_audio.html
+│   │   │   │   ├── drumscript.audio_processor.audio_loader.normalise_audio.html
+│   │   │   │   ├── drumscript.audio_processor.feature_extractor.extract_features.html
+│   │   │   │   ├── drumscript.audio_processor.feature_extractor.extract_features_for_onsets.html
+│   │   │   │   ├── drumscript.audio_processor.feature_extractor.html
+│   │   │   │   ├── drumscript.audio_processor.onset_detector.detect_onsets.html
+│   │   │   │   ├── drumscript.audio_processor.onset_detector.html
+│   │   │   │   ├── drumscript.audio_processor.stem_splitter.extract_drum_stem.html
+│   │   │   │   ├── drumscript.audio_processor.stem_splitter.html
+│   │   │   │   ├── drumscript.audio_processor.stem_splitter.mix_stems.html
+│   │   │   │   ├── drumscript.audio_processor.stem_splitter.separate_audio.html
+│   │   │   │   ├── drumscript.audio_processor.tempo_detector.estimate_tempo.html
+│   │   │   │   ├── drumscript.audio_processor.tempo_detector.html
+│   │   │   │   ├── drumscript.detect_tempo.html
+│   │   │   │   ├── drumscript.drum_classifier.classify.classify_event.html
+│   │   │   │   ├── drumscript.drum_classifier.classify.classify_events.html
+│   │   │   │   ├── drumscript.drum_classifier.classify.classify_idiophone.html
+│   │   │   │   ├── drumscript.drum_classifier.classify.classify_membranophone.html
+│   │   │   │   ├── drumscript.drum_classifier.classify.classify_rudiment_events.html
+│   │   │   │   ├── drumscript.drum_classifier.classify.extract_features.html
+│   │   │   │   ├── drumscript.drum_classifier.classify.get_audio_slice.html
+│   │   │   │   ├── drumscript.drum_classifier.classify.html
+│   │   │   │   ├── drumscript.export_midi.html
+│   │   │   │   ├── drumscript.export_pdf.html
+│   │   │   │   ├── drumscript.export_xml.html
+│   │   │   │   ├── drumscript.extract_stems.html
+│   │   │   │   ├── drumscript.notation_generator.constants.html
+│   │   │   │   ├── drumscript.notation_generator.helpers.calculate_cents_difference.html
+│   │   │   │   ├── drumscript.notation_generator.helpers.format_drum_event.html
+│   │   │   │   ├── drumscript.notation_generator.helpers.get_note_duration_name.html
+│   │   │   │   ├── drumscript.notation_generator.helpers.html
+│   │   │   │   ├── drumscript.notation_generator.helpers.round_to_nearest_subdivision.html
+│   │   │   │   ├── drumscript.notation_generator.midi_exporter.export_to_midi.html
+│   │   │   │   ├── drumscript.notation_generator.midi_exporter.html
+│   │   │   │   ├── drumscript.notation_generator.pdf_exporter.draw_bar_line.html
+│   │   │   │   ├── drumscript.notation_generator.pdf_exporter.draw_clef.html
+│   │   │   │   ├── drumscript.notation_generator.pdf_exporter.draw_notehead.html
+│   │   │   │   ├── drumscript.notation_generator.pdf_exporter.draw_staff.html
+│   │   │   │   ├── drumscript.notation_generator.pdf_exporter.draw_time_signature.html
+│   │   │   │   ├── drumscript.notation_generator.pdf_exporter.export_pdf.html
+│   │   │   │   ├── drumscript.notation_generator.pdf_exporter.get_vertical_position.html
+│   │   │   │   ├── drumscript.notation_generator.pdf_exporter.html
+│   │   │   │   ├── drumscript.notation_generator.score_builder.build_score.html
+│   │   │   │   ├── drumscript.notation_generator.score_builder.html
+│   │   │   │   ├── drumscript.notation_generator.xml_exporter.export_xml.html
+│   │   │   │   ├── drumscript.notation_generator.xml_exporter.html
+│   │   │   │   ├── drumscript.transcribe.html
+│   │   │   │   ├── drumscript.utils.ffmpeg_installer.html
+│   │   │   │   ├── drumscript.utils.ffmpeg_installer.install_ffmpeg.html
+│   │   │   │   └── drumscript.utils.ffmpeg_installer.is_ffmpeg_installed.html
+│   │   │   ├── genindex.html
+│   │   │   ├── guide
+│   │   │   │   ├── cli_reference.html
+│   │   │   │   ├── configuration.html
+│   │   │   │   ├── glossary.html
+│   │   │   │   ├── installation.html
+│   │   │   │   ├── interactive
+│   │   │   │   │   ├── create_backing_track.html
+│   │   │   │   │   ├── extract_drums.html
+│   │   │   │   │   ├── index.html
+│   │   │   │   │   ├── measure_tempo.html
+│   │   │   │   │   └── transcribe.html
+│   │   │   │   ├── roadmap.html
+│   │   │   │   ├── security.html
+│   │   │   │   └── usage.html
+│   │   │   ├── index.html
+│   │   │   ├── objects.inv
+│   │   │   ├── py-modindex.html
+│   │   │   ├── release_notes
+│   │   │   │   ├── 0.1.0.html
+│   │   │   │   ├── 0.1.1.html
+│   │   │   │   ├── 0.1.2.html
+│   │   │   │   ├── 0.1.3.html
+│   │   │   │   ├── 0.1.4.html
+│   │   │   │   ├── 0.1.5.html
+│   │   │   │   ├── 0.1.6.html
+│   │   │   │   ├── 0.2.0.html
+│   │   │   │   └── index.html
+│   │   │   ├── search.html
+│   │   │   ├── searchindex.js
+│   │   │   └── theory
+│   │   │       ├── bibliography.html
+│   │   │       ├── digital_signal_processing.html
+│   │   │       ├── drum_notation_guide.html
+│   │   │       ├── how_it_works.html
+│   │   │       ├── percussion_frequencies.html
+│   │   │       ├── sources.html
+│   │   │       ├── stem_splitting.html
+│   │   │       └── tempo_estimation.html
+│   │   └── jupyter_execute
+│   │       └── guide
+│   │           └── interactive
+│   │               ├── create_backing_track.ipynb
+│   │               ├── extract_drums.ipynb
+│   │               ├── measure_tempo.ipynb
+│   │               └── transcribe.ipynb
+│   ├── _templates
+│   │   └── autosummary
+│   │       └── module.rst
+│   ├── about.md
+│   ├── api.rst
+│   ├── changelog.md -> ../CHANGELOG.md
+│   ├── conf.py
+│   ├── development
+│   │   ├── code_of_conduct.md
+│   │   ├── contributor_guidance.md
+│   │   ├── documentation.md
+│   │   └── testing_guidance.md
+│   ├── index.md
+│   ├── make.bat
+│   ├── theory
+│   └── versions.json
+├── drumscript
+│   ├── __init__.py
+│   ├── audio_processor
+│   │   ├── __init__.py
+│   │   ├── audio_loader.py
+│   │   ├── feature_extractor.py
+│   │   ├── onset_detector.py
+│   │   ├── stem_splitter.py
+│   │   ├── tempo_detector.py
+│   │   └── tempogram.py
+│   ├── datasets
+│   │   ├── __init__.py
+│   │   ├── base.py
+│   │   └── idmt.py
+│   ├── drum_classifier
+│   │   ├── __init__.py
+│   │   ├── classify.py
+│   │   └── proofs
+│   ├── main.py
+│   ├── notation_generator
+│   │   ├── __init__.py
+│   │   ├── constants.py
+│   │   ├── helpers.py
+│   │   ├── midi_exporter.py
+│   │   ├── pdf_exporter.py
+│   │   ├── proofs
+│   │   ├── score_builder.py
+│   │   └── xml_exporter.py
+│   └── utils
+│       ├── __init__.py
+│       ├── ffmpeg_installer.py
+│       └── research
+│           ├── __init__.py
+│           ├── analyze_closed_hat_physics.py
+│           ├── analyze_crash_physics.py
+│           ├── analyze_high_tom_physics.py
+│           ├── analyze_kick_physics.py
+│           ├── analyze_low_tom_physics.py
+│           ├── analyze_mid_tom_physics.py
+│           ├── analyze_open_hat_physics.py
+│           ├── analyze_ride_physics.py
+│           ├── analyze_snare_physics.py
+│           ├── analyze_tom_physics.py
+│           ├── get_event_frequencies.py
+│           ├── measure_hat_frequency.py
+│           ├── measure_kick_frequency.py
+│           └── measure_snare_frequency.py
+├── git-filter-repo-analysis
+├── machine-learning
+│   ├── data_labeller
+│   │   └── labelled_datasets
+│   ├── models
+│   │   └── models_development
+│   │       ├── ConvolutionalNeuralNetworks
+│   │       └── RandomForest
+│   └── training_data
+│       ├── [UNKNOWN]--source_dataset
+│       │   ├── closed_hi_hat
+│       │   │   ├── closedhat_0001.wav
+│       │   │   ├── closedhat_0002.wav
+│       │   │   ├── closedhat_0003.wav
+│       │   │   ├── closedhat_0004.wav
+│       │   │   ├── closedhat_0005.wav
+│       │   │   ├── closedhat_0006.wav
+│       │   │   ├── closedhat_0007.wav
+│       │   │   ├── closedhat_0008.wav
+│       │   │   ├── closedhat_0009.wav
+│       │   │   ├── closedhat_0010.wav
+│       │   │   ├── closedhat_0011.wav
+│       │   │   ├── closedhat_0012.wav
+│       │   │   ├── closedhat_0013.wav
+│       │   │   ├── closedhat_0014.wav
+│       │   │   ├── closedhat_0015.wav
+│       │   │   ├── closedhat_0016.wav
+│       │   │   ├── closedhat_0017.wav
+│       │   │   ├── closedhat_0018.wav
+│       │   │   ├── closedhat_0019.wav
+│       │   │   ├── closedhat_0020.wav
+│       │   │   ├── closedhat_0021.wav
+│       │   │   ├── closedhat_0022.wav
+│       │   │   ├── closedhat_0023.wav
+│       │   │   ├── closedhat_0024.wav
+│       │   │   ├── closedhat_0025.wav
+│       │   │   ├── closedhat_0026.wav
+│       │   │   ├── closedhat_0027.wav
+│       │   │   ├── closedhat_0028.wav
+│       │   │   ├── closedhat_0029.wav
+│       │   │   ├── closedhat_0030.wav
+│       │   │   ├── closedhat_0031.wav
+│       │   │   ├── closedhat_0032.wav
+│       │   │   ├── closedhat_0033.wav
+│       │   │   ├── closedhat_0034.wav
+│       │   │   ├── closedhat_0035.wav
+│       │   │   ├── closedhat_0036.wav
+│       │   │   ├── closedhat_0037.wav
+│       │   │   ├── closedhat_0038.wav
+│       │   │   ├── closedhat_0039.wav
+│       │   │   ├── closedhat_0040.wav
+│       │   │   ├── closedhat_0041.wav
+│       │   │   ├── closedhat_0042.wav
+│       │   │   ├── closedhat_0043.wav
+│       │   │   ├── closedhat_0044.wav
+│       │   │   ├── closedhat_0045.wav
+│       │   │   ├── closedhat_0046.wav
+│       │   │   ├── closedhat_0047.wav
+│       │   │   ├── closedhat_0048.wav
+│       │   │   ├── closedhat_0049.wav
+│       │   │   ├── closedhat_0050.wav
+│       │   │   ├── closedhat_0051.wav
+│       │   │   ├── closedhat_0052.wav
+│       │   │   ├── closedhat_0053.wav
+│       │   │   ├── closedhat_0054.wav
+│       │   │   ├── closedhat_0055.wav
+│       │   │   ├── closedhat_0056.wav
+│       │   │   ├── closedhat_0057.wav
+│       │   │   ├── closedhat_0058.wav
+│       │   │   ├── closedhat_0059.wav
+│       │   │   ├── closedhat_0060.wav
+│       │   │   ├── closedhat_0061.wav
+│       │   │   ├── closedhat_0062.wav
+│       │   │   ├── closedhat_0063.wav
+│       │   │   ├── closedhat_0064.wav
+│       │   │   ├── closedhat_0065.wav
+│       │   │   ├── closedhat_0066.wav
+│       │   │   ├── closedhat_0067.wav
+│       │   │   ├── closedhat_0068.wav
+│       │   │   ├── closedhat_0069.wav
+│       │   │   ├── closedhat_0070.wav
+│       │   │   ├── closedhat_0071.wav
+│       │   │   ├── closedhat_0072.wav
+│       │   │   ├── closedhat_0073.wav
+│       │   │   ├── closedhat_0074.wav
+│       │   │   ├── closedhat_0075.wav
+│       │   │   ├── closedhat_0076.wav
+│       │   │   ├── closedhat_0077.wav
+│       │   │   ├── closedhat_0078.wav
+│       │   │   ├── closedhat_0079.wav
+│       │   │   ├── closedhat_0080.wav
+│       │   │   ├── closedhat_0081.wav
+│       │   │   ├── closedhat_0082.wav
+│       │   │   ├── closedhat_0083.wav
+│       │   │   ├── closedhat_0084.wav
+│       │   │   ├── closedhat_0085.wav
+│       │   │   ├── closedhat_0086.wav
+│       │   │   ├── closedhat_0087.wav
+│       │   │   ├── closedhat_0088.wav
+│       │   │   ├── closedhat_0089.wav
+│       │   │   ├── closedhat_0090.wav
+│       │   │   ├── closedhat_0091.wav
+│       │   │   ├── closedhat_0092.wav
+│       │   │   ├── closedhat_0093.wav
+│       │   │   ├── closedhat_0094.wav
+│       │   │   ├── closedhat_0095.wav
+│       │   │   ├── closedhat_0096.wav
+│       │   │   ├── closedhat_0097.wav
+│       │   │   ├── closedhat_0098.wav
+│       │   │   ├── closedhat_0099.wav
+│       │   │   ├── closedhat_0100.wav
+│       │   │   ├── closedhat_0101.wav
+│       │   │   ├── closedhat_0102.wav
+│       │   │   ├── closedhat_0103.wav
+│       │   │   ├── closedhat_0104.wav
+│       │   │   ├── closedhat_0105.wav
+│       │   │   ├── closedhat_0106.wav
+│       │   │   ├── closedhat_0107.wav
+│       │   │   ├── closedhat_0108.wav
+│       │   │   ├── closedhat_0109.wav
+│       │   │   ├── closedhat_0110.wav
+│       │   │   ├── closedhat_0111.wav
+│       │   │   ├── closedhat_0112.wav
+│       │   │   ├── closedhat_0113.wav
+│       │   │   ├── closedhat_0114.wav
+│       │   │   ├── closedhat_0115.wav
+│       │   │   ├── closedhat_0116.wav
+│       │   │   ├── closedhat_0117.wav
+│       │   │   ├── closedhat_0118.wav
+│       │   │   ├── closedhat_0119.wav
+│       │   │   ├── closedhat_0120.wav
+│       │   │   ├── closedhat_0121.wav
+│       │   │   ├── closedhat_0122.wav
+│       │   │   ├── closedhat_0123.wav
+│       │   │   ├── closedhat_0124.wav
+│       │   │   ├── closedhat_0125.wav
+│       │   │   ├── closedhat_0126.wav
+│       │   │   ├── closedhat_0127.wav
+│       │   │   ├── closedhat_0128.wav
+│       │   │   ├── closedhat_0129.wav
+│       │   │   ├── closedhat_0130.wav
+│       │   │   ├── closedhat_0131.wav
+│       │   │   ├── closedhat_0132.wav
+│       │   │   ├── closedhat_0133.wav
+│       │   │   ├── closedhat_0134.wav
+│       │   │   ├── closedhat_0135.wav
+│       │   │   ├── closedhat_0136.wav
+│       │   │   ├── closedhat_0137.wav
+│       │   │   ├── closedhat_0138.wav
+│       │   │   ├── closedhat_0139.wav
+│       │   │   ├── closedhat_0140.wav
+│       │   │   ├── closedhat_0141.wav
+│       │   │   ├── closedhat_0142.wav
+│       │   │   ├── closedhat_0143.wav
+│       │   │   ├── closedhat_0144.wav
+│       │   │   ├── closedhat_0145.wav
+│       │   │   ├── closedhat_0146.wav
+│       │   │   ├── closedhat_0147.wav
+│       │   │   ├── closedhat_0148.wav
+│       │   │   ├── closedhat_0149.wav
+│       │   │   ├── closedhat_0150.wav
+│       │   │   ├── closedhat_0151.wav
+│       │   │   ├── closedhat_0152.wav
+│       │   │   ├── closedhat_0153.wav
+│       │   │   ├── closedhat_0154.wav
+│       │   │   ├── closedhat_0155.wav
+│       │   │   ├── closedhat_0156.wav
+│       │   │   ├── closedhat_0157.wav
+│       │   │   ├── closedhat_0158.wav
+│       │   │   ├── closedhat_0159.wav
+│       │   │   ├── closedhat_0160.wav
+│       │   │   ├── closedhat_0161.wav
+│       │   │   ├── closedhat_0162.wav
+│       │   │   ├── closedhat_0163.wav
+│       │   │   ├── closedhat_0164.wav
+│       │   │   ├── closedhat_0165.wav
+│       │   │   ├── closedhat_0166.wav
+│       │   │   ├── closedhat_0167.wav
+│       │   │   ├── closedhat_0168.wav
+│       │   │   ├── closedhat_0169.wav
+│       │   │   ├── closedhat_0170.wav
+│       │   │   ├── closedhat_0171.wav
+│       │   │   ├── closedhat_0172.wav
+│       │   │   ├── closedhat_0173.wav
+│       │   │   ├── closedhat_0174.wav
+│       │   │   ├── closedhat_0175.wav
+│       │   │   ├── closedhat_0176.wav
+│       │   │   ├── closedhat_0177.wav
+│       │   │   ├── closedhat_0178.wav
+│       │   │   ├── closedhat_0179.wav
+│       │   │   ├── closedhat_0180.wav
+│       │   │   ├── closedhat_0181.wav
+│       │   │   ├── closedhat_0182.wav
+│       │   │   ├── closedhat_0183.wav
+│       │   │   ├── closedhat_0184.wav
+│       │   │   ├── closedhat_0185.wav
+│       │   │   ├── closedhat_0186.wav
+│       │   │   ├── closedhat_0187.wav
+│       │   │   ├── closedhat_0188.wav
+│       │   │   ├── closedhat_0189.wav
+│       │   │   ├── closedhat_0190.wav
+│       │   │   ├── closedhat_0191.wav
+│       │   │   ├── closedhat_0192.wav
+│       │   │   ├── closedhat_0193.wav
+│       │   │   ├── closedhat_0194.wav
+│       │   │   ├── closedhat_0195.wav
+│       │   │   ├── closedhat_0196.wav
+│       │   │   ├── closedhat_0197.wav
+│       │   │   ├── closedhat_0198.wav
+│       │   │   ├── closedhat_0199.wav
+│       │   │   ├── closedhat_0200.wav
+│       │   │   ├── closedhat_0201.wav
+│       │   │   ├── closedhat_0202.wav
+│       │   │   ├── closedhat_0203.wav
+│       │   │   ├── closedhat_0204.wav
+│       │   │   ├── closedhat_0205.wav
+│       │   │   ├── closedhat_0206.wav
+│       │   │   ├── closedhat_0207.wav
+│       │   │   ├── closedhat_0208.wav
+│       │   │   ├── closedhat_0209.wav
+│       │   │   ├── closedhat_0210.wav
+│       │   │   ├── closedhat_0211.wav
+│       │   │   ├── closedhat_0212.wav
+│       │   │   ├── closedhat_0213.wav
+│       │   │   ├── closedhat_0214.wav
+│       │   │   ├── closedhat_0215.wav
+│       │   │   ├── closedhat_0216.wav
+│       │   │   ├── closedhat_0217.wav
+│       │   │   ├── closedhat_0218.wav
+│       │   │   ├── closedhat_0219.wav
+│       │   │   ├── closedhat_0220.wav
+│       │   │   ├── closedhat_0221.wav
+│       │   │   ├── closedhat_0222.wav
+│       │   │   ├── closedhat_0223.wav
+│       │   │   ├── closedhat_0224.wav
+│       │   │   ├── closedhat_0225.wav
+│       │   │   ├── closedhat_0226.wav
+│       │   │   ├── closedhat_0227.wav
+│       │   │   ├── closedhat_0228.wav
+│       │   │   ├── closedhat_0229.wav
+│       │   │   ├── closedhat_0230.wav
+│       │   │   ├── closedhat_0231.wav
+│       │   │   ├── closedhat_0232.wav
+│       │   │   ├── closedhat_0233.wav
+│       │   │   ├── closedhat_0234.wav
+│       │   │   ├── closedhat_0235.wav
+│       │   │   ├── closedhat_0236.wav
+│       │   │   ├── closedhat_0237.wav
+│       │   │   ├── closedhat_0238.wav
+│       │   │   ├── closedhat_0239.wav
+│       │   │   ├── closedhat_0240.wav
+│       │   │   ├── closedhat_0241.wav
+│       │   │   └── closedhat_0242.wav
+│       │   ├── kick
+│       │   │   ├── kick_0001.wav
+│       │   │   ├── kick_0002.wav
+│       │   │   ├── kick_0003.wav
+│       │   │   ├── kick_0004.wav
+│       │   │   ├── kick_0005.wav
+│       │   │   ├── kick_0006.wav
+│       │   │   ├── kick_0007.wav
+│       │   │   ├── kick_0008.wav
+│       │   │   ├── kick_0009.wav
+│       │   │   ├── kick_0010.wav
+│       │   │   ├── kick_0011.wav
+│       │   │   ├── kick_0012.wav
+│       │   │   ├── kick_0013.wav
+│       │   │   ├── kick_0014.wav
+│       │   │   ├── kick_0015.wav
+│       │   │   ├── kick_0016.wav
+│       │   │   ├── kick_0017.wav
+│       │   │   ├── kick_0018.wav
+│       │   │   ├── kick_0019.wav
+│       │   │   ├── kick_0020.wav
+│       │   │   ├── kick_0021.wav
+│       │   │   ├── kick_0022.wav
+│       │   │   ├── kick_0023.wav
+│       │   │   ├── kick_0024.wav
+│       │   │   ├── kick_0025.wav
+│       │   │   ├── kick_0026.wav
+│       │   │   ├── kick_0027.wav
+│       │   │   ├── kick_0028.wav
+│       │   │   ├── kick_0029.wav
+│       │   │   ├── kick_0030.wav
+│       │   │   ├── kick_0031.wav
+│       │   │   ├── kick_0032.wav
+│       │   │   ├── kick_0033.wav
+│       │   │   ├── kick_0034.wav
+│       │   │   ├── kick_0035.wav
+│       │   │   ├── kick_0036.wav
+│       │   │   ├── kick_0037.wav
+│       │   │   ├── kick_0038.wav
+│       │   │   ├── kick_0039.wav
+│       │   │   ├── kick_0040.wav
+│       │   │   ├── kick_0041.wav
+│       │   │   ├── kick_0042.wav
+│       │   │   ├── kick_0043.wav
+│       │   │   ├── kick_0044.wav
+│       │   │   ├── kick_0045.wav
+│       │   │   ├── kick_0046.wav
+│       │   │   ├── kick_0047.wav
+│       │   │   ├── kick_0048.wav
+│       │   │   ├── kick_0049.wav
+│       │   │   ├── kick_0050.wav
+│       │   │   ├── kick_0051.wav
+│       │   │   ├── kick_0052.wav
+│       │   │   ├── kick_0053.wav
+│       │   │   ├── kick_0054.wav
+│       │   │   ├── kick_0055.wav
+│       │   │   ├── kick_0056.wav
+│       │   │   ├── kick_0057.wav
+│       │   │   ├── kick_0058.wav
+│       │   │   ├── kick_0059.wav
+│       │   │   ├── kick_0060.wav
+│       │   │   ├── kick_0061.wav
+│       │   │   ├── kick_0062.wav
+│       │   │   ├── kick_0063.wav
+│       │   │   ├── kick_0064.wav
+│       │   │   ├── kick_0065.wav
+│       │   │   ├── kick_0066.wav
+│       │   │   ├── kick_0067.wav
+│       │   │   ├── kick_0068.wav
+│       │   │   ├── kick_0069.wav
+│       │   │   ├── kick_0070.wav
+│       │   │   ├── kick_0071.wav
+│       │   │   ├── kick_0072.wav
+│       │   │   ├── kick_0073.wav
+│       │   │   ├── kick_0074.wav
+│       │   │   ├── kick_0075.wav
+│       │   │   ├── kick_0076.wav
+│       │   │   ├── kick_0077.wav
+│       │   │   ├── kick_0078.wav
+│       │   │   ├── kick_0079.wav
+│       │   │   ├── kick_0080.wav
+│       │   │   ├── kick_0081.wav
+│       │   │   ├── kick_0082.wav
+│       │   │   ├── kick_0083.wav
+│       │   │   ├── kick_0084.wav
+│       │   │   ├── kick_0085.wav
+│       │   │   ├── kick_0086.wav
+│       │   │   ├── kick_0087.wav
+│       │   │   ├── kick_0088.wav
+│       │   │   ├── kick_0089.wav
+│       │   │   ├── kick_0090.wav
+│       │   │   ├── kick_0091.wav
+│       │   │   ├── kick_0092.wav
+│       │   │   ├── kick_0093.wav
+│       │   │   ├── kick_0094.wav
+│       │   │   ├── kick_0095.wav
+│       │   │   ├── kick_0096.wav
+│       │   │   ├── kick_0097.wav
+│       │   │   ├── kick_0098.wav
+│       │   │   ├── kick_0099.wav
+│       │   │   ├── kick_0100.wav
+│       │   │   ├── kick_0101.wav
+│       │   │   ├── kick_0102.wav
+│       │   │   ├── kick_0103.wav
+│       │   │   ├── kick_0104.wav
+│       │   │   ├── kick_0105.wav
+│       │   │   ├── kick_0106.wav
+│       │   │   ├── kick_0107.wav
+│       │   │   ├── kick_0108.wav
+│       │   │   ├── kick_0109.wav
+│       │   │   ├── kick_0110.wav
+│       │   │   ├── kick_0111.wav
+│       │   │   ├── kick_0112.wav
+│       │   │   ├── kick_0113.wav
+│       │   │   ├── kick_0114.wav
+│       │   │   ├── kick_0115.wav
+│       │   │   ├── kick_0116.wav
+│       │   │   ├── kick_0117.wav
+│       │   │   ├── kick_0118.wav
+│       │   │   ├── kick_0119.wav
+│       │   │   ├── kick_0120.wav
+│       │   │   ├── kick_0121.wav
+│       │   │   ├── kick_0122.wav
+│       │   │   ├── kick_0123.wav
+│       │   │   ├── kick_0124.wav
+│       │   │   ├── kick_0125.wav
+│       │   │   ├── kick_0126.wav
+│       │   │   ├── kick_0127.wav
+│       │   │   ├── kick_0128.WAV
+│       │   │   ├── kick_0129.wav
+│       │   │   ├── kick_0130.wav
+│       │   │   ├── kick_0131.wav
+│       │   │   ├── kick_0132.wav
+│       │   │   ├── kick_0133.wav
+│       │   │   ├── kick_0134.wav
+│       │   │   ├── kick_0135.wav
+│       │   │   ├── kick_0136.wav
+│       │   │   ├── kick_0137.wav
+│       │   │   ├── kick_0138.wav
+│       │   │   ├── kick_0139.wav
+│       │   │   ├── kick_0140.wav
+│       │   │   ├── kick_0141.wav
+│       │   │   ├── kick_0142.wav
+│       │   │   ├── kick_0143.wav
+│       │   │   ├── kick_0144.wav
+│       │   │   ├── kick_0145.wav
+│       │   │   ├── kick_0146.wav
+│       │   │   ├── kick_0147.wav
+│       │   │   ├── kick_0148.wav
+│       │   │   ├── kick_0149.wav
+│       │   │   ├── kick_0150.wav
+│       │   │   ├── kick_0151.wav
+│       │   │   ├── kick_0152.wav
+│       │   │   ├── kick_0153.wav
+│       │   │   ├── kick_0154.wav
+│       │   │   ├── kick_0155.wav
+│       │   │   ├── kick_0156.wav
+│       │   │   ├── kick_0157.wav
+│       │   │   ├── kick_0158.wav
+│       │   │   ├── kick_0159.wav
+│       │   │   ├── kick_0160.wav
+│       │   │   ├── kick_0161.wav
+│       │   │   ├── kick_0162.wav
+│       │   │   ├── kick_0163.wav
+│       │   │   ├── kick_0164.wav
+│       │   │   ├── kick_0165.wav
+│       │   │   ├── kick_0166.wav
+│       │   │   ├── kick_0167.wav
+│       │   │   ├── kick_0168.wav
+│       │   │   ├── kick_0169.wav
+│       │   │   ├── kick_0170.wav
+│       │   │   ├── kick_0171.wav
+│       │   │   ├── kick_0172.wav
+│       │   │   ├── kick_0173.wav
+│       │   │   ├── kick_0174.wav
+│       │   │   ├── kick_0175.wav
+│       │   │   ├── kick_0176.wav
+│       │   │   ├── kick_0177.wav
+│       │   │   ├── kick_0178.wav
+│       │   │   ├── kick_0179.wav
+│       │   │   ├── kick_0180.wav
+│       │   │   ├── kick_0181.wav
+│       │   │   ├── kick_0182.wav
+│       │   │   ├── kick_0183.wav
+│       │   │   ├── kick_0184.wav
+│       │   │   ├── kick_0185.wav
+│       │   │   ├── kick_0186.wav
+│       │   │   ├── kick_0187.wav
+│       │   │   ├── kick_0188.wav
+│       │   │   ├── kick_0189.wav
+│       │   │   ├── kick_0190.wav
+│       │   │   ├── kick_0191.wav
+│       │   │   ├── kick_0192.wav
+│       │   │   ├── kick_0193.wav
+│       │   │   ├── kick_0194.wav
+│       │   │   ├── kick_0195.wav
+│       │   │   ├── kick_0196.wav
+│       │   │   ├── kick_0197.wav
+│       │   │   ├── kick_0198.wav
+│       │   │   ├── kick_0199.wav
+│       │   │   ├── kick_0200.wav
+│       │   │   ├── kick_0201.wav
+│       │   │   ├── kick_0202.wav
+│       │   │   ├── kick_0203.wav
+│       │   │   ├── kick_0204.wav
+│       │   │   ├── kick_0205.wav
+│       │   │   ├── kick_0206.wav
+│       │   │   ├── kick_0207.wav
+│       │   │   ├── kick_0208.wav
+│       │   │   ├── kick_0209.wav
+│       │   │   ├── kick_0210.wav
+│       │   │   ├── kick_0211.wav
+│       │   │   ├── kick_0212.wav
+│       │   │   ├── kick_0213.wav
+│       │   │   ├── kick_0214.wav
+│       │   │   ├── kick_0215.wav
+│       │   │   ├── kick_0216.wav
+│       │   │   ├── kick_0217.wav
+│       │   │   ├── kick_0218.wav
+│       │   │   ├── kick_0219.wav
+│       │   │   ├── kick_0220.wav
+│       │   │   ├── kick_0221.wav
+│       │   │   ├── kick_0222.wav
+│       │   │   ├── kick_0223.wav
+│       │   │   ├── kick_0224.wav
+│       │   │   ├── kick_0225.wav
+│       │   │   ├── kick_0226.wav
+│       │   │   ├── kick_0227.wav
+│       │   │   ├── kick_0228.wav
+│       │   │   ├── kick_0229.wav
+│       │   │   ├── kick_0230.wav
+│       │   │   ├── kick_0231.wav
+│       │   │   ├── kick_0232.wav
+│       │   │   ├── kick_0233.wav
+│       │   │   ├── kick_0234.wav
+│       │   │   ├── kick_0235.wav
+│       │   │   ├── kick_0236.wav
+│       │   │   ├── kick_0237.wav
+│       │   │   ├── kick_0238.wav
+│       │   │   ├── kick_0239.wav
+│       │   │   ├── kick_0240.wav
+│       │   │   ├── kick_0241.wav
+│       │   │   ├── kick_0242.wav
+│       │   │   ├── kick_0243.wav
+│       │   │   ├── kick_0244.wav
+│       │   │   ├── kick_0245.wav
+│       │   │   ├── kick_0246.wav
+│       │   │   ├── kick_0247.wav
+│       │   │   ├── kick_0248.wav
+│       │   │   ├── kick_0249.wav
+│       │   │   ├── kick_0250.wav
+│       │   │   ├── kick_0251.wav
+│       │   │   ├── kick_0252.wav
+│       │   │   ├── kick_0253.wav
+│       │   │   ├── kick_0254.wav
+│       │   │   ├── kick_0255.wav
+│       │   │   ├── kick_0256.wav
+│       │   │   ├── kick_0257.wav
+│       │   │   ├── kick_0258.wav
+│       │   │   ├── kick_0259.wav
+│       │   │   ├── kick_0260.wav
+│       │   │   ├── kick_0261.wav
+│       │   │   ├── kick_0262.wav
+│       │   │   ├── kick_0263.wav
+│       │   │   ├── kick_0264.wav
+│       │   │   ├── kick_0265.wav
+│       │   │   ├── kick_0266.wav
+│       │   │   ├── kick_0267.wav
+│       │   │   ├── kick_0268.wav
+│       │   │   ├── kick_0269.wav
+│       │   │   ├── kick_0270.wav
+│       │   │   ├── kick_0271.wav
+│       │   │   ├── kick_0272.wav
+│       │   │   ├── kick_0273.wav
+│       │   │   ├── kick_0274.wav
+│       │   │   ├── kick_0275.wav
+│       │   │   ├── kick_0276.wav
+│       │   │   ├── kick_0277.wav
+│       │   │   ├── kick_0278.wav
+│       │   │   ├── kick_0279.wav
+│       │   │   ├── kick_0280.wav
+│       │   │   ├── kick_0281.wav
+│       │   │   ├── kick_0282.wav
+│       │   │   ├── kick_0283.wav
+│       │   │   ├── kick_0284.wav
+│       │   │   ├── kick_0285.wav
+│       │   │   ├── kick_0286.wav
+│       │   │   ├── kick_0287.wav
+│       │   │   ├── kick_0288.wav
+│       │   │   ├── kick_0289.wav
+│       │   │   ├── kick_0290.wav
+│       │   │   ├── kick_0291.wav
+│       │   │   ├── kick_0292.wav
+│       │   │   ├── kick_0293.wav
+│       │   │   ├── kick_0294.wav
+│       │   │   ├── kick_0295.wav
+│       │   │   ├── kick_0296.wav
+│       │   │   ├── kick_0297.wav
+│       │   │   ├── kick_0298.wav
+│       │   │   ├── kick_0299.wav
+│       │   │   ├── kick_0300.wav
+│       │   │   ├── kick_0301.wav
+│       │   │   ├── kick_0302.wav
+│       │   │   ├── kick_0303.wav
+│       │   │   ├── kick_0304.wav
+│       │   │   ├── kick_0305.wav
+│       │   │   ├── kick_0306.wav
+│       │   │   ├── kick_0307.wav
+│       │   │   ├── kick_0308.wav
+│       │   │   ├── kick_0309.wav
+│       │   │   ├── kick_0310.wav
+│       │   │   ├── kick_0311.wav
+│       │   │   ├── kick_0312.wav
+│       │   │   ├── kick_0313.wav
+│       │   │   ├── kick_0314.wav
+│       │   │   ├── kick_0315.wav
+│       │   │   ├── kick_0316.wav
+│       │   │   ├── kick_0317.wav
+│       │   │   ├── kick_0318.wav
+│       │   │   ├── kick_0319.wav
+│       │   │   ├── kick_0320.wav
+│       │   │   ├── kick_0321.wav
+│       │   │   ├── kick_0322.wav
+│       │   │   ├── kick_0323.wav
+│       │   │   ├── kick_0324.wav
+│       │   │   ├── kick_0325.wav
+│       │   │   ├── kick_0326.wav
+│       │   │   ├── kick_0327.wav
+│       │   │   ├── kick_0328.wav
+│       │   │   ├── kick_0329.wav
+│       │   │   ├── kick_0330.wav
+│       │   │   ├── kick_0331.wav
+│       │   │   ├── kick_0332.wav
+│       │   │   ├── kick_0333.wav
+│       │   │   ├── kick_0334.wav
+│       │   │   ├── kick_0335.wav
+│       │   │   ├── kick_0336.wav
+│       │   │   ├── kick_0337.wav
+│       │   │   ├── kick_0338.wav
+│       │   │   ├── kick_0339.wav
+│       │   │   ├── kick_0340.wav
+│       │   │   ├── kick_0341.wav
+│       │   │   ├── kick_0342.wav
+│       │   │   ├── kick_0343.wav
+│       │   │   ├── kick_0344.wav
+│       │   │   ├── kick_0345.wav
+│       │   │   ├── kick_0346.wav
+│       │   │   ├── kick_0347.wav
+│       │   │   ├── kick_0348.wav
+│       │   │   ├── kick_0349.wav
+│       │   │   ├── kick_0350.wav
+│       │   │   ├── kick_0351.wav
+│       │   │   ├── kick_0352.wav
+│       │   │   ├── kick_0353.wav
+│       │   │   ├── kick_0354.wav
+│       │   │   ├── kick_0355.wav
+│       │   │   ├── kick_0356.wav
+│       │   │   ├── kick_0357.wav
+│       │   │   ├── kick_0358.wav
+│       │   │   ├── kick_0359.wav
+│       │   │   ├── kick_0360.wav
+│       │   │   ├── kick_0361.wav
+│       │   │   ├── kick_0362.wav
+│       │   │   ├── kick_0363.wav
+│       │   │   ├── kick_0364.wav
+│       │   │   ├── kick_0365.wav
+│       │   │   ├── kick_0366.wav
+│       │   │   ├── kick_0367.wav
+│       │   │   ├── kick_0368.wav
+│       │   │   ├── kick_0369.wav
+│       │   │   ├── kick_0370.wav
+│       │   │   ├── kick_0371.wav
+│       │   │   ├── kick_0372.wav
+│       │   │   ├── kick_0373.wav
+│       │   │   ├── kick_0374.wav
+│       │   │   ├── kick_0375.wav
+│       │   │   ├── kick_0376.wav
+│       │   │   ├── kick_0377.wav
+│       │   │   ├── kick_0378.wav
+│       │   │   ├── kick_0379.wav
+│       │   │   ├── kick_0380.wav
+│       │   │   ├── kick_0381.wav
+│       │   │   ├── kick_0382.wav
+│       │   │   ├── kick_0383.wav
+│       │   │   ├── kick_0384.wav
+│       │   │   ├── kick_0385.wav
+│       │   │   ├── kick_0386.wav
+│       │   │   ├── kick_0387.wav
+│       │   │   ├── kick_0388.wav
+│       │   │   ├── kick_0389.wav
+│       │   │   ├── kick_0390.wav
+│       │   │   ├── kick_0391.wav
+│       │   │   ├── kick_0392.wav
+│       │   │   ├── kick_0393.wav
+│       │   │   ├── kick_0394.wav
+│       │   │   ├── kick_0395.wav
+│       │   │   ├── kick_0396.wav
+│       │   │   ├── kick_0397.wav
+│       │   │   ├── kick_0398.wav
+│       │   │   ├── kick_0399.wav
+│       │   │   ├── kick_0400.wav
+│       │   │   ├── kick_0401.wav
+│       │   │   ├── kick_0402.wav
+│       │   │   ├── kick_0403.wav
+│       │   │   ├── kick_0404.wav
+│       │   │   ├── kick_0405.wav
+│       │   │   ├── kick_0406.wav
+│       │   │   ├── kick_0407.wav
+│       │   │   ├── kick_0408.wav
+│       │   │   ├── kick_0409.wav
+│       │   │   ├── kick_0410.wav
+│       │   │   ├── kick_0411.wav
+│       │   │   ├── kick_0412.wav
+│       │   │   ├── kick_0413.wav
+│       │   │   ├── kick_0414.wav
+│       │   │   ├── kick_0415.wav
+│       │   │   ├── kick_0416.wav
+│       │   │   ├── kick_0417.wav
+│       │   │   ├── kick_0418.wav
+│       │   │   ├── kick_0419.wav
+│       │   │   ├── kick_0420.wav
+│       │   │   ├── kick_0421.wav
+│       │   │   ├── kick_0422.wav
+│       │   │   ├── kick_0423.wav
+│       │   │   ├── kick_0424.wav
+│       │   │   ├── kick_0425.wav
+│       │   │   ├── kick_0426.wav
+│       │   │   ├── kick_0427.wav
+│       │   │   ├── kick_0428.wav
+│       │   │   ├── kick_0429.wav
+│       │   │   ├── kick_0430.wav
+│       │   │   ├── kick_0431.wav
+│       │   │   ├── kick_0432.wav
+│       │   │   ├── kick_0433.wav
+│       │   │   ├── kick_0434.wav
+│       │   │   ├── kick_0435.wav
+│       │   │   ├── kick_0436.wav
+│       │   │   ├── kick_0437.wav
+│       │   │   ├── kick_0438.wav
+│       │   │   ├── kick_0439.wav
+│       │   │   ├── kick_0440.wav
+│       │   │   ├── kick_0441.wav
+│       │   │   ├── kick_0442.wav
+│       │   │   ├── kick_0443.wav
+│       │   │   ├── kick_0444.wav
+│       │   │   ├── kick_0445.wav
+│       │   │   ├── kick_0446.wav
+│       │   │   ├── kick_0447.wav
+│       │   │   ├── kick_0448.wav
+│       │   │   ├── kick_0449.wav
+│       │   │   ├── kick_0450.wav
+│       │   │   ├── kick_0451.wav
+│       │   │   ├── kick_0452.wav
+│       │   │   ├── kick_0453.wav
+│       │   │   ├── kick_0454.wav
+│       │   │   ├── kick_0455.wav
+│       │   │   ├── kick_0456.wav
+│       │   │   ├── kick_0457.wav
+│       │   │   ├── kick_0458.wav
+│       │   │   ├── kick_0459.wav
+│       │   │   ├── kick_0460.wav
+│       │   │   ├── kick_0461.wav
+│       │   │   ├── kick_0462.wav
+│       │   │   ├── kick_0463.wav
+│       │   │   ├── kick_0464.wav
+│       │   │   ├── kick_0465.wav
+│       │   │   ├── kick_0466.wav
+│       │   │   ├── kick_0467.wav
+│       │   │   ├── kick_0468.wav
+│       │   │   ├── kick_0469.wav
+│       │   │   ├── kick_0470.wav
+│       │   │   ├── kick_0471.wav
+│       │   │   ├── kick_0472.wav
+│       │   │   ├── kick_0473.wav
+│       │   │   ├── kick_0474.wav
+│       │   │   ├── kick_0475.wav
+│       │   │   ├── kick_0476.wav
+│       │   │   ├── kick_0477.wav
+│       │   │   ├── kick_0478.wav
+│       │   │   ├── kick_0479.wav
+│       │   │   ├── kick_0480.wav
+│       │   │   ├── kick_0481.wav
+│       │   │   ├── kick_0482.wav
+│       │   │   ├── kick_0483.wav
+│       │   │   ├── kick_0484.wav
+│       │   │   ├── kick_0485.wav
+│       │   │   ├── kick_0486.wav
+│       │   │   ├── kick_0487.wav
+│       │   │   ├── kick_0488.wav
+│       │   │   ├── kick_0489.wav
+│       │   │   ├── kick_0490.wav
+│       │   │   ├── kick_0491.wav
+│       │   │   ├── kick_0492.wav
+│       │   │   ├── kick_0493.wav
+│       │   │   ├── kick_0494.wav
+│       │   │   ├── kick_0495.wav
+│       │   │   ├── kick_0496.wav
+│       │   │   ├── kick_0497.wav
+│       │   │   ├── kick_0498.wav
+│       │   │   ├── kick_0499.wav
+│       │   │   ├── kick_0500.wav
+│       │   │   ├── kick_0501.wav
+│       │   │   ├── kick_0502.wav
+│       │   │   ├── kick_0503.wav
+│       │   │   ├── kick_0504.wav
+│       │   │   ├── kick_0505.wav
+│       │   │   ├── kick_0506.wav
+│       │   │   ├── kick_0507.wav
+│       │   │   ├── kick_0508.wav
+│       │   │   ├── kick_0509.wav
+│       │   │   ├── kick_0510.wav
+│       │   │   ├── kick_0511.wav
+│       │   │   ├── kick_0512.wav
+│       │   │   ├── kick_0513.wav
+│       │   │   ├── kick_0514.wav
+│       │   │   ├── kick_0515.wav
+│       │   │   ├── kick_0516.wav
+│       │   │   ├── kick_0517.wav
+│       │   │   ├── kick_0518.wav
+│       │   │   ├── kick_0519.wav
+│       │   │   ├── kick_0520.wav
+│       │   │   ├── kick_0521.wav
+│       │   │   ├── kick_0522.wav
+│       │   │   ├── kick_0523.wav
+│       │   │   ├── kick_0524.wav
+│       │   │   ├── kick_0525.wav
+│       │   │   ├── kick_0526.wav
+│       │   │   ├── kick_0527.wav
+│       │   │   ├── kick_0528.wav
+│       │   │   ├── kick_0529.wav
+│       │   │   ├── kick_0530.wav
+│       │   │   ├── kick_0531.wav
+│       │   │   ├── kick_0532.wav
+│       │   │   ├── kick_0533.wav
+│       │   │   ├── kick_0534.wav
+│       │   │   ├── kick_0535.wav
+│       │   │   ├── kick_0536.wav
+│       │   │   ├── kick_0537.wav
+│       │   │   ├── kick_0538.wav
+│       │   │   ├── kick_0539.wav
+│       │   │   ├── kick_0540.wav
+│       │   │   ├── kick_0541.wav
+│       │   │   ├── kick_0542.wav
+│       │   │   ├── kick_0543.wav
+│       │   │   ├── kick_0544.wav
+│       │   │   ├── kick_0545.wav
+│       │   │   ├── kick_0546.wav
+│       │   │   ├── kick_0547.wav
+│       │   │   ├── kick_0548.wav
+│       │   │   ├── kick_0549.wav
+│       │   │   ├── kick_0550.wav
+│       │   │   ├── kick_0551.wav
+│       │   │   ├── kick_0552.wav
+│       │   │   ├── kick_0553.wav
+│       │   │   ├── kick_0554.wav
+│       │   │   ├── kick_0555.wav
+│       │   │   ├── kick_0556.wav
+│       │   │   ├── kick_0557.wav
+│       │   │   ├── kick_0558.wav
+│       │   │   ├── kick_0559.wav
+│       │   │   ├── kick_0560.wav
+│       │   │   ├── kick_0561.wav
+│       │   │   ├── kick_0562.wav
+│       │   │   ├── kick_0563.wav
+│       │   │   ├── kick_0564.wav
+│       │   │   ├── kick_0565.wav
+│       │   │   ├── kick_0566.wav
+│       │   │   ├── kick_0567.wav
+│       │   │   ├── kick_0568.wav
+│       │   │   ├── kick_0569.wav
+│       │   │   ├── kick_0570.wav
+│       │   │   ├── kick_0571.wav
+│       │   │   ├── kick_0572.wav
+│       │   │   ├── kick_0573.wav
+│       │   │   ├── kick_0574.wav
+│       │   │   ├── kick_0575.wav
+│       │   │   ├── kick_0576.wav
+│       │   │   ├── kick_0577.wav
+│       │   │   ├── kick_0578.wav
+│       │   │   ├── kick_0579.wav
+│       │   │   ├── kick_0580.wav
+│       │   │   ├── kick_0581.wav
+│       │   │   ├── kick_0582.wav
+│       │   │   ├── kick_0583.wav
+│       │   │   ├── kick_0584.wav
+│       │   │   ├── kick_0585.wav
+│       │   │   ├── kick_0586.wav
+│       │   │   ├── kick_0587.wav
+│       │   │   ├── kick_0588.wav
+│       │   │   ├── kick_0589.wav
+│       │   │   ├── kick_0590.wav
+│       │   │   ├── kick_0591.wav
+│       │   │   ├── kick_0592.wav
+│       │   │   ├── kick_0593.wav
+│       │   │   ├── kick_0594.wav
+│       │   │   ├── kick_0595.wav
+│       │   │   ├── kick_0596.wav
+│       │   │   ├── kick_0597.wav
+│       │   │   ├── kick_0598.wav
+│       │   │   ├── kick_0599.wav
+│       │   │   ├── kick_0600.wav
+│       │   │   ├── kick_0601.wav
+│       │   │   ├── kick_0602.wav
+│       │   │   ├── kick_0603.wav
+│       │   │   ├── kick_0604.wav
+│       │   │   ├── kick_0605.wav
+│       │   │   ├── kick_0606.wav
+│       │   │   ├── kick_0607.wav
+│       │   │   ├── kick_0608.wav
+│       │   │   ├── kick_0609.wav
+│       │   │   ├── kick_0610.wav
+│       │   │   ├── kick_0611.wav
+│       │   │   ├── kick_0612.wav
+│       │   │   ├── kick_0613.wav
+│       │   │   ├── kick_0614.wav
+│       │   │   ├── kick_0615.wav
+│       │   │   ├── kick_0616.wav
+│       │   │   ├── kick_0617.wav
+│       │   │   ├── kick_0618.wav
+│       │   │   ├── kick_0619.wav
+│       │   │   ├── kick_0620.wav
+│       │   │   ├── kick_0621.wav
+│       │   │   ├── kick_0622.wav
+│       │   │   ├── kick_0623.wav
+│       │   │   ├── kick_0624.wav
+│       │   │   ├── kick_0625.wav
+│       │   │   ├── kick_0626.wav
+│       │   │   ├── kick_0627.wav
+│       │   │   ├── kick_0628.wav
+│       │   │   ├── kick_0629.wav
+│       │   │   ├── kick_0630.wav
+│       │   │   ├── kick_0631.wav
+│       │   │   ├── kick_0632.wav
+│       │   │   ├── kick_0633.wav
+│       │   │   ├── kick_0634.wav
+│       │   │   ├── kick_0635.wav
+│       │   │   ├── kick_0636.wav
+│       │   │   ├── kick_0637.wav
+│       │   │   ├── kick_0638.wav
+│       │   │   ├── kick_0639.wav
+│       │   │   ├── kick_0640.wav
+│       │   │   ├── kick_0641.wav
+│       │   │   ├── kick_0642.wav
+│       │   │   ├── kick_0643.wav
+│       │   │   ├── kick_0644.wav
+│       │   │   ├── kick_0645.wav
+│       │   │   ├── kick_0646.wav
+│       │   │   ├── kick_0647.wav
+│       │   │   ├── kick_0648.wav
+│       │   │   ├── kick_0649.wav
+│       │   │   ├── kick_0650.wav
+│       │   │   ├── kick_0651.wav
+│       │   │   ├── kick_0652.wav
+│       │   │   ├── kick_0653.wav
+│       │   │   ├── kick_0654.wav
+│       │   │   ├── kick_0655.wav
+│       │   │   ├── kick_0656.wav
+│       │   │   ├── kick_0657.wav
+│       │   │   ├── kick_0658.wav
+│       │   │   ├── kick_0659.wav
+│       │   │   ├── kick_0660.wav
+│       │   │   ├── kick_0661.wav
+│       │   │   ├── kick_0662.wav
+│       │   │   ├── kick_0663.wav
+│       │   │   ├── kick_0664.wav
+│       │   │   ├── kick_0665.wav
+│       │   │   ├── kick_0666.wav
+│       │   │   ├── kick_0667.wav
+│       │   │   ├── kick_0668.wav
+│       │   │   ├── kick_0669.wav
+│       │   │   ├── kick_0670.wav
+│       │   │   ├── kick_0671.wav
+│       │   │   ├── kick_0672.wav
+│       │   │   ├── kick_0673.wav
+│       │   │   ├── kick_0674.wav
+│       │   │   ├── kick_0675.wav
+│       │   │   ├── kick_0676.wav
+│       │   │   ├── kick_0677.wav
+│       │   │   ├── kick_0678.wav
+│       │   │   ├── kick_0679.wav
+│       │   │   ├── kick_0680.wav
+│       │   │   ├── kick_0681.wav
+│       │   │   ├── kick_0682.wav
+│       │   │   ├── kick_0683.wav
+│       │   │   ├── kick_0684.wav
+│       │   │   ├── kick_0685.wav
+│       │   │   ├── kick_0686.wav
+│       │   │   ├── kick_0687.wav
+│       │   │   ├── kick_0688.wav
+│       │   │   ├── kick_0689.wav
+│       │   │   ├── kick_0690.wav
+│       │   │   ├── kick_0691.wav
+│       │   │   ├── kick_0692.wav
+│       │   │   ├── kick_0693.wav
+│       │   │   ├── kick_0694.wav
+│       │   │   ├── kick_0695.wav
+│       │   │   ├── kick_0696.wav
+│       │   │   ├── kick_0697.wav
+│       │   │   ├── kick_0698.wav
+│       │   │   ├── kick_0699.wav
+│       │   │   ├── kick_0700.wav
+│       │   │   ├── kick_0701.wav
+│       │   │   ├── kick_0702.wav
+│       │   │   ├── kick_0703.wav
+│       │   │   ├── kick_0704.wav
+│       │   │   ├── kick_0705.wav
+│       │   │   ├── kick_0706.wav
+│       │   │   ├── kick_0707.wav
+│       │   │   ├── kick_0708.wav
+│       │   │   ├── kick_0709.wav
+│       │   │   ├── kick_0710.wav
+│       │   │   ├── kick_0711.wav
+│       │   │   ├── kick_0712.wav
+│       │   │   ├── kick_0713.wav
+│       │   │   ├── kick_0714.wav
+│       │   │   ├── kick_0715.wav
+│       │   │   ├── kick_0716.wav
+│       │   │   ├── kick_0717.wav
+│       │   │   ├── kick_0718.wav
+│       │   │   ├── kick_0719.wav
+│       │   │   ├── kick_0720.wav
+│       │   │   ├── kick_0721.wav
+│       │   │   ├── kick_0722.wav
+│       │   │   ├── kick_0723.wav
+│       │   │   ├── kick_0724.wav
+│       │   │   ├── kick_0725.wav
+│       │   │   ├── kick_0726.wav
+│       │   │   ├── kick_0727.wav
+│       │   │   ├── kick_0728.wav
+│       │   │   ├── kick_0729.wav
+│       │   │   ├── kick_0730.wav
+│       │   │   ├── kick_0731.wav
+│       │   │   ├── kick_0732.wav
+│       │   │   ├── kick_0733.wav
+│       │   │   ├── kick_0734.wav
+│       │   │   ├── kick_0735.wav
+│       │   │   ├── kick_0736.wav
+│       │   │   ├── kick_0737.wav
+│       │   │   ├── kick_0738.wav
+│       │   │   ├── kick_0739.wav
+│       │   │   ├── kick_0740.wav
+│       │   │   ├── kick_0741.wav
+│       │   │   ├── kick_0742.wav
+│       │   │   ├── kick_0743.wav
+│       │   │   ├── kick_0744.wav
+│       │   │   ├── kick_0745.wav
+│       │   │   ├── kick_0746.wav
+│       │   │   ├── kick_0747.wav
+│       │   │   └── kick_0748.wav
+│       │   ├── open_hi_hat
+│       │   │   ├── openhat_0001.wav
+│       │   │   ├── openhat_0002.wav
+│       │   │   ├── openhat_0003.wav
+│       │   │   ├── openhat_0004.wav
+│       │   │   ├── openhat_0005.wav
+│       │   │   ├── openhat_0006.wav
+│       │   │   ├── openhat_0007.wav
+│       │   │   ├── openhat_0008.wav
+│       │   │   ├── openhat_0009.wav
+│       │   │   ├── openhat_0010.wav
+│       │   │   ├── openhat_0011.wav
+│       │   │   ├── openhat_0012.wav
+│       │   │   ├── openhat_0013.wav
+│       │   │   ├── openhat_0014.wav
+│       │   │   ├── openhat_0015.wav
+│       │   │   ├── openhat_0016.wav
+│       │   │   ├── openhat_0017.wav
+│       │   │   ├── openhat_0018.wav
+│       │   │   ├── openhat_0019.wav
+│       │   │   ├── openhat_0020.wav
+│       │   │   ├── openhat_0021.wav
+│       │   │   ├── openhat_0022.wav
+│       │   │   ├── openhat_0023.wav
+│       │   │   ├── openhat_0024.wav
+│       │   │   ├── openhat_0025.wav
+│       │   │   ├── openhat_0026.wav
+│       │   │   ├── openhat_0027.wav
+│       │   │   ├── openhat_0028.wav
+│       │   │   ├── openhat_0029.wav
+│       │   │   ├── openhat_0030.wav
+│       │   │   ├── openhat_0031.wav
+│       │   │   ├── openhat_0032.wav
+│       │   │   ├── openhat_0033.wav
+│       │   │   ├── openhat_0034.wav
+│       │   │   ├── openhat_0035.wav
+│       │   │   ├── openhat_0036.wav
+│       │   │   ├── openhat_0037.wav
+│       │   │   ├── openhat_0038.wav
+│       │   │   ├── openhat_0039.wav
+│       │   │   ├── openhat_0040.wav
+│       │   │   ├── openhat_0041.wav
+│       │   │   ├── openhat_0042.wav
+│       │   │   ├── openhat_0043.wav
+│       │   │   ├── openhat_0044.wav
+│       │   │   ├── openhat_0045.wav
+│       │   │   ├── openhat_0046.wav
+│       │   │   ├── openhat_0047.wav
+│       │   │   ├── openhat_0048.wav
+│       │   │   ├── openhat_0049.wav
+│       │   │   ├── openhat_0050.wav
+│       │   │   ├── openhat_0051.wav
+│       │   │   ├── openhat_0052.wav
+│       │   │   ├── openhat_0053.wav
+│       │   │   ├── openhat_0054.wav
+│       │   │   ├── openhat_0055.wav
+│       │   │   ├── openhat_0056.wav
+│       │   │   ├── openhat_0057.wav
+│       │   │   ├── openhat_0058.wav
+│       │   │   ├── openhat_0059.wav
+│       │   │   ├── openhat_0060.wav
+│       │   │   ├── openhat_0061.wav
+│       │   │   ├── openhat_0062.wav
+│       │   │   ├── openhat_0063.wav
+│       │   │   ├── openhat_0064.wav
+│       │   │   ├── openhat_0065.wav
+│       │   │   ├── openhat_0066.wav
+│       │   │   ├── openhat_0067.wav
+│       │   │   ├── openhat_0068.wav
+│       │   │   ├── openhat_0069.wav
+│       │   │   ├── openhat_0070.wav
+│       │   │   ├── openhat_0071.wav
+│       │   │   ├── openhat_0072.wav
+│       │   │   ├── openhat_0073.wav
+│       │   │   ├── openhat_0074.wav
+│       │   │   ├── openhat_0075.wav
+│       │   │   ├── openhat_0076.wav
+│       │   │   ├── openhat_0077.wav
+│       │   │   ├── openhat_0078.wav
+│       │   │   ├── openhat_0079.wav
+│       │   │   ├── openhat_0080.wav
+│       │   │   ├── openhat_0081.wav
+│       │   │   ├── openhat_0082.wav
+│       │   │   ├── openhat_0083.wav
+│       │   │   ├── openhat_0084.wav
+│       │   │   ├── openhat_0085.WAV
+│       │   │   ├── openhat_0086.wav
+│       │   │   ├── openhat_0087.wav
+│       │   │   ├── openhat_0088.wav
+│       │   │   ├── openhat_0089.wav
+│       │   │   ├── openhat_0090.wav
+│       │   │   ├── openhat_0091.wav
+│       │   │   ├── openhat_0092.wav
+│       │   │   ├── openhat_0093.wav
+│       │   │   ├── openhat_0094.wav
+│       │   │   ├── openhat_0095.WAV
+│       │   │   ├── openhat_0096.wav
+│       │   │   ├── openhat_0097.wav
+│       │   │   ├── openhat_0098.wav
+│       │   │   ├── openhat_0099.wav
+│       │   │   ├── openhat_0100.wav
+│       │   │   ├── openhat_0101.wav
+│       │   │   ├── openhat_0102.wav
+│       │   │   ├── openhat_0103.wav
+│       │   │   ├── openhat_0104.wav
+│       │   │   ├── openhat_0105.wav
+│       │   │   ├── openhat_0106.wav
+│       │   │   ├── openhat_0107.wav
+│       │   │   ├── openhat_0108.wav
+│       │   │   ├── openhat_0109.wav
+│       │   │   ├── openhat_0110.wav
+│       │   │   ├── openhat_0111.wav
+│       │   │   └── openhat_0112.wav
+│       │   └── snare
+│       │       ├── snare_0001.wav
+│       │       ├── snare_0002.wav
+│       │       ├── snare_0003.wav
+│       │       ├── snare_0004.wav
+│       │       ├── snare_0005.wav
+│       │       ├── snare_0006.wav
+│       │       ├── snare_0007.wav
+│       │       ├── snare_0008.wav
+│       │       ├── snare_0009.wav
+│       │       ├── snare_0010.wav
+│       │       ├── snare_0011.wav
+│       │       ├── snare_0012.wav
+│       │       ├── snare_0013.wav
+│       │       ├── snare_0014.wav
+│       │       ├── snare_0015.wav
+│       │       ├── snare_0016.wav
+│       │       ├── snare_0017.wav
+│       │       ├── snare_0018.wav
+│       │       ├── snare_0019.wav
+│       │       ├── snare_0020.wav
+│       │       ├── snare_0021.wav
+│       │       ├── snare_0022.wav
+│       │       ├── snare_0023.wav
+│       │       ├── snare_0024.wav
+│       │       ├── snare_0025.wav
+│       │       ├── snare_0026.wav
+│       │       ├── snare_0027.wav
+│       │       ├── snare_0028.wav
+│       │       ├── snare_0029.wav
+│       │       ├── snare_0030.wav
+│       │       ├── snare_0031.wav
+│       │       ├── snare_0032.wav
+│       │       ├── snare_0033.wav
+│       │       ├── snare_0034.wav
+│       │       ├── snare_0035.wav
+│       │       ├── snare_0036.wav
+│       │       ├── snare_0037.wav
+│       │       ├── snare_0038.wav
+│       │       ├── snare_0039.wav
+│       │       ├── snare_0040.wav
+│       │       ├── snare_0041.wav
+│       │       ├── snare_0042.wav
+│       │       ├── snare_0043.wav
+│       │       ├── snare_0044.wav
+│       │       ├── snare_0045.wav
+│       │       ├── snare_0046.wav
+│       │       ├── snare_0047.wav
+│       │       ├── snare_0048.wav
+│       │       ├── snare_0049.wav
+│       │       ├── snare_0050.wav
+│       │       ├── snare_0051.wav
+│       │       ├── snare_0052.wav
+│       │       ├── snare_0053.wav
+│       │       ├── snare_0054.wav
+│       │       ├── snare_0055.wav
+│       │       ├── snare_0056.wav
+│       │       ├── snare_0057.wav
+│       │       ├── snare_0058.wav
+│       │       ├── snare_0059.wav
+│       │       ├── snare_0060.wav
+│       │       ├── snare_0061.wav
+│       │       ├── snare_0062.wav
+│       │       ├── snare_0063.wav
+│       │       ├── snare_0064.wav
+│       │       ├── snare_0065.wav
+│       │       ├── snare_0066.wav
+│       │       ├── snare_0067.wav
+│       │       ├── snare_0068.wav
+│       │       ├── snare_0069.wav
+│       │       ├── snare_0070.wav
+│       │       ├── snare_0071.wav
+│       │       ├── snare_0072.wav
+│       │       ├── snare_0073.wav
+│       │       ├── snare_0074.wav
+│       │       ├── snare_0075.wav
+│       │       ├── snare_0076.wav
+│       │       ├── snare_0077.wav
+│       │       ├── snare_0078.wav
+│       │       ├── snare_0079.wav
+│       │       ├── snare_0080.wav
+│       │       ├── snare_0081.wav
+│       │       ├── snare_0082.wav
+│       │       ├── snare_0083.wav
+│       │       ├── snare_0084.wav
+│       │       ├── snare_0085.wav
+│       │       ├── snare_0086.wav
+│       │       ├── snare_0087.wav
+│       │       ├── snare_0088.wav
+│       │       ├── snare_0089.wav
+│       │       ├── snare_0090.wav
+│       │       ├── snare_0091.wav
+│       │       ├── snare_0092.wav
+│       │       ├── snare_0093.wav
+│       │       ├── snare_0094.wav
+│       │       ├── snare_0095.wav
+│       │       ├── snare_0096.wav
+│       │       ├── snare_0097.wav
+│       │       ├── snare_0098.wav
+│       │       ├── snare_0099.wav
+│       │       ├── snare_0100.wav
+│       │       ├── snare_0101.wav
+│       │       ├── snare_0102.wav
+│       │       ├── snare_0103.wav
+│       │       ├── snare_0104.wav
+│       │       ├── snare_0105.wav
+│       │       ├── snare_0106.wav
+│       │       ├── snare_0107.wav
+│       │       ├── snare_0108.wav
+│       │       ├── snare_0109.wav
+│       │       ├── snare_0110.wav
+│       │       ├── snare_0111.wav
+│       │       ├── snare_0112.wav
+│       │       ├── snare_0113.wav
+│       │       ├── snare_0114.wav
+│       │       ├── snare_0115.wav
+│       │       ├── snare_0116.wav
+│       │       ├── snare_0117.wav
+│       │       ├── snare_0118.wav
+│       │       ├── snare_0119.wav
+│       │       ├── snare_0120.wav
+│       │       ├── snare_0121.wav
+│       │       ├── snare_0122.wav
+│       │       ├── snare_0123.wav
+│       │       ├── snare_0124.wav
+│       │       ├── snare_0125.wav
+│       │       ├── snare_0126.wav
+│       │       ├── snare_0127.wav
+│       │       ├── snare_0128.wav
+│       │       ├── snare_0129.wav
+│       │       ├── snare_0130.wav
+│       │       ├── snare_0131.wav
+│       │       ├── snare_0132.wav
+│       │       ├── snare_0133.wav
+│       │       ├── snare_0134.wav
+│       │       ├── snare_0135.wav
+│       │       ├── snare_0136.wav
+│       │       ├── snare_0137.wav
+│       │       ├── snare_0138.wav
+│       │       ├── snare_0139.wav
+│       │       ├── snare_0140.wav
+│       │       ├── snare_0141.wav
+│       │       ├── snare_0142.wav
+│       │       ├── snare_0143.wav
+│       │       ├── snare_0144.wav
+│       │       ├── snare_0145.wav
+│       │       ├── snare_0146.wav
+│       │       ├── snare_0147.wav
+│       │       ├── snare_0148.wav
+│       │       ├── snare_0149.wav
+│       │       ├── snare_0150.wav
+│       │       ├── snare_0151.wav
+│       │       ├── snare_0152.wav
+│       │       ├── snare_0153.wav
+│       │       ├── snare_0154.wav
+│       │       ├── snare_0155.wav
+│       │       ├── snare_0156.wav
+│       │       ├── snare_0157.wav
+│       │       ├── snare_0158.wav
+│       │       ├── snare_0159.wav
+│       │       ├── snare_0160.wav
+│       │       ├── snare_0161.wav
+│       │       ├── snare_0162.wav
+│       │       ├── snare_0163.wav
+│       │       ├── snare_0164.wav
+│       │       ├── snare_0165.wav
+│       │       ├── snare_0166.wav
+│       │       ├── snare_0167.wav
+│       │       ├── snare_0168.wav
+│       │       ├── snare_0169.wav
+│       │       ├── snare_0170.wav
+│       │       ├── snare_0171.wav
+│       │       ├── snare_0172.wav
+│       │       ├── snare_0173.wav
+│       │       ├── snare_0174.wav
+│       │       ├── snare_0175.wav
+│       │       ├── snare_0176.wav
+│       │       ├── snare_0177.wav
+│       │       ├── snare_0178.wav
+│       │       ├── snare_0179.wav
+│       │       ├── snare_0180.wav
+│       │       ├── snare_0181.wav
+│       │       ├── snare_0182.wav
+│       │       ├── snare_0183.wav
+│       │       ├── snare_0184.wav
+│       │       ├── snare_0185.wav
+│       │       ├── snare_0186.wav
+│       │       ├── snare_0187.wav
+│       │       ├── snare_0188.WAV
+│       │       ├── snare_0189.wav
+│       │       ├── snare_0190.wav
+│       │       ├── snare_0191.wav
+│       │       ├── snare_0192.wav
+│       │       ├── snare_0193.wav
+│       │       ├── snare_0194.wav
+│       │       ├── snare_0195.wav
+│       │       ├── snare_0196.wav
+│       │       ├── snare_0197.wav
+│       │       ├── snare_0198.wav
+│       │       ├── snare_0199.wav
+│       │       ├── snare_0200.wav
+│       │       ├── snare_0201.wav
+│       │       ├── snare_0202.wav
+│       │       ├── snare_0203.wav
+│       │       ├── snare_0204.wav
+│       │       ├── snare_0205.wav
+│       │       ├── snare_0206.wav
+│       │       ├── snare_0207.wav
+│       │       ├── snare_0208.wav
+│       │       ├── snare_0209.wav
+│       │       ├── snare_0210.wav
+│       │       ├── snare_0211.wav
+│       │       ├── snare_0212.wav
+│       │       ├── snare_0213.wav
+│       │       ├── snare_0214.wav
+│       │       ├── snare_0215.wav
+│       │       ├── snare_0216.wav
+│       │       ├── snare_0217.wav
+│       │       ├── snare_0218.wav
+│       │       ├── snare_0219.wav
+│       │       ├── snare_0220.wav
+│       │       ├── snare_0221.wav
+│       │       ├── snare_0222.wav
+│       │       ├── snare_0223.wav
+│       │       ├── snare_0224.wav
+│       │       ├── snare_0225.wav
+│       │       ├── snare_0226.wav
+│       │       ├── snare_0227.wav
+│       │       ├── snare_0228.wav
+│       │       ├── snare_0229.wav
+│       │       ├── snare_0230.wav
+│       │       ├── snare_0231.wav
+│       │       ├── snare_0232.wav
+│       │       ├── snare_0233.wav
+│       │       ├── snare_0234.wav
+│       │       ├── snare_0235.wav
+│       │       ├── snare_0236.wav
+│       │       ├── snare_0237.wav
+│       │       ├── snare_0238.wav
+│       │       ├── snare_0239.wav
+│       │       ├── snare_0240.wav
+│       │       ├── snare_0241.wav
+│       │       ├── snare_0242.wav
+│       │       ├── snare_0243.wav
+│       │       ├── snare_0244.wav
+│       │       ├── snare_0245.wav
+│       │       ├── snare_0246.wav
+│       │       ├── snare_0247.wav
+│       │       ├── snare_0248.wav
+│       │       ├── snare_0249.wav
+│       │       ├── snare_0250.wav
+│       │       ├── snare_0251.wav
+│       │       ├── snare_0252.wav
+│       │       ├── snare_0253.wav
+│       │       ├── snare_0254.wav
+│       │       ├── snare_0255.wav
+│       │       ├── snare_0256.wav
+│       │       ├── snare_0257.wav
+│       │       ├── snare_0258.wav
+│       │       ├── snare_0259.wav
+│       │       ├── snare_0260.wav
+│       │       ├── snare_0261.wav
+│       │       ├── snare_0262.wav
+│       │       ├── snare_0263.wav
+│       │       ├── snare_0264.wav
+│       │       ├── snare_0265.wav
+│       │       ├── snare_0266.wav
+│       │       ├── snare_0267.wav
+│       │       ├── snare_0268.wav
+│       │       ├── snare_0269.wav
+│       │       ├── snare_0270.wav
+│       │       ├── snare_0271.wav
+│       │       ├── snare_0272.wav
+│       │       ├── snare_0273.wav
+│       │       ├── snare_0274.wav
+│       │       ├── snare_0275.wav
+│       │       ├── snare_0276.wav
+│       │       ├── snare_0277.wav
+│       │       ├── snare_0278.wav
+│       │       ├── snare_0279.wav
+│       │       ├── snare_0280.wav
+│       │       ├── snare_0281.wav
+│       │       ├── snare_0282.wav
+│       │       ├── snare_0283.wav
+│       │       ├── snare_0284.wav
+│       │       ├── snare_0285.wav
+│       │       ├── snare_0286.wav
+│       │       ├── snare_0287.wav
+│       │       ├── snare_0288.wav
+│       │       ├── snare_0289.wav
+│       │       ├── snare_0290.wav
+│       │       ├── snare_0291.wav
+│       │       ├── snare_0292.wav
+│       │       ├── snare_0293.wav
+│       │       ├── snare_0294.wav
+│       │       ├── snare_0295.wav
+│       │       ├── snare_0296.wav
+│       │       ├── snare_0297.wav
+│       │       ├── snare_0298.wav
+│       │       ├── snare_0299.wav
+│       │       ├── snare_0300.wav
+│       │       ├── snare_0301.wav
+│       │       ├── snare_0302.wav
+│       │       ├── snare_0303.wav
+│       │       ├── snare_0304.wav
+│       │       ├── snare_0305.wav
+│       │       ├── snare_0306.wav
+│       │       ├── snare_0307.wav
+│       │       ├── snare_0308.wav
+│       │       ├── snare_0309.wav
+│       │       ├── snare_0310.wav
+│       │       ├── snare_0311.wav
+│       │       ├── snare_0312.wav
+│       │       ├── snare_0313.wav
+│       │       ├── snare_0314.wav
+│       │       ├── snare_0315.wav
+│       │       ├── snare_0316.wav
+│       │       ├── snare_0317.wav
+│       │       ├── snare_0318.wav
+│       │       ├── snare_0319.wav
+│       │       ├── snare_0320.wav
+│       │       ├── snare_0321.wav
+│       │       ├── snare_0322.wav
+│       │       ├── snare_0323.wav
+│       │       ├── snare_0324.wav
+│       │       ├── snare_0325.wav
+│       │       ├── snare_0326.wav
+│       │       ├── snare_0327.wav
+│       │       ├── snare_0328.wav
+│       │       ├── snare_0329.wav
+│       │       ├── snare_0330.wav
+│       │       ├── snare_0331.wav
+│       │       ├── snare_0332.wav
+│       │       ├── snare_0333.wav
+│       │       ├── snare_0334.wav
+│       │       ├── snare_0335.wav
+│       │       ├── snare_0336.wav
+│       │       ├── snare_0337.wav
+│       │       ├── snare_0338.wav
+│       │       ├── snare_0339.wav
+│       │       ├── snare_0340.wav
+│       │       ├── snare_0341.wav
+│       │       ├── snare_0342.wav
+│       │       ├── snare_0343.wav
+│       │       ├── snare_0344.wav
+│       │       ├── snare_0345.wav
+│       │       ├── snare_0346.wav
+│       │       ├── snare_0347.wav
+│       │       ├── snare_0348.wav
+│       │       ├── snare_0349.wav
+│       │       ├── snare_0350.wav
+│       │       ├── snare_0351.wav
+│       │       ├── snare_0352.wav
+│       │       ├── snare_0353.wav
+│       │       ├── snare_0354.wav
+│       │       ├── snare_0355.wav
+│       │       ├── snare_0356.wav
+│       │       ├── snare_0357.wav
+│       │       ├── snare_0358.wav
+│       │       ├── snare_0359.wav
+│       │       ├── snare_0360.wav
+│       │       ├── snare_0361.wav
+│       │       ├── snare_0362.wav
+│       │       ├── snare_0363.wav
+│       │       ├── snare_0364.wav
+│       │       ├── snare_0365.wav
+│       │       ├── snare_0366.wav
+│       │       ├── snare_0367.wav
+│       │       ├── snare_0368.wav
+│       │       ├── snare_0369.wav
+│       │       ├── snare_0370.wav
+│       │       ├── snare_0371.wav
+│       │       ├── snare_0372.wav
+│       │       ├── snare_0373.wav
+│       │       ├── snare_0374.wav
+│       │       ├── snare_0375.wav
+│       │       ├── snare_0376.wav
+│       │       ├── snare_0377.wav
+│       │       ├── snare_0378.wav
+│       │       ├── snare_0379.wav
+│       │       ├── snare_0380.wav
+│       │       ├── snare_0381.wav
+│       │       ├── snare_0382.wav
+│       │       ├── snare_0383.wav
+│       │       ├── snare_0384.wav
+│       │       ├── snare_0385.wav
+│       │       ├── snare_0386.wav
+│       │       ├── snare_0387.wav
+│       │       ├── snare_0388.wav
+│       │       ├── snare_0389.wav
+│       │       ├── snare_0390.wav
+│       │       ├── snare_0391.wav
+│       │       ├── snare_0392.wav
+│       │       ├── snare_0393.wav
+│       │       ├── snare_0394.wav
+│       │       ├── snare_0395.wav
+│       │       ├── snare_0396.wav
+│       │       ├── snare_0397.wav
+│       │       ├── snare_0398.wav
+│       │       ├── snare_0399.wav
+│       │       ├── snare_0400.wav
+│       │       ├── snare_0401.wav
+│       │       ├── snare_0402.wav
+│       │       ├── snare_0403.wav
+│       │       ├── snare_0404.wav
+│       │       ├── snare_0405.wav
+│       │       ├── snare_0406.wav
+│       │       ├── snare_0407.wav
+│       │       ├── snare_0408.wav
+│       │       ├── snare_0409.wav
+│       │       ├── snare_0410.wav
+│       │       ├── snare_0411.wav
+│       │       ├── snare_0412.wav
+│       │       ├── snare_0413.wav
+│       │       ├── snare_0414.wav
+│       │       ├── snare_0415.wav
+│       │       ├── snare_0416.wav
+│       │       ├── snare_0417.wav
+│       │       ├── snare_0418.wav
+│       │       ├── snare_0419.wav
+│       │       ├── snare_0420.wav
+│       │       ├── snare_0421.wav
+│       │       ├── snare_0422.wav
+│       │       ├── snare_0423.wav
+│       │       ├── snare_0424.wav
+│       │       ├── snare_0425.wav
+│       │       ├── snare_0426.wav
+│       │       ├── snare_0427.wav
+│       │       ├── snare_0428.wav
+│       │       ├── snare_0429.wav
+│       │       ├── snare_0430.wav
+│       │       ├── snare_0431.wav
+│       │       ├── snare_0432.wav
+│       │       ├── snare_0433.wav
+│       │       ├── snare_0434.wav
+│       │       ├── snare_0435.wav
+│       │       ├── snare_0436.wav
+│       │       ├── snare_0437.wav
+│       │       ├── snare_0438.wav
+│       │       ├── snare_0439.wav
+│       │       ├── snare_0440.wav
+│       │       ├── snare_0441.wav
+│       │       ├── snare_0442.wav
+│       │       ├── snare_0443.wav
+│       │       ├── snare_0444.wav
+│       │       ├── snare_0445.wav
+│       │       ├── snare_0446.wav
+│       │       ├── snare_0447.wav
+│       │       ├── snare_0448.wav
+│       │       ├── snare_0449.wav
+│       │       ├── snare_0450.wav
+│       │       ├── snare_0451.wav
+│       │       ├── snare_0452.wav
+│       │       ├── snare_0453.wav
+│       │       ├── snare_0454.wav
+│       │       ├── snare_0455.wav
+│       │       ├── snare_0456.wav
+│       │       ├── snare_0457.wav
+│       │       ├── snare_0458.wav
+│       │       ├── snare_0459.wav
+│       │       ├── snare_0460.wav
+│       │       ├── snare_0461.wav
+│       │       ├── snare_0462.wav
+│       │       ├── snare_0463.wav
+│       │       ├── snare_0464.wav
+│       │       ├── snare_0465.wav
+│       │       ├── snare_0466.wav
+│       │       ├── snare_0467.wav
+│       │       ├── snare_0468.wav
+│       │       ├── snare_0469.wav
+│       │       ├── snare_0470.wav
+│       │       ├── snare_0471.wav
+│       │       ├── snare_0472.wav
+│       │       ├── snare_0473.wav
+│       │       ├── snare_0474.wav
+│       │       ├── snare_0475.wav
+│       │       ├── snare_0476.wav
+│       │       ├── snare_0477.wav
+│       │       ├── snare_0478.wav
+│       │       ├── snare_0479.wav
+│       │       ├── snare_0480.wav
+│       │       ├── snare_0481.wav
+│       │       ├── snare_0482.wav
+│       │       ├── snare_0483.wav
+│       │       ├── snare_0484.wav
+│       │       ├── snare_0485.wav
+│       │       ├── snare_0486.wav
+│       │       ├── snare_0487.wav
+│       │       ├── snare_0488.wav
+│       │       ├── snare_0489.wav
+│       │       ├── snare_0490.wav
+│       │       ├── snare_0491.wav
+│       │       ├── snare_0492.wav
+│       │       ├── snare_0493.wav
+│       │       ├── snare_0494.wav
+│       │       ├── snare_0495.wav
+│       │       ├── snare_0496.wav
+│       │       ├── snare_0497.wav
+│       │       ├── snare_0498.wav
+│       │       ├── snare_0499.wav
+│       │       ├── snare_0500.wav
+│       │       ├── snare_0501.wav
+│       │       ├── snare_0502.wav
+│       │       ├── snare_0503.wav
+│       │       ├── snare_0504.wav
+│       │       ├── snare_0505.wav
+│       │       ├── snare_0506.wav
+│       │       ├── snare_0507.wav
+│       │       ├── snare_0508.wav
+│       │       ├── snare_0509.wav
+│       │       ├── snare_0510.wav
+│       │       ├── snare_0511.wav
+│       │       ├── snare_0512.wav
+│       │       ├── snare_0513.wav
+│       │       ├── snare_0514.wav
+│       │       ├── snare_0515.wav
+│       │       ├── snare_0516.wav
+│       │       ├── snare_0517.wav
+│       │       ├── snare_0518.wav
+│       │       ├── snare_0519.wav
+│       │       ├── snare_0520.wav
+│       │       ├── snare_0521.wav
+│       │       ├── snare_0522.wav
+│       │       ├── snare_0523.wav
+│       │       ├── snare_0524.wav
+│       │       ├── snare_0525.wav
+│       │       ├── snare_0526.wav
+│       │       ├── snare_0527.wav
+│       │       ├── snare_0528.wav
+│       │       ├── snare_0529.wav
+│       │       ├── snare_0530.wav
+│       │       ├── snare_0531.wav
+│       │       ├── snare_0532.wav
+│       │       ├── snare_0533.wav
+│       │       ├── snare_0534.wav
+│       │       ├── snare_0535.wav
+│       │       ├── snare_0536.wav
+│       │       ├── snare_0537.wav
+│       │       ├── snare_0538.wav
+│       │       ├── snare_0539.wav
+│       │       ├── snare_0540.wav
+│       │       ├── snare_0541.wav
+│       │       ├── snare_0542.wav
+│       │       ├── snare_0543.wav
+│       │       ├── snare_0544.wav
+│       │       ├── snare_0545.wav
+│       │       ├── snare_0546.wav
+│       │       ├── snare_0547.wav
+│       │       ├── snare_0548.wav
+│       │       ├── snare_0549.wav
+│       │       ├── snare_0550.wav
+│       │       ├── snare_0551.wav
+│       │       ├── snare_0552.wav
+│       │       ├── snare_0553.wav
+│       │       ├── snare_0554.wav
+│       │       ├── snare_0555.wav
+│       │       ├── snare_0556.wav
+│       │       ├── snare_0557.wav
+│       │       ├── snare_0558.wav
+│       │       ├── snare_0559.wav
+│       │       ├── snare_0560.wav
+│       │       ├── snare_0561.wav
+│       │       ├── snare_0562.wav
+│       │       ├── snare_0563.wav
+│       │       ├── snare_0564.wav
+│       │       ├── snare_0565.wav
+│       │       ├── snare_0566.wav
+│       │       ├── snare_0567.wav
+│       │       ├── snare_0568.wav
+│       │       ├── snare_0569.wav
+│       │       ├── snare_0570.wav
+│       │       ├── snare_0571.wav
+│       │       ├── snare_0572.wav
+│       │       ├── snare_0573.wav
+│       │       ├── snare_0574.wav
+│       │       ├── snare_0575.wav
+│       │       ├── snare_0576.wav
+│       │       ├── snare_0577.wav
+│       │       ├── snare_0578.wav
+│       │       ├── snare_0579.wav
+│       │       ├── snare_0580.wav
+│       │       ├── snare_0581.wav
+│       │       ├── snare_0582.wav
+│       │       ├── snare_0583.wav
+│       │       ├── snare_0584.wav
+│       │       ├── snare_0585.wav
+│       │       ├── snare_0586.wav
+│       │       ├── snare_0587.wav
+│       │       ├── snare_0588.wav
+│       │       ├── snare_0589.wav
+│       │       ├── snare_0590.wav
+│       │       ├── snare_0591.wav
+│       │       ├── snare_0592.wav
+│       │       ├── snare_0593.wav
+│       │       ├── snare_0594.wav
+│       │       ├── snare_0595.wav
+│       │       ├── snare_0596.wav
+│       │       ├── snare_0597.wav
+│       │       ├── snare_0598.wav
+│       │       ├── snare_0599.wav
+│       │       ├── snare_0600.wav
+│       │       ├── snare_0601.wav
+│       │       ├── snare_0602.wav
+│       │       ├── snare_0603.wav
+│       │       ├── snare_0604.wav
+│       │       ├── snare_0605.wav
+│       │       ├── snare_0606.wav
+│       │       ├── snare_0607.wav
+│       │       ├── snare_0608.wav
+│       │       ├── snare_0609.wav
+│       │       ├── snare_0610.wav
+│       │       ├── snare_0611.wav
+│       │       ├── snare_0612.wav
+│       │       ├── snare_0613.wav
+│       │       ├── snare_0614.wav
+│       │       ├── snare_0615.wav
+│       │       ├── snare_0616.wav
+│       │       ├── snare_0617.wav
+│       │       ├── snare_0618.wav
+│       │       ├── snare_0619.wav
+│       │       ├── snare_0620.wav
+│       │       ├── snare_0621.wav
+│       │       ├── snare_0622.wav
+│       │       ├── snare_0623.wav
+│       │       ├── snare_0624.wav
+│       │       ├── snare_0625.wav
+│       │       ├── snare_0626.wav
+│       │       ├── snare_0627.wav
+│       │       ├── snare_0628.wav
+│       │       ├── snare_0629.wav
+│       │       ├── snare_0630.wav
+│       │       ├── snare_0631.wav
+│       │       ├── snare_0632.wav
+│       │       ├── snare_0633.wav
+│       │       ├── snare_0634.wav
+│       │       ├── snare_0635.wav
+│       │       ├── snare_0636.wav
+│       │       ├── snare_0637.wav
+│       │       ├── snare_0638.wav
+│       │       ├── snare_0639.wav
+│       │       ├── snare_0640.wav
+│       │       ├── snare_0641.wav
+│       │       ├── snare_0642.wav
+│       │       ├── snare_0643.wav
+│       │       ├── snare_0644.wav
+│       │       ├── snare_0645.wav
+│       │       ├── snare_0646.wav
+│       │       ├── snare_0647.wav
+│       │       ├── snare_0648.wav
+│       │       ├── snare_0649.wav
+│       │       ├── snare_0650.wav
+│       │       ├── snare_0651.wav
+│       │       ├── snare_0652.wav
+│       │       ├── snare_0653.wav
+│       │       ├── snare_0654.wav
+│       │       ├── snare_0655.wav
+│       │       ├── snare_0656.wav
+│       │       ├── snare_0657.wav
+│       │       ├── snare_0658.wav
+│       │       ├── snare_0659.wav
+│       │       ├── snare_0660.wav
+│       │       ├── snare_0661.wav
+│       │       ├── snare_0662.wav
+│       │       ├── snare_0663.wav
+│       │       ├── snare_0664.wav
+│       │       ├── snare_0665.wav
+│       │       ├── snare_0666.wav
+│       │       ├── snare_0667.wav
+│       │       ├── snare_0668.wav
+│       │       ├── snare_0669.wav
+│       │       ├── snare_0670.wav
+│       │       ├── snare_0671.wav
+│       │       ├── snare_0672.wav
+│       │       ├── snare_0673.wav
+│       │       ├── snare_0674.wav
+│       │       ├── snare_0675.wav
+│       │       ├── snare_0676.wav
+│       │       ├── snare_0677.wav
+│       │       ├── snare_0678.wav
+│       │       ├── snare_0679.wav
+│       │       ├── snare_0680.wav
+│       │       ├── snare_0681.wav
+│       │       ├── snare_0682.wav
+│       │       ├── snare_0683.wav
+│       │       ├── snare_0684.wav
+│       │       ├── snare_0685.wav
+│       │       ├── snare_0686.wav
+│       │       ├── snare_0687.wav
+│       │       ├── snare_0688.wav
+│       │       ├── snare_0689.wav
+│       │       ├── snare_0690.wav
+│       │       ├── snare_0691.wav
+│       │       ├── snare_0692.wav
+│       │       ├── snare_0693.wav
+│       │       ├── snare_0694.wav
+│       │       ├── snare_0695.wav
+│       │       ├── snare_0696.wav
+│       │       ├── snare_0697.wav
+│       │       ├── snare_0698.wav
+│       │       ├── snare_0699.wav
+│       │       ├── snare_0700.wav
+│       │       ├── snare_0701.wav
+│       │       ├── snare_0702.wav
+│       │       ├── snare_0703.wav
+│       │       ├── snare_0704.wav
+│       │       ├── snare_0705.wav
+│       │       ├── snare_0706.wav
+│       │       ├── snare_0707.wav
+│       │       ├── snare_0708.wav
+│       │       ├── snare_0709.wav
+│       │       ├── snare_0710.wav
+│       │       ├── snare_0711.wav
+│       │       ├── snare_0712.wav
+│       │       ├── snare_0713.wav
+│       │       ├── snare_0714.wav
+│       │       ├── snare_0715.wav
+│       │       ├── snare_0716.wav
+│       │       ├── snare_0717.wav
+│       │       ├── snare_0718.wav
+│       │       ├── snare_0719.wav
+│       │       ├── snare_0720.wav
+│       │       ├── snare_0721.wav
+│       │       ├── snare_0722.wav
+│       │       ├── snare_0723.wav
+│       │       ├── snare_0724.wav
+│       │       ├── snare_0725.wav
+│       │       ├── snare_0726.wav
+│       │       ├── snare_0727.wav
+│       │       ├── snare_0728.wav
+│       │       ├── snare_0729.wav
+│       │       ├── snare_0730.wav
+│       │       ├── snare_0731.wav
+│       │       ├── snare_0732.wav
+│       │       ├── snare_0733.wav
+│       │       ├── snare_0734.wav
+│       │       ├── snare_0735.wav
+│       │       ├── snare_0736.wav
+│       │       ├── snare_0737.wav
+│       │       ├── snare_0738.wav
+│       │       ├── snare_0739.wav
+│       │       ├── snare_0740.wav
+│       │       ├── snare_0741.wav
+│       │       ├── snare_0742.wav
+│       │       ├── snare_0743.wav
+│       │       ├── snare_0744.wav
+│       │       ├── snare_0745.wav
+│       │       ├── snare_0746.wav
+│       │       ├── snare_0747.wav
+│       │       ├── snare_0748.wav
+│       │       ├── snare_0749.wav
+│       │       ├── snare_0750.wav
+│       │       ├── snare_0751.wav
+│       │       ├── snare_0752.wav
+│       │       ├── snare_0753.wav
+│       │       ├── snare_0754.wav
+│       │       ├── snare_0755.wav
+│       │       ├── snare_0756.wav
+│       │       ├── snare_0757.wav
+│       │       ├── snare_0758.wav
+│       │       ├── snare_0759.wav
+│       │       ├── snare_0760.wav
+│       │       ├── snare_0761.wav
+│       │       ├── snare_0762.wav
+│       │       ├── snare_0763.wav
+│       │       ├── snare_0764.wav
+│       │       ├── snare_0765.wav
+│       │       ├── snare_0766.wav
+│       │       ├── snare_0767.wav
+│       │       ├── snare_0768.wav
+│       │       ├── snare_0769.wav
+│       │       ├── snare_0770.wav
+│       │       ├── snare_0771.wav
+│       │       ├── snare_0772.wav
+│       │       ├── snare_0773.wav
+│       │       ├── snare_0774.wav
+│       │       ├── snare_0775.wav
+│       │       ├── snare_0776.wav
+│       │       ├── snare_0777.wav
+│       │       ├── snare_0778.wav
+│       │       ├── snare_0779.wav
+│       │       ├── snare_0780.wav
+│       │       ├── snare_0781.wav
+│       │       ├── snare_0782.wav
+│       │       ├── snare_0783.wav
+│       │       ├── snare_0784.wav
+│       │       ├── snare_0785.wav
+│       │       ├── snare_0786.wav
+│       │       ├── snare_0787.wav
+│       │       ├── snare_0788.wav
+│       │       ├── snare_0789.wav
+│       │       ├── snare_0790.wav
+│       │       ├── snare_0791.wav
+│       │       ├── snare_0792.wav
+│       │       ├── snare_0793.wav
+│       │       ├── snare_0794.wav
+│       │       ├── snare_0795.wav
+│       │       ├── snare_0796.wav
+│       │       ├── snare_0797.wav
+│       │       ├── snare_0798.wav
+│       │       ├── snare_0799.wav
+│       │       ├── snare_0800.wav
+│       │       ├── snare_0801.wav
+│       │       ├── snare_0802.wav
+│       │       ├── snare_0803.wav
+│       │       ├── snare_0804.wav
+│       │       ├── snare_0805.wav
+│       │       ├── snare_0806.wav
+│       │       ├── snare_0807.wav
+│       │       ├── snare_0808.wav
+│       │       ├── snare_0809.wav
+│       │       ├── snare_0810.wav
+│       │       ├── snare_0811.wav
+│       │       ├── snare_0812.wav
+│       │       ├── snare_0813.wav
+│       │       ├── snare_0814.wav
+│       │       ├── snare_0815.wav
+│       │       ├── snare_0816.wav
+│       │       ├── snare_0817.wav
+│       │       ├── snare_0818.wav
+│       │       ├── snare_0819.wav
+│       │       ├── snare_0820.wav
+│       │       ├── snare_0821.wav
+│       │       ├── snare_0822.wav
+│       │       ├── snare_0823.wav
+│       │       ├── snare_0824.wav
+│       │       ├── snare_0825.wav
+│       │       ├── snare_0826.wav
+│       │       ├── snare_0827.wav
+│       │       ├── snare_0828.wav
+│       │       ├── snare_0829.wav
+│       │       ├── snare_0830.wav
+│       │       ├── snare_0831.wav
+│       │       ├── snare_0832.wav
+│       │       ├── snare_0833.wav
+│       │       ├── snare_0834.wav
+│       │       ├── snare_0835.wav
+│       │       ├── snare_0836.wav
+│       │       ├── snare_0837.wav
+│       │       ├── snare_0838.wav
+│       │       ├── snare_0839.wav
+│       │       ├── snare_0840.wav
+│       │       ├── snare_0841.wav
+│       │       ├── snare_0842.wav
+│       │       ├── snare_0843.wav
+│       │       ├── snare_0844.wav
+│       │       ├── snare_0845.wav
+│       │       ├── snare_0846.wav
+│       │       ├── snare_0847.wav
+│       │       ├── snare_0848.wav
+│       │       ├── snare_0849.wav
+│       │       ├── snare_0850.wav
+│       │       ├── snare_0851.wav
+│       │       ├── snare_0852.wav
+│       │       ├── snare_0853.wav
+│       │       ├── snare_0854.wav
+│       │       ├── snare_0855.wav
+│       │       ├── snare_0856.wav
+│       │       ├── snare_0857.wav
+│       │       ├── snare_0858.wav
+│       │       ├── snare_0859.wav
+│       │       ├── snare_0860.wav
+│       │       ├── snare_0861.wav
+│       │       ├── snare_0862.wav
+│       │       ├── snare_0863.wav
+│       │       ├── snare_0864.wav
+│       │       ├── snare_0865.wav
+│       │       ├── snare_0866.wav
+│       │       ├── snare_0867.wav
+│       │       ├── snare_0868.wav
+│       │       ├── snare_0869.wav
+│       │       ├── snare_0870.wav
+│       │       ├── snare_0871.wav
+│       │       ├── snare_0872.wav
+│       │       ├── snare_0873.wav
+│       │       ├── snare_0874.wav
+│       │       ├── snare_0875.wav
+│       │       ├── snare_0876.wav
+│       │       ├── snare_0877.wav
+│       │       ├── snare_0878.wav
+│       │       ├── snare_0879.wav
+│       │       ├── snare_0880.wav
+│       │       ├── snare_0881.wav
+│       │       ├── snare_0882.wav
+│       │       ├── snare_0883.wav
+│       │       ├── snare_0884.wav
+│       │       ├── snare_0885.wav
+│       │       ├── snare_0886.wav
+│       │       ├── snare_0887.wav
+│       │       ├── snare_0888.wav
+│       │       ├── snare_0889.wav
+│       │       ├── snare_0890.wav
+│       │       ├── snare_0891.wav
+│       │       ├── snare_0892.wav
+│       │       ├── snare_0893.wav
+│       │       ├── snare_0894.wav
+│       │       ├── snare_0895.wav
+│       │       ├── snare_0896.wav
+│       │       ├── snare_0897.wav
+│       │       ├── snare_0898.wav
+│       │       ├── snare_0899.wav
+│       │       ├── snare_0900.wav
+│       │       ├── snare_0901.wav
+│       │       ├── snare_0902.wav
+│       │       ├── snare_0903.wav
+│       │       ├── snare_0904.wav
+│       │       ├── snare_0905.wav
+│       │       ├── snare_0906.wav
+│       │       ├── snare_0907.wav
+│       │       ├── snare_0908.wav
+│       │       ├── snare_0909.wav
+│       │       ├── snare_0910.wav
+│       │       ├── snare_0911.wav
+│       │       ├── snare_0912.wav
+│       │       ├── snare_0913.wav
+│       │       ├── snare_0914.wav
+│       │       ├── snare_0915.wav
+│       │       ├── snare_0916.wav
+│       │       ├── snare_0917.wav
+│       │       ├── snare_0918.wav
+│       │       ├── snare_0919.wav
+│       │       ├── snare_0920.wav
+│       │       ├── snare_0921.wav
+│       │       ├── snare_0922.wav
+│       │       ├── snare_0923.wav
+│       │       ├── snare_0924.wav
+│       │       ├── snare_0925.wav
+│       │       ├── snare_0926.wav
+│       │       ├── snare_0927.wav
+│       │       ├── snare_0928.wav
+│       │       ├── snare_0929.wav
+│       │       ├── snare_0930.wav
+│       │       ├── snare_0931.wav
+│       │       ├── snare_0932.wav
+│       │       ├── snare_0933.wav
+│       │       ├── snare_0934.wav
+│       │       ├── snare_0935.wav
+│       │       ├── snare_0936.wav
+│       │       ├── snare_0937.wav
+│       │       ├── snare_0938.wav
+│       │       ├── snare_0939.wav
+│       │       ├── snare_0940.wav
+│       │       ├── snare_0941.wav
+│       │       ├── snare_0942.wav
+│       │       ├── snare_0943.wav
+│       │       ├── snare_0944.wav
+│       │       ├── snare_0945.wav
+│       │       ├── snare_0946.wav
+│       │       ├── snare_0947.wav
+│       │       ├── snare_0948.wav
+│       │       ├── snare_0949.wav
+│       │       ├── snare_0950.wav
+│       │       ├── snare_0951.wav
+│       │       ├── snare_0952.wav
+│       │       ├── snare_0953.wav
+│       │       ├── snare_0954.wav
+│       │       ├── snare_0955.wav
+│       │       ├── snare_0956.wav
+│       │       ├── snare_0957.wav
+│       │       ├── snare_0958.wav
+│       │       ├── snare_0959.wav
+│       │       ├── snare_0960.wav
+│       │       ├── snare_0961.wav
+│       │       ├── snare_0962.wav
+│       │       ├── snare_0963.wav
+│       │       ├── snare_0964.wav
+│       │       ├── snare_0965.wav
+│       │       ├── snare_0966.wav
+│       │       ├── snare_0967.wav
+│       │       ├── snare_0968.wav
+│       │       ├── snare_0969.wav
+│       │       ├── snare_0970.wav
+│       │       ├── snare_0971.wav
+│       │       ├── snare_0972.wav
+│       │       ├── snare_0973.wav
+│       │       ├── snare_0974.wav
+│       │       ├── snare_0975.wav
+│       │       ├── snare_0976.wav
+│       │       ├── snare_0977.wav
+│       │       ├── snare_0978.wav
+│       │       ├── snare_0979.wav
+│       │       ├── snare_0980.wav
+│       │       ├── snare_0981.wav
+│       │       ├── snare_0982.wav
+│       │       ├── snare_0983.wav
+│       │       ├── snare_0984.wav
+│       │       ├── snare_0985.wav
+│       │       ├── snare_0986.wav
+│       │       ├── snare_0987.wav
+│       │       ├── snare_0988.wav
+│       │       ├── snare_0989.wav
+│       │       ├── snare_0990.wav
+│       │       ├── snare_0991.wav
+│       │       ├── snare_0992.wav
+│       │       ├── snare_0993.wav
+│       │       ├── snare_0994.wav
+│       │       ├── snare_0995.wav
+│       │       ├── snare_0996.wav
+│       │       ├── snare_0997.wav
+│       │       ├── snare_0998.wav
+│       │       ├── snare_0999.wav
+│       │       ├── snare_1000.wav
+│       │       ├── snare_1001.wav
+│       │       ├── snare_1002.wav
+│       │       ├── snare_1003.wav
+│       │       ├── snare_1004.wav
+│       │       ├── snare_1005.wav
+│       │       ├── snare_1006.wav
+│       │       ├── snare_1007.wav
+│       │       ├── snare_1008.wav
+│       │       ├── snare_1009.wav
+│       │       ├── snare_1010.wav
+│       │       ├── snare_1011.wav
+│       │       ├── snare_1012.wav
+│       │       ├── snare_1013.wav
+│       │       ├── snare_1014.wav
+│       │       ├── snare_1015.wav
+│       │       ├── snare_1016.wav
+│       │       ├── snare_1017.wav
+│       │       ├── snare_1018.wav
+│       │       ├── snare_1019.wav
+│       │       ├── snare_1020.wav
+│       │       ├── snare_1021.wav
+│       │       ├── snare_1022.wav
+│       │       ├── snare_1023.wav
+│       │       ├── snare_1024.wav
+│       │       ├── snare_1025.wav
+│       │       ├── snare_1026.wav
+│       │       ├── snare_1027.wav
+│       │       ├── snare_1028.wav
+│       │       ├── snare_1029.wav
+│       │       ├── snare_1030.wav
+│       │       ├── snare_1031.wav
+│       │       ├── snare_1032.wav
+│       │       ├── snare_1033.wav
+│       │       ├── snare_1034.wav
+│       │       ├── snare_1035.wav
+│       │       ├── snare_1036.wav
+│       │       ├── snare_1037.wav
+│       │       ├── snare_1038.wav
+│       │       ├── snare_1039.wav
+│       │       ├── snare_1040.wav
+│       │       ├── snare_1041.wav
+│       │       ├── snare_1042.wav
+│       │       ├── snare_1043.wav
+│       │       ├── snare_1044.wav
+│       │       ├── snare_1045.wav
+│       │       ├── snare_1046.wav
+│       │       ├── snare_1047.wav
+│       │       ├── snare_1048.wav
+│       │       ├── snare_1049.wav
+│       │       ├── snare_1050.wav
+│       │       ├── snare_1051.wav
+│       │       ├── snare_1052.wav
+│       │       ├── snare_1053.wav
+│       │       ├── snare_1054.wav
+│       │       ├── snare_1055.wav
+│       │       ├── snare_1056.wav
+│       │       ├── snare_1057.wav
+│       │       ├── snare_1058.wav
+│       │       ├── snare_1059.wav
+│       │       ├── snare_1060.wav
+│       │       ├── snare_1061.wav
+│       │       ├── snare_1062.wav
+│       │       ├── snare_1063.wav
+│       │       ├── snare_1064.wav
+│       │       ├── snare_1065.wav
+│       │       ├── snare_1066.wav
+│       │       ├── snare_1067.wav
+│       │       ├── snare_1068.wav
+│       │       ├── snare_1069.wav
+│       │       ├── snare_1070.wav
+│       │       ├── snare_1071.wav
+│       │       ├── snare_1072.wav
+│       │       ├── snare_1073.wav
+│       │       ├── snare_1074.wav
+│       │       ├── snare_1075.wav
+│       │       ├── snare_1076.wav
+│       │       ├── snare_1077.wav
+│       │       ├── snare_1078.wav
+│       │       ├── snare_1079.wav
+│       │       ├── snare_1080.wav
+│       │       ├── snare_1081.wav
+│       │       ├── snare_1082.wav
+│       │       ├── snare_1083.wav
+│       │       ├── snare_1084.wav
+│       │       ├── snare_1085.wav
+│       │       ├── snare_1086.wav
+│       │       ├── snare_1087.wav
+│       │       ├── snare_1088.wav
+│       │       ├── snare_1089.wav
+│       │       ├── snare_1090.wav
+│       │       ├── snare_1091.wav
+│       │       ├── snare_1092.wav
+│       │       ├── snare_1093.wav
+│       │       ├── snare_1094.wav
+│       │       ├── snare_1095.wav
+│       │       ├── snare_1096.wav
+│       │       ├── snare_1097.wav
+│       │       ├── snare_1098.wav
+│       │       ├── snare_1099.wav
+│       │       ├── snare_1100.wav
+│       │       ├── snare_1101.wav
+│       │       ├── snare_1102.wav
+│       │       ├── snare_1103.wav
+│       │       ├── snare_1104.wav
+│       │       ├── snare_1105.wav
+│       │       ├── snare_1106.wav
+│       │       ├── snare_1107.wav
+│       │       ├── snare_1108.wav
+│       │       ├── snare_1109.wav
+│       │       ├── snare_1110.wav
+│       │       ├── snare_1111.wav
+│       │       ├── snare_1112.wav
+│       │       ├── snare_1113.wav
+│       │       ├── snare_1114.wav
+│       │       ├── snare_1115.wav
+│       │       ├── snare_1116.wav
+│       │       ├── snare_1117.wav
+│       │       ├── snare_1118.wav
+│       │       ├── snare_1119.wav
+│       │       ├── snare_1120.WAV
+│       │       ├── snare_1121.WAV
+│       │       ├── snare_1122.WAV
+│       │       ├── snare_1123.wav
+│       │       ├── snare_1124.wav
+│       │       ├── snare_1125.wav
+│       │       ├── snare_1126.wav
+│       │       ├── snare_1127.wav
+│       │       ├── snare_1128.wav
+│       │       ├── snare_1129.wav
+│       │       ├── snare_1130.wav
+│       │       ├── snare_1131.wav
+│       │       ├── snare_1132.wav
+│       │       ├── snare_1133.wav
+│       │       ├── snare_1134.wav
+│       │       ├── snare_1135.wav
+│       │       ├── snare_1136.wav
+│       │       ├── snare_1137.wav
+│       │       ├── snare_1138.wav
+│       │       ├── snare_1139.wav
+│       │       ├── snare_1140.wav
+│       │       ├── snare_1141.wav
+│       │       ├── snare_1142.wav
+│       │       ├── snare_1143.wav
+│       │       ├── snare_1144.WAV
+│       │       ├── snare_1145.wav
+│       │       ├── snare_1146.wav
+│       │       ├── snare_1147.wav
+│       │       ├── snare_1148.wav
+│       │       ├── snare_1149.wav
+│       │       ├── snare_1150.wav
+│       │       ├── snare_1151.wav
+│       │       ├── snare_1152.wav
+│       │       ├── snare_1153.wav
+│       │       ├── snare_1154.wav
+│       │       ├── snare_1155.wav
+│       │       ├── snare_1156.wav
+│       │       ├── snare_1157.wav
+│       │       ├── snare_1158.wav
+│       │       ├── snare_1159.wav
+│       │       ├── snare_1160.wav
+│       │       ├── snare_1161.wav
+│       │       ├── snare_1162.wav
+│       │       ├── snare_1163.wav
+│       │       ├── snare_1164.wav
+│       │       ├── snare_1165.wav
+│       │       ├── snare_1166.wav
+│       │       ├── snare_1167.wav
+│       │       ├── snare_1168.wav
+│       │       ├── snare_1169.wav
+│       │       ├── snare_1170.wav
+│       │       ├── snare_1171.wav
+│       │       ├── snare_1172.wav
+│       │       ├── snare_1173.wav
+│       │       ├── snare_1174.wav
+│       │       ├── snare_1175.wav
+│       │       ├── snare_1176.wav
+│       │       ├── snare_1177.wav
+│       │       ├── snare_1178.wav
+│       │       ├── snare_1179.wav
+│       │       ├── snare_1180.wav
+│       │       ├── snare_1181.wav
+│       │       ├── snare_1182.wav
+│       │       ├── snare_1183.wav
+│       │       ├── snare_1184.wav
+│       │       ├── snare_1185.wav
+│       │       ├── snare_1186.wav
+│       │       ├── snare_1187.wav
+│       │       ├── snare_1188.wav
+│       │       ├── snare_1189.wav
+│       │       ├── snare_1190.wav
+│       │       ├── snare_1191.wav
+│       │       ├── snare_1192.wav
+│       │       ├── snare_1193.wav
+│       │       ├── snare_1194.wav
+│       │       ├── snare_1195.wav
+│       │       ├── snare_1196.wav
+│       │       ├── snare_1197.wav
+│       │       ├── snare_1198.wav
+│       │       ├── snare_1199.wav
+│       │       ├── snare_1200.wav
+│       │       ├── snare_1201.wav
+│       │       ├── snare_1202.wav
+│       │       ├── snare_1203.wav
+│       │       ├── snare_1204.wav
+│       │       ├── snare_1205.wav
+│       │       ├── snare_1206.wav
+│       │       ├── snare_1207.wav
+│       │       ├── snare_1208.wav
+│       │       ├── snare_1209.wav
+│       │       ├── snare_1210.wav
+│       │       ├── snare_1211.wav
+│       │       ├── snare_1212.wav
+│       │       ├── snare_1213.wav
+│       │       ├── snare_1214.wav
+│       │       ├── snare_1215.wav
+│       │       ├── snare_1216.wav
+│       │       ├── snare_1217.wav
+│       │       ├── snare_1218.wav
+│       │       ├── snare_1219.wav
+│       │       ├── snare_1220.wav
+│       │       ├── snare_1221.wav
+│       │       ├── snare_1222.wav
+│       │       ├── snare_1223.wav
+│       │       ├── snare_1224.wav
+│       │       ├── snare_1225.wav
+│       │       ├── snare_1226.wav
+│       │       ├── snare_1227.wav
+│       │       ├── snare_1228.wav
+│       │       ├── snare_1229.wav
+│       │       ├── snare_1230.wav
+│       │       ├── snare_1231.wav
+│       │       ├── snare_1232.wav
+│       │       ├── snare_1233.wav
+│       │       ├── snare_1234.wav
+│       │       ├── snare_1235.wav
+│       │       ├── snare_1236.wav
+│       │       ├── snare_1237.wav
+│       │       ├── snare_1238.wav
+│       │       ├── snare_1239.wav
+│       │       ├── snare_1240.wav
+│       │       ├── snare_1241.wav
+│       │       ├── snare_1242.wav
+│       │       ├── snare_1243.wav
+│       │       ├── snare_1244.wav
+│       │       ├── snare_1245.wav
+│       │       ├── snare_1246.wav
+│       │       ├── snare_1247.wav
+│       │       ├── snare_1248.wav
+│       │       ├── snare_1249.wav
+│       │       ├── snare_1250.wav
+│       │       ├── snare_1251.wav
+│       │       ├── snare_1252.wav
+│       │       ├── snare_1253.wav
+│       │       ├── snare_1254.wav
+│       │       ├── snare_1255.wav
+│       │       ├── snare_1256.wav
+│       │       ├── snare_1257.wav
+│       │       ├── snare_1258.wav
+│       │       ├── snare_1259.wav
+│       │       ├── snare_1260.wav
+│       │       ├── snare_1261.wav
+│       │       ├── snare_1262.wav
+│       │       ├── snare_1263.wav
+│       │       ├── snare_1264.wav
+│       │       ├── snare_1265.wav
+│       │       ├── snare_1266.wav
+│       │       ├── snare_1267.wav
+│       │       ├── snare_1268.wav
+│       │       ├── snare_1269.wav
+│       │       ├── snare_1270.wav
+│       │       ├── snare_1271.wav
+│       │       ├── snare_1272.wav
+│       │       ├── snare_1273.wav
+│       │       ├── snare_1274.wav
+│       │       ├── snare_1275.wav
+│       │       ├── snare_1276.wav
+│       │       ├── snare_1277.wav
+│       │       ├── snare_1278.wav
+│       │       ├── snare_1279.wav
+│       │       ├── snare_1280.wav
+│       │       ├── snare_1281.wav
+│       │       ├── snare_1282.wav
+│       │       ├── snare_1283.wav
+│       │       ├── snare_1284.wav
+│       │       ├── snare_1285.wav
+│       │       ├── snare_1286.wav
+│       │       ├── snare_1287.wav
+│       │       ├── snare_1288.wav
+│       │       ├── snare_1289.wav
+│       │       ├── snare_1290.wav
+│       │       ├── snare_1291.wav
+│       │       ├── snare_1292.wav
+│       │       ├── snare_1293.wav
+│       │       ├── snare_1294.wav
+│       │       ├── snare_1295.wav
+│       │       ├── snare_1296.wav
+│       │       ├── snare_1297.wav
+│       │       ├── snare_1298.wav
+│       │       ├── snare_1299.wav
+│       │       ├── snare_1300.wav
+│       │       ├── snare_1301.wav
+│       │       ├── snare_1302.wav
+│       │       ├── snare_1303.wav
+│       │       ├── snare_1304.wav
+│       │       ├── snare_1305.wav
+│       │       ├── snare_1306.wav
+│       │       ├── snare_1307.wav
+│       │       ├── snare_1308.wav
+│       │       ├── snare_1309.wav
+│       │       ├── snare_1310.wav
+│       │       ├── snare_1311.wav
+│       │       ├── snare_1312.wav
+│       │       ├── snare_1313.wav
+│       │       ├── snare_1314.wav
+│       │       ├── snare_1315.wav
+│       │       ├── snare_1316.wav
+│       │       ├── snare_1317.wav
+│       │       ├── snare_1318.wav
+│       │       ├── snare_1319.wav
+│       │       ├── snare_1320.wav
+│       │       ├── snare_1321.wav
+│       │       ├── snare_1322.wav
+│       │       ├── snare_1323.wav
+│       │       ├── snare_1324.wav
+│       │       ├── snare_1325.wav
+│       │       ├── snare_1326.wav
+│       │       ├── snare_1327.wav
+│       │       ├── snare_1328.wav
+│       │       ├── snare_1329.wav
+│       │       ├── snare_1330.wav
+│       │       ├── snare_1331.wav
+│       │       ├── snare_1332.wav
+│       │       ├── snare_1333.wav
+│       │       ├── snare_1334.wav
+│       │       ├── snare_1335.wav
+│       │       ├── snare_1336.wav
+│       │       ├── snare_1337.wav
+│       │       ├── snare_1338.wav
+│       │       ├── snare_1339.wav
+│       │       ├── snare_1340.wav
+│       │       ├── snare_1341.wav
+│       │       ├── snare_1342.wav
+│       │       ├── snare_1343.wav
+│       │       ├── snare_1344.wav
+│       │       ├── snare_1345.wav
+│       │       ├── snare_1346.wav
+│       │       ├── snare_1347.wav
+│       │       ├── snare_1348.wav
+│       │       ├── snare_1349.wav
+│       │       ├── snare_1350.wav
+│       │       ├── snare_1351.wav
+│       │       ├── snare_1352.wav
+│       │       ├── snare_1353.wav
+│       │       ├── snare_1354.wav
+│       │       ├── snare_1355.wav
+│       │       ├── snare_1356.wav
+│       │       ├── snare_1357.wav
+│       │       ├── snare_1358.wav
+│       │       ├── snare_1359.wav
+│       │       ├── snare_1360.wav
+│       │       ├── snare_1361.wav
+│       │       ├── snare_1362.wav
+│       │       ├── snare_1363.wav
+│       │       ├── snare_1364.wav
+│       │       ├── snare_1365.wav
+│       │       ├── snare_1366.wav
+│       │       ├── snare_1367.wav
+│       │       ├── snare_1368.wav
+│       │       ├── snare_1369.wav
+│       │       ├── snare_1370.wav
+│       │       ├── snare_1371.wav
+│       │       ├── snare_1372.wav
+│       │       ├── snare_1373.wav
+│       │       ├── snare_1374.wav
+│       │       ├── snare_1375.wav
+│       │       ├── snare_1376.wav
+│       │       ├── snare_1377.wav
+│       │       ├── snare_1378.wav
+│       │       ├── snare_1379.wav
+│       │       ├── snare_1380.wav
+│       │       ├── snare_1381.wav
+│       │       ├── snare_1382.wav
+│       │       ├── snare_1383.wav
+│       │       ├── snare_1384.wav
+│       │       ├── snare_1385.wav
+│       │       ├── snare_1386.wav
+│       │       ├── snare_1387.wav
+│       │       ├── snare_1388.wav
+│       │       ├── snare_1389.wav
+│       │       ├── snare_1390.wav
+│       │       ├── snare_1391.wav
+│       │       ├── snare_1392.wav
+│       │       ├── snare_1393.wav
+│       │       ├── snare_1394.wav
+│       │       ├── snare_1395.wav
+│       │       ├── snare_1396.wav
+│       │       ├── snare_1397.wav
+│       │       ├── snare_1398.wav
+│       │       ├── snare_1399.wav
+│       │       ├── snare_1400.wav
+│       │       ├── snare_1401.wav
+│       │       ├── snare_1402.wav
+│       │       ├── snare_1403.wav
+│       │       ├── snare_1404.wav
+│       │       ├── snare_1405.wav
+│       │       ├── snare_1406.wav
+│       │       ├── snare_1407.wav
+│       │       ├── snare_1408.wav
+│       │       ├── snare_1409.wav
+│       │       ├── snare_1410.wav
+│       │       ├── snare_1411.wav
+│       │       ├── snare_1412.wav
+│       │       ├── snare_1413.wav
+│       │       ├── snare_1414.wav
+│       │       ├── snare_1415.wav
+│       │       ├── snare_1416.wav
+│       │       └── snare_1417.wav
+│       ├── drum_sheet_music_with_double_bass_drum.jpg
+│       ├── enst_disclaimer.md
+│       ├── example_drum_sheet_music.pdf
+│       ├── process_enst_dataset.py
+│       ├── reference_audio--own_dataset
+│       │   ├── 1. 147 BPM.mp3
+│       │   ├── 10. 146 BPM.mp3
+│       │   ├── 11. 118 BPM.mp3
+│       │   ├── 12. 136 BPM.mp3
+│       │   ├── 13. 150 BPM.mp3
+│       │   ├── 14. 150 BPM.mp3
+│       │   ├── 15. 160 BPM.mp3
+│       │   ├── 16. 170 BPM.mp3
+│       │   ├── 17. 165 BPM.mp3
+│       │   ├── 18. 173 BPM.mp3
+│       │   ├── 19. 110 BPM.mp3
+│       │   ├── 2. 185 BPM.mp3
+│       │   ├── 20. 110 BPM.mp3
+│       │   ├── 21. 140 BPM.mp3
+│       │   ├── 22. 135 BPM.mp3
+│       │   ├── 23. 156 BPM.mp3
+│       │   ├── 24. 126 BPM.mp3
+│       │   ├── 25. 140 BPM.mp3
+│       │   ├── 26. 160 BPM.mp3
+│       │   ├── 27. 135 BPM.mp3
+│       │   ├── 28. 135 BPM.mp3
+│       │   ├── 29. 130 BPM.mp3
+│       │   ├── 3. 185 BPM.mp3
+│       │   ├── 30. 121 BPM.mp3
+│       │   ├── 31. 122 BPM.mp3
+│       │   ├── 32. 145 BPM.mp3
+│       │   ├── 33. 110 BPM.mp3
+│       │   ├── 34. 135 BPM.mp3
+│       │   ├── 35. 150 BPM.mp3
+│       │   ├── 36. 135 BPM.mp3
+│       │   ├── 37. 138 BPM.mp3
+│       │   ├── 38. 135 BPM.mp3
+│       │   ├── 39. 100 BPM.mp3
+│       │   ├── 4. 150 BPM.mp3
+│       │   ├── 40. 113 BPM.mp3
+│       │   ├── 41. 118 BPM.mp3
+│       │   ├── 42. 117 BPM.mp3
+│       │   ├── 43. 130 BPM.mp3
+│       │   ├── 44. 130 BPM.mp3
+│       │   ├── 45. 138 BPM.mp3
+│       │   ├── 46. 125 BPM.mp3
+│       │   ├── 47. 130 BPM.mp3
+│       │   ├── 48. 150 BPM.mp3
+│       │   ├── 49. 190 BPM.mp3
+│       │   ├── 5. 177 BPM.mp3
+│       │   ├── 50. 198 BPM.mp3
+│       │   ├── 51. 205 BPM.mp3
+│       │   ├── 52. 195 BPM.mp3
+│       │   ├── 6. 186 BPM.mp3
+│       │   ├── 7. 142 BPM.mp3
+│       │   ├── 8. 130 BPM.mp3
+│       │   ├── 9. 194 BPM.mp3
+│       │   └── test.mp3
+│       └── standard_non_specific_sheet_music.png
+├── public
+│   └── drumscript-0.1.6-py3-none-any.whl
+├── pyproject.toml
+├── repository_structure.md
+├── scripts
+│   ├── pypi.sh
+│   ├── run_tests.sh
+│   ├── update_public_wheel.sh
+│   ├── verify_release.md
+│   └── verify_release.sh
+├── tests
+│   ├── README.md
+│   ├── conftest.py
+│   ├── integration
+│   │   ├── test_stem_splitter_real.py
+│   │   └── test_transcribe_real.py
+│   ├── tree_tests.txt
+│   └── unit
+│       ├── __init__.py
+│       ├── test_audio_loader.py
+│       ├── test_benchmarks_run.py
+│       ├── test_classify.py
+│       ├── test_cli_args.py
+│       ├── test_deprecation_warnings.py
+│       ├── test_helpers.py
+│       ├── test_idmt_dataset.py
+│       ├── test_onset_detector.py
+│       ├── test_stem_splitter_helpers.py
+│       ├── test_tempo_detector.py
+│       └── test_transcribe.py
+├── tree.txt
+├── tree_full.txt
+├── uv.lock
+└── visuals
+    └── tempogram.png
+
+86 directories, 3081 files

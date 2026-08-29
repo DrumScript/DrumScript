@@ -396,13 +396,20 @@ data-aria-dark="Switch to auto color mode">
 <div><p class="rubric" id="changes"><em>Changes</em></p>
 </div></blockquote>
 <ul class="simple">
-<li><p>tidied up branch tree #311 on remote</p></li>
+<li><p>tidied up branch tree on remote #311</p></li>
 </ul>
 <blockquote>
 <div><p class="rubric" id="fixes"><em>Fixes</em></p>
 </div></blockquote>
 <ul class="simple">
 <li><p><strong>Python 3.13 not supported.</strong> DrumScript pins <code class="docutils literal notranslate"><span class="pre">numpy&lt;2</span></code>, and numpy 1.x has no cp313 wheels on PyPI. This caused <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">drumscript</span></code> on Python 3.13 to fall back to a source build (which requires a C toolchain most users don’t have), producing a confusing <code class="docutils literal notranslate"><span class="pre">Compiler</span> <span class="pre">cc</span> <span class="pre">cannot</span> <span class="pre">compile</span> <span class="pre">programs</span></code> error rather than a clear “unsupported Python version” message. <code class="docutils literal notranslate"><span class="pre">requires-python</span></code> lowered from <code class="docutils literal notranslate"><span class="pre">&lt;3.14</span></code> to <code class="docutils literal notranslate"><span class="pre">&lt;3.13</span></code> in <code class="docutils literal notranslate"><span class="pre">pyproject.toml</span></code>. Python 3.13 support planned once DrumScript migrates to <code class="docutils literal notranslate"><span class="pre">numpy&gt;=2</span></code> (see <a class="reference external" href="https://github.com/DrumScript/DrumScript/issues/303">#303</a>).</p></li>
+</ul>
+<blockquote>
+<div><p><strong>Known debt being paid down alongside the alpha’s fundamental work (model + score generation).</strong> These are treated as bugs to fix, not future features - but they are not allowed to displace the core classification/score-generation work:</p>
+</div></blockquote>
+<ul class="simple">
+<li><p><strong>numpy 2.x migration</strong> - move from the current <code class="docutils literal notranslate"><span class="pre">numpy&lt;2</span></code> pin to <code class="docutils literal notranslate"><span class="pre">numpy&gt;=2</span></code>. This is the blocker for Python 3.13 support: the two are a single linked task (migrate to numpy 2 -&gt; unblocks 3.13 -&gt; add 3.13, and test 3.14, to the CI matrix). Requires cross-checking numba, librosa, and scipy at numpy 2, and fixing any numpy 1.x-only API usage in the codebase (see <a class="reference external" href="https://github.com/DrumScript/DrumScript/issues/303">#303</a>).</p></li>
+<li><p><strong>pydub <code class="docutils literal notranslate"><span class="pre">SyntaxWarning</span></code> surfacing in the CLI</strong> - pydub has an upstream <code class="docutils literal notranslate"><span class="pre">SyntaxWarning</span></code> on Python 3.12 that currently leaks to users when running the CLI. To be suppressed via <code class="docutils literal notranslate"><span class="pre">warnings.filterwarnings</span></code> targeting <code class="docutils literal notranslate"><span class="pre">pydub.utils</span></code>.</p></li>
 </ul>
 <hr class="docutils" />
 <section id="future-releases">

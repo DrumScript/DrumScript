@@ -1,7 +1,5 @@
-# drumscript/utils/measure_hat_frequency.py
+# drumscript/utils/research/measure_hat_frequency.py
 
-
-# [CONTRIBUTOR SCRIPT]
 # To measure the frequency characteristics of open and closed hi-hat drums using librosa,
 # you can load the audio, perform a Short-Time Fourier Transform (STFT) to analyze the frequency content over time
 # and then examine the spectral features.
@@ -13,15 +11,6 @@ Utility script to measure the fundamental frequency of a drum sample.
 import librosa
 import librosa.display
 import numpy as np
-
-# from datetime import datetime
-
-# Uncomment to use for logging/tests
-
-# print("\n# ------------------------------------------------------------------------------------")
-# datetimestamp = datetime.now()
-# print(f'\ndatetimestamp: {datetimestamp}')
-
 
 # from drumscript.utils.config import SAMPLE_RATE, HOP_LENGTH, N_FFT
 
@@ -101,8 +90,13 @@ magnitudes_closed = np.abs(D[:, frame_index_closed])
 
 
 if __name__ == "__main__":
-    # This allows you to run it from the command line with an argument
     import sys
+    # --------------------------------------------------------------------------uncomment during testing
+    # from datetime import datetime
+    # print("\n# ------------------------------------------------------------------------------------")
+    # datetimestamp = datetime.now()
+    # print(f'\ndate/time: {datetimestamp}')
+    # --------------------------------------------------------------------------------------------------
 
     if len(sys.argv) < 2:
         print("Usage: uv run drumscript/utils/measure_hat_frequency.py <path_to_audio_file>")

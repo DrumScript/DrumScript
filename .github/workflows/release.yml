@@ -13,8 +13,8 @@
 #      - The publish.yml workflow (triggered by the release) handles PyPI upload
 #
 # VERSIONING STRATEGY:
-#   0.x.y  = Alpha (current phase) — breaking changes between minors are OK
-#   1.0.0  = First stable release — public API is locked
+#   0.x.y  = Alpha (current phase) - breaking changes between minors are OK
+#   1.0.0  = First stable release - public API is locked
 #   See: https://semver.org
 
 name: Create Release
@@ -76,22 +76,26 @@ jobs:
         run: |
           sed -i "s/^version = \".*\"/version = \"${{ env.VERSION }}\"/" pyproject.toml
 
-      - name: Bump drumscript/__init__.py
+      - name: Bump drumscript/__init__.py fallback version
         run: |
-          sed -i "s/^__version__ = \".*\"/__version__ = \"${{ env.VERSION }}\"/" drumscript/__init__.py
+          # Leading-whitespace anchor: matches the indented fallback inside the
+          # except block, but NOT the commented-out historical line
+          # (`# __version__ = "0.1.6"`), which is preserved as a record.
+          sed -i 's/^\( *\)__version__ = "[0-9]\+\.[0-9]\+\.[0-9]\+"/\1__version__ = "${{ env.VERSION }}"/' drumscript/__init__.py
 
       - name: Bump docs/versions.json
         run: |
           if [ -f docs/versions.json ]; then
-            # Add the new version to the JSON array if not already present
             python3 -c "
           import json
           with open('docs/versions.json') as f:
               data = json.load(f)
-          versions = [v['version'] if isinstance(v, dict) else v for v in data]
+          items = data.get('list', [])
+          versions = [v['version'] if isinstance(v, dict) else v for v in items]
           if '${{ env.VERSION }}' not in versions:
-              entry = {'version': '${{ env.VERSION }}', 'url': '/DrumScript/'}
-              data.insert(0, entry)
+              entry = {'name': '${{ env.VERSION }} (Alpha)', 'version': '${{ env.VERSION }}'}
+              items.insert(0, entry)
+              data['list'] = items
               with open('docs/versions.json', 'w') as f:
                   json.dump(data, f, indent=2)
               print(f'Added ${{ env.VERSION }} to versions.json')
@@ -174,7 +178,7 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ env.TAG }}
-          name: "DrumScript ${{ env.TAG }}${{ inputs.summary && format(' — {0}', inputs.summary) || '' }}"
+          name: "DrumScript ${{ env.TAG }}${{ inputs.summary && format(' - {0}', inputs.summary) || '' }}"
           body_path: /tmp/changelog.md
           prerelease: ${{ inputs.release_type != 'Stable' }}
           generate_release_notes: true

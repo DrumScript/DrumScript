@@ -1,14 +1,11 @@
+# drumscript/utils/research/analyze_ride_physics.py
+
 import glob
 import os
-from datetime import datetime
 from pathlib import Path
 
 import librosa
 import numpy as np
-
-print("\n# ------------------------------------------------------------------------------------")
-datetimestamp = datetime.now()
-print(f"\ndate/time: {datetimestamp}")
 
 
 def analyze_ride_physics(file_path):
@@ -77,9 +74,15 @@ def main():
         avg_cent = np.mean([r["centroid"] for r in results])
 
         print("-" * 130)
-        print(f"AVERAGES | {avg_decay:.3f}      | {avg_cent:.0f}            | --         | --")
+        print(f"AVERAGES | {avg_decay:.3f}| {avg_cent:.0f}            | --         | --")
         print("-" * 130)
 
 
 if __name__ == "__main__":
+    # --------------------------------------------------------------------------uncomment during testing
+    # from datetime import datetime
+    # print("\n# ------------------------------------------------------------------------------------")
+    # datetimestamp = datetime.now()
+    # print(f'\ndate/time: {datetimestamp}')
+    # --------------------------------------------------------------------------------------------------
     main()

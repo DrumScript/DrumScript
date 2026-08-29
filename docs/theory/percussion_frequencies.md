@@ -1,7 +1,7 @@
-# **Percussion Frequencies**
+# Percussion Frequencies
 
 <!--date_created:weds-16-jul-2025-->
-<!--date_updated:weds-16-jul-2025-->
+<!--date_updated:sat-27-june-2026-->
 
 The following document outlines two **Markdown tables** with reference frequencies for:
 

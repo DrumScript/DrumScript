@@ -1,11 +1,11 @@
 # This file defines who owns which files.
 # The owner will be automatically requested for review when these files change.
 
-# Default: The DrumScript admin team owns everything
-* @drumscript-admin @victoria-mckinney @bellescoincidences
+# Default: The DrumScript admins own everything
+* @drumscript-admin @victoria-mckinney
 
 # Specific owners for repo
-/DrumScript/ @drumscript-admin @victoria-mckinney @bellescoincidences
+/DrumScript/ @drumscript-admin @victoria-mckinney
 
 # Specific owners for the core engine
-/drumscript/ @drumscript-admin @victoria-mckinney @bellescoincidences
+/drumscript/ @drumscript-admin @victoria-mckinney

@@ -1,15 +1,12 @@
+# drumscript/utils/research/analyze_snare_physics.py
+
 import glob
 import os
-from datetime import datetime
 from pathlib import Path
 
 import librosa
 import numpy as np
 import scipy.signal
-
-print("\n# ------------------------------------------------------------------------------------")
-datetimestamp = datetime.now()
-print(f"\ndate/time: {datetimestamp}")
 
 
 def analyze_snare_physics(file_path):
@@ -81,9 +78,15 @@ def main():
         avg_cent = np.mean([r["centroid"] for r in results])
 
         print("-" * 115)
-        print(f"AVERAGES        | {avg_peak:.2f}           | {avg_hfer * 100:.1f}%           | {avg_flat:.4f}          | {avg_cent:.0f}")
+        print(f"AVERAGES| {avg_peak:.2f}| {avg_hfer * 100:.1f}% | {avg_flat:.4f} | {avg_cent:.0f}")
         print("-" * 115)
 
 
 if __name__ == "__main__":
+    # --------------------------------------------------------------------------uncomment during testing
+    # from datetime import datetime
+    # print("\n# ------------------------------------------------------------------------------------")
+    # datetimestamp = datetime.now()
+    # print(f'\ndate/time: {datetimestamp}')
+    # --------------------------------------------------------------------------------------------------
     main()

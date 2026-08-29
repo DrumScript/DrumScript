@@ -1,7 +1,7 @@
-# **Glossary of Terms**
+# Glossary of Terms
 
-<!--date_created:03-july-2025-->
-<!--date_updated:02-feb-2026-->
+<!--date_created:thurs-03-july-2025-->
+<!--date_updated:weds-25-aug-2026-->
 
 ## **Python Libraries & Classes**
 
@@ -20,6 +20,26 @@
 
 In `DrumScript`, `librosa` is crucial because it's the underlying library that `audio_loader.py`, `feature_extractor.py`, and `onset_detector.py` use to actually perform the **low-level audio processing** and extract the characteristics of your **drum sound** and **audio recordings**. `Librosa`'s beat and tempo detection functions are specifically used in the `tempo_detector.py` and `tempogram.py` scripts.
 
+### `stem_splitter`
+
+> **Module**
+
+* **Meaning:** A module within `drumscript.audio_processor` responsible for separating source audio into distinct stems (drums, bass, vocals, other). It uses the `Demucs` model to perform high-quality source separation. It exposes **module-level functions**, not a class.
+* **Key functions:**
+  * `extract_drum_stem(audio_path, output_dir=None)` - returns the file path of the isolated drum track.
+  * `separate_audio(audio_path, output_format="wav", drumless=False, mute=None, all_stems=False, output_dir=None)` - full separation; returns a dict of every file written.
+
+>
+> * **Example:**
+>   ```python
+>   from drumscript.audio_processor.stem_splitter import extract_drum_stem
+>   drum_path = extract_drum_stem("song.mp3", output_dir="./stems")
+>   ```
+
+<!-- SUPERSEDED (v0.2.0): this entry described a `StemSplitter` class with a
+     `split_drums()` method. No such class exists or has ever existed;
+     stem_splitter.py has only module-level functions.
+
 ### `StemSplitter`
 
 > **Class**
@@ -33,6 +53,7 @@ In `DrumScript`, `librosa` is crucial because it's the underlying library that `
 >   splitter = StemSplitter()
 >   drum_path = splitter.split_drums(*song.mp3*, *./stems*)
 >   ```
+-->
 
 ### `Demucs`
 
@@ -89,7 +110,9 @@ In `DrumScript`, `MuseScore` is crucial because `music21` can be configured to u
   * **Example:**
 > If `hop_length=512`, the window (or `object_event`) moves **512 samples to the right** for the next analysis, overlapping with the previous window (`object_event`).
 
-  * Playing around with the `hop_length` is often crucial for finding the right split of intervals in a given audio sample.  The `hop_length` also depends on the `SAMPLE_RATE` defined  (in the case of `DrumScript` we have chosen a `sample_rate=441000` across the library)
+  * **DrumScript uses `HOP_LENGTH = 128`**, not 512. At 44100 Hz that gives a time resolution of ~2.9 ms - fine enough to separate individual drum hits. It is set in `drumscript/notation_generator/constants.py`.
+
+  * Playing around with the `hop_length` is often crucial for finding the right split of intervals in a given audio sample.  The `hop_length` also depends on the `SAMPLE_RATE` defined  (in the case of `DrumScript` we have chosen a `SAMPLE_RATE = 44100` across the library, defined in `drumscript/notation_generator/constants.py`)
 
 > There us a **more detailed explanation of `hop_length`**, along with calculated examples in the **[README.md](#README.md#faqs)**
 

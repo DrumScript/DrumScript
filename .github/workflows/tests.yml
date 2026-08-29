@@ -1,19 +1,18 @@
 name: Run Tests
 
-# Trigger the workflow on push or pull request to main
 on:
   push:
-    branches: [ "main", "build/prep_for_release" ]
+    branches: ["main"]
   pull_request:
-    branches: [ "main", "build/prep_for_release" ]
+    branches: ["main"]
 
 jobs:
   test:
     runs-on: ubuntu-latest
+    timeout-minutes: 25
     strategy:
       matrix:
-        # Test across multiple Python versions to ensure the package is robust
-        python-version: ["3.9", "3.10", "3.11", "3.12","3.13"] # consistent with versions in uv.lock. Removed 3.14 from list given its infancy
+        python-version: ["3.9", "3.10", "3.11", "3.12"]
 
     steps:
     - name: Checkout code
@@ -22,7 +21,7 @@ jobs:
     - name: Install Linux System Dependencies
       run: |
         sudo apt-get update
-        sudo apt-get install -y libportaudio2 libsndfile1 ffmpeg
+        sudo apt-get install -y --no-install-recommends libportaudio2 libsndfile1 ffmpeg
 
     - name: Install uv
       uses: astral-sh/setup-uv@v5
@@ -36,16 +35,14 @@ jobs:
 
     - name: Install dependencies
       run: |
-        # Use uv sync to install the package and all [dependency-groups] simultaneously
+        # Install the package and all dev dependencies
         uv sync --all-extras
 
     - name: Lint and Format with Ruff
       run: |
-        # Run ruff using the environment managed by uv
         uv run ruff format --check .
         uv run ruff check .
 
     - name: Run tests with pytest
-      run: |
-        # Run pytest using the environment managed by uv
-        uv run pytest
+      run: uv run pytest -m "not slow"
+

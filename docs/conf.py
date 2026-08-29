@@ -10,6 +10,8 @@ import sys
 
 sys.path.insert(0, os.path.abspath(".."))
 
+import drumscript as ds
+
 #
 # For the full list of built-in configuration values, see the documentation:
 # https://www.sphinx-doc.org/en/master/usage/configuration.html
@@ -18,9 +20,10 @@ sys.path.insert(0, os.path.abspath(".."))
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
 project = "DrumScript"
+# project = f"DrumScript v{ds.__version__}"
 copyright = "© 2026, DrumScript"
 author = "DrumScript"
-release = "0.1.3"
+release = ds.__version__
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
@@ -34,8 +37,17 @@ extensions = [
     "myst_nb",  # Read .ipynb files
 ]
 
+
 ## -- MyST configuration ------------------------------------------------------
 myst_heading_anchors = 3  # auto-generate anchors for H1-H3, anchor IDs for H1 through H3 headings, slugified from the heading text.
+
+# Dynamic substitutions for use in .md files via {{variable_name}} syntax.
+myst_substitutions = {
+    "version": ds.__version__,
+}
+
+myst_enable_extensions = ["substitution", "colon_fence"]
+nb_execution_mode = "off"
 
 # Generate the stub pages automatically
 autosummary_generate = True
@@ -63,7 +75,9 @@ html_css_files = [
 ]
 # Shibuya Setup
 html_theme_options = {
-    # Logos: Shibuya prefers the full relative path from your docs folder
+    # Logos: Shibuya prefers the full relative path from docs folder
+    # "announcement": f"Alpha release - v{ds.__version__}",
+    "announcement": f"DrumScript v{ds.__version__} now available: with mir_eval benchmarking",
     "light_logo": "_static/logo-light.svg",
     "dark_logo": "_static/logo-dark.svg",
     "github_url": "https://github.com/DrumScript/DrumScript",
@@ -82,5 +96,16 @@ html_context = {
     "source_type": "github",
     "source_user": "DrumScript",
     "source_repo": "DrumScript",
-    "versions_url": "/versions.json",
+    # "versions_url": "/versions.json",  # Not used by Shibuya - kept for reference
+    # ── Version switcher (Shibuya nav-versions.html) ───────────────
+    # Shibuya expects `versions` as a list of (label, url) tuples and
+    # `current_version` as a string. URLs are relative to the docs root.
+    # Update this list when adding new tagged releases.
+    "current_version": f"v{ds.__version__}",
+    "versions": [
+        ("latest", "/DrumScript/latest/"),
+        ("dev", "/DrumScript/dev/"),
+        ("v0.2.0", "/DrumScript/v0.2.0/"),
+        ("v0.1.6", "/DrumScript/v0.1.6/"),
+    ],
 }

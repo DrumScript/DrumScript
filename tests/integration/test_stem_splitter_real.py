@@ -195,7 +195,7 @@ class TestSeparateAudioReal:
     def test_default_call_returns_drums(self, short_drum_loop_wav, tmp_path):
         """Default call (no flags) should produce just the drum stem."""
         result = separate_audio(
-            input_audio_path=str(short_drum_loop_wav),
+            audio_path=str(short_drum_loop_wav),
             output_dir=str(tmp_path),
         )
 
@@ -206,7 +206,7 @@ class TestSeparateAudioReal:
     def test_drumless_creates_mix_and_drum_stem(self, short_drum_loop_wav, tmp_path):
         """``drumless=True`` should produce both the no-drums mix AND the isolated drums."""
         result = separate_audio(
-            input_audio_path=str(short_drum_loop_wav),
+            audio_path=str(short_drum_loop_wav),
             output_dir=str(tmp_path),
             drumless=True,
         )
@@ -224,7 +224,7 @@ class TestSeparateAudioReal:
     def test_all_stems_creates_four_files(self, short_drum_loop_wav, tmp_path):
         """``all_stems=True`` should create one file per Demucs stem (4 total)."""
         result = separate_audio(
-            input_audio_path=str(short_drum_loop_wav),
+            audio_path=str(short_drum_loop_wav),
             output_dir=str(tmp_path),
             all_stems=True,
         )
@@ -241,7 +241,7 @@ class TestSeparateAudioReal:
     def test_mute_bass_creates_no_bass_mix(self, short_drum_loop_wav, tmp_path):
         """``mute=['bass']`` should produce a mix with the bass excluded."""
         result = separate_audio(
-            input_audio_path=str(short_drum_loop_wav),
+            audio_path=str(short_drum_loop_wav),
             output_dir=str(tmp_path),
             mute=["bass"],
         )
@@ -262,7 +262,7 @@ class TestSeparateAudioReal:
         commented out or moved out of scope.
         """
         separate_audio(
-            input_audio_path=str(short_drum_loop_wav),
+            audio_path=str(short_drum_loop_wav),
             output_dir=str(tmp_path),
         )
 

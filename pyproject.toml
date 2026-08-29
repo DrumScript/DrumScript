@@ -4,13 +4,13 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "drumscript"
-version = "0.1.3"
+version = "0.2.1"
 description = "A Python package to convert drum audio to sheet music."
 license = "Apache-2.0"
 readme = "README.md"
-requires-python = ">=3.9,<3.14"
+requires-python = ">=3.9,<3.13"
 authors = [
-  { name="drumscript-admin", email="hello.drumscript@gmail.com" }, 
+  { name="drumscript-admin", email="hello.drumscript@gmail.com" },
 ]
 
 keywords = ["drum", "audio", "music", "sheet-music", "notation", "dsp", "machine-learning", "drumscript", "drums", "percussion", "sound analysis", "eq", "atd", "automatic-drum-transcription"]
@@ -36,58 +36,69 @@ classifiers = [
     "Topic :: Multimedia :: Sound/Audio :: Sound Synthesis",
     "Topic :: Scientific/Engineering",
     "Topic :: Scientific/Engineering :: Mathematics",
-    "Topic :: Scientific/Engineering :: Physics"
+    "Topic :: Scientific/Engineering :: Physics",
 ]
 
 dependencies = [
-    "demucs",
+    # --- Pyodide-compatible core (browser + desktop) ---
+    # `pip install drumscript` installs only these.
     "librosa",
     "matplotlib",
-    "mido",
     "music21",
-    "numba",
     "numpy<2",
-    "pandas",
     "pretty-midi",
-    "pydub",
-    "pyyaml",
     "reportlab",
-    "scikit-learn",
     "scipy",
-    "sounddevice",
     "soundfile",
-    "torch>=2.4,<2.9",
-    "torchaudio>=2.4,<2.9",
-    "tqdm",
-]
 
-  # note that torch only compatible with  Python ABI tags: `cp39`, `cp310`, `cp311`, `cp312`. Not yet compatible with 3.13
+    # --- Moved to [project.optional-dependencies] full ---
+    # Not Pyodide-compatible; browser uses ONNX Runtime Web for stems instead.
+    # "demucs",
+    # "numba",      # requires LLVM compiler — not available in WASM
+    # "pydub",      # requires ffmpeg binary — not available in browser
+    # "torch>=2.4,<2.9",
+    # "torchaudio>=2.4,<2.9",
+]
+# Note: torch only compatible with Python ABI tags cp39-cp312. Not yet compatible with 3.13.
+# Note: demucs, numba, pydub, torch, torchaudio moved to the `full` extra — see [project.optional-dependencies]
 
 [project.urls]
+"Homepage" = "https://drumscript.github.io/DrumScript/"
+"Documentation" = "https://drumscript.github.io/DrumScript/"
 "Repository" = "https://github.com/DrumScript/DrumScript"
 "Issues" = "https://github.com/DrumScript/DrumScript/issues"
 
 [project.optional-dependencies]
-# COMMENTED OUT: Moved to [dependency-groups] below to follow modern PEP 735 standards for local dev environments.
+# `pip install drumscript[full]` — full desktop install including Demucs.
+# Same behaviour as `pip install drumscript` before v0.1.7.
+full = [
+    "demucs",
+    "numba",
+    "pydub",
+    "torch>=2.4,<2.9",
+    "torchaudio>=2.4,<2.9",
+]
+
 dev = [
-  # "furo",
   "ipykernel",
   "myst-parser",
   "myst-nb>=1.3.0",
+  "mir-eval>=0.8.2",
   "pytest",
   "pytest-cov>=7.1.0",
   "shibuya>=2025.10.21",
-  "fastapi>=0.128.8",
   "ipywidgets>=8.1.8",
   "requests>=2.32.5",
-  "ruff>=0.15.11"
+  "ruff>=0.15.11",
+  "twine>=6.2.0",
+  "nbstripout>=0.8.2",
 ]
 
-
-
-
 [project.scripts]
-drumscript = "drumscript.main:main"
+# Points at cli(), not main(). The console script calls its target with no
+# arguments; main() takes explicit keyword args, so pointing here directly
+# raised TypeError on every invocation. cli() parses argv and forwards.
+drumscript = "drumscript.main:cli"
 
 [tool.setuptools]
 include-package-data = true
@@ -100,17 +111,14 @@ exclude = [
     "local_tests*",
     ".development*",
     ".archive/*",
-    "machine-learning*",
     "test_audio*",
-    "terraform/*",
     "visuals/",
     "outputs/",
-    ".testing",
     "*/logs/*",
     "*/proofs/*",
     "*/__pycache__/*",
     "drumscript.utils.research*",
-    ]
+]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
@@ -128,11 +136,15 @@ filterwarnings = [
     "ignore:'audioop' is deprecated:DeprecationWarning",
     "ignore:'sunau' is deprecated:DeprecationWarning",
 ]
-
 addopts = "-v --tb=short --strict-markers --ignore=local_tests/classification_engine --ignore=local_tests/mp3_conversion --ignore=pdf_generation"
 
 # --- RUFF CONFIGURATION ---
 [tool.ruff]
+# Markdown code blocks are illustrative documentation, not executed source.
+# ruff >=0.16 formats them by default, which reflows deliberate one-liner
+# snippets (e.g. `import platform; print(...)`) and collapses readable
+# multi-line examples. Exclude them so ruff governs real Python only.
+extend-exclude = ["*.md"]
 # Set the maximum line length
 line-length = 150
 # Target Python 3.9 as minimum supported version

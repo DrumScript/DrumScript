@@ -6,7 +6,6 @@
 This module contains functions for visualising tempo using librosa's tempogram function
 """
 
-# Import packages: ------------------------------------------------------------------------------------------------
 import librosa
 import matplotlib
 
@@ -19,28 +18,20 @@ import matplotlib.pyplot as plt
 
 from drumscript.audio_processor.audio_loader import load_audio, normalise_audio
 from drumscript.audio_processor.tempo_detector import estimate_tempo
-from drumscript.notation_generator.constants import (
-    HOP_LENGTH,
-    SAMPLE_RATE,
-)
-
-# from datetime import datetime
-
-# print("\n# ------------------------------------------------------------------------------------")
-# datetimestamp = datetime.now()
-# print(f'\ndate/time: {datetimestamp}')
+from drumscript.notation_generator.constants import HOP_LENGTH, SAMPLE_RATE
 
 
 # --- Define function --------------------------------------------------------------------------------------------
 # def visualise_tempogram(audio_data, sr, hop_length=256, output_path="tempogram.png"):
-def visualise_tempogram(audio_data, sr, hop_length=HOP_LENGTH, output_path="tempogram.png"):
+# def visualise_tempogram(audio_data, sr, hop_length=HOP_LENGTH, output_path="tempogram.png"):
+def visualise_tempogram(audio_path, sr, hop_length=HOP_LENGTH, output_path="tempogram.png"):
     """
     Calculates and saves a tempogram visualization for the given audio in folder `visuals`. Creates folder if not present.
 
     Calculates and saves a tempogram visualization.
 
-    :param audio_data: The audio time series.
-    :type audio_data: np.ndarray
+    :param audio_path: The audio time series.
+    :type audio_path: np.ndarray
     :param sr: Sampling rate.
     :type sr: int
     :param hop_length: Hop length for analysis.
@@ -49,9 +40,9 @@ def visualise_tempogram(audio_data, sr, hop_length=HOP_LENGTH, output_path="temp
     :type output_path: str, optional
     """
     sr = SAMPLE_RATE
-    oenv = librosa.onset.onset_strength(y=audio_data, sr=SAMPLE_RATE, hop_length=HOP_LENGTH)
+    oenv = librosa.onset.onset_strength(y=audio_path, sr=SAMPLE_RATE, hop_length=HOP_LENGTH)
     tempogram = librosa.feature.tempogram(onset_envelope=oenv, sr=SAMPLE_RATE, hop_length=HOP_LENGTH)
-    global_tempo = estimate_tempo(audio_data, sr)
+    global_tempo = estimate_tempo(audio_path, sr)
 
     fig, ax = plt.subplots(figsize=(12, 6))
     librosa.display.specshow(tempogram, sr=SAMPLE_RATE, hop_length=HOP_LENGTH, x_axis="time", y_axis="tempo", cmap="magma", ax=ax)
@@ -70,18 +61,25 @@ def visualise_tempogram(audio_data, sr, hop_length=HOP_LENGTH, output_path="temp
 # MAIN BLOCK - for local testing of this function
 
 if __name__ == "__main__":
+    # --------------------------------------------------------------------------uncomment during testing
+    # from datetime import datetime
+    # print("\n# ------------------------------------------------------------------------------------")
+    # datetimestamp = datetime.now()
+    # print(f'\ndate/time: {datetimestamp}')
+    # --------------------------------------------------------------------------------------------------
+
     from drumscript.audio_processor.audio_loader import load_audio, normalise_audio
 
     parser = argparse.ArgumentParser(description="Generate a tempogram visualization for a given audio file.")
-    parser.add_argument("audio_file_path", type=str, help="Path to the audio file to be processed.")
+    parser.add_argument("audio_path", type=str, help="Path to the audio file to be processed.")
     args = parser.parse_args()
-    actual_drum_recording_path = args.audio_file_path
+    audio_path = args.audio_path
 
     try:
         # Load and normalise the audio
-        print(f"Attempting to load: {actual_drum_recording_path}")
+        print(f"Attempting to load: {audio_path}")
         # audio, sr = load_audio(actual_drum_recording_path, sr=44100)
-        audio, sr = load_audio(actual_drum_recording_path, sr=SAMPLE_RATE)
+        audio, sr = load_audio(audio_path, sr=SAMPLE_RATE)
         normalised_audio = normalise_audio(audio)
 
         # Estimate the tempo
@@ -97,8 +95,3 @@ if __name__ == "__main__":
 
     except Exception as e:
         print(f"\nAn unexpected error occurred: {e}")
-# ===========================================================================================================
-# MAIN BLOCK - for local testing of this function
-
-# Uncomment to use, for clearer error logs
-# print("\n# ------------------------------------------------------------------------------------")

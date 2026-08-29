@@ -15,5 +15,7 @@ This page details the history of changes, improvements, and bug fixes in `DrumSc
 0.1.4
 0.1.5
 0.1.6
+0.2.0
+0.2.1
 ```
 <!--release versions should match /release_notes/X.Y.Z exactly, ie NOT `v0.1.0`` or it will break the sphinx build-->

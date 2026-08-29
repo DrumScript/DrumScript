@@ -75,7 +75,7 @@ def _resolve_verbose_flag(full, verbose, function_name):
 #     print(pdf)
 # keeps working but emits a DeprecationWarning.
 #
-# Removal target: v1.0.0 — transcribe() will return a plain dict.
+# Removal target: v1.0.0 - transcribe() will return a plain dict.
 
 
 class _TranscribeResult(dict):
@@ -85,7 +85,7 @@ class _TranscribeResult(dict):
     this dict subclass so existing ``pdf = ds.transcribe(...)`` code keeps
     working while we migrate users to dict access.
 
-    Removal target: v1.0.0 — ``transcribe()`` will return a plain dict.
+    Removal target: v1.0.0 - ``transcribe()`` will return a plain dict.
     """
 
     def __str__(self):
@@ -418,20 +418,34 @@ def transcribe(
     midi_path = output_dir / f"{fname}.mid"
 
     print(f"...Building score: {pdf_path}")
-    score_builder.build_score(
+    # build_score() returns a mapping of the files it SUCCESSFULLY wrote. Each of
+    # its three exports (JSON/PDF/MIDI) is individually fault-tolerant, so a
+    # failure in one does not stop the others - but it also means a path we
+    # computed above may never have been written to disk.
+    #
+    # Prefer what build_score actually reports. If it returns something other
+    # than a dict (e.g. an older build_score that returned None, or a test
+    # double), fall back to the computed paths so behaviour is unchanged.
+    written = score_builder.build_score(
         detected_events=detected_events,
         tempo=tempo,
         output_path=str(pdf_path),
         time_signature=time_signature,
     )
+    if not isinstance(written, dict):
+        written = {
+            "pdf_path": str(pdf_path),
+            "json_path": str(json_path),
+            "midi_path": str(midi_path),
+        }
     print("--- Done ---")
 
     # if full:
     if verbose:
         return {
-            "pdf_path": str(pdf_path),
-            "json_path": str(json_path),
-            "midi_path": str(midi_path),
+            "pdf_path": written.get("pdf_path"),
+            "json_path": written.get("json_path"),
+            "midi_path": written.get("midi_path"),
             "audio_path": audio_path,
             "drum_stem_path": working_path if full_song else None,
             "tempo": tempo,
@@ -441,13 +455,7 @@ def transcribe(
             "sample_rate": sr,
         }
     # return str(pdf_path)  # LEGACY: v0.1.x returned only the PDF path as a string
-    return _TranscribeResult(
-        {
-            "pdf_path": str(pdf_path),
-            "json_path": str(json_path),
-            "midi_path": str(midi_path),
-        }
-    )
+    return _TranscribeResult(written)
 
 
 def export_pdf(score, output_path=None, **kwargs):
@@ -578,4 +586,4 @@ __all__ = [
 try:
     __version__ = importlib.metadata.version("drumscript")
 except importlib.metadata.PackageNotFoundError:
-    __version__ = "0.2.0"
+    __version__ = "0.2.1"

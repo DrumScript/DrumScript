@@ -13,8 +13,8 @@
 #      - The publish.yml workflow (triggered by the release) handles PyPI upload
 #
 # VERSIONING STRATEGY:
-#   0.x.y  = Alpha (current phase) — breaking changes between minors are OK
-#   1.0.0  = First stable release — public API is locked
+#   0.x.y  = Alpha (current phase) - breaking changes between minors are OK
+#   1.0.0  = First stable release - public API is locked
 #   See: https://semver.org
 
 name: Create Release
@@ -32,7 +32,7 @@ on:
         type: choice
         options:
           - Alpha
-          - Betav
+          - Beta
           - Stable
       summary:
         description: "One-line release summary (used in GitHub Release title)"
@@ -76,9 +76,12 @@ jobs:
         run: |
           sed -i "s/^version = \".*\"/version = \"${{ env.VERSION }}\"/" pyproject.toml
 
-      - name: Bump drumscript/__init__.py
+      - name: Bump drumscript/__init__.py fallback version
         run: |
-          sed -i "s/^__version__ = \".*\"/__version__ = \"${{ env.VERSION }}\"/" drumscript/__init__.py
+          # Leading-whitespace anchor: matches the indented fallback inside the
+          # except block, but NOT the commented-out historical line
+          # (`# __version__ = "0.1.6"`), which is preserved as a record.
+          sed -i 's/^\( *\)__version__ = "[0-9]\+\.[0-9]\+\.[0-9]\+"/\1__version__ = "${{ env.VERSION }}"/' drumscript/__init__.py
 
       - name: Bump docs/versions.json
         run: |
@@ -175,7 +178,7 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ env.TAG }}
-          name: "DrumScript ${{ env.TAG }}${{ inputs.summary && format(' — {0}', inputs.summary) || '' }}"
+          name: "DrumScript ${{ env.TAG }}${{ inputs.summary && format(' - {0}', inputs.summary) || '' }}"
           body_path: /tmp/changelog.md
           prerelease: ${{ inputs.release_type != 'Stable' }}
           generate_release_notes: true

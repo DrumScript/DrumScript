@@ -1,12 +1,22 @@
 # **`DrumScript`**
 
 <!--date_created: sun-15-june-2025-->
-<!--date_edited: fri-31-july-2026--->
+<!--date_edited: mon-24-august-2026--->
 
+**DrumScript** is an open-source Python library and CLI tool for drum audio analysis and transcription. Give it a recording - a full mix or an isolated drum stem - and it will generate PDF sheet music, MIDI files, and MusicXML output. The `DrumScript` model is a **deterministic classifier**, and doesn't use AI/machine learning. Built for drummers and by drummers, it is - and always will be - an open-source community tool. The alpha has been running since **01 June 2026** and will be ongoing until we make the model and transcription process more accurate. 
 
-**DrumScript** is an open-source Python library and CLI tool for drum audio analysis and transcription. Give it a recording — a full mix or an isolated drum stem — and it will generate PDF sheet music, MIDI files, and MusicXML output. The `DrumScript` model is a **deterministic classifier**, and doesn't use AI/machine learning. Built for drummers and by drummers, it is - and always will be - an open-source community tool.
+**Disclaimer**
+> * `DrumScript` is developed by part-timers who have full-time jobs and, like most modern software, it's built with the help of good tooling and occasional use of LLM for debugging and refining website content, but all the decisions are human-reviewed more than once at every step.
+> * The deterministic classification model (classify.py) has been built from a relatively small dataset covering different genres, but with a notable focus on **fast-paced, technical death metal** songs and drumming
+> * The prioritisation of speed versus accuracy means the score generation needs work. 
+> * Moreover, as our [roadmap](./docs/guide/roadmap.md) points out, increasing DrumScript's accuracy for all genres and drumming styles, including better score generation is an important long-term goal
+> * The core classification model does NOT use machine learning in classifying onset_events into drum parts. This is what makes the DrumScript package unique: it uses physics-only derived and measured inputs based on the individual features of each part of the drumkit. 
+> * The PDF generation uses ReportLab to build a custom PDF; it does not use librosa or MuseScore
+> * Accuracy of onset detection, sonic properties of deterministic model and score generation are the three main areas we need to improve. 
+> * `GitActions[Bot]` is used in the automated daily workflow that gathers repository statistics: [**repo-stats**](https://github.com/DrumScript/DrumScript/blob/github-repo-stats/DrumScript/DrumScript/latest-report/report.pdf)
+> * If you feel any part of this hasn't been made clear, then please raise it in the **[Discussions](https://github.com/orgs/DrumScript/discussions)**
 
-> **Python >=3.9**
+> **Python >=3.9, < 3.13**
 
 **Workflow Status**
 > 
@@ -29,13 +39,14 @@
 - **[Benchmarking](#benchmarking)**
 - **[Traffic](#traffic)**
 - **[FAQs](#faqs)**
+- **[Changelog](CHANGELOG.md)**
 - **[Acknowledgements](#acknowledgements)**
-- **[License](#license)**
 - **[Similar projects](#similar-projects)**
+- **[License](#license)**
 
 ---
 
-#### **Public Alpha (v0.1.4+) — June to August 2026**
+#### **Public Alpha (v0.1.4+) - ongoing since June 2026**
 
  - We're looking for early adopters and feedback
  - [Feedback on the classification model](https://github.com/DrumScript/DrumScript/issues), and help shape v1.0.0.
@@ -53,13 +64,17 @@
 
 **Example 1: Simple groove**
 
-![DrumScript transcription output](./docs/_static/test_wav.png)
+<!---![DrumScript transcription output](./docs/_static/test_wav.png)-->
+![DrumScript transcription output](https://raw.githubusercontent.com/DrumScript/DrumScript/main//docs/_static/test_wav.png)
 
 **Example 2: A well-known Sabbath song**
 
-![DrumScript transcription output](./docs/_static/iron_man_1.png)
-![DrumScript transcription output](./docs/_static/iron_man_2.png)
-![DrumScript transcription output](./docs/_static/iron_man_3.png)
+<!---![DrumScript transcription output](./docs/_static/iron_man_1.png)--->
+<!---![DrumScript transcription output](./docs/_static/iron_man_2.png)--->
+<!---![DrumScript transcription output](./docs/_static/iron_man_3.png)--->
+![DrumScript transcription output](https://raw.githubusercontent.com/DrumScript/DrumScript/main/docs/_static/iron_man_1.png)
+![DrumScript transcription output](https://raw.githubusercontent.com/DrumScript/DrumScript/main/docs/_static/iron_man_2.png)
+![DrumScript transcription output](https://raw.githubusercontent.com/DrumScript/DrumScript/main/docs/_static/iron_man_3.png)
 
 ---
 
@@ -71,6 +86,7 @@ See [`repository_structure.md`](repository_structure.md) for the full project la
 
 ```
 DrumScript/
+├── benchmarks/                 # mir_eval scripts for benchmarking DrumScript 
 ├── drumscript/                 # Main source package
 │   ├── __init__.py             # Public API (transcribe, load_audio, etc.)
 │   ├── main.py                 # CLI entry point
@@ -81,7 +97,7 @@ DrumScript/
 │   └── utils/                  # Helpers (ffmpeg installer, research scripts)
 ├── benchmarks/                 # Evaluation runners (see benchmarks/README.md)
 ├── docs/                       # Sphinx documentation
-├── tests/                      # pytest test suite (131 unit + 8 integration)
+├── tests/                      # pytest test suite (138 unit + 23 integration)
 ├── .github/workflows/          # CI/CD (tests, build, publish, docs)
 ├── pyproject.toml              # Package metadata and dependencies
 └── uv.lock                     # Pinned dependency versions
@@ -92,7 +108,7 @@ DrumScript/
 ## Features
 *[back](#drumscript)*
 
-- **Automatic Drum Transcription:** Detects kicks, snares, hi-hats, toms, and cymbals using a deterministic, rule-based classification engine — no machine learning required.
+- **Automatic Drum Transcription:** Detects kicks, snares, hi-hats, toms, and cymbals using a deterministic, rule-based classification engine - no machine learning required.
 - **Tempo Detection:** Automatically estimates BPM using a voting-system algorithm tuned for percussive audio.
 - **Onset Detection:** Onset detection method tuned to the physics of percussion audio rather than polyphonic instruments (piano, guitar, etc.).
 - **Stem Separation:** Uses the state-of-the-art [Demucs](https://github.com/adefossez/demucs) source separation model to isolate drums, bass, vocals, and other instruments from a full mix.
@@ -140,7 +156,7 @@ DrumScript manages all dependencies via [`pyproject.toml`](pyproject.toml) using
   - Ubuntu/Debian: `sudo apt-get install libportaudio2`
   - Windows: Usually bundled with the `sounddevice` wheel.
 
-- **git-lfs** is **only** required if you want to run the documentation notebooks locally or rebuild the docs site. Some example audio files in `docs/guide/interactive/audio/` are tracked via Git LFS to keep the main repo lightweight. `pip install drumscript` and ordinary use of the package do **not** need it. If you skip this step, `git clone` will still succeed — you'll just get small LFS pointer files in place of the example audio.
+- **git-lfs** is **only** required if you want to run the documentation notebooks locally or rebuild the docs site. Some example audio files in `docs/guide/interactive/audio/` are tracked via Git LFS to keep the main repo lightweight. `pip install drumscript` and ordinary use of the package do **not** need it. If you skip this step, `git clone` will still succeed - you'll just get small LFS pointer files in place of the example audio.
   - macOS: `brew install git-lfs`
   - Ubuntu/Debian: `sudo apt-get install git-lfs`
   - Windows: [Download from git-lfs.com](https://git-lfs.com/) or install via `winget install GitHub.GitLFS`.
@@ -160,18 +176,25 @@ DrumScript manages all dependencies via [`pyproject.toml`](pyproject.toml) using
 ```python
 import drumscript as ds
 
-# Transcribe an isolated drum stem → PDF
-pdf_path = ds.transcribe("drum_audio.wav")
+# Transcribe an isolated drum stem → PDF + JSON + MIDI
+result = ds.transcribe("drum_audio.wav")
+print(result["pdf_path"])   # PDF sheet music
+print(result["json_path"])  # raw transcription data (JSON)
+print(result["midi_path"])  # MIDI file for DAW import
 
 # Transcribe a full song (separates drums automatically)
-pdf_path = ds.transcribe("full_song.mp3") # drum only audio
-pdf_path = ds.transcribe("full_song.mp3", full_song=True) # full song, tells DrumScript to extract the drums first and then transcribe
+result = ds.transcribe("full_song.mp3") # drum only audio
+result = ds.transcribe("full_song.mp3", full_song=True) # full song, tells DrumScript to extract the drums first and then transcribe
 
-# Get all intermediate results
+# Get all intermediate results (tempo, onsets, events, etc.)
 result = ds.transcribe("drum_audio.wav", verbose=True)
 print(f"Tempo: {result['tempo']:.1f} BPM")
 print(f"Events: {len(result['events'])}")
+print(f"PDF: {result['pdf_path']}")
+print(f"MIDI: {result['midi_path']}")
 ```
+
+> **Note (v0.2.0):** `transcribe()` now returns a dict with `pdf_path`, `json_path`, and `midi_path` keys. Using the return value as a plain string (e.g. `pdf = ds.transcribe(...)`) still works but is deprecated and will be removed in v1.0.0. Use `result["pdf_path"]` instead.
 
 ### Load and explore audio
 
@@ -179,8 +202,9 @@ print(f"Events: {len(result['events'])}")
 import drumscript as ds
 
 # Load at native sample rate (for notebooks / exploration)
-audio_file = ds.load_audio("drum_audio.wav")
-print(f"Sample rate: {sr} Hz, Duration: {len(audio)/sr:.1f}s")
+audio, sr = ds.load_audio("drum_audio.wav")
+# print(f"Sample rate: {sr} Hz, Duration: {len(audio)/sr:.1f}s")
+print(f"Sample rate: {audio_file[1]} Hz, Duration: {len(audio_file[0])/audio_file[1]:.1f}s")
 
 # Detect tempo
 bpm = ds.detect_tempo("drum_audio.wav")
@@ -210,7 +234,8 @@ remove_drums = ds.extract_stems("full_song.wav",
     drumless=True,
     verbose=True,
 )
-print(f"Backing track: {results['mix']}")
+print(f"Files written to: {remove_drums['output_directory']}")
+# The backing track is saved as <input>_no_drums.wav in that directory.
 ```
 
 ---
@@ -274,6 +299,7 @@ drumscript snare_hit.wav --rudiment
 We welcome contributions! DrumScript is intended to be a community-owned project. You can also refer to detailed contributor guidance **[here](./docs/development/contributor_guidance.md)**
 
 - **[Open an Issue](https://github.com/DrumScript/DrumScript/issues/new)** for bugs or feature requests.
+- **[Discussions](https://github.com/orgs/DrumScript/discussions)** for discussions
 - **[Submit a Pull Request](https://github.com/DrumScript/DrumScript/pulls)** for code changes.
 - See **[CONTRIBUTING.md](CONTRIBUTING.md)** for the full contributor guide.
 
@@ -282,7 +308,7 @@ We welcome contributions! DrumScript is intended to be a community-owned project
 **[hello.drumscript@gmail.com](mailto:hello.drumscript@gmail.com)**
 
 ## Alpha Priorities (v0.0.4 < v1.0.0) 
-The alpha phase runs between 01 June and 31 August 2026
+The alpha phase began June 2026. We expect it to run through late 2026 and into 2027 - beta is targeted on API stability and benchmark validation rather than a fixed calendar date.
 
 **What works today:**
 
@@ -348,7 +374,7 @@ Results are archived to `outputs/benchmarks/idmt/` with per-file metrics, summar
 ## Traffic
 *[back](#drumscript)*
 
-We collate usage over time for performance-monitoring. Live repository statistics — updated daily:
+We collate usage over time for performance-monitoring. Repository statistics - updated daily:
 
 - [**View Report (PDF)**](https://github.com/DrumScript/DrumScript/blob/github-repo-stats/DrumScript/DrumScript/latest-report/report.pdf)
 <!--- [**View Report (HTML)**](https://github.com/DrumScript/DrumScript/blob/github-repo-stats/DrumScript/DrumScript/latest-report/report.html)
@@ -366,24 +392,41 @@ ffmpeg is a system-level program, not a Python library, so it cannot be declared
 
 ### What normalisation is applied to loaded audio?
 
-`load_audio()` applies **peak normalisation** after loading. It converts the audio to mono and scales it so the loudest sample is at 1.0. This is a linear operation — no audio detail is lost.
+`load_audio()` applies **peak normalisation** after loading. It converts the audio to mono and scales it so the loudest sample is at 1.0. This is a linear operation - no audio detail is lost.
 
 ### What is `hop_length`?
 
-When analysing audio, librosa slides a small analysis window across the signal. The `hop_length` is how many samples the window advances per step. DrumScript uses `HOP_LENGTH = 128`, which at 44100 Hz gives a time resolution of ~2.9 milliseconds — fast enough to capture individual drum hits.
+When analysing audio, librosa slides a small analysis window across the signal. The `hop_length` is how many samples the window advances per step. DrumScript uses `HOP_LENGTH = 128`, which at 44100 Hz gives a time resolution of ~2.9 milliseconds - fast enough to capture individual drum hits.
 
 ### Does DrumScript use AI/machine learning?
 
-DrumScript's own classification engine is **fully deterministic** — it uses physics-based rules, not neural networks. However, the optional stem separation feature uses [Demucs](https://github.com/adefossez/demucs), which is a deep learning model by Meta/Facebook.
+DrumScript's own classification engine is **fully deterministic** - it uses physics-based rules, not neural networks. However, the optional stem separation feature uses [Demucs](https://github.com/adefossez/demucs), which is a deep learning model by Meta/Facebook.
 
 ---
 
 ## Acknowledgements
 *[back](#drumscript)*
 
-1. **[Demucs](https://github.com/adefossez/demucs)** — The stem splitting functionality is built upon the work of [@adefossez](https://github.com/adefossez).
-2. **[librosa](https://librosa.org/)** — For foundational audio processing tools.
-3. **[@nanaoto](https://github.com/nanaoto)** — For building the `mir_eval` benchmarking infrastructure and IDMT-SMT-Drums V2 adapter (PR [#273](https://github.com/DrumScript/DrumScript/pull/273)).
+1. **[Demucs](https://github.com/adefossez/demucs)** - The stem splitting functionality is built upon the work of [@adefossez](https://github.com/adefossez).
+2. **[librosa](https://librosa.org/)** - For foundational audio processing tools.
+3. **[@nanaoto](https://github.com/nanaoto)** - For building the `mir_eval` benchmarking infrastructure and IDMT-SMT-Drums V2 adapter (PR [#273](https://github.com/DrumScript/DrumScript/pull/273)).
+
+
+
+---
+## Similar Projects
+
+*[back](#drumscript)*
+
+DrumScript has no affiliation with any of the projects below. They are listed for context and reference.
+
+* **[librosa](https://librosa.org/)** - The spectral analysis library that powers DrumScript's onset detection and feature extraction.
+* **[Demucs](https://github.com/adefossez/demucs)** - The stem separation model we use for isolating drums from full mixes.
+* **[tepreece/drumscript (Golang)](https://github.com/tepreece/drumscript)** - A `(Go)lang` MIDI drum pattern scripting language by Tom Preece. Different use case (composing drum patterns via script), different technology (MIDI output rather than audio transcription). If you're looking to *write* drum patterns programmatically, check it out. Maintained by [@tepreece](https://github.com/tepreece)
+* **[basic-pitch](https://github.com/spotify/basic-pitch)** - A lightweight yet powerful audio-to-MIDI converter with pitch bend detection (better for non-percussive audio). Maintained by Spotify.
+* **[mir_eval](https://github.com/mir-evaluation/mir_eval)** - Standard evaluation metrics for music information retrieval tasks.
+* **[onset_db](https://github.com/CPJKU/onset_db)** - Provides a dataset of annotated musical onsets for tuning and evaluating audio detection algorithms. Maintained by JKU Linz.
+* **[DrumBurp](https://github.com/Whatang/DrumBurp)** -  DrumBurp is a desktop GUI drum tab editor created by Michael Thomas (whatang) between 2011–2019. It's a PyQt desktop application for manually writing drum notation - you type in notes by hand, specifying which drum, when, and how you hit it. It is not a transcription tool.
 
 ---
 
@@ -399,19 +442,6 @@ DrumScript's own classification engine is **fully deterministic** — it uses ph
                         http://www.apache.org/licenses/
 
 ---
-## Similar Projects
 
-*[back](#drumscript)*
-
-DrumScript has no affiliation with any of the projects below. They are listed for context and reference.
-
-* **[librosa](https://librosa.org/)** — The spectral analysis library that powers DrumScript's onset detection and feature extraction.
-* **[Demucs](https://github.com/adefossez/demucs)** — The stem separation model we use for isolating drums from full mixes.
-* **[tepreece/drumscript (Golang)](https://github.com/tepreece/drumscript)** — A `(Go)lang` MIDI drum pattern scripting language by Tom Preece. Different use case (composing drum patterns via script), different technology (MIDI output rather than audio transcription). If you're looking to *write* drum patterns programmatically, check it out. Maintained by [@tepreece](https://github.com/tepreece)
-* **[basic-pitch](https://github.com/spotify/basic-pitch)** — A lightweight yet powerful audio-to-MIDI converter with pitch bend detection (better for non-percussive audio). Maintained by Spotify.
-* **[mir_eval](https://github.com/mir-evaluation/mir_eval)** — Standard evaluation metrics for music information retrieval tasks.
-* **[onset_db](https://github.com/CPJKU/onset_db)** - Provides a dataset of annotated musical onsets for tuning and evaluating audio detection algorithms. Maintained by JKU Linz.
-
----
 
 <!--END-->

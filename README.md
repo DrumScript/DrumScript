@@ -1,13 +1,12 @@
-# **`DrumScript`**
+# **DrumScript**
 
 <!--date_created: sun-15-june-2025-->
-<!--date_edited: sat-29-august-2026--->
+<!--date_edited: sun-30-august-2026--->
 
-    Python >=3.9, < 3.13
-> 
-**DrumScript** is an open-source Python library and CLI tool for drum audio analysis and transcription. Give it a recording - a full mix or an isolated drum stem - and it will generate PDF sheet music, MIDI files, and MusicXML output. The `DrumScript` model is a **deterministic classifier**, and doesn't use AI/machine learning. Built for drummers and by drummers, it is - and always will be - an open-source community tool. The alpha has been running since **01 June 2026** and will be ongoing until we make the model and transcription process more accurate.  **[drumscript.github.io](https://drumscript.github.io/DrumScript/)**
-
-> #### `DrumScript` is a project in Development (*alpha*). Please [contribute](#contributing) to help us get to v1.0.0. No coding knowledge required, we are looking for testers too
+> **Python >=3.9, < 3.13**
+>
+**[drumscript.github.io](https://drumscript.github.io/DrumScript/)**
+>
 > 
 <!--**Workflow Status**-->
 
@@ -19,12 +18,15 @@
 <a href="https://colab.research.google.com/drive/15yBGu6WURPyiH-sEQ82g_2T2wKqiIPsq" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open DrumScript In Colab"/></a>
 
 
-> ##### **Release Plan**
+> 
+**DrumScript** is an open-source Python library and CLI tool for drum audio analysis and automatic drum transcription. It also serves as a wrapper for extracting drums from songs using Demucs and creating drumless backing tracks from any song. By default DrumScript accepts drum- and percussion-only audio (`.wav` or `.mp3`). If you specify the `--full-song` flag when using `transcribe()` it will *first* extract the drums from song using Demucs 4-part model and then transcribe. In spirit DrumScript aims to be: Give it a recording - a full mix or an isolated drum stem - and it will generate PDF sheet music, MIDI files, and MusicXML output. 
 
+> #### `DrumScript` is a project in Development (*alpha*). The alpha has been running since **01 June 2026** and will be ongoing until we make the model and transcription process more accurate. Please [contribute](#contributing) to help us get to v1.0.0
+> 
+#### **Release Plan**
 Before we can publish a **confident v1.0.0 of `DrumScript` we need to:**
-  1. perfect the **DrumScript deterministic engine**: ie, the classification model and the score/PDF generation
-  2. build an in-browser, zero storage for input or output audio and **free-to-use** UI for non-coders
-
+1. perfect the **DrumScript deterministic engine**: ie, the classification model and the score/PDF generation
+2. build an in-browser, zero storage for input or output audio and **free-to-use** UI for non-coders
 
 | Phase | Versions | Target Window | What to Expect |
 |-------|----------|---------------|----------------|
@@ -44,6 +46,34 @@ Before we can publish a **confident v1.0.0 of `DrumScript` we need to:**
 > * `GitActions[Bot]` is used in the automated daily workflow that gathers repository statistics: [**repo-stats**](https://github.com/DrumScript/DrumScript/blob/github-repo-stats/DrumScript/DrumScript/latest-report/report.pdf). It's an automated script set to trigger at a specific time daily, it's not a droid. 🤖
 > * `DrumScript` is developed by part-timers who have full-time jobs and, like most modern software, it's built with the help of good tooling and occasional use of LLM for debugging and refining website content, but all the decisions are human-reviewed more than once at every step.
 > * If you feel any part of this hasn't been made clear, then please raise it in the **[Discussions](https://github.com/orgs/DrumScript/discussions)**
+
+---
+
+#### What do you mean by `DrumScript is a deterministic classification engine`?
+* Machine learning/AI is based on **predictive power** and relies on the model being trained by a lot of data.
+* Some people use machine learning to predict which drum note is which. This is often referred to a `Automatic Drum Transcription (ADT)`
+* The `DrumScript` model is a **deterministic classification model**: it does not rely on predictive power
+* It relies on **physical measurement of drum notes** using **spectral analysis** and a **rule-based classification system**
+
+    ```python
+  from drumscript.notation_generator.constants import (
+      HAT_CLOSED_MAX_DECAY,
+      HAT_OPEN_MAX_DECAY,
+      HOP_LENGTH,
+      IDIOPHONE_MIN_HFER_5K,
+      KICK_FREQ_MAX,
+      KICK_FREQ_MIN,
+      KICK_LFER_MIN,
+      N_FFT,
+      ONSET_SLICE_DURATION_MS,
+      SNARE_FREQ_MAX,
+      SNARE_FREQ_MIN,
+      SNARE_HFER_MIN,
+      TOM_FREQ_LOW_MAX,
+      TOM_FREQ_MID_MAX,
+      TOM_MIN_DECAY,
+      )  
+    ```
 
 ---
 
@@ -139,21 +169,21 @@ DrumScript manages all dependencies via [`pyproject.toml`](pyproject.toml) using
 ### System dependencies
 
 - **ffmpeg** is required for MP3 input/output. WAV-only workflows do not need it.
-  - macOS: `brew install ffmpeg`
-  - Ubuntu/Debian: `sudo apt-get install ffmpeg libsndfile1`
-  - Windows: [Download from ffmpeg.org](https://ffmpeg.org/download.html) and add to PATH.
-  - Or use the built-in helper: `import drumscript as ds; ds.install_ffmpeg()`
+- macOS: `brew install ffmpeg`
+- Ubuntu/Debian: `sudo apt-get install ffmpeg libsndfile1`
+- Windows: [Download from ffmpeg.org](https://ffmpeg.org/download.html) and add to PATH.
+- Or use the built-in helper: `import drumscript as ds; ds.install_ffmpeg()`
 
 - **PortAudio** is required by `sounddevice` for audio playback.
-  - macOS: `brew install portaudio`
-  - Ubuntu/Debian: `sudo apt-get install libportaudio2`
-  - Windows: Usually bundled with the `sounddevice` wheel.
+- macOS: `brew install portaudio`
+- Ubuntu/Debian: `sudo apt-get install libportaudio2`
+- Windows: Usually bundled with the `sounddevice` wheel.
 
 - **git-lfs** is **only** required if you want to run the documentation notebooks locally or rebuild the docs site. Some example audio files in `docs/guide/interactive/audio/` are tracked via Git LFS to keep the main repo lightweight. `pip install drumscript` and ordinary use of the package do **not** need it. If you skip this step, `git clone` will still succeed - you'll just get small LFS pointer files in place of the example audio.
-  - macOS: `brew install git-lfs`
-  - Ubuntu/Debian: `sudo apt-get install git-lfs`
-  - Windows: [Download from git-lfs.com](https://git-lfs.com/) or install via `winget install GitHub.GitLFS`.
-  - After installing, run `git lfs install` once, then `git lfs pull` inside the cloned repo to fetch the audio.
+- macOS: `brew install git-lfs`
+- Ubuntu/Debian: `sudo apt-get install git-lfs`
+- Windows: [Download from git-lfs.com](https://git-lfs.com/) or install via `winget install GitHub.GitLFS`.
+- After installing, run `git lfs install` once, then `git lfs pull` inside the cloned repo to fetch the audio.
 
 ---
 
@@ -224,8 +254,8 @@ import drumscript as ds
 # default input format is .wav
 
 remove_drums = ds.extract_stems("full_song.wav",
-    drumless=True,
-    verbose=True,
+  drumless=True,
+  verbose=True,
 )
 print(f"Files written to: {remove_drums['output_directory']}")
 # The backing track is saved as <input>_no_drums.wav in that directory.
@@ -262,13 +292,13 @@ drumscript full_song.mp3 --drumless
 drumscript <audio_file> [OPTIONS]
 
 Options:
-  --full-song     Transcribe a full song (isolates drums first via Demucs)
-  --drumless      Extract a drumless backing track
-  --mute STEM     Mute a specific stem (e.g. --mute bass). Repeatable.
-  --all-stems     Export all individual stems (drums, bass, vocals, other)
-  --format FORMAT Output format for stems: wav (default) or mp3 (requires ffmpeg to be installed)
-  --rudiment      Optimise classification for isolated single beats
-  --ts SIG        Time signature (default: 4/4)
+--full-song     Transcribe a full song (isolates drums first via Demucs)
+--drumless      Extract a drumless backing track
+--mute STEM     Mute a specific stem (e.g. --mute bass). Repeatable.
+--all-stems     Export all individual stems (drums, bass, vocals, other)
+--format FORMAT Output format for stems: wav (default) or mp3 (requires ffmpeg to be installed)
+--rudiment      Optimise classification for isolated single beats
+--ts SIG        Time signature (default: 4/4)
 ```
 
 ### Examples
@@ -352,12 +382,12 @@ uv sync --extra dev
 
 # Run the IDMT benchmark
 uv run --extra dev python benchmarks/run.py idmt \
-  --root /path/to/IDMT-SMT-DRUMS-V2
+--root /path/to/IDMT-SMT-DRUMS-V2
 
 # Run on a single subset with a limit
 uv run --extra dev python benchmarks/run.py idmt \
-  --root /path/to/IDMT-SMT-DRUMS-V2 \
-  --subset RealDrum --limit 5
+--root /path/to/IDMT-SMT-DRUMS-V2 \
+--subset RealDrum --limit 5
 ```
 
 Results are archived to `outputs/benchmarks/idmt/` with per-file metrics, summary statistics, and git commit tracking for reproducibility. See [`benchmarks/README.md`](benchmarks/README.md) for dataset setup and full usage.
@@ -430,9 +460,9 @@ DrumScript has no affiliation with any of the projects below. They are listed fo
 
 **Copyright 2026 DrumScript**
 
-                                 Apache License
-                           Version 2.0, January 2004
-                        http://www.apache.org/licenses/
+                                Apache License
+                          Version 2.0, January 2004
+                      http://www.apache.org/licenses/
 
 ---
 

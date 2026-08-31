@@ -1,4 +1,11 @@
+
+
 # `DrumScript` Transcription Results Template
+
+<!--date_added:mon-31-august-2026-->
+<!--date_updated:mon-31-august-2026-->
+
+**Description:** Share DrumScript results (such as incorrect transcriptions or classifications) to help improve accuracy
 
 ---
 name: Submit transcription results

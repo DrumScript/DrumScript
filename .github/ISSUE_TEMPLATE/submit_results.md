@@ -1,12 +1,9 @@
-
-
-# `DrumScript` Transcription Results Template
+# `DrumScript` Submit Results Template
 
 <!--date_added:mon-31-august-2026-->
 <!--date_updated:tues-01-september-2026-->
 
 **Usage:**  Use this template to submit results from DrumScript, ie inaccurate transcription, poor score generation
-
 
 **Release Plan**
 Before we can publish a **confident v1.0.0 of `DrumScript` we need to:**
@@ -37,7 +34,7 @@ Tick one:
 
 ## Overall rating
 
-Tick one:
+**Tick one:**
 
 - [ ] Usable as-is
 - [ ] Usable after minor manual editing
@@ -46,26 +43,30 @@ Tick one:
 
 ## Source audio
 
-| Item | Value |
+| **Item** | *Value* |
 |------|-------|
-| Artist / track (or "own recording") | e.g. Megadeth, Peace Sells |
-| Genre | e.g. thrash metal, funk, jazz |
-| Real tempo (BPM), if you know it | e.g. 156 |
-| Real time signature, if you know it | e.g. 4/4, 7/8 |
-| Duration | e.g. 1 min 01 sec |
-| Format / sample rate | e.g. WAV, 44100 Hz |
-| Input type | Full mix / isolated drum stem |
-| Kit type | Acoustic / electronic / sampled / programmed |
-| Production | Studio / live / rehearsal room / phone recording |
+| **Artist / track (or "own recording")** | *e.g. Megadeth, Peace Sell*s* |
+| **Genre** | *e.g. thrash metal, funk, jazz* |
+| **Real tempo (BPM)** (if you know it) | *e.g. 156* |
+| **Real time signature** (if you know it) | *e.g. 4/4, 7/8* |
+| **Duration** | *e.g. 1 min 01 sec* |
+| **Format / sample rate** | *e.g. WAV, 44100 Hz* |
+| **Input type** (if you know it)| *Full mix / isolated drum stem* |
+| **Kit type** (if you know it)| *Acoustic / electronic / sampled / programmed* |
+| **Production** (if you know it)| *Studio / live / rehearsal room / phone recording* |
 
-> Please do not upload copyrighted audio. Link to it, or supply a short clip you
-> own the rights to.
+> Please do not upload copyrighted audio, nor your own. Link to it, or supply a short clip you own the rights to.
 
 ## How you ran it
 
 ```bash
 # Paste the exact CLI command, or the Python you called
 drumscript transcribe test.wav
+```
+```
+# paste here
+
+
 ```
 
 ## Environment
@@ -78,17 +79,16 @@ Run `uv pip list | grep -E "drumscript|torch|librosa|demucs|numpy|soundfile"` an
 
 ```
 
-| Item | Value |
+| Item | *Value* |
 |------|-------|
-| DrumScript version | e.g. 0.2.1 |
-| Python version | e.g. 3.12.4 |
-| OS | e.g. macOS 14.4, Ubuntu 24.04, Windows 11 |
-| ffmpeg on PATH? | yes / no / not sure |
+| **DrumScript version** | *e.g. 0.2.1* |
+| **Python version** | *e.g. 3.12.4* |
+| **OS** | *e.g. macOS 14.4, Ubuntu 24.04, Windows 11* |
+| **ffmpeg on PATH?** | *yes / no / not sure* |
 
 ## Detection summary
 
-Fill in what DrumScript reported. The tempo and onset count are printed in the
-log; the instrument counts can be counted from the JSON.
+Fill in what **DrumScript** reported. The tempo and onset count are printed in the log; the instrument counts can be counted from the JSON.
 
 | Item | DrumScript reported | Your estimate of the truth |
 |------|---------------------|----------------------------|
@@ -185,3 +185,23 @@ benchmarking.
 
 Anything else worth knowing. Related issues, links, or a specific timestamp in
 the audio where things went wrong.
+
+<details>
+<summary>Additional notes</summary>
+
+```
+Paste here
+
+
+```
+
+</details>
+
+---
+
+<!--FOR OUR PURPOSES-->
+<!--date_received:tues01sept2026-->
+<!--date_assigned:tues01sept2026-->
+<!--date_closed:tues01sept2026-->
+<!--user_conf_sent:tues01sept2026-->
+<!--zero_ephemeral_data:yes/no-->

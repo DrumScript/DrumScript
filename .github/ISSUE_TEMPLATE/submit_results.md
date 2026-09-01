@@ -3,22 +3,37 @@
 # `DrumScript` Transcription Results Template
 
 <!--date_added:mon-31-august-2026-->
-<!--date_updated:mon-31-august-2026-->
+<!--date_updated:tues-01-september-2026-->
 
-**Description:** Share DrumScript results (such as incorrect transcriptions or classifications) to help improve accuracy
+**Usage:**  Use this template to submit results from DrumScript, ie inaccurate transcription, poor score generation
 
----
-name: Submit transcription results
-about: Share a transcription DrumScript produced, so it can be reviewed and used to improve accuracy
+
+**Release Plan**
+Before we can publish a **confident v1.0.0 of `DrumScript` we need to:**
+1. perfect the **DrumScript deterministic engine**: ie, the classification model and the score/PDF generation
+2. build an in-browser, zero storage for input or output audio and **free-to-use** UI for non-coders
+
+> Please **do not share personal information** when using this template.  DrumScript is a **public repository** which means that **anyone** can view its code, including **[Issues](https://github.com/DrumScript/DrumScript/issues)**. GitHub usernames are fine.
+
+<!--**about:** Share a transcription DrumScript produced (or some other output), so it can be reviewed and used to improve accuracy of the **deterministic classification engine**, **pdf rendering** and/or the **score generation**
 title: "[RESULTS] "
 labels: transcription-results
-assignees: ''
+assignees: ''-->
 
 ---
 
 ## Summary
 
-One sentence: what did you transcribe, and how did it go overall?
+One sentence: what were you trying to do, and how did it go overall?
+Tick one:
+
+- [ ] Transcribe drum-only audio into pdf drum sheet music
+- [ ] Transcribe drum-only from polyphonic* audio into pdf drum sheet music
+- [ ] Detect tempo of drum-only audio
+- [ ] Extract drums from polyphonic* audio
+- [ ] Create a backing track from polyphonic* audio
+
+> ****polyphonic audio*** *refers to a sound or musical texture made up of two or more independent melodic lines or multiple notes played at the exact same time. you might call this a **song***
 
 ## Overall rating
 

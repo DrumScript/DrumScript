@@ -3,15 +3,14 @@
 <!--date_added:mon-31-august-2026-->
 <!--date_updated:tues-01-september-2026-->
 
-**Usage:**  Use this template to submit results from DrumScript, ie inaccurate transcription, poor score generation
+**Usage:**  Use this template to submit results from DrumScript, ie inaccurate transcription, poor score generation, or give feedback. Please try to include **as much information** as possible to help us understand what you were trying to achieve. Please **do not share personal information** when using this template.  DrumScript is a **public repository** which means that **anyone** can view its code, including **[Issues](https://github.com/DrumScript/DrumScript/issues)**. GitHub usernames are fine. Please do not upload copyrighted audio, nor your own. Link to it, or supply a short clip you own the rights to. If you are unsure email the developers at hello.drumscript@gmail.com. 
 
 **Release Plan**
 Before we can publish a **confident v1.0.0 of `DrumScript` we need to:**
 1. perfect the **DrumScript deterministic engine**: ie, the classification model and the score/PDF generation
 2. build an in-browser, zero storage for input or output audio and **free-to-use** UI for non-coders
 
-> Please **do not share personal information** when using this template.  DrumScript is a **public repository** which means that **anyone** can view its code, including **[Issues](https://github.com/DrumScript/DrumScript/issues)**. GitHub usernames are fine.
-
+> 
 <!--**about:** Share a transcription DrumScript produced (or some other output), so it can be reviewed and used to improve accuracy of the **deterministic classification engine**, **pdf rendering** and/or the **score generation**
 title: "[RESULTS] "
 labels: transcription-results
@@ -55,7 +54,6 @@ Tick one:
 | **Kit type** (if you know it)| *Acoustic / electronic / sampled / programmed* |
 | **Production** (if you know it)| *Studio / live / rehearsal room / phone recording* |
 
-> Please do not upload copyrighted audio, nor your own. Link to it, or supply a short clip you own the rights to.
 
 ## How you ran it
 

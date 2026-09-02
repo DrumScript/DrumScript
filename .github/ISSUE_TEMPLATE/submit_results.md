@@ -21,7 +21,8 @@ assignees: ''-->
 ## Summary
 
 One sentence: what were you trying to do, and how did it go overall?
-Tick one:
+
+**Tick one:**
 
 - [ ] Transcribe drum-only audio into pdf drum sheet music
 - [ ] Transcribe drum-only from polyphonic* audio into pdf drum sheet music

@@ -4,7 +4,11 @@
 │   ├── CODEOWNERS
 │   ├── ISSUE_TEMPLATE
 │   │   ├── bug_report.md
-│   │   └── feature_request.md
+│   │   ├── bug_report.yml
+│   │   ├── feature_request.md
+│   │   ├── feature_request.yml
+│   │   ├── submit_results.md
+│   │   └── submit_results.yml
 │   ├── PULL_REQUEST_TEMPLATE.md
 │   └── workflows
 │       ├── docs.yml
@@ -60,8 +64,7 @@
 │   │   └── idmt.py
 │   ├── drum_classifier
 │   │   ├── __init__.py
-│   │   ├── classify.py
-│   │   └── proofs
+│   │   └── classify.py
 │   ├── main.py
 │   ├── notation_generator
 │   │   ├── __init__.py
@@ -69,7 +72,6 @@
 │   │   ├── helpers.py
 │   │   ├── midi_exporter.py
 │   │   ├── pdf_exporter.py
-│   │   ├── proofs
 │   │   ├── score_builder.py
 │   │   └── xml_exporter.py
 │   └── utils
@@ -116,4 +118,4 @@
 ├── tree.txt
 └── uv.lock
 
-22 directories, 95 files
+20 directories, 99 files

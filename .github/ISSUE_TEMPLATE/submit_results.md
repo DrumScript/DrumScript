@@ -1,6 +1,6 @@
 ---
 name: submit_results
-about: Share a transcription DrumScript produced to help improve accuracy.
+about: Share DrumScript results produced to help improve accuracy.
 title: ''
 labels: ''
 assignees: drumscript-admin

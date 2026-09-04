@@ -1,74 +1,68 @@
-# `DrumScript` Bug Report Template
 ---
-name: Bug report
+name: bug_report
 about: Something is broken or behaving unexpectedly
-title: "[BUG] "
+title: "[BUG]:"
 labels: bug
-assignees: ''
+assignees: drumscript-admin
+type: Bug
 
 ---
 
-## Describe the bug
-
-A clear description of what is broken and what you expected to happen instead.
-
-## Steps to reproduce
-
-```python
-# Minimal code that reproduces the problem
-import drumscript as ds
-
-ds.transcribe("my_file.wav")
-```
-
-1. Step one
-2. Step two
-3. See error
-
-## Expected behaviour
-
-What you expected to happen.
-
-## Actual behaviour
-
-What actually happened. Include the full error message and stack trace if there is one.
-
-<details>
-<summary>Full traceback</summary>
-
-```
-Paste the full traceback here
-
-
-```
-
-</details>
-
-## Environment
-
-Run `uv pip list | grep -E "drumscript|torch|librosa|demucs|numpy|soundfile"` and paste the output:
-
-```
-# paste here
-
-
-```
-| Item | Value |
-|------|-------|
-| DrumScript version | e.g. 0.1.2 |
-| Python version | e.g. 3.11.4 |
-| OS | e.g. macOS 14.4, Ubuntu 24.04, Windows 11 |
-| ffmpeg on PATH? | yes / no / not sure |
-
-## Audio file details (if relevant)
-
-| Item | Value |
-|------|-------|
-| Format | e.g. WAV, MP3 |
-| Sample rate | e.g. 44100 Hz |
-| Duration | e.g. 3 min 24 sec |
-| Input type | Full mix / isolated drum stem |
-
-## Additional context
-
-Any other information that might help — screenshots, links, related issues.
+name: Bug report
+description: Something is broken or behaving unexpectedly
+title: "[BUG] "
+labels: [bug]
+body:
+  - type: textarea
+    id: bug-description
+    attributes:
+      label: Describe the bug
+      description: A clear description of what is broken and what you expected to happen instead.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction-steps
+    attributes:
+      label: Steps to reproduce
+      description: Minimal code that reproduces the problem and the steps to see the error.
+      value: |
+        ```python
+        import drumscript as ds
+        ds.transcribe("my_file.wav")
+        ```
+        1. Step one
+        2. Step two
+        3. See error
+    validations:
+      required: true
+  - type: textarea
+    id: expected-behaviour
+    attributes:
+      label: Expected behaviour
+      description: What you expected to happen.
+    validations:
+      required: true
+  - type: textarea
+    id: actual-behaviour
+    attributes:
+      label: Actual behaviour
+      description: What actually happened. Include the full error message and stack trace if there is one.
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Run `uv pip list | grep -E "drumscript|torch|librosa|demucs|numpy|soundfile"` and paste the output. Please include OS and Python version.
+    validations:
+      required: true
+  - type: textarea
+    id: audio-details
+    attributes:
+      label: Audio file details (if relevant)
+      description: Format, sample rate, duration, input type.
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional context
+      description: Any other information that might help — screenshots, links, related issues.

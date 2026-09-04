@@ -1,12 +1,3 @@
----
-name: submit_results
-about: Share DrumScript results produced to help improve accuracy.
-title: ''
-labels: ''
-assignees: drumscript-admin
-
----
-
 name: Submit Results
 description: Share a transcription DrumScript produced to help improve accuracy.
 title: "[RESULTS] "

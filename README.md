@@ -1,7 +1,7 @@
 # **DrumScript**
 
 <!--date_created: sun-15-june-2025-->
-<!--date_edited: sun-30-august-2026--->
+<!--date_edited: fri-04-september-2026--->
 
 > **Python >=3.9, < 3.13**
 >
@@ -17,11 +17,29 @@
 >
 <a href="https://colab.research.google.com/drive/15yBGu6WURPyiH-sEQ82g_2T2wKqiIPsq" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open DrumScript In Colab"/></a>
 
+- **[Features](#features)**
+- **[Project Structure](#project-structure)**
+- **[Installation](#installation)**
+- **[Quick Start](#quick-start)**
+- **[CLI Usage](#cli-usage)**
+- **[Contributing](#contributing)**
+- **[Testing](#testing)**
+- **[Benchmarking](#benchmarking)**
+- **[Traffic](#traffic)**
+- **[FAQs](#faqs)**
+- **[Changelog](CHANGELOG.md)**
+- **[Acknowledgements](#acknowledgements)**
+- **[Similar projects](#similar-projects)**
+- **[License](#license)**
 
 > 
-**DrumScript** is an open-source Python library and CLI tool for drum audio analysis and automatic drum transcription. It also serves as a wrapper for extracting drums from songs using Demucs and creating drumless backing tracks from any song. By default DrumScript accepts drum- and percussion-only audio (`.wav` or `.mp3`). If you specify the `--full-song` flag when using `transcribe()` it will *first* extract the drums from song using Demucs 4-part model and then transcribe. In spirit DrumScript aims to be: Give it a recording - a full mix or an isolated drum stem - and it will generate PDF sheet music, MIDI files, and MusicXML output. 
+**DrumScript** is an open-source Python library and CLI tool for drum audio analysis and automatic drum transcription. It also serves as a wrapper for extracting drums from songs using Demucs and creating drumless backing tracks from any song.  
 
-> #### `DrumScript` is a project in Development (*alpha*). The alpha has been running since **01 June 2026** and will be ongoing until we make the model and transcription process more accurate. Please [contribute](#contributing) to help us get to v1.0.0
+> By default DrumScript accepts drum- and percussion-only audio (`.wav` or `.mp3`). If you specify the `--full-song` flag when using `transcribe()` it will *first* extract the drums from song using Demucs 4-part model and then transcribe. 
+
+In spirit DrumScript aims to be: Give it a recording - a full mix or an isolated drum stem - and it will generate PDF sheet music, MIDI files, and MusicXML output. 
+
+> #### ***`DrumScript` is a project in Development (*alpha*). The alpha has been running since **01 June 2026** and will be ongoing until we make the model and transcription process more accurate. Please [contribute](#contributing) to help us get to v1.0.0***
 > 
 #### **Release Plan**
 Before we can publish a **confident v1.0.0 of `DrumScript` we need to:**
@@ -322,6 +340,12 @@ drumscript snare_hit.wav --rudiment
 We welcome contributions! DrumScript is intended to be a community-owned project. You can also refer to detailed contributor guidance **[here](./docs/development/contributor_guidance.md)**
 
 - **[Open an Issue](https://github.com/DrumScript/DrumScript/issues/new)** for bugs or feature requests.
+Please use the links below to submit your input:
+
+  - **[Report a Bug](https://github.com/DrumScript/DrumScript/issues/new?template=bug_report.yml)**: Tell us if something is broken or behaving unexpectedly.
+  - **[Request a Feature](https://github.com/DrumScript/DrumScript/issues/new?template=feature_request.yml)**: Suggest a new capability or improvement.
+  - **[Submit Transcription Results](https://github.com/DrumScript/DrumScript/issues/new?template=submit_results.yml)**: Share a DrumScript output file for review.
+
 - **[Discussions](https://github.com/orgs/DrumScript/discussions)** for discussions
 - **[Submit a Pull Request](https://github.com/DrumScript/DrumScript/pulls)** for code changes.
 - See **[CONTRIBUTING.md](CONTRIBUTING.md)** for the full contributor guide.

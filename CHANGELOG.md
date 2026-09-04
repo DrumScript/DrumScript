@@ -1,7 +1,7 @@
 # **Changelog**
 
 <!--date_added:thurs-28-may-2026-->
-<!--date_updated:sat-29-august-2026-->
+<!--date_updated:fri-04-september-2026-->
 
 
 * All notable changes related to the repository and pypi distribution of `DrumScript` will be documented here
@@ -31,6 +31,7 @@
 
 > ### *Additions*
 * added blurb to `README.md`, `docs/index.md` and `docs/about.md` about build process and current development people
+* added issue forms for bug_report, feature_request and submit_results to make giving feedback easier
 
 > ### *Changes*
 * tidied up branch tree on remote #311

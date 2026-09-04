@@ -4,6 +4,7 @@ on:
   pull_request:
     branches:
       - main
+      - feat/add_submission_template
 
 jobs:
   test-and-lint:

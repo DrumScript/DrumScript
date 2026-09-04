@@ -1,13 +1,3 @@
----
-name: bug_report
-about: Something is broken or behaving unexpectedly
-title: "[BUG]:"
-labels: bug
-assignees: drumscript-admin
-type: Bug
-
----
-
 name: Bug report
 description: Something is broken or behaving unexpectedly
 title: "[BUG] "

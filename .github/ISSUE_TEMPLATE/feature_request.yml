@@ -1,13 +1,3 @@
----
-name: feature_request
-about: " Suggest a new feature or improvement to DrumScript"
-title: "[feature]:"
-labels: feature
-assignees: drumscript-admin
-type: Feature
-
----
-
 name: Feature request
 description: Suggest a new feature or improvement to DrumScript
 title: "[FEATURE] "

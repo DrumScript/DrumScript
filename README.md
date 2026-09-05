@@ -342,7 +342,7 @@ We welcome contributions! DrumScript is intended to be a community-owned project
 
 All bug reports and feature requests must be filed as GitHub Issues. All code changes must be submitted as [Pull Requests](https://github.com/DrumScript/DrumScript/pulls). Keeping discussion public helps everyone.
 
-See **[CONTRIBUTING.md](CONTRIBUTING.md)** for the full contributor guide.
+<!--See **[CONTRIBUTING.md](CONTRIBUTING.md)** for the full contributor guide.-->
 
 
 - **[Open an Issue](https://github.com/DrumScript/DrumScript/issues/new)** for bugs or feature requests.

@@ -2,6 +2,7 @@
 
 <!--date_created: sun-15-june-2025-->
 <!--date_edited: sat-05-september-2026--->
+<!--date_edited: sat-05-september-2026--->
 
 > **Python >=3.9, < 3.13**
 >
@@ -31,8 +32,27 @@
 - **[Acknowledgements](#acknowledgements)**
 - **[Similar projects](#similar-projects)**
 - **[License](#license)**
+- **[Features](#features)**
+- **[Project Structure](#project-structure)**
+- **[Installation](#installation)**
+- **[Quick Start](#quick-start)**
+- **[CLI Usage](#cli-usage)**
+- **[Contributing](#contributing)**
+- **[Testing](#testing)**
+- **[Benchmarking](#benchmarking)**
+- **[Traffic](#traffic)**
+- **[FAQs](#faqs)**
+- **[Changelog](CHANGELOG.md)**
+- **[Acknowledgements](#acknowledgements)**
+- **[Similar projects](#similar-projects)**
+- **[License](#license)**
 
 > 
+**DrumScript** is an open-source Python library and CLI tool for drum audio analysis and automatic drum transcription. It also serves as a wrapper for extracting drums from songs using Demucs and creating drumless backing tracks from any song.  
+
+> By default DrumScript accepts drum- and percussion-only audio (`.wav` or `.mp3`). If you specify the `--full-song` flag when using `transcribe()` it will *first* extract the drums from song using Demucs 4-part model and then transcribe. 
+
+DrumScript (both the Python package and the eventual UI) aims to be a **free-to-use**, open-source, **[zero-egress](#what-is-zero-egress)** tool that allows you to give it a recording - a full mix or an isolated drum stem - and it will generate PDF sheet music, MIDI files, and MusicXML output. 
 **DrumScript** is an open-source Python library and CLI tool for drum audio analysis and automatic drum transcription. It also serves as a wrapper for extracting drums from songs using Demucs and creating drumless backing tracks from any song.  
 
 > By default DrumScript accepts drum- and percussion-only audio (`.wav` or `.mp3`). If you specify the `--full-song` flag when using `transcribe()` it will *first* extract the drums from song using Demucs 4-part model and then transcribe. 
@@ -345,7 +365,18 @@ All bug reports and feature requests must be filed as GitHub Issues. All code ch
 <!--See **[CONTRIBUTING.md](CONTRIBUTING.md)** for the full contributor guide.-->
 
 
+All bug reports and feature requests must be filed as GitHub Issues. All code changes must be submitted as [Pull Requests](https://github.com/DrumScript/DrumScript/pulls). Keeping discussion public helps everyone.
+
+<!--See **[CONTRIBUTING.md](CONTRIBUTING.md)** for the full contributor guide.-->
+
+
 - **[Open an Issue](https://github.com/DrumScript/DrumScript/issues/new)** for bugs or feature requests.
+Please use the links below to submit your input:
+
+  - **[Report a Bug](https://github.com/DrumScript/DrumScript/issues/new?template=bug_report.yml)**: Tell us if something is broken or behaving unexpectedly.
+  - **[Request a Feature](https://github.com/DrumScript/DrumScript/issues/new?template=feature_request.yml)**: Suggest a new capability or improvement.
+  - **[Submit Results](https://github.com/DrumScript/DrumScript/issues/new?template=submit_results.yml)**: Share a DrumScript output file to help improve the model or score generation.
+
 Please use the links below to submit your input:
 
   - **[Report a Bug](https://github.com/DrumScript/DrumScript/issues/new?template=bug_report.yml)**: Tell us if something is broken or behaving unexpectedly.
@@ -356,6 +387,9 @@ Please use the links below to submit your input:
 
 
 
+
+
+- **[Discussions](https://github.com/orgs/DrumScript/discussions)** for discussions
 - **[Discussions](https://github.com/orgs/DrumScript/discussions)** for discussions
 
 **[hello.drumscript@gmail.com](mailto:hello.drumscript@gmail.com)**
@@ -454,6 +488,16 @@ When analysing audio, librosa slides a small analysis window across the signal. 
 ### Does DrumScript use AI/machine learning?
 
 DrumScript's own classification engine is **fully deterministic** - it uses physics-based rules, not neural networks. However, the optional stem separation feature uses [Demucs](https://github.com/adefossez/demucs), which is a deep learning model by Meta/Facebook.
+
+### What is a `Pull Request`?
+
+A **[pull request](https://docs.github.com/en/pull-requests/reference/pull-requests)** is a formal proposal by a developer to merge code changes from a separate working branch into the main project codebase. It serves as a central place to review, discuss, and test code before it becomes part of the official codebase. ie. You suggest a fix or improvement to the code directly through a pull request.
+
+### What is `zero-egress`?
+
+`Zero egress` means a cloud or data hosting provider does not charge fees when you pull, transfer, or move your data out of their network and onto the internet. 
+
+
 
 ### What is a `Pull Request`?
 

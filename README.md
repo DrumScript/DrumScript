@@ -350,11 +350,6 @@ All bug reports and feature requests must be filed as GitHub Issues. All code ch
 <!--See **[CONTRIBUTING.md](CONTRIBUTING.md)** for the full contributor guide.-->
 
 
-All bug reports and feature requests must be filed as GitHub Issues. All code changes must be submitted as [Pull Requests](https://github.com/DrumScript/DrumScript/pulls). Keeping discussion public helps everyone.
-
-<!--See **[CONTRIBUTING.md](CONTRIBUTING.md)** for the full contributor guide.-->
-
-
 - **[Open an Issue](https://github.com/DrumScript/DrumScript/issues/new)** for bugs or feature requests.
 Please use the links below to submit your input:
 
@@ -362,19 +357,10 @@ Please use the links below to submit your input:
   - **[Request a Feature](https://github.com/DrumScript/DrumScript/issues/new?template=feature_request.yml)**: Suggest a new capability or improvement.
   - **[Submit Results](https://github.com/DrumScript/DrumScript/issues/new?template=submit_results.yml)**: Share a DrumScript output file to help improve the model or score generation.
 
-Please use the links below to submit your input:
-
-  - **[Report a Bug](https://github.com/DrumScript/DrumScript/issues/new?template=bug_report.yml)**: Tell us if something is broken or behaving unexpectedly.
-  - **[Request a Feature](https://github.com/DrumScript/DrumScript/issues/new?template=feature_request.yml)**: Suggest a new capability or improvement.
-  - **[Submit Results](https://github.com/DrumScript/DrumScript/issues/new?template=submit_results.yml)**: Share a DrumScript output file to help improve the model or score generation.
 
 - **[Submit a Pull Request](https://github.com/DrumScript/DrumScript/pulls)** for code changes.
 
 
-
-
-
-- **[Discussions](https://github.com/orgs/DrumScript/discussions)** for discussions
 - **[Discussions](https://github.com/orgs/DrumScript/discussions)** for discussions
 
 **[hello.drumscript@gmail.com](mailto:hello.drumscript@gmail.com)**

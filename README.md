@@ -1,7 +1,7 @@
 # **DrumScript**
 
 <!--date_created: sun-15-june-2025-->
-<!--date_edited: fri-04-september-2026--->
+<!--date_edited: sat-05-september-2026--->
 
 > **Python >=3.9, < 3.13**
 >
@@ -37,9 +37,10 @@
 
 > By default DrumScript accepts drum- and percussion-only audio (`.wav` or `.mp3`). If you specify the `--full-song` flag when using `transcribe()` it will *first* extract the drums from song using Demucs 4-part model and then transcribe. 
 
-In spirit DrumScript aims to be: Give it a recording - a full mix or an isolated drum stem - and it will generate PDF sheet music, MIDI files, and MusicXML output. 
+DrumScript (both the Python package and the eventual UI) aims to be a **free-to-use**, open-source, **[zero-egress](#what-is-zero-egress)** tool that allows you to give it a recording - a full mix or an isolated drum stem - and it will generate PDF sheet music, MIDI files, and MusicXML output. 
 
-> #### ***`DrumScript` is a project in Development (*alpha*). The alpha has been running since **01 June 2026** and will be ongoing until we make the model and transcription process more accurate. Please [contribute](#contributing) to help us get to v1.0.0***
+> The alpha has been running since **01 June 2026** and will be ongoing until we make the model and transcription process more accurate. **Please [contribute](#contributing) to help us get to v1.0.0**. You can **submit results** (such as `.pdf`, `.midi` of transcriptions) using the custom **[issue form](https://github.com/DrumScript/DrumScript/issues/new?template=submit_results.yml)**  or submit a **[pull request](#what-is-a-pull-request)**. [DrumScript](https://github.com/DrumScript/DrumScript) is a **public repository**: all issues, discussions and pr requests are also public please do not upload copyrighted material or personal information. You can email hello.drumscript@gmail.com if you have questions
+
 > 
 #### **Release Plan**
 Before we can publish a **confident v1.0.0 of `DrumScript` we need to:**
@@ -339,18 +340,23 @@ drumscript snare_hit.wav --rudiment
 
 We welcome contributions! DrumScript is intended to be a community-owned project. You can also refer to detailed contributor guidance **[here](./docs/development/contributor_guidance.md)**
 
+All bug reports and feature requests must be filed as GitHub Issues. All code changes must be submitted as [Pull Requests](https://github.com/DrumScript/DrumScript/pulls). Keeping discussion public helps everyone.
+
+See **[CONTRIBUTING.md](CONTRIBUTING.md)** for the full contributor guide.
+
+
 - **[Open an Issue](https://github.com/DrumScript/DrumScript/issues/new)** for bugs or feature requests.
 Please use the links below to submit your input:
 
   - **[Report a Bug](https://github.com/DrumScript/DrumScript/issues/new?template=bug_report.yml)**: Tell us if something is broken or behaving unexpectedly.
   - **[Request a Feature](https://github.com/DrumScript/DrumScript/issues/new?template=feature_request.yml)**: Suggest a new capability or improvement.
-  - **[Submit Transcription Results](https://github.com/DrumScript/DrumScript/issues/new?template=submit_results.yml)**: Share a DrumScript output file for review.
+  - **[Submit Results](https://github.com/DrumScript/DrumScript/issues/new?template=submit_results.yml)**: Share a DrumScript output file to help improve the model or score generation.
+
+- **[Submit a Pull Request](https://github.com/DrumScript/DrumScript/pulls)** for code changes.
+
+
 
 - **[Discussions](https://github.com/orgs/DrumScript/discussions)** for discussions
-- **[Submit a Pull Request](https://github.com/DrumScript/DrumScript/pulls)** for code changes.
-- See **[CONTRIBUTING.md](CONTRIBUTING.md)** for the full contributor guide.
-
-> All bug reports and feature requests must be filed as GitHub Issues. All code changes must be submitted as Pull Requests. Keeping discussion public helps everyone.
 
 **[hello.drumscript@gmail.com](mailto:hello.drumscript@gmail.com)**
 
@@ -448,6 +454,16 @@ When analysing audio, librosa slides a small analysis window across the signal. 
 ### Does DrumScript use AI/machine learning?
 
 DrumScript's own classification engine is **fully deterministic** - it uses physics-based rules, not neural networks. However, the optional stem separation feature uses [Demucs](https://github.com/adefossez/demucs), which is a deep learning model by Meta/Facebook.
+
+### What is a `Pull Request`?
+
+A **[pull request](https://docs.github.com/en/pull-requests/reference/pull-requests)** is a formal proposal by a developer to merge code changes from a separate working branch into the main project codebase. It serves as a central place to review, discuss, and test code before it becomes part of the official codebase. ie. You suggest a fix or improvement to the code directly through a pull request.
+
+### What is `zero-egress`?
+
+`Zero egress` means a cloud or data hosting provider does not charge fees when you pull, transfer, or move your data out of their network and onto the internet. 
+
+
 
 ---
 

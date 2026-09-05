@@ -8,7 +8,28 @@
 
 ---
 
-Thanks for your interest in contributing!
+We welcome contributions! DrumScript is intended to be a community-owned project. You can also refer to detailed contributor guidance **[here](./docs/development/contributor_guidance.md)**
+
+All bug reports and feature requests must be filed as GitHub Issues. All code changes must be submitted as [Pull Requests](https://github.com/DrumScript/DrumScript/pulls). Keeping discussion public helps everyone.
+
+
+- **[Open an Issue](https://github.com/DrumScript/DrumScript/issues/new)** for bugs or feature requests.
+Please use the links below to submit your input:
+
+  - **[Report a Bug](https://github.com/DrumScript/DrumScript/issues/new?template=bug_report.yml)**: Tell us if something is broken or behaving unexpectedly.
+  - **[Request a Feature](https://github.com/DrumScript/DrumScript/issues/new?template=feature_request.yml)**: Suggest a new capability or improvement.
+  - **[Submit Results](https://github.com/DrumScript/DrumScript/issues/new?template=submit_results.yml)**: Share a DrumScript output file to help improve the model or score generation.
+
+- **[Submit a Pull Request](https://github.com/DrumScript/DrumScript/pulls)** for code changes.
+
+
+
+- **[Discussions](https://github.com/orgs/DrumScript/discussions)** for discussions
+
+---
+
+
+<!--Thanks for your interest in contributing!-->
 
 **Quick start:**
 

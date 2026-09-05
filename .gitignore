@@ -142,6 +142,11 @@ aws_api.py
 scripts/*.md
 Dockerfile
 drumscript_full_review.txt
+<<<<<<< HEAD
+=======
+public/
+public/pyodideWorker.js
+>>>>>>> b66eb13ec849817ca4e60eb42d14ecf21af72a58
 tree_full.txt
 ui.py
 

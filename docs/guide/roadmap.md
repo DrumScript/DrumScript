@@ -1,7 +1,11 @@
 # Roadmap for `DrumScript`
 
 <!--date_created: thurs-21-may-2026-->
+<<<<<<< HEAD
 <!--date_updated:weds-25-aug-2026-->
+=======
+<!--date_updated: sat-29-august-2026-->
+>>>>>>> b66eb13ec849817ca4e60eb42d14ecf21af72a58
 
 > DrumScript follows [Semantic Versioning](https://semver.org/).
 > The current phase is **Alpha** (`v{{version}}`) - the classification model and score generation/ API is out for testing. 
@@ -21,7 +25,11 @@
 |-------|----------|---------------|----------------|
 | **Pre-Alpha** | `0.1.0` – `0.9.0` | **June 2025 - May 2026** | Core pipeline works end-to-end. API may change between releases. Built in isolation |
 | **Alpha** (current) | `0.1.0` – `0.9.0` | **June 2026 – ongoing** | Core pipeline works end-to-end. API may change between releases. Feedback sought. Cross off some of the **[Issues](https://github.com/DrumScript/DrumScript/issues)** added in pre-Alpha |
+<<<<<<< HEAD
 | **Beta** | `0.9.x` – `0.9.9` | Follows alpha (API-stability gated) | API locked for each minor version. Focus on accuracy, edge cases, and evaluation against standard ADT datasets. Release **free-to-use** `WebGPU/WASM/ONNX` UI for non-coders |
+=======
+| **Beta** | `0.9.x` – `0.9.9` | Follows alpha (API-stability gated) | API locked for each minor version. Focus on accuracy, edge cases, and evaluation against standard ADT datasets. Release first version of **free-to-use** `WebGPU/WASM/ONNX` UI for non-coders |
+>>>>>>> b66eb13ec849817ca4e60eb42d14ecf21af72a58
 | **Stable** | `1.0.0` | *tbc* | Public API frozen. Breaking changes only in major versions. Community-owned tool. Publication of paper in journal to announce release |
 
 
@@ -39,6 +47,7 @@
 
 ### Alpha Priorities (v0.3.0 – v0.9.0)
 
+<<<<<<< HEAD
 **What we're focused on during the alpha:**
 
 - Expanding test coverage across **genres**, **kit types**, and **recording conditions**
@@ -49,12 +58,53 @@
 - Improving **Demucs** stem-separation quality outputs
 - Community feedback from fellow drummers, audio, engineers and the TISMIR/MIR community
 - Expanding benchmark dataset coverage (ENST-Drums, MDB-Drums) and recalibrating classifier thresholds based on benchmark findings
+=======
+> Before we can publish a **confident v1.0.0 of `DrumScript` we need to:**
+>      a. perfect the **DrumScript deterministic engine**: ie, the classification model and the score/PDF generation
+>      b. build an in-browser, zero storage for input or output audio and **free-to-use** UI for non-coders
+
+**1. Deterministic classification model** (the core, and the part the MIR community is most interested in)
+- Fixing classification edge cases (deep snares vs clicky kicks, splash cymbals vs open hats)
+- Addressing crash/cymbal over-detection (centroid thresholds, de-bounce - see the classification-fixes note above)
+- Improving onset detection sensitivity for ghost notes and fast passages, and reducing phantom/duplicate events
+- Expanding coverage across **genres**, **kit types**, and **recording conditions**
+- Relative-frequency (per-track) calibration so the model is less tied to absolute Hz bands (see "Stable Version" below for the longer-term vision)
+
+**2. Score / PDF generation and readability** (raised repeatedly by testers, including MIR researchers)
+- Improve transcription notation; known bugs: note tails that don't line up with note heads, review cosmetic layout/density
+- Fix time signatures and ensure transcription timing is correct to semi-quaver
+- Investigate onset-timing precision feeding into score placement (spurious rests from small timing errors)
+
+**3. Browser-based zero-code UI**
+> **A major goal before Beta**
+
+ - We recognise DrumScript's place as a Python package excludes non-coders from using it, so it is a major goal to publish, alongside 1. and 2. a browser deployment using WebGPU/WebAssembly/Pyodide-or-Java/ONNX-based UI
+ - We want this to be **Free-to-use**
+ - We also want it to run completely in-browser, so it **never stores your audio or data, including the outputs so that DrumScript can run entirely client-side - no installation, no server, no account, no data leaves the user's machine. The aim is a free, local-input/local-output tool that non-technical musicians can use without touching a terminal.
+
+**Measurement**
+- Resuming the `mir_eval` benchmarking work (with [@nanaoto](https://github.com/nanaoto)); expanding dataset coverage (ENST-Drums, MDB-Drums) beyond the existing IDMT-SMT-Drums V2 adapter, and recalibrating classifier thresholds based on benchmark findings rather than by eye
+
+**Supporting work**
+- Improving **Demucs** stem-separation quality outputs
+- Community feedback from fellow drummers, audio engineers, and the `TISMIR/MIR` community
+
+**Bugs & technical debt handled alongside (not at the expense of the two fundamentals above):**
+- numpy 2.x migration, which unblocks Python 3.13 support (and testing 3.14) - one linked task
+- Silencing the pydub `SyntaxWarning` in the CLI
+
+<!---*Deferred until the fundamentals are solid (logged, not prioritised): manual `--tempo` / `--sr` / `--quantize` overrides, MusicXML as standard output*-->
+>>>>>>> b66eb13ec849817ca4e60eb42d14ecf21af72a58
 
 ### Beta Priorities `0.9.x` – `0.9.9`
 
 **Immediately prior to release of DrumScript v1.0.0 some goals will be small fixes to ensure robustness, testing the UI, integrating the UI with current CI/CD pipelines**
 
+<<<<<<< HEAD
 ### Stable Version `1.0.0` and Beyond 
+=======
+### Also planned:
+>>>>>>> b66eb13ec849817ca4e60eb42d14ecf21af72a58
 
 1. **Smarter classification across genres and kits**
 
@@ -78,6 +128,7 @@ The alpha treats every hit as equal. Future versions should handle:
 
 * Accents and ghost notes
 * Different beater styles (stick tip vs shoulder, brush sweeps, mallet rolls)
+<<<<<<< HEAD
 * Expressive techniques critical for accur  FIX 1: Restored minimal noise gate (2% of global max) in classify_events.
          Dead silence was passing through and generating phantom events.
   FIX 2: Aligned ride/crash centroid threshold from 2500 → 5500 in classify_events,
@@ -98,6 +149,24 @@ A major goal: a browser deployment using WebGPU, WebAssembly, Pyodide, and ONNX 
 6. Formal evaluation and paper
 
 Benchmarking against standard ADT datasets using `mir_eval` metrics is now underway - the infrastructure shipped in v0.1.6 with IDMT-SMT-Drums V2 as the first verified benchmark. The write-up will target the [TISMIR](https://transactions.ismir.net/) Educational Articles track covering the pipeline architecture, evaluation results, and design decisions.
+=======
+* Expressive techniques critical for accurate transcription and meaningful notation
+
+> - **Classification fixes already applied in `classify_events`** These address known over-detection / phantom-event problems and are directly relevant to the ongoing score-readability work:
+> - **Noise gate** - restored a minimal noise gate (2% of global max) in `classify_events`. Dead silence was passing through and generating phantom events.
+> - **Ride/crash centroid threshold** - aligned from `2500` → `5500` in `classify_events`, matching the `classify_idiophone` standalone function. `2500` was causing massive crash over-detection (e.g. 859 crashes in the TGOO transcription).
+> - **De-bounce lockout** - added a minimal 50ms lockout in `classify_events` for full-song mode. Duplicate timestamps were appearing because consecutive onsets on the same transient were both being classified.
+> 
+> *Note (Aug 2026): crash over-detection has been observed again in testing (e.g. ~291 crashes on a Peace Sells transcription), so the centroid threshold and de-bounce behaviour likely need revisiting - tracked as part of the alpha classification-model work below.*
+
+4.  **Broader stem separation uses**
+
+The Demucs integration currently targets drummers, but the same pipeline can produce vocal-only, bass-only, or instrument-only extractions. These will be exposed as first-class features so the tool is useful to vocalists, bassists, and producers - not just drummers.
+
+5. **Formal evaluation/publishing a paper in academic journals (software engineering/open source/music information retrieval) on deterministic methods/the `DrumScript` repository/project. *scope as yet undecided**
+
+> Benchmarking against standard ADT datasets using `mir_eval` metrics is now underway - the infrastructure shipped in v0.1.6 with IDMT-SMT-Drums V2 as the first verified benchmark. The write-up will target the [TISMIR](https://transactions.ismir.net/) Educational Articles track covering the pipeline architecture, evaluation results, and design decisions.
+>>>>>>> b66eb13ec849817ca4e60eb42d14ecf21af72a58
 
 ---
 

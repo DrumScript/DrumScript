@@ -47,6 +47,7 @@ dependencies = [
     "music21",
     "numpy<2",
     "pretty-midi",
+<<<<<<< HEAD
     "reportlab",
     "scipy",
     "soundfile",
@@ -61,6 +62,16 @@ dependencies = [
 ]
 # Note: torch only compatible with Python ABI tags cp39-cp312. Not yet compatible with 3.13.
 # Note: demucs, numba, pydub, torch, torchaudio moved to the `full` extra — see [project.optional-dependencies]
+=======
+    "pydub",
+    "reportlab",
+    "scipy",
+    "soundfile",
+    "torch>=2.4,<2.9",
+    "torchaudio>=2.4,<2.9",
+]
+# Note: torch only compatible with Python ABI tags cp39-cp312. Not yet compatible with 3.13.
+>>>>>>> b66eb13ec849817ca4e60eb42d14ecf21af72a58
 
 [project.urls]
 "Homepage" = "https://drumscript.github.io/DrumScript/"
@@ -69,6 +80,7 @@ dependencies = [
 "Issues" = "https://github.com/DrumScript/DrumScript/issues"
 
 [project.optional-dependencies]
+<<<<<<< HEAD
 # `pip install drumscript[full]` — full desktop install including Demucs.
 # Same behaviour as `pip install drumscript` before v0.1.7.
 full = [
@@ -79,6 +91,8 @@ full = [
     "torchaudio>=2.4,<2.9",
 ]
 
+=======
+>>>>>>> b66eb13ec849817ca4e60eb42d14ecf21af72a58
 dev = [
   "ipykernel",
   "myst-parser",

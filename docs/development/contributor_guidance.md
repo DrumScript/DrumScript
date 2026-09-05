@@ -1,7 +1,7 @@
 # Contributing to `DrumScript`
 
 <!--date_created: thurs-03-jul-2025 -->
-<!--date_updated: weds-21-jan-2026 -->
+<!--date_updated: sat-05-sept-2026-->
 
 ---
 
@@ -16,6 +16,10 @@
 - [Pull Request Process](#pull-request-process)
 - [Coding Standards](#coding-standards)
 - [Reporting Issues](#reporting-issues)
+<<<<<<< HEAD
+=======
+  - [Issue Forms](#issue-forms) 
+>>>>>>> b66eb13ec849817ca4e60eb42d14ecf21af72a58
 - [Questions & Support](#questions--support)
 
 First off, thank you for considering contributing to `DrumScript`! :D
@@ -338,7 +342,11 @@ Use this option if you want GitHub to do the version bumping and tagging for you
 4. Run the test suite: `pytest tests/`
 5. Submit a PR against the `main` branch.
 
+<<<<<<< HEAD
 We enforce **Sphinx reST (https://www.sphinx-doc.org/en/master/usage/restructuredtext/basics.html) DocString convention**. All contributed code must follow this.
+=======
+We enforce **[Sphinx reST formatting DocString conventions](https://www.sphinx-doc.org/en/master/usage/restructuredtext/basics.html)** in developing our documentation and guidance. All contributed code must follow this.
+>>>>>>> b66eb13ec849817ca4e60eb42d14ecf21af72a58
 
 ---
 
@@ -377,6 +385,21 @@ It is recommended to check that your issue complies with the following rules bef
  or [pull requests](https://github.com/DrumScript/DrumScript/pulls).
 
 -  Please ensure all code snippets and error messages are formatted in appropriate code blocks. See [Creating and highlighting code blocks](https://help.github.com/articles/creating-and-highlighting-code-blocks).
+
+### Issue forms
+
+We have drafted custom issue templates to help you submit feedback. 
+
+- **[Open an Issue](https://github.com/DrumScript/DrumScript/issues/new)** for bugs or feature requests.
+Please use the links below to submit your input:
+
+  - **[Report a Bug](https://github.com/DrumScript/DrumScript/issues/new?template=bug_report.yml)**: Tell us if something is broken or behaving unexpectedly.
+  - **[Request a Feature](https://github.com/DrumScript/DrumScript/issues/new?template=feature_request.yml)**: Suggest a new capability or improvement.
+  - **[Submit Results](https://github.com/DrumScript/DrumScript/issues/new?template=submit_results.yml)**: Share a DrumScript output file to help improve the model or score generation.
+
+- **[Submit a Pull Request](https://github.com/DrumScript/DrumScript/pulls)** for code changes.
+
+
 
 ---
 

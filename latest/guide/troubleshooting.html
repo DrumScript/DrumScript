@@ -2,7 +2,7 @@
 <html lang="en" data-accent-color="violet" data-content_root="../">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Configuration - DrumScript 0.2.1 documentation</title><link rel="author" title="About these documents" href="../about.html" /><link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Glossary of Terms" href="glossary.html" /><link rel="prev" title="DrumScript CLI Reference" href="cli_reference.html" /><script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Troubleshooting - DrumScript 0.2.1 documentation</title><link rel="author" title="About these documents" href="../about.html" /><link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><script>
     function setColorMode(t){let e=document.documentElement;e.setAttribute("data-color-mode",t);let a=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches,s=t;"auto"===t&&(s=a?"dark":"light"),"light"===s?(e.classList.remove("dark"),e.classList.add("light")):(e.classList.remove("light"),e.classList.add("dark"))}
     setColorMode(localStorage._theme||"auto");
   </script><link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=e1a1ceaf" />
@@ -20,7 +20,7 @@
 }
 </style>
     
-  <meta property="og:type" content="website"/><meta property="og:title" content="Configuration"/>
+  <meta property="og:type" content="website"/><meta property="og:title" content="Troubleshooting"/>
     <meta name="twitter:card" content="summary"/>
   </head>
 <body><div class="announcement">
@@ -39,7 +39,7 @@
       <strong>DrumScript</strong>
     </a>
     <div class="sy-head-nav" id="head-nav">
-      <nav class="sy-head-links"><ul><li class="link"><a href="../index.html">Getting Started</a></li><li class="link"><a href="../api.html">API Reference</a></li><li class="link"><a href="installation.html">Guide</a></li><li class="link"><a href="interactive/index.html">Runbooks</a></li><li class="link"><a href="../development/contributor_guidance.html">Contributing</a></li><li class="link"><a href="troubleshooting.html">Troubleshooting</a></li><li class="link"><a href="../release_notes/index.html">Release Notes</a></li><li class="link"><a href="../theory/drum_notation_guide.html">Fun Theory</a></li></ul></nav>
+      <nav class="sy-head-links"><ul><li class="link"><a href="../index.html">Getting Started</a></li><li class="link"><a href="../api.html">API Reference</a></li><li class="link"><a href="installation.html">Guide</a></li><li class="link"><a href="interactive/index.html">Runbooks</a></li><li class="link"><a href="../development/contributor_guidance.html">Contributing</a></li><li class="link"><a href="#">Troubleshooting</a></li><li class="link"><a href="../release_notes/index.html">Release Notes</a></li><li class="link"><a href="../theory/drum_notation_guide.html">Fun Theory</a></li></ul></nav>
       <div class="sy-head-extra flex items-center print:hidden"><form class="searchbox flex items-center" action="../search.html" method="get">
   <input type="text" name="q" placeholder="Search" />
   <kbd>/</kbd>
@@ -221,9 +221,9 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l1"><a class="reference internal" href="../theory/sources.html">Research Sources</a></li>
 </ul>
 <p class="caption" role="heading" aria-level="3"><span class="caption-text">User Guide</span></p>
-<ul class="current">
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="cli_reference.html"><strong>DrumScript CLI Reference</strong></a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="configuration.html">Configuration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="glossary.html">Glossary of Terms</a></li>
 <li class="toctree-l1"><a class="reference internal" href="glossary.html#definitions">Definitions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="roadmap.html">Roadmap for <code class="docutils literal notranslate"><span class="pre">DrumScript</span></code></a></li>
@@ -241,11 +241,9 @@ data-aria-dark="Switch to auto color mode">
       <i class="i-lucide close"></i>
     </button>
     <div class="sy-scrollbar sy-rside-inner px-6 xl:top-16 xl:sticky xl:pl-0 pt-6 pb-4"><div class="localtoc"><h3>On this page</h3><ul>
-<li><a class="reference internal" href="#onset-detection">Onset Detection</a></li>
-<li><a class="reference internal" href="#sample-rate-and-hop-length">Sample Rate and Hop Length</a></li>
-<li><a class="reference internal" href="#output-formats">Output Formats</a></li>
-<li><a class="reference internal" href="#stem-output-format">Stem Output Format</a></li>
-<li><a class="reference internal" href="#time-signature">Time Signature</a></li>
+<li><a class="reference internal" href="#known-dependency-warnings">Known dependency warnings</a></li>
+<li><a class="reference internal" href="#drumscript-warnings">DrumScript warnings</a></li>
+<li><a class="reference internal" href="#how-to-submit-an-issue">How to submit an issue</a></li>
 </ul>
 </div><a class="js-repo-stats repo-stats flex items-center" href="https://github.com/DrumScript/DrumScript"
   data-type="github" data-user="DrumScript" data-repo="DrumScript">
@@ -269,7 +267,7 @@ data-aria-dark="Switch to auto color mode">
     </span>
   </span>
 </a><div class="edit-this-page">
-  <a href="https://github.com/DrumScript/DrumScript/blob/main/docs/guide/configuration.md">Edit this page</a>
+  <a href="https://github.com/DrumScript/DrumScript/blob/main/docs/guide/troubleshooting.md">Edit this page</a>
 </div><div id="ethical-ad-placement" data-ea-publisher="readthedocs"></div></div>
   </aside>
   <div class="rside-overlay js-menu" role="button" aria-label="Close Table of Contents" aria-controls="rside" aria-expanded="false"></div>
@@ -286,7 +284,7 @@ data-aria-dark="Switch to auto color mode">
         <span>/</span>
         <meta itemprop="position" content="1" />
       </li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-        <strong itemprop="name">Configuration</strong>
+        <strong itemprop="name">Troubleshooting</strong>
         <meta itemprop="position" content="2" />
       </li></ol>
     <div class="xl:hidden ml-1">
@@ -303,7 +301,7 @@ data-aria-dark="Switch to auto color mode">
     <button
       type="button"
       class="js-copy px-3 py-1 inline-flex items-center gap-1"
-      data-url="https://raw.githubusercontent.com/DrumScript/DrumScript/refs/heads/main/docs/guide/configuration.md.txt"
+      data-url="https://raw.githubusercontent.com/DrumScript/DrumScript/refs/heads/main/docs/guide/troubleshooting.md.txt"
     >
       <i class="i-lucide" data-icon="copy"></i>
       <span>Copy page</span>
@@ -317,143 +315,91 @@ data-aria-dark="Switch to auto color mode">
     <div role="presentation">
       <div class="flex flex-col" role="group">
         <button class="js-copy" type="button" role="menuitem"
-          data-url="https://raw.githubusercontent.com/DrumScript/DrumScript/refs/heads/main/docs/guide/configuration.md.txt">
+          data-url="https://raw.githubusercontent.com/DrumScript/DrumScript/refs/heads/main/docs/guide/troubleshooting.md.txt">
           <span class="iconify-icon">
             <i class="i-lucide" data-icon="copy"></i>
           </span>
           <span>Copy page</span>
         </button>
-        <a role="menuitem" href="https://raw.githubusercontent.com/DrumScript/DrumScript/refs/heads/main/docs/guide/configuration.md.txt" target="_blank" rel="nofollow"><iconify-icon icon="bi:markdown"></iconify-icon>
-            <span>View as Markdown</span></a><a role="menuitem" href="https://chatgpt.com/?hints=search&q=Read%20https%3A//raw.githubusercontent.com/DrumScript/DrumScript/refs/heads/main/docs/guide/configuration.md.txt%20so%20I%20can%20ask%20questions%20about%20it." target="_blank" rel="nofollow">
+        <a role="menuitem" href="https://raw.githubusercontent.com/DrumScript/DrumScript/refs/heads/main/docs/guide/troubleshooting.md.txt" target="_blank" rel="nofollow"><iconify-icon icon="bi:markdown"></iconify-icon>
+            <span>View as Markdown</span></a><a role="menuitem" href="https://chatgpt.com/?hints=search&q=Read%20https%3A//raw.githubusercontent.com/DrumScript/DrumScript/refs/heads/main/docs/guide/troubleshooting.md.txt%20so%20I%20can%20ask%20questions%20about%20it." target="_blank" rel="nofollow">
           <iconify-icon icon="bi:openai"></iconify-icon>
           <span>Open in ChatGPT</span>
-        </a><a role="menuitem" href="https://claude.ai/new?q=Read%20https%3A//raw.githubusercontent.com/DrumScript/DrumScript/refs/heads/main/docs/guide/configuration.md.txt%20so%20I%20can%20ask%20questions%20about%20it." target="_blank" rel="nofollow">
+        </a><a role="menuitem" href="https://claude.ai/new?q=Read%20https%3A//raw.githubusercontent.com/DrumScript/DrumScript/refs/heads/main/docs/guide/troubleshooting.md.txt%20so%20I%20can%20ask%20questions%20about%20it." target="_blank" rel="nofollow">
           <iconify-icon icon="bi:claude"></iconify-icon>
           <span>Open in Claude</span>
         </a></div>
     </div>
   </div>
 </div><article class="yue" role="main">
-          <section id="configuration">
-<h1>Configuration<a class="headerlink" href="#configuration" title="Link to this heading">#</a></h1>
-<!--date_updated:sun-16-august-2026-->
-<!--date_updated:weds-25-aug-2026-->
-<p>DrumScript’s DSP behaviour is controlled by module-level constants rather than
-per-call parameters. This page documents what is actually configurable today.</p>
+          <section id="troubleshooting">
+<h1>Troubleshooting<a class="headerlink" href="#troubleshooting" title="Link to this heading">#</a></h1>
+<!--date_added:mon-07-september-2026-->
+<p>We endeavour to make the DrumScript package as warning-free and seemless to use as possible.</p>
+<p>This page lists known warnings and errors from <strong>packages that DrumScript depends on</strong>, which you may encounter. The list exists to differentiate between DrumScript issues and dep-related issues outside of our control. Items are grouped by whether they originate from DrumScript itself or from a third-party dependency.</p>
 <blockquote>
-<div><p><strong>Note:</strong> Earlier versions of this page documented a <code class="docutils literal notranslate"><span class="pre">threshold</span></code> argument on
-<code class="docutils literal notranslate"><span class="pre">detect_onsets()</span></code> and a <code class="docutils literal notranslate"><span class="pre">format</span></code> argument for output. Neither exists. The
-real controls are described below.</p>
+<div><p><strong>See <span class="xref myst">CHANGELOG.md</span></strong> list future or ongoing fixes/resolutions for these dependency-related issues</p>
 </div></blockquote>
-<section id="onset-detection">
-<h2>Onset Detection<a class="headerlink" href="#onset-detection" title="Link to this heading">#</a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">detect_onsets()</span></code> takes the audio and its sample rate, and nothing else:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="kn">import</span><span class="w"> </span><span class="nn">drumscript</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">ds</span>
-</span><span data-line="2">
-</span><span data-line="3"><span class="n">y</span><span class="p">,</span> <span class="n">sr</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">load_audio</span><span class="p">(</span><span class="s2">&quot;drum_audio.wav&quot;</span><span class="p">)</span>
-</span><span data-line="4"><span class="n">y</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">normalise_audio</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
-</span><span data-line="5"><span class="n">onsets</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">detect_onsets</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">sr</span><span class="p">)</span>   <span class="c1"># returns a list of times in seconds</span>
-</span></pre></div>
-</div>
-<p>Sensitivity is governed by two values set inside
-<code class="docutils literal notranslate"><span class="pre">drumscript/audio_processor/onset_detector.py</span></code>:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#known-dependency-warnings">Known dependency issues/warnings</a></p></li>
+<li><p><a class="reference internal" href="#drumscript-warnings">DrumScript warnings</a></p></li>
+<li><p><a class="reference internal" href="#"><span class="xref myst">How to submit an issue</span></a></p></li>
+</ul>
+<hr class="docutils" />
+<section id="known-dependency-warnings">
+<h2>Known dependency warnings<a class="headerlink" href="#known-dependency-warnings" title="Link to this heading">#</a></h2>
+<p>These warnings come from libraries that DrumScript depends on. They do <strong>not</strong> affect DrumScript’s output or accuracy and can be safely ignored.</p>
 <div class="table-wrapper colwidths-auto docutils container">
 <table class="docutils align-default">
 <thead>
-<tr class="row-odd"><th class="head"><p>Setting</p></th>
-<th class="head"><p>Value</p></th>
-<th class="head"><p>Effect</p></th>
+<tr class="row-odd"><th class="head"><p>Error</p></th>
+<th class="head"><p>Log</p></th>
+<th class="head"><p>Source</p></th>
+<th class="head"><p>Impact</p></th>
+<th class="head"><p>Fix</p></th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">delta</span></code></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">0.05</span></code></p></td>
-<td><p>Detection threshold above the noise floor. Lower detects quieter hits (more false positives); higher misses ghost notes.</p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">libmpg123</span></code> – ID3 comment warning</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">src/libmpg123/id3.c:process_comment():587]</span> <span class="pre">error:</span> <span class="pre">No</span> <span class="pre">comment</span> <span class="pre">text</span> <span class="pre">/</span> <span class="pre">valid</span> <span class="pre">description</span></code>?</p></td>
+<td><p>Loading <code class="docutils literal notranslate"><span class="pre">.wav</span></code> or <code class="docutils literal notranslate"><span class="pre">.mp3</span></code> files that contain ID3 metadata tags with an empty or malformed comment field. Common with files converted from MP3, or exported from certain DAWs.</p></td>
+<td><p>None. Audio data is loaded correctly.</p></td>
+<td><p>None required. The message is cosmetic. Add warning suppression in DrumScript v0.2.1+</p></td>
 </tr>
-<tr class="row-odd"><td><p>lockout</p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">0.05</span></code> s</p></td>
-<td><p>Minimum gap between two detected hits. Stops cymbal vibration from double-triggering.</p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">pydub</span></code> – SyntaxWarning on import</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">SyntaxWarning:</span> <span class="pre">invalid</span> <span class="pre">escape</span> <span class="pre">sequence</span></code></p></td>
+<td><p>On first import of <code class="docutils literal notranslate"><span class="pre">pydub</span></code>, particularly on Python 3.12+. The warning comes from unescaped backslashes in <code class="docutils literal notranslate"><span class="pre">pydub</span></code>’s source code.</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">pydub</span></code> (v0.25.1). This is an <a class="reference external" href="https://github.com/jiaaro/pydub/issues">upstream issue</a> in the <code class="docutils literal notranslate"><span class="pre">pydub</span></code> package itself. None. All <code class="docutils literal notranslate"><span class="pre">pydub</span></code> functionality (MP3 export, stem mixing) works correctly.</p></td>
+<td><p>DrumScript will add warning suppression in v0.2.1+ ie <code class="docutils literal notranslate"><span class="pre">warnings.filterwarnings</span></code> in <code class="docutils literal notranslate"><span class="pre">main.py</span></code>. If you see it in a notebook or standalone script, you can suppress it manually with <code class="docutils literal notranslate"><span class="pre">warnings.filterwarnings(&quot;ignore&quot;,</span> <span class="pre">category=SyntaxWarning,</span> <span class="pre">module=&quot;pydub&quot;)</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">audioread</span></code> / <code class="docutils literal notranslate"><span class="pre">aifc</span></code> / <code class="docutils literal notranslate"><span class="pre">audioop</span></code> / <code class="docutils literal notranslate"><span class="pre">sunau</span></code> – DeprecationWarnings</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">DeprecationWarning:</span> <span class="pre">'aifc'</span> <span class="pre">is</span> <span class="pre">deprecated</span></code>; <code class="docutils literal notranslate"><span class="pre">DeprecationWarning:</span> <span class="pre">'audioop'</span> <span class="pre">is</span> <span class="pre">deprecated</span></code>; <code class="docutils literal notranslate"><span class="pre">DeprecationWarning:</span> <span class="pre">'sunau'</span> <span class="pre">is</span> <span class="pre">deprecated</span></code></p></td>
+<td><p>On Python 3.12+ when <code class="docutils literal notranslate"><span class="pre">librosa</span></code> loads audio via <code class="docutils literal notranslate"><span class="pre">audioread</span></code>. These standard library modules were deprecated in Python 3.11 and removed in Python 3.13. <code class="docutils literal notranslate"><span class="pre">audioread</span></code> (used by <code class="docutils literal notranslate"><span class="pre">librosa</span></code>).</p></td>
+<td><p>None on Python 3.9–3.12. On Python 3.13+, <code class="docutils literal notranslate"><span class="pre">audioread</span></code> may fail entirely (this is tracked separately under the numpy 2.x / Python 3.13 migration).</p></td>
+<td><p>DrumScript’s <code class="docutils literal notranslate"><span class="pre">pyproject.toml</span></code> suppresses these warnings in pytest.</p></td>
+</tr>
+<tr class="row-odd"><td><p>-</p></td>
+<td><p>-</p></td>
+<td><p>-</p></td>
+<td><p>-</p></td>
+<td><p>-</p></td>
 </tr>
 </tbody>
 </table>
 </div>
-<p>Both are currently hardcoded. Exposing them as arguments is on the roadmap -
-see <a class="reference external" href="https://github.com/DrumScript/DrumScript/issues">the issue tracker</a>.</p>
 </section>
-<section id="sample-rate-and-hop-length">
-<h2>Sample Rate and Hop Length<a class="headerlink" href="#sample-rate-and-hop-length" title="Link to this heading">#</a></h2>
-<p>Set in <code class="docutils literal notranslate"><span class="pre">drumscript/notation_generator/constants.py</span></code>:</p>
-<div class="table-wrapper colwidths-auto docutils container">
-<table class="docutils align-default">
-<thead>
-<tr class="row-odd"><th class="head"><p>Constant</p></th>
-<th class="head"><p>Value</p></th>
-<th class="head"><p>Meaning</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">SAMPLE_RATE</span></code></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">44100</span></code></p></td>
-<td><p>Rate the pipeline resamples to internally.</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">HOP_LENGTH</span></code></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">128</span></code></p></td>
-<td><p>Analysis window advance, ~2.9 ms at 44.1 kHz.</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<p><code class="docutils literal notranslate"><span class="pre">load_audio()</span></code> defaults to the file’s <strong>native</strong> rate. The pipeline passes
-<code class="docutils literal notranslate"><span class="pre">sr=SAMPLE_RATE</span></code> explicitly when it needs a consistent rate:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="kn">from</span><span class="w"> </span><span class="nn">drumscript.notation_generator.constants</span><span class="w"> </span><span class="kn">import</span> <span class="n">SAMPLE_RATE</span>
-</span><span data-line="2">
-</span><span data-line="3"><span class="n">y</span><span class="p">,</span> <span class="n">sr</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">load_audio</span><span class="p">(</span><span class="s2">&quot;drum_audio.wav&quot;</span><span class="p">)</span>                 <span class="c1"># native rate</span>
-</span><span data-line="4"><span class="n">y</span><span class="p">,</span> <span class="n">sr</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">load_audio</span><span class="p">(</span><span class="s2">&quot;drum_audio.wav&quot;</span><span class="p">,</span> <span class="n">sr</span><span class="o">=</span><span class="n">SAMPLE_RATE</span><span class="p">)</span> <span class="c1"># resampled to 44100</span>
-</span></pre></div>
-</div>
+<hr class="docutils" />
+<section id="drumscript-warnings">
+<h2>DrumScript warnings<a class="headerlink" href="#drumscript-warnings" title="Link to this heading">#</a></h2>
+<p><em>No known DrumScript-specific warnings at this time. This section will be updated as issues are identified.</em></p>
 </section>
-<section id="output-formats">
-<h2>Output Formats<a class="headerlink" href="#output-formats" title="Link to this heading">#</a></h2>
-<p>Output format is not a parameter. <code class="docutils literal notranslate"><span class="pre">transcribe()</span></code> always writes three files and
-reports where they went:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="n">result</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">transcribe</span><span class="p">(</span><span class="s2">&quot;drum_audio.wav&quot;</span><span class="p">)</span>
-</span><span data-line="2"><span class="n">result</span><span class="p">[</span><span class="s2">&quot;pdf_path&quot;</span><span class="p">]</span>    <span class="c1"># sheet music</span>
-</span><span data-line="3"><span class="n">result</span><span class="p">[</span><span class="s2">&quot;json_path&quot;</span><span class="p">]</span>   <span class="c1"># raw transcription data</span>
-</span><span data-line="4"><span class="n">result</span><span class="p">[</span><span class="s2">&quot;midi_path&quot;</span><span class="p">]</span>   <span class="c1"># MIDI for DAW import</span>
-</span></pre></div>
-</div>
-<p>MusicXML is not produced automatically. Export it separately with
-<code class="docutils literal notranslate"><span class="pre">ds.export_xml()</span></code>.</p>
-<blockquote>
-<div><p>Per-format flags (<code class="docutils literal notranslate"><span class="pre">output_midi</span></code>, <code class="docutils literal notranslate"><span class="pre">output_json</span></code>, <code class="docutils literal notranslate"><span class="pre">output_xml</span></code>) are planned -
-see the <span class="xref myst">CHANGELOG</span>.</p>
-</div></blockquote>
-</section>
-<section id="stem-output-format">
-<h2>Stem Output Format<a class="headerlink" href="#stem-output-format" title="Link to this heading">#</a></h2>
-<p>The one place a format <strong>is</strong> selectable is stem export, via <code class="docutils literal notranslate"><span class="pre">--format</span></code> on the
-CLI or <code class="docutils literal notranslate"><span class="pre">output_format=</span></code> in the Python API:</p>
-<div class="highlight-zsh notranslate"><div class="highlight"><pre><span></span><span data-line="1">drumscript<span class="w"> </span><span class="s2">&quot;full_song.mp3&quot;</span><span class="w"> </span>--all-stems<span class="w"> </span>--format<span class="w"> </span>mp3
-</span></pre></div>
-</div>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="n">ds</span><span class="o">.</span><span class="n">extract_stems</span><span class="p">(</span><span class="s2">&quot;full_song.mp3&quot;</span><span class="p">,</span> <span class="n">all_stems</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">output_format</span><span class="o">=</span><span class="s2">&quot;mp3&quot;</span><span class="p">)</span>
-</span></pre></div>
-</div>
-<p>Valid values are <code class="docutils literal notranslate"><span class="pre">wav</span></code> (default) and <code class="docutils literal notranslate"><span class="pre">mp3</span></code>. MP3 requires <code class="docutils literal notranslate"><span class="pre">ffmpeg</span></code>; WAV does not.</p>
-</section>
-<section id="time-signature">
-<h2>Time Signature<a class="headerlink" href="#time-signature" title="Link to this heading">#</a></h2>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="n">ds</span><span class="o">.</span><span class="n">transcribe</span><span class="p">(</span><span class="s2">&quot;drum_audio.wav&quot;</span><span class="p">,</span> <span class="n">time_signature</span><span class="o">=</span><span class="s2">&quot;6/8&quot;</span><span class="p">)</span>
-</span></pre></div>
-</div>
-<div class="highlight-zsh notranslate"><div class="highlight"><pre><span></span><span data-line="1">drumscript<span class="w"> </span><span class="s2">&quot;drum_audio.wav&quot;</span><span class="w"> </span>--ts<span class="w"> </span><span class="m">6</span>/8
-</span></pre></div>
-</div>
-<blockquote>
-<div><p>Use a forward slash (<code class="docutils literal notranslate"><span class="pre">3/4</span></code>, <code class="docutils literal notranslate"><span class="pre">6/8</span></code>). Any other form - including underscores
-like <code class="docutils literal notranslate"><span class="pre">3_4</span></code> - silently falls back to 4/4 with no warning.</p>
-</div></blockquote>
-</section>
+<hr class="docutils" />
+<section id="how-to-submit-an-issue">
+<h2>How to submit an issue<a class="headerlink" href="#how-to-submit-an-issue" title="Link to this heading">#</a></h2>
+<p>If you identify a dependency issue with DrumScript please <a class="reference external" href="https://github.com/DrumScript/DrumScript/issues/new/choose">Raise an Issue</a>* or email: <em>hello.drumscript&#64;gmail.com</em></p>
+  <!--^*^*requires a GitHub account*-->
+<hr class="docutils" />
+<!--END--></section>
 </section>
 
         </article><button class="back-to-top" type="button">
@@ -461,21 +407,7 @@ like <code class="docutils literal notranslate"><span class="pre">3_4</span></co
     <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
   </svg>
   <span>Back to top</span>
-</button><div class="navigation flex print:hidden"><div class="navigation-prev">
-    <a href="cli_reference.html">
-      <i class="i-lucide chevron-left"></i>
-      <div class="page-info">
-        <span>Previous</span><div class="title"><strong>DrumScript CLI Reference</strong></div></div>
-    </a>
-  </div><div class="navigation-next">
-    <a href="glossary.html">
-      <div class="page-info">
-        <span>Next</span>
-        <div class="title">Glossary of Terms</div>
-      </div>
-      <i class="i-lucide chevron-right"></i>
-    </a>
-  </div></div></div>
+</button><div class="navigation flex print:hidden"></div></div>
     </div>
   </main>
 </div>

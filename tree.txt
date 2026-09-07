@@ -3,18 +3,14 @@
 ├── .github
 │   ├── CODEOWNERS
 │   ├── ISSUE_TEMPLATE
-│   │   ├── bug_report.md
 │   │   ├── bug_report.yml
 │   │   ├── config.yml
-│   │   ├── feature_request.md
 │   │   ├── feature_request.yml
-│   │   ├── submit_results.md
 │   │   └── submit_results.yml
 │   ├── PULL_REQUEST_TEMPLATE.md
 │   └── workflows
 │       ├── docs.yml
 │       ├── publish.yml
-│       ├── pull_requests.yml
 │       ├── pull_requests.yml
 │       ├── release.yml
 │       ├── repo-stats.yml
@@ -47,6 +43,21 @@
 │   │   ├── contributor_guidance.md
 │   │   ├── documentation.md
 │   │   └── testing_guidance.md
+│   ├── guide
+│   │   ├── cli_reference.md
+│   │   ├── configuration.md
+│   │   ├── glossary.md
+│   │   ├── installation.md
+│   │   ├── interactive
+│   │   │   ├── create_backing_track.ipynb
+│   │   │   ├── extract_drums.ipynb
+│   │   │   ├── index.md
+│   │   │   ├── measure_tempo.ipynb
+│   │   │   └── transcribe.ipynb
+│   │   ├── roadmap.md
+│   │   ├── security.md
+│   │   ├── troubleshooting.md
+│   │   └── usage.md
 │   ├── index.md
 │   ├── make.bat
 │   ├── theory
@@ -67,7 +78,6 @@
 │   │   └── idmt.py
 │   ├── drum_classifier
 │   │   ├── __init__.py
-│   │   └── classify.py
 │   │   └── classify.py
 │   ├── main.py
 │   ├── notation_generator
@@ -122,4 +132,4 @@
 ├── tree.txt
 └── uv.lock
 
-20 directories, 101 files
+22 directories, 111 files

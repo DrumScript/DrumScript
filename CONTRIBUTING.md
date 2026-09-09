@@ -23,7 +23,6 @@ Please use the links below to submit your input:
 - **[Submit a Pull Request](https://github.com/DrumScript/DrumScript/pulls)** for code changes.
 
 
-
 - **[Discussions](https://github.com/orgs/DrumScript/discussions)** for discussions
 
 ---

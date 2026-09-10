@@ -1,7 +1,7 @@
 # **Changelog**
 
 <!--date_added:thurs-28-may-2026-->
-<!--date_updated:weds-25-aug-2026-->
+<!--date_updated:mon-07-sept-2026-->
 
 
 * All notable changes related to the repository and pypi distribution of `DrumScript` will be documented here
@@ -31,10 +31,19 @@
 
 > ### *Additions*
 * added blurb to `README.md`, `docs/index.md` and `docs/about.md` about build process and current development people
+* added issue forms for `bug_report`, `feature_request` and `submit_results` to make giving feedback easier
+* added troubleshooting page to documentation, with navigation tab for known dependency issues/errors impacting DrumScript
+
+> ### *Changes*
+* tidied up branch tree on remote #311
 
 > ### *Fixes*
-
 * **Python 3.13 not supported.** DrumScript pins `numpy<2`, and numpy 1.x has no cp313 wheels on PyPI. This caused `pip install drumscript` on Python 3.13 to fall back to a source build (which requires a C toolchain most users don't have), producing a confusing `Compiler cc cannot compile programs` error rather than a clear "unsupported Python version" message. `requires-python` lowered from `<3.14` to `<3.13` in `pyproject.toml`. Python 3.13 support planned once DrumScript migrates to `numpy>=2` (see [#303](https://github.com/DrumScript/DrumScript/issues/303)).
+
+> **Known debt being paid down alongside the alpha's fundamental work (model + score generation).** These are treated as bugs to fix, not future features - but they are not allowed to displace the core classification/score-generation work:
+
+* **numpy 2.x migration** - move from the current `numpy<2` pin to `numpy>=2`. This is the blocker for Python 3.13 support: the two are a single linked task (migrate to numpy 2 -> unblocks 3.13 -> add 3.13, and test 3.14, to the CI matrix). Requires cross-checking numba, librosa, and scipy at numpy 2, and fixing any numpy 1.x-only API usage in the codebase (see [#303](https://github.com/DrumScript/DrumScript/issues/303)).
+* **pydub `SyntaxWarning` surfacing in the CLI** - pydub has an upstream `SyntaxWarning` on Python 3.12 that currently leaks to users when running the CLI. To be suppressed via `warnings.filterwarnings` targeting `pydub.utils`.
 
 
 ---

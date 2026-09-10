@@ -1,0 +1,130 @@
+name: Submit Results
+description: "Share a transcription DrumScript produced to help improve accuracy."
+title: "[RESULTS] "
+labels: ["transcription-results"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **Usage:** Use this template to submit results from DrumScript. Please try to include **as much information** as possible. Please **do not share personal information**. DrumScript is a **public repository**. GitHub usernames are fine. Please do not upload copyrighted audio, nor your own. Link to it, or supply a short clip you own the rights to. If you are unsure email the developers at hello.drumscript@gmail.com.
+
+        **Release Plan**
+        Before we can publish a **confident v1.0.0 of `DrumScript` we need to:**
+        1. perfect the **DrumScript deterministic engine**: ie, the classification model and the score/PDF generation
+        2. build an in-browser, zero storage for input or output audio and **free-to-use** UI for non-coders
+  - type: textarea
+    id: summary
+    attributes:
+      label: "Summary"
+      description: "One sentence - what were you trying to do, and how did it go overall?"
+    validations:
+      required: true
+  - type: dropdown
+    id: task-type
+    attributes:
+      label: "Task Type"
+      description: "polyphonic audio refers to a sound or musical texture made up of two or more independent melodic lines or multiple notes played at the exact same time. you might call this a song."
+      options:
+        - "Transcribe drum-only audio into pdf drum sheet music"
+        - "Transcribe drum-only from polyphonic audio into pdf drum sheet music"
+        - "Detect tempo of drum-only audio"
+        - "Extract drums from polyphonic audio"
+        - "Create a backing track from polyphonic audio"
+    validations:
+      required: true
+  - type: dropdown
+    id: overall-rating
+    attributes:
+      label: "Overall rating"
+      options:
+        - "Usable as-is"
+        - "Usable after minor manual editing"
+        - "Recognisable, but needs substantial editing"
+        - "Not usable"
+    validations:
+      required: true
+  - type: textarea
+    id: source-audio
+    attributes:
+      label: "Source audio details"
+      description: "Artist/track, genre, tempo, time signature, duration, format, input type, kit type, production."
+  - type: textarea
+    id: command-run
+    attributes:
+      label: "How you ran it"
+      description: "Paste the exact CLI command, or the Python you called."
+      value: |
+        ```bash
+        drumscript transcribe test.wav
+        ```
+  - type: textarea
+    id: environment
+    attributes:
+      label: "Environment"
+      description: 'DrumScript version, Python version, OS, ffmpeg on PATH, and output of `uv pip list | grep -E "drumscript|torch|librosa|demucs|numpy|soundfile"`.'
+  - type: textarea
+    id: detection-summary
+    attributes:
+      label: "Detection summary"
+      description: "Fill in what DrumScript reported vs your estimate of the truth (Tempo, Time signature, Onsets, Bars)."
+  - type: textarea
+    id: per-instrument
+    attributes:
+      label: "Per-instrument accuracy"
+      description: "Rate each instrument (Good, Over-detected, Under-detected, Confused)."
+  - type: checkboxes
+    id: pdf-readability
+    attributes:
+      label: "Score and PDF readability"
+      options:
+        - label: "Notation is readable and correctly spaced"
+        - label: "Bar lengths look wrong"
+        - label: "Notes are quantised to the wrong subdivision"
+        - label: "Too many notes crammed into a bar"
+        - label: "Stems, beams or rests are malformed"
+        - label: "Instrument is on the wrong line or space of the stave"
+        - label: "Page or system breaks are in awkward places"
+        - label: "Other (describe in comments below)"
+  - type: textarea
+    id: readability-comments
+    attributes:
+      label: "Comments on readability"
+  - type: checkboxes
+    id: files-attached
+    attributes:
+      label: "Files attached"
+      description: "GitHub does not accept .mid, .json or .musicxml directly, so zip them together."
+      options:
+        - label: "`*_transcription.json`"
+        - label: "`*_transcription.pdf`"
+        - label: "`*_transcription.mid`"
+        - label: "`*_transcription.musicxml`"
+        - label: "`onset_detection.log` or console output"
+        - label: "Screenshot of the score"
+        - label: "Short audio clip"
+  - type: textarea
+    id: console-output
+    attributes:
+      label: "Console output"
+  - type: checkboxes
+    id: ground-truth
+    attributes:
+      label: "Ground truth (optional)"
+      options:
+        - label: "I have a reference MIDI file"
+        - label: "I have a published or hand-written drum chart"
+        - label: "I played the part myself and know what I played"
+        - label: "No ground truth available"
+  - type: checkboxes
+    id: permission
+    attributes:
+      label: "Permission to reuse"
+      options:
+        - label: "You may use this transcription output as a test case in the DrumScript repository."
+        - label: "You may quote my comments in issues, docs or a paper."
+        - label: "Please credit me."
+        - label: "Please keep this private to the maintainers (do not reuse)."
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: "Additional context"

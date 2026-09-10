@@ -87,6 +87,7 @@ html_theme_options = {
         {"title": "Guide", "url": "guide/installation"},
         {"title": "Runbooks", "url": "guide/interactive/index"},
         {"title": "Contributing", "url": "development/contributor_guidance"},
+        {"title": "Troubleshooting", "url": "guide/troubleshooting"},
         {"title": "Release Notes", "url": "release_notes/index"},
         {"title": "Fun Theory", "url": "theory/drum_notation_guide"},
     ],

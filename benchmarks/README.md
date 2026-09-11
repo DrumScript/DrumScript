@@ -73,8 +73,8 @@ Only IDMT-SMT-Drums is currently verified to run end-to-end.
   Optional flags:
 
   ```bash
-  uv run --extra dev python benchmarks/run.py idmt --root … --subset RealDrum
-  uv run --extra dev python benchmarks/run.py idmt --root … --limit 5
+  uv run --extra dev python benchmarks/run.py idmt --root <path_to_benchmarking_data> --subset RealDrum
+  uv run --extra dev python benchmarks/run.py --limit 5 idmt --root <path_to_benchmarking_data> 
   ```
 
   Results archive to `outputs/benchmarks/idmt/` (untracked).

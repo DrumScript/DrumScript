@@ -1,7 +1,7 @@
 # **DrumScript**
 
 <!--date_created: sun-15-june-2025-->
-<!--date_edited: mon-07-september-2026--->
+<!--date_edited: sat-12-september-2026--->
 
 > **Python >=3.9, < 3.13**
 >
@@ -33,11 +33,7 @@
 - **[Similar projects](#similar-projects)**
 - **[License](#license)**
 > 
-**DrumScript** is an open-source Python library and CLI tool for drum audio analysis and automatic drum transcription. It also serves as a wrapper for extracting drums from songs using Demucs and creating drumless backing tracks from any song.  
 
-> By default DrumScript accepts drum- and percussion-only audio (`.wav` or `.mp3`). If you specify the `--full-song` flag when using `transcribe()` it will *first* extract the drums from song using Demucs 4-part model and then transcribe. 
-
-DrumScript (both the Python package and the eventual UI) aims to be a **free-to-use**, open-source, **[zero-egress](#what-is-zero-egress)** tool that allows you to give it a recording - a full mix or an isolated drum stem - and it will generate PDF sheet music, MIDI files, and MusicXML output. 
 **DrumScript** is an open-source Python library and CLI tool for drum audio analysis and automatic drum transcription. It also serves as a wrapper for extracting drums from songs using Demucs and creating drumless backing tracks from any song.  
 
 > By default DrumScript accepts drum- and percussion-only audio (`.wav` or `.mp3`). If you specify the `--full-song` flag when using `transcribe()` it will *first* extract the drums from song using Demucs 4-part model and then transcribe. 

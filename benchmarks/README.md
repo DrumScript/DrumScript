@@ -39,10 +39,10 @@ Out of scope: training, dataset acquisition, and manifest preparation.
 <details/>
 <summary/> <b/>notes</b></summary>
 
-> ^1^ *data sources are true at time of writing.*
+^1^ *data sources are true at time of writing.*
 *Please submit an issue if you believe a link to be incorrect*
 
-> ^2^ *the `zenodo` website is temperamental; try again during working hours,*
+^2^ *the `zenodo` website is temperamental; try again during working hours,*
  *...ie Monday-Friday EST/GMT if you are struggling to get a connection, or get `401 error`*
 
 </details>

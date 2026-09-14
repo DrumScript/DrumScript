@@ -33,12 +33,19 @@ Out of scope: training, dataset acquisition, and manifest preparation.
 
 1. All datasets belong in the `benchmarks/datasets` folder.
 2. Above tree shows indicative structure
-3. Users **must first** copy the dataset locally: see below^*^ for data sources^**^
+3. Users **must first** copy the dataset locally: see below^1^ for data sources^2^
 4. Raw data **must never** be pushed to remote, ie committed. Ensure the path `benchmarks/datasets/**` is added to `.gitignore`
 
-> ^*^ *data sources are true at time of writing. Please submit an issue if you believe a link to be incorrect*
+<details/>
+<summary/> <b/>notes</b></summary>
 
-> ^**^ *the `zenodo` website is temperamental; try again during working hours, ie Monday-Friday EST/GMT if you are struggling to get a connection, or get `401 error`*
+> ^1^ *data sources are true at time of writing.*
+*Please submit an issue if you believe a link to be incorrect*
+
+> ^2^ *the `zenodo` website is temperamental; try again during working hours,*
+ *...ie Monday-Friday EST/GMT if you are struggling to get a connection, or get `401 error`*
+
+</details>
 
 ---
 
@@ -67,7 +74,6 @@ Only IDMT-SMT-Drums is currently verified to run end-to-end.
 
 - Source: <https://zenodo.org/record/7544164>
 - Evaluation scope: the current IDMT benchmark covers the dataset's
-  foundational instrument classes only:
 
   | IDMT code | DrumScript label(s) |
   | --- | --- |

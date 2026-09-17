@@ -32,15 +32,14 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from drumscript.audio_processor.audio_loader import load_audio, normalise_audio
 from drumscript.audio_processor.onset_detector import detect_onsets
 from drumscript.datasets import idmt as idmt_adapter
+from drumscript.datasets import mdb as mdb_adapter
 from drumscript.datasets.base import BenchmarkItem
 from drumscript.drum_classifier.classify import classify_events
 from drumscript.notation_generator.constants import SAMPLE_RATE
 
 ONSET_WINDOW = 0.050  # 50 ms tolerance, standard in ADT literature.
 CLI_DESCRIPTION = "Run a DrumScript benchmark on one dataset."
-ADAPTERS: dict[str, ModuleType] = {
-    idmt_adapter.DATASET_NAME: idmt_adapter,
-}
+ADAPTERS: dict[str, ModuleType] = {idmt_adapter.DATASET_NAME: idmt_adapter, mdb_adapter.DATASET_NAME: idmt_adapter}
 
 
 # ── shared evaluation primitives ─────────────────────────────────────────────
@@ -269,7 +268,8 @@ def evaluate_item(item: BenchmarkItem, code_to_labels: Mapping[str, Sequence[str
 def build_parser() -> argparse.ArgumentParser:
     """Build the benchmark command-line parser."""
     parser = argparse.ArgumentParser(description=CLI_DESCRIPTION)
-    parser.add_argument("--output", default=None, help="Per-item CSV path (default: <dataset>_results.csv)")
+    # parser.add_argument("--output", default=None, help="Per-item CSV path (default: <dataset>_results.csv)")
+    parser.add_argument("--output", default=None, help="Per-item CSV path (default: outputs/<dataset>_results.csv)")
     parser.add_argument("--run-name", default=None, help="Optional suffix for the archived run directory")
     parser.add_argument("--limit", type=int, default=None, help="Process only first N items")
 
@@ -318,7 +318,9 @@ def main() -> None:
             print()
             print_summary(f"[{bucket}]", bucket_summary)
 
-    output_path = Path(args.output or f"{ctx.dataset_name}_results.csv")
+    # output_path = Path(args.output or f"{ctx.dataset_name}_results.csv")
+    output_path = Path(args.output or f"outputs/{ctx.dataset_name}_results.csv")
+    output_path.parent.mkdir(parents=True, exist_ok=True)
     write_metrics_csv(items, results, adapter.INSTRUMENT_CODES, output_path)
     print(f"\nPer-item results saved to: {output_path}")
 

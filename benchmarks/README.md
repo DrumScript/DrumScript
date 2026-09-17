@@ -110,12 +110,12 @@ Only IDMT-SMT-Drums is currently verified to run end-to-end.
   - Subset names (`RealDrum`, `WaveDrum`, `TechnoDrum`) are the filename
     prefix; `--subset` filters on this prefix.
 
-- Run:
+Run:
 
-  <!-->```bash
-  uv run --extra dev python benchmarks/run.py idmt \
-    --root /path/to/IDMT-SMT-DRUMS-V2
-  ```-->
+<!--```bash
+uv run --extra dev python benchmarks/run.py idmt \
+  --root /path/to/IDMT-SMT-DRUMS-V2
+```-->
 
   ```bash
   uv run --extra dev python benchmarks/run.py idmt \
@@ -124,9 +124,10 @@ Only IDMT-SMT-Drums is currently verified to run end-to-end.
 
   Optional flags:
 
+  <!--  # uv run --extra dev python benchmarks/run.py idmt --root <path_to_benchmarking_data> -limit 5-->
+
   ```bash
   uv run --extra dev python benchmarks/run.py idmt --root <path_to_benchmarking_data> --subset RealDrum
-  # uv run --extra dev python benchmarks/run.py idmt --root <path_to_benchmarking_data> -limit 5
   uv run --extra dev python benchmarks/run.py --limit 5 idmt --root <path_to_benchmarking_data>
   ```
 

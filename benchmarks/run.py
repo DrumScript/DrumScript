@@ -39,7 +39,7 @@ from drumscript.notation_generator.constants import SAMPLE_RATE
 
 ONSET_WINDOW = 0.050  # 50 ms tolerance, standard in ADT literature.
 CLI_DESCRIPTION = "Run a DrumScript benchmark on one dataset."
-ADAPTERS: dict[str, ModuleType] = {idmt_adapter.DATASET_NAME: idmt_adapter, mdb_adapter.DATASET_NAME: idmt_adapter}
+ADAPTERS: dict[str, ModuleType] = {idmt_adapter.DATASET_NAME: idmt_adapter, mdb_adapter.DATASET_NAME: mdb_adapter}
 
 
 # ── shared evaluation primitives ─────────────────────────────────────────────

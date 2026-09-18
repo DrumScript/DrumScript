@@ -81,6 +81,20 @@ CODE_TO_DRUMSCRIPT: dict[str, list[str]] = {
     "high_tom": ["high_tom"],
 }
 
+#: Instrument codes this dataset reports, in output/CSV column order.
+#: (Same keys as CODE_TO_DRUMSCRIPT — the DrumScript classes MDB can score.)
+INSTRUMENT_CODES: list[str] = [
+    "kick",
+    "snare",
+    "hi_hat_closed",
+    "hi_hat_open",
+    "low_tom",
+    "mid_tom",
+    "high_tom",
+    "crash",
+    "ride",
+]
+
 
 # ── runner protocol ──────────────────────────────────────────────────────────
 

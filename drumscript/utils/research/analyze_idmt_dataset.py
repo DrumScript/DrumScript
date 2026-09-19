@@ -16,7 +16,7 @@ Sphinx documentation: Standard reST docstrings are applied to all functions.
 
 Usage:
 uv run python drumscript/utils/research/analyze_idmt_dataset.py benchmarks/datasets/IDMT
-uv run --extra dev python drumscript/utils/research/analyze_idmt_dataset.py benchmarks/datasets/IDMT --group
+uv run --extra dev python drumscript/utils/research/analyze_idmt_dataset.py benchmarks/datasets/IDMT --group --sort-metrics
 
 """
 
@@ -99,8 +99,10 @@ def extract_core_specs(file_path):
     }
 
 
-# def analyze_dataset(root_path):
-def analyze_dataset(root_path, group_by_instrument=False):
+# def analyze_dataset(root_path, group_by_instrument=False):
+# def analyze_dataset(root_path, group_by_instrument=False, sort_metrics=False):
+## sort by column in order peak, decay, centroid, lfer, hfer 2k and hfer 5k
+def analyze_dataset(root_path, group_by_instrument=False, sort_metrics=False):
     """
     Scans the dataset for drum stems and analyzes their physics.
 
@@ -108,6 +110,8 @@ def analyze_dataset(root_path, group_by_instrument=False):
     :type root_path: str
     :param group_by_instrument: Flag to sort the output by instrument type.
     :type group_by_instrument: bool
+    :param sort_metrics: Flag to sort the output by sequential physics metrics.
+    :type sort_metrics: bool
     """
     dataset_path = Path(root_path)
     if not dataset_path.exists():
@@ -145,24 +149,62 @@ def analyze_dataset(root_path, group_by_instrument=False):
     print(f"{'File':<35} | {'Peak (Hz)':<10} | {'Decay (s)':<10} | {'Centroid':<10} | {'LFER %':<10} | {'HFER 2k %':<10} | {'HFER 5k %':<10}")
     print("-" * 120)
 
+    # results = []
+    # for f in target_files:
+    #     res = extract_core_specs(f)
+    #     if res:
+    #         results.append(res)
+    #         print(
+    #             f"{res['file']:<35} | {res['peak_freq']:<10.1f} | {res['decay_time']:<10.3f} | "
+    #             f"{res['centroid']:<10.0f} | {res['lfer'] * 100:<10.1f} | {res['hfer_2k'] * 100:<10.1f} | {res['hfer_5k'] * 100:<10.1f}"
+    #         )
+
     results = []
     for f in target_files:
         res = extract_core_specs(f)
         if res:
             results.append(res)
-            print(
-                f"{res['file']:<35} | {res['peak_freq']:<10.1f} | {res['decay_time']:<10.3f} | "
-                f"{res['centroid']:<10.0f} | {res['lfer'] * 100:<10.1f} | {res['hfer_2k'] * 100:<10.1f} | {res['hfer_5k'] * 100:<10.1f}"
+
+    if sort_metrics:
+        if group_by_instrument:
+
+            def instrument_sort_key_res(res):
+                if "#KD" in res["file"]:
+                    return 1
+                elif "#SD" in res["file"]:
+                    return 2
+                elif "#HH" in res["file"]:
+                    return 3
+                return 4
+
+            results.sort(
+                key=lambda x: (instrument_sort_key_res(x), x["peak_freq"], x["decay_time"], x["centroid"], x["lfer"], x["hfer_2k"], x["hfer_5k"])
             )
+        else:
+            results.sort(key=lambda x: (x["peak_freq"], x["decay_time"], x["centroid"], x["lfer"], x["hfer_2k"], x["hfer_5k"]))
+
+    for res in results:
+        print(
+            f"{res['file']:<35} | {res['peak_freq']:<10.1f} | {res['decay_time']:<10.3f} | "
+            f"{res['centroid']:<10.0f} | {res['lfer'] * 100:<10.1f} | {res['hfer_2k'] * 100:<10.1f} | {res['hfer_5k'] * 100:<10.1f}"
+        )
 
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Extract frequencies and core specs from IDMT dataset.")
     parser.add_argument("dataset_root", type=str, help="Path to the IDMT dataset root folder")
     # parser.add_argument("--group-by-instrument", action="store_true", help="Group the printed results by instrument type")
-    parser.add_argument("--group", action="store_true", help="Group the printed results by instrument type")  # assumed default will be unsorted
-    args = parser.parse_args()
 
+    # parser.add_argument("--group", action="store_true", help="Group the printed results by instrument type")  # assumed default will be unsorted
+    # args = parser.parse_args()
     # analyze_dataset(args.dataset_root)
     # analyze_dataset(args.dataset_root, args.group_by_instrument)
-    analyze_dataset(args.dataset_root, args.group)  # group by instrument
+    # analyze_dataset(args.dataset_root, args.group)  # group by instrument
+
+    parser.add_argument("--group", action="store_true", help="Group the printed results by instrument type")
+    # sort by column in order peak, decay, centroid, lfer, hfer 2k and hfer 5k
+    parser.add_argument("--sort", action="store_true", help="Sort the printed results by extracted metrics")
+
+    args = parser.parse_args()
+
+    analyze_dataset(args.dataset_root, group_by_instrument=args.group, sort_metrics=args.sort)

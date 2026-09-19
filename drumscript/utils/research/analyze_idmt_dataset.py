@@ -16,7 +16,7 @@ Sphinx documentation: Standard reST docstrings are applied to all functions.
 
 Usage:
 uv run python drumscript/utils/research/analyze_idmt_dataset.py benchmarks/datasets/IDMT
-uv run --extra dev python drumscript/utils/research/analyze_idmt_dataset.py benchmarks/datasets/IDMT --group-by-instrument
+uv run --extra dev python drumscript/utils/research/analyze_idmt_dataset.py benchmarks/datasets/IDMT --group
 
 """
 

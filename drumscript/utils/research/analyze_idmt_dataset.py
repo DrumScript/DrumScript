@@ -159,8 +159,10 @@ def analyze_dataset(root_path, group_by_instrument=False):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Extract frequencies and core specs from IDMT dataset.")
     parser.add_argument("dataset_root", type=str, help="Path to the IDMT dataset root folder")
-    parser.add_argument("--group-by-instrument", action="store_true", help="Group the printed results by instrument type")
+    # parser.add_argument("--group-by-instrument", action="store_true", help="Group the printed results by instrument type")
+    parser.add_argument("--group", action="store_true", help="Group the printed results by instrument type")  # assumed default will be unsorted
     args = parser.parse_args()
 
     # analyze_dataset(args.dataset_root)
-    analyze_dataset(args.dataset_root, args.group_by_instrument)
+    # analyze_dataset(args.dataset_root, args.group_by_instrument)
+    analyze_dataset(args.dataset_root, args.group)  # group by instrument

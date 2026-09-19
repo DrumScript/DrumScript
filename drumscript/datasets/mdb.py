@@ -94,7 +94,13 @@ EXCLUDED_CODES: frozenset[str] = frozenset(
 # DrumScript target classes this dataset can score. Each maps to itself so the
 # runner's evaluate_per_instrument (code → DrumScript labels) works unchanged.
 
-DRUMSCRIPT_DICT: dict[str, list[str]] = {
+# DrumScript output vocabulary (from drum_classifier/classify.py):
+## defined in drumscript/notation_generator/constants.py
+## DRUM_NOTATION_MAPPING
+#   kick, snare, low_tom, mid_tom, high_tom,
+#   hi_hat_closed, hi_hat_open, crash, ride
+
+DRUMSCRIPT_DICT: dict[str, list[str]] = {  # DICTIONARY OF CURRENT DRUMSCRIPT COVERAGE
     "kick": ["kick"],
     "snare": ["snare"],
     "hi_hat_closed": ["hi_hat_closed"],

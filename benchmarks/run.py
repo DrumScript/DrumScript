@@ -299,7 +299,8 @@ def main() -> None:
     print(f"Window  : {int(ONSET_WINDOW * 1000)}ms\n")
     print("─" * 60)
 
-    results: list[dict | None] = [evaluate_item(item, adapter.CODE_TO_DRUMSCRIPT) for item in items]
+    # results: list[dict | None] = [evaluate_item(item, adapter.CODE_TO_DRUMSCRIPT) for item in items]
+    results: list[dict | None] = [evaluate_item(item, adapter.DRUMSCRIPT_DICT) for item in items]
     valid = [r for r in results if r is not None]
     result_statuses = count_result_statuses(items, results)
     print(f"\n{'─' * 60}\nEvaluated {result_statuses['files_evaluated']} / {len(items)} items successfully.")

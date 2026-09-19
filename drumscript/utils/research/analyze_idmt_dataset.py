@@ -16,7 +16,8 @@ Sphinx documentation: Standard reST docstrings are applied to all functions.
 
 Usage:
 uv run python drumscript/utils/research/analyze_idmt_dataset.py benchmarks/datasets/IDMT
-uv run --extra dev python drumscript/utils/research/analyze_idmt_dataset.py benchmarks/datasets/IDMT --group --sort-metrics
+uv run --extra dev python drumscript/utils/research/analyze_idmt_dataset.py benchmarks/datasets/IDMT --group --sort
+    note: Currently if the flag --sort is used on its own it will both GROUP AND SORT. This is fine for now
 
 """
 

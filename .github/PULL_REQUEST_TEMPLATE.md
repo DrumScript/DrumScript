@@ -27,7 +27,7 @@ pytest tests/unit/test_...
 - [ ] Linter is clean: `uv run ruff check .`
 - [ ] I have added or updated tests to cover my changes (where applicable).
 - [ ] I have added or updated docstrings for any changed public functions.
-- [ ] I have updated `CHANGELOG.md` under `[Unreleased]`.
+- [ ] I have updated `CHANGELOG.md` under `[Unreleased]` for user-facing code, dependency, or build changes (not needed for docs/tests-only changes).
 - [ ] No `.ipynb` files are included in this PR.
 
 ## Screenshots / output (if relevant)

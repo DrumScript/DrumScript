@@ -19,57 +19,82 @@ DATASET_NAME = "mdb"
 #
 # Principle (per project decision): a label maps to a DrumScript notation ONLY
 # if there is a direct, unambiguous equivalent. Anything without a direct
-# DrumScript notation is EXCLUDED from evaluation — never lumped into a nearby
+# DrumScript notation is EXCLUDED from evaluation #  never lumped into a nearby
 # class. DrumScript is a transcription engine; china ≠ crash, splash ≠ crash,
 # side-stick ≠ snare. Excluded reference events are dropped entirely (they count
 # as neither hits nor false positives), which is the standard way to benchmark a
 # model against classes it cannot produce.
 #
 # DrumScript output vocabulary (from drum_classifier/classify.py):
+## defined in drumscript/notation_generator/constants.py
+## DRUM_NOTATION_MAPPING
 #   kick, snare, low_tom, mid_tom, high_tom,
 #   hi_hat_closed, hi_hat_open, crash, ride
 # ─────────────────────────────────────────────────────────────────────────────
 
-#: MDB-Drums *subclass* code → DrumScript label. Only directly-mappable codes
-#: appear here; everything else is excluded (see EXCLUDED_CODES below).
+# MDB-Drums *subclass* code → DrumScript label. Only directly-mappable codes
+# appear here; everything else is excluded (see EXCLUDED_CODES below).
+## nb: PREVIOUS CODES -- PRESERVE FOR NOW -- COMMENTED OUT
+
 MDB_SUBCLASS_TO_DRUMSCRIPT: dict[str, str] = {
     # --- Kick ---
     "KD": "kick",
-    # --- Snare (all snare articulations are still the snare drum) ---
+    # --- Snare ---
     "SD": "snare",  # plain snare
-    "SDG": "snare",  # ghost note
-    "SDB": "snare",  # brush
-    "SDF": "snare",  # flam
-    "SDD": "snare",  # drag
+    # "SDG": "snare",  # ghost note
+    # "SDB": "snare",  # brush
+    # "SDF": "snare",  # flam
+    # "SDD": "snare",  # drag
     # --- Hi-hat ---
     "CHH": "hi_hat_closed",  # closed hi-hat
-    "PHH": "hi_hat_closed",  # pedal hi-hat (closed sound)
+    # "PHH": "hi_hat_closed",  # pedal hi-hat (closed sound)
     "OHH": "hi_hat_open",  # open hi-hat
     # --- Ride ---
     "RDC": "ride",  # ride cymbal
-    "RDB": "ride",  # ride bell
+    # "RDB": "ride",  # ride bell
     # --- Crash ---
     "CRC": "crash",  # crash cymbal
     # --- Toms (direct 1:1 with DrumScript's three tom classes) ---
     "LFT": "low_tom",  # low floor tom
-    "MHT": "mid_tom",  # mid/high tom
-    "HFT": "high_tom",  # high floor tom
+    # "MHT": "mid_tom",  # mid/high tom
+    "HFT": "mid_tom",  # high floor tom, would be mid_tom in DS **MIGHT NOT COMMUTE THOUGH SO REVIW RESULTS AFTER**
+    "HIT": "high_tom",
 }
 
-#: Codes deliberately excluded — no direct DrumScript notation exists, so they
-#: are dropped from evaluation rather than mapped to an approximate class.
-#:   SDNS = snare, snares-off (sounds tom-like; not a DrumScript class)
-#:   CHC  = china cymbal   (distinct notation ≠ crash)
-#:   SPC  = splash cymbal  (distinct notation ≠ crash)
-#:   SST  = side/cross-stick (distinct notation ≠ snare)
-#:   TMB  = tambourine     (auxiliary percussion)
-#:   HIT  = generic/ambiguous hit
-#:   OT   = "other" (class-level catch-all)
-EXCLUDED_CODES: frozenset[str] = frozenset({"SDNS", "CHC", "SPC", "SST", "TMB", "HIT", "OT"})
+# Codes deliberately excluded #  no direct DrumScript notation exists, so they
+# are dropped from evaluation rather than mapped to an approximate class.
 
-#: DrumScript target classes this dataset can score. Each maps to itself so the
-#: runner's evaluate_per_instrument (code → DrumScript labels) works unchanged.
-CODE_TO_DRUMSCRIPT: dict[str, list[str]] = {
+## PREVIOUS CODES -- PRESERVE FOR NOW --
+# EXCLUDED_CODES: frozenset[str] = frozenset({
+#   "SDNS",
+#   "CHC",
+#   "SPC",
+#   "SST",
+#   "TMB",
+#   "HIT",
+#   "OT"
+#   })
+
+EXCLUDED_CODES: frozenset[str] = frozenset(
+    {
+        "SDD",  # snare drum drag
+        "SDF",  # dnare drum flam
+        "SDB",  # snare drum brush
+        "SDG",  # snare drum ghost note
+        "SDNS",  # snare drum no snare (???)
+        "SST",  # snare srum stick/rim hit
+        "CHC",  # china cymbal
+        "SPC",  # splash cymbal
+        "TMB",  # tambourine (???)
+        "OT",  #  "Other Percussion"
+    }
+)
+
+
+# DrumScript target classes this dataset can score. Each maps to itself so the
+# runner's evaluate_per_instrument (code → DrumScript labels) works unchanged.
+
+DRUMSCRIPT_DICT: dict[str, list[str]] = {
     "kick": ["kick"],
     "snare": ["snare"],
     "hi_hat_closed": ["hi_hat_closed"],
@@ -81,8 +106,10 @@ CODE_TO_DRUMSCRIPT: dict[str, list[str]] = {
     "high_tom": ["high_tom"],
 }
 
-#: Instrument codes this dataset reports, in output/CSV column order.
-#: (Same keys as CODE_TO_DRUMSCRIPT — the DrumScript classes MDB can score.)
+# Instrument codes this dataset reports, in output/CSV column order.
+# Same keys as DRUMSCRIPT_LABELS  #  the DrumScript classes MDB can score.
+## There are crrently 9 drum labels feeding into DrumScript
+## Expand these as the coverage widens to other p[arts, ie flam, splash, china etc]
 INSTRUMENT_CODES: list[str] = [
     "kick",
     "snare",
@@ -218,13 +245,13 @@ def reference_onsets(annotation_path: Path) -> dict[str, np.ndarray]:
 
         label = MDB_SUBCLASS_TO_DRUMSCRIPT.get(code)
         if label is None:
-            # Unknown code (not mapped and not explicitly excluded) — skip, but
+            # Unknown code (not mapped and not explicitly excluded) #  skip, but
             # warn once so new/renamed labels are noticed rather than silently
             # dropped.
             if code not in seen_unknown:
                 seen_unknown.add(code)
                 logger.warning(
-                    "Unmapped MDB code %r in %s — excluded from evaluation",
+                    "Unmapped MDB code %r in %s #  excluded from evaluation",
                     code,
                     annotation_path.name,
                 )

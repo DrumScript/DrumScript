@@ -137,6 +137,10 @@ def export_pdf(detected_events, output_path, tempo, time_signature="4/4"):
     try:
         numerator, denominator = map(int, time_signature.split("/"))
     except ValueError:
+        print(
+            f"Warning: invalid time signature {time_signature!r}; "
+            "falling back to 4/4. Use a numerator/denominator form such as 3/4."
+        )
         numerator, denominator = 4, 4
 
     print(f"Generating PDF: {output_path} (Sig: {numerator}/{denominator}, {int(tempo)} BPM)")

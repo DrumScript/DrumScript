@@ -80,7 +80,7 @@ drumscript "audio_path.wav" --ts 3/4
 drumscript "audio_path.wav" --ts 6/8
 ```
 
-> Use a forward slash. Any other form - including underscores like `3_4` - silently falls back to 4/4 with no warning.
+> Use a forward slash (`3/4`, `6/8`). Forms without a slash — including `--ts 44` or underscores like `3_4` — cannot be parsed and fall back to 4/4. The exporter prints a warning when that happens.
 
 <!--You can also use DrumScript directly from your terminal:-->
 

@@ -16,7 +16,7 @@ Sphinx documentation: Standard reST docstrings are applied to all functions.
 
 Usage:
 uv run python drumscript/utils/research/analyze_idmt_dataset.py benchmarks/datasets/IDMT
-uv run --extra dev python drumscript/utils/research/analyze_idmt_dataset.py benchmarks/datasets/IDMT
+uv run --extra dev python drumscript/utils/research/analyze_idmt_dataset.py benchmarks/datasets/IDMT --group-by-instrument
 
 """
 
@@ -99,12 +99,15 @@ def extract_core_specs(file_path):
     }
 
 
-def analyze_dataset(root_path):
+# def analyze_dataset(root_path):
+def analyze_dataset(root_path, group_by_instrument=False):
     """
     Scans the dataset for drum stems and analyzes their physics.
 
     :param root_path: Path to the dataset root folder.
     :type root_path: str
+    :param group_by_instrument: Flag to sort the output by instrument type.
+    :type group_by_instrument: bool
     """
     dataset_path = Path(root_path)
     if not dataset_path.exists():
@@ -115,7 +118,23 @@ def analyze_dataset(root_path):
     files = glob.glob(search_pattern, recursive=True)
 
     target_files = [f for f in files if "#KD" in f or "#SD" in f or "#HH" in f]
-    target_files.sort()
+
+    # target_files.sort()
+
+    if group_by_instrument:
+
+        def instrument_sort_key(filepath):
+            if "#KD" in filepath:
+                return 1
+            elif "#SD" in filepath:
+                return 2
+            elif "#HH" in filepath:
+                return 3
+            return 4
+
+        target_files.sort(key=lambda f: (instrument_sort_key(f), f))
+    else:
+        target_files.sort()
 
     if not target_files:
         print(f"No isolated stem files found in {dataset_path}")
@@ -140,6 +159,8 @@ def analyze_dataset(root_path):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Extract frequencies and core specs from IDMT dataset.")
     parser.add_argument("dataset_root", type=str, help="Path to the IDMT dataset root folder")
+    parser.add_argument("--group-by-instrument", action="store_true", help="Group the printed results by instrument type")
     args = parser.parse_args()
 
-    analyze_dataset(args.dataset_root)
+    # analyze_dataset(args.dataset_root)
+    analyze_dataset(args.dataset_root, args.group_by_instrument)

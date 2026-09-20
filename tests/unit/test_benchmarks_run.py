@@ -19,10 +19,12 @@ def load_benchmark_run():
 
 
 class TestBenchmarkRun:
-    def test_only_registers_verified_idmt_adapter(self):
-        benchmark_run = load_benchmark_run()
+    # def test_only_registers_verified_idmt_adapter(self):
+    # benchmark_run = load_benchmark_run()
 
-        assert list(benchmark_run.ADAPTERS) == ["idmt"]
+    def test_registers_verified_adapters(self):
+        benchmark_run = load_benchmark_run()
+        assert set(benchmark_run.ADAPTERS) == {"idmt", "mdb"}
 
     def test_evaluate_per_instrument_maps_drumscript_labels_to_dataset_codes(self):
         benchmark_run = load_benchmark_run()

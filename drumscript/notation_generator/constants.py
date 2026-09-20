@@ -31,9 +31,9 @@ N_FFT = 2048
 
 # FUNDAMENTAL FREQUENCY RANGES (Hz) (Based on testing audio manually)
 # Copy and comment out most recent previous freq for reference, when amending
-# KICK_RANGE = (64, 87)  # majority of kick drum fundaemtals either 64.60 or 86.13 HZ, so this is a good baseline
-KICK_RANGE = (43, 87)  # majority of kick drum fundaemtals either 64.60 or 86.13 HZ, so this is a good baseline (actual lower bound is 43.2 but round
-# down for simplicity)
+KICK_RANGE = (64, 87)  # majority of kick drum fundaemtals either 64.60 or 86.13 HZ, so this is a good baseline
+# KICK_RANGE = (43, 87)  # majority of kick drum fundaemtals either 64.60 or 86.13 HZ, so this is a good baseline (actual lower bound is 43.2 but
+# round down for simplicity)
 # LOW_TOM_RANGE = (90, 110)
 # SNARE_RANGE = (120, 240)
 LOW_TOM_RANGE = (88, 118)  # ie between snare and kick??

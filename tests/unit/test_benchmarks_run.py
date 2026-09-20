@@ -34,7 +34,7 @@ class TestBenchmarkRun:
         # so a newly-added adapter that forgets one is caught here rather than
         # at runtime (e.g. the INSTRUMENT_CODES omission that broke the first
         # MDB run).
-        required = ("DATASET_NAME", "CODE_TO_DRUMSCRIPT", "INSTRUMENT_CODES", "add_cli_args", "iter_items")
+        required = ("DATASET_NAME", "DRUMSCRIPT_DICT", "INSTRUMENT_CODES", "add_cli_args", "iter_items")
         for name, adapter in benchmark_run.ADAPTERS.items():
             for attr in required:
                 assert hasattr(adapter, attr), f"{name} adapter missing {attr}"

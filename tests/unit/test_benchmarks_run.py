@@ -19,12 +19,25 @@ def load_benchmark_run():
 
 
 class TestBenchmarkRun:
-    # def test_only_registers_verified_idmt_adapter(self):
-    # benchmark_run = load_benchmark_run()
-
     def test_registers_verified_adapters(self):
         benchmark_run = load_benchmark_run()
+
+        # Both adapters are verified end-to-end (IDMT: kick/snare/hi-hat;
+        # MDB-Drums: full kit). Order-independent so registration order
+        # changes don't break the test.
         assert set(benchmark_run.ADAPTERS) == {"idmt", "mdb"}
+
+    def test_each_adapter_exposes_required_contract(self):
+        benchmark_run = load_benchmark_run()
+
+        # Every registered adapter must expose the attributes run.py relies on,
+        # so a newly-added adapter that forgets one is caught here rather than
+        # at runtime (e.g. the INSTRUMENT_CODES omission that broke the first
+        # MDB run).
+        required = ("DATASET_NAME", "CODE_TO_DRUMSCRIPT", "INSTRUMENT_CODES", "add_cli_args", "iter_items")
+        for name, adapter in benchmark_run.ADAPTERS.items():
+            for attr in required:
+                assert hasattr(adapter, attr), f"{name} adapter missing {attr}"
 
     def test_evaluate_per_instrument_maps_drumscript_labels_to_dataset_codes(self):
         benchmark_run = load_benchmark_run()

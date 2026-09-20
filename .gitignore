@@ -107,7 +107,8 @@ training_data/
 *machine-learning
 machine-learning/models/*.h5
 machine-learning/models/*.joblib
-benchmarks/data/
+benchmarks/datasets/
+benchmarks/analysis/
 
 # ==========================================
 # DOCUMENTATION & SPECIFIC ASSETS

@@ -405,9 +405,9 @@ For detailed instructions on testing and publishing via the command line, please
 ## Benchmarking
 *[back](#drumscript)*
 
-DrumScript includes a benchmarking framework for evaluating the classifier against standard ADT datasets using [`mir_eval`](https://github.com/mir-evaluation/mir_eval). Currently supports IDMT-SMT-Drums V2.
+DrumScript includes a benchmarking framework for evaluating the classifier against standard ADT datasets using [`mir_eval`](https://github.com/mir-evaluation/mir_eval). Currently supports IDMT-SMT-Drums V2 and MDB Drums
 
-```zsh
+<!--```zsh
 # Install dev dependencies (includes mir_eval)
 uv sync --extra dev
 
@@ -419,9 +419,33 @@ uv run --extra dev python benchmarks/run.py idmt \
 uv run --extra dev python benchmarks/run.py idmt \
 --root /path/to/IDMT-SMT-DRUMS-V2 \
 --subset RealDrum --limit 5
+```-->
+
+```zsh
+# Install dev dependencies (includes mir_eval)
+uv sync --extra dev
+
+# Run the IDMT benchmark
+uv run --extra dev python benchmarks/run.py idmt \
+--root benchmarks/datasets/IDMT
+
+# Run on a single subset with a limit
+uv run --extra dev python benchmarks/run.py idmt \
+--root benchmarks/datasets/IDMT \
+--subset RealDrum --limit 5
 ```
 
-Results are archived to `outputs/benchmarks/idmt/` with per-file metrics, summary statistics, and git commit tracking for reproducibility. See [`benchmarks/README.md`](benchmarks/README.md) for dataset setup and full usage.
+```zsh
+# Install dev dependencies (includes mir_eval)
+uv sync --extra dev
+
+# Run the MBD benchmark
+uv run --extra dev python benchmarks/run.py mdb \
+--root benchmarks/datasets/MDB
+
+Results are archived to `outputs/benchmarks/{dataset}/` (where `dataset` corresponds to a the currently-supported mir_eval adapters); either with per-file metrics, summary statistics, and git commit tracking for reproducibility. See [`benchmarks/README.md`](benchmarks/README.md) for dataset setup and full usage.
+
+> **Note:** download the datasets to `benchmarks/datasets/` folder and rename to `IDMB` or `MDB` depending on which one you use, before running
 
 ---
 

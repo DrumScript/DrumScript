@@ -1,7 +1,7 @@
 # **Changelog**
 
 <!--date_added:thurs-28-may-2026-->
-<!--date_updated:mon-07-sept-2026-->
+<!--date_updated:sun-20-sept-2026-->
 
 
 * All notable changes related to the repository and pypi distribution of `DrumScript` will be documented here
@@ -30,12 +30,17 @@
 > Items listed below are **currently in development** but **have not been distributed on PyPi**
 
 > ### *Additions*
-* added blurb to `README.md`, `docs/index.md` and `docs/about.md` about build process and current development people
-* added issue forms for `bug_report`, `feature_request` and `submit_results` to make giving feedback easier
-* added troubleshooting page to documentation, with navigation tab for known dependency issues/errors impacting DrumScript
+**Documentation:** 
+* Added blurb to `README.md`, `docs/index.md` and `docs/about.md` about build process and current development people
+* Added troubleshooting page to documentation, with navigation tab for known dependency issues/errors impacting DrumScript
+* Added issue forms for `bug_report`, `feature_request` and `submit_results` to make giving feedback easier
+
+**Benchmarks:**
+*  Updated the IDMT benchmark dataset layout and documentation, including local dataset storage under `benchmarks/datasets/`, expanded setup guidance, and a template for adding future benchmark datasets. [#321](https://github.com/DrumScript/DrumScript/pull/321)
+* Added MDB-Drums full-kit benchmark support with dataset mappings, documentation, and adapter tests. [#330](https://github.com/DrumScript/DrumScript/pull/330)
 
 > ### *Changes*
-* tidied up branch tree on remote #311
+* Tidied up branch tree on remote #311
 
 > ### *Fixes*
 * **Python 3.13 not supported.** DrumScript pins `numpy<2`, and numpy 1.x has no cp313 wheels on PyPI. This caused `pip install drumscript` on Python 3.13 to fall back to a source build (which requires a C toolchain most users don't have), producing a confusing `Compiler cc cannot compile programs` error rather than a clear "unsupported Python version" message. `requires-python` lowered from `<3.14` to `<3.13` in `pyproject.toml`. Python 3.13 support planned once DrumScript migrates to `numpy>=2` (see [#303](https://github.com/DrumScript/DrumScript/issues/303)).

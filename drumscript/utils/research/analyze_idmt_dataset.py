@@ -395,7 +395,8 @@ def diagnose_kicks(root_path, subset=None, tracks=None, output_dir=None):
     out_dir.mkdir(parents=True, exist_ok=True)
     write_dict_csv(out_dir / "kick_hits.csv", KICK_HIT_FIELDS, all_hits)
     write_dict_csv(out_dir / "kick_summary.csv", KICK_SUMMARY_FIELDS, summaries)
-    print(f"\nWritten: {out_dir}/kick_hits.csv and kick_summary.csv\n")
+    # print(f"\nWritten: {out_dir}/kick_hits.csv and kick_summary.csv\n")
+    print(f"\nWritten: {out_dir}/kick_hits.csv and {out_dir}/kkick_summary.csv\n")
 
 
 if __name__ == "__main__":

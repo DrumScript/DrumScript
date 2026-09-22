@@ -19,6 +19,7 @@
    draw_time_signature
    export_pdf
    get_vertical_position
+   parse_time_signature
 
 
 

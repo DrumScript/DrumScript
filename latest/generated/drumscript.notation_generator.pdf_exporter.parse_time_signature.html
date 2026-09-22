@@ -2,7 +2,7 @@
 <html lang="en" data-accent-color="violet" data-content_root="../">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"><title>drumscript.notation_generator.score_builder - DrumScript 0.2.1 documentation</title><link rel="author" title="About these documents" href="../about.html" /><link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="drumscript.notation_generator.score_builder.build_score" href="drumscript.notation_generator.score_builder.build_score.html" /><link rel="prev" title="drumscript.notation_generator.helpers.round_to_nearest_subdivision" href="drumscript.notation_generator.helpers.round_to_nearest_subdivision.html" /><script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"><title>drumscript.notation_generator.pdf_exporter.parse_time_signature - DrumScript 0.2.1 documentation</title><link rel="author" title="About these documents" href="../about.html" /><link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="drumscript.notation_generator.midi_exporter" href="drumscript.notation_generator.midi_exporter.html" /><link rel="prev" title="drumscript.notation_generator.pdf_exporter.get_vertical_position" href="drumscript.notation_generator.pdf_exporter.get_vertical_position.html" /><script>
     function setColorMode(t){let e=document.documentElement;e.setAttribute("data-color-mode",t);let a=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches,s=t;"auto"===t&&(s=a?"dark":"light"),"light"===s?(e.classList.remove("dark"),e.classList.add("light")):(e.classList.remove("light"),e.classList.add("dark"))}
     setColorMode(localStorage._theme||"auto");
   </script><link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=e1a1ceaf" />
@@ -20,7 +20,7 @@
 }
 </style>
     
-  <meta property="og:type" content="website"/><meta property="og:title" content="drumscript.notation_generator.score_builder"/>
+  <meta property="og:type" content="website"/><meta property="og:title" content="drumscript.notation_generator.pdf_exporter.parse_time_signature"/>
     <meta name="twitter:card" content="summary"/>
   </head>
 <body><div class="announcement">
@@ -140,11 +140,11 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l3"><a class="reference internal" href="drumscript.notation_generator.helpers.round_to_nearest_subdivision.html">drumscript.notation_generator.helpers.round_to_nearest_subdivision</a></li>
 </ul>
 </li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">drumscript.notation_generator.score_builder</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="drumscript.notation_generator.score_builder.html">drumscript.notation_generator.score_builder</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="drumscript.notation_generator.score_builder.build_score.html">drumscript.notation_generator.score_builder.build_score</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="drumscript.notation_generator.pdf_exporter.html">drumscript.notation_generator.pdf_exporter</a><ul>
+<li class="toctree-l2 current"><a class="reference internal" href="drumscript.notation_generator.pdf_exporter.html">drumscript.notation_generator.pdf_exporter</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="drumscript.notation_generator.pdf_exporter.draw_bar_line.html">drumscript.notation_generator.pdf_exporter.draw_bar_line</a></li>
 <li class="toctree-l3"><a class="reference internal" href="drumscript.notation_generator.pdf_exporter.draw_clef.html">drumscript.notation_generator.pdf_exporter.draw_clef</a></li>
 <li class="toctree-l3"><a class="reference internal" href="drumscript.notation_generator.pdf_exporter.draw_notehead.html">drumscript.notation_generator.pdf_exporter.draw_notehead</a></li>
@@ -152,7 +152,7 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l3"><a class="reference internal" href="drumscript.notation_generator.pdf_exporter.draw_time_signature.html">drumscript.notation_generator.pdf_exporter.draw_time_signature</a></li>
 <li class="toctree-l3"><a class="reference internal" href="drumscript.notation_generator.pdf_exporter.export_pdf.html">drumscript.notation_generator.pdf_exporter.export_pdf</a></li>
 <li class="toctree-l3"><a class="reference internal" href="drumscript.notation_generator.pdf_exporter.get_vertical_position.html">drumscript.notation_generator.pdf_exporter.get_vertical_position</a></li>
-<li class="toctree-l3"><a class="reference internal" href="drumscript.notation_generator.pdf_exporter.parse_time_signature.html">drumscript.notation_generator.pdf_exporter.parse_time_signature</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">drumscript.notation_generator.pdf_exporter.parse_time_signature</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="drumscript.notation_generator.midi_exporter.html">drumscript.notation_generator.midi_exporter</a><ul>
@@ -241,7 +241,10 @@ data-aria-dark="Switch to auto color mode">
     <button class="rside-close js-menu xl:hidden" aria-label="Close Table of Contents" type="button" aria-controls="rside" aria-expanded="false">
       <i class="i-lucide close"></i>
     </button>
-    <div class="sy-scrollbar sy-rside-inner px-6 xl:top-16 xl:sticky xl:pl-0 pt-6 pb-4"><a class="js-repo-stats repo-stats flex items-center" href="https://github.com/DrumScript/DrumScript"
+    <div class="sy-scrollbar sy-rside-inner px-6 xl:top-16 xl:sticky xl:pl-0 pt-6 pb-4"><div class="localtoc"><h3>On this page</h3><ul>
+<li><a class="reference internal" href="#drumscript.notation_generator.pdf_exporter.parse_time_signature"><code class="docutils literal notranslate"><span class="pre">parse_time_signature()</span></code></a></li>
+</ul>
+</div><a class="js-repo-stats repo-stats flex items-center" href="https://github.com/DrumScript/DrumScript"
   data-type="github" data-user="DrumScript" data-repo="DrumScript">
   <span class="w-8 flex items-center justify-around shrink-0 text-3xl">
     <iconify-icon icon="simple-icons:github"></iconify-icon>
@@ -263,7 +266,7 @@ data-aria-dark="Switch to auto color mode">
     </span>
   </span>
 </a><div class="edit-this-page">
-  <a href="https://github.com/DrumScript/DrumScript/blob/main/docs/generated/drumscript.notation_generator.score_builder.rst">Edit this page</a>
+  <a href="https://github.com/DrumScript/DrumScript/blob/main/docs/generated/drumscript.notation_generator.pdf_exporter.parse_time_signature.rst">Edit this page</a>
 </div><div id="ethical-ad-placement" data-ea-publisher="readthedocs"></div></div>
   </aside>
   <div class="rside-overlay js-menu" role="button" aria-label="Close Table of Contents" aria-controls="rside" aria-expanded="false"></div>
@@ -284,8 +287,12 @@ data-aria-dark="Switch to auto color mode">
         <span>/</span>
         <meta itemprop="position" content="2" />
       </li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-        <strong itemprop="name">drumscript.notation_generator.score_builder</strong>
+        <a itemprop="item" href="drumscript.notation_generator.pdf_exporter.html"><span itemprop="name">drumscript.notation_generator.pdf_exporter</span></a>
+        <span>/</span>
         <meta itemprop="position" content="3" />
+      </li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <strong itemprop="name">drumscript.notation_generator.pdf_exporter.parse_time_signature</strong>
+        <meta itemprop="position" content="4" />
       </li></ol>
     <div class="xl:hidden ml-1">
       <button class="js-menu" aria-label="Show table of contents" type="button" aria-controls="rside"
@@ -301,7 +308,7 @@ data-aria-dark="Switch to auto color mode">
     <button
       type="button"
       class="js-copy px-3 py-1 inline-flex items-center gap-1"
-      data-url="https://raw.githubusercontent.com/DrumScript/DrumScript/refs/heads/main/docs/generated/drumscript.notation_generator.score_builder.rst.txt"
+      data-url="https://raw.githubusercontent.com/DrumScript/DrumScript/refs/heads/main/docs/generated/drumscript.notation_generator.pdf_exporter.parse_time_signature.rst.txt"
     >
       <i class="i-lucide" data-icon="copy"></i>
       <span>Copy page</span>
@@ -315,36 +322,31 @@ data-aria-dark="Switch to auto color mode">
     <div role="presentation">
       <div class="flex flex-col" role="group">
         <button class="js-copy" type="button" role="menuitem"
-          data-url="https://raw.githubusercontent.com/DrumScript/DrumScript/refs/heads/main/docs/generated/drumscript.notation_generator.score_builder.rst.txt">
+          data-url="https://raw.githubusercontent.com/DrumScript/DrumScript/refs/heads/main/docs/generated/drumscript.notation_generator.pdf_exporter.parse_time_signature.rst.txt">
           <span class="iconify-icon">
             <i class="i-lucide" data-icon="copy"></i>
           </span>
           <span>Copy page</span>
         </button>
-        <a role="menuitem" href="https://raw.githubusercontent.com/DrumScript/DrumScript/refs/heads/main/docs/generated/drumscript.notation_generator.score_builder.rst.txt" target="_blank" rel="nofollow"><iconify-icon icon="bi:code-slash"></iconify-icon>
-            <span>View Source</span></a><a role="menuitem" href="https://chatgpt.com/?hints=search&q=Read%20https%3A//raw.githubusercontent.com/DrumScript/DrumScript/refs/heads/main/docs/generated/drumscript.notation_generator.score_builder.rst.txt%20so%20I%20can%20ask%20questions%20about%20it." target="_blank" rel="nofollow">
+        <a role="menuitem" href="https://raw.githubusercontent.com/DrumScript/DrumScript/refs/heads/main/docs/generated/drumscript.notation_generator.pdf_exporter.parse_time_signature.rst.txt" target="_blank" rel="nofollow"><iconify-icon icon="bi:code-slash"></iconify-icon>
+            <span>View Source</span></a><a role="menuitem" href="https://chatgpt.com/?hints=search&q=Read%20https%3A//raw.githubusercontent.com/DrumScript/DrumScript/refs/heads/main/docs/generated/drumscript.notation_generator.pdf_exporter.parse_time_signature.rst.txt%20so%20I%20can%20ask%20questions%20about%20it." target="_blank" rel="nofollow">
           <iconify-icon icon="bi:openai"></iconify-icon>
           <span>Open in ChatGPT</span>
-        </a><a role="menuitem" href="https://claude.ai/new?q=Read%20https%3A//raw.githubusercontent.com/DrumScript/DrumScript/refs/heads/main/docs/generated/drumscript.notation_generator.score_builder.rst.txt%20so%20I%20can%20ask%20questions%20about%20it." target="_blank" rel="nofollow">
+        </a><a role="menuitem" href="https://claude.ai/new?q=Read%20https%3A//raw.githubusercontent.com/DrumScript/DrumScript/refs/heads/main/docs/generated/drumscript.notation_generator.pdf_exporter.parse_time_signature.rst.txt%20so%20I%20can%20ask%20questions%20about%20it." target="_blank" rel="nofollow">
           <iconify-icon icon="bi:claude"></iconify-icon>
           <span>Open in Claude</span>
         </a></div>
     </div>
   </div>
 </div><article class="yue" role="main">
-          <section id="module-drumscript.notation_generator.score_builder">
-<span id="drumscript-notation-generator-score-builder"></span><h1>drumscript.notation_generator.score_builder<a class="headerlink" href="#module-drumscript.notation_generator.score_builder" title="Link to this heading">#</a></h1>
-<p>Module to build the final score from classified events.</p>
-<p class="rubric">Functions</p>
-<div class="table-wrapper autosummary longtable docutils container">
-<table class="autosummary longtable docutils align-default">
-<tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="drumscript.notation_generator.score_builder.build_score.html#drumscript.notation_generator.score_builder.build_score" title="drumscript.notation_generator.score_builder.build_score"><code class="xref py py-obj docutils literal notranslate"><span class="pre">build_score</span></code></a></p></td>
-<td><p>Builds a drum score by saving event data to JSON and rendering to PDF.</p></td>
-</tr>
-</tbody>
-</table>
-</div>
+          <section id="drumscript-notation-generator-pdf-exporter-parse-time-signature">
+<h1>drumscript.notation_generator.pdf_exporter.parse_time_signature<a class="headerlink" href="#drumscript-notation-generator-pdf-exporter-parse-time-signature" title="Link to this heading">#</a></h1>
+<dl class="py function">
+<dt class="sig sig-object py" id="drumscript.notation_generator.pdf_exporter.parse_time_signature">
+<span class="sig-name descname"><span class="pre">parse_time_signature</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">time_signature</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'4/4'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/drumscript/notation_generator/pdf_exporter.html#parse_time_signature"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drumscript.notation_generator.pdf_exporter.parse_time_signature" title="Link to this definition">#</a></dt>
+<dd><p>Parse <code class="docutils literal notranslate"><span class="pre">numerator/denominator</span></code>. Invalid values fall back to 4/4 with a warning.</p>
+</dd></dl>
+
 </section>
 
         </article><button class="back-to-top" type="button">
@@ -353,16 +355,16 @@ data-aria-dark="Switch to auto color mode">
   </svg>
   <span>Back to top</span>
 </button><div class="navigation flex print:hidden"><div class="navigation-prev">
-    <a href="drumscript.notation_generator.helpers.round_to_nearest_subdivision.html">
+    <a href="drumscript.notation_generator.pdf_exporter.get_vertical_position.html">
       <i class="i-lucide chevron-left"></i>
       <div class="page-info">
-        <span>Previous</span><div class="title">drumscript.notation_generator.helpers.round_to_nearest_subdivision</div></div>
+        <span>Previous</span><div class="title">drumscript.notation_generator.pdf_exporter.get_vertical_position</div></div>
     </a>
   </div><div class="navigation-next">
-    <a href="drumscript.notation_generator.score_builder.build_score.html">
+    <a href="drumscript.notation_generator.midi_exporter.html">
       <div class="page-info">
         <span>Next</span>
-        <div class="title">drumscript.notation_generator.score_builder.build_score</div>
+        <div class="title">drumscript.notation_generator.midi_exporter</div>
       </div>
       <i class="i-lucide chevron-right"></i>
     </a>

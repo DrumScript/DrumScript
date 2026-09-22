@@ -152,6 +152,7 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l3"><a class="reference internal" href="generated/drumscript.notation_generator.pdf_exporter.draw_time_signature.html">drumscript.notation_generator.pdf_exporter.draw_time_signature</a></li>
 <li class="toctree-l3"><a class="reference internal" href="generated/drumscript.notation_generator.pdf_exporter.export_pdf.html">drumscript.notation_generator.pdf_exporter.export_pdf</a></li>
 <li class="toctree-l3"><a class="reference internal" href="generated/drumscript.notation_generator.pdf_exporter.get_vertical_position.html">drumscript.notation_generator.pdf_exporter.get_vertical_position</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/drumscript.notation_generator.pdf_exporter.parse_time_signature.html">drumscript.notation_generator.pdf_exporter.parse_time_signature</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="generated/drumscript.notation_generator.midi_exporter.html">drumscript.notation_generator.midi_exporter</a><ul>
@@ -410,6 +411,7 @@ data-aria-dark="Switch to auto color mode">
 <div><p class="rubric" id="fixes"><em>Fixes</em></p>
 </div></blockquote>
 <ul class="simple">
+<li><p>warn when an invalid time signature falls back to 4/4 instead of failing silently</p></li>
 <li><p><strong>Python 3.13 not supported.</strong> DrumScript pins <code class="docutils literal notranslate"><span class="pre">numpy&lt;2</span></code>, and numpy 1.x has no cp313 wheels on PyPI. This caused <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">drumscript</span></code> on Python 3.13 to fall back to a source build (which requires a C toolchain most users don’t have), producing a confusing <code class="docutils literal notranslate"><span class="pre">Compiler</span> <span class="pre">cc</span> <span class="pre">cannot</span> <span class="pre">compile</span> <span class="pre">programs</span></code> error rather than a clear “unsupported Python version” message. <code class="docutils literal notranslate"><span class="pre">requires-python</span></code> lowered from <code class="docutils literal notranslate"><span class="pre">&lt;3.14</span></code> to <code class="docutils literal notranslate"><span class="pre">&lt;3.13</span></code> in <code class="docutils literal notranslate"><span class="pre">pyproject.toml</span></code>. Python 3.13 support planned once DrumScript migrates to <code class="docutils literal notranslate"><span class="pre">numpy&gt;=2</span></code> (see <a class="reference external" href="https://github.com/DrumScript/DrumScript/issues/303">#303</a>).</p></li>
 </ul>
 <blockquote>

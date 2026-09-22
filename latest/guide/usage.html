@@ -152,6 +152,7 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l3"><a class="reference internal" href="../generated/drumscript.notation_generator.pdf_exporter.draw_time_signature.html">drumscript.notation_generator.pdf_exporter.draw_time_signature</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../generated/drumscript.notation_generator.pdf_exporter.export_pdf.html">drumscript.notation_generator.pdf_exporter.export_pdf</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../generated/drumscript.notation_generator.pdf_exporter.get_vertical_position.html">drumscript.notation_generator.pdf_exporter.get_vertical_position</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../generated/drumscript.notation_generator.pdf_exporter.parse_time_signature.html">drumscript.notation_generator.pdf_exporter.parse_time_signature</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../generated/drumscript.notation_generator.midi_exporter.html">drumscript.notation_generator.midi_exporter</a><ul>
@@ -348,7 +349,7 @@ data-aria-dark="Switch to auto color mode">
           <section id="usage-guide">
 <h1>Usage Guide<a class="headerlink" href="#usage-guide" title="Link to this heading">#</a></h1>
 <!--date_updated:sat-17-january-2026-->
-<!--date_updated:sun-16-august-2026-->
+<!--date_updated:tues-22-september-2026-->
 <section id="quick-start">
 <h2>Quick Start<a class="headerlink" href="#quick-start" title="Link to this heading">#</a></h2>
 <!--`DrumScript` accepts the default format of `.wav` if the `--mp3` flag is not specified.-->
@@ -420,7 +421,7 @@ y, sr = ds.load_audio("audio_path.wav")
 </span></pre></div>
 </div>
 <blockquote>
-<div><p>Use a forward slash. Any other form - including underscores like <code class="docutils literal notranslate"><span class="pre">3_4</span></code> - silently falls back to 4/4 with no warning.</p>
+<div><p>Use a forward slash. Any other form - including underscores like <code class="docutils literal notranslate"><span class="pre">3_4</span></code> or a typo like <code class="docutils literal notranslate"><span class="pre">44</span></code> - falls back to 4/4 and prints a warning.</p>
 </div></blockquote>
 <!--You can also use DrumScript directly from your terminal:-->
 </section>

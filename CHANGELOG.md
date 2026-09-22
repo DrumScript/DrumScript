@@ -1,7 +1,7 @@
 # **Changelog**
 
 <!--date_added:thurs-28-may-2026-->
-<!--date_updated:mon-07-sept-2026-->
+<!--date_updated:sun-20-sept-2026-->
 
 
 * All notable changes related to the repository and pypi distribution of `DrumScript` will be documented here
@@ -30,12 +30,17 @@
 > Items listed below are **currently in development** but **have not been distributed on PyPi**
 
 > ### *Additions*
-* added blurb to `README.md`, `docs/index.md` and `docs/about.md` about build process and current development people
-* added issue forms for `bug_report`, `feature_request` and `submit_results` to make giving feedback easier
-* added troubleshooting page to documentation, with navigation tab for known dependency issues/errors impacting DrumScript
+**Documentation:** 
+* Added blurb to `README.md`, `docs/index.md` and `docs/about.md` about build process and current development people
+* Added troubleshooting page to documentation, with navigation tab for known dependency issues/errors impacting DrumScript
+* Added issue forms for `bug_report`, `feature_request` and `submit_results` to make giving feedback easier
+
+**Benchmarks:**
+*  Updated the IDMT benchmark dataset layout and documentation, including local dataset storage under `benchmarks/datasets/`, expanded setup guidance, and a template for adding future benchmark datasets. [#321](https://github.com/DrumScript/DrumScript/pull/321)
+* Added MDB-Drums full-kit benchmark support with dataset mappings, documentation, and adapter tests. [#330](https://github.com/DrumScript/DrumScript/pull/330)
 
 > ### *Changes*
-* tidied up branch tree on remote #311
+* Tidied up branch tree on remote #311
 
 > ### *Fixes*
 * warn when an invalid time signature falls back to 4/4 instead of failing silently

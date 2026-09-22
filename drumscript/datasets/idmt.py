@@ -17,13 +17,13 @@ DATASET_NAME = "idmt"
 
 #: IDMT instrument codes → DrumScript label list. ``HH`` matches both open and
 #: closed hi-hat.
-CODE_TO_DRUMSCRIPT: dict[str, list[str]] = {
+DRUMSCRIPT_DICT: dict[str, list[str]] = {
     "KD": ["kick"],
     "SD": ["snare"],
     "HH": ["hi_hat_closed", "hi_hat_open"],
 }
 
-INSTRUMENT_CODES: tuple[str, ...] = tuple(CODE_TO_DRUMSCRIPT.keys())
+INSTRUMENT_CODES: tuple[str, ...] = tuple(DRUMSCRIPT_DICT.keys())
 
 #: Filename prefixes that identify the three IDMT subsets.
 SUBSETS: tuple[str, ...] = ("RealDrum", "WaveDrum", "TechnoDrum")

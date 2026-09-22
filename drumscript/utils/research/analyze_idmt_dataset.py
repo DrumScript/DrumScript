@@ -30,6 +30,8 @@ uv run --extra dev python drumscript/utils/research/analyze_idmt_dataset.py benc
 --sort
 --diagnose-kick
 --diagnose-kick --tracks WaveDrum02_37 WaveDrum02_39
+--diagnose-kick --top 30
+--sweep-csv outputs/benchmarks/idmt/diagnostics/<stamp>/onset_features.csv
 """
 
 import argparse
@@ -64,6 +66,12 @@ ONSET_FIELDS = ["track", "bucket", "event_time", "labelled_as", "ref_classes", "
 REF_CLASSES = ("KD", "SD", "HH")
 # Candidate KICK_LFER_MIN values for the threshold sweep.
 LFER_SWEEP = (0.12, 0.15, 0.18, 0.20, 0.22, 0.25, 0.28, 0.30, 0.32, 0.35)
+
+# --- Grid sweep: candidate values for all three kick thresholds together ---
+FREQ_MIN_GRID = (0.0, 15.0, 20.0, 30.0, 40.0)
+FREQ_MAX_GRID = (120.0, 140.0, 160.0, 180.0, 200.0, 220.0, 250.0)
+LFER_MIN_GRID = (0.04, 0.06, 0.08, 0.10, 0.12, 0.14, 0.16, 0.18, 0.20, 0.24, 0.28, 0.32)
+PRECISION_FLOORS = (0.95, 0.90, 0.85, 0.80, 0.75)
 
 
 def extract_core_specs(file_path):
@@ -427,6 +435,147 @@ def print_threshold_sweep(onset_rows):
         print(f"  {threshold:<12.2f}{caught:>7}/{len(kick_rows):<6}{recall:>8.2f}{false_pos:>14}{marker}")
 
 
+def score_candidate_rule(onset_rows, freq_min, freq_max, lfer_min):
+    """
+    Scores one candidate kick rule against the reference kicks.
+
+    The candidate fires when ``freq_min <= peak_freq <= freq_max`` and
+    ``lfer >= lfer_min``. Precision, recall and F-measure are computed across
+    every onset supplied, where a positive case is an onset with a kick reference.
+
+    :param onset_rows: Per-onset rows from diagnose_kick_track.
+    :type onset_rows: list[dict]
+    :param freq_min: Candidate KICK_FREQ_MIN.
+    :type freq_min: float
+    :param freq_max: Candidate KICK_FREQ_MAX.
+    :type freq_max: float
+    :param lfer_min: Candidate KICK_LFER_MIN.
+    :type lfer_min: float
+    :return: Dictionary of thresholds, counts and precision/recall/F.
+    :rtype: dict
+    """
+    true_pos = 0
+    false_pos = 0
+    total_kicks = 0
+
+    for row in onset_rows:
+        is_kick = bool(row.get("has_kick_ref"))
+        if is_kick:
+            total_kicks += 1
+        peak_freq = row.get("peak_freq", 0.0)
+        fires = freq_min <= peak_freq <= freq_max and row.get("lfer", 0.0) >= lfer_min
+        if fires and is_kick:
+            true_pos += 1
+        elif fires:
+            false_pos += 1
+
+    precision = true_pos / (true_pos + false_pos) if (true_pos + false_pos) else 0.0
+    recall = true_pos / total_kicks if total_kicks else 0.0
+    f_measure = 2 * precision * recall / (precision + recall) if (precision + recall) else 0.0
+
+    return {
+        "freq_min": freq_min,
+        "freq_max": freq_max,
+        "lfer_min": lfer_min,
+        "tp": true_pos,
+        "fp": false_pos,
+        "precision": precision,
+        "recall": recall,
+        "f": f_measure,
+    }
+
+
+def print_grid_header():
+    """Prints the column header used by the grid sweep tables."""
+    print(f"  {'freq (Hz)':<12}{'lfer':<8}{'TP':<8}{'FP':<8}{'prec':<8}{'recall':<9}{'F':<8}")
+    print("  " + "-" * 60)
+
+
+def print_grid_row(result, marker=""):
+    """
+    Prints one scored candidate rule as a fixed-width line.
+
+    :param result: A result dict from score_candidate_rule.
+    :type result: dict
+    :param marker: Optional trailing note.
+    :type marker: str
+    """
+    freqs = f"{result['freq_min']:.0f}-{result['freq_max']:.0f}"
+    counts = f"{result['tp']:<8}{result['fp']:<8}"
+    scores = f"{result['precision']:<8.3f}{result['recall']:<9.3f}{result['f']:<8.3f}"
+    print(f"  {freqs:<12}{result['lfer_min']:<8.2f}{counts}{scores}{marker}")
+
+
+def print_grid_sweep(onset_rows, top=20):
+    """
+    Grid sweeps KICK_FREQ_MIN, KICK_FREQ_MAX and KICK_LFER_MIN together.
+
+    The LFER sweep alone assumes the current frequency band is correct. This
+    varies all three thresholds, so a change can be chosen on F-measure rather
+    than on recall in isolation.
+
+    :param onset_rows: Per-onset rows from diagnose_kick_track.
+    :type onset_rows: list[dict]
+    :param top: How many ranked combinations to print.
+    :type top: int
+    """
+    if not onset_rows:
+        print("\n-- Grid sweep: no onsets to score --")
+        return
+
+    print("\n-- Current live rule --")
+    print_grid_header()
+    print_grid_row(score_candidate_rule(onset_rows, KICK_FREQ_MIN, KICK_FREQ_MAX, KICK_LFER_MIN))
+
+    results = []
+    for freq_min in FREQ_MIN_GRID:
+        for freq_max in FREQ_MAX_GRID:
+            for lfer_min in LFER_MIN_GRID:
+                results.append(score_candidate_rule(onset_rows, freq_min, freq_max, lfer_min))
+
+    results.sort(key=lambda r: r["f"], reverse=True)
+
+    print(f"\n-- Top {top} candidate rules by F-measure --")
+    print_grid_header()
+    for result in results[:top]:
+        print_grid_row(result)
+
+    print("\n-- Best candidate at each precision floor --")
+    print_grid_header()
+    for floor in PRECISION_FLOORS:
+        eligible = [r for r in results if r["precision"] >= floor]
+        if eligible:
+            print_grid_row(eligible[0], marker=f"   prec >= {floor:.2f}")
+        else:
+            print(f"  (nothing reaches precision {floor:.2f})")
+
+
+def load_onset_rows(csv_path):
+    """
+    Reloads onset rows from a previously written onset_features.csv.
+
+    Lets the grid sweep be re-run on an existing diagnostics folder without
+    re-processing any audio.
+
+    :param csv_path: Path to onset_features.csv.
+    :type csv_path: str
+    :return: Per-onset rows in the same shape diagnose_kick_track produces.
+    :rtype: list[dict]
+    """
+    rows = []
+    with open(csv_path, newline="") as fh:
+        for record in csv.DictReader(fh):
+            row = dict(record)
+            row["has_kick_ref"] = str(record.get("has_kick_ref", "")).strip().lower() == "true"
+            for key in KICK_FEATURE_KEYS:
+                try:
+                    row[key] = float(record[key])
+                except (KeyError, TypeError, ValueError):
+                    row.pop(key, None)
+            rows.append(row)
+    return rows
+
+
 def write_dict_csv(path, fields, rows):
     """
     Writes a list of dicts to CSV, leaving missing fields blank.
@@ -444,7 +593,7 @@ def write_dict_csv(path, fields, rows):
         writer.writerows(rows)
 
 
-def diagnose_kicks(root_path, subset=None, tracks=None, output_dir=None):
+def diagnose_kicks(root_path, subset=None, tracks=None, output_dir=None, top=20):
     """
     Runs the kick diagnosis over the selected IDMT #MIX tracks.
 
@@ -456,6 +605,8 @@ def diagnose_kicks(root_path, subset=None, tracks=None, output_dir=None):
     :type tracks: list[str]
     :param output_dir: Optional output directory for the CSVs.
     :type output_dir: str
+    :param top: How many ranked grid-sweep combinations to print.
+    :type top: int
     """
     items = list(idmt_adapter.iter_items(argparse.Namespace(root=root_path, subset=subset)))
     if tracks:
@@ -500,6 +651,7 @@ def diagnose_kicks(root_path, subset=None, tracks=None, output_dir=None):
         print(f"  {label:<30}{n}")
 
     print_threshold_sweep(all_onsets)
+    print_grid_sweep(all_onsets, top=top)
 
     out_dir = Path(output_dir) if output_dir else Path("outputs") / "benchmarks" / "idmt" / "diagnostics" / datetime.now().strftime("%Y-%m-%d_%H%M%S")
     out_dir.mkdir(parents=True, exist_ok=True)
@@ -511,7 +663,9 @@ def diagnose_kicks(root_path, subset=None, tracks=None, output_dir=None):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Extract frequencies and core specs from IDMT dataset.")
-    parser.add_argument("dataset_root", type=str, help="Path to the IDMT dataset root folder")
+    # parser.add_argument("dataset_root", type=str, help="Path to the IDMT dataset root folder")
+    # Optional so --sweep-csv can be run on an existing CSV without a dataset path.
+    parser.add_argument("dataset_root", type=str, nargs="?", default=None, help="Path to the IDMT dataset root folder")
     # parser.add_argument("--group-by-instrument", action="store_true", help="Group the printed results by instrument type")
 
     # parser.add_argument("--group", action="store_true", help="Group the printed results by instrument type")  # assumed default will be unsorted
@@ -531,11 +685,20 @@ if __name__ == "__main__":
     parser.add_argument("--subset", default=None, help="Kick diagnosis only: RealDrum, WaveDrum or TechnoDrum")
     parser.add_argument("--tracks", nargs="*", default=None, help="Kick diagnosis only: run tracks whose name contains any of these")
     parser.add_argument("--output", default=None, help="Kick diagnosis only: output directory for the CSVs")
+    parser.add_argument("--top", type=int, default=20, help="Kick diagnosis only: how many grid-sweep combinations to print")
+    parser.add_argument("--sweep-csv", default=None, help="Grid sweep an existing onset_features.csv, without re-processing audio")
 
     args = parser.parse_args()
 
     # analyze_dataset(args.dataset_root, group_by_instrument=args.group, sort_metrics=args.sort)
-    if args.diagnose_kick:
-        diagnose_kicks(args.dataset_root, subset=args.subset, tracks=args.tracks, output_dir=args.output)
+    # if args.diagnose_kick:
+    #     diagnose_kicks(args.dataset_root, subset=args.subset, tracks=args.tracks, output_dir=args.output)
+    if args.sweep_csv:
+        print_grid_sweep(load_onset_rows(args.sweep_csv), top=args.top)
+        print()
+    elif not args.dataset_root:
+        parser.error("dataset_root is required unless --sweep-csv is used")
+    elif args.diagnose_kick:
+        diagnose_kicks(args.dataset_root, subset=args.subset, tracks=args.tracks, output_dir=args.output, top=args.top)
     else:
         analyze_dataset(args.dataset_root, group_by_instrument=args.group, sort_metrics=args.sort)

@@ -132,10 +132,7 @@ def parse_time_signature(time_signature="4/4"):
         numerator, denominator = map(int, str(time_signature).split("/"))
         return numerator, denominator
     except ValueError:
-        print(
-            f"Warning: invalid time signature {time_signature!r}; "
-            "falling back to 4/4. Use a forward slash, e.g. 3/4 or 6/8."
-        )
+        print(f"Warning: invalid time signature {time_signature!r}; falling back to 4/4. Use a forward slash, e.g. 3/4 or 6/8.")
         return 4, 4
 
 

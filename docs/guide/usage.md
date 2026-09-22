@@ -1,7 +1,7 @@
 # Usage Guide
 
 <!--date_updated:sat-17-january-2026-->
-<!--date_updated:sun-16-august-2026-->
+<!--date_updated:tues-22-september-2026-->
 
 ## Quick Start
 
@@ -80,7 +80,7 @@ drumscript "audio_path.wav" --ts 3/4
 drumscript "audio_path.wav" --ts 6/8
 ```
 
-> Use a forward slash. Any other form - including underscores like `3_4` - silently falls back to 4/4 with no warning.
+> Use a forward slash. Any other form - including underscores like `3_4` or a typo like `44` - falls back to 4/4 and prints a warning.
 
 <!--You can also use DrumScript directly from your terminal:-->
 

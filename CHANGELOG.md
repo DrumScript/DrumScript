@@ -1,7 +1,7 @@
 # **Changelog**
 
 <!--date_added:thurs-28-may-2026-->
-<!--date_updated:sun-20-sept-2026-->
+<!--date_updated:thurs-24-sept-2026-->
 
 
 * All notable changes related to the repository and pypi distribution of `DrumScript` will be documented here
@@ -38,9 +38,15 @@
 **Benchmarks:**
 *  Updated the IDMT benchmark dataset layout and documentation, including local dataset storage under `benchmarks/datasets/`, expanded setup guidance, and a template for adding future benchmark datasets. [#321](https://github.com/DrumScript/DrumScript/pull/321)
 * Added MDB-Drums full-kit benchmark support with dataset mappings, documentation, and adapter tests. [#330](https://github.com/DrumScript/DrumScript/pull/330)
+* Added diagnostic modes to `drumscript/utils/research/analyze_idmt_dataset.py`: per-onset pipeline-stage attribution (`--diagnose-kick`), capture of features for all detected onsets, and a threshold grid sweep scoring candidate rules by precision, recall and F-measure (`--sweep-csv`, `--top`).
+<!--* Added `drumscript/utils/research/analyze_mdb_dataset.py`: full-kit stage attribution, per-class confusion reporting, and per-class feature distributions for MDB-Drums.UNCOMMENT WHEN WORK IS DONE-->
 
 > ### *Changes*
+**Classification:**
+* **Kick drum detection threshold recalibrated.** `KICK_LFER_MIN` lowered from `0.32` to `0.08` in `constants.py`. The original value was derived from isolated drum stems; because LFER is a ratio of sub-150Hz energy to total energy, simultaneous hi-hat energy in mixed audio suppresses it, so the threshold sat above the median LFER of a genuine kick (0.213 across 5,387 annotated IDMT onsets). Mean kick F-measure on IDMT-SMT-Drums V2 rose from a rule firing on 27.9% of reference kicks to one firing on 86.3%, with zero-scoring tracks falling from 31/95 to 0/95. On MDB-Drums, mean kick F-measure rose from 0.397 to 0.721. No other instrument class changed on either dataset. Frequency bounds (`KICK_FREQ_MIN`, `KICK_FREQ_MAX`) deliberately left unchanged to avoid widening the kick band into the snare and tom ranges.
+-  *fix in progress* **Known issue:** Tom, ride and crash rules currently produce zero predictions against MDB-Drums (835 ride and 64 tom reference hits, 0 estimates). These are unreachable rules rather than mis-tuned thresholds.  
 * Tidied up branch tree on remote #311
+
 
 > ### *Fixes*
 * warn when an invalid time signature falls back to 4/4 instead of failing silently

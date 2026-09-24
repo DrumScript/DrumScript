@@ -425,6 +425,10 @@ def print_threshold_sweep(onset_rows):
     describe_lfer("with a kick ref", [r.get("lfer", 0.0) for r in kick_rows])
     describe_lfer("without a kick ref", [r.get("lfer", 0.0) for r in other_rows])
 
+    if not other_rows:
+        print("\n  [WARNING] No in-band onsets without a kick reference in this sample.")
+        print("  [WARNING] The false kick column below is structurally zero, not a good result.")
+
     print("\n-- KICK_LFER_MIN sweep --")
     print(f"  {'threshold':<12}{'kicks caught':>14}{'recall':>9}{'false kicks':>14}")
     for threshold in LFER_SWEEP:
@@ -523,6 +527,14 @@ def print_grid_sweep(onset_rows, top=20):
         print("\n-- Grid sweep: no onsets to score --")
         return
 
+    if not any(not row.get("has_kick_ref") for row in onset_rows):
+        print("\n  [WARNING] Every onset in this sample has a kick reference.")
+        print("  [WARNING] No false positive is possible, so precision and F are meaningless here.")
+        print("  [WARNING] Re-run across more tracks before trusting these numbers.")
+
+    n_kick = sum(1 for row in onset_rows if row.get("has_kick_ref"))
+    print(f"\n-- Scoring pool --\n  onsets={len(onset_rows)}  with a kick ref={n_kick}  without={len(onset_rows) - n_kick}")
+
     print("\n-- Current live rule --")
     print_grid_header()
     print_grid_row(score_candidate_rule(onset_rows, KICK_FREQ_MIN, KICK_FREQ_MAX, KICK_LFER_MIN))
@@ -539,6 +551,11 @@ def print_grid_sweep(onset_rows, top=20):
     print_grid_header()
     for result in results[:top]:
         print_grid_row(result)
+
+    if results and results[0]["fp"] == 0:
+        print("\n  [WARNING] The best candidate produces zero false positives.")
+        print("  [WARNING] That usually means this sample holds no confusable non-kick onsets,")
+        print("  [WARNING] not that the rule is perfect. Re-run across the full dataset.")
 
     print("\n-- Best candidate at each precision floor --")
     print_grid_header()

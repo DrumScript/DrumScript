@@ -1,6 +1,7 @@
 # Benchmarks
 
 <!--date_updated:sat-19-september-2026-->
+<!--date_updated:tue-29-september-2026-->
 
 Evaluation entrypoints that score the **existing** DrumScript classifier
 against a dataset's ground truth and report metrics.
@@ -14,6 +15,7 @@ Out of scope: training, dataset acquisition, and manifest preparation.
 - **[Verified Benchmarks](#verified-benchmarks)**
   - **[IDMT-SMT-DRUMS-V2](#idmt-smt-drums-v2)**
   - **[MDBDrums-master](#mdb-drums)**
+  - **[ENST-Drums](#enst-drums)** *(adapter added; first run pending)*
 - **[Planned Dataset Coverage](#planned-dataset-coverage)**
   - **[How to Add/Update a New/an Existing Dataset](#how-to-addupdate-a-newan-existing-dataset)**
 
@@ -32,6 +34,33 @@ Out of scope: training, dataset acquisition, and manifest preparation.
 ├── run.py
 └── tree_benchmarks.txt
 ```
+
+**NOTE**: care has been taken to ensure that the unzipped folder name(s) from source ENST, IDMT, MDB datasets matches that copied into `benchmarks/README.md`. However, to ensure smooth running, check that the `DATASET_NAME `in the adapter file (ie. `drumscript/datasets/*.py` for $[*:=`enst`, `idmt`,`mdb`]$ ) is *matching** whast it is in the [`benchmarks/datasets`](./../benchmarks/datasets/) folder. 
+
+It's also recommended that you copy the downloaded `.zip` or `.tar.bz2` file **directly** into the [`benchmarks/datasets`](./../benchmarks/datasets/) folder and unzip there
+
+
+> **Example**
+```python
+# drumscript/datasets/idmt.py
+from drumscript.datasets.base import BenchmarkItem
+
+logger = logging.getLogger(__name__)
+
+DATASET_NAME = "idmt" # THIS LINE
+``` 
+
+> must match the folder name where the dataset has been stored locally; normally it's in [benchmarks/dataset/](./../benchmarks/datasets/)
+
+
+```zsh
+
+├── datasets  # Users must first copy the dataset locally. Data must never be committed to git.
+│   ├── ENST-drums-public
+│   ├── IDMT-SMT-DRUMS-V2
+│   └── MDBDrums-master
+```
+
 
 1. All datasets belong in the `benchmarks/datasets` folder.
 2. Above tree shows indicative structure
@@ -55,12 +84,20 @@ Out of scope: training, dataset acquisition, and manifest preparation.
 *[(back)](#benchmarks)*
 
 
+<!--PREVIOUS -- KEEP FOR NOW -- CODE_TO_DRUMSCRIPT renamed to DRUMSCRIPT_DICT
 - One entrypoint script: `run.py`. It dispatches on the dataset subcommand to
   an adapter under `drumscript/datasets/<name>.py`. Adding a new benchmark
   means adding an adapter module that exposes
   `DATASET_NAME` / `INSTRUMENT_CODES` / `CODE_TO_DRUMSCRIPT` /
   `add_cli_args(parser)` / `iter_items(args)`, then registering it in
-  `ADAPTERS` in `run.py`.
+  `ADAPTERS` in `run.py`.-->
+- One entrypoint script: `run.py`. It dispatches on the dataset subcommand to
+  an adapter under `drumscript/datasets/<name>.py`. Adding a new benchmark
+  means adding an adapter module that exposes
+  `DATASET_NAME` / `INSTRUMENT_CODES` / `DRUMSCRIPT_DICT` /
+  `add_cli_args(parser)` / `iter_items(args)`, then registering it in
+  `ADAPTERS` in `run.py`. `tests/unit/test_benchmarks_run.py` checks every
+  registered adapter exposes all five.
 - Scripts only read data and the production classifier; they never mutate the
   model.
 - Outputs (metrics, prediction CSVs) go under `outputs/benchmarks/<dataset>/`
@@ -98,6 +135,8 @@ It cannot cope with variations of things yet, such as below.
 * Snare drum: ghost note
 * Snare drum: side stick
 * Snare drum: no snare
+* Snare drum: rim shot *(ENST)*
+* Snare drum: brush sweep *(ENST)*
 
 #### Hi-Hat
 
@@ -106,6 +145,7 @@ It cannot cope with variations of things yet, such as below.
 #### Toms
 
 * High-mid tom
+* Tom hit on the rim *(ENST)*
 
 #### Ride
 
@@ -115,10 +155,13 @@ It cannot cope with variations of things yet, such as below.
 
 * China cymbal
 * Splash cymbal
+* Other cymbals *(ENST)*
 
 #### Other Percussion
 
 * TMB: Tambourine
+* Cowbell *(ENST)*
+* Sticks hit together *(ENST)*
 
     
 
@@ -132,6 +175,8 @@ If and when DrumScript expands its labels these mappings will be updated
 
 1. **IDMT-SMT-Drums V2**
 2. **MDB-Drums**
+
+A third adapter, **ENST-Drums**, has been added but is **not yet verified** (first run pending).
 
 ### IDMT-SMT-Drums V2
 
@@ -313,14 +358,118 @@ Run:
   detection, so a full 23-track run takes several minutes. Use `--limit 1`
   first to sanity-check before a full run.
 
+### ENST-Drums
+
+*[(back)](#benchmarks)*
+
+> **Status:** adapter added on `benchmarks/enst-first-run`; first run pending.
+> Move to the verified list above once a full run has been checked.
+
+- Source: <!--TODO: add download/access link--> Paper: Gillet & Richard (2006),
+  [ENST-Drums: an extensive audio-visual database for drum signals processing](https://archives.ismir.net/ismir2006/paper/000027.pdf), ISMIR.
+- Evaluation scope: ENST-Drums is a full-kit benchmark with real acoustic kits
+  played by three drummers. It follows the same strict principle as MDB: a label
+  maps to a DrumScript notation **only** where a direct, unambiguous equivalent
+  exists; everything else is **excluded** (counted as neither a hit nor a false
+  positive).
+
+| # | ENST Label | ENST Description | DrumScript Class |
+| --- | --- | --- | --- |
+| 1 | bd | Bass drum | `kick` |
+| 2 | sd | Snare drum | `snare` |
+| 3 | chh | Closed hi-hat | `hi_hat_closed` |
+| 4 | ohh | Open hi-hat | `hi_hat_open` |
+| 5 | rc | Ride cymbal | `ride` |
+| 6 | cr | Crash cymbal | `crash` |
+
+**Pending decision** (currently unmapped; logged as a warning, not scored)
+
+| ENST Label | ENST Description |
+| --- | --- |
+| lft | Lowest tom |
+| lt | Low tom |
+| lmt | Low-mid tom |
+| mt | Mid tom |
+
+**Excluded Codes**
+
+| ENST Label | ENST Description |
+| --- | --- |
+| rs, cs | Rim shot, cross stick |
+| sweep | Brush sweep |
+| mtr, ltr | Mid / low tom hit on the rim |
+| ch, spl, c | Chinese, splash, other cymbals |
+| cb | Cowbell |
+| sticks | Sticks hit together |
+
+- Place the dataset under `benchmarks/datasets/`.
+- The benchmark evaluates the **`wet_mix`** audio by default. The per-mic
+  channels and `accompaniment/` are not used.
+- Required layout (the path you pass to `--root` must be the directory that
+  directly contains the `drummer_*` folders):
+
+  ```
+  ENST/                              ← pass this path to --root
+    drummer_1/
+      annotation/                    ← labels this benchmark reads
+        001_hits_snare-drum_sticks_x6.txt
+        ...                          (one *.txt per take, same stem as the audio)
+      audio/
+        wet_mix/                     ← default
+        dry_mix/                     ← optional; used only with --audio dry_mix
+        kick/ snare/ hi-hat/ tom_1/ tom_2/ overhead_L/ overhead_R/ accompaniment/   ← not used
+    drummer_2/                       (same layout)
+    drummer_3/                       (same layout, plus tom_3/)
+  ```
+
+  Notes:
+  - Annotation format is `<onset_seconds> <label>` per line; onset times are
+    real seconds. Line endings are handled whatever their style.
+  - A trailing instance number on a label (e.g. a second crash) identifies
+    which physical drum or cymbal was hit, not a different class, so it is
+    stripped before mapping.
+  - Stem matching is exact, per drummer: `audio/<mix>/<name>.wav` pairs with
+    `annotation/<name>.txt`.
+  - Filenames repeat across drummers, so the `track` id is prefixed with the
+    drummer (e.g. `drummer_1_001_hits_snare-drum_sticks_x6.wav`).
+  - The `bucket` used in per-bucket summaries is the recording type, taken from
+    the second token of the filename: `hits`, `phrase`, `solo` or `minus-one`.
+    `--subset` filters on this.
+
+Run:
+
+  ```bash
+  uv run --extra dev python benchmarks/run.py enst \
+    --root benchmarks/datasets/ENST
+  ```
+
+  Optional flags:
+
+  ```bash
+  # transcribe the dry mix instead of the wet mix
+  uv run --extra dev python benchmarks/run.py enst --root benchmarks/datasets/ENST --audio dry_mix
+  # one recording type only
+  uv run --extra dev python benchmarks/run.py enst --root benchmarks/datasets/ENST --subset minus-one
+  # process only the first N items (global flag, goes before the dataset name)
+  uv run --extra dev python benchmarks/run.py --limit 5 enst --root benchmarks/datasets/ENST
+  ```
+
+  Results archive to `outputs/benchmarks/enst/` (untracked).
+
+  Diagnostics: `drumscript/utils/research/analyze_enst_dataset.py` gives
+  per-class stage attribution and feature profiles, in the same format as the
+  MDB diagnostics script.
+
 ## Planned dataset coverage
 *[(back)](#benchmarks)*
 
 IDMT was the first end-to-end benchmark because its three-class setup matches the
 core classifier and keeps the initial `mir_eval` pipeline easy to audit.
 MDB-Drums added the first full-kit coverage (toms, ride, crash, open/closed
-hi-hat). The next planned adapter is **ENST-Drums**, which adds real acoustic
-kits and a wider articulation vocabulary. Each new adapter defines its own
+hi-hat). <!--The next planned adapter is **ENST-Drums**, which adds real acoustic
+kits and a wider articulation vocabulary.--> **ENST-Drums** has now been added
+(first run pending), bringing real acoustic kits and a wider articulation
+vocabulary. Each new adapter defines its own
 code-to-DrumScript mapping, following the same strict "direct notation
 equivalent or exclude" principle used for MDB.
 

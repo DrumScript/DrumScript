@@ -126,6 +126,16 @@ def draw_notehead(c, x, y, note_type, staff_y_base, accent=False):
 
 
 # def generate_custom_pdf(detected_events, output_path, tempo, time_signature="4/4"):
+def parse_time_signature(time_signature="4/4"):
+    """Parse ``numerator/denominator``. Invalid values fall back to 4/4 with a warning."""
+    try:
+        numerator, denominator = map(int, str(time_signature).split("/"))
+        return numerator, denominator
+    except ValueError:
+        print(f"Warning: invalid time signature {time_signature!r}; falling back to 4/4. Use a forward slash, e.g. 3/4 or 6/8.")
+        return 4, 4
+
+
 def export_pdf(detected_events, output_path, tempo, time_signature="4/4"):
     """
     Generates a PDF drum score using ReportLab engine.
@@ -134,10 +144,7 @@ def export_pdf(detected_events, output_path, tempo, time_signature="4/4"):
         print("ReportLab missing.")
         return
 
-    try:
-        numerator, denominator = map(int, time_signature.split("/"))
-    except ValueError:
-        numerator, denominator = 4, 4
+    numerator, denominator = parse_time_signature(time_signature)
 
     print(f"Generating PDF: {output_path} (Sig: {numerator}/{denominator}, {int(tempo)} BPM)")
 

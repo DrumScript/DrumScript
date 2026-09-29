@@ -25,7 +25,9 @@ class TestBenchmarkRun:
         # Both adapters are verified end-to-end (IDMT: kick/snare/hi-hat;
         # MDB-Drums: full kit). Order-independent so registration order
         # changes don't break the test.
-        assert set(benchmark_run.ADAPTERS) == {"idmt", "mdb"}
+        # ENST-Drums (full kit) added on benchmarks/enst-first-run.
+        # assert set(benchmark_run.ADAPTERS) == {"idmt", "mdb"}
+        assert set(benchmark_run.ADAPTERS) == {"idmt", "mdb", "enst"}
 
     def test_each_adapter_exposes_required_contract(self):
         benchmark_run = load_benchmark_run()

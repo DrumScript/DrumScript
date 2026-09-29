@@ -3,12 +3,27 @@
 
 Usage::
 
-    python benchmarks/run.py idmt --root /path/to/IDMT-SMT-DRUMS-V2
+    python benchmarks/run.py IDMT-SMT-DRUMS-V2 --root benchmarks/datasets/IDMT-SMT-DRUMS-V2
 
 Global flags (``--output``, ``--run-name``, ``--limit``) go before the dataset
-name. See ``benchmarks/README.md`` for per-dataset preparation and required
-layout. Only ``idmt`` is currently verified end-to-end.
+name. The dataset name is each adapter's ``DATASET_NAME``, which matches the
+dataset's native folder name under ``benchmarks/datasets/``. See
+``benchmarks/README.md`` for per-dataset preparation and required layout.
+``IDMT-SMT-DRUMS-V2`` and ``MDBDrums-master`` are verified end-to-end;
+``ENST-drums-public`` is added but not yet verified.
 """
+
+# PREVIOUS DOCSTRING -- KEEP FOR NOW -- (subcommands renamed to native dataset folder names)
+# """Run a DrumScript benchmark on one dataset.
+#
+# Usage::
+#
+#     python benchmarks/run.py idmt --root /path/to/IDMT-SMT-DRUMS-V2
+#
+# Global flags (``--output``, ``--run-name``, ``--limit``) go before the dataset
+# name. See ``benchmarks/README.md`` for per-dataset preparation and required
+# layout. Only ``idmt`` is currently verified end-to-end.
+# """
 
 from __future__ import annotations
 

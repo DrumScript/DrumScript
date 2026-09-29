@@ -464,7 +464,8 @@ def diagnose(root_path, tracks=None, limit=None, instrument=None, output_dir=Non
     :param output_dir: Optional output directory for the CSVs.
     :type output_dir: str
     """
-    code_to_labels = dict(mdb_adapter.CODE_TO_DRUMSCRIPT)
+    # code_to_labels = dict(mdb_adapter.CODE_TO_DRUMSCRIPT)  # renamed to DRUMSCRIPT_DICT in mdb.py
+    code_to_labels = dict(mdb_adapter.DRUMSCRIPT_DICT)
     codes = tuple(mdb_adapter.INSTRUMENT_CODES)
     if instrument:
         codes = tuple(c for c in codes if c == instrument)

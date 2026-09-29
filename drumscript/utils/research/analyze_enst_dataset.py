@@ -1,11 +1,16 @@
-# drumscript/utils/research/analyze_mdb_dataset.py
+# drumscript/utils/research/analyze_enst_dataset.py
 
 """
-Utility script to diagnose DrumScript classification against the MDB-Drums dataset.
+Utility script to diagnose DrumScript classification against the ENST-Drums dataset.
 
-Full-kit coverage: Unlike IDMT (kick / snare / hi-hat only), MDB-Drums annotates
-toms, ride and crash, so this script reports on every class the adapter exposes
-rather than on one instrument.
+Full-kit coverage: Like MDB-Drums, ENST-Drums annotates toms, ride and crash, so
+this script reports on every class the adapter exposes rather than on one
+instrument. It mirrors analyze_mdb_dataset.py so the two outputs line up.
+
+ENST specifics: Three drummers (drummer_1/2/3), each with a wet_mix and a
+dry_mix drum recording, and four recording types (hits / phrase / solo /
+minus-one). Recording type is the bucket; the drummer is the prefix of the
+track id, so --tracks drummer_2 selects one drummer.
 
 Stage attribution: For every reference onset of every class, the script reports
 which pipeline stage lost it (no_onset / gated / misclassified / ok), and for
@@ -16,7 +21,7 @@ reports the distribution of every physics feature. Comparing those distributions
 against the live thresholds shows why a rule never fires.
 
 Adapter-driven: Instrument codes and their DrumScript labels are read from the
-MDB adapter, not hardcoded here, so the script follows the adapter if it changes.
+ENST adapter, not hardcoded here, so the script follows the adapter if it changes.
 
 Standardised imports: All import statements are separated onto individual lines.
 
@@ -25,11 +30,13 @@ Sphinx documentation: Standard reST docstrings are applied to all functions.
 Usage:
 
 ## FLAGS
-uv run --extra dev python drumscript/utils/research/analyze_mdb_dataset.py benchmarks/datasets/MDB
---tracks MusicDelta_Rock MusicDelta_Disco
+uv run --extra dev python drumscript/utils/research/analyze_enst_dataset.py benchmarks/datasets/ENST
+--audio dry_mix
+--subset minus-one
+--tracks drummer_2
 --limit 5
 --instrument ride
---profile-csv outputs/benchmarks/mdb/diagnostics/<stamp>/onset_features.csv
+--profile-csv outputs/benchmarks/enst/diagnostics/<stamp>/onset_features.csv
 """
 
 import argparse
@@ -46,7 +53,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[3]))
 
 from drumscript.audio_processor.audio_loader import load_audio, normalise_audio
 from drumscript.audio_processor.onset_detector import detect_onsets
-from drumscript.datasets import mdb as mdb_adapter
+from drumscript.datasets import enst as enst_adapter
 from drumscript.drum_classifier.classify import classify_events
 from drumscript.notation_generator import constants
 from drumscript.notation_generator.constants import SAMPLE_RATE
@@ -118,21 +125,30 @@ def copy_features(row, features):
             row[key] = round(float(features[key]), 4)
 
 
-def adapter_namespace(root):
+def adapter_namespace(root, audio=None, subset=None):
     """
-    Builds the argparse namespace the MDB adapter expects.
+    Builds the argparse namespace the ENST adapter expects.
 
     The adapter declares its own CLI flags, so they are parsed here rather than
-    assumed. Any flag the adapter adds keeps its own default.
+    assumed. Any flag not passed keeps the adapter's own default.
 
-    :param root: Path to the MDB dataset root folder.
+    :param root: Path to the ENST dataset root folder.
     :type root: str
-    :return: Namespace suitable for mdb_adapter.iter_items.
+    :param audio: Optional audio folder (wet_mix or dry_mix).
+    :type audio: str
+    :param subset: Optional recording type (hits, phrase, solo or minus-one).
+    :type subset: str
+    :return: Namespace suitable for enst_adapter.iter_items.
     :rtype: argparse.Namespace
     """
     parser = argparse.ArgumentParser(add_help=False)
-    mdb_adapter.add_cli_args(parser)
-    return parser.parse_args(["--root", str(root)])
+    enst_adapter.add_cli_args(parser)
+    argv = ["--root", str(root)]
+    if audio:
+        argv += ["--audio", audio]
+    if subset:
+        argv += ["--subset", subset]
+    return parser.parse_args(argv)
 
 
 def print_live_thresholds():
@@ -152,7 +168,7 @@ def reference_codes_at(item, event_time):
     """
     Returns every reference code with an annotated onset near an event.
 
-    :param item: A BenchmarkItem from the MDB adapter.
+    :param item: A BenchmarkItem from the ENST adapter.
     :type item: drumscript.datasets.base.BenchmarkItem
     :param event_time: Event time in seconds.
     :type event_time: float
@@ -171,7 +187,7 @@ def diagnose_track(item, code_to_labels):
     """
     Attributes every reference onset in one track to the stage that lost it.
 
-    :param item: A BenchmarkItem from the MDB adapter.
+    :param item: A BenchmarkItem from the ENST adapter.
     :type item: drumscript.datasets.base.BenchmarkItem
     :param code_to_labels: Mapping of dataset code to DrumScript label list.
     :type code_to_labels: dict
@@ -419,7 +435,7 @@ def resolve_output_dir(output_dir):
     if output_dir:
         return Path(output_dir)
     stamp = datetime.now().strftime("%Y-%m-%d_%H%M%S")
-    return Path("outputs") / "benchmarks" / "mdb" / "diagnostics" / stamp
+    return Path("outputs") / "benchmarks" / "enst" / "diagnostics" / stamp
 
 
 def load_onset_rows(csv_path):
@@ -449,11 +465,11 @@ def load_onset_rows(csv_path):
 # ── main ─────────────────────────────────────────────────────────────────────
 
 
-def diagnose(root_path, tracks=None, limit=None, instrument=None, output_dir=None):
+def diagnose(root_path, tracks=None, limit=None, instrument=None, output_dir=None, audio=None, subset=None):
     """
-    Runs the full-kit diagnosis over the selected MDB tracks.
+    Runs the full-kit diagnosis over the selected ENST tracks.
 
-    :param root_path: Path to the MDB dataset root folder.
+    :param root_path: Path to the ENST dataset root folder.
     :type root_path: str
     :param tracks: Optional list of substrings; only matching tracks are run.
     :type tracks: list[str]
@@ -463,17 +479,20 @@ def diagnose(root_path, tracks=None, limit=None, instrument=None, output_dir=Non
     :type instrument: str
     :param output_dir: Optional output directory for the CSVs.
     :type output_dir: str
+    :param audio: Optional audio folder (wet_mix or dry_mix).
+    :type audio: str
+    :param subset: Optional recording type (hits, phrase, solo or minus-one).
+    :type subset: str
     """
-    # code_to_labels = dict(mdb_adapter.CODE_TO_DRUMSCRIPT)  # renamed to DRUMSCRIPT_DICT in mdb.py
-    code_to_labels = dict(mdb_adapter.DRUMSCRIPT_DICT)
-    codes = tuple(mdb_adapter.INSTRUMENT_CODES)
+    code_to_labels = dict(enst_adapter.DRUMSCRIPT_DICT)
+    codes = tuple(enst_adapter.INSTRUMENT_CODES)
     if instrument:
         codes = tuple(c for c in codes if c == instrument)
         if not codes:
-            print(f"Unknown instrument code: {instrument}. Known: {', '.join(mdb_adapter.INSTRUMENT_CODES)}")
+            print(f"Unknown instrument code: {instrument}. Known: {', '.join(enst_adapter.INSTRUMENT_CODES)}")
             return
 
-    items = list(mdb_adapter.iter_items(adapter_namespace(root_path)))
+    items = list(enst_adapter.iter_items(adapter_namespace(root_path, audio=audio, subset=subset)))
     if tracks:
         items = [i for i in items if any(t in i.track_id for t in tracks)]
     if limit:
@@ -482,7 +501,9 @@ def diagnose(root_path, tracks=None, limit=None, instrument=None, output_dir=Non
         print("No matching tracks found.")
         return
 
-    print(f"\nWindow  : {int(ONSET_WINDOW * 1000)} ms")
+    print(f"\nAudio   : {audio or 'adapter default'}")
+    print(f"Subset  : {subset or 'all'}")
+    print(f"Window  : {int(ONSET_WINDOW * 1000)} ms")
     print(f"Tracks  : {len(items)}")
     print(f"Classes : {', '.join(codes)}")
     print_live_thresholds()
@@ -495,7 +516,7 @@ def diagnose(root_path, tracks=None, limit=None, instrument=None, output_dir=Non
         try:
             hits, onset_rows, summaries = diagnose_track(item, code_to_labels)
         except Exception as e:
-            print(f"  {item.track_id:<44}[ERROR] {e}")
+            print(f"  {item.track_id:<64}[ERROR] {e}")
             continue
         if instrument:
             hits = [h for h in hits if h["code"] in codes]
@@ -503,7 +524,7 @@ def diagnose(root_path, tracks=None, limit=None, instrument=None, output_dir=Non
         all_hits.extend(hits)
         all_onsets.extend(onset_rows)
         all_summaries.extend(summaries)
-        print(f"  {item.track_id:<44}onsets={len(onset_rows):<6}refs={len(hits)}")
+        print(f"  {item.track_id:<64}onsets={len(onset_rows):<6}refs={len(hits)}")
 
     if not all_hits:
         print("\nNo reference hits scored.")
@@ -527,12 +548,14 @@ def diagnose(root_path, tracks=None, limit=None, instrument=None, output_dir=Non
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Diagnose DrumScript classification against MDB-Drums.")
-    parser.add_argument("dataset_root", type=str, nargs="?", default=None, help="Path to the MDB dataset root folder")
+    parser = argparse.ArgumentParser(description="Diagnose DrumScript classification against ENST-Drums.")
+    parser.add_argument("dataset_root", type=str, nargs="?", default=None, help="Path to the ENST dataset root folder")
     parser.add_argument("--tracks", nargs="*", default=None, help="Only run tracks whose name contains any of these")
     parser.add_argument("--limit", type=int, default=None, help="Process at most this many tracks")
     parser.add_argument("--instrument", default=None, help="Report on one class code only (e.g. ride)")
     parser.add_argument("--output", default=None, help="Output directory for the CSVs")
+    parser.add_argument("--audio", default=None, choices=enst_adapter.AUDIO_CHOICES, help="Drum mix to analyse (adapter default: wet_mix)")
+    parser.add_argument("--subset", default=None, choices=enst_adapter.SUBSETS, help="Recording type: hits, phrase, solo or minus-one")
     parser.add_argument("--profile-csv", default=None, help="Rebuild feature profiles from an existing onset_features.csv")
 
     args = parser.parse_args()
@@ -555,4 +578,6 @@ if __name__ == "__main__":
             limit=args.limit,
             instrument=args.instrument,
             output_dir=args.output,
+            audio=args.audio,
+            subset=args.subset,
         )

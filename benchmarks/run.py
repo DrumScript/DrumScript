@@ -31,6 +31,7 @@ import numpy as np
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from drumscript.audio_processor.audio_loader import load_audio, normalise_audio
 from drumscript.audio_processor.onset_detector import detect_onsets
+from drumscript.datasets import enst as enst_adapter
 from drumscript.datasets import idmt as idmt_adapter
 from drumscript.datasets import mdb as mdb_adapter
 from drumscript.datasets.base import BenchmarkItem
@@ -39,7 +40,12 @@ from drumscript.notation_generator.constants import SAMPLE_RATE
 
 ONSET_WINDOW = 0.050  # 50 ms tolerance, standard in ADT literature.
 CLI_DESCRIPTION = "Run a DrumScript benchmark on one dataset."
-ADAPTERS: dict[str, ModuleType] = {idmt_adapter.DATASET_NAME: idmt_adapter, mdb_adapter.DATASET_NAME: mdb_adapter}
+# ADAPTERS: dict[str, ModuleType] = {idmt_adapter.DATASET_NAME: idmt_adapter, mdb_adapter.DATASET_NAME: mdb_adapter}
+ADAPTERS: dict[str, ModuleType] = {
+    idmt_adapter.DATASET_NAME: idmt_adapter,
+    mdb_adapter.DATASET_NAME: mdb_adapter,
+    enst_adapter.DATASET_NAME: enst_adapter,
+}
 
 
 # ── shared evaluation primitives ─────────────────────────────────────────────

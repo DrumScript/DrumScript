@@ -128,7 +128,8 @@ Derived from iterative analysis of user audio samples (Feb 2026).
 KICK_FREQ_MIN = 40.0  # Hz
 KICK_FREQ_MAX = 140.0  # Hz
 # KICK_LFER_MIN = 0.40    # Min 40% energy must be < 150Hz  [UPDATE weds-25-mar-26: commenting out due to duplication (ie KICK_MIN_LFER)]
-KICK_LFER_MIN = 0.32  # Min 32% energy must be < 150Hz [UPDATE weds-25-mar-26: commenting out due to duplication (ie KICK_MIN_LFER, ~line 207 above)]
+# KICK_LFER_MIN = 0.32  # Min 32% energy must be < 150Hz [UPDATE weds-25-mar-26: commenting out due to duplication (ie KICK_MIN_LFER, ~line 207 above)
+KICK_LFER_MIN = 0.08  # follows idmt benchmarking Sept 2026
 KICK_MAX_DECAY = 0.25  # Seconds (Thud)
 
 # B. SNARE DRUM (Wire Noise + Body)

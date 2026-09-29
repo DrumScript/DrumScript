@@ -28,7 +28,9 @@ class TestBenchmarkRun:
         # ENST-Drums (full kit) added on benchmarks/enst-first-run.
         # assert set(benchmark_run.ADAPTERS) == {"idmt", "mdb"}
         # assert set(benchmark_run.ADAPTERS) == {"idmt", "mdb", "enst"}
-        assert set(benchmark_run.ADAPTERS) == {"idmt", "mdb", "enst"}
+        # assert set(benchmark_run.ADAPTERS) == {"idmt", "mdb", "enst"}
+        # DATASET_NAME now matches each dataset's native folder name under benchmarks/datasets/.
+        assert set(benchmark_run.ADAPTERS) == {"IDMT-SMT-DRUMS-V2", "MDBDrums-master", "ENST-drums-public"}
 
     def test_each_adapter_exposes_required_contract(self):
         benchmark_run = load_benchmark_run()

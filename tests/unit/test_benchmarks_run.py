@@ -27,6 +27,7 @@ class TestBenchmarkRun:
         # changes don't break the test.
         # ENST-Drums (full kit) added on benchmarks/enst-first-run.
         # assert set(benchmark_run.ADAPTERS) == {"idmt", "mdb"}
+        # assert set(benchmark_run.ADAPTERS) == {"idmt", "mdb", "enst"}
         assert set(benchmark_run.ADAPTERS) == {"idmt", "mdb", "enst"}
 
     def test_each_adapter_exposes_required_contract(self):

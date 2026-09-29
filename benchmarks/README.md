@@ -98,6 +98,9 @@ DATASET_NAME = "idmt" # THIS LINE
   `add_cli_args(parser)` / `iter_items(args)`, then registering it in
   `ADAPTERS` in `run.py`. `tests/unit/test_benchmarks_run.py` checks every
   registered adapter exposes all five.
+- `DATASET_NAME` matches the dataset's native unzipped folder name under
+  `benchmarks/datasets/` (e.g. `IDMT-SMT-DRUMS-V2`). It is also the `run.py`
+  subcommand and the output folder name, so nothing needs renaming.
 - Scripts only read data and the production classifier; they never mutate the
   model.
 - Outputs (metrics, prediction CSVs) go under `outputs/benchmarks/<dataset>/`
@@ -226,18 +229,19 @@ A third adapter, **ENST-Drums**, has been added but is **not yet verified** (fir
 Run:
 
   ```bash
-  uv run --extra dev python benchmarks/run.py idmt \
+  uv run --extra dev python benchmarks/run.py IDMT-SMT-DRUMS-V2 \
     --root benchmarks/datasets/IDMT-SMT-DRUMS-V2
   ```
 
   Optional flags:
 
   ```bash
-  uv run --extra dev python benchmarks/run.py idmt --root <path_to_benchmarking_data> --subset RealDrum
-  uv run --extra dev python benchmarks/run.py --limit 5 idmt --root <path_to_benchmarking_data>
+  uv run --extra dev python benchmarks/run.py IDMT-SMT-DRUMS-V2 --root <path_to_benchmarking_data> --subset RealDrum
+  uv run --extra dev python benchmarks/run.py --limit 5 IDMT-SMT-DRUMS-V2 --root <path_to_benchmarking_data>
   ```
 
-  Results archive to `outputs/benchmarks/idmt/` (untracked).
+  <!--Results archive to `outputs/benchmarks/idmt/` (untracked).-->
+  Results archive to `outputs/benchmarks/IDMT-SMT-DRUMS-V2/` (untracked).
 
 ### MDB-Drums
 
@@ -339,20 +343,21 @@ Run:
 Run:
 
   ```bash
-  uv run --extra dev python benchmarks/run.py mdb \
-    --root "benchmarks/datasets/MDB/MDB Drums"
+  uv run --extra dev python benchmarks/run.py MDBDrums-master \
+    --root "benchmarks/datasets/MDBDrums-master/MDB Drums"
   ```
 
   Optional flags:
 
   ```bash
   # transcribe the full mix instead of the isolated drum stem
-  uv run --extra dev python benchmarks/run.py mdb --root "benchmarks/datasets/MDB/MDB Drums" --audio full_mix
+  uv run --extra dev python benchmarks/run.py MDBDrums-master --root "benchmarks/datasets/MDBDrums-master/MDB Drums" --audio full_mix
   # process only the first N tracks (global flag, goes before the dataset name)
-  uv run --extra dev python benchmarks/run.py --limit 1 mdb --root "benchmarks/datasets/MDB/MDB Drums"
+  uv run --extra dev python benchmarks/run.py --limit 1 MDBDrums-master --root "benchmarks/datasets/MDBDrums-master/MDB Drums"
   ```
 
-  Results archive to `outputs/benchmarks/mdb/` (untracked).
+  <!--Results archive to `outputs/benchmarks/mdb/` (untracked).-->
+  Results archive to `outputs/benchmarks/MDBDrums-master/` (untracked).
 
   Note: MDB tracks are full songs and each is decomposed with HPSS onset
   detection, so a full 23-track run takes several minutes. Use `--limit 1`
@@ -409,7 +414,7 @@ Run:
   directly contains the `drummer_*` folders):
 
   ```
-  ENST/                              ← pass this path to --root
+  ENST-drums-public/                 ← pass this path to --root
     drummer_1/
       annotation/                    ← labels this benchmark reads
         001_hits_snare-drum_sticks_x6.txt
@@ -439,22 +444,23 @@ Run:
 Run:
 
   ```bash
-  uv run --extra dev python benchmarks/run.py enst \
-    --root benchmarks/datasets/ENST
+  uv run --extra dev python benchmarks/run.py ENST-drums-public \
+    --root benchmarks/datasets/ENST-drums-public
   ```
 
   Optional flags:
 
   ```bash
   # transcribe the dry mix instead of the wet mix
-  uv run --extra dev python benchmarks/run.py enst --root benchmarks/datasets/ENST --audio dry_mix
+  uv run --extra dev python benchmarks/run.py ENST-drums-public --root benchmarks/datasets/ENST-drums-public --audio dry_mix
   # one recording type only
-  uv run --extra dev python benchmarks/run.py enst --root benchmarks/datasets/ENST --subset minus-one
+  uv run --extra dev python benchmarks/run.py ENST-drums-public --root benchmarks/datasets/ENST-drums-public --subset minus-one
   # process only the first N items (global flag, goes before the dataset name)
-  uv run --extra dev python benchmarks/run.py --limit 5 enst --root benchmarks/datasets/ENST
+  uv run --extra dev python benchmarks/run.py --limit 5 ENST-drums-public --root benchmarks/datasets/ENST-drums-public
   ```
 
-  Results archive to `outputs/benchmarks/enst/` (untracked).
+  <!--Results archive to `outputs/benchmarks/enst/` (untracked).-->
+  Results archive to `outputs/benchmarks/ENST-drums-public/` (untracked).
 
   Diagnostics: `drumscript/utils/research/analyze_enst_dataset.py` gives
   per-class stage attribution and feature profiles, in the same format as the

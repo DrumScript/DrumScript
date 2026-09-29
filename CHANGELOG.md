@@ -2,6 +2,7 @@
 
 <!--date_added:thurs-28-may-2026-->
 <!--date_updated:thurs-24-sept-2026-->
+<!--date_updated:tue-29-sept-2026-->
 
 
 * All notable changes related to the repository and pypi distribution of `DrumScript` will be documented here
@@ -40,6 +41,8 @@
 * Added MDB-Drums full-kit benchmark support with dataset mappings, documentation, and adapter tests. [#330](https://github.com/DrumScript/DrumScript/pull/330)
 * Added diagnostic modes to `drumscript/utils/research/analyze_idmt_dataset.py`: per-onset pipeline-stage attribution (`--diagnose-kick`), capture of features for all detected onsets, and a threshold grid sweep scoring candidate rules by precision, recall and F-measure (`--sweep-csv`, `--top`).
 <!--* Added `drumscript/utils/research/analyze_mdb_dataset.py`: full-kit stage attribution, per-class confusion reporting, and per-class feature distributions for MDB-Drums.UNCOMMENT WHEN WORK IS DONE-->
+* Added ENST-Drums full-kit benchmark adapter (`drumscript/datasets/enst.py`), registered in `benchmarks/run.py`. Follows the MDB "direct notation equivalent or exclude" mapping; tom labels are left unmapped pending a decision, and are logged rather than silently dropped. First run pending.
+* Added `drumscript/utils/research/analyze_enst_dataset.py`: ENST-Drums equivalent of the MDB diagnostics script (stage attribution, confusion reporting, per-class feature distributions), with `--audio` and `--subset` flags.
 
 > ### *Changes*
 **Classification:**
@@ -47,9 +50,15 @@
 -  *fix in progress* **Known issue:** Tom, ride and crash rules currently produce zero predictions against MDB-Drums (835 ride and 64 tom reference hits, 0 estimates). These are unreachable rules rather than mis-tuned thresholds.  
 * Tidied up branch tree on remote #311
 
+**Benchmarks:**
+* *(breaking, benchmark CLI only)* Each adapter's `DATASET_NAME` now matches the dataset's native unzipped folder name under `benchmarks/datasets/` (`IDMT-SMT-DRUMS-V2`, `MDBDrums-master`, `ENST-drums-public`), so datasets no longer need renaming. The `run.py` subcommands and the `outputs/benchmarks/<dataset>/` archive folders change to match (e.g. `run.py idmt` becomes `run.py IDMT-SMT-DRUMS-V2`). Earlier runs remain under the old folder names.
+* Adapter attribute `CODE_TO_DRUMSCRIPT` renamed to `DRUMSCRIPT_DICT` across the IDMT and MDB adapters, `benchmarks/run.py`, `analyze_mdb_dataset.py` and the adapter contract test.
+* `benchmarks/README.md`, `tests/README.md`, `tests/tree_tests.txt`, the root `README.md` and `tree.txt` updated for the ENST adapter, the renamed dataset folders and the current test counts (142 unit tests).
+
 
 > ### *Fixes*
 * warn when an invalid time signature falls back to 4/4 instead of failing silently
+* Root `README.md` benchmarking section: the MDB code block was missing its closing fence, so the results paragraph rendered as code; and the IDMT example placed the global `--limit` flag after the dataset name, which `run.py` rejects.
 * **Python 3.13 not supported.** DrumScript pins `numpy<2`, and numpy 1.x has no cp313 wheels on PyPI. This caused `pip install drumscript` on Python 3.13 to fall back to a source build (which requires a C toolchain most users don't have), producing a confusing `Compiler cc cannot compile programs` error rather than a clear "unsupported Python version" message. `requires-python` lowered from `<3.14` to `<3.13` in `pyproject.toml`. Python 3.13 support planned once DrumScript migrates to `numpy>=2` (see [#303](https://github.com/DrumScript/DrumScript/issues/303)).
 
 > **Known debt being paid down alongside the alpha's fundamental work (model + score generation).** These are treated as bugs to fix, not future features - but they are not allowed to displace the core classification/score-generation work:

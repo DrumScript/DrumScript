@@ -109,6 +109,7 @@ machine-learning/models/*.h5
 machine-learning/models/*.joblib
 benchmarks/datasets/
 benchmarks/analysis/
+benchmarks/_reports/
 
 # ==========================================
 # DOCUMENTATION & SPECIFIC ASSETS

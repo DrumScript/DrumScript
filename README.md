@@ -2,6 +2,7 @@
 
 <!--date_created: sun-15-june-2025-->
 <!--date_edited: sat-12-september-2026--->
+<!--date_edited: tue-29-september-2026-->
 
 > **Python >=3.9, < 3.13**
 >
@@ -112,11 +113,11 @@ DrumScript/
 │   ├── audio_processor/        # Audio loading, DSP, stem splitting
 │   ├── drum_classifier/        # Rule-based classification engine
 │   ├── notation_generator/     # Score building, PDF/MIDI/XML export
-│   ├── datasets/               # Benchmark dataset adapters (IDMT, etc.)
+│   ├── datasets/               # Benchmark dataset adapters (IDMT, MDB, ENST)
 │   └── utils/                  # Helpers (ffmpeg installer, research scripts)
 ├── benchmarks/                 # Evaluation runners (see benchmarks/README.md)
 ├── docs/                       # Sphinx documentation
-├── tests/                      # pytest test suite (138 unit + 23 integration)
+├── tests/                      # pytest test suite (142 unit + 23 integration)
 ├── .github/workflows/          # CI/CD (tests, build, publish, docs)
 ├── pyproject.toml              # Package metadata and dependencies
 └── uv.lock                     # Pinned dependency versions
@@ -405,7 +406,8 @@ For detailed instructions on testing and publishing via the command line, please
 ## Benchmarking
 *[back](#drumscript)*
 
-DrumScript includes a benchmarking framework for evaluating the classifier against standard ADT datasets using [`mir_eval`](https://github.com/mir-evaluation/mir_eval). Currently supports IDMT-SMT-Drums V2 and MDB Drums
+DrumScript includes a benchmarking framework for evaluating the classifier against standard ADT datasets using [`mir_eval`](https://github.com/mir-evaluation/mir_eval). <!--Currently supports IDMT-SMT-Drums V2 and MDB Drums-->
+Currently supports IDMT-SMT-Drums V2 and MDB-Drums, with ENST-Drums added (first run pending).
 
 <!--```zsh
 # Install dev dependencies (includes mir_eval)
@@ -421,6 +423,7 @@ uv run --extra dev python benchmarks/run.py idmt \
 --subset RealDrum --limit 5
 ```-->
 
+<!--PREVIOUS -- KEEP FOR NOW -- subcommands and dataset folders renamed to native folder names
 ```zsh
 # Install dev dependencies (includes mir_eval)
 uv sync --extra dev
@@ -446,6 +449,37 @@ uv run --extra dev python benchmarks/run.py mdb \
 Results are archived to `outputs/benchmarks/{dataset}/` (where `dataset` corresponds to a the currently-supported mir_eval adapters); either with per-file metrics, summary statistics, and git commit tracking for reproducibility. See [`benchmarks/README.md`](benchmarks/README.md) for dataset setup and full usage.
 
 > **Note:** download the datasets to `benchmarks/datasets/` folder and rename to `IDMB` or `MDB` depending on which one you use, before running
+-->
+
+```zsh
+# Install dev dependencies (includes mir_eval)
+uv sync --extra dev
+
+# Run the IDMT benchmark
+uv run --extra dev python benchmarks/run.py IDMT-SMT-DRUMS-V2 \
+--root benchmarks/datasets/IDMT-SMT-DRUMS-V2
+
+# Run on a single subset with a limit (--limit is a global flag, so it goes before the dataset name)
+uv run --extra dev python benchmarks/run.py --limit 5 IDMT-SMT-DRUMS-V2 \
+--root benchmarks/datasets/IDMT-SMT-DRUMS-V2 \
+--subset RealDrum
+```
+
+```zsh
+# Run the MDB-Drums benchmark
+uv run --extra dev python benchmarks/run.py MDBDrums-master \
+--root "benchmarks/datasets/MDBDrums-master/MDB Drums"
+```
+
+```zsh
+# Run the ENST-Drums benchmark (adapter added; first run pending)
+uv run --extra dev python benchmarks/run.py ENST-drums-public \
+--root benchmarks/datasets/ENST-drums-public
+```
+
+Results are archived to `outputs/benchmarks/{dataset}/`, where `{dataset}` is the dataset name used above, with per-file metrics, summary statistics, and git commit tracking for reproducibility. See [`benchmarks/README.md`](benchmarks/README.md) for dataset setup and full usage.
+
+> **Note:** download each dataset into the `benchmarks/datasets/` folder and keep its native unzipped folder name (`IDMT-SMT-DRUMS-V2`, `MDBDrums-master`, `ENST-drums-public`). No renaming is needed. Datasets must never be committed to git.
 
 ---
 

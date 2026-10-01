@@ -1,7 +1,7 @@
 # Benchmarks
 
 <!--date_updated:sat-19-september-2026-->
-<!--date_updated:tue-29-september-2026-->
+<!--date_updated:weds-30september-2026-->
 
 Evaluation entrypoints that score the **existing** DrumScript classifier
 against a dataset's ground truth and report metrics.
@@ -378,7 +378,7 @@ Run:
   exists; everything else is **excluded** (counted as neither a hit nor a false
   positive).
 
-| # | ENST Label | ENST Description | DrumScript Class |
+<!--| # | ENST Label | ENST Description | DrumScript Class |
 | --- | --- | --- | --- |
 | 1 | bd | Bass drum | `kick` |
 | 2 | sd | Snare drum | `snare` |
@@ -405,7 +405,39 @@ Run:
 | mtr, ltr | Mid / low tom hit on the rim |
 | ch, spl, c | Chinese, splash, other cymbals |
 | cb | Cowbell |
-| sticks | Sticks hit together |
+| sticks | Sticks hit together |-->
+
+**Included ENST annotations (uses the 20-part segment of ENST)**
+| Label | Instrument | Technique / Articulation Specified | DrumScript mapping |
+| --- | --- | --- | --- |
+| SD_cl | Snare Drum | Centre struck note (clean) | SD |
+| RC_bl | Ride Cymbal | Bell strike (pure bell tone) | RD |
+| TT_mid | Tom-Tom | Mid-pitched rack tom | MT |
+| TT_low | Tom-Tom | Low-pitched rack or floor tom | LT |
+| TT_floor | Tom-Tom | Main low floor tom | LT |
+| TT_hi | Tom-Tom | High-pitched rack tom | HT |
+| HH_op | Hi-Hat | Fully open ringing strike | HH-OP |
+| HH_cl | Hi-Hat | Tightly closed strike with tip or shoulder | HH-CL |
+| CR_lh | Crash Cymbal | Left-hand crash cymbal placement | CC |
+| CR_rh | Crash Cymbal | Right-hand crash cymbal placement | CC |
+| BD | Bass Drum | Standard kick pedal hit | BD |
+
+**Excluded ENST annotations (uses the 20-part segment of ENST)**
+
+| Label | Instrument | Technique / Articulation Specified | DrumScript mapping |
+| --- | --- | --- | --- |
+| RC_bw | Ride Cymbal | Bow strike (standard ping riding) | -- |
+| SD_rs | Snare Drum | Rimshot (hitting head and rim together) | -- |
+| SD_ss | Snare Drum | Side-stick / Cross-stick (clicking the rim) | -- |
+| SD_roll | Snare Drum | Closed roll / buzz pattern | -- |
+| HH_ho | Hi-Hat | Half-open "sloshy" strike | -- |
+| HH_pd | Hi-Hat | Foot pedal close action (chick sound) | -- |
+| SPL | Splash Cymbal | Accent splash cymbal hit | -- |
+| CB | Cowbell | Accessory percussion hit | -- |
+| BR_sw | Brushes | Brush sweep / sustained friction swirl | -- |
+
+Please advise if any columns need adjusting or if further details on DrumScript mapping are required.
+
 
 - Place the dataset under `benchmarks/datasets/`.
 - The benchmark evaluates the **`wet_mix`** audio by default. The per-mic

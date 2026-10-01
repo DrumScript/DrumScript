@@ -39,8 +39,47 @@ DATASET_NAME = "ENST-drums-public"
 #   hi_hat_closed, hi_hat_open, crash, ride
 # ─────────────────────────────────────────────────────────────────────────────
 
-# ENST label → DrumScript label. Only directly-mappable labels appear here;
+# PREVIOUS MAPPING -- KEEP FOR NOW
+"""# ENST label → DrumScript label. Only directly-mappable labels appear here;
 # everything else is excluded (see EXCLUDED_CODES below).
+ENST_CODE_TO_DRUMSCRIPT: dict[str, str] = {
+    # --- Kick ---
+    "bd": "kick",  # bass drum
+    # --- Snare ---
+    "sd": "snare",  # snare drum
+    # --- Hi-hat ---
+    "chh": "hi_hat_closed",  # closed hi-hat
+    "ohh": "hi_hat_open",  # open hi-hat
+    # --- Ride ---
+    "rc": "ride",  # ride cymbal
+    # --- Crash ---
+    "cr": "crash",  # crash cymbal
+    # --- Toms: PENDING DECISION -- confirm against label counts before enabling ---
+    # (left unmapped AND unexcluded on purpose, so they log a warning and stay visible)
+    # "lft": "low_tom",  # lowest tom
+    # "lt": "low_tom",  # low tom
+    # "lmt": "mid_tom",  # low-mid tom
+    # "mt": "mid_tom",  # mid tom
+}
+
+# Labels deliberately excluded #  no direct DrumScript notation exists, so they
+# are dropped from evaluation rather than mapped to an approximate class.
+EXCLUDED_CODES: frozenset[str] = frozenset(
+    {
+        "sweep",  # brush sweep (not an onset-style hit)
+        "sticks",  # sticks hit together (not a drum)
+        "rs",  # rim shot
+        "cs",  # cross stick
+        "cb",  # cowbell
+        "c",  # other cymbals
+        "ch",  # chinese ride cymbal
+        "spl",  # splash cymbal
+        "mtr",  # mid tom, hit on the rim
+        "ltr",  # low tom, hit on the rim
+    }
+)"""
+
+
 ENST_CODE_TO_DRUMSCRIPT: dict[str, str] = {
     # --- Kick ---
     "bd": "kick",  # bass drum

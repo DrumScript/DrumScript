@@ -1,8 +1,7 @@
 # DrumScript Tests
 
 <!--date_added:weds-29-apr-2026-->
-<!--date_updated:sun-09-aug-2026-->
-<!--date_updated:tue-29-sep-2026-->
+<!--date_updated:sat-03-oct-2026-->
 
 This directory contains the pytest test suite for `DrumScript`.
 

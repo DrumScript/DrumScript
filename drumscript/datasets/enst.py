@@ -92,11 +92,10 @@ ENST_CODE_TO_DRUMSCRIPT: dict[str, str] = {
     "rc": "ride",  # ride cymbal
     # --- Crash ---
     "cr": "crash",  # crash cymbal
-    # --- Toms: PENDING DECISION -- confirm against label counts before enabling ---
-    # (left unmapped AND unexcluded on purpose, so they log a warning and stay visible)
-    # "lft": "low_tom",  # lowest tom
-    # "lt": "low_tom",  # low tom
-    # "lmt": "mid_tom",  # low-mid tom
+    # --- Toms: confirm against label counts before enabling ---
+    "lft": "low_tom",  # floor tom
+    "lt": "low_tom",  # low tom
+    "lmt": "mid_tom",  # low-mid tom
     # "mt": "mid_tom",  # mid tom
 }
 

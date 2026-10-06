@@ -30,13 +30,16 @@ Sphinx documentation: Standard reST docstrings are applied to all functions.
 Usage:
 
 ## FLAGS
-uv run --extra dev python drumscript/utils/research/analyze_enst_dataset.py benchmarks/datasets/ENST
+uv run --extra dev python drumscript/utils/research/analyze_enst_dataset.py benchmarks/datasets/ENST-drums-public
 --audio dry_mix
 --subset minus-one
 --tracks drummer_2
 --limit 5
 --instrument ride
 --profile-csv outputs/benchmarks/enst/diagnostics/<stamp>/onset_features.csv
+
+## PREVIOUS PATH (before datasets kept their native folder names)
+## uv run --extra dev python drumscript/utils/research/analyze_enst_dataset.py benchmarks/datasets/ENST
 """
 
 import argparse

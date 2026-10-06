@@ -1,7 +1,7 @@
 # Benchmarks
 
 <!--date_updated:sat-19-september-2026-->
-<!--date_updated:weds-30september-2026-->
+<!--date_updated:tues-06-october-2026-->
 
 Evaluation entrypoints that score the **existing** DrumScript classifier
 against a dataset's ground truth and report metrics.
@@ -407,6 +407,8 @@ Run:
 | cb | Cowbell |
 | sticks | Sticks hit together |-->
 
+<!--ALTERNATIVE LABEL LIST -- KEEP FOR NOW -- these labels do not appear in the ENST annotation files
+(checked against a full label count, 29 Sep 2026), so they are not used by the adapter.
 **Included ENST annotations (uses the 20-part segment of ENST)**
 | Label | Instrument | Technique / Articulation Specified | DrumScript mapping |
 | --- | --- | --- | --- |
@@ -437,6 +439,45 @@ Run:
 | BR_sw | Brushes | Brush sweep / sustained friction swirl | -- |
 
 Please advise if any columns need adjusting or if further details on DrumScript mapping are required.
+-->
+
+**Labels and mapping** (as used by `drumscript/datasets/enst.py`)
+
+Labels are from Table 2 of the ENST paper, plus `sd-`, which appears in the
+annotation files but not in Table 2. Counts are from a full label count of the
+dataset's annotation files (29 Sep 2026).
+
+| # | ENST Label | ENST Description | Count | DrumScript Class |
+| --- | --- | --- | --- | --- |
+| 1 | bd | Bass drum | 10,686 | `kick` |
+| 2 | sd | Snare drum | 11,276 | `snare` |
+| 3 | chh | Hi-hat (closed) | 9,899 | `hi_hat_closed` |
+| 4 | ohh | Hi-hat (open) | 4,345 | `hi_hat_open` |
+| 5 | rc (rc2, rc3, rc4) | Ride cymbal | 3,218 | `ride` |
+| 6 | cr (cr1, cr2, cr5) | Crash cymbal | 385 | `crash` |
+| 7 | lt | Low tom | 1,189 | `low_tom` |
+| 8 | lft | Lowest tom (drummer 3 only) | 177 | `low_tom` |
+| 9 | lmt | Low-mid tom (drummer 3 only) | 232 | `mid_tom` |
+
+ENST has no high tom, so `high_tom` is never scored.
+
+**Excluded Codes**
+
+| ENST Label | ENST Description | Count |
+| --- | --- | --- |
+| mt | Mid tom (excluded by choice) | 1,160 |
+| sd- | Snare drum, snares off (not in Table 2) | 484 |
+| rs | Rim shot | 130 |
+| cs | Cross stick | 773 |
+| sweep | Brush sweep | 7 |
+| mtr, ltr | Mid / low tom, hit on the rim | 12 |
+| ch (ch1, ch5) | Chinese ride cymbal | 68 |
+| spl (spl2) | Splash cymbal | 28 |
+| c (c1, c4) | Other cymbals | 948 |
+| cb | Cowbell | 680 |
+| sticks | Sticks hit together | 7 |
+
+Totals: 41,407 hits scored, 4,297 excluded, 45,704 in all.
 
 
 - Place the dataset under `benchmarks/datasets/`.
@@ -465,6 +506,8 @@ Please advise if any columns need adjusting or if further details on DrumScript 
   - A trailing instance number on a label (e.g. a second crash) identifies
     which physical drum or cymbal was hit, not a different class, so it is
     stripped before mapping.
+  - Per the paper, cymbals are numbered left to right from the drummer's point
+    of view (e.g. `rc3` is a ride, the third cymbal for that drummer).
   - Stem matching is exact, per drummer: `audio/<mix>/<name>.wav` pairs with
     `annotation/<name>.txt`.
   - Filenames repeat across drummers, so the `track` id is prefixed with the

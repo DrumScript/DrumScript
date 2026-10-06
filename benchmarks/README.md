@@ -370,8 +370,15 @@ Run:
 > **Status:** adapter added on `benchmarks/enst-first-run`; first run pending.
 > Move to the verified list above once a full run has been checked.
 
-- Source: <!--TODO: add download/access link--> Paper: Gillet & Richard (2006),
-  [ENST-Drums: an extensive audio-visual database for drum signals processing](https://archives.ismir.net/ismir2006/paper/000027.pdf), ISMIR.
+<!--PREVIOUS -- KEEP FOR NOW -- (TODO: add download/access link)
+- Source: Paper: Gillet & Richard (2006),
+  [ENST-Drums: an extensive audio-visual database for drum signals processing](https://archives.ismir.net/ismir2006/paper/000027.pdf), ISMIR.-->
+- Source: <https://adasp.telecom-paris.fr/resources/2009-11-25-enst-drums>
+  (Télécom Paris, ADASP group). Read and accept the user licence on that page
+  before downloading.
+- Paper: Gillet & Richard (2006),
+  [ENST-Drums: an extensive audio-visual database for drum signals processing](https://archives.ismir.net/ismir2006/paper/000027.pdf),
+  ISMIR 2006, pp. 156-159. The annotation labels are listed in Table 2.
 - Evaluation scope: ENST-Drums is a full-kit benchmark with real acoustic kits
   played by three drummers. It follows the same strict principle as MDB: a label
   maps to a DrumScript notation **only** where a direct, unambiguous equivalent

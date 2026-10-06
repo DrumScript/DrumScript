@@ -31,6 +31,11 @@ DATASET_NAME = "ENST-drums-public"
 # ENST annotation files may append an instance number to a label (e.g. a
 # second crash). The number identifies WHICH physical cymbal/drum, not a
 # different class, so it is stripped before lookup (see normalise_code).
+# Per the paper (section 2.4), cymbals are numbered left to right from the
+# drummer's point of view, e.g. rc3 = ride cymbal, 3rd cymbal for that drummer.
+#
+# Observed in the annotation files but NOT listed in Table 2:
+#   sd-  (snare drum, snares off; 484 hits) -- excluded below, as MDB SDNS.
 #
 # DrumScript output vocabulary (from drum_classifier/classify.py):
 ## defined in drumscript/notation_generator/constants.py
@@ -97,6 +102,7 @@ ENST_CODE_TO_DRUMSCRIPT: dict[str, str] = {
     "lt": "low_tom",  # low tom
     "lmt": "mid_tom",  # low-mid tom
     # "mt": "mid_tom",  # mid tom
+    # Toms decided 29 Sep 2026: lft/lt -> low_tom, lmt -> mid_tom; mt excluded (see EXCLUDED_CODES).
 }
 
 # Labels deliberately excluded #  no direct DrumScript notation exists, so they
@@ -113,6 +119,8 @@ EXCLUDED_CODES: frozenset[str] = frozenset(
         "spl",  # splash cymbal
         "mtr",  # mid tom, hit on the rim
         "ltr",  # low tom, hit on the rim
+        "sd-",  # snare drum, snares off -- as MDB SDNS (not in Table 2; observed in files)
+        "mt",  # mid tom -- excluded by choice, 29 Sep 2026
     }
 )
 

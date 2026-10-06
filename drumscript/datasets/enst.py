@@ -103,6 +103,9 @@ ENST_CODE_TO_DRUMSCRIPT: dict[str, str] = {
     "lmt": "mid_tom",  # low-mid tom
     # "mt": "mid_tom",  # mid tom
     # Toms decided 29 Sep 2026: lft/lt -> low_tom, lmt -> mid_tom; mt excluded (see EXCLUDED_CODES).
+    # Toms revised 6 Oct 2026: mapped by relative pitch on each kit, so DrumScript gets low/mid/high.
+    # mt is the highest tom on every ENST kit (drummers 1-2: mt + lt; drummer 3: mt, lmt, lt, lft).
+    "mt": "high_tom",  # mid tom -- highest tom on every ENST kit
 }
 
 # Labels deliberately excluded #  no direct DrumScript notation exists, so they
@@ -120,7 +123,7 @@ EXCLUDED_CODES: frozenset[str] = frozenset(
         "mtr",  # mid tom, hit on the rim
         "ltr",  # low tom, hit on the rim
         "sd-",  # snare drum, snares off -- as MDB SDNS (not in Table 2; observed in files)
-        "mt",  # mid tom -- excluded by choice, 29 Sep 2026
+        # "mt",  # mid tom -- excluded by choice, 29 Sep 2026 (now mapped to high_tom, 6 Oct 2026)
     }
 )
 

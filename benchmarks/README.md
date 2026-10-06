@@ -465,14 +465,18 @@ dataset's annotation files (29 Sep 2026).
 | 7 | lt | Low tom | 1,189 | `low_tom` |
 | 8 | lft | Lowest tom (drummer 3 only) | 177 | `low_tom` |
 | 9 | lmt | Low-mid tom (drummer 3 only) | 232 | `mid_tom` |
+| 10 | mt | Mid tom (the highest tom on every ENST kit) | 1,160 | `high_tom` |
 
-ENST has no high tom, so `high_tom` is never scored.
+<!--PREVIOUS -- KEEP FOR NOW -- ENST has no high tom, so `high_tom` is never scored.-->
+Toms are mapped by **relative pitch** on each kit, not by ENST's names, so
+DrumScript gets a low, mid and high tom. Drummers 1 and 2 have two toms (`mt`,
+`lt`); drummer 3 has four (`mt`, `lmt`, `lt`, `lft`). `mt` is always the
+highest, so it maps to `high_tom`. On drummers 1 and 2, `mid_tom` has no hits.
 
 **Excluded Codes**
 
 | ENST Label | ENST Description | Count |
 | --- | --- | --- |
-| mt | Mid tom (excluded by choice) | 1,160 |
 | sd- | Snare drum, snares off (not in Table 2) | 484 |
 | rs | Rim shot | 130 |
 | cs | Cross stick | 773 |
@@ -484,7 +488,11 @@ ENST has no high tom, so `high_tom` is never scored.
 | cb | Cowbell | 680 |
 | sticks | Sticks hit together | 7 |
 
-Totals: 41,407 hits scored, 4,297 excluded, 45,704 in all.
+<!--PREVIOUS -- KEEP FOR NOW -- row moved out of the table above (mt now mapped to high_tom, 6 Oct 2026):
+| mt | Mid tom (excluded by choice) | 1,160 |-->
+
+<!--PREVIOUS -- KEEP FOR NOW -- Totals: 41,407 hits scored, 4,297 excluded, 45,704 in all.-->
+Totals: 42,567 hits scored, 3,137 excluded, 45,704 in all.
 
 
 - Place the dataset under `benchmarks/datasets/`.

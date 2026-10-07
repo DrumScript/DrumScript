@@ -1,7 +1,7 @@
 # Benchmarks
 
 <!--date_updated:sat-19-september-2026-->
-<!--date_updated:tues-06-october-2026-->
+<!--date_updated:weds-07-october-2026-->
 
 Evaluation entrypoints that score the **existing** DrumScript classifier
 against a dataset's ground truth and report metrics.
@@ -253,9 +253,8 @@ Run:
   classes. The mapping principle is strict: a subclass maps to a DrumScript
   label **only** where a direct, unambiguous notation equivalent exists.
   Anything without a direct equivalent is **excluded** from evaluation (counted
-  as neither a hit nor a false positive) rather than folded into a nearby class
-  — DrumScript is a transcription engine, so china ≠ crash, splash ≠ crash,
-  side-stick ≠ snare.
+  as neither a hit nor a false positive) rather than folded into a nearby class; 
+  DrumScript is a transcription engine, so china ≠ crash, splash ≠ crash, side-stick ≠ snare.
 
   <!--PREVIOUS MAPPING -- KEEP FOR NOW -- 
   | MDB subclass | DrumScript label |
@@ -278,7 +277,7 @@ Run:
   skipped with a one-time warning, so a new/renamed label is surfaced rather
   than silently dropped.-->
 
-  *possible overlap* 
+  <!--*possible overlap*-->
 
 <!-->> ?? try with both, withtout first?? and then review results with possible ones to see if results are better-->
 
@@ -373,13 +372,13 @@ Run:
 <!--PREVIOUS -- KEEP FOR NOW -- (TODO: add download/access link)
 - Source: Paper: Gillet & Richard (2006),
   [ENST-Drums: an extensive audio-visual database for drum signals processing](https://archives.ismir.net/ismir2006/paper/000027.pdf), ISMIR.-->
-- Source: <https://adasp.telecom-paris.fr/resources/2009-11-25-enst-drums>
+- **Source:** <https://adasp.telecom-paris.fr/resources/2009-11-25-enst-drums>
   (Télécom Paris, ADASP group). Read and accept the user licence on that page
-  before downloading.
-- Paper: Gillet & Richard (2006),
+  before downloading. You can also directly download from: [`https://zenodo.org/records/7432188`](https://zenodo.org/records/7432188/files/ENST-drums-audio.tar.bz2?download=1) (choose `ENST-drums-audio.tar.bz2`, copy paste to `./benchmarks/datasets` ) (~4.5GB zipped, ~10GB unzipped)
+- **Paper:** Gillet & Richard (2006),
   [ENST-Drums: an extensive audio-visual database for drum signals processing](https://archives.ismir.net/ismir2006/paper/000027.pdf),
   ISMIR 2006, pp. 156-159. The annotation labels are listed in Table 2.
-- Evaluation scope: ENST-Drums is a full-kit benchmark with real acoustic kits
+- **Evaluation scope:** ENST-Drums is a full-kit benchmark with real acoustic kits
   played by three drummers. It follows the same strict principle as MDB: a label
   maps to a DrumScript notation **only** where a direct, unambiguous equivalent
   exists; everything else is **excluded** (counted as neither a hit nor a false

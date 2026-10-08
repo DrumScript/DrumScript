@@ -1,7 +1,7 @@
 # **Changelog**
 
 <!--date_added:thurs-28-may-2026-->
-<!--date_updated:sun-20-sept-2026-->
+<!--date_updated:tue-29-sept-2026-->
 
 
 * All notable changes related to the repository and pypi distribution of `DrumScript` will be documented here
@@ -38,12 +38,27 @@
 **Benchmarks:**
 *  Updated the IDMT benchmark dataset layout and documentation, including local dataset storage under `benchmarks/datasets/`, expanded setup guidance, and a template for adding future benchmark datasets. [#321](https://github.com/DrumScript/DrumScript/pull/321)
 * Added MDB-Drums full-kit benchmark support with dataset mappings, documentation, and adapter tests. [#330](https://github.com/DrumScript/DrumScript/pull/330)
+* Added diagnostic modes to `drumscript/utils/research/analyze_idmt_dataset.py`: per-onset pipeline-stage attribution (`--diagnose-kick`), capture of features for all detected onsets, and a threshold grid sweep scoring candidate rules by precision, recall and F-measure (`--sweep-csv`, `--top`).
+<!--* Added `drumscript/utils/research/analyze_mdb_dataset.py`: full-kit stage attribution, per-class confusion reporting, and per-class feature distributions for MDB-Drums.UNCOMMENT WHEN WORK IS DONE-->
+* Added ENST-Drums full-kit benchmark adapter (`drumscript/datasets/enst.py`), registered in `benchmarks/run.py`. Follows the MDB "direct notation equivalent or exclude" mapping; tom labels are left unmapped pending a decision, and are logged rather than silently dropped. First run pending.
+* Added `drumscript/utils/research/analyze_enst_dataset.py`: ENST-Drums equivalent of the MDB diagnostics script (stage attribution, confusion reporting, per-class feature distributions), with `--audio` and `--subset` flags.
+* Expanded benchmark dataset coverage (ENST-Drums, MDB-Drums) building on the IDMT-SMT-Drums V2 foundation shipped in v0.1.6
 
 > ### *Changes*
+**Classification:**
+* **Kick drum detection threshold recalibrated.** `KICK_LFER_MIN` lowered from `0.32` to `0.08` in `constants.py`. The original value was derived from isolated drum stems; because LFER is a ratio of sub-150Hz energy to total energy, simultaneous hi-hat energy in mixed audio suppresses it, so the threshold sat above the median LFER of a genuine kick (0.213 across 5,387 annotated IDMT onsets). Mean kick F-measure on IDMT-SMT-Drums V2 rose from a rule firing on 27.9% of reference kicks to one firing on 86.3%, with zero-scoring tracks falling from 31/95 to 0/95. On MDB-Drums, mean kick F-measure rose from 0.397 to 0.721. No other instrument class changed on either dataset. Frequency bounds (`KICK_FREQ_MIN`, `KICK_FREQ_MAX`) deliberately left unchanged to avoid widening the kick band into the snare and tom ranges.
+-  *fix in progress* **Known issue:** Tom, ride and crash rules currently produce zero predictions against MDB-Drums (835 ride and 64 tom reference hits, 0 estimates). These are unreachable rules rather than mis-tuned thresholds.  
 * Tidied up branch tree on remote #311
+
+**Benchmarks:**
+* *(breaking, benchmark CLI only)* Each adapter's `DATASET_NAME` now matches the dataset's native unzipped folder name under `benchmarks/datasets/` (`IDMT-SMT-DRUMS-V2`, `MDBDrums-master`, `ENST-drums-public`), so datasets no longer need renaming. The `run.py` subcommands and the `outputs/benchmarks/<dataset>/` archive folders change to match (e.g. `run.py idmt` becomes `run.py IDMT-SMT-DRUMS-V2`). Earlier runs remain under the old folder names.
+* Adapter attribute `CODE_TO_DRUMSCRIPT` renamed to `DRUMSCRIPT_DICT` across the IDMT and MDB adapters, `benchmarks/run.py`, `analyze_mdb_dataset.py` and the adapter contract test.
+* `benchmarks/README.md`, `tests/README.md`, `tests/tree_tests.txt`, the root `README.md` and `tree.txt` updated for the ENST adapter, the renamed dataset folders and the current test counts (142 unit tests).
+
 
 > ### *Fixes*
 * warn when an invalid time signature falls back to 4/4 instead of failing silently
+* Root `README.md` benchmarking section: the MDB code block was missing its closing fence, so the results paragraph rendered as code; and the IDMT example placed the global `--limit` flag after the dataset name, which `run.py` rejects.
 * **Python 3.13 not supported.** DrumScript pins `numpy<2`, and numpy 1.x has no cp313 wheels on PyPI. This caused `pip install drumscript` on Python 3.13 to fall back to a source build (which requires a C toolchain most users don't have), producing a confusing `Compiler cc cannot compile programs` error rather than a clear "unsupported Python version" message. `requires-python` lowered from `<3.14` to `<3.13` in `pyproject.toml`. Python 3.13 support planned once DrumScript migrates to `numpy>=2` (see [#303](https://github.com/DrumScript/DrumScript/issues/303)).
 
 > **Known debt being paid down alongside the alpha's fundamental work (model + score generation).** These are treated as bugs to fix, not future features - but they are not allowed to displace the core classification/score-generation work:
@@ -65,7 +80,6 @@ Items listed below are fully implemented and **published to pypi** under an offi
 >
 ###### *Additions*
 - `output_midi`, `output_json`, `output_xml` flags to be added to `transcribe()` for multi-format export
-- Expanded benchmark dataset coverage (ENST-Drums, MDB-Drums) building on the IDMT-SMT-Drums V2 foundation shipped in v0.1.6
 - Code-to-DrumScript label mapping expanded beyond `KD`/`SD`/`HH` to cover full-kit classes (toms, crash, ride)
 - Repository statistics badge (shields.io endpoint) for README and docs homepage: extend `repo-stats.yml` to write a small JSON (`schemaVersion`, `label`, `message`, `color`) to the `github-repo-stats` branch on each daily run, so shields.io can render live view/clone counts rather than a static link #296
 - Check compatibility for Python 3.13 (#299)

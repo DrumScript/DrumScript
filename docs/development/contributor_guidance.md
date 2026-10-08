@@ -16,7 +16,10 @@
 - [Pull Request Process](#pull-request-process)
 - [Coding Standards](#coding-standards)
 - [Reporting Issues](#reporting-issues)
+<<<<<<< HEAD
+=======
   - [Issue Forms](#issue-forms) 
+>>>>>>> b66eb13ec849817ca4e60eb42d14ecf21af72a58
 - [Questions & Support](#questions--support)
 
 First off, thank you for considering contributing to `DrumScript`! :D
@@ -339,7 +342,11 @@ Use this option if you want GitHub to do the version bumping and tagging for you
 4. Run the test suite: `pytest tests/`
 5. Submit a PR against the `main` branch.
 
+<<<<<<< HEAD
+We enforce **Sphinx reST (https://www.sphinx-doc.org/en/master/usage/restructuredtext/basics.html) DocString convention**. All contributed code must follow this.
+=======
 We enforce **[Sphinx reST formatting DocString conventions](https://www.sphinx-doc.org/en/master/usage/restructuredtext/basics.html)** in developing our documentation and guidance. All contributed code must follow this.
+>>>>>>> b66eb13ec849817ca4e60eb42d14ecf21af72a58
 
 ---
 

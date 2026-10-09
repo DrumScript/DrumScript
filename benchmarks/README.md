@@ -5,7 +5,7 @@
 
 Evaluation entrypoints that score the **existing** DrumScript classifier against a dataset's ground truth and report metrics.
 
-**Out of scope:** model training/machine learning, dataset acquisition, and manifest preparation
+**Out of scope:**a model training/machine learning, dataset acquisition, and manifest preparation
 
 - **[Data](#data)**
 - **[Conventions](#conventions)**

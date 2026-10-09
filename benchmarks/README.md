@@ -1,12 +1,11 @@
 # Benchmarks
 
 <!--date_updated:sat-19-september-2026-->
-<!--date_updated:tue-29-september-2026-->
+<!--date_updated:fri-09-october-2026-->
 
-Evaluation entrypoints that score the **existing** DrumScript classifier
-against a dataset's ground truth and report metrics.
+Evaluation entrypoints that score the **existing** DrumScript classifier against a dataset's ground truth and report metrics.
 
-Out of scope: training, dataset acquisition, and manifest preparation.
+Out of scope: model training/machine learning, dataset acquisition, and manifest preparation
 
 - **[Data](#data)**
 - **[Conventions](#conventions)**

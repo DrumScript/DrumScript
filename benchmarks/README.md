@@ -1,12 +1,11 @@
 # Benchmarks
 
 <!--date_updated:sat-19-september-2026-->
-<!--date_updated:weds-07-october-2026-->
+<!--date_updated:fri-09-october-2026-->
 
-Evaluation entrypoints that score the **existing** DrumScript classifier
-against a dataset's ground truth and report metrics.
+Evaluation entrypoints that score the **existing** DrumScript classifier against a dataset's ground truth and report metrics.
 
-Out of scope: training, dataset acquisition, and manifest preparation.
+**Out of scope:**a model training/machine learning, dataset acquisition, and manifest preparation
 
 - **[Data](#data)**
 - **[Conventions](#conventions)**
@@ -253,8 +252,9 @@ Run:
   classes. The mapping principle is strict: a subclass maps to a DrumScript
   label **only** where a direct, unambiguous notation equivalent exists.
   Anything without a direct equivalent is **excluded** from evaluation (counted
-  as neither a hit nor a false positive) rather than folded into a nearby class; 
-  DrumScript is a transcription engine, so china ≠ crash, splash ≠ crash, side-stick ≠ snare.
+  as neither a hit nor a false positive) rather than folded into a nearby class
+  — DrumScript is a transcription engine, so china ≠ crash, splash ≠ crash,
+  side-stick ≠ snare.
 
   <!--PREVIOUS MAPPING -- KEEP FOR NOW -- 
   | MDB subclass | DrumScript label |
@@ -277,7 +277,7 @@ Run:
   skipped with a one-time warning, so a new/renamed label is surfaced rather
   than silently dropped.-->
 
-  <!--*possible overlap*-->
+  *possible overlap* 
 
 <!-->> ?? try with both, withtout first?? and then review results with possible ones to see if results are better-->
 
@@ -369,22 +369,15 @@ Run:
 > **Status:** adapter added on `benchmarks/enst-first-run`; first run pending.
 > Move to the verified list above once a full run has been checked.
 
-<!--PREVIOUS -- KEEP FOR NOW -- (TODO: add download/access link)
-- Source: Paper: Gillet & Richard (2006),
-  [ENST-Drums: an extensive audio-visual database for drum signals processing](https://archives.ismir.net/ismir2006/paper/000027.pdf), ISMIR.-->
-- **Source:** <https://adasp.telecom-paris.fr/resources/2009-11-25-enst-drums>
-  (Télécom Paris, ADASP group). Read and accept the user licence on that page
-  before downloading. You can also directly download from: [`https://zenodo.org/records/7432188`](https://zenodo.org/records/7432188/files/ENST-drums-audio.tar.bz2?download=1) (choose `ENST-drums-audio.tar.bz2`, copy paste to `./benchmarks/datasets` ) (~4.5GB zipped, ~10GB unzipped)
-- **Paper:** Gillet & Richard (2006),
-  [ENST-Drums: an extensive audio-visual database for drum signals processing](https://archives.ismir.net/ismir2006/paper/000027.pdf),
-  ISMIR 2006, pp. 156-159. The annotation labels are listed in Table 2.
-- **Evaluation scope:** ENST-Drums is a full-kit benchmark with real acoustic kits
+- Source: <!--TODO: add download/access link--> Paper: Gillet & Richard (2006),
+  [ENST-Drums: an extensive audio-visual database for drum signals processing](https://archives.ismir.net/ismir2006/paper/000027.pdf), ISMIR.
+- Evaluation scope: ENST-Drums is a full-kit benchmark with real acoustic kits
   played by three drummers. It follows the same strict principle as MDB: a label
   maps to a DrumScript notation **only** where a direct, unambiguous equivalent
   exists; everything else is **excluded** (counted as neither a hit nor a false
   positive).
 
-<!--| # | ENST Label | ENST Description | DrumScript Class |
+| # | ENST Label | ENST Description | DrumScript Class |
 | --- | --- | --- | --- |
 | 1 | bd | Bass drum | `kick` |
 | 2 | sd | Snare drum | `snare` |
@@ -411,88 +404,7 @@ Run:
 | mtr, ltr | Mid / low tom hit on the rim |
 | ch, spl, c | Chinese, splash, other cymbals |
 | cb | Cowbell |
-| sticks | Sticks hit together |-->
-
-<!--ALTERNATIVE LABEL LIST -- KEEP FOR NOW -- these labels do not appear in the ENST annotation files
-(checked against a full label count, 29 Sep 2026), so they are not used by the adapter.
-**Included ENST annotations (uses the 20-part segment of ENST)**
-| Label | Instrument | Technique / Articulation Specified | DrumScript mapping |
-| --- | --- | --- | --- |
-| SD_cl | Snare Drum | Centre struck note (clean) | SD |
-| RC_bl | Ride Cymbal | Bell strike (pure bell tone) | RD |
-| TT_mid | Tom-Tom | Mid-pitched rack tom | MT |
-| TT_low | Tom-Tom | Low-pitched rack or floor tom | LT |
-| TT_floor | Tom-Tom | Main low floor tom | LT |
-| TT_hi | Tom-Tom | High-pitched rack tom | HT |
-| HH_op | Hi-Hat | Fully open ringing strike | HH-OP |
-| HH_cl | Hi-Hat | Tightly closed strike with tip or shoulder | HH-CL |
-| CR_lh | Crash Cymbal | Left-hand crash cymbal placement | CC |
-| CR_rh | Crash Cymbal | Right-hand crash cymbal placement | CC |
-| BD | Bass Drum | Standard kick pedal hit | BD |
-
-**Excluded ENST annotations (uses the 20-part segment of ENST)**
-
-| Label | Instrument | Technique / Articulation Specified | DrumScript mapping |
-| --- | --- | --- | --- |
-| RC_bw | Ride Cymbal | Bow strike (standard ping riding) | -- |
-| SD_rs | Snare Drum | Rimshot (hitting head and rim together) | -- |
-| SD_ss | Snare Drum | Side-stick / Cross-stick (clicking the rim) | -- |
-| SD_roll | Snare Drum | Closed roll / buzz pattern | -- |
-| HH_ho | Hi-Hat | Half-open "sloshy" strike | -- |
-| HH_pd | Hi-Hat | Foot pedal close action (chick sound) | -- |
-| SPL | Splash Cymbal | Accent splash cymbal hit | -- |
-| CB | Cowbell | Accessory percussion hit | -- |
-| BR_sw | Brushes | Brush sweep / sustained friction swirl | -- |
-
-Please advise if any columns need adjusting or if further details on DrumScript mapping are required.
--->
-
-**Labels and mapping** (as used by `drumscript/datasets/enst.py`)
-
-Labels are from Table 2 of the ENST paper, plus `sd-`, which appears in the
-annotation files but not in Table 2. Counts are from a full label count of the
-dataset's annotation files (29 Sep 2026).
-
-| # | ENST Label | ENST Description | Count | DrumScript Class |
-| --- | --- | --- | --- | --- |
-| 1 | bd | Bass drum | 10,686 | `kick` |
-| 2 | sd | Snare drum | 11,276 | `snare` |
-| 3 | chh | Hi-hat (closed) | 9,899 | `hi_hat_closed` |
-| 4 | ohh | Hi-hat (open) | 4,345 | `hi_hat_open` |
-| 5 | rc (rc2, rc3, rc4) | Ride cymbal | 3,218 | `ride` |
-| 6 | cr (cr1, cr2, cr5) | Crash cymbal | 385 | `crash` |
-| 7 | lt | Low tom | 1,189 | `low_tom` |
-| 8 | lft | Lowest tom (drummer 3 only) | 177 | `low_tom` |
-| 9 | lmt | Low-mid tom (drummer 3 only) | 232 | `mid_tom` |
-| 10 | mt | Mid tom (the highest tom on every ENST kit) | 1,160 | `high_tom` |
-
-<!--PREVIOUS -- KEEP FOR NOW -- ENST has no high tom, so `high_tom` is never scored.-->
-Toms are mapped by **relative pitch** on each kit, not by ENST's names, so
-DrumScript gets a low, mid and high tom. Drummers 1 and 2 have two toms (`mt`,
-`lt`); drummer 3 has four (`mt`, `lmt`, `lt`, `lft`). `mt` is always the
-highest, so it maps to `high_tom`. On drummers 1 and 2, `mid_tom` has no hits.
-
-**Excluded Codes**
-
-| ENST Label | ENST Description | Count |
-| --- | --- | --- |
-| sd- | Snare drum, snares off (not in Table 2) | 484 |
-| rs | Rim shot | 130 |
-| cs | Cross stick | 773 |
-| sweep | Brush sweep | 7 |
-| mtr, ltr | Mid / low tom, hit on the rim | 12 |
-| ch (ch1, ch5) | Chinese ride cymbal | 68 |
-| spl (spl2) | Splash cymbal | 28 |
-| c (c1, c4) | Other cymbals | 948 |
-| cb | Cowbell | 680 |
-| sticks | Sticks hit together | 7 |
-
-<!--PREVIOUS -- KEEP FOR NOW -- row moved out of the table above (mt now mapped to high_tom, 6 Oct 2026):
-| mt | Mid tom (excluded by choice) | 1,160 |-->
-
-<!--PREVIOUS -- KEEP FOR NOW -- Totals: 41,407 hits scored, 4,297 excluded, 45,704 in all.-->
-Totals: 42,567 hits scored, 3,137 excluded, 45,704 in all.
-
+| sticks | Sticks hit together |
 
 - Place the dataset under `benchmarks/datasets/`.
 - The benchmark evaluates the **`wet_mix`** audio by default. The per-mic
@@ -520,8 +432,6 @@ Totals: 42,567 hits scored, 3,137 excluded, 45,704 in all.
   - A trailing instance number on a label (e.g. a second crash) identifies
     which physical drum or cymbal was hit, not a different class, so it is
     stripped before mapping.
-  - Per the paper, cymbals are numbered left to right from the drummer's point
-    of view (e.g. `rc3` is a ride, the third cymbal for that drummer).
   - Stem matching is exact, per drummer: `audio/<mix>/<name>.wav` pairs with
     `annotation/<name>.txt`.
   - Filenames repeat across drummers, so the `track` id is prefixed with the

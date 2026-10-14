@@ -30,13 +30,17 @@ Sphinx documentation: Standard reST docstrings are applied to all functions.
 Usage:
 
 ## FLAGS
-uv run --extra dev python drumscript/utils/research/analyze_enst_dataset.py benchmarks/datasets/ENST
+uv run --extra dev python drumscript/utils/research/analyze_enst_dataset.py benchmarks/datasets/ENST-drums-public
 --audio dry_mix
 --subset minus-one
 --tracks drummer_2
 --limit 5
 --instrument ride
---profile-csv outputs/benchmarks/enst/diagnostics/<stamp>/onset_features.csv
+--profile-csv outputs/benchmarks/ENST-drums-public/diagnostics/<stamp>/onset_features.csv
+## PREVIOUS: --profile-csv outputs/benchmarks/enst/diagnostics/<stamp>/onset_features.csv
+
+## PREVIOUS PATH (before datasets kept their native folder names)
+## uv run --extra dev python drumscript/utils/research/analyze_enst_dataset.py benchmarks/datasets/ENST
 """
 
 import argparse
@@ -435,7 +439,9 @@ def resolve_output_dir(output_dir):
     if output_dir:
         return Path(output_dir)
     stamp = datetime.now().strftime("%Y-%m-%d_%H%M%S")
-    return Path("outputs") / "benchmarks" / "enst" / "diagnostics" / stamp
+    # return Path("outputs") / "benchmarks" / "enst" / "diagnostics" / stamp  # PREVIOUS -- KEEP FOR NOW
+    # Diagnostics now sit beside the run.py results for this dataset, under DATASET_NAME.
+    return Path("outputs") / "benchmarks" / enst_adapter.DATASET_NAME / "diagnostics" / stamp
 
 
 def load_onset_rows(csv_path):

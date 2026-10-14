@@ -31,6 +31,11 @@ DATASET_NAME = "ENST-drums-public"
 # ENST annotation files may append an instance number to a label (e.g. a
 # second crash). The number identifies WHICH physical cymbal/drum, not a
 # different class, so it is stripped before lookup (see normalise_code).
+# Per the paper (section 2.4), cymbals are numbered left to right from the
+# drummer's point of view, e.g. rc3 = ride cymbal, 3rd cymbal for that drummer.
+#
+# Observed in the annotation files but NOT listed in Table 2:
+#   sd-  (snare drum, snares off; 484 hits) -- excluded below, as MDB SDNS.
 #
 # DrumScript output vocabulary (from drum_classifier/classify.py):
 ## defined in drumscript/notation_generator/constants.py
@@ -39,7 +44,8 @@ DATASET_NAME = "ENST-drums-public"
 #   hi_hat_closed, hi_hat_open, crash, ride
 # ─────────────────────────────────────────────────────────────────────────────
 
-# ENST label → DrumScript label. Only directly-mappable labels appear here;
+# PREVIOUS MAPPING -- KEEP FOR NOW
+"""# ENST label → DrumScript label. Only directly-mappable labels appear here;
 # everything else is excluded (see EXCLUDED_CODES below).
 ENST_CODE_TO_DRUMSCRIPT: dict[str, str] = {
     # --- Kick ---
@@ -75,6 +81,49 @@ EXCLUDED_CODES: frozenset[str] = frozenset(
         "spl",  # splash cymbal
         "mtr",  # mid tom, hit on the rim
         "ltr",  # low tom, hit on the rim
+    }
+)"""
+
+
+ENST_CODE_TO_DRUMSCRIPT: dict[str, str] = {
+    # --- Kick ---
+    "bd": "kick",  # bass drum
+    # --- Snare ---
+    "sd": "snare",  # snare drum
+    # --- Hi-hat ---
+    "chh": "hi_hat_closed",  # closed hi-hat
+    "ohh": "hi_hat_open",  # open hi-hat
+    # --- Ride ---
+    "rc": "ride",  # ride cymbal
+    # --- Crash ---
+    "cr": "crash",  # crash cymbal
+    # --- Toms: confirm against label counts before enabling ---
+    "lft": "low_tom",  # floor tom
+    "lt": "low_tom",  # low tom
+    "lmt": "mid_tom",  # low-mid tom
+    # "mt": "mid_tom",  # mid tom
+    # Toms decided 29 Sep 2026: lft/lt -> low_tom, lmt -> mid_tom; mt excluded (see EXCLUDED_CODES).
+    # Toms revised 6 Oct 2026: mapped by relative pitch on each kit, so DrumScript gets low/mid/high.
+    # mt is the highest tom on every ENST kit (drummers 1-2: mt + lt; drummer 3: mt, lmt, lt, lft).
+    "mt": "high_tom",  # mid tom -- highest tom on every ENST kit
+}
+
+# Labels deliberately excluded #  no direct DrumScript notation exists, so they
+# are dropped from evaluation rather than mapped to an approximate class.
+EXCLUDED_CODES: frozenset[str] = frozenset(
+    {
+        "sweep",  # brush sweep (not an onset-style hit)
+        "sticks",  # sticks hit together (not a drum)
+        "rs",  # rim shot
+        "cs",  # cross stick
+        "cb",  # cowbell
+        "c",  # other cymbals
+        "ch",  # chinese ride cymbal
+        "spl",  # splash cymbal
+        "mtr",  # mid tom, hit on the rim
+        "ltr",  # low tom, hit on the rim
+        "sd-",  # snare drum, snares off -- as MDB SDNS (not in Table 2; observed in files)
+        # "mt",  # mid tom -- excluded by choice, 29 Sep 2026 (now mapped to high_tom, 6 Oct 2026)
     }
 )
 

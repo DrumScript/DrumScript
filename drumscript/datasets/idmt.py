@@ -13,8 +13,8 @@ from drumscript.datasets.base import BenchmarkItem
 
 logger = logging.getLogger(__name__)
 
-DATASET_NAME = "idmt"
-
+# DATASET_NAME = "idmt"
+DATASET_NAME = "IDMT-SMT-DRUMS-V2"
 #: IDMT instrument codes → DrumScript label list. ``HH`` matches both open and
 #: closed hi-hat.
 DRUMSCRIPT_DICT: dict[str, list[str]] = {

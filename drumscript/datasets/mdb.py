@@ -12,8 +12,8 @@ from drumscript.datasets.base import BenchmarkItem
 
 logger = logging.getLogger(__name__)
 
-DATASET_NAME = "mdb"
-
+# DATASET_NAME = "mdb"
+DATASET_NAME = "MDBDrums-master"
 # ─────────────────────────────────────────────────────────────────────────────
 # TAXONOMY MAPPING  (MDB-Drums subclass label → DrumScript instrument label)
 #

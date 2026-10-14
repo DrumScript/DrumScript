@@ -3,12 +3,27 @@
 
 Usage::
 
-    python benchmarks/run.py idmt --root /path/to/IDMT-SMT-DRUMS-V2
+    python benchmarks/run.py IDMT-SMT-DRUMS-V2 --root benchmarks/datasets/IDMT-SMT-DRUMS-V2
 
 Global flags (``--output``, ``--run-name``, ``--limit``) go before the dataset
-name. See ``benchmarks/README.md`` for per-dataset preparation and required
-layout. Only ``idmt`` is currently verified end-to-end.
+name. The dataset name is each adapter's ``DATASET_NAME``, which matches the
+dataset's native folder name under ``benchmarks/datasets/``. See
+``benchmarks/README.md`` for per-dataset preparation and required layout.
+``IDMT-SMT-DRUMS-V2`` and ``MDBDrums-master`` are verified end-to-end;
+``ENST-drums-public`` is added but not yet verified.
 """
+
+# PREVIOUS DOCSTRING -- KEEP FOR NOW -- (subcommands renamed to native dataset folder names)
+# """Run a DrumScript benchmark on one dataset.
+#
+# Usage::
+#
+#     python benchmarks/run.py idmt --root /path/to/IDMT-SMT-DRUMS-V2
+#
+# Global flags (``--output``, ``--run-name``, ``--limit``) go before the dataset
+# name. See ``benchmarks/README.md`` for per-dataset preparation and required
+# layout. Only ``idmt`` is currently verified end-to-end.
+# """
 
 from __future__ import annotations
 
@@ -31,6 +46,7 @@ import numpy as np
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from drumscript.audio_processor.audio_loader import load_audio, normalise_audio
 from drumscript.audio_processor.onset_detector import detect_onsets
+from drumscript.datasets import enst as enst_adapter
 from drumscript.datasets import idmt as idmt_adapter
 from drumscript.datasets import mdb as mdb_adapter
 from drumscript.datasets.base import BenchmarkItem
@@ -39,7 +55,12 @@ from drumscript.notation_generator.constants import SAMPLE_RATE
 
 ONSET_WINDOW = 0.050  # 50 ms tolerance, standard in ADT literature.
 CLI_DESCRIPTION = "Run a DrumScript benchmark on one dataset."
-ADAPTERS: dict[str, ModuleType] = {idmt_adapter.DATASET_NAME: idmt_adapter, mdb_adapter.DATASET_NAME: mdb_adapter}
+# ADAPTERS: dict[str, ModuleType] = {idmt_adapter.DATASET_NAME: idmt_adapter, mdb_adapter.DATASET_NAME: mdb_adapter}
+ADAPTERS: dict[str, ModuleType] = {
+    idmt_adapter.DATASET_NAME: idmt_adapter,
+    mdb_adapter.DATASET_NAME: mdb_adapter,
+    enst_adapter.DATASET_NAME: enst_adapter,
+}
 
 
 # ── shared evaluation primitives ─────────────────────────────────────────────

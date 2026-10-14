@@ -12,6 +12,23 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Remind contributors to update the changelog
+        shell: bash
+        run: |
+          changed_files="$(git diff --name-only \
+            '${{ github.event.pull_request.base.sha }}' \
+            '${{ github.event.pull_request.head.sha }}')"
+
+          if grep -Fxq 'CHANGELOG.md' <<< "$changed_files"; then
+            echo "CHANGELOG.md is included in this PR."
+          elif grep -Eq '^(drumscript/|pyproject\.toml$|requirements[^/]*$|uv\.lock$|setup\.py$|setup\.cfg$|\.github/workflows/)' <<< "$changed_files"; then
+            echo "::warning::This PR changes code, dependencies, or CI configuration. Please add a user-facing entry under [Unreleased] in CHANGELOG.md when appropriate. Documentation-only and test-only changes do not need an entry."
+          else
+            echo "No implementation or build changes detected; no changelog reminder needed."
+          fi
 
       - name: Install uv
         uses: astral-sh/setup-uv@v3

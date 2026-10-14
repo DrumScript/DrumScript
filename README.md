@@ -1,7 +1,7 @@
 # **DrumScript**
 
 <!--date_created: sun-15-june-2025-->
-<!--date_edited: sat-12-september-2026--->
+<!--date_edited: thurs-08-october-2026--->
 
 > **Python >=3.9, < 3.13**
 >
@@ -67,6 +67,8 @@ Before we can publish a **confident v1.0.0 of `DrumScript` we need to:**
 > * `DrumScript` is developed by part-timers who have full-time jobs and, like most modern software, it's built with the help of good tooling and occasional use of LLM for debugging and refining website content, but all the decisions are human-reviewed more than once at every step.
 > * If you feel any part of this hasn't been made clear, then please raise it in the **[Discussions](https://github.com/orgs/DrumScript/discussions)**
 
+> **Repo history rewritten to clean .git bloat (8 Oct 2026)** - if you have an existing clone or fork made prior to 08 October 2026, please **re-clone**; a normal `git pull` will no longer work. Details: **[Discussions announcement](https://github.com/orgs/DrumScript/discussions)**. The PyPI package, releases, and docs site are unaffected. On the plus side this will reduce any future clones or forks by 88% (from 2.4GB to 177MB)
+
 ---
 
 #### What do you mean by `DrumScript is a deterministic classification engine`?
@@ -112,11 +114,11 @@ DrumScript/
 │   ├── audio_processor/        # Audio loading, DSP, stem splitting
 │   ├── drum_classifier/        # Rule-based classification engine
 │   ├── notation_generator/     # Score building, PDF/MIDI/XML export
-│   ├── datasets/               # Benchmark dataset adapters (IDMT, etc.)
+│   ├── datasets/               # Benchmark dataset adapters (IDMT, MDB, ENST)
 │   └── utils/                  # Helpers (ffmpeg installer, research scripts)
 ├── benchmarks/                 # Evaluation runners (see benchmarks/README.md)
 ├── docs/                       # Sphinx documentation
-├── tests/                      # pytest test suite (138 unit + 23 integration)
+├── tests/                      # pytest test suite (142 unit + 23 integration)
 ├── .github/workflows/          # CI/CD (tests, build, publish, docs)
 ├── pyproject.toml              # Package metadata and dependencies
 └── uv.lock                     # Pinned dependency versions
@@ -125,6 +127,8 @@ DrumScript/
 ---
 
 ## Features
+
+
 *[back](#drumscript)*
 
 - **Automatic Drum Transcription:** Detects kicks, snares, hi-hats, toms, and cymbals using a deterministic, rule-based classification engine - no machine learning required.
@@ -405,9 +409,10 @@ For detailed instructions on testing and publishing via the command line, please
 ## Benchmarking
 *[back](#drumscript)*
 
-DrumScript includes a benchmarking framework for evaluating the classifier against standard ADT datasets using [`mir_eval`](https://github.com/mir-evaluation/mir_eval). Currently supports IDMT-SMT-Drums V2.
+DrumScript includes a benchmarking framework for evaluating the classifier against standard ADT datasets using [`mir_eval`](https://github.com/mir-evaluation/mir_eval). <!--Currently supports IDMT-SMT-Drums V2 and MDB Drums-->
+Currently supports IDMT-SMT-Drums V2 and MDB-Drums, with ENST-Drums added (first run pending).
 
-```zsh
+<!--```zsh
 # Install dev dependencies (includes mir_eval)
 uv sync --extra dev
 
@@ -419,9 +424,65 @@ uv run --extra dev python benchmarks/run.py idmt \
 uv run --extra dev python benchmarks/run.py idmt \
 --root /path/to/IDMT-SMT-DRUMS-V2 \
 --subset RealDrum --limit 5
+```-->
+
+<!--PREVIOUS -- KEEP FOR NOW -- subcommands and dataset folders renamed to native folder names
+```zsh
+# Install dev dependencies (includes mir_eval)
+uv sync --extra dev
+
+# Run the IDMT benchmark
+uv run --extra dev python benchmarks/run.py idmt \
+--root benchmarks/datasets/IDMT
+
+# Run on a single subset with a limit
+uv run --extra dev python benchmarks/run.py idmt \
+--root benchmarks/datasets/IDMT \
+--subset RealDrum --limit 5
 ```
 
-Results are archived to `outputs/benchmarks/idmt/` with per-file metrics, summary statistics, and git commit tracking for reproducibility. See [`benchmarks/README.md`](benchmarks/README.md) for dataset setup and full usage.
+```zsh
+# Install dev dependencies (includes mir_eval)
+uv sync --extra dev
+
+# Run the MBD benchmark
+uv run --extra dev python benchmarks/run.py mdb \
+--root benchmarks/datasets/MDB
+
+Results are archived to `outputs/benchmarks/{dataset}/` (where `dataset` corresponds to a the currently-supported mir_eval adapters); either with per-file metrics, summary statistics, and git commit tracking for reproducibility. See [`benchmarks/README.md`](benchmarks/README.md) for dataset setup and full usage.
+
+> **Note:** download the datasets to `benchmarks/datasets/` folder and rename to `IDMB` or `MDB` depending on which one you use, before running
+-->
+
+```zsh
+# Install dev dependencies (includes mir_eval)
+uv sync --extra dev
+
+# Run the IDMT benchmark
+uv run --extra dev python benchmarks/run.py IDMT-SMT-DRUMS-V2 \
+--root benchmarks/datasets/IDMT-SMT-DRUMS-V2
+
+# Run on a single subset with a limit (--limit is a global flag, so it goes before the dataset name)
+uv run --extra dev python benchmarks/run.py --limit 5 IDMT-SMT-DRUMS-V2 \
+--root benchmarks/datasets/IDMT-SMT-DRUMS-V2 \
+--subset RealDrum
+```
+
+```zsh
+# Run the MDB-Drums benchmark
+uv run --extra dev python benchmarks/run.py MDBDrums-master \
+--root "benchmarks/datasets/MDBDrums-master/MDB Drums"
+```
+
+```zsh
+# Run the ENST-Drums benchmark (adapter added; first run pending)
+uv run --extra dev python benchmarks/run.py ENST-drums-public \
+--root benchmarks/datasets/ENST-drums-public
+```
+
+Results are archived to `outputs/benchmarks/{dataset}/`, where `{dataset}` is the dataset name used above, with per-file metrics, summary statistics, and git commit tracking for reproducibility. See [`benchmarks/README.md`](benchmarks/README.md) for dataset setup and full usage.
+
+> **Note:** download each dataset into the `benchmarks/datasets/` folder and keep its native unzipped folder name (`IDMT-SMT-DRUMS-V2`, `MDBDrums-master`, `ENST-drums-public`). No renaming is needed. Datasets must never be committed to git.
 
 ---
 

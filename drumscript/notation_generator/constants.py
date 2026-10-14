@@ -31,8 +31,9 @@ N_FFT = 2048
 
 # FUNDAMENTAL FREQUENCY RANGES (Hz) (Based on testing audio manually)
 # Copy and comment out most recent previous freq for reference, when amending
-# KICK_RANGE = (50, 60)
 KICK_RANGE = (64, 87)  # majority of kick drum fundaemtals either 64.60 or 86.13 HZ, so this is a good baseline
+# KICK_RANGE = (43, 87)  # majority of kick drum fundaemtals either 64.60 or 86.13 HZ, so this is a good baseline (actual lower bound is 43.2 but
+# round down for simplicity)
 # LOW_TOM_RANGE = (90, 110)
 # SNARE_RANGE = (120, 240)
 LOW_TOM_RANGE = (88, 118)  # ie between snare and kick??
@@ -127,7 +128,8 @@ Derived from iterative analysis of user audio samples (Feb 2026).
 KICK_FREQ_MIN = 40.0  # Hz
 KICK_FREQ_MAX = 140.0  # Hz
 # KICK_LFER_MIN = 0.40    # Min 40% energy must be < 150Hz  [UPDATE weds-25-mar-26: commenting out due to duplication (ie KICK_MIN_LFER)]
-KICK_LFER_MIN = 0.32  # Min 32% energy must be < 150Hz [UPDATE weds-25-mar-26: commenting out due to duplication (ie KICK_MIN_LFER, ~line 207 above)]
+# KICK_LFER_MIN = 0.32  # Min 32% energy must be < 150Hz [UPDATE weds-25-mar-26: commenting out due to duplication (ie KICK_MIN_LFER, ~line 207 above)
+KICK_LFER_MIN = 0.08  # follows idmt benchmarking Sept 2026
 KICK_MAX_DECAY = 0.25  # Seconds (Thud)
 
 # B. SNARE DRUM (Wire Noise + Body)

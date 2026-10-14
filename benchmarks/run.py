@@ -3,12 +3,27 @@
 
 Usage::
 
-    python benchmarks/run.py idmt --root /path/to/IDMT-SMT-DRUMS-V2
+    python benchmarks/run.py IDMT-SMT-DRUMS-V2 --root benchmarks/datasets/IDMT-SMT-DRUMS-V2
 
 Global flags (``--output``, ``--run-name``, ``--limit``) go before the dataset
-name. See ``benchmarks/README.md`` for per-dataset preparation and required
-layout. Only ``idmt`` is currently verified end-to-end.
+name. The dataset name is each adapter's ``DATASET_NAME``, which matches the
+dataset's native folder name under ``benchmarks/datasets/``. See
+``benchmarks/README.md`` for per-dataset preparation and required layout.
+``IDMT-SMT-DRUMS-V2`` and ``MDBDrums-master`` are verified end-to-end;
+``ENST-drums-public`` is added but not yet verified.
 """
+
+# PREVIOUS DOCSTRING -- KEEP FOR NOW -- (subcommands renamed to native dataset folder names)
+# """Run a DrumScript benchmark on one dataset.
+#
+# Usage::
+#
+#     python benchmarks/run.py idmt --root /path/to/IDMT-SMT-DRUMS-V2
+#
+# Global flags (``--output``, ``--run-name``, ``--limit``) go before the dataset
+# name. See ``benchmarks/README.md`` for per-dataset preparation and required
+# layout. Only ``idmt`` is currently verified end-to-end.
+# """
 
 from __future__ import annotations
 
@@ -31,15 +46,20 @@ import numpy as np
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from drumscript.audio_processor.audio_loader import load_audio, normalise_audio
 from drumscript.audio_processor.onset_detector import detect_onsets
+from drumscript.datasets import enst as enst_adapter
 from drumscript.datasets import idmt as idmt_adapter
+from drumscript.datasets import mdb as mdb_adapter
 from drumscript.datasets.base import BenchmarkItem
 from drumscript.drum_classifier.classify import classify_events
 from drumscript.notation_generator.constants import SAMPLE_RATE
 
 ONSET_WINDOW = 0.050  # 50 ms tolerance, standard in ADT literature.
 CLI_DESCRIPTION = "Run a DrumScript benchmark on one dataset."
+# ADAPTERS: dict[str, ModuleType] = {idmt_adapter.DATASET_NAME: idmt_adapter, mdb_adapter.DATASET_NAME: mdb_adapter}
 ADAPTERS: dict[str, ModuleType] = {
     idmt_adapter.DATASET_NAME: idmt_adapter,
+    mdb_adapter.DATASET_NAME: mdb_adapter,
+    enst_adapter.DATASET_NAME: enst_adapter,
 }
 
 
@@ -269,7 +289,8 @@ def evaluate_item(item: BenchmarkItem, code_to_labels: Mapping[str, Sequence[str
 def build_parser() -> argparse.ArgumentParser:
     """Build the benchmark command-line parser."""
     parser = argparse.ArgumentParser(description=CLI_DESCRIPTION)
-    parser.add_argument("--output", default=None, help="Per-item CSV path (default: <dataset>_results.csv)")
+    # parser.add_argument("--output", default=None, help="Per-item CSV path (default: <dataset>_results.csv)")
+    parser.add_argument("--output", default=None, help="Per-item CSV path (default: outputs/<dataset>_results.csv)")
     parser.add_argument("--run-name", default=None, help="Optional suffix for the archived run directory")
     parser.add_argument("--limit", type=int, default=None, help="Process only first N items")
 
@@ -299,7 +320,8 @@ def main() -> None:
     print(f"Window  : {int(ONSET_WINDOW * 1000)}ms\n")
     print("─" * 60)
 
-    results: list[dict | None] = [evaluate_item(item, adapter.CODE_TO_DRUMSCRIPT) for item in items]
+    # results: list[dict | None] = [evaluate_item(item, adapter.CODE_TO_DRUMSCRIPT) for item in items]
+    results: list[dict | None] = [evaluate_item(item, adapter.DRUMSCRIPT_DICT) for item in items]
     valid = [r for r in results if r is not None]
     result_statuses = count_result_statuses(items, results)
     print(f"\n{'─' * 60}\nEvaluated {result_statuses['files_evaluated']} / {len(items)} items successfully.")
@@ -318,7 +340,9 @@ def main() -> None:
             print()
             print_summary(f"[{bucket}]", bucket_summary)
 
-    output_path = Path(args.output or f"{ctx.dataset_name}_results.csv")
+    # output_path = Path(args.output or f"{ctx.dataset_name}_results.csv")
+    output_path = Path(args.output or f"outputs/{ctx.dataset_name}_results.csv")
+    output_path.parent.mkdir(parents=True, exist_ok=True)
     write_metrics_csv(items, results, adapter.INSTRUMENT_CODES, output_path)
     print(f"\nPer-item results saved to: {output_path}")
 

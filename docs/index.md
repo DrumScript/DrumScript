@@ -1,11 +1,13 @@
 # `DrumScript` Documentation
 
 <!--date_created:tuesday-30-december-2025-->
-<!--date_updated:saturday-05-september-2026-->
+<!--date_updated:thursday-15-october-2026-->
 
 > **Python >=3.9, < 3.13**
 
 [![Run Tests](https://github.com/DrumScript/DrumScript/actions/workflows/tests.yml/badge.svg?branch=main)](https://github.com/DrumScript/DrumScript/actions/workflows/tests.yml)
+[![PyPI version](https://img.shields.io/pypi/v/drumscript)](https://pypi.org/project/drumscript/)
+[![PyPI downloads](https://img.shields.io/pypi/dm/drumscript)](https://pypistats.org/packages/drumscript)
 
 **DrumScript** is an open-source Python library and CLI tool for drum audio analysis and automatic drum transcription. It also serves as a wrapper for extracting drums from songs using Demucs and creating drumless backing tracks from any song.  
 

@@ -1,7 +1,7 @@
 # **Changelog**
 
 <!--date_added:thurs-28-may-2026-->
-<!--date_updated:tue-29-sept-2026-->
+<!--date_updated:thurs-15-october-2026-->
 
 
 * All notable changes related to the repository and pypi distribution of `DrumScript` will be documented here
@@ -34,6 +34,7 @@
 * Added blurb to `README.md`, `docs/index.md` and `docs/about.md` about build process and current development people
 * Added troubleshooting page to documentation, with navigation tab for known dependency issues/errors impacting DrumScript
 * Added issue forms for `bug_report`, `feature_request` and `submit_results` to make giving feedback easier
+* Added PyPI version and monthly download badges to the badge blocks in `README.md` and `docs/index.md`, both served live by [shields.io](https://shields.io) so neither needs a workflow or a manual bump. The version badge tracks the latest published release; the downloads badge reads [pypistats.org](https://pypistats.org/packages/drumscript), which excludes mirror and bot traffic. Mirror-inclusive counts run roughly 2.3x higher, so the mirror-excluded figure was chosen as the honest one.
 
 **Benchmarks:**
 *  Updated the IDMT benchmark dataset layout and documentation, including local dataset storage under `benchmarks/datasets/`, expanded setup guidance, and a template for adding future benchmark datasets. [#321](https://github.com/DrumScript/DrumScript/pull/321)

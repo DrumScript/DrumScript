@@ -97,6 +97,7 @@ proofs/
 .development/
 local_tests/
 local_tests/**
+tests/unit/test_single_hits.py
 
 # ==========================================
 # DATA, AUDIO & MACHINE LEARNING

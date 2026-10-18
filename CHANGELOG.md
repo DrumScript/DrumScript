@@ -1,7 +1,7 @@
 # **Changelog**
 
 <!--date_added:thurs-28-may-2026-->
-<!--date_updated:thurs-15-october-2026-->
+<!--date_updated:sun-17-october-2026-->
 
 
 * All notable changes related to the repository and pypi distribution of `DrumScript` will be documented here
@@ -30,11 +30,20 @@
 > Items listed below are **currently in development** but **have not been distributed on PyPi**
 
 > ### *Additions*
+
 **Documentation:** 
 * Added blurb to `README.md`, `docs/index.md` and `docs/about.md` about build process and current development people
 * Added troubleshooting page to documentation, with navigation tab for known dependency issues/errors impacting DrumScript
 * Added issue forms for `bug_report`, `feature_request` and `submit_results` to make giving feedback easier
 * Added PyPI version and monthly download badges to the badge blocks in `README.md` and `docs/index.md`, both served live by [shields.io](https://shields.io) so neither needs a workflow or a manual bump. The version badge tracks the latest published release; the downloads badge reads [pypistats.org](https://pypistats.org/packages/drumscript), which excludes mirror and bot traffic. Mirror-inclusive counts run roughly 2.3x higher, so the mirror-excluded figure was chosen as the honest one.
+
+**Testing**
+* Added an automated E2E transcription harness under `scripts/e2e/`, replacing the manual before/after routine. Three parts, driven by one config file (`scripts/e2e/e2e_tracks.json`) so the runner and the assertions cannot drift apart:
+  - `run_e2e.py` runs every configured audio file through `drumscript.main`, verifies the outputs, archives them to a dated `outputs/orchestration_outputs/` folder following the existing naming convention, copies `Drum-music-notation.jpg` and `drumscript_full_review.txt` in, and writes a `manifest.json` recording the commit, whether the tree was dirty, the Python version and per-entry timings.
+  - `compare_runs.py` diffs two run folders and reports what moved. It compares the `*_transcription.json` files rather than `drumscript.log`, so the output is `kick 673->938 (+265)` with the changed onsets listed, rather than two columns of log text to read by eye. Works on any folder containing transcription JSON, including the hundreds of archived runs made before this tooling existed - no migration needed.
+  - `e2e_config.py` holds the shared config loading and expectation checking imported by both, and by the pytest suite.
+* Added `tests/e2e/test_single_hits.py` (13 tests, marked `e2e`): the nine isolated single-hit samples have a known correct classification, so they are asserted rather than compared - `kick_0006.wav` must classify as `kick`. Plus guards that every `single_hit` entry declares an expectation, that entry names are unique (duplicates would overwrite each other's output), and that every configured audio file exists. Skipped automatically when `test_audio/` is absent, so CI and contributor checkouts are unaffected.
+* Added `scripts/e2e/README.md` documenting the harness, the config schema, all flags, exit codes and how to substitute your own drum samples.
 
 **Benchmarks:**
 *  Updated the IDMT benchmark dataset layout and documentation, including local dataset storage under `benchmarks/datasets/`, expanded setup guidance, and a template for adding future benchmark datasets. [#321](https://github.com/DrumScript/DrumScript/pull/321)
@@ -56,11 +65,15 @@
 * Adapter attribute `CODE_TO_DRUMSCRIPT` renamed to `DRUMSCRIPT_DICT` across the IDMT and MDB adapters, `benchmarks/run.py`, `analyze_mdb_dataset.py` and the adapter contract test.
 * `benchmarks/README.md`, `tests/README.md`, `tests/tree_tests.txt`, the root `README.md` and `tree.txt` updated for the ENST adapter, the renamed dataset folders and the current test counts (142 unit tests).
 
+**Testing:**
+* `scripts/backup.sh` now runs without prompting when `E2E_TIMING`, `E2E_REASON` and `E2E_BACKUP_NUM` are set in the environment, so `run_e2e.py` can call it unattended. Any variable left unset still prompts exactly as before, so running the script by hand is unchanged. The three original `read -r -p` lines are commented out above the new block rather than deleted, per project convention.
+* New `e2e` pytest marker registered in `pyproject.toml`. Required because `--strict-markers` is enabled. CI selection becomes `pytest -m "not e2e"`.
 
 > ### *Fixes*
 * warn when an invalid time signature falls back to 4/4 instead of failing silently
 * Root `README.md` benchmarking section: the MDB code block was missing its closing fence, so the results paragraph rendered as code; and the IDMT example placed the global `--limit` flag after the dataset name, which `run.py` rejects.
 * **Python 3.13 not supported.** DrumScript pins `numpy<2`, and numpy 1.x has no cp313 wheels on PyPI. This caused `pip install drumscript` on Python 3.13 to fall back to a source build (which requires a C toolchain most users don't have), producing a confusing `Compiler cc cannot compile programs` error rather than a clear "unsupported Python version" message. `requires-python` lowered from `<3.14` to `<3.13` in `pyproject.toml`. Python 3.13 support planned once DrumScript migrates to `numpy>=2` (see [#303](https://github.com/DrumScript/DrumScript/issues/303)).
+* **E2E runs could fail silently.** `drumscript.main` prints errors but still exits 0, so a failing track did not stop the `&&` chain. In the 19 September before/after comparison, one of the songs failed with `Audio file not found` in *both* halves, so the side-by-side log diff looked clean while that track contributed nothing. `run_e2e.py` checks every audio file exists before running anything (exit 2, nothing run), and afterwards confirms the `.json`, `.pdf` and `.mid` were genuinely written - it never trusts the return code. The underlying exit-code behaviour in `main()` is unchanged and remains open.
 
 > **Known debt being paid down alongside the alpha's fundamental work (model + score generation).** These are treated as bugs to fix, not future features - but they are not allowed to displace the core classification/score-generation work:
 

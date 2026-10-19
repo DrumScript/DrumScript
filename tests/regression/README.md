@@ -51,7 +51,7 @@ cp tests/regression/songs.example.json tests/regression/songs.json
 
 Then edit `songs.json` to point at your own audio.
 
-`songs.json` is **gitignored** — it names files on your machine. `songs.example.json` is
+`songs.json` is **gitignored** - it names files on your machine. `songs.example.json` is
 committed, so a fresh clone always has a template.
 
 Without `songs.json`, the tests skip and the CLI prints these instructions. Nothing
@@ -66,7 +66,7 @@ tests/regression/songs.json
 ### Nothing else to configure
 
 The `integration` marker it uses is already defined in `pyproject.toml`. No new markers,
-no new dependencies — the script is standard library only, apart from pytest and
+no new dependencies - the script is standard library only, apart from pytest and
 DrumScript itself.
 
 ---
@@ -169,7 +169,7 @@ Valid instrument labels: `kick`, `snare`, `hi_hat_closed`, `hi_hat_open`, `low_t
 `mid_tom`, `high_tom`, `crash`, `ride`.
 
 Top-level keys control `audio_root`, `output_dir`, `archive_dir`, `run_log`, and
-`extra_files` — a list of repo-relative files copied into every run folder, for anything
+`extra_files` - a list of repo-relative files copied into every run folder, for anything
 you want travelling beside the results.
 
 ---
@@ -182,7 +182,7 @@ asserted. The only automatic check is `min_events`, which catches a track silent
 producing nothing.
 
 **A `single_hit` does have a known answer.** A recording of one kick drum must classify
-as `kick`. These are **asserted** — real pass/fail, and what catches a threshold change
+as `kick`. These are **asserted** - real pass/fail, and what catches a threshold change
 breaking detection without anyone reading a diff.
 
 If you do not know what a file should produce, make it a `track`. It will be compared
@@ -234,7 +234,7 @@ archives made long before this script existed. No migration.
 |---|---|
 | `0` | Every entry ran and passed |
 | `1` | At least one entry failed to run or failed its expectation |
-| `2` | Setup problem — missing audio or config. Nothing was run |
+| `2` | Setup problem - missing audio or config. Nothing was run |
 
 **`compare`**
 

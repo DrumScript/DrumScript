@@ -1,7 +1,7 @@
 # Transcription regression checks
 
 <!--date_added:sun-18-oct-2026-->
-<!--date_updated:sun-18-oct-2026-->
+<!--date_updated:mon-19-oct-2026-->
 
 Run a fixed set of audio through DrumScript, archive the results, and compare against
 last time. One script, one config, three jobs.

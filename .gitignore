@@ -99,6 +99,7 @@ local_tests/
 local_tests/**
 tests/unit/test_single_hits.py
 tests/e2e
+tests/regression/songs.json
 
 # ==========================================
 # DATA, AUDIO & MACHINE LEARNING

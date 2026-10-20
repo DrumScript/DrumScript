@@ -1,7 +1,7 @@
 # **Changelog**
 
 <!--date_added:thurs-28-may-2026-->
-<!--date_updated:sun-17-october-2026-->
+<!--date_updated:tues-20-october-2026-->
 
 
 * All notable changes related to the repository and pypi distribution of `DrumScript` will be documented here
@@ -37,14 +37,14 @@
 * Added issue forms for `bug_report`, `feature_request` and `submit_results` to make giving feedback easier
 * Added PyPI version and monthly download badges to the badge blocks in `README.md` and `docs/index.md`, both served live by [shields.io](https://shields.io) so neither needs a workflow or a manual bump. The version badge tracks the latest published release; the downloads badge reads [pypistats.org](https://pypistats.org/packages/drumscript), which excludes mirror and bot traffic. Mirror-inclusive counts run roughly 2.3x higher, so the mirror-excluded figure was chosen as the honest one.
 
-**Testing**
-* Added an automated E2E transcription harness under `scripts/e2e/`, replacing the manual before/after routine. Three parts, driven by one config file (`scripts/e2e/e2e_tracks.json`) so the runner and the assertions cannot drift apart:
-  - `run_e2e.py` runs every configured audio file through `drumscript.main`, verifies the outputs, archives them to a dated `outputs/orchestration_outputs/` folder following the existing naming convention, copies `Drum-music-notation.jpg` and `drumscript_full_review.txt` in, and writes a `manifest.json` recording the commit, whether the tree was dirty, the Python version and per-entry timings.
-  - `compare_runs.py` diffs two run folders and reports what moved. It compares the `*_transcription.json` files rather than `drumscript.log`, so the output is `kick 673->938 (+265)` with the changed onsets listed, rather than two columns of log text to read by eye. Works on any folder containing transcription JSON, including the hundreds of archived runs made before this tooling existed - no migration needed.
-  - `e2e_config.py` holds the shared config loading and expectation checking imported by both, and by the pytest suite.
-* Added `tests/e2e/test_single_hits.py` (13 tests, marked `e2e`): the nine isolated single-hit samples have a known correct classification, so they are asserted rather than compared - `kick_0006.wav` must classify as `kick`. Plus guards that every `single_hit` entry declares an expectation, that entry names are unique (duplicates would overwrite each other's output), and that every configured audio file exists. Skipped automatically when `test_audio/` is absent, so CI and contributor checkouts are unaffected.
-* Added `scripts/e2e/README.md` documenting the harness, the config schema, all flags, exit codes and how to substitute your own drum samples.
+**Testing:**
+* Added a transcription regression harness at `tests/regression/`, replacing the manual before/after routine. One file, `test_regression.py`, is both a pytest module and a command-line tool with `run`, `compare` and `verify` subcommands. `run` transcribes every file in the config, verifies the outputs and archives them to a dated folder with a `manifest.json` recording the commit, whether the tree was dirty, per-entry timings and results. `compare` diffs two archives and reports what moved. `verify` re-checks an archived folder against the current expectations.
+* Two kinds of check, driven by one config. A `track` entry has no known-correct transcription, so it is compared against a previous run. A `single_hit` entry is an isolated drum or cymbal recording with a known answer, so it is asserted: a kick sample must classify as `kick`. The `kind` field distinguishes them.
+* Added `tests/regression/songs.example.json`, a committed template documenting the config schema. The working copy, `songs.json`, is gitignored, so nobody's audio file list is published. Without it the pytest tests skip and the CLI prints setup instructions, so a fresh clone is never broken by its absence.
+* Added `scripts/check_harness.sh`, a smoke test for the harness itself. Runs the cheapest checks first, with `--full` and `--prove` for the slower ones. Per-step logs go to `scripts/logs/check_harness/<timestamp>/`.
+* Added `tests/regression/README.md` documenting the config schema, every flag, the exit codes and how to substitute your own audio.
 
+> ### *Changes*
 **Benchmarks:**
 *  Updated the IDMT benchmark dataset layout and documentation, including local dataset storage under `benchmarks/datasets/`, expanded setup guidance, and a template for adding future benchmark datasets. [#321](https://github.com/DrumScript/DrumScript/pull/321)
 * Added MDB-Drums full-kit benchmark support with dataset mappings, documentation, and adapter tests. [#330](https://github.com/DrumScript/DrumScript/pull/330)
@@ -52,9 +52,8 @@
 <!--* Added `drumscript/utils/research/analyze_mdb_dataset.py`: full-kit stage attribution, per-class confusion reporting, and per-class feature distributions for MDB-Drums.UNCOMMENT WHEN WORK IS DONE-->
 * Added ENST-Drums full-kit benchmark adapter (`drumscript/datasets/enst.py`), registered in `benchmarks/run.py`. Follows the MDB "direct notation equivalent or exclude" mapping; tom labels are left unmapped pending a decision, and are logged rather than silently dropped. First run pending.
 * Added `drumscript/utils/research/analyze_enst_dataset.py`: ENST-Drums equivalent of the MDB diagnostics script (stage attribution, confusion reporting, per-class feature distributions), with `--audio` and `--subset` flags.
-* Expanded benchmark dataset coverage (ENST-Drums, MDB-Drums) building on the IDMT-SMT-Drums V2 foundation shipped in v0.1.6
-
-> ### *Changes*
+* Expanded benchmark dataset coverage (ENST-Drums, MDB-Drums) building on the IDMT-SMT-Drums V2 foundation shipped in v0.1.6.
+  
 **Classification:**
 * **Kick drum detection threshold recalibrated.** `KICK_LFER_MIN` lowered from `0.32` to `0.08` in `constants.py`. The original value was derived from isolated drum stems; because LFER is a ratio of sub-150Hz energy to total energy, simultaneous hi-hat energy in mixed audio suppresses it, so the threshold sat above the median LFER of a genuine kick (0.213 across 5,387 annotated IDMT onsets). Mean kick F-measure on IDMT-SMT-Drums V2 rose from a rule firing on 27.9% of reference kicks to one firing on 86.3%, with zero-scoring tracks falling from 31/95 to 0/95. On MDB-Drums, mean kick F-measure rose from 0.397 to 0.721. No other instrument class changed on either dataset. Frequency bounds (`KICK_FREQ_MIN`, `KICK_FREQ_MAX`) deliberately left unchanged to avoid widening the kick band into the snare and tom ranges.
 -  *fix in progress* **Known issue:** Tom, ride and crash rules currently produce zero predictions against MDB-Drums (835 ride and 64 tom reference hits, 0 estimates). These are unreachable rules rather than mis-tuned thresholds.  
@@ -66,8 +65,10 @@
 * `benchmarks/README.md`, `tests/README.md`, `tests/tree_tests.txt`, the root `README.md` and `tree.txt` updated for the ENST adapter, the renamed dataset folders and the current test counts (142 unit tests).
 
 **Testing:**
-* `scripts/backup.sh` now runs without prompting when `E2E_TIMING`, `E2E_REASON` and `E2E_BACKUP_NUM` are set in the environment, so `run_e2e.py` can call it unattended. Any variable left unset still prompts exactly as before, so running the script by hand is unchanged. The three original `read -r -p` lines are commented out above the new block rather than deleted, per project convention.
-* New `e2e` pytest marker registered in `pyproject.toml`. Required because `--strict-markers` is enabled. CI selection becomes `pytest -m "not e2e"`.
+<!--* `scripts/backup.sh` now runs without prompting when `E2E_TIMING`, `E2E_REASON` and `E2E_BACKUP_NUM` are set, so the harness can call it unattended. Any variable left unset still prompts exactly as before, so running it by hand is unchanged. The three original `read -r -p` lines are commented out above the new block rather than deleted, per project convention.-->
+* Renamed the "Regression tests" section to "Behaviour-locking unit tests" in both `tests/README.md` and `docs/development/testing_guidance.md`. Those are ordinary unit tests pinning previously-fixed behaviour, and the old name collided with the new `tests/regression/` harness. Both sections now cross-reference each other so the two cannot be confused.
+* `docs/development/testing_guidance.md`: the Suite Layout tree printed `tests/` twice, nested inside itself, and omitted `test_pdf_time_signature.py`. Replaced with a single correct tree including `regression/`. The Test Pyramid's bottom row, previously an unoccupied "End-to-end" entry, now describes the transcription regression tier.
+* `tests/tree_tests.txt` regenerated for the new folder.
 
 > ### *Fixes*
 * warn when an invalid time signature falls back to 4/4 instead of failing silently
@@ -157,8 +158,9 @@ Items listed below are fully implemented and **published to pypi** under an offi
 * Added `Traffic` section to [README](./README.md#traffic) with links to daily-updated repository statistics report (PDF and HTML), generated by `repo-stats.yml` via [github-repo-stats](https://github.com/jgehrcke/github-repo-stats)
 * Added CHANGELOG reference to README table of contents (Sphinx docs already linked via symlink)
 * `_TranscribeResult` deprecation shim class in `drumscript/__init__.py`: dict subclass with `__str__` and `__fspath__` methods that emit `DeprecationWarning` when the return value of `transcribe()` is used as a string. Provides smooth migration path from v0.1.x string return to v1.0.0 dict return.
-* Added `scripts/verify_release.sh` - 56-check release verification script covering every documented CLI command and public API function, run in a clean temporary directory to catch environment assumptions (e.g. the missing-`outputs/` bug)
-* Added `scripts/close_issues_v020.sh` - batch `gh issue close` script (with per-issue comments) for the GitHub issues resolved in v0.2.0
+* Added `scripts/verify_release.sh` - 56-
+* check release verification script covering every documented CLI command and public API function, run in a clean temporary directory to catch environment assumptions (e.g. the missing-`outputs/` bug)
+<!--* Added `scripts/close_issues_v020.sh` - batch `gh issue close` script (with per-issue comments) for the GitHub issues resolved in v0.2.0-->
 * Added timeout to jobs block in `tests.yml` and add `--no-install-recommend` to linux system dependencies job to prevent `apt-get` issues in workflow
 >
 > ### *Changes*

@@ -1,7 +1,7 @@
 # DrumScript Tests
 
 <!--date_added:weds-29-apr-2026-->
-<!--date_updated:sat-03-oct-2026-->
+<!--date_updated:tues-20-october-2026-->
 
 This directory contains the pytest test suite for `DrumScript`.
 
@@ -21,15 +21,15 @@ DrumScript/
     ├── unit/                               ← fast, no I/O, no subprocess
     │   ├── __init__.py
     │   ├── test_audio_loader.py            ← 13 tests
-    │   ├── test_benchmarks_run.py          ←  7 tests (added v0.1.6,{PR#273})
+    │   ├── test_benchmarks_run.py          ←  7 tests
     │   ├── test_classify.py                ← 24 tests
-    │   ├── test_cli_args.py                ←  4 tests (added v0.1.6)
-    │   ├── test_deprecation_warnings.py    ← 13 tests (added v0.1.6)
+    │   ├── test_cli_args.py                ←  4 tests
+    │   ├── test_deprecation_warnings.py    ← 13 tests
     │   ├── test_helpers.py                 ← 24 tests
-    │   ├── test_idmt_dataset.py            ←  4 tests  (added v0.1.6,{PR#273})
+    │   ├── test_idmt_dataset.py            ←  4 tests
     │   ├── test_onset_detector.py          ←  7 tests
     │   ├── test_pdf_time_signature.py      ←  3 tests
-    │   ├── test_stem_splitter_helpers.py    ← 17 tests (includes regression)
+    │   ├── test_stem_splitter_helpers.py   ← 17 tests
     │   ├── test_tempo_detector.py          ←  6 tests
     │   └── test_transcribe.py              ← 20 tests
     ├── integration/                        ← real files; Demucs/ffmpeg where noted

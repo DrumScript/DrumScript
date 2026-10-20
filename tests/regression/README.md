@@ -288,11 +288,13 @@ The pytest assertions call `ds.transcribe()` with `output_dir` set to `tmp_path`
 That honours the project rule against writing to the working directory, leaves the real
 output folder untouched, and gets a proper `FileNotFoundError` instead of a silent exit 0.
 
-### Not the same as "regression tests" in `tests/README.md`
+### Not the same as the behaviour-locking unit tests
 
-That section means individual pytest tests locking in previously-fixed behaviour, living
-in `unit/` and `integration/`. This folder is a before/after comparison harness. Same
-word, different thing.
+`tests/README.md` has a section called "Behaviour-locking unit tests", covering
+individual pytest tests that pin down previously-fixed behaviour. They live in `unit/`
+and `integration/`, and were loosely called "regression tests" before this harness
+existed. This folder is a before/after comparison harness instead: a related idea, but a
+different thing.
 
 ### `manifest.json`
 

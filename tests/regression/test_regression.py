@@ -139,6 +139,14 @@ BACKUP_ENV_TIMING = "E2E_TIMING"
 BACKUP_ENV_REASON = "E2E_REASON"
 BACKUP_ENV_NUMBER = "E2E_BACKUP_NUM"
 
+#: Seconds before a subprocess is treated as hung and killed. Every child is
+#: also given a closed stdin, so a script that prompts gets EOF and carries on
+#: instead of waiting for a keypress nobody can see: `capture_output` swallows
+#: the prompt, so a blocking `read` looks exactly like a stall.
+BACKUP_TIMEOUT_S = 900
+GIT_TIMEOUT_S = 30
+DEFAULT_ENTRY_TIMEOUT_S = 3600
+
 SETUP_HINT = (
     f"No {CONFIG_FILENAME} found.\n"
     f"  Copy the template and point it at your own audio:\n"
@@ -731,10 +739,18 @@ def git_commit(root):
     :rtype: str
     """
     try:
-        result = subprocess.run(["git", "rev-parse", "--short", "HEAD"], cwd=str(root), capture_output=True, text=True, check=False)
+        result = subprocess.run(
+            ["git", "rev-parse", "--short", "HEAD"],
+            cwd=str(root),
+            capture_output=True,
+            text=True,
+            check=False,
+            stdin=subprocess.DEVNULL,
+            timeout=GIT_TIMEOUT_S,
+        )
         if result.returncode == 0:
             return result.stdout.strip()
-    except OSError:
+    except (OSError, subprocess.TimeoutExpired):
         pass
     return "unknown"
 
@@ -752,9 +768,17 @@ def git_is_dirty(root):
     :rtype: bool
     """
     try:
-        result = subprocess.run(["git", "status", "--porcelain"], cwd=str(root), capture_output=True, text=True, check=False)
+        result = subprocess.run(
+            ["git", "status", "--porcelain"],
+            cwd=str(root),
+            capture_output=True,
+            text=True,
+            check=False,
+            stdin=subprocess.DEVNULL,
+            timeout=GIT_TIMEOUT_S,
+        )
         return bool(result.stdout.strip()) if result.returncode == 0 else False
-    except OSError:
+    except (OSError, subprocess.TimeoutExpired):
         return False
 
 
@@ -835,7 +859,7 @@ def preflight(config, entries, root):
     return problems
 
 
-def run_entry(config, entry, root, log_handle, tee):
+def run_entry(config, entry, root, log_handle, tee, timeout_s=DEFAULT_ENTRY_TIMEOUT_S):
     """
     Runs the transcription CLI for one entry and verifies its outputs.
 
@@ -854,6 +878,8 @@ def run_entry(config, entry, root, log_handle, tee):
     :type log_handle: io.TextIOBase
     :param tee: When True, also stream the output to the terminal.
     :type tee: bool
+    :param timeout_s: Seconds before this entry is treated as hung and killed.
+    :type timeout_s: int
     :return: A result dict describing what happened.
     :rtype: dict
     """
@@ -862,10 +888,27 @@ def run_entry(config, entry, root, log_handle, tee):
     command = [sys.executable] + python_flags + ["-m", "drumscript.main", str(audio)] + list(entry.get("args", []))
 
     started = datetime.now()
-    completed = subprocess.run(command, cwd=str(root), capture_output=True, text=True, check=False)
+    # stdin is closed so anything that tries to prompt gets EOF rather than
+    # blocking on input nobody can see, and the timeout is a hard backstop.
+    timed_out = False
+    try:
+        completed = subprocess.run(
+            command,
+            cwd=str(root),
+            capture_output=True,
+            text=True,
+            check=False,
+            stdin=subprocess.DEVNULL,
+            timeout=timeout_s,
+        )
+        output = completed.stdout + (completed.stderr or "")
+        returncode = completed.returncode
+    except subprocess.TimeoutExpired as exc:
+        timed_out = True
+        returncode = None
+        output = (exc.stdout or "") + (exc.stderr or "") if isinstance(exc.stdout, str) else ""
     duration = (datetime.now() - started).total_seconds()
 
-    output = completed.stdout + (completed.stderr or "")
     log_handle.write(output)
     log_handle.flush()
     if tee:
@@ -875,11 +918,15 @@ def run_entry(config, entry, root, log_handle, tee):
         "name": entry["name"],
         "kind": entry.get("kind"),
         "command": command,
-        "returncode": completed.returncode,
+        "returncode": returncode,
         "duration_s": round(duration, 2),
         "passed": False,
         "message": "",
     }
+
+    if timed_out:
+        result["message"] = f"timed out after {timeout_s}s and was killed"
+        return result
 
     # The CLI exits 0 even on failure, so the written files are the real signal.
     expected = output_paths(config, entry, root)
@@ -923,13 +970,39 @@ def run_backup(root, timing, label, number):
     if not script.is_file():
         return False, f"not found, skipped: {script}"
 
+    # An unpatched backup.sh prompts for its three answers. Under capture_output
+    # the prompt is invisible, so a blocking `read` is indistinguishable from a
+    # stall. Rather than run it blind and let it produce a backup named from
+    # three empty strings, check for the variables and skip with an explanation.
+    try:
+        script_text = script.read_text(encoding="utf-8", errors="replace")
+    except OSError as exc:
+        return False, f"could not read backup.sh: {exc}"
+
+    if BACKUP_ENV_TIMING not in script_text:
+        return False, (
+            f"skipped: {script.name} does not read ${BACKUP_ENV_TIMING}, so it would prompt and hang. "
+            "Update it to the non-interactive version, or pass --no-backup."
+        )
+
     environment = dict(os.environ)
     environment[BACKUP_ENV_TIMING] = timing or "AFTER"
     environment[BACKUP_ENV_REASON] = label
     environment[BACKUP_ENV_NUMBER] = str(number)
 
     try:
-        completed = subprocess.run(["bash", str(script)], cwd=str(root), capture_output=True, text=True, env=environment, check=False)
+        completed = subprocess.run(
+            ["bash", str(script)],
+            cwd=str(root),
+            capture_output=True,
+            text=True,
+            env=environment,
+            check=False,
+            stdin=subprocess.DEVNULL,
+            timeout=BACKUP_TIMEOUT_S,
+        )
+    except subprocess.TimeoutExpired:
+        return False, f"timed out after {BACKUP_TIMEOUT_S}s and was killed. Re-run with --no-backup to skip it."
     except OSError as exc:
         return False, f"could not run backup.sh: {exc}"
 
@@ -1300,7 +1373,7 @@ def cmd_run(args):
         log_handle.write(f"\n{'=' * 78}\nREGRESSION RUN  {stamp}  label={args.label}  timing={args.timing or '-'}\n{'=' * 78}\n")
 
         for entry in entries:
-            result = run_entry(config, entry, root, log_handle, args.tee)
+            result = run_entry(config, entry, root, log_handle, args.tee, args.timeout)
             results.append(result)
             status = "PASS" if result["passed"] else "FAIL"
             print(f"  [{status}] {result['name'][:52]:<54} {result['duration_s']:>7.2f}s  {result['message']}")
@@ -1414,6 +1487,12 @@ def build_parser():
     run.add_argument("--no-archive", action="store_true", help="Run and verify, but do not create a dated folder")
     run.add_argument("--keep-outputs", action="store_true", help="Copy rather than move, leaving the output folder populated")
     run.add_argument("--config", type=Path, default=None, help="Use a different config file")
+    run.add_argument(
+        "--timeout",
+        type=int,
+        default=DEFAULT_ENTRY_TIMEOUT_S,
+        help=f"Seconds before one entry is treated as hung and killed (default: {DEFAULT_ENTRY_TIMEOUT_S})",
+    )
     run.add_argument("--dry-run", action="store_true", help="Print what would run and change nothing")
     run.set_defaults(func=cmd_run)
 

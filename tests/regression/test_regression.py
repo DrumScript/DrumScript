@@ -127,6 +127,9 @@ TIME_MATCH_TOLERANCE_S = 0.002
 #: Folder-name date format, e.g. "sat18october2026". Lowercased after formatting.
 FOLDER_DATE_FORMAT = "%a%d%B%Y"
 
+#: Scope segment used when a run covered every configured entry.
+DEFAULT_SCOPE = "all-files"
+
 #: Entry kinds.
 KIND_TRACK = "track"
 KIND_SINGLE_HIT = "single_hit"
@@ -729,6 +732,22 @@ def build_report(results, only_before, only_after, before_dir, after_dir, show_o
 # =============================================================================
 
 
+def say(message, prefix="  "):
+    """
+    Prints a progress line and flushes it immediately.
+
+    Without the flush, stdout is block-buffered when piped (into ``tee``, say),
+    so nothing appears until the run ends. The whole point of these lines is to
+    show what is happening while a long track is transcribing.
+
+    :param message: The line to print.
+    :type message: str
+    :param prefix: Indentation prefix.
+    :type prefix: str
+    """
+    print(f"{prefix}{message}", flush=True)
+
+
 def git_commit(root):
     """
     Returns the current short git commit, for the manifest.
@@ -782,12 +801,19 @@ def git_is_dirty(root):
         return False
 
 
-def build_folder_name(archive_dir, label, timing):
+def build_folder_name(archive_dir, label, timing, tag=None, scope=DEFAULT_SCOPE):
     """
     Builds a non-clashing dated archive folder name.
 
-    The trailing number increments until the name is free, so two runs on the
-    same day never overwrite each other.
+    The shape is::
+
+        thu22october2026__orchestration_outputs__BEFORE__my_label__all-files__1
+        |______________|  |___________________|  |____|  |______|  |_______|  |
+          date            tag                    timing  label     scope      number
+
+    ``timing`` is omitted when it was not supplied. The trailing number
+    increments until the name is free, so two runs on the same day never
+    overwrite each other.
 
     :param archive_dir: Directory the run folders live in.
     :type archive_dir: pathlib.Path
@@ -795,19 +821,54 @@ def build_folder_name(archive_dir, label, timing):
     :type label: str
     :param timing: ``BEFORE``, ``AFTER`` or None.
     :type timing: str, optional
+    :param tag: Second segment; defaults to the archive directory's own name.
+    :type tag: str, optional
+    :param scope: What the run covered, e.g. ``all-files``.
+    :type scope: str
     :return: A path that does not yet exist.
     :rtype: pathlib.Path
     """
     date_part = datetime.now().strftime(FOLDER_DATE_FORMAT).lower()
     safe_label = "".join(char if char.isalnum() or char in "_-" else "_" for char in label)
-    middle = f"{timing}__{safe_label}" if timing else safe_label
+    folder_tag = tag or Path(archive_dir).name
+
+    segments = [date_part, folder_tag]
+    if timing:
+        segments.append(timing)
+    segments.extend([safe_label, scope])
+    stem = "__".join(segments)
 
     number = 1
     while True:
-        candidate = archive_dir / f"{date_part}__{middle}--{number}"
+        candidate = archive_dir / f"{stem}__{number}"
         if not candidate.exists():
             return candidate
         number += 1
+
+
+def describe_scope(config, entries, only, kind):
+    """
+    Describes what a run covered, for the folder name's scope segment.
+
+    A filtered run must not be labelled ``all-files``: a later comparison would
+    otherwise look like entries had vanished, when they were never run.
+
+    :param config: The loaded configuration.
+    :type config: dict
+    :param entries: The entries actually selected.
+    :type entries: list
+    :param only: The ``--only`` names given, if any.
+    :type only: list
+    :param kind: The ``--kind`` filter given, if any.
+    :type kind: str, optional
+    :return: A filename-safe scope description.
+    :rtype: str
+    """
+    if not only and not kind:
+        return DEFAULT_SCOPE
+    if kind and not only:
+        return f"{kind.replace('_', '-')}-files"
+    return f"{len(entries)}-of-{len(config['entries'])}-files"
 
 
 def select_entries(config, only, kind):
@@ -970,25 +1031,24 @@ def run_backup(root, timing, label, number):
     if not script.is_file():
         return False, f"not found, skipped: {script}"
 
-    # An unpatched backup.sh prompts for its three answers. Under capture_output
-    # the prompt is invisible, so a blocking `read` is indistinguishable from a
-    # stall. Rather than run it blind and let it produce a backup named from
-    # three empty strings, check for the variables and skip with an explanation.
-    try:
-        script_text = script.read_text(encoding="utf-8", errors="replace")
-    except OSError as exc:
-        return False, f"could not read backup.sh: {exc}"
+    answers = [timing or "AFTER", label, str(number)]
 
-    if BACKUP_ENV_TIMING not in script_text:
-        return False, (
-            f"skipped: {script.name} does not read ${BACKUP_ENV_TIMING}, so it would prompt and hang. "
-            "Update it to the non-interactive version, or pass --no-backup."
-        )
-
+    # Two kinds of backup.sh exist in the wild and this has to drive both:
+    #
+    #   the interactive original  asks its three questions with `read -r -p`
+    #   the non-interactive one   reads E2E_TIMING / E2E_REASON / E2E_BACKUP_NUM
+    #
+    # So do both. The environment is set for the second, and the three answers
+    # are piped in for the first. A script that reads the environment simply
+    # never consumes the stdin, which costs nothing.
+    #
+    # This is also what stops the hang: stdin is a pipe that closes after those
+    # three lines, so a fourth `read` gets EOF instead of waiting forever on a
+    # prompt that capture_output has swallowed.
     environment = dict(os.environ)
-    environment[BACKUP_ENV_TIMING] = timing or "AFTER"
-    environment[BACKUP_ENV_REASON] = label
-    environment[BACKUP_ENV_NUMBER] = str(number)
+    environment[BACKUP_ENV_TIMING] = answers[0]
+    environment[BACKUP_ENV_REASON] = answers[1]
+    environment[BACKUP_ENV_NUMBER] = answers[2]
 
     try:
         completed = subprocess.run(
@@ -998,7 +1058,7 @@ def run_backup(root, timing, label, number):
             text=True,
             env=environment,
             check=False,
-            stdin=subprocess.DEVNULL,
+            input="\n".join(answers) + "\n",
             timeout=BACKUP_TIMEOUT_S,
         )
     except subprocess.TimeoutExpired:
@@ -1008,7 +1068,7 @@ def run_backup(root, timing, label, number):
 
     if completed.returncode != 0:
         return False, f"backup.sh exited {completed.returncode}: {completed.stderr.strip()[:200]}"
-    return True, "code bundle regenerated"
+    return True, f"code bundle regenerated (answers: {', '.join(answers)})"
 
 
 def archive_outputs(config, entries, root, destination, keep_outputs):
@@ -1334,6 +1394,9 @@ def cmd_run(args):
     :return: Process exit code.
     :rtype: int
     """
+    started_at = datetime.now()
+
+    say(f"Loading config from {args.config or config_path()}", prefix="")
     config = load_config(args.config)
     root = repo_root()
     entries = select_entries(config, args.only, args.kind)
@@ -1342,65 +1405,87 @@ def cmd_run(args):
         print("[ERROR] No entries selected.")
         return 2
 
+    say(f"Repository root: {root}", prefix="")
     dirty = " (dirty tree)" if git_is_dirty(root) else ""
-    print(f"Transcription regression -- {len(entries)} entries, commit {git_commit(root)}{dirty}")
+    say(f"Commit: {git_commit(root)}{dirty}", prefix="")
+    say(f"Selected {len(entries)} of {len(config['entries'])} configured entries", prefix="")
     print()
 
+    say("Pre-flight: checking every audio file exists...", prefix="")
     problems = preflight(config, entries, root)
     if problems:
         print("[ERROR] Pre-flight failed. Nothing was run:")
         for problem in problems:
             print(f"  - {problem}")
         return 2
+    say(f"Pre-flight OK: all {len(entries)} files present", prefix="")
+    print()
 
     archive_dir = root / config.get("archive_dir", "outputs/regression_runs")
+    folder_tag = config.get("folder_tag")
+    scope = describe_scope(config, entries, args.only, args.kind)
 
     if args.dry_run:
         print("[DRY RUN] Would run, in order:")
-        for entry in entries:
+        for position, entry in enumerate(entries, start=1):
             flags = " ".join(entry.get("python_flags", []) + entry.get("args", []))
-            print(f"  - {entry['name'][:52]:<54} {entry['file']} {flags}".rstrip())
+            print(f"  [{position:>2}/{len(entries)}] {entry['name'][:52]:<54} {entry['file']} {flags}".rstrip())
         print()
-        print(f"[DRY RUN] Would archive to: {build_folder_name(archive_dir, args.label, args.timing)}")
+        print(f"[DRY RUN] Would archive to: {build_folder_name(archive_dir, args.label, args.timing, folder_tag, scope)}")
         return 0
 
     log_path = root / config.get("run_log", "drumscript/logs/drumscript.log")
     log_path.parent.mkdir(parents=True, exist_ok=True)
+    say(f"Appending transcription output to {log_path}", prefix="")
+    print()
 
     results = []
     with open(log_path, "a", encoding="utf-8") as log_handle:
         stamp = f"{datetime.now():%Y-%m-%d %H:%M:%S}"
         log_handle.write(f"\n{'=' * 78}\nREGRESSION RUN  {stamp}  label={args.label}  timing={args.timing or '-'}\n{'=' * 78}\n")
 
-        for entry in entries:
+        total = len(entries)
+        for position, entry in enumerate(entries, start=1):
+            counter = f"[{position:>2}/{total}]"
+            kind_note = "single hit" if entry.get("kind") == KIND_SINGLE_HIT else "track"
+            say(f"{counter} running  {entry['name'][:52]:<54} ({kind_note})")
+
             result = run_entry(config, entry, root, log_handle, args.tee, args.timeout)
             results.append(result)
+
             status = "PASS" if result["passed"] else "FAIL"
-            print(f"  [{status}] {result['name'][:52]:<54} {result['duration_s']:>7.2f}s  {result['message']}")
+            say(f"{counter} [{status}]  {result['name'][:52]:<54} {result['duration_s']:>7.2f}s  {result['message']}")
 
     failures = [result for result in results if not result["passed"]]
+    elapsed = (datetime.now() - started_at).total_seconds()
     print()
-    print(f"{len(results) - len(failures)}/{len(results)} entries passed.")
+    say(f"{len(results) - len(failures)}/{len(results)} entries passed in {elapsed:.1f}s total.", prefix="")
 
     if args.no_archive:
-        print(f"Outputs left in {config.get('output_dir', 'outputs')}/ (--no-archive).")
+        say(f"Outputs left in {config.get('output_dir', 'outputs')}/ (--no-archive).", prefix="")
         return 1 if failures else 0
 
+    print()
     if not args.no_backup:
+        say("Running scripts/backup.sh to regenerate the code bundle...", prefix="")
         ok, message = run_backup(root, args.timing, args.label, 1)
-        print(f"  [{'OK' if ok else 'WARN'}] backup.sh: {message}")
+        say(f"[{'OK' if ok else 'WARN'}] backup.sh: {message}")
 
-    destination = build_folder_name(archive_dir, args.label, args.timing)
+    destination = build_folder_name(archive_dir, args.label, args.timing, folder_tag, scope)
+    say(f"Archiving to {destination.name} ...", prefix="")
     archived = archive_outputs(config, entries, root, destination, args.keep_outputs)
+    say(f"moved {archived} output files", prefix="    ")
+
     notes = copy_supporting_files(config, root, destination)
+    for note in notes:
+        say(note, prefix="    ")
+
     manifest_path = write_manifest(destination, config, results, root, args.label, args.timing, notes)
+    say(f"wrote {manifest_path.name}", prefix="    ")
 
     print()
-    print(f"Archived {archived} files to:")
+    print("Archived to:")
     print(f"  {destination}")
-    for note in notes:
-        print(f"  - {note}")
-    print(f"  - wrote {manifest_path.name}")
 
     if failures:
         print()

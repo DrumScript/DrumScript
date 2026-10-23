@@ -2,79 +2,57 @@
 """
 Transcription regression checks: run a fixed set of audio, compare against last time.
 
-What this file is
------------------
-One script that does three jobs, because they share a single list of audio files
-and must never disagree about it:
+What it does
+------------
+1. ``run``     transcribes every file in ``songs.json`` and archives the results.
+2. ``compare`` diffs two of those archives and reports what moved.
+3. ``verify``  re-checks an old archive against today's expectations.
+4. ``pytest``  asserts that isolated single drum hits still classify correctly.
 
-1. **Runs** every file in ``songs.json`` through the transcription pipeline and
-   archives the results into a dated folder.
-2. **Compares** two of those archives and reports what moved.
-3. **Asserts**, under pytest, that isolated single drum hits still classify as
-   the right instrument.
+It is a pytest module and a command-line tool in one file, because all four jobs
+share the same list of audio and must never disagree about it.
 
-It is both a pytest module and a command-line tool. Importing it (what pytest
-does) defines the tests; running it directly gives you the runner and the
-comparator.
+Two kinds of entry
+------------------
+``track``       a full song. There is no known-correct answer for a seven-minute
+                song, so a track is compared against a previous run, never asserted.
+``single_hit``  one isolated drum. It has a known answer, so it is asserted: a
+                kick sample must classify as ``kick``.
 
-Two kinds of check, and why they differ
----------------------------------------
-A full track has no known-correct transcription. Nobody can say what the
-"right" 1,500 events are for a seven-minute song, so the only meaningful check
-is to compare one run against another and read what changed.
+Both live in ``songs.json``, told apart by their ``kind`` field. If you do not
+know what a file should produce, make it a ``track``.
 
-An isolated single hit is different. A recording of one drum has a correct
-answer: a kick sample must classify as ``kick``. Those are real pass/fail
-assertions, and they are what catches a threshold change breaking detection
-without anyone reading a diff.
+Two things worth knowing
+------------------------
+**It does not trust exit codes.** ``drumscript.main`` prints errors but still
+exits 0, so a failing file does not stop a shell chain of ``&&``, and a file
+that fails the same way in both halves of a before/after pair cancels out. So
+this checks every audio file exists before running anything, and afterwards
+confirms the ``.json``, ``.pdf`` and ``.mid`` were actually written.
 
-Both kinds live in the same ``songs.json``, distinguished by their ``kind``
-field.
-
-Why it does not trust exit codes
---------------------------------
-``drumscript.main`` prints errors but still exits 0, so a failing file does not
-stop a shell chain of ``&&``. Worse, a file that fails the same way in *both*
-halves of a before/after pair cancels out: the comparison looks clean while that
-file contributed nothing.
-
-This script confirms the expected ``.json``, ``.pdf`` and ``.mid`` were actually
-written, and refuses to report success otherwise. It also checks every audio
-file exists before running anything.
-
-Why the JSON and not the log
-----------------------------
-``drumscript.log`` records ``Classified 1550 events``. The transcription JSON
-records *which* 1,550 and the physics behind each one, so a comparison can say
-``kick 412 -> 598 (+186)`` and list the onsets that changed, rather than leaving
-you to read two columns of text side by side.
+**It compares the JSON, not the log.** The log says ``Classified 1550 events``.
+The JSON says which 1,550 and the physics behind each, so a comparison can
+report ``kick 412 -> 598 (+186)`` and list the onsets that changed.
 
 Setting it up
 -------------
 ``songs.json`` is gitignored: it names audio on your own machine. Copy the
-template and edit it::
+template and point it at your own recordings::
 
     cp tests/regression/songs.example.json tests/regression/songs.json
 
-Point the entries at your own recordings. For each single hit, set ``expect`` to
-the instrument it should classify as. If you do not know what a file *should*
-produce, make it a ``track`` instead and it will be compared rather than
-asserted.
-
-Without ``songs.json`` the tests skip cleanly and the CLI prints these
-instructions, so a fresh clone is never broken by its absence.
+Without it the tests skip cleanly and the CLI prints these instructions, so a
+fresh clone is never broken by its absence.
 
 How to run
 ----------
 ::
 
-    # pytest
     pytest tests/regression/ -v
-    pytest -m "not slow"                  # included; skips without songs.json
 
-    # command line
     python3 tests/regression/test_regression.py run --label <name> --timing BEFORE
     python3 tests/regression/test_regression.py run --label <name> --timing AFTER
+    python3 tests/regression/test_regression.py run --label <name> --timing LATEST
     python3 tests/regression/test_regression.py compare <before_folder> <after_folder>
     python3 tests/regression/test_regression.py verify <run_folder>
 """
@@ -129,6 +107,14 @@ FOLDER_DATE_FORMAT = "%a%d%B%Y"
 
 #: Scope segment used when a run covered every configured entry.
 DEFAULT_SCOPE = "all-files"
+
+#: Values the timing segment can take. Used when working out the next run
+#: number, which deliberately ignores this segment so that every run of the
+#: same label shares one sequence whichever timing it was given.
+#:
+#: BEFORE and AFTER bracket a change. LATEST is for a run that is not part of
+#: a pair: the current state of things, with nothing to compare it against yet.
+TIMING_VALUES = ("BEFORE", "AFTER", "LATEST")
 
 #: Entry kinds.
 KIND_TRACK = "track"
@@ -801,6 +787,74 @@ def git_is_dirty(root):
         return False
 
 
+def split_trailing_number(folder_name):
+    """
+    Splits a folder name into its stem and its trailing run number.
+
+    :param folder_name: A single folder name, not a path.
+    :type folder_name: str
+    :return: ``(stem, number)``, or ``(folder_name, None)`` when there is no
+        trailing ``__<digits>``.
+    :rtype: tuple
+    """
+    stem, separator, tail = folder_name.rpartition("__")
+    if separator and tail.isdigit():
+        return stem, int(tail)
+    return folder_name, None
+
+
+def strip_timing(stem):
+    """
+    Removes the timing segment from an archive folder stem.
+
+    The stem is built as ``date__tag__[timing__]label__scope``, so the timing,
+    when present, is always the third segment. Dropping it gives the key the
+    run number is counted against, which is what makes every run of the same
+    label share one sequence whatever timing it was given.
+
+    :param stem: A folder stem with the trailing number already removed.
+    :type stem: str
+    :return: The same stem without its timing segment.
+    :rtype: str
+    """
+    segments = stem.split("__")
+    if len(segments) >= 3 and segments[2] in TIMING_VALUES:
+        del segments[2]
+    return "__".join(segments)
+
+
+def next_run_number(archive_dir, timingless_stem):
+    """
+    Works out the next run number for a label, ignoring BEFORE/AFTER.
+
+    Numbering follows the label, not the timing. Two BEFORE runs and then an
+    AFTER run of the same label on the same day give ``__1``, ``__2``, ``__3``,
+    so the folder list reads in the order the runs actually happened rather
+    than restarting at one each time the timing changes.
+
+    :param archive_dir: Directory the run folders live in.
+    :type archive_dir: pathlib.Path
+    :param timingless_stem: The folder stem with its timing segment removed.
+    :type timingless_stem: str
+    :return: One more than the highest number already used by that label.
+    :rtype: int
+    """
+    archive_dir = Path(archive_dir)
+    if not archive_dir.is_dir():
+        return 1
+
+    highest = 0
+    for child in archive_dir.iterdir():
+        if not child.is_dir():
+            continue
+        stem, number = split_trailing_number(child.name)
+        if number is None:
+            continue
+        if strip_timing(stem) == timingless_stem:
+            highest = max(highest, number)
+    return highest + 1
+
+
 def build_folder_name(archive_dir, label, timing, tag=None, scope=DEFAULT_SCOPE):
     """
     Builds a non-clashing dated archive folder name.
@@ -815,11 +869,17 @@ def build_folder_name(archive_dir, label, timing, tag=None, scope=DEFAULT_SCOPE)
     increments until the name is free, so two runs on the same day never
     overwrite each other.
 
+    The number follows the **label**, not the timing. Every run of the same
+    label on the same day shares one sequence, so a BEFORE, a second BEFORE
+    and then an AFTER give ``__1``, ``__2``, ``__3`` rather than ``__1``,
+    ``__2``, ``__1``. The folder list then reads in the order the runs
+    actually happened.
+
     :param archive_dir: Directory the run folders live in.
     :type archive_dir: pathlib.Path
     :param label: Descriptive part of the name.
     :type label: str
-    :param timing: ``BEFORE``, ``AFTER`` or None.
+    :param timing: ``BEFORE``, ``AFTER``, ``LATEST`` or None.
     :type timing: str, optional
     :param tag: Second segment; defaults to the archive directory's own name.
     :type tag: str, optional
@@ -838,7 +898,14 @@ def build_folder_name(archive_dir, label, timing, tag=None, scope=DEFAULT_SCOPE)
     segments.extend([safe_label, scope])
     stem = "__".join(segments)
 
-    number = 1
+    # Counted against the stem with no timing segment, so every run of the
+    # same label keeps one shared sequence.
+    timingless_stem = f"{date_part}__{folder_tag}__{safe_label}__{scope}"
+
+    # Was: a fresh counter per exact stem, which restarted the numbering every
+    # time the timing flipped.
+    # number = 1
+    number = next_run_number(archive_dir, timingless_stem)
     while True:
         candidate = archive_dir / f"{stem}__{number}"
         if not candidate.exists():
@@ -1018,7 +1085,7 @@ def run_backup(root, timing, label, number):
 
     :param root: Repository root.
     :type root: pathlib.Path
-    :param timing: ``BEFORE`` or ``AFTER``; defaults to ``AFTER`` when not supplied.
+    :param timing: ``BEFORE``, ``AFTER`` or ``LATEST``; defaults to ``AFTER`` when not supplied.
     :type timing: str, optional
     :param label: Reason string recorded in the backup filename.
     :type label: str
@@ -1564,7 +1631,13 @@ def build_parser():
 
     run = sub.add_parser("run", help="Run the configured audio and archive the results")
     run.add_argument("--label", required=True, help="Descriptive part of the archive folder name")
-    run.add_argument("--timing", choices=["BEFORE", "AFTER"], default=None, help="Mark this run as BEFORE or AFTER a change")
+    # run.add_argument("--timing", choices=["BEFORE", "AFTER"], default=None, help="Mark this run as BEFORE or AFTER a change")
+    run.add_argument(
+        "--timing",
+        choices=list(TIMING_VALUES),
+        default=None,
+        help="Mark this run as BEFORE or AFTER a change, or LATEST for a standalone run",
+    )
     run.add_argument("--only", action="append", default=[], help="Run only this entry name (repeatable)")
     run.add_argument("--kind", choices=[KIND_TRACK, KIND_SINGLE_HIT], default=None, help="Run only entries of this kind")
     run.add_argument("--tee", action="store_true", help="Stream each entry's output to the terminal as well as the log")

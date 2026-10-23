@@ -163,6 +163,7 @@ Items listed below are fully implemented and **published to pypi** under an offi
 * check release verification script covering every documented CLI command and public API function, run in a clean temporary directory to catch environment assumptions (e.g. the missing-`outputs/` bug)
 <!--* Added `scripts/close_issues_v020.sh` - batch `gh issue close` script (with per-issue comments) for the GitHub issues resolved in v0.2.0-->
 * Added timeout to jobs block in `tests.yml` and add `--no-install-recommend` to linux system dependencies job to prevent `apt-get` issues in workflow
+*  `scripts/backup.sh` and `scripts/collect_code.sh` are now tracked in the repository rather than gitignored, so the archiving and code-bundling helpers are public.
 >
 > ### *Changes*
 >

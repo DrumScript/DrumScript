@@ -20,7 +20,7 @@ def build_score(
     # tempo: int, # <-- forces the caller to provide tempo
     tempo: float,
     output_path: str = "outputs/score.pdf",
-    quantization_subdivision: int = 16,
+    quantization_subdivision: int = 16,  # must be non-zero or transcription fails
     time_signature: str = "4/4",
 ):
     """
@@ -36,9 +36,9 @@ def build_score(
     :type tempo: int
     :param output_path: Path to save the PDF.
     :type output_path: str, optional
-    :param quantization_subdivision: Grid for quantization (e.g., 16 for 16th notes).
+    :param quantization_subdivision: Grid for quantization (e.g., 1/n where n is the subdivision, 16 for 1/16th notes).
     :type quantization_subdivision: int, optional
-    :param time_signature: Time signature string (e.g., "4/4").
+    :param time_signature: Time signature string (e.g., "4/4"), default if time_sig is unspecified
     :type time_signature: str, optional
 
     :return: Mapping of the files that were **successfully written**, with keys

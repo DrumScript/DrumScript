@@ -324,7 +324,7 @@ data-aria-dark="Switch to auto color mode">
 </span><span data-line="20">    <span class="c1"># tempo: int, # &lt;-- forces the caller to provide tempo</span>
 </span><span data-line="21">    <span class="n">tempo</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
 </span><span data-line="22">    <span class="n">output_path</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;outputs/score.pdf&quot;</span><span class="p">,</span>
-</span><span data-line="23">    <span class="n">quantization_subdivision</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">16</span><span class="p">,</span>
+</span><span data-line="23">    <span class="n">quantization_subdivision</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">16</span><span class="p">,</span>  <span class="c1"># must be non-zero or transcription fails</span>
 </span><span data-line="24">    <span class="n">time_signature</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;4/4&quot;</span><span class="p">,</span>
 </span><span data-line="25"><span class="p">):</span>
 </span><span data-line="26"><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
@@ -340,9 +340,9 @@ data-aria-dark="Switch to auto color mode">
 </span><span data-line="36"><span class="sd">    :type tempo: int</span>
 </span><span data-line="37"><span class="sd">    :param output_path: Path to save the PDF.</span>
 </span><span data-line="38"><span class="sd">    :type output_path: str, optional</span>
-</span><span data-line="39"><span class="sd">    :param quantization_subdivision: Grid for quantization (e.g., 16 for 16th notes).</span>
-</span><span data-line="40"><span class="sd">    :type quantization_subdivision: int, optional</span>
-</span><span data-line="41"><span class="sd">    :param time_signature: Time signature string (e.g., &quot;4/4&quot;).</span>
+</span><span data-line="39"><span class="sd">    :param quantization_subdivision: Grid for quantization (e.g., 1/n where n is the subdivision, 16 for 1/16th notes).</span>
+</span><span data-line="40"><span class="sd">    :type quantization_subdivision: int, optional, must be non-zero</span>
+</span><span data-line="41"><span class="sd">    :param time_signature: Time signature string (e.g., &quot;4/4&quot;), default if time_sig is unspecified</span>
 </span><span data-line="42"><span class="sd">    :type time_signature: str, optional</span>
 </span><span data-line="43">
 </span><span data-line="44"><span class="sd">    :return: Mapping of the files that were **successfully written**, with keys</span>

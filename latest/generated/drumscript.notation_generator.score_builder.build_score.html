@@ -355,8 +355,8 @@ data-aria-dark="Switch to auto color mode">
 <li><p><strong>detected_events</strong> (<em>List</em><em>[</em><em>Dict</em><em>[</em><em>str</em><em>, </em><em>Any</em><em>]</em><em>]</em>) – List of classified drum events.</p></li>
 <li><p><strong>tempo</strong> (<em>int</em>) – Tempo in BPM.</p></li>
 <li><p><strong>output_path</strong> (<em>str</em><em>, </em><em>optional</em>) – Path to save the PDF.</p></li>
-<li><p><strong>quantization_subdivision</strong> (<em>int</em><em>, </em><em>optional</em>) – Grid for quantization (e.g., 16 for 16th notes).</p></li>
-<li><p><strong>time_signature</strong> (<em>str</em><em>, </em><em>optional</em>) – Time signature string (e.g., “4/4”).</p></li>
+<li><p><strong>quantization_subdivision</strong> (<em>int</em><em>, </em><em>optional</em><em>, </em><em>must be non-zero</em>) – Grid for quantization (e.g., 1/n where n is the subdivision, 16 for 1/16th notes).</p></li>
+<li><p><strong>time_signature</strong> (<em>str</em><em>, </em><em>optional</em>) – Time signature string (e.g., “4/4”), default if time_sig is unspecified</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>

@@ -181,6 +181,7 @@ Items listed below are fully implemented and **published to pypi** under an offi
 * `docs/guide/cli_reference.md` audited: added the missing `--rudiment` flag, corrected the primary entry point from `python drumscript/main.py` to the `drumscript` console command, corrected the onset_detector standalone usage note, and expanded the worked examples from 3 to 6. (#107)
 * `docs/guide/usage.md`, `docs/guide/glossary.md`, `docs/guide/configuration.md` and `docs/guide/installation.md` audited and corrected: removed references to a non-existent `StemSplitter` class, `ds.AudioLoader`, `ds.main` / `python -m ds.main`, a `threshold` parameter on `detect_onsets()`, and underscore time-signature syntax; `configuration.md` rewritten to document the real configurable constants; `uv sync --all-groups` corrected to `--all-extras`. Superseded blocks commented out rather than deleted, per project convention. (#7)
 * updated `transcribe.py` and `extract_stems.py` notebooks/runbooks, as well as audited the Colab notebook https://colab.research.google.com/drive/15yBGu6WURPyiH-sEQ82g_2T2wKqiIPsq#scrollTo=qpnuXCSle5V0
+*  Ruff now excludes `*.sh`, so a shell script passed to it explicitly is not parsed as Python (#344)
 >
 > ### *Fixes*
 >

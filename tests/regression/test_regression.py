@@ -128,6 +128,11 @@ BACKUP_ENV_TIMING = "E2E_TIMING"
 BACKUP_ENV_REASON = "E2E_REASON"
 BACKUP_ENV_NUMBER = "E2E_BACKUP_NUM"
 
+#: Directories ``scripts/backup.sh`` writes into, created before it is called so
+#: a clone that has never run it is not missing them. Override with a
+#: ``backup_dirs`` list in the config.
+DEFAULT_BACKUP_DIRS = (".archive",)
+
 #: Seconds before a subprocess is treated as hung and killed. Every child is
 #: also given a closed stdin, so a script that prompts gets EOF and carries on
 #: instead of waiting for a keypress nobody can see: `capture_output` swallows
@@ -734,6 +739,50 @@ def say(message, prefix="  "):
     print(f"{prefix}{message}", flush=True)
 
 
+def ensure_dir(path, description="directory", announce=True):
+    """
+    Creates a directory if it is not already there, and says so when it does.
+
+    Every directory this script **writes** to goes through here, so a fresh
+    clone with no output folder, no archive folder and no log folder works the
+    first time it is run.
+
+    Directories the script only **reads** from are deliberately not created.
+    Conjuring an empty folder where a mistyped path was meant would turn a
+    clear "that does not exist" into a confusing "that is empty".
+
+    :param path: Directory to create.
+    :type path: pathlib.Path
+    :param description: Named in the progress line when one has to be created.
+    :type description: str
+    :param announce: When False, create silently.
+    :type announce: bool
+    :return: The same path, now guaranteed to exist.
+    :rtype: pathlib.Path
+    """
+    path = Path(path)
+    existed = path.is_dir()
+    path.mkdir(parents=True, exist_ok=True)
+    if announce and not existed:
+        say(f"created missing {description}: {path}")
+    return path
+
+
+def directory_names_in(path):
+    """
+    Lists the names directly inside a directory.
+
+    :param path: Directory to list.
+    :type path: pathlib.Path
+    :return: The names found, or an empty set when the directory is unreadable.
+    :rtype: set
+    """
+    try:
+        return {child.name for child in Path(path).iterdir()}
+    except OSError:
+        return set()
+
+
 def git_commit(root):
     """
     Returns the current short git commit, for the manifest.
@@ -1076,12 +1125,21 @@ def run_entry(config, entry, root, log_handle, tee, timeout_s=DEFAULT_ENTRY_TIME
     return result
 
 
-def run_backup(root, timing, label, number):
+def run_backup(root, timing, label, number, backup_dirs=None):
     """
     Regenerates the code bundle by calling ``scripts/backup.sh`` without prompting.
 
     Optional: the script is skipped with a warning when it is not present, so
     this works in a checkout that does not have it.
+
+    ``backup.sh`` stages its bundle at the repository root with ``cp -r`` and
+    then moves it into the archive. If a bundle of the same name is already
+    archived, that ``mv`` refuses to overwrite a non-empty directory and the
+    staging copy is orphaned at the root, which is how the same bundle ends up
+    in two places. Two things guard against it: ``number`` is now the run's own
+    number rather than a constant, so the names do not collide, and anything
+    that does appear at the root is reported rather than left to be discovered
+    as untracked files.
 
     :param root: Repository root.
     :type root: pathlib.Path
@@ -1089,14 +1147,26 @@ def run_backup(root, timing, label, number):
     :type timing: str, optional
     :param label: Reason string recorded in the backup filename.
     :type label: str
-    :param number: Backup number for the day.
+    :param number: Backup number for the day. Must differ between runs, or the
+        bundle is left at the repository root instead of being archived.
     :type number: int
+    :param backup_dirs: Repo-relative directories to create before calling the
+        script, so a clone that has never run it is not missing them.
+    :type backup_dirs: list, optional
     :return: ``(ok, message)``.
     :rtype: tuple
     """
     script = root / "scripts" / "backup.sh"
     if not script.is_file():
         return False, f"not found, skipped: {script}"
+
+    # Failsafe: backup.sh writes into these, so create them if this clone has
+    # never had them. Its own sub-folders are its business.
+    for relative in backup_dirs if backup_dirs is not None else DEFAULT_BACKUP_DIRS:
+        ensure_dir(root / relative, f"backup directory ({relative})")
+
+    # Snapshotted so a bundle stranded at the root by a failed `mv` is noticed.
+    root_before = directory_names_in(root)
 
     answers = [timing or "AFTER", label, str(number)]
 
@@ -1135,7 +1205,16 @@ def run_backup(root, timing, label, number):
 
     if completed.returncode != 0:
         return False, f"backup.sh exited {completed.returncode}: {completed.stderr.strip()[:200]}"
-    return True, f"code bundle regenerated (answers: {', '.join(answers)})"
+
+    # Was: an unconditional success, which hid a bundle stranded at the root.
+    # return True, f"code bundle regenerated (answers: {', '.join(answers)})"
+    message = f"code bundle regenerated (answers: {', '.join(answers)})"
+
+    stranded = sorted(name for name in directory_names_in(root) - root_before if (root / name).is_dir())
+    if stranded:
+        left = ", ".join(stranded)
+        return False, f"{message}. Left at the repository root, not archived: {left}. The archived copy already exists, so these can be deleted."
+    return True, message
 
 
 def archive_outputs(config, entries, root, destination, keep_outputs):
@@ -1158,7 +1237,9 @@ def archive_outputs(config, entries, root, destination, keep_outputs):
     :return: Number of files archived.
     :rtype: int
     """
-    destination.mkdir(parents=True, exist_ok=True)
+    # destination.mkdir(parents=True, exist_ok=True)
+    # Silent: this folder is new on every run, so announcing it is just noise.
+    ensure_dir(destination, "run folder", announce=False)
     transfer = shutil.copy2 if keep_outputs else shutil.move
 
     archived = 0
@@ -1489,6 +1570,7 @@ def cmd_run(args):
     print()
 
     archive_dir = root / config.get("archive_dir", "outputs/regression_runs")
+    output_dir = root / config.get("output_dir", "outputs")
     folder_tag = config.get("folder_tag")
     scope = describe_scope(config, entries, args.only, args.kind)
 
@@ -1501,8 +1583,19 @@ def cmd_run(args):
         print(f"[DRY RUN] Would archive to: {build_folder_name(archive_dir, args.label, args.timing, folder_tag, scope)}")
         return 0
 
+    # Failsafe for every directory this run writes into. Done after --dry-run
+    # has returned, so a dry run really does change nothing on disk.
+    ensure_dir(output_dir, "output directory")
+    ensure_dir(archive_dir, "archive directory")
+
+    # Deliberately NOT created: audio_root is an input. An empty folder where a
+    # mistyped path was meant would hide the mistake, and pre-flight above has
+    # already named every missing audio file.
+    # ensure_dir(root / config.get("audio_root", "test_audio"), "audio directory")
+
     log_path = root / config.get("run_log", "drumscript/logs/drumscript.log")
-    log_path.parent.mkdir(parents=True, exist_ok=True)
+    # log_path.parent.mkdir(parents=True, exist_ok=True)
+    ensure_dir(log_path.parent, "log directory")
     say(f"Appending transcription output to {log_path}", prefix="")
     print()
 
@@ -1532,13 +1625,21 @@ def cmd_run(args):
         say(f"Outputs left in {config.get('output_dir', 'outputs')}/ (--no-archive).", prefix="")
         return 1 if failures else 0
 
+    # Settled before the backup runs so backup.sh can be given this run's own
+    # number. Nothing is created here, so the name is still free further down.
+    destination = build_folder_name(archive_dir, args.label, args.timing, folder_tag, scope)
+    _destination_stem, run_number = split_trailing_number(destination.name)
+
     print()
     if not args.no_backup:
         say("Running scripts/backup.sh to regenerate the code bundle...", prefix="")
-        ok, message = run_backup(root, args.timing, args.label, 1)
+        # Was: a hardcoded 1. Every backup of the day then shared one name, so
+        # the second run's `mv` refused to overwrite the first and left the
+        # bundle sitting at the repository root as well as in the archive.
+        # ok, message = run_backup(root, args.timing, args.label, 1)
+        ok, message = run_backup(root, args.timing, args.label, run_number or 1, config.get("backup_dirs"))
         say(f"[{'OK' if ok else 'WARN'}] backup.sh: {message}")
 
-    destination = build_folder_name(archive_dir, args.label, args.timing, folder_tag, scope)
     say(f"Archiving to {destination.name} ...", prefix="")
     archived = archive_outputs(config, entries, root, destination, args.keep_outputs)
     say(f"moved {archived} output files", prefix="    ")
@@ -1582,7 +1683,8 @@ def cmd_compare(args):
     print(report)
 
     if args.out:
-        args.out.parent.mkdir(parents=True, exist_ok=True)
+        # args.out.parent.mkdir(parents=True, exist_ok=True)
+        ensure_dir(args.out.parent, "report directory")
         args.out.write_text(report, encoding="utf-8")
         print(f"[OK] Report written to {args.out}")
 

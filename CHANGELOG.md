@@ -163,6 +163,7 @@ Items listed below are fully implemented and **published to pypi** under an offi
 * check release verification script covering every documented CLI command and public API function, run in a clean temporary directory to catch environment assumptions (e.g. the missing-`outputs/` bug)
 <!--* Added `scripts/close_issues_v020.sh` - batch `gh issue close` script (with per-issue comments) for the GitHub issues resolved in v0.2.0-->
 * Added timeout to jobs block in `tests.yml` and add `--no-install-recommend` to linux system dependencies job to prevent `apt-get` issues in workflow
+*  `scripts/backup.sh` and `scripts/collect_code.sh` are now tracked in the repository rather than gitignored, so the archiving and code-bundling helpers are public.
 >
 > ### *Changes*
 >
@@ -181,6 +182,7 @@ Items listed below are fully implemented and **published to pypi** under an offi
 * `docs/guide/cli_reference.md` audited: added the missing `--rudiment` flag, corrected the primary entry point from `python drumscript/main.py` to the `drumscript` console command, corrected the onset_detector standalone usage note, and expanded the worked examples from 3 to 6. (#107)
 * `docs/guide/usage.md`, `docs/guide/glossary.md`, `docs/guide/configuration.md` and `docs/guide/installation.md` audited and corrected: removed references to a non-existent `StemSplitter` class, `ds.AudioLoader`, `ds.main` / `python -m ds.main`, a `threshold` parameter on `detect_onsets()`, and underscore time-signature syntax; `configuration.md` rewritten to document the real configurable constants; `uv sync --all-groups` corrected to `--all-extras`. Superseded blocks commented out rather than deleted, per project convention. (#7)
 * updated `transcribe.py` and `extract_stems.py` notebooks/runbooks, as well as audited the Colab notebook https://colab.research.google.com/drive/15yBGu6WURPyiH-sEQ82g_2T2wKqiIPsq#scrollTo=qpnuXCSle5V0
+*  Ruff now excludes `*.sh`, so a shell script passed to it explicitly is not parsed as Python (#344)
 >
 > ### *Fixes*
 >

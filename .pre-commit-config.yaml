@@ -12,15 +12,39 @@ repos:
 
 
     ## shellcheck hook
-  - repo: https://github.com/koalaman/shellcheck-precommit
-    rev: v0.10.0
+    #
+    # SUPERSEDED: koalaman/shellcheck-precommit runs as a Docker image
+    # (language: docker_image), so every commit touching a shell script needed
+    # Docker Desktop running and failed with
+    #     Cannot connect to the Docker daemon ... Is the docker daemon running?
+    # It went unnoticed while *.sh was gitignored, because no shell file was
+    # ever staged and the hook always had nothing to check. Replaced by the
+    # pip-installed wrapper below, which needs no Docker. Kept per project
+    # convention.
+    #
+    # - repo: https://github.com/koalaman/shellcheck-precommit
+    #   rev: v0.10.0
+    #   hooks:
+    #     - id: shellcheck
+    #       # Optional: tell shellcheck which shell dialect you're using.
+    #       # Defaults to detecting from the shebang line, which is fine
+    #       # for our scripts (they use #!/usr/bin/env bash or #!/bin/bash).
+    #       # args: ["--shell=bash"]
+
+  - repo: https://github.com/shellcheck-py/shellcheck-py
+    rev: v0.11.0.1-1
     hooks:
       - id: shellcheck
+        # Same shellcheck, installed via pip rather than pulled as a Docker
+        # image. language: python, types: [shell], so it picks up staged shell
+        # scripts by shebang and extension and never touches Python.
+        #
         # Optional: tell shellcheck which shell dialect you're using.
         # Defaults to detecting from the shebang line, which is fine
         # for our scripts (they use #!/usr/bin/env bash or #!/bin/bash).
         # args: ["--shell=bash"]
-        
+
+
   - repo: https://github.com/kynan/nbstripout
     rev: 0.7.1
     hooks:

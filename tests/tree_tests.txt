@@ -4,6 +4,10 @@ tests/
 ├── integration
 │   ├── test_stem_splitter_real.py
 │   └── test_transcribe_real.py
+├── regression
+│   ├── README.md
+│   ├── songs.example.json
+│   └── test_regression.py
 ├── tree_tests.txt
 └── unit
     ├── __init__.py
@@ -20,4 +24,4 @@ tests/
     ├── test_tempo_detector.py
     └── test_transcribe.py
 
-3 directories, 18 files
+4 directories, 21 files

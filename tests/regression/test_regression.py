@@ -4,39 +4,39 @@ Transcription regression checks: run a fixed set of audio, compare against last 
 
 What it does
 ------------
-1. ``run``     transcribes every file in ``songs.json`` and archives the results.
-2. ``compare`` diffs two of those archives and reports what moved.
-3. ``verify``  re-checks an old archive against today's expectations.
-4. ``pytest``  asserts that isolated single drum hits still classify correctly.
+1. `run`     transcribes every file in `songs.json` and archives the results.
+2. `compare` diffs two of those archives and reports what moved.
+3. `verify`  re-checks an old archive against today's expectations.
+4. `pytest`  asserts that isolated single drum hits still classify correctly.
 
 It is a pytest module and a command-line tool in one file, because all four jobs
 share the same list of audio and must never disagree about it.
 
 Two kinds of entry
 ------------------
-``track``       a full song. There is no known-correct answer for a seven-minute
+`track`       a full song. There is no known-correct answer for a seven-minute
                 song, so a track is compared against a previous run, never asserted.
-``single_hit``  one isolated drum. It has a known answer, so it is asserted: a
-                kick sample must classify as ``kick``.
+`single_hit`  one isolated drum. It has a known answer, so it is asserted: a
+                kick sample must classify as `kick`.
 
-Both live in ``songs.json``, told apart by their ``kind`` field. If you do not
-know what a file should produce, make it a ``track``.
+Both live in `songs.json`, told apart by their `kind` field. If you do not
+know what a file should produce, make it a `track`.
 
 Two things worth knowing
 ------------------------
-**It does not trust exit codes.** ``drumscript.main`` prints errors but still
-exits 0, so a failing file does not stop a shell chain of ``&&``, and a file
+**It does not trust exit codes.** `drumscript.main` prints errors but still
+exits 0, so a failing file does not stop a shell chain of `&&`, and a file
 that fails the same way in both halves of a before/after pair cancels out. So
 this checks every audio file exists before running anything, and afterwards
-confirms the ``.json``, ``.pdf`` and ``.mid`` were actually written.
+confirms the `.json`, `.pdf` and `.mid` were actually written.
 
-**It compares the JSON, not the log.** The log says ``Classified 1550 events``.
+**It compares the JSON, not the log.** The log says `Classified 1550 events`.
 The JSON says which 1,550 and the physics behind each, so a comparison can
-report ``kick 412 -> 598 (+186)`` and list the onsets that changed.
+report `kick 412 -> 598 (+186)` and list the onsets that changed.
 
 Setting it up
 -------------
-``songs.json`` is gitignored: it names audio on your own machine. Copy the
+`songs.json` is gitignored: it names audio on your own machine. Copy the
 template and point it at your own recordings::
 
     cp tests/regression/songs.example.json tests/regression/songs.json
@@ -128,9 +128,9 @@ BACKUP_ENV_TIMING = "E2E_TIMING"
 BACKUP_ENV_REASON = "E2E_REASON"
 BACKUP_ENV_NUMBER = "E2E_BACKUP_NUM"
 
-#: Directories ``scripts/backup.sh`` writes into, created before it is called so
+#: Directories `scripts/backup.sh` writes into, created before it is called so
 #: a clone that has never run it is not missing them. Override with a
-#: ``backup_dirs`` list in the config.
+#: `backup_dirs` list in the config.
 DEFAULT_BACKUP_DIRS = (".archive",)
 
 #: Seconds before a subprocess is treated as hung and killed. Every child is
@@ -157,7 +157,7 @@ def repo_root():
     """
     Returns the repository root.
 
-    Resolved from this file's location (``<root>/tests/regression/test_regression.py``)
+    Resolved from this file's location (`<root>/tests/regression/test_regression.py`)
     so the script works regardless of the current working directory.
 
     :return: Absolute path to the repository root.
@@ -170,7 +170,7 @@ def config_path():
     """
     Returns the path to the audio list, which sits beside this script.
 
-    :return: Absolute path to ``songs.json``.
+    :return: Absolute path to `songs.json`.
     :rtype: pathlib.Path
     """
     return Path(__file__).resolve().parent / CONFIG_FILENAME
@@ -180,11 +180,11 @@ def load_config(path=None):
     """
     Loads the audio list.
 
-    :param path: Path to the JSON config; defaults to ``songs.json`` beside this file.
+    :param path: Path to the JSON config; defaults to `songs.json` beside this file.
     :type path: pathlib.Path, optional
     :return: The parsed configuration.
     :rtype: dict
-    :raises SystemExit: If the file is missing, unreadable or has no ``entries``.
+    :raises SystemExit: If the file is missing, unreadable or has no `entries`.
     """
     target = Path(path) if path else config_path()
 
@@ -209,7 +209,7 @@ def entries_of_kind(config, kind):
 
     :param config: The loaded configuration.
     :type config: dict
-    :param kind: Either ``track`` or ``single_hit``.
+    :param kind: Either `track` or `single_hit`.
     :type kind: str
     :return: Matching entries, in config order.
     :rtype: list
@@ -221,7 +221,7 @@ def audio_path(config, entry, root=None):
     """
     Builds the absolute path to an entry's audio file.
 
-    An entry's ``file`` is resolved against ``audio_root`` unless it is already
+    An entry's `file` is resolved against `audio_root` unless it is already
     absolute, which lets you point at recordings outside the repository.
 
     :param config: The loaded configuration.
@@ -295,11 +295,11 @@ def check_single_hit(entry, events):
     """
     Checks a single-hit entry's events against its expected classification.
 
-    :param entry: One ``single_hit`` config entry.
+    :param entry: One `single_hit` config entry.
     :type entry: dict
     :param events: Onset events from that entry's transcription JSON.
     :type events: list
-    :return: ``(passed, message)`` where message explains any failure.
+    :return: `(passed, message)` where message explains any failure.
     :rtype: tuple
     """
     expected_labels = entry.get("expect")
@@ -331,11 +331,11 @@ def check_track(entry, events):
     worth making is that the track produced something at all. Everything else is
     handled by comparing against a previous run.
 
-    :param entry: One ``track`` config entry.
+    :param entry: One `track` config entry.
     :type entry: dict
     :param events: Onset events from that entry's transcription JSON.
     :type events: list
-    :return: ``(passed, message)``.
+    :return: `(passed, message)`.
     :rtype: tuple
     """
     floor = entry.get("min_events", 1)
@@ -352,7 +352,7 @@ def check_entry(entry, events):
     :type entry: dict
     :param events: Onset events from that entry's transcription JSON.
     :type events: list
-    :return: ``(passed, message)``.
+    :return: `(passed, message)`.
     :rtype: tuple
     """
     if entry.get("kind") == KIND_SINGLE_HIT:
@@ -370,7 +370,7 @@ def verify_run_folder(config, folder):
     :type config: dict
     :param folder: A run folder to verify.
     :type folder: pathlib.Path
-    :return: List of ``(entry_name, passed, message)`` in config order.
+    :return: List of `(entry_name, passed, message)` in config order.
     :rtype: list
     """
     results = []
@@ -460,7 +460,7 @@ def feature_deltas(before_event, after_event, eps):
     :type after_event: dict
     :param eps: Absolute change below which a feature counts as unmoved.
     :type eps: float
-    :return: Feature name to ``(before_value, after_value)`` for each moved feature.
+    :return: Feature name to `(before_value, after_value)` for each moved feature.
     :rtype: dict
     """
     before_features = before_event.get("debug_features") or {}
@@ -556,7 +556,7 @@ def compare_runs(before_run, after_run, eps):
     :type after_run: dict
     :param eps: Absolute change below which a feature counts as unmoved.
     :type eps: float
-    :return: ``(per_entry_results, only_in_before, only_in_after)``.
+    :return: `(per_entry_results, only_in_before, only_in_after)`.
     :rtype: tuple
     """
     shared = sorted(set(before_run) & set(after_run))
@@ -583,7 +583,7 @@ def format_label_changes(changes):
     """
     Renders per-instrument count changes as a compact one-line string.
 
-    :param changes: Instrument label to ``(before_count, after_count)``.
+    :param changes: Instrument label to `(before_count, after_count)`.
     :type changes: dict
     :return: A readable summary, or a dash when nothing changed.
     :rtype: str
@@ -727,7 +727,7 @@ def say(message, prefix="  "):
     """
     Prints a progress line and flushes it immediately.
 
-    Without the flush, stdout is block-buffered when piped (into ``tee``, say),
+    Without the flush, stdout is block-buffered when piped (into `tee`, say),
     so nothing appears until the run ends. The whole point of these lines is to
     show what is happening while a long track is transcribing.
 
@@ -789,7 +789,7 @@ def git_commit(root):
 
     :param root: Repository root.
     :type root: pathlib.Path
-    :return: Short commit hash, or ``"unknown"`` if git is unavailable.
+    :return: Short commit hash, or `"unknown"` if git is unavailable.
     :rtype: str
     """
     try:
@@ -842,8 +842,8 @@ def split_trailing_number(folder_name):
 
     :param folder_name: A single folder name, not a path.
     :type folder_name: str
-    :return: ``(stem, number)``, or ``(folder_name, None)`` when there is no
-        trailing ``__<digits>``.
+    :return: `(stem, number)`, or `(folder_name, None)` when there is no
+        trailing `__<digits>`.
     :rtype: tuple
     """
     stem, separator, tail = folder_name.rpartition("__")
@@ -856,7 +856,7 @@ def strip_timing(stem):
     """
     Removes the timing segment from an archive folder stem.
 
-    The stem is built as ``date__tag__[timing__]label__scope``, so the timing,
+    The stem is built as `date__tag__[timing__]label__scope`, so the timing,
     when present, is always the third segment. Dropping it gives the key the
     run number is counted against, which is what makes every run of the same
     label share one sequence whatever timing it was given.
@@ -877,7 +877,7 @@ def next_run_number(archive_dir, timingless_stem):
     Works out the next run number for a label, ignoring BEFORE/AFTER.
 
     Numbering follows the label, not the timing. Two BEFORE runs and then an
-    AFTER run of the same label on the same day give ``__1``, ``__2``, ``__3``,
+    AFTER run of the same label on the same day give `__1`, `__2`, `__3`,
     so the folder list reads in the order the runs actually happened rather
     than restarting at one each time the timing changes.
 
@@ -914,25 +914,25 @@ def build_folder_name(archive_dir, label, timing, tag=None, scope=DEFAULT_SCOPE)
         |______________|  |___________________|  |____|  |______|  |_______|  |
           date            tag                    timing  label     scope      number
 
-    ``timing`` is omitted when it was not supplied. The trailing number
+    `timing` is omitted when it was not supplied. The trailing number
     increments until the name is free, so two runs on the same day never
     overwrite each other.
 
     The number follows the **label**, not the timing. Every run of the same
     label on the same day shares one sequence, so a BEFORE, a second BEFORE
-    and then an AFTER give ``__1``, ``__2``, ``__3`` rather than ``__1``,
-    ``__2``, ``__1``. The folder list then reads in the order the runs
+    and then an AFTER give `__1`, `__2`, `__3` rather than `__1`,
+    `__2`, `__1`. The folder list then reads in the order the runs
     actually happened.
 
     :param archive_dir: Directory the run folders live in.
     :type archive_dir: pathlib.Path
     :param label: Descriptive part of the name.
     :type label: str
-    :param timing: ``BEFORE``, ``AFTER``, ``LATEST`` or None.
+    :param timing: `BEFORE`, `AFTER`, `LATEST` or None.
     :type timing: str, optional
     :param tag: Second segment; defaults to the archive directory's own name.
     :type tag: str, optional
-    :param scope: What the run covered, e.g. ``all-files``.
+    :param scope: What the run covered, e.g. `all-files`.
     :type scope: str
     :return: A path that does not yet exist.
     :rtype: pathlib.Path
@@ -966,16 +966,16 @@ def describe_scope(config, entries, only, kind):
     """
     Describes what a run covered, for the folder name's scope segment.
 
-    A filtered run must not be labelled ``all-files``: a later comparison would
+    A filtered run must not be labelled `all-files`: a later comparison would
     otherwise look like entries had vanished, when they were never run.
 
     :param config: The loaded configuration.
     :type config: dict
     :param entries: The entries actually selected.
     :type entries: list
-    :param only: The ``--only`` names given, if any.
+    :param only: The `--only` names given, if any.
     :type only: list
-    :param kind: The ``--kind`` filter given, if any.
+    :param kind: The `--kind` filter given, if any.
     :type kind: str, optional
     :return: A filename-safe scope description.
     :rtype: str
@@ -989,7 +989,7 @@ def describe_scope(config, entries, only, kind):
 
 def select_entries(config, only, kind):
     """
-    Applies the ``--only`` and ``--kind`` filters to the config entries.
+    Applies the `--only` and `--kind` filters to the config entries.
 
     :param config: The loaded configuration.
     :type config: dict
@@ -1127,23 +1127,23 @@ def run_entry(config, entry, root, log_handle, tee, timeout_s=DEFAULT_ENTRY_TIME
 
 def run_backup(root, timing, label, number, backup_dirs=None):
     """
-    Regenerates the code bundle by calling ``scripts/backup.sh`` without prompting.
+    Regenerates the code bundle by calling `scripts/backup.sh` without prompting.
 
     Optional: the script is skipped with a warning when it is not present, so
     this works in a checkout that does not have it.
 
-    ``backup.sh`` stages its bundle at the repository root with ``cp -r`` and
+    `backup.sh` stages its bundle at the repository root with `cp -r` and
     then moves it into the archive. If a bundle of the same name is already
-    archived, that ``mv`` refuses to overwrite a non-empty directory and the
+    archived, that `mv` refuses to overwrite a non-empty directory and the
     staging copy is orphaned at the root, which is how the same bundle ends up
-    in two places. Two things guard against it: ``number`` is now the run's own
+    in two places. Two things guard against it: `number` is now the run's own
     number rather than a constant, so the names do not collide, and anything
     that does appear at the root is reported rather than left to be discovered
     as untracked files.
 
     :param root: Repository root.
     :type root: pathlib.Path
-    :param timing: ``BEFORE``, ``AFTER`` or ``LATEST``; defaults to ``AFTER`` when not supplied.
+    :param timing: `BEFORE`, `AFTER` or `LATEST`; defaults to `AFTER` when not supplied.
     :type timing: str, optional
     :param label: Reason string recorded in the backup filename.
     :type label: str
@@ -1153,7 +1153,7 @@ def run_backup(root, timing, label, number, backup_dirs=None):
     :param backup_dirs: Repo-relative directories to create before calling the
         script, so a clone that has never run it is not missing them.
     :type backup_dirs: list, optional
-    :return: ``(ok, message)``.
+    :return: `(ok, message)`.
     :rtype: tuple
     """
     script = root / "scripts" / "backup.sh"
@@ -1255,7 +1255,7 @@ def copy_supporting_files(config, root, destination):
     """
     Copies any configured extra files into the archive folder.
 
-    ``extra_files`` is a list of repository-relative paths, each copied in if it
+    `extra_files` is a list of repository-relative paths, each copied in if it
     exists. Use it for a notation reference image, a code bundle, or anything
     else that should travel with the results. Missing entries are reported but
     are never fatal.
@@ -1282,7 +1282,7 @@ def copy_supporting_files(config, root, destination):
 
 def write_manifest(destination, config, results, root, label, timing, notes):
     """
-    Writes ``manifest.json`` recording exactly what this run did.
+    Writes `manifest.json` recording exactly what this run did.
 
     This is what makes an archived run self-describing months later: the commit,
     whether the tree was dirty, which entries ran, how long each took and what
@@ -1298,7 +1298,7 @@ def write_manifest(destination, config, results, root, label, timing, notes):
     :type root: pathlib.Path
     :param label: The run label.
     :type label: str
-    :param timing: ``BEFORE``, ``AFTER`` or None.
+    :param timing: `BEFORE`, `AFTER` or None.
     :type timing: str, optional
     :param notes: Notes from the supporting-file copy step.
     :type notes: list
@@ -1430,7 +1430,7 @@ class TestSingleHitClassification:
 
 class TestConfig:
     """
-    Guards on ``songs.json`` itself.
+    Guards on `songs.json` itself.
 
     These run without the audio present, because a malformed config is worth
     catching on any machine.
@@ -1438,9 +1438,9 @@ class TestConfig:
 
     def test_every_single_hit_declares_an_expectation(self, config):
         """
-        Every ``single_hit`` entry must say what it should classify as.
+        Every `single_hit` entry must say what it should classify as.
 
-        Without this, adding a sample and forgetting ``expect`` would make the
+        Without this, adding a sample and forgetting `expect` would make the
         accuracy tests silently pass on anything.
         """
         entries = entries_of_kind(config, KIND_SINGLE_HIT)
@@ -1463,7 +1463,7 @@ class TestConfig:
         assert not duplicates, f"duplicate entry names in config: {duplicates}"
 
     def test_every_entry_declares_a_known_kind(self, config):
-        """Each entry must be a ``track`` or a ``single_hit``."""
+        """Each entry must be a `track` or a `single_hit`."""
         valid = {KIND_TRACK, KIND_SINGLE_HIT}
         wrong = [(entry["name"], entry.get("kind")) for entry in config["entries"] if entry.get("kind") not in valid]
         assert not wrong, f"entries with an unknown 'kind' (expected one of {sorted(valid)}): {wrong}"
@@ -1778,7 +1778,7 @@ def main(argv=None):
     """
     Command-line entry point.
 
-    :param argv: Arguments to parse; defaults to ``sys.argv[1:]``.
+    :param argv: Arguments to parse; defaults to `sys.argv[1:]`.
     :type argv: list
     :return: Process exit code.
     :rtype: int

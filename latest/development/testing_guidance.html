@@ -261,9 +261,17 @@ data-aria-dark="Switch to auto color mode">
 <li><a class="reference internal" href="#asserting-on-warnings">Asserting on warnings</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#the-match-argument-is-a-regex-against-the-warning-message-useful-for-locking-in-that-the-warning-text-actually-points-users-at-the-replacement">The <code class="docutils literal notranslate"><span class="pre">match</span></code> argument is a regex against the warning message &#8212; useful for
+<li><a class="reference internal" href="#the-match-argument-is-a-regex-against-the-warning-message-useful-for-locking-in-that-the-warning-text-actually-points-users-at-the-replacement">The <code class="docutils literal notranslate"><span class="pre">match</span></code> argument is a regex against the warning message - useful for
 locking in that the warning text actually points users at the replacement.</a></li>
-<li><a class="reference internal" href="#regression-tests">Regression tests</a></li>
+<li><a class="reference internal" href="#transcription-regression-checks">Transcription regression checks</a><ul>
+<li><a class="reference internal" href="#two-kinds-of-check">Two kinds of check</a></li>
+<li><a class="reference internal" href="#setting-it-up">Setting it up</a></li>
+<li><a class="reference internal" href="#using-it">Using it</a></li>
+<li><a class="reference internal" href="#what-a-comparison-tells-you">What a comparison tells you</a></li>
+<li><a class="reference internal" href="#why-it-does-not-trust-exit-codes">Why it does not trust exit codes</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#behaviour-locking-unit-tests">Behaviour-locking unit tests</a></li>
 <li><a class="reference internal" href="#coverage-reports">Coverage Reports</a></li>
 <li><a class="reference internal" href="#common-pitfalls">Common Pitfalls</a></li>
 <li><a class="reference internal" href="#continuous-integration">Continuous Integration</a></li>
@@ -370,7 +378,8 @@ the suite. For a copy-pasteable command reference, see the
 <li><p><strong><a class="reference internal" href="#suite-layout">Suite layout</a></strong></p></li>
 <li><p><strong><a class="reference internal" href="#writing-a-new-test">Writing a new test</a></strong></p></li>
 <li><p><strong><a class="reference internal" href="#patterns-you-ll-use-often">Patterns you’ll use often</a></strong></p></li>
-<li><p><strong><a class="reference internal" href="#regression-tests">Regression tests</a></strong></p></li>
+<li><p><strong><a class="reference internal" href="#transcription-regression-checks">Transcription regression checks</a></strong></p></li>
+<li><p><strong><a class="reference internal" href="#behaviour-locking-unit-tests">Behaviour-locking unit tests</a></strong></p></li>
 <li><p><strong><a class="reference internal" href="#coverage-reports">Coverage reports</a></strong></p></li>
 <li><p><strong><a class="reference internal" href="#common-pitfalls">Common pitfalls</a></strong></p></li>
 <li><p><strong><a class="reference internal" href="#continuous-integration">Continuous integration</a></strong></p></li>
@@ -412,6 +421,11 @@ the suite. For a copy-pasteable command reference, see the
 <td><p>very few</p></td>
 <td><p>Full pipeline: audio → MIDI/PDF/XML</p></td>
 </tr>
+<tr class="row-even"><td><p><strong>Transcription regression</strong></p></td>
+<td><p>minutes</p></td>
+<td><p>opt-in</p></td>
+<td><p>Full pipeline on your own audio, compared against a previous run</p></td>
+</tr>
 </tbody>
 </table>
 </div>
@@ -421,7 +435,7 @@ integration tier adds roughly 30 seconds because it really loads audio and
 really writes PDF/JSON/MIDI to disk.</p>
 <p>That tier exists because mocking has a blind spot. <code class="docutils literal notranslate"><span class="pre">tests/unit/test_transcribe.py</span></code>
 mocks <code class="docutils literal notranslate"><span class="pre">build_score</span></code>, so it can only prove <em>“transcribe() reports whatever
-build_score told it”</em> — it can never prove the files landed on disk. The fast
+build_score told it”</em> - it can never prove the files landed on disk. The fast
 integration tests close that gap, and because they don’t need model weights they
 can run in CI on every push.</p>
 <p>The slow tier (real Demucs) stays opt-in and is triggered before a release with
@@ -438,31 +452,33 @@ when something fails. Unit tests catch <em>most</em> bugs <em>much</em> faster.<
 <h2>Suite Layout<a class="headerlink" href="#suite-layout" title="Link to this heading">#</a></h2>
 <p><a class="reference internal" href="#testing-guidance"><em>back to top</em></a></p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span data-line="1">tests/
-</span><span data-line="2">├── conftest.py              ← shared fixtures (auto-discovered)
-</span><span data-line="3">├── fixtures/audio/          ← real audio files (empty; synthesised in conftest)
-</span><span data-line="4">├── unit/                    ← fast, no I/O, no subprocess
-</span><span data-line="5">tests/
-</span><span data-line="6">├── README.md
-</span><span data-line="7">├── conftest.py
-</span><span data-line="8">└── unit
-</span><span data-line="9">    ├── __init__.py
-</span><span data-line="10">    ├── test_audio_loader.py
-</span><span data-line="11">    ├── test_benchmarks_run.py
-</span><span data-line="12">    ├── test_classify.py
-</span><span data-line="13">    ├── test_cli_args.py
-</span><span data-line="14">    ├── test_deprecation_warnings.py
-</span><span data-line="15">    ├── test_helpers.py
-</span><span data-line="16">    ├── test_idmt_dataset.py
-</span><span data-line="17">    ├── test_onset_detector.py
-</span><span data-line="18">    ├── test_stem_splitter_helpers.py
-</span><span data-line="19">    ├── test_tempo_detector.py
-</span><span data-line="20">    └── test_transcribe.py
-</span><span data-line="21">└── integration/             ← real files; Demucs/ffmpeg where noted
-</span><span data-line="22">    ├── test_stem_splitter_real.py   ← all cases require Demucs (slow)
-</span><span data-line="23">    └── test_transcribe_real.py      ← 12 cases need no Demucs, 3 do
+</span><span data-line="2">├── README.md                ← copy-pasteable command reference
+</span><span data-line="3">├── conftest.py              ← shared fixtures (auto-discovered)
+</span><span data-line="4">├── tree_tests.txt
+</span><span data-line="5">├── unit/                    ← fast, no I/O, no subprocess
+</span><span data-line="6">│   ├── __init__.py
+</span><span data-line="7">│   ├── test_audio_loader.py
+</span><span data-line="8">│   ├── test_benchmarks_run.py
+</span><span data-line="9">│   ├── test_classify.py
+</span><span data-line="10">│   ├── test_cli_args.py
+</span><span data-line="11">│   ├── test_deprecation_warnings.py
+</span><span data-line="12">│   ├── test_helpers.py
+</span><span data-line="13">│   ├── test_idmt_dataset.py
+</span><span data-line="14">│   ├── test_onset_detector.py
+</span><span data-line="15">│   ├── test_pdf_time_signature.py
+</span><span data-line="16">│   ├── test_stem_splitter_helpers.py
+</span><span data-line="17">│   ├── test_tempo_detector.py
+</span><span data-line="18">│   └── test_transcribe.py
+</span><span data-line="19">├── integration/             ← real files; Demucs/ffmpeg where noted
+</span><span data-line="20">│   ├── test_stem_splitter_real.py   ← all cases require Demucs (slow)
+</span><span data-line="21">│   └── test_transcribe_real.py      ← 12 cases need no Demucs, 3 do
+</span><span data-line="22">└── regression/              ← before/after transcription harness
+</span><span data-line="23">    ├── README.md
+</span><span data-line="24">    ├── songs.example.json   ← template; copy to songs.json (gitignored)
+</span><span data-line="25">    └── test_regression.py   ← pytest module AND command-line tool
 </span></pre></div>
 </div>
-<p>Tests are auto-discovered by pytest — any file matching <code class="docutils literal notranslate"><span class="pre">test_*.py</span></code> under
+<p>Tests are auto-discovered by pytest - any file matching <code class="docutils literal notranslate"><span class="pre">test_*.py</span></code> under
 <code class="docutils literal notranslate"><span class="pre">tests/</span></code> is picked up automatically. There is no central registry to update
 when adding new files.</p>
 </section>
@@ -474,7 +490,7 @@ when adding new files.</p>
 : Tests that take more than a second or two. Skipped by default during
 development.</p>
 <p><code class="docutils literal notranslate"><span class="pre">&#64;pytest.mark.integration</span></code>
-: Tests that require external dependencies — Demucs, ffmpeg, real audio
+: Tests that require external dependencies - Demucs, ffmpeg, real audio
 files. Always combined with <code class="docutils literal notranslate"><span class="pre">slow</span></code>.</p>
 <div class="highlight-zsh notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="c1"># Fast loop (default)</span>
 </span><span data-line="2">pytest<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;not slow&quot;</span>
@@ -512,7 +528,7 @@ load audio that takes more than 100ms?</em></p>
 <li><p>Filename: <code class="docutils literal notranslate"><span class="pre">test_*.py</span></code></p></li>
 <li><p>Class names: <code class="docutils literal notranslate"><span class="pre">Test*</span></code></p></li>
 <li><p>Function names: <code class="docutils literal notranslate"><span class="pre">test_*</span></code></p></li>
-<li><p>Group related assertions inside a <code class="docutils literal notranslate"><span class="pre">Test*</span></code> class for readability — pytest
+<li><p>Group related assertions inside a <code class="docutils literal notranslate"><span class="pre">Test*</span></code> class for readability - pytest
 treats each method as a separate test.</p></li>
 </ul>
 </section>
@@ -520,13 +536,13 @@ treats each method as a separate test.</p></li>
 <h3>3. Use Arrange / Act / Assert<a class="headerlink" href="#use-arrange-act-assert" title="Link to this heading">#</a></h3>
 <p>Every test should follow this shape:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="k">def</span><span class="w"> </span><span class="nf">test_normalises_to_unit_peak</span><span class="p">():</span>
-</span><span data-line="2">    <span class="c1"># Arrange — set up inputs</span>
+</span><span data-line="2">    <span class="c1"># Arrange - set up inputs</span>
 </span><span data-line="3">    <span class="n">audio</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.25</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
 </span><span data-line="4">
-</span><span data-line="5">    <span class="c1"># Act — do the thing</span>
+</span><span data-line="5">    <span class="c1"># Act - do the thing</span>
 </span><span data-line="6">    <span class="n">result</span> <span class="o">=</span> <span class="n">normalise_audio</span><span class="p">(</span><span class="n">audio</span><span class="p">)</span>
 </span><span data-line="7">
-</span><span data-line="8">    <span class="c1"># Assert — verify the outcome</span>
+</span><span data-line="8">    <span class="c1"># Assert - verify the outcome</span>
 </span><span data-line="9">    <span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">result</span><span class="p">)),</span> <span class="mf">1.0</span><span class="p">)</span>
 </span></pre></div>
 </div>
@@ -611,7 +627,7 @@ instead:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="k">def</span><span class="w"> </span><span class="nf">test_tempo_detection_on_120bpm_click</span><span class="p">(</span><span class="n">click_track_120bpm</span><span class="p">):</span>
 </span><span data-line="2">    <span class="n">audio</span><span class="p">,</span> <span class="n">sr</span> <span class="o">=</span> <span class="n">click_track_120bpm</span>
 </span><span data-line="3">    <span class="n">bpm</span> <span class="o">=</span> <span class="n">estimate_tempo</span><span class="p">(</span><span class="n">audio</span><span class="p">,</span> <span class="n">sr</span><span class="p">)</span>
-</span><span data-line="4">    <span class="c1"># ±10% — accepts 108-132 BPM. Wide enough for librosa&#39;s variance,</span>
+</span><span data-line="4">    <span class="c1"># ±10% - accepts 108-132 BPM. Wide enough for librosa&#39;s variance,</span>
 </span><span data-line="5">    <span class="c1"># narrow enough to catch real regressions.</span>
 </span><span data-line="6">    <span class="k">assert</span> <span class="mi">108</span> <span class="o">&lt;=</span> <span class="n">bpm</span> <span class="o">&lt;=</span> <span class="mi">132</span>
 </span></pre></div>
@@ -619,7 +635,7 @@ instead:</p>
 </section>
 <section id="mocking-subprocess-calls">
 <h3>Mocking subprocess calls<a class="headerlink" href="#mocking-subprocess-calls" title="Link to this heading">#</a></h3>
-<p>The unit tests for <code class="docutils literal notranslate"><span class="pre">stem_splitter</span></code> don’t actually run Demucs — that would be
+<p>The unit tests for <code class="docutils literal notranslate"><span class="pre">stem_splitter</span></code> don’t actually run Demucs - that would be
 too slow. Instead, they mock <code class="docutils literal notranslate"><span class="pre">subprocess.run</span></code> and verify the <em>command being
 constructed</em>. The real Demucs run lives in
 <code class="docutils literal notranslate"><span class="pre">tests/integration/test_stem_splitter_real.py</span></code>.</p>
@@ -628,7 +644,7 @@ constructed</em>. The real Demucs run lives in
 <h3>Knowing what mocking cannot prove<a class="headerlink" href="#knowing-what-mocking-cannot-prove" title="Link to this heading">#</a></h3>
 <p>Mocking buys speed but hides whole classes of bug. <code class="docutils literal notranslate"><span class="pre">tests/unit/test_transcribe.py</span></code>
 mocks <code class="docutils literal notranslate"><span class="pre">build_score</span></code>, so it verifies the <em>contract between</em> <code class="docutils literal notranslate"><span class="pre">transcribe()</span></code> and
-<code class="docutils literal notranslate"><span class="pre">build_score()</span></code> — not that any file was written. Two v0.2.0 bugs sat squarely in
+<code class="docutils literal notranslate"><span class="pre">build_score()</span></code> - not that any file was written. Two v0.2.0 bugs sat squarely in
 that blind spot:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">transcribe()</span></code> reported PDF/JSON/MIDI paths unconditionally, including files
@@ -652,15 +668,96 @@ use <code class="docutils literal notranslate"><span class="pre">pytest.warns()<
 </section>
 </section>
 <section id="the-match-argument-is-a-regex-against-the-warning-message-useful-for-locking-in-that-the-warning-text-actually-points-users-at-the-replacement">
-<h2>The <code class="docutils literal notranslate"><span class="pre">match</span></code> argument is a regex against the warning message — useful for
+<h2>The <code class="docutils literal notranslate"><span class="pre">match</span></code> argument is a regex against the warning message - useful for
 locking in that the warning text actually points users at the replacement.<a class="headerlink" href="#the-match-argument-is-a-regex-against-the-warning-message-useful-for-locking-in-that-the-warning-text-actually-points-users-at-the-replacement" title="Link to this heading">#</a></h2>
 </section>
-<section id="regression-tests">
-<h2>Regression tests<a class="headerlink" href="#regression-tests" title="Link to this heading">#</a></h2>
+<section id="transcription-regression-checks">
+<h2>Transcription regression checks<a class="headerlink" href="#transcription-regression-checks" title="Link to this heading">#</a></h2>
 <p><a class="reference internal" href="#testing-guidance"><em>back to top</em></a></p>
-<p>Some test files exist specifically to lock in behaviour that was previously
-inconsistent, ambiguous, or breaking. They sit alongside the normal unit tests
-but should not be removed without a deliberate decision:</p>
+<p><code class="docutils literal notranslate"><span class="pre">tests/regression/</span></code> answers a question the rest of the suite cannot: <strong>did my
+change alter the transcriptions?</strong></p>
+<p>It is one file, <code class="docutils literal notranslate"><span class="pre">test_regression.py</span></code>, which is both a pytest module and a
+command-line tool. Importing it defines the tests; running it gives you a
+runner and a comparator.</p>
+<section id="two-kinds-of-check">
+<h3>Two kinds of check<a class="headerlink" href="#two-kinds-of-check" title="Link to this heading">#</a></h3>
+<p>A <strong>full track</strong> has no known-correct transcription. Nobody can say what the
+right 1,500 events are for a seven-minute song, so a track is <em>compared</em>
+against a previous run, never asserted.</p>
+<p>An <strong>isolated single hit</strong> does have a correct answer: a recording of one kick
+drum must classify as <code class="docutils literal notranslate"><span class="pre">kick</span></code>. Those are real pass/fail assertions, and they are
+what catches a threshold change breaking detection without anyone reading a
+diff.</p>
+<p>Both live in the same config, distinguished by a <code class="docutils literal notranslate"><span class="pre">kind</span></code> field.</p>
+</section>
+<section id="setting-it-up">
+<h3>Setting it up<a class="headerlink" href="#setting-it-up" title="Link to this heading">#</a></h3>
+<div class="highlight-zsh notranslate"><div class="highlight"><pre><span></span><span data-line="1">cp<span class="w"> </span>tests/regression/songs.example.json<span class="w"> </span>tests/regression/songs.json
+</span></pre></div>
+</div>
+<p>Then edit <code class="docutils literal notranslate"><span class="pre">songs.json</span></code> to point at your own recordings. It is gitignored, so
+your file list never leaves your machine. Without it the tests skip and the CLI
+prints these instructions.</p>
+</section>
+<section id="using-it">
+<h3>Using it<a class="headerlink" href="#using-it" title="Link to this heading">#</a></h3>
+<div class="highlight-zsh notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="c1"># before your change</span>
+</span><span data-line="2">python3<span class="w"> </span>tests/regression/test_regression.py<span class="w"> </span>run<span class="w"> </span>--label<span class="w"> </span>&lt;name&gt;<span class="w"> </span>--timing<span class="w"> </span>BEFORE
+</span><span data-line="3">
+</span><span data-line="4"><span class="c1"># ...make the change, then...</span>
+</span><span data-line="5">python3<span class="w"> </span>tests/regression/test_regression.py<span class="w"> </span>run<span class="w"> </span>--label<span class="w"> </span>&lt;name&gt;<span class="w"> </span>--timing<span class="w"> </span>AFTER
+</span><span data-line="6">
+</span><span data-line="7"><span class="c1"># compare the two folders it printed</span>
+</span><span data-line="8">python3<span class="w"> </span>tests/regression/test_regression.py<span class="w"> </span>compare<span class="w"> </span>&lt;before&gt;<span class="w"> </span>&lt;after&gt;<span class="w"> </span>--markdown
+</span><span data-line="9">
+</span><span data-line="10"><span class="c1"># re-check an archived run against today&#39;s expectations</span>
+</span><span data-line="11">python3<span class="w"> </span>tests/regression/test_regression.py<span class="w"> </span>verify<span class="w"> </span>&lt;run_folder&gt;
+</span></pre></div>
+</div>
+</section>
+<section id="what-a-comparison-tells-you">
+<h3>What a comparison tells you<a class="headerlink" href="#what-a-comparison-tells-you" title="Link to this heading">#</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="n">Entry</span>                     <span class="n">Onsets</span>  <span class="n">Relabel</span> <span class="n">FeatOnly</span>  <span class="n">Label</span> <span class="n">changes</span>
+</span><span data-line="2"><span class="n">track_one</span>                   <span class="mi">1550</span>      <span class="mi">265</span>        <span class="mi">0</span>  <span class="n">kick</span> <span class="mi">412</span><span class="o">-&gt;</span><span class="mi">598</span> <span class="p">(</span><span class="o">+</span><span class="mi">186</span><span class="p">)</span>
+</span><span data-line="3"><span class="n">track_two</span>                    <span class="mi">158</span>        <span class="mi">1</span>        <span class="mi">0</span>  <span class="n">kick</span> <span class="mi">59</span><span class="o">-&gt;</span><span class="mi">60</span> <span class="p">(</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+</span></pre></div>
+</div>
+<p>It compares the transcription JSON, not <code class="docutils literal notranslate"><span class="pre">drumscript.log</span></code>. The log only records
+<code class="docutils literal notranslate"><span class="pre">Classified</span> <span class="pre">1550</span> <span class="pre">events</span></code>; the JSON records <em>which</em> 1,550 and the physics behind
+each, so the report can name the onsets that changed.</p>
+<div class="tip admonition">
+<p class="admonition-title">Onsets versus classification</p>
+<p>Onsets are paired by position. If onset counts hold steady while labels change,
+the <strong>classifier</strong> moved. If the counts themselves change, <strong>onset detection</strong>
+moved. Very different problems, and the report distinguishes them.</p>
+</div>
+</section>
+<section id="why-it-does-not-trust-exit-codes">
+<h3>Why it does not trust exit codes<a class="headerlink" href="#why-it-does-not-trust-exit-codes" title="Link to this heading">#</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">drumscript.main</span></code> prints errors but still exits 0, so a failing file does not
+stop a shell chain of <code class="docutils literal notranslate"><span class="pre">&amp;&amp;</span></code>. Worse, a file that fails the same way in <em>both</em>
+halves of a before/after pair cancels out: the comparison looks clean while
+that file contributed nothing.</p>
+<p>So the runner checks every audio file exists <strong>before</strong> running anything, and
+afterwards confirms the <code class="docutils literal notranslate"><span class="pre">.json</span></code>, <code class="docutils literal notranslate"><span class="pre">.pdf</span></code> and <code class="docutils literal notranslate"><span class="pre">.mid</span></code> were actually written.</p>
+<p>Full documentation lives in
+<a class="reference external" href="https://github.com/DrumScript/DrumScript/tree/main/tests/regression#readme"><code class="docutils literal notranslate"><span class="pre">tests/regression/README.md</span></code></a>.</p>
+</section>
+</section>
+<hr class="docutils" />
+<section id="behaviour-locking-unit-tests">
+<h2>Behaviour-locking unit tests<a class="headerlink" href="#behaviour-locking-unit-tests" title="Link to this heading">#</a></h2>
+<p><a class="reference internal" href="#testing-guidance"><em>back to top</em></a></p>
+<p>Some <strong>unit test</strong> files exist specifically to lock in behaviour that was
+previously inconsistent, ambiguous, or breaking. They are ordinary unit tests
+living in <code class="docutils literal notranslate"><span class="pre">tests/unit/</span></code>; the label describes <em>why</em> they exist, not where they
+sit. They should not be removed without a deliberate decision:</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Not to be confused with <code class="docutils literal notranslate"><span class="pre">tests/regression/</span></code>, which is a separate before/after
+transcription harness covered in
+<a class="reference internal" href="#transcription-regression-checks">Transcription regression checks</a>.</p>
+</div>
 <p><code class="docutils literal notranslate"><span class="pre">test_cli_args.py</span></code>
 : Locks in <code class="docutils literal notranslate"><span class="pre">--full-song</span></code> (hyphenated) as the canonical CLI flag after the
 v0.1.6 rename from <code class="docutils literal notranslate"><span class="pre">--full</span></code>. Also asserts that the underscore variant
@@ -674,7 +771,7 @@ mentions both the replacement parameter (<code class="docutils literal notransla
 version (v1.0.0). Delete (or flip to expect <code class="docutils literal notranslate"><span class="pre">TypeError</span></code>) when <code class="docutils literal notranslate"><span class="pre">full</span></code> is
 removed in v1.0.0.</p>
 <p>When you find a class of bug that previously slipped through, the corresponding
-test belongs here too — not just as a pass/fail check, but with comments
+test belongs here too - not just as a pass/fail check, but with comments
 explaining <em>why</em> the test exists so it isn’t deleted by accident later.</p>
 </section>
 <hr class="docutils" />
@@ -712,7 +809,7 @@ test you can add.</p></li>
 <li><p><strong>Don’t conflate filter configuration with behaviour.</strong> Tests that use
 <code class="docutils literal notranslate"><span class="pre">pytest.warns()</span></code> and <code class="docutils literal notranslate"><span class="pre">recwarn</span></code> capture warnings regardless of how Python’s
 warning filters are configured. Don’t add <code class="docutils literal notranslate"><span class="pre">warnings.simplefilter(&quot;always&quot;)</span></code>
-inside tests — pytest handles this for you.</p></li>
+inside tests - pytest handles this for you.</p></li>
 </ol>
 </section>
 <hr class="docutils" />
@@ -733,10 +830,11 @@ a pull request so the feedback loop is fast.</p>
 <section id="see-also">
 <h2>See Also<a class="headerlink" href="#see-also" title="Link to this heading">#</a></h2>
 <ul class="simple">
-<li><p><a class="reference external" href="https://github.com/DrumScript/DrumScript/tree/main/tests#readme">Tests README</a> — copy-pasteable command reference</p></li>
+<li><p><a class="reference external" href="https://github.com/DrumScript/DrumScript/tree/main/tests#readme">Tests README</a> - copy-pasteable command reference</p></li>
+<li><p><a class="reference external" href="https://github.com/DrumScript/DrumScript/tree/main/tests/regression#readme">Regression harness README</a> - the before/after transcription checks</p></li>
 <li><p><a class="reference internal" href="contributor_guidance.html"><span class="std std-doc">Contributor Guidance</span></a></p></li>
 <li><p><a class="reference internal" href="documentation.html"><span class="std std-doc">Documentation Guide</span></a></p></li>
-<li><p><a class="reference external" href="https://docs.pytest.org/">Pytest documentation</a> — official reference</p></li>
+<li><p><a class="reference external" href="https://docs.pytest.org/">Pytest documentation</a> - official reference</p></li>
 </ul>
 <hr class="docutils" />
 <!-- LEGACY_CODE: KEEP FOR NOW

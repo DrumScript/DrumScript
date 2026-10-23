@@ -13,7 +13,8 @@ the suite. For a copy-pasteable command reference, see the
 - **[Suite layout](#suite-layout)**
 - **[Writing a new test](#writing-a-new-test)**
 - **[Patterns you'll use often](#patterns-youll-use-often)**
-- **[Regression tests](#regression-tests)**
+- **[Transcription regression checks](#transcription-regression-checks)**
+- **[Behaviour-locking unit tests](#behaviour-locking-unit-tests)**
 - **[Coverage reports](#coverage-reports)**
 - **[Common pitfalls](#common-pitfalls)**
 - **[Continuous integration](#continuous-integration)**
@@ -34,6 +35,7 @@ DrumScript follows the classic [test pyramid](https://martinfowler.com/articles/
 | **Integration (fast)** | seconds | ~12 cases | Real audio and real file writes, no Demucs |
 | **Integration (slow)** | seconds–minutes | ~11 cases | Real Demucs runs, real ffmpeg |
 | **End-to-end** | minutes | very few | Full pipeline: audio → MIDI/PDF/XML |
+| **Transcription regression** | minutes | opt-in | Full pipeline on your own audio, compared against a previous run |
 
 The dev loop (`pytest -m "not slow"`) runs the unit layer **and** the fast
 integration layer. The unit layer finishes in well under 10 seconds; the fast
@@ -42,7 +44,7 @@ really writes PDF/JSON/MIDI to disk.
 
 That tier exists because mocking has a blind spot. `tests/unit/test_transcribe.py`
 mocks `build_score`, so it can only prove *"transcribe() reports whatever
-build_score told it"* — it can never prove the files landed on disk. The fast
+build_score told it"* - it can never prove the files landed on disk. The fast
 integration tests close that gap, and because they don't need model weights they
 can run in CI on every push.
 
@@ -62,31 +64,33 @@ when something fails. Unit tests catch *most* bugs *much* faster.
 
 ```
 tests/
+├── README.md                ← copy-pasteable command reference
 ├── conftest.py              ← shared fixtures (auto-discovered)
-├── fixtures/audio/          ← real audio files (empty; synthesised in conftest)
+├── tree_tests.txt
 ├── unit/                    ← fast, no I/O, no subprocess
-tests/
-├── README.md
-├── conftest.py
-└── unit
-    ├── __init__.py
-    ├── test_audio_loader.py
-    ├── test_benchmarks_run.py
-    ├── test_classify.py
-    ├── test_cli_args.py
-    ├── test_deprecation_warnings.py
-    ├── test_helpers.py
-    ├── test_idmt_dataset.py
-    ├── test_onset_detector.py
-    ├── test_stem_splitter_helpers.py
-    ├── test_tempo_detector.py
-    └── test_transcribe.py
-└── integration/             ← real files; Demucs/ffmpeg where noted
-    ├── test_stem_splitter_real.py   ← all cases require Demucs (slow)
-    └── test_transcribe_real.py      ← 12 cases need no Demucs, 3 do
+│   ├── __init__.py
+│   ├── test_audio_loader.py
+│   ├── test_benchmarks_run.py
+│   ├── test_classify.py
+│   ├── test_cli_args.py
+│   ├── test_deprecation_warnings.py
+│   ├── test_helpers.py
+│   ├── test_idmt_dataset.py
+│   ├── test_onset_detector.py
+│   ├── test_pdf_time_signature.py
+│   ├── test_stem_splitter_helpers.py
+│   ├── test_tempo_detector.py
+│   └── test_transcribe.py
+├── integration/             ← real files; Demucs/ffmpeg where noted
+│   ├── test_stem_splitter_real.py   ← all cases require Demucs (slow)
+│   └── test_transcribe_real.py      ← 12 cases need no Demucs, 3 do
+└── regression/              ← before/after transcription harness
+    ├── README.md
+    ├── songs.example.json   ← template; copy to songs.json (gitignored)
+    └── test_regression.py   ← pytest module AND command-line tool
 ```
 
-Tests are auto-discovered by pytest — any file matching `test_*.py` under
+Tests are auto-discovered by pytest - any file matching `test_*.py` under
 `tests/` is picked up automatically. There is no central registry to update
 when adding new files.
 
@@ -101,7 +105,7 @@ Two custom markers are defined in `pyproject.toml` (under `[tool.pytest.ini_opti
   development.
 
 `@pytest.mark.integration`
-: Tests that require external dependencies — Demucs, ffmpeg, real audio
+: Tests that require external dependencies - Demucs, ffmpeg, real audio
   files. Always combined with `slow`.
 
 ```zsh
@@ -140,7 +144,7 @@ load audio that takes more than 100ms?*
 - Filename: `test_*.py`
 - Class names: `Test*`
 - Function names: `test_*`
-- Group related assertions inside a `Test*` class for readability — pytest
+- Group related assertions inside a `Test*` class for readability - pytest
   treats each method as a separate test.
 
 ### 3. Use Arrange / Act / Assert
@@ -149,13 +153,13 @@ Every test should follow this shape:
 
 ```python
 def test_normalises_to_unit_peak():
-    # Arrange — set up inputs
+    # Arrange - set up inputs
     audio = np.array([0.0, 0.5, -0.25, 0.1], dtype=np.float32)
 
-    # Act — do the thing
+    # Act - do the thing
     result = normalise_audio(audio)
 
-    # Assert — verify the outcome
+    # Assert - verify the outcome
     assert np.isclose(np.max(np.abs(result)), 1.0)
 ```
 
@@ -226,14 +230,14 @@ instead:
 def test_tempo_detection_on_120bpm_click(click_track_120bpm):
     audio, sr = click_track_120bpm
     bpm = estimate_tempo(audio, sr)
-    # ±10% — accepts 108-132 BPM. Wide enough for librosa's variance,
+    # ±10% - accepts 108-132 BPM. Wide enough for librosa's variance,
     # narrow enough to catch real regressions.
     assert 108 <= bpm <= 132
 ```
 
 ### Mocking subprocess calls
 
-The unit tests for `stem_splitter` don't actually run Demucs — that would be
+The unit tests for `stem_splitter` don't actually run Demucs - that would be
 too slow. Instead, they mock `subprocess.run` and verify the *command being
 constructed*. The real Demucs run lives in
 `tests/integration/test_stem_splitter_real.py`.
@@ -242,7 +246,7 @@ constructed*. The real Demucs run lives in
 
 Mocking buys speed but hides whole classes of bug. `tests/unit/test_transcribe.py`
 mocks `build_score`, so it verifies the *contract between* `transcribe()` and
-`build_score()` — not that any file was written. Two v0.2.0 bugs sat squarely in
+`build_score()` - not that any file was written. Two v0.2.0 bugs sat squarely in
 that blind spot:
 
 - `transcribe()` reported PDF/JSON/MIDI paths unconditionally, including files
@@ -265,16 +269,106 @@ def test_deprecated_param_warns():
         ds.detect_tempo(audio, full=True)
 ```
 
-The `match` argument is a regex against the warning message — useful for
+The `match` argument is a regex against the warning message - useful for
 locking in that the warning text actually points users at the replacement.
 ---
 
-## Regression tests
+## Transcription regression checks
 [*back to top*](#testing-guidance)
 
-Some test files exist specifically to lock in behaviour that was previously
-inconsistent, ambiguous, or breaking. They sit alongside the normal unit tests
-but should not be removed without a deliberate decision:
+`tests/regression/` answers a question the rest of the suite cannot: **did my
+change alter the transcriptions?**
+
+It is one file, `test_regression.py`, which is both a pytest module and a
+command-line tool. Importing it defines the tests; running it gives you a
+runner and a comparator.
+
+### Two kinds of check
+
+A **full track** has no known-correct transcription. Nobody can say what the
+right 1,500 events are for a seven-minute song, so a track is *compared*
+against a previous run, never asserted.
+
+An **isolated single hit** does have a correct answer: a recording of one kick
+drum must classify as `kick`. Those are real pass/fail assertions, and they are
+what catches a threshold change breaking detection without anyone reading a
+diff.
+
+Both live in the same config, distinguished by a `kind` field.
+
+### Setting it up
+
+```zsh
+cp tests/regression/songs.example.json tests/regression/songs.json
+```
+
+Then edit `songs.json` to point at your own recordings. It is gitignored, so
+your file list never leaves your machine. Without it the tests skip and the CLI
+prints these instructions.
+
+### Using it
+
+```zsh
+# before your change
+python3 tests/regression/test_regression.py run --label <name> --timing BEFORE
+
+# ...make the change, then...
+python3 tests/regression/test_regression.py run --label <name> --timing AFTER
+
+# compare the two folders it printed
+python3 tests/regression/test_regression.py compare <before> <after> --markdown
+
+# re-check an archived run against today's expectations
+python3 tests/regression/test_regression.py verify <run_folder>
+```
+
+### What a comparison tells you
+
+```
+Entry                     Onsets  Relabel FeatOnly  Label changes
+track_one                   1550      265        0  kick 412->598 (+186)
+track_two                    158        1        0  kick 59->60 (+1)
+```
+
+It compares the transcription JSON, not `drumscript.log`. The log only records
+`Classified 1550 events`; the JSON records *which* 1,550 and the physics behind
+each, so the report can name the onsets that changed.
+
+```{admonition} Onsets versus classification
+:class: tip
+Onsets are paired by position. If onset counts hold steady while labels change,
+the **classifier** moved. If the counts themselves change, **onset detection**
+moved. Very different problems, and the report distinguishes them.
+```
+
+### Why it does not trust exit codes
+
+`drumscript.main` prints errors but still exits 0, so a failing file does not
+stop a shell chain of `&&`. Worse, a file that fails the same way in *both*
+halves of a before/after pair cancels out: the comparison looks clean while
+that file contributed nothing.
+
+So the runner checks every audio file exists **before** running anything, and
+afterwards confirms the `.json`, `.pdf` and `.mid` were actually written.
+
+Full documentation lives in
+[`tests/regression/README.md`](https://github.com/DrumScript/DrumScript/tree/main/tests/regression#readme).
+
+---
+
+## Behaviour-locking unit tests
+[*back to top*](#testing-guidance)
+
+Some **unit test** files exist specifically to lock in behaviour that was
+previously inconsistent, ambiguous, or breaking. They are ordinary unit tests
+living in `tests/unit/`; the label describes *why* they exist, not where they
+sit. They should not be removed without a deliberate decision:
+
+```{note}
+Not to be confused with `tests/regression/`, which is a separate before/after
+transcription harness covered in
+[Transcription regression checks](#transcription-regression-checks).
+```
 
 `test_cli_args.py`
 : Locks in `--full-song` (hyphenated) as the canonical CLI flag after the
@@ -291,7 +385,7 @@ but should not be removed without a deliberate decision:
   removed in v1.0.0.
 
 When you find a class of bug that previously slipped through, the corresponding
-test belongs here too — not just as a pass/fail check, but with comments
+test belongs here too - not just as a pass/fail check, but with comments
 explaining *why* the test exists so it isn't deleted by accident later.
 
 ---
@@ -333,7 +427,7 @@ better than total coverage.
 5. **Don't conflate filter configuration with behaviour.** Tests that use
    `pytest.warns()` and `recwarn` capture warnings regardless of how Python's
    warning filters are configured. Don't add `warnings.simplefilter("always")`
-   inside tests — pytest handles this for you.
+   inside tests - pytest handles this for you.
 
 
 ---
@@ -356,10 +450,11 @@ a pull request so the feedback loop is fast.
 
 ## See Also
 
-- [Tests README](https://github.com/DrumScript/DrumScript/tree/main/tests#readme) — copy-pasteable command reference
+- [Tests README](https://github.com/DrumScript/DrumScript/tree/main/tests#readme) - copy-pasteable command reference
+- [Regression harness README](https://github.com/DrumScript/DrumScript/tree/main/tests/regression#readme) - the before/after transcription checks
 - [Contributor Guidance](contributor_guidance.md)
 - [Documentation Guide](documentation.md)
-- [Pytest documentation](https://docs.pytest.org/) — official reference
+- [Pytest documentation](https://docs.pytest.org/) - official reference
 
 ---
 <!-- LEGACY_CODE: KEEP FOR NOW

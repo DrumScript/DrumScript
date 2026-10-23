@@ -128,7 +128,7 @@ addopts = "-v --tb=short --strict-markers --ignore=local_tests/classification_en
 # ruff >=0.16 formats them by default, which reflows deliberate one-liner
 # snippets (e.g. `import platform; print(...)`) and collapses readable
 # multi-line examples. Exclude them so ruff governs real Python only.
-extend-exclude = ["*.md"]
+extend-exclude = ["*.md", "*.sh"]
 # Set the maximum line length
 line-length = 150
 # Target Python 3.9 as minimum supported version

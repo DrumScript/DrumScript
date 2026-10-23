@@ -144,7 +144,9 @@ htdemucs/**
 # ==========================================
 aws_api.py
 *.sh
+!scripts/backup.sh
 !scripts/run_tests.sh
+!scripts/collect_code.sh
 scripts/*.md
 Dockerfile
 drumscript_full_review.txt

@@ -37,7 +37,7 @@ def build_score(
     :param output_path: Path to save the PDF.
     :type output_path: str, optional
     :param quantization_subdivision: Grid for quantization (e.g., 1/n where n is the subdivision, 16 for 1/16th notes).
-    :type quantization_subdivision: int, optional
+    :type quantization_subdivision: int, optional, must be non-zero
     :param time_signature: Time signature string (e.g., "4/4"), default if time_sig is unspecified
     :type time_signature: str, optional
 

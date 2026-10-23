@@ -97,6 +97,9 @@ proofs/
 .development/
 local_tests/
 local_tests/**
+tests/unit/test_single_hits.py
+tests/e2e
+tests/regression/songs.json
 
 # ==========================================
 # DATA, AUDIO & MACHINE LEARNING
@@ -141,7 +144,9 @@ htdemucs/**
 # ==========================================
 aws_api.py
 *.sh
+!scripts/backup.sh
 !scripts/run_tests.sh
+!scripts/collect_code.sh
 scripts/*.md
 Dockerfile
 drumscript_full_review.txt
@@ -179,3 +184,4 @@ terraform/.terraform/providers/registry.terraform.io/hashicorp/aws/5.100.0/darwi
 
 app/
 drumscript_full_review.txt
+tests/regression/_COMMANDS.md

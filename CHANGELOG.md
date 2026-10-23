@@ -1,7 +1,7 @@
 # **Changelog**
 
 <!--date_added:thurs-28-may-2026-->
-<!--date_updated:tues-20-october-2026-->
+<!--date_updated:fri-23-october-2026-->
 
 
 * All notable changes related to the repository and pypi distribution of `DrumScript` will be documented here
@@ -36,6 +36,7 @@
 * Added troubleshooting page to documentation, with navigation tab for known dependency issues/errors impacting DrumScript
 * Added issue forms for `bug_report`, `feature_request` and `submit_results` to make giving feedback easier
 * Added PyPI version and monthly download badges to the badge blocks in `README.md` and `docs/index.md`, both served live by [shields.io](https://shields.io) so neither needs a workflow or a manual bump. The version badge tracks the latest published release; the downloads badge reads [pypistats.org](https://pypistats.org/packages/drumscript), which excludes mirror and bot traffic. Mirror-inclusive counts run roughly 2.3x higher, so the mirror-excluded figure was chosen as the honest one.
+* Added additional docstring to lines 23, 39-41 of `drumscript/notation_generator/score_builder.py` to indicate default behaviour for time signature (4/4 is default) and to specify non-zero constraint on quantization_subdivision
 
 **Testing:**
 * Added a transcription regression harness at `tests/regression/`, replacing the manual before/after routine. One file, `test_regression.py`, is both a pytest module and a command-line tool with `run`, `compare` and `verify` subcommands. `run` transcribes every file in the config, verifies the outputs and archives them to a dated folder with a `manifest.json` recording the commit, whether the tree was dirty, per-entry timings and results. `compare` diffs two archives and reports what moved. `verify` re-checks an archived folder against the current expectations.

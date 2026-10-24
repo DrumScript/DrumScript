@@ -1,7 +1,7 @@
 # DrumScript Tests
 
 <!--date_added:weds-29-apr-2026-->
-<!--date_updated:sat-03-oct-2026-->
+<!--date_updated:tues-20-october-2026-->
 
 This directory contains the pytest test suite for `DrumScript`.
 
@@ -21,22 +21,26 @@ DrumScript/
     ├── unit/                               ← fast, no I/O, no subprocess
     │   ├── __init__.py
     │   ├── test_audio_loader.py            ← 13 tests
-    │   ├── test_benchmarks_run.py          ←  7 tests (added v0.1.6,{PR#273})
+    │   ├── test_benchmarks_run.py          ←  7 tests
     │   ├── test_classify.py                ← 24 tests
-    │   ├── test_cli_args.py                ←  4 tests (added v0.1.6)
-    │   ├── test_deprecation_warnings.py    ← 13 tests (added v0.1.6)
+    │   ├── test_cli_args.py                ←  4 tests
+    │   ├── test_deprecation_warnings.py    ← 13 tests
     │   ├── test_helpers.py                 ← 24 tests
-    │   ├── test_idmt_dataset.py            ←  4 tests  (added v0.1.6,{PR#273})
+    │   ├── test_idmt_dataset.py            ←  4 tests
     │   ├── test_onset_detector.py          ←  7 tests
     │   ├── test_pdf_time_signature.py      ←  3 tests
-    │   ├── test_stem_splitter_helpers.py    ← 17 tests (includes regression)
+    │   ├── test_stem_splitter_helpers.py   ← 17 tests
     │   ├── test_tempo_detector.py          ←  6 tests
     │   └── test_transcribe.py              ← 20 tests
-    └── integration/                        ← real files; Demucs/ffmpeg where noted
-        ├── __init__.py
-        ├── test_stem_splitter_real.py      ←  8 tests (all require Demucs)
-        └── test_transcribe_real.py         ← 15 tests (added v0.2.0)
-                                                12 need no Demucs, 3 do
+    ├── integration/                        ← real files; Demucs/ffmpeg where noted
+    │   ├── __init__.py
+    │   ├── test_stem_splitter_real.py      ←  8 tests (all require Demucs)
+    │   └── test_transcribe_real.py         ← 15 tests (added v0.2.0)
+    │                                           12 need no Demucs, 3 do
+    └── regression/                         ← before/after transcription harness
+        ├── README.md                       ← full documentation
+        ├── songs.example.json              ← template; copy to songs.json
+        └── test_regression.py              ← pytest module AND command-line tool
 ```
 
 > **Note:** Counts above reflect pytest's collected case count, ie parametrised
@@ -44,9 +48,15 @@ DrumScript/
 > across **11** files.--> Unit total: **142** cases across **12** files. 
 > Integration total: **23** cases across **2** files.
 
+> **`tests/regression/` is not collected as ordinary tests.** It is a
+> before/after transcription harness: `test_regression.py` runs a configured
+> set of audio, archives the results, and compares two archives. Its pytest
+> tests skip unless you have created `songs.json`, so the counts above are
+> unaffected on a fresh clone.
+
 > **Not all integration tests are slow.** The 12 Demucs-free cases in
 > `test_transcribe_real.py` are marked `integration` but **not** `slow`, so they
-> still run under `pytest -m "not slow"` — and therefore in CI. They give the
+> still run under `pytest -m "not slow"` - and therefore in CI. They give the
 > v0.2.0 `_TranscribeResult` change real end-to-end coverage (files genuinely
 > written to disk) without needing model weights. Expect them to add roughly
 > 30 seconds to a "fast" run.
@@ -82,8 +92,8 @@ The `[dev]` group installs:
 
 1. Documentation tooling (`shibuya`, `myst-parser`)
 2. Testing suite (`pytest`, `pytest-cov`)
-3. Jupyter support (`ipykernel`) — convenience only
-4. Benchmarking (`mir_eval` — for benchmark runners under `benchmarks/`)
+3. Jupyter support (`ipykernel`) - convenience only
+4. Benchmarking (`mir_eval` - for benchmark runners under `benchmarks/`)
 
 > **Note:** `ipykernel`/Jupyter is a convenience package; **`.ipynb` files must never be committed**. PRs containing `.ipynb` files (or their metadata) will not be reviewed until they are removed.
 
@@ -138,8 +148,8 @@ For one-off direct pytest runs, see [Quick start](#quick-start).
 
 Tests can be tagged with custom markers (defined in `pyproject.toml`):
 
-- `@pytest.mark.slow` — skip by default during development
-- `@pytest.mark.integration` — touches real files, not mocked
+- `@pytest.mark.slow` - skip by default during development
+- `@pytest.mark.integration` - touches real files, not mocked
 
 The two are independent, which matters. A test can be `integration` without
 being `slow`: it does real work (real audio, real file writes) but finishes in
@@ -173,7 +183,7 @@ pytest -m integration
 1. Place it under `tests/unit/` if everything heavy is mocked, or
    `tests/integration/` if it touches real files, audio, or subprocesses.
    If it's an integration test that does *not* need Demucs, mark it
-   `integration` only — leave `slow` off so it still runs in CI.
+   `integration` only - leave `slow` off so it still runs in CI.
 2. Name the file `test_*.py`. The runner script auto-discovers anything
    matching this pattern; no extra wiring required.
 3. Group related tests in a `Test*` class with `test_*` methods.
@@ -194,23 +204,61 @@ pytest -m integration
 
 ---
 
-## Regression tests
+## Transcription regression checks
 
-A handful of tests exist specifically to lock in behaviour that was previously
-inconsistent or ambiguous. These shouldn't be removed without a deliberate
-decision:
+`tests/regression/` answers a different question from the rest of the suite:
+**did my change alter the transcriptions?**
 
-- `test_cli_args.py` — locks in `--full-song` (hyphenated) as the canonical
+Full tracks have no known-correct output, so they are *compared* against a
+previous run rather than asserted. Isolated single drum hits do have a correct
+answer, so those are asserted.
+
+```zsh
+# before your change
+python3 tests/regression/test_regression.py run --label <name> --timing BEFORE
+
+# ...make the change, then...
+python3 tests/regression/test_regression.py run --label <name> --timing AFTER
+
+# compare the two folders it printed
+python3 tests/regression/test_regression.py compare <before> <after>
+```
+
+To set it up, copy the template and point it at your own audio:
+
+```zsh
+cp tests/regression/songs.example.json tests/regression/songs.json
+```
+
+`songs.json` is gitignored. Without it the tests skip and the CLI prints these
+instructions, so a fresh clone is never broken by its absence.
+
+Full documentation: [`tests/regression/README.md`](regression/README.md).
+
+---
+
+## Behaviour-locking unit tests
+
+A handful of **unit tests** exist specifically to lock in behaviour that was
+previously inconsistent or ambiguous. They are ordinary unit tests and live
+with the rest in `tests/unit/`; the label is about *why* they exist, not where.
+They shouldn't be removed without a deliberate decision:
+
+> **Not to be confused with `tests/regression/`**, which is a separate
+> before/after transcription harness. See
+> [Transcription regression checks](#transcription-regression-checks) below.
+
+- `test_cli_args.py` - locks in `--full-song` (hyphenated) as the canonical
   CLI flag after the v0.1.6 rename from `--full`.
-- `test_deprecation_warnings.py` — locks in the `full` → `verbose` shim
+- `test_deprecation_warnings.py` - locks in the `full` → `verbose` shim
   behaviour on the Python API. Delete (or flip) this when `full` is removed
   in v1.0.0.
-- `test_transcribe.py::TestTranscribeWrittenPaths` — locks in that
+- `test_transcribe.py::TestTranscribeWrittenPaths` - locks in that
   `transcribe()` reports only the files `build_score()` actually wrote. Before
   v0.2.0 all three paths were returned unconditionally, including files that
   failed to write.
 - `test_transcribe_real.py::TestCliStemFlagsReal::test_drumless_produces_backing_track_and_no_score`
-  — locks in the v0.2.0 fix where `--drumless` / `--all-stems` / `--mute` were
+  - locks in the v0.2.0 fix where `--drumless` / `--all-stems` / `--mute` were
   only reachable from inside an `except` handler, so they silently did nothing
   on the happy path. Requires Demucs.
 

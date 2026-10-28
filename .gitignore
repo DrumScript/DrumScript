@@ -183,3 +183,4 @@ app/
 drumscript_full_review.txt
 tests/regression/_COMMANDS.md
 extract_drums.ipynb
+create_backing_track.ipynb

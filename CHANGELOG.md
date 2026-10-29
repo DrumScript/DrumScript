@@ -99,6 +99,7 @@ Items listed below are fully implemented and **published to pypi** under an offi
 - Code-to-DrumScript label mapping expanded beyond `KD`/`SD`/`HH` to cover full-kit classes (toms, crash, ride)
 - Repository statistics badge (shields.io endpoint) for README and docs homepage: extend `repo-stats.yml` to write a small JSON (`schemaVersion`, `label`, `message`, `color`) to the `github-repo-stats` branch on each daily run, so shields.io can render live view/clone counts rather than a static link #296
 - Check compatibility for Python 3.13 (#299)
+- Added `export_midi()` support for transcribing audio files directly to MIDI without generating PDF or JSON output, along with the CLI `--midi-only` flag.
 >
 ###### *Changes*
 - Transcription function docstrings to be updated to make clear that drum-only audio is expected as standard input

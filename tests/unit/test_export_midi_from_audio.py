@@ -166,3 +166,73 @@ class TestExportMidiFromAudio:
         mock_export.assert_called_once()
         mock_pdf_exporter.assert_not_called()
         mock_xml_exporter.assert_not_called()
+
+
+def test_audio_export_creates_only_midi_file(tmp_path, monkeypatch):
+    from pretty_midi import PrettyMIDI
+
+    monkeypatch.chdir(tmp_path)
+
+    audio_file = tmp_path / "drums.wav"
+    audio_file.touch()
+
+    with (
+        patch("drumscript.load_audio", return_value=(np.zeros(22050), 22050)),
+        patch("drumscript.normalise_audio", side_effect=lambda audio: audio),
+        patch("drumscript._internal_estimate", return_value=120.0),
+        patch("drumscript.detect_onsets", return_value=[0.0, 0.5]),
+        patch(
+            "drumscript.classify_events",
+            return_value=[
+                {"time_sec": 0.0, "instruments": ["kick"]},
+                {"time_sec": 0.5, "instruments": ["snare"]},
+            ],
+        ),
+    ):
+        result = export_midi(audio_file, from_audio=True)
+
+    output_dir = tmp_path / "outputs"
+    midi_file = output_dir / "drums.mid"
+
+    assert pathlib.Path(result) == midi_file.resolve()
+    assert midi_file.is_file()
+
+    output_files = {path.suffix for path in output_dir.iterdir() if path.is_file()}
+    assert output_files == {".mid"}
+
+    midi = PrettyMIDI(str(midi_file))
+    tempo_times, tempi = midi.get_tempo_changes()
+
+    assert len(tempo_times) > 0
+    assert tempi[0] == pytest.approx(120.0)
+
+
+def test_event_list_export_remains_backward_compatible(tmp_path):
+    events = [{"time_sec": 0.0, "instruments": ["kick"]}]
+    output_path = str(tmp_path / "existing.mid")
+
+    with patch("drumscript.midi_exporter.export_to_midi") as mock_export:
+        result = export_midi(events, output_path=output_path)
+
+    mock_export.assert_called_once_with(events, output_path=output_path)
+    assert result is mock_export.return_value
+
+
+def test_midi_export_supports_filename_without_parent_directory(tmp_path, monkeypatch):
+
+    from pretty_midi import PrettyMIDI
+
+    monkeypatch.chdir(tmp_path)
+
+    events = [{"time_sec": 0.0, "instruments": ["kick"]}]
+
+    from drumscript.notation_generator.midi_exporter import export_to_midi
+
+    export_to_midi(events, output_path="out.mid", tempo=120.0)
+
+    midi_file = tmp_path / "out.mid"
+    assert midi_file.is_file()
+
+    midi = PrettyMIDI(str(midi_file))
+    _, tempi = midi.get_tempo_changes()
+    assert tempi[0] == pytest.approx(120.0)

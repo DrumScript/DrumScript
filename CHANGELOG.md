@@ -31,6 +31,10 @@
 
 > ### *Additions*
 
+**API/CLI:**
+* Added `export_midi(..., from_audio=True)` to export audio directly to MIDI without generating PDF or JSON files, and introduced the `--midi-only` CLI flag.
+* Fixed MIDI export when the output filename has no parent directory.
+
 **Documentation:** 
 * Added blurb to `README.md`, `docs/index.md` and `docs/about.md` about build process and current development people
 * Added troubleshooting page to documentation, with navigation tab for known dependency issues/errors impacting DrumScript

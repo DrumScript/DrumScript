@@ -29,9 +29,11 @@ What this file does NOT cover
   argument parser.
 """
 
+from unittest.mock import patch
+
 import pytest
 
-from drumscript.main import build_parser
+from drumscript.main import build_parser, cli
 
 # =============================================================================
 # Tests
@@ -100,3 +102,23 @@ class TestMidiOnlyFlag:
         args = parser.parse_args(["my_song.mp3"])
 
         assert args.midi_only is False
+
+    def test_midi_only_cli_calls_export_midi(self, monkeypatch):
+        """The CLI should route --midi-only to direct audio-to-MIDI export."""
+        monkeypatch.setattr(
+            "sys.argv",
+            ["drumscript", "my_song.wav", "--midi-only"],
+        )
+
+        with patch(
+            "drumscript.main.export_midi",
+            return_value="outputs/my_song.mid",
+        ) as mock_export:
+            cli()
+
+        mock_export.assert_called_once_with(
+            "my_song.wav",
+            from_audio=True,
+            full_song=False,
+            is_rudiment=False,
+        )

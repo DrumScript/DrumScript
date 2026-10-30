@@ -6,6 +6,7 @@ This job of this script is to orchestrate the End-to-End running of DrumScript m
 import argparse
 from pathlib import Path
 
+from drumscript import export_midi
 from drumscript.audio_processor import audio_loader, onset_detector, tempo_detector
 from drumscript.audio_processor.stem_splitter import extract_drum_stem, separate_audio
 from drumscript.drum_classifier.classify import classify_events, classify_rudiment_events
@@ -22,6 +23,7 @@ def main(
     all_stems: bool = False,
     output_format: str = "wav",
     is_rudiment: bool = False,
+    midi_only: bool = False,
 ):
     # .wav format as default, unless --mp3 input specified as an arg in user command
 
@@ -45,6 +47,17 @@ def main(
     :param is_rudiment: If True, optimises classification for isolated single beats, rudiments, or paradiddles by applying dynamic transient gating.
     :type is_rudiment: bool, optional
     """
+
+    if midi_only:
+        midi_path = export_midi(
+            input_audio_path,
+            from_audio=True,
+            full_song=full_song,
+            is_rudiment=is_rudiment,
+        )
+        print(f"MIDI-only export complete: {midi_path}")
+        return
+
     print("\n--- Starting DrumScript ---")
     print(f"Target: {input_audio_path}")
 
@@ -318,6 +331,12 @@ def build_parser() -> argparse.ArgumentParser:
 
     parser.add_argument("--full-song", action="store_true", help="Transcribe the full song (isolates drums first)")
 
+    parser.add_argument(
+        "--midi-only",
+        action="store_true",
+        help="Export MIDI only without generating sheet music or JSON.",
+    )
+
     # Stem Splitter arguments
     parser.add_argument(
         "--drumless", action="store_true", help="Extract a drumless backing track. Saves both the backing track and the drum-only audio"
@@ -357,6 +376,7 @@ def cli(argv: list = None) -> None:
         all_stems=args.all_stems,
         is_rudiment=args.rudiment,
         output_format=args.format,
+        midi_only=args.midi_only,
     )
 
 

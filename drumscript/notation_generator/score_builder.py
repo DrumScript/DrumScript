@@ -20,7 +20,8 @@ def build_score(
     # tempo: int, # <-- forces the caller to provide tempo
     tempo: float,
     output_path: str = "outputs/score.pdf",
-    quantization_subdivision: int = 16,  # must be non-zero or transcription fails
+    # quantization_subdivision: int = 16,  # must be non-zero or transcription fails
+    quantization_subdivision: int = None,
     time_signature: str = "4/4",
 ):
     """
@@ -56,12 +57,38 @@ def build_score(
     #    tempo = tempo / 2.0
     tempo = tempo
 
+    # --- DYNAMIC QUANTIZATION SUBDIVISION DERIVATION ---
+    # Parse the time signature to extract its denominator
+    try:
+        # ts_denominator = float(time_signature.split("/")[1])
+        parts = time_signature.split("/")
+        ts_numerator = float(parts[0])
+        ts_denominator = float(parts[1])
+    except (ValueError, IndexError):
+        ts_numerator = 4.0
+        ts_denominator = 4.0
+
+    # If the user did not explicitly override the subdivision flag, dynamically compute it
+    if quantization_subdivision is None:
+        if ts_denominator == 8.0:
+            # For /8 meters (e.g., 5/8, 7/8, 12/8), baseline 16th notes are ideal for tech death grids
+            # quantization_subdivision = 16
+            if ts_numerator in [6.0, 9.0, 12.0]:
+                quantization_subdivision = 24
+            else:
+                quantization_subdivision = 16
+        else:
+            # Fallback baseline for standard /4 meters
+            quantization_subdivision = 16
+
     # --- QUANTIZATION LOGIC
     # Snap all raw timestamps to a perfect musical grid so notes align vertically
     if tempo > 0:
         seconds_per_beat = 60.0 / float(tempo)
         # If subdivision is 16 (16th notes), that is 4 grid slices per beat
-        grid_step_seconds = seconds_per_beat * (4.0 / quantization_subdivision)
+        # grid_step_seconds = seconds_per_beat * (4.0 / quantization_subdivision)
+        ## Multiplier scales adaptively matching the musical pulse base of the denominator
+        grid_step_seconds = seconds_per_beat * (ts_denominator / quantization_subdivision)
 
         for event in detected_events:
             # raw_time = event['time']
@@ -78,7 +105,7 @@ def build_score(
     base_path = os.path.splitext(output_path)[0]  # "outputs/mysong"
     json_path = f"{base_path}.json"
 
-    # NEW: Derive specific file paths from the base string
+    ## Derive specific file paths from the base string
     pdf_filepath = f"{base_path}.pdf"
     midi_filepath = f"{base_path}.mid"
 

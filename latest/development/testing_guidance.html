@@ -464,18 +464,20 @@ when something fails. Unit tests catch <em>most</em> bugs <em>much</em> faster.<
 </span><span data-line="11">│   ├── test_deprecation_warnings.py
 </span><span data-line="12">│   ├── test_helpers.py
 </span><span data-line="13">│   ├── test_idmt_dataset.py
-</span><span data-line="14">│   ├── test_onset_detector.py
-</span><span data-line="15">│   ├── test_pdf_time_signature.py
-</span><span data-line="16">│   ├── test_stem_splitter_helpers.py
-</span><span data-line="17">│   ├── test_tempo_detector.py
-</span><span data-line="18">│   └── test_transcribe.py
-</span><span data-line="19">├── integration/             ← real files; Demucs/ffmpeg where noted
-</span><span data-line="20">│   ├── test_stem_splitter_real.py   ← all cases require Demucs (slow)
-</span><span data-line="21">│   └── test_transcribe_real.py      ← 12 cases need no Demucs, 3 do
-</span><span data-line="22">└── regression/              ← before/after transcription harness
-</span><span data-line="23">    ├── README.md
-</span><span data-line="24">    ├── songs.example.json   ← template; copy to songs.json (gitignored)
-</span><span data-line="25">    └── test_regression.py   ← pytest module AND command-line tool
+</span><span data-line="14">│   ├── test_main_midi_only.py
+</span><span data-line="15">│   ├── test_midi_exporter.py
+</span><span data-line="16">│   ├── test_onset_detector.py
+</span><span data-line="17">│   ├── test_pdf_time_signature.py
+</span><span data-line="18">│   ├── test_stem_splitter_helpers.py
+</span><span data-line="19">│   ├── test_tempo_detector.py
+</span><span data-line="20">│   └── test_transcribe.py
+</span><span data-line="21">├── integration/             ← real files; Demucs/ffmpeg where noted
+</span><span data-line="22">│   ├── test_stem_splitter_real.py   ← all cases require Demucs (slow)
+</span><span data-line="23">│   └── test_transcribe_real.py      ← 22 cases need no Demucs, 3 do
+</span><span data-line="24">└── regression/              ← before/after transcription harness
+</span><span data-line="25">    ├── README.md
+</span><span data-line="26">    ├── songs.example.json   ← template; copy to songs.json (gitignored)
+</span><span data-line="27">    └── test_regression.py   ← pytest module AND command-line tool
 </span></pre></div>
 </div>
 <p>Tests are auto-discovered by pytest - any file matching <code class="docutils literal notranslate"><span class="pre">test_*.py</span></code> under

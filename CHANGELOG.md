@@ -33,7 +33,10 @@
 
 **API/CLI:**
 * Added `export_midi(..., from_audio=True)` to export audio directly to MIDI without generating PDF or JSON files, and introduced the `--midi-only` CLI flag.
-* Fixed MIDI export when the output filename has no parent directory.
+-->
+* Added a `midi_only` option to `transcribe()` and a matching `--midi-only` CLI flag, which write the MIDI file and skip the PDF and JSON exports. The transcription itself is unchanged: onsets are still detected and hits still classified, because a MIDI file of drum notes cannot be produced without that work. Only the two other writes are suppressed, so there is still one transcription pipeline rather than two.
+* Added `midi_only` to `score_builder.build_score()`, which is the single place that decides which files get written. Both the CLI and the Python API pass the flag straight through to it.
+* Fixed MIDI export when the output filename has no parent directory. `os.path.dirname()` returns an empty string for a bare filename such as `my_drums.mid`, and `os.makedirs("")` raises `FileNotFoundError`. Carried over from [#348](https://github.com/DrumScript/DrumScript/pull/348).
 
 **Documentation:** 
 * Added blurb to `README.md`, `docs/index.md` and `docs/about.md` about build process and current development people
@@ -103,7 +106,10 @@ Items listed below are fully implemented and **published to pypi** under an offi
 - Code-to-DrumScript label mapping expanded beyond `KD`/`SD`/`HH` to cover full-kit classes (toms, crash, ride)
 - Repository statistics badge (shields.io endpoint) for README and docs homepage: extend `repo-stats.yml` to write a small JSON (`schemaVersion`, `label`, `message`, `color`) to the `github-repo-stats` branch on each daily run, so shields.io can render live view/clone counts rather than a static link #296
 - Check compatibility for Python 3.13 (#299)
+<!-- SUPERSEDED: shipped ahead of 1.0.0 as `midi_only` on `transcribe()`, see the Unreleased
+     section above. The remaining `output_midi`/`output_json`/`output_xml` work above still stands.
 - Added `export_midi()` support for transcribing audio files directly to MIDI without generating PDF or JSON output, along with the CLI `--midi-only` flag.
+-->
 >
 ###### *Changes*
 - Transcription function docstrings to be updated to make clear that drum-only audio is expected as standard input

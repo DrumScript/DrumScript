@@ -117,6 +117,42 @@ print(f"MIDI: {result['midi_path']}")
 
 > **Note (v0.2.0):** `transcribe()` now returns a dict with `pdf_path`, `json_path`, and `midi_path` keys. Using the return value as a plain string (e.g. `pdf = ds.transcribe(...)`) still works but is deprecated and will be removed in v1.0.0. Use `result["pdf_path"]` instead.
 
+### 7. Export MIDI Only (`--midi-only`)
+
+If you only need a MIDI file for your DAW, use `export_midi()` to transcribe audio directly to MIDI without generating PDF sheet music or JSON output.
+
+**CLI:**
+
+```zsh
+drumscript "drum_loop.wav" --midi-only
+```
+
+This creates `outputs/drum_loop.mid` by default.
+
+**Python API:**
+
+```python
+import drumscript as ds
+
+midi_path = ds.export_midi(
+    "drum_loop.wav",
+    from_audio=True,
+)
+print(f"MIDI saved to: {midi_path}")
+```
+
+For a full song, use `full_song=True` to separate the drum stem before transcription. To use the rudiment classifier, set `is_rudiment=True`.
+
+```python
+midi_path = ds.export_midi(
+    "full_song.wav",
+    from_audio=True,
+    full_song=True,
+)
+```
+
+You can also specify a custom output path using `output_path`, for example `output_path="my_drums.mid"`.
+
 > **Full commands**
 
 #### **Audio Transcription**

@@ -56,8 +56,11 @@ def export_to_midi(classified_events: list[dict], output_path: str, tempo: float
     # 4. Add the finished track to the file and save it
     midi.instruments.append(drum_track)
 
-    # Ensure directory exists
-    os.makedirs(os.path.dirname(output_path), exist_ok=True)
+    # Ensure directory exists when an output directory is specified
+    output_dir = os.path.dirname(output_path)
+    if output_dir:
+        os.makedirs(output_dir, exist_ok=True)
+
     midi.write(output_path)
 
     print(f"SUCCESS: MIDI file generated at -> {output_path}")

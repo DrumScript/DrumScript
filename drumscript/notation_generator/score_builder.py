@@ -22,6 +22,7 @@ def build_score(
     output_path: str = "outputs/score.pdf",
     quantization_subdivision: int = 16,  # must be non-zero or transcription fails
     time_signature: str = "4/4",
+    midi_only: bool = False,
 ):
     """
     Builds a drum score by saving event data to JSON and rendering to PDF.
@@ -40,6 +41,10 @@ def build_score(
     :type quantization_subdivision: int, optional, must be non-zero
     :param time_signature: Time signature string (e.g., "4/4"), default if time_sig is unspecified
     :type time_signature: str, optional
+    :param midi_only: If True, write the MIDI file and skip the JSON and PDF exports.
+        The events are still quantised exactly as normal, so the MIDI is identical to
+        the one a full run would produce. Only the other two writes are suppressed.
+    :type midi_only: bool, optional
 
     :return: Mapping of the files that were **successfully written**, with keys
         ``pdf_path``, ``json_path`` and ``midi_path``. A key is absent if that
@@ -100,32 +105,36 @@ def build_score(
 
     # 2. Save Transcription Data to JSON
     # This file serves as the "Source of Truth" for the PDF renderer.
-    try:
-        print(f"Saving to: {json_path}")
-        with open(json_path, "w") as f:
-            json.dump(detected_events, f, indent=4)
-        written_paths["json_path"] = json_path
-    except Exception as e:
-        print(f" Warning: Could not save JSON transcription: {e}")
+    # Skipped under midi_only: the caller asked for a MIDI file and nothing else.
+    if not midi_only:
+        try:
+            print(f"Saving to: {json_path}")
+            with open(json_path, "w") as f:
+                json.dump(detected_events, f, indent=4)
+            written_paths["json_path"] = json_path
+        except Exception as e:
+            print(f" Warning: Could not save JSON transcription: {e}")
 
     # 3. Generate Visual PDF (Directly from Data)
-    try:
-        # generate_custom_pdf(
-        export_pdf(
-            detected_events=detected_events,
-            # OLD: output_path=output_path,
-            output_path=pdf_filepath,  # Updated to explicitly map to .pdf
-            tempo=tempo,
-            time_signature=time_signature,
-        )
-        written_paths["pdf_path"] = pdf_filepath
+    # Skipped under midi_only, as above.
+    if not midi_only:
+        try:
+            # generate_custom_pdf(
+            export_pdf(
+                detected_events=detected_events,
+                # OLD: output_path=output_path,
+                output_path=pdf_filepath,  # Updated to explicitly map to .pdf
+                tempo=tempo,
+                time_signature=time_signature,
+            )
+            written_paths["pdf_path"] = pdf_filepath
 
-    # Success message is handled inside generate_custom_pdf/export_pdf in pdf_exporter.py
-    except Exception as e:
-        print(f"PDF Export Failed: {e}")
-        import traceback
+        # Success message is handled inside generate_custom_pdf/export_pdf in pdf_exporter.py
+        except Exception as e:
+            print(f"PDF Export Failed: {e}")
+            import traceback
 
-        traceback.print_exc()
+            traceback.print_exc()
 
     # 4. Generate MIDI File
     try:

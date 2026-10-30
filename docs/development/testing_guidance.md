@@ -76,6 +76,8 @@ tests/
 │   ├── test_deprecation_warnings.py
 │   ├── test_helpers.py
 │   ├── test_idmt_dataset.py
+│   ├── test_main_midi_only.py
+│   ├── test_midi_exporter.py
 │   ├── test_onset_detector.py
 │   ├── test_pdf_time_signature.py
 │   ├── test_stem_splitter_helpers.py
@@ -83,7 +85,7 @@ tests/
 │   └── test_transcribe.py
 ├── integration/             ← real files; Demucs/ffmpeg where noted
 │   ├── test_stem_splitter_real.py   ← all cases require Demucs (slow)
-│   └── test_transcribe_real.py      ← 12 cases need no Demucs, 3 do
+│   └── test_transcribe_real.py      ← 22 cases need no Demucs, 3 do
 └── regression/              ← before/after transcription harness
     ├── README.md
     ├── songs.example.json   ← template; copy to songs.json (gitignored)

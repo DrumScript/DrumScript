@@ -18,10 +18,12 @@ tests/
     ├── test_deprecation_warnings.py
     ├── test_helpers.py
     ├── test_idmt_dataset.py
+    ├── test_main_midi_only.py
+    ├── test_midi_exporter.py
     ├── test_onset_detector.py
     ├── test_pdf_time_signature.py
     ├── test_stem_splitter_helpers.py
     ├── test_tempo_detector.py
     └── test_transcribe.py
 
-4 directories, 21 files
+4 directories, 23 files

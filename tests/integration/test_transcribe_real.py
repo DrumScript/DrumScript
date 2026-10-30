@@ -46,6 +46,7 @@ import warnings
 from pathlib import Path
 
 import numpy as np
+import pretty_midi
 import pytest
 import soundfile as sf
 
@@ -297,3 +298,164 @@ class TestCliStemFlagsReal:
         ds_main.main(str(drum_only_loop), full_song=True)
 
         assert list(tmp_path.rglob("*_transcription.pdf")), "No score produced for --full-song"
+
+
+# =============================================================================
+# midi_only end-to-end - real audio, real files, no mocks
+# =============================================================================
+
+
+class TestMidiOnlyReal:
+    """``midi_only`` against real audio, which is the only thing that proves it works.
+
+    The unit tests in ``tests/unit/test_main_midi_only.py`` mock ``build_score``
+    and assert the flag arrives. That pins the wiring but would pass even if the
+    exports themselves were broken. These run the whole pipeline on the
+    synthesised loop and look at what actually lands on disk.
+
+    The flag is a filter on which files get written, nothing more. So the two
+    things worth proving are that it writes fewer files, and that the one file
+    it does write is identical to the one a full run produces.
+    """
+
+    def test_writes_only_the_midi_file(self, drum_only_loop, tmp_path):
+        """A midi_only run leaves a .mid and nothing else."""
+        # Act
+        ds.transcribe(str(drum_only_loop), output_dir=str(tmp_path), midi_only=True)
+
+        # Assert
+        produced = sorted(f.suffix for f in tmp_path.iterdir() if f.is_file())
+        assert produced == [".mid"], f"expected only a .mid, got {produced}"
+
+    def test_reports_only_the_path_it_wrote(self, drum_only_loop, tmp_path):
+        """
+        The returned mapping must not advertise a PDF that was deliberately skipped.
+
+        This is the same class of bug ``build_score``'s return value exists to
+        avoid: reporting a path for a file that was never written.
+        """
+        # Act
+        result = ds.transcribe(str(drum_only_loop), output_dir=str(tmp_path), midi_only=True, verbose=True)
+
+        # Assert
+        assert result["midi_path"], "no MIDI path reported"
+        assert Path(result["midi_path"]).is_file()
+        assert result["pdf_path"] is None
+        assert result["json_path"] is None
+
+    def test_midi_is_identical_to_a_full_run(self, drum_only_loop, tmp_path):
+        """
+        The headline guarantee. Same audio in, same MIDI out, fewer files written.
+
+        If this ever fails, the flag has leaked out of the output stage and into
+        the transcription itself, which it must never do.
+        """
+        # Arrange
+        full_dir = tmp_path / "full"
+        midi_dir = tmp_path / "midi_only"
+        full_dir.mkdir()
+        midi_dir.mkdir()
+
+        # Act
+        full = ds.transcribe(str(drum_only_loop), output_dir=str(full_dir), verbose=True)
+        midi = ds.transcribe(str(drum_only_loop), output_dir=str(midi_dir), midi_only=True, verbose=True)
+
+        # Assert
+        assert Path(full["midi_path"]).read_bytes() == Path(midi["midi_path"]).read_bytes()
+
+    def test_pipeline_still_runs_in_full(self, drum_only_loop, tmp_path):
+        """
+        Onsets are still detected and hits still classified.
+
+        A MIDI file of drum notes cannot be produced without that work, so a
+        midi_only run that reported zero onsets would mean the flag had been
+        wired as a shortcut rather than a filter.
+        """
+        # Arrange
+        full_dir = tmp_path / "full"
+        midi_dir = tmp_path / "midi_only"
+        full_dir.mkdir()
+        midi_dir.mkdir()
+
+        # Act
+        full = ds.transcribe(str(drum_only_loop), output_dir=str(full_dir), verbose=True)
+        midi = ds.transcribe(str(drum_only_loop), output_dir=str(midi_dir), midi_only=True, verbose=True)
+
+        # Assert
+        assert len(midi["onsets"]) > 0, "midi_only produced no onsets, so it skipped detection"
+        assert len(midi["onsets"]) == len(full["onsets"])
+        assert len(midi["events"]) == len(full["events"])
+        assert midi["tempo"] == pytest.approx(full["tempo"])
+
+    def test_written_midi_is_a_readable_drum_track(self, drum_only_loop, tmp_path):
+        """The output has to be openable by a DAW, not merely present."""
+        # Act
+        result = ds.transcribe(str(drum_only_loop), output_dir=str(tmp_path), midi_only=True, verbose=True)
+
+        # Assert
+        parsed = pretty_midi.PrettyMIDI(result["midi_path"])
+        assert parsed.instruments, "no instrument track in the exported MIDI"
+        assert parsed.instruments[0].is_drum is True
+        assert parsed.instruments[0].notes, "the exported MIDI has no notes in it"
+
+    def test_output_filename_is_honoured(self, drum_only_loop, tmp_path):
+        """``output_filename`` still controls the name, as it does on a normal run."""
+        # Act
+        result = ds.transcribe(str(drum_only_loop), output_dir=str(tmp_path), output_filename="my_drums", midi_only=True, verbose=True)
+
+        # Assert
+        assert Path(result["midi_path"]).name == "my_drums.mid"
+        assert (tmp_path / "my_drums.mid").is_file()
+
+    def test_creates_a_missing_output_dir(self, drum_only_loop, tmp_path):
+        """A nested output directory that does not exist yet is created."""
+        # Arrange
+        target = tmp_path / "does" / "not" / "exist"
+
+        # Act
+        result = ds.transcribe(str(drum_only_loop), output_dir=str(target), midi_only=True, verbose=True)
+
+        # Assert
+        assert Path(result["midi_path"]).is_file()
+
+    def test_default_run_is_unchanged(self, drum_only_loop, tmp_path):
+        """The regression guard: without the flag, all three files still appear."""
+        # Act
+        ds.transcribe(str(drum_only_loop), output_dir=str(tmp_path))
+
+        # Assert
+        produced = sorted(f.suffix for f in tmp_path.iterdir() if f.is_file())
+        assert produced == [".json", ".mid", ".pdf"]
+
+
+class TestMidiOnlyCliReal:
+    """The CLI route, driven the same way as ``TestCliStemFlagsReal`` above."""
+
+    def test_cli_midi_only_writes_one_file(self, drum_only_loop, tmp_path, monkeypatch):
+        """``drumscript song.wav --midi-only`` produces a .mid and no score."""
+        # Arrange
+        from drumscript import main as ds_main
+
+        monkeypatch.chdir(tmp_path)
+
+        # Act
+        ds_main.main(str(drum_only_loop), midi_only=True)
+
+        # Assert
+        assert list(tmp_path.rglob("*.mid")), "no MIDI file produced"
+        assert list(tmp_path.rglob("*.pdf")) == [], "a PDF was written under --midi-only"
+        assert list(tmp_path.rglob("*_transcription.json")) == [], "JSON was written under --midi-only"
+
+    def test_cli_default_still_writes_the_score(self, drum_only_loop, tmp_path, monkeypatch):
+        """Without the flag the CLI behaves exactly as before."""
+        # Arrange
+        from drumscript import main as ds_main
+
+        monkeypatch.chdir(tmp_path)
+
+        # Act
+        ds_main.main(str(drum_only_loop))
+
+        # Assert
+        assert list(tmp_path.rglob("*.mid"))
+        assert list(tmp_path.rglob("*_transcription.pdf"))

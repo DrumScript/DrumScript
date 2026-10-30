@@ -22,6 +22,7 @@ def main(
     all_stems: bool = False,
     output_format: str = "wav",
     is_rudiment: bool = False,
+    midi_only: bool = False,
 ):
     # .wav format as default, unless --mp3 input specified as an arg in user command
 
@@ -44,6 +45,8 @@ def main(
     :type output_format: str, optional
     :param is_rudiment: If True, optimises classification for isolated single beats, rudiments, or paradiddles by applying dynamic transient gating.
     :type is_rudiment: bool, optional
+    :param midi_only: If True, write only the MIDI file and skip the PDF and JSON exports. The pipeline itself is unchanged.
+    :type midi_only: bool, optional
     """
     print("\n--- Starting DrumScript ---")
     print(f"Target: {input_audio_path}")
@@ -173,7 +176,11 @@ def main(
         print(f"...Building Score & JSON: {pdf_path}...")
 
         # score_builder.build_and_export_drum_score(
-        score_builder.build_score(detected_events=detected_events, tempo=tempo, output_path=pdf_path, time_signature=time_signature)
+        # SUPERSEDED: wrote all three outputs unconditionally, so --midi-only had nowhere to act.
+        # score_builder.build_score(detected_events=detected_events, tempo=tempo, output_path=pdf_path, time_signature=time_signature)
+        score_builder.build_score(
+            detected_events=detected_events, tempo=tempo, output_path=pdf_path, time_signature=time_signature, midi_only=midi_only
+        )
 
         print("--- Done! ---\n")
 
@@ -318,6 +325,8 @@ def build_parser() -> argparse.ArgumentParser:
 
     parser.add_argument("--full-song", action="store_true", help="Transcribe the full song (isolates drums first)")
 
+    parser.add_argument("--midi-only", action="store_true", help="Export MIDI only, without generating sheet music or JSON.")
+
     # Stem Splitter arguments
     parser.add_argument(
         "--drumless", action="store_true", help="Extract a drumless backing track. Saves both the backing track and the drum-only audio"
@@ -357,6 +366,7 @@ def cli(argv: list = None) -> None:
         all_stems=args.all_stems,
         is_rudiment=args.rudiment,
         output_format=args.format,
+        midi_only=args.midi_only,
     )
 
 

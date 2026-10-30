@@ -392,8 +392,11 @@ data-aria-dark="Switch to auto color mode">
 </div></blockquote>
 <p><strong>API/CLI:</strong></p>
 <ul class="simple">
-<li><p>Added <code class="docutils literal notranslate"><span class="pre">export_midi(...,</span> <span class="pre">from_audio=True)</span></code> to export audio directly to MIDI without generating PDF or JSON files, and introduced the <code class="docutils literal notranslate"><span class="pre">--midi-only</span></code> CLI flag.</p></li>
-<li><p>Fixed MIDI export when the output filename has no parent directory.</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">export_midi(...,</span> <span class="pre">from_audio=True)</span></code> to export audio directly to MIDI without generating PDF or JSON files, and introduced the <code class="docutils literal notranslate"><span class="pre">--midi-only</span></code> CLI flag.
+–&gt;</p></li>
+<li><p>Added a <code class="docutils literal notranslate"><span class="pre">midi_only</span></code> option to <code class="docutils literal notranslate"><span class="pre">transcribe()</span></code> and a matching <code class="docutils literal notranslate"><span class="pre">--midi-only</span></code> CLI flag, which write the MIDI file and skip the PDF and JSON exports. The transcription itself is unchanged: onsets are still detected and hits still classified, because a MIDI file of drum notes cannot be produced without that work. Only the two other writes are suppressed, so there is still one transcription pipeline rather than two.</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">midi_only</span></code> to <code class="docutils literal notranslate"><span class="pre">score_builder.build_score()</span></code>, which is the single place that decides which files get written. Both the CLI and the Python API pass the flag straight through to it.</p></li>
+<li><p>Fixed MIDI export when the output filename has no parent directory. <code class="docutils literal notranslate"><span class="pre">os.path.dirname()</span></code> returns an empty string for a bare filename such as <code class="docutils literal notranslate"><span class="pre">my_drums.mid</span></code>, and <code class="docutils literal notranslate"><span class="pre">os.makedirs(&quot;&quot;)</span></code> raises <code class="docutils literal notranslate"><span class="pre">FileNotFoundError</span></code>. Carried over from <a class="reference external" href="https://github.com/DrumScript/DrumScript/pull/348">#348</a>.</p></li>
 </ul>
 <p><strong>Documentation:</strong></p>
 <ul class="simple">
@@ -480,8 +483,11 @@ data-aria-dark="Switch to auto color mode">
 <li><p>Code-to-DrumScript label mapping expanded beyond <code class="docutils literal notranslate"><span class="pre">KD</span></code>/<code class="docutils literal notranslate"><span class="pre">SD</span></code>/<code class="docutils literal notranslate"><span class="pre">HH</span></code> to cover full-kit classes (toms, crash, ride)</p></li>
 <li><p>Repository statistics badge (shields.io endpoint) for README and docs homepage: extend <code class="docutils literal notranslate"><span class="pre">repo-stats.yml</span></code> to write a small JSON (<code class="docutils literal notranslate"><span class="pre">schemaVersion</span></code>, <code class="docutils literal notranslate"><span class="pre">label</span></code>, <code class="docutils literal notranslate"><span class="pre">message</span></code>, <code class="docutils literal notranslate"><span class="pre">color</span></code>) to the <code class="docutils literal notranslate"><span class="pre">github-repo-stats</span></code> branch on each daily run, so shields.io can render live view/clone counts rather than a static link #296</p></li>
 <li><p>Check compatibility for Python 3.13 (#299)</p></li>
-<li><p>Added <code class="docutils literal notranslate"><span class="pre">export_midi()</span></code> support for transcribing audio files directly to MIDI without generating PDF or JSON output, along with the CLI <code class="docutils literal notranslate"><span class="pre">--midi-only</span></code> flag.</p></li>
 </ul>
+<!-- SUPERSEDED: shipped ahead of 1.0.0 as `midi_only` on `transcribe()`, see the Unreleased
+     section above. The remaining `output_midi`/`output_json`/`output_xml` work above still stands.
+- Added `export_midi()` support for transcribing audio files directly to MIDI without generating PDF or JSON output, along with the CLI `--midi-only` flag.
+-->
 <blockquote>
 <div></div></blockquote>
 </section>

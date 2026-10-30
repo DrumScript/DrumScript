@@ -602,353 +602,339 @@ data-aria-dark="Switch to auto color mode">
 </span><span data-line="296">    <span class="n">is_rudiment</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
 </span><span data-line="297">    <span class="n">output_dir</span><span class="o">=</span><span class="s2">&quot;outputs&quot;</span><span class="p">,</span>
 </span><span data-line="298">    <span class="n">output_filename</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-</span><span data-line="299">    <span class="c1"># full=False, # LEGACY CODE FROM V0.1.5 (--full flag replaced with deprecation shim, in place of --verbose)</span>
-</span><span data-line="300">    <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-</span><span data-line="301">    <span class="n">full</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-</span><span data-line="302"><span class="p">):</span>
-</span><span data-line="303"><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span data-line="304"><span class="sd">    Run the full DrumScript transcription pipeline end-to-end.</span>
-</span><span data-line="305">
-</span><span data-line="306"><span class="sd">    Loads audio → optionally extracts the drum stem → detects tempo and onsets →</span>
-</span><span data-line="307"><span class="sd">    classifies hits → builds the score → writes PDF, JSON, and MIDI output.</span>
-</span><span data-line="308">
-</span><span data-line="309"><span class="sd">    :param audio_path: Path to the input audio file (full song or isolated drum stem).</span>
-</span><span data-line="310"><span class="sd">    :type audio_path: str</span>
-</span><span data-line="311"><span class="sd">    :param full_song: If True, run Demucs stem separation first to isolate the drum</span>
-</span><span data-line="312"><span class="sd">        track. Set to False if your input is already an isolated drum stem.</span>
-</span><span data-line="313"><span class="sd">    :type full_song: bool, optional</span>
-</span><span data-line="314"><span class="sd">    :param time_signature: Time signature string in &#39;N/D&#39; form (e.g. &#39;4/4&#39;, &#39;6/8&#39;).</span>
-</span><span data-line="315"><span class="sd">    :type time_signature: str, optional</span>
-</span><span data-line="316"><span class="sd">    :param is_rudiment: If True, use the simpler classifier optimised for isolated</span>
-</span><span data-line="317"><span class="sd">        single beats and rudiments rather than full polyphonic drum patterns.</span>
-</span><span data-line="318"><span class="sd">    :type is_rudiment: bool, optional</span>
-</span><span data-line="319"><span class="sd">    :param output_dir: Directory to save output files. Created if it doesn&#39;t exist.</span>
-</span><span data-line="320"><span class="sd">        Defaults to &#39;outputs/&#39;.</span>
-</span><span data-line="321"><span class="sd">    :type output_dir: str, optional</span>
-</span><span data-line="322"><span class="sd">    :param output_filename: Output filename without extension. Defaults to</span>
-</span><span data-line="323"><span class="sd">        &#39;&lt;input_stem&gt;_transcription&#39;.</span>
-</span><span data-line="324"><span class="sd">    :type output_filename: str, optional</span>
-</span><span data-line="325"><span class="sd">    :param verbose: If True, return a dict with all intermediate results (tempo, onsets,</span>
-</span><span data-line="326"><span class="sd">        events, paths) instead of just the output paths.</span>
-</span><span data-line="327"><span class="sd">    :type verbose: bool, optional</span>
-</span><span data-line="328"><span class="sd">    :param full: **Deprecated** since v0.1.6, will be removed in v1.0.0. Use ``verbose``</span>
-</span><span data-line="329"><span class="sd">        instead. Passing ``full=True`` still works but emits a ``DeprecationWarning``.</span>
-</span><span data-line="330"><span class="sd">        Note: this is unrelated to ``full_song``, which controls stem separation.</span>
-</span><span data-line="331"><span class="sd">    :type full: bool, optional</span>
-</span><span data-line="332">
-</span><span data-line="333"><span class="sd">    :return: A dict with ``pdf_path``, ``json_path``, and ``midi_path`` keys</span>
-</span><span data-line="334"><span class="sd">        (backwards-compatible as a string via the PDF path until v1.0.0).</span>
-</span><span data-line="335"><span class="sd">        If ``verbose=True``, returns an extended dict with tempo, onsets,</span>
-</span><span data-line="336"><span class="sd">        events, and other intermediate results.</span>
-</span><span data-line="337"><span class="sd">    :rtype: _TranscribeResult or dict</span>
-</span><span data-line="338">
-</span><span data-line="339"><span class="sd">    **Examples:**</span>
-</span><span data-line="340">
-</span><span data-line="341"><span class="sd">    Quick transcription of an isolated drum stem:</span>
-</span><span data-line="342">
-</span><span data-line="343"><span class="sd">    .. code-block:: python</span>
-</span><span data-line="344">
-</span><span data-line="345"><span class="sd">       import drumscript as ds</span>
-</span><span data-line="346"><span class="sd">       result = ds.transcribe(&quot;drum_loop.wav&quot;)</span>
-</span><span data-line="347"><span class="sd">       print(result[&quot;pdf_path&quot;])   # PDF sheet music</span>
-</span><span data-line="348"><span class="sd">       print(result[&quot;json_path&quot;])  # raw transcription data</span>
-</span><span data-line="349"><span class="sd">       print(result[&quot;midi_path&quot;])  # MIDI file for DAW import</span>
+</span><span data-line="299">    <span class="n">midi_only</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+</span><span data-line="300">    <span class="c1"># full=False, # LEGACY CODE FROM V0.1.5 (--full flag replaced with deprecation shim, in place of --verbose)</span>
+</span><span data-line="301">    <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+</span><span data-line="302">    <span class="n">full</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+</span><span data-line="303"><span class="p">):</span>
+</span><span data-line="304"><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span data-line="305"><span class="sd">    Run the full DrumScript transcription pipeline end-to-end.</span>
+</span><span data-line="306">
+</span><span data-line="307"><span class="sd">    Loads audio → optionally extracts the drum stem → detects tempo and onsets →</span>
+</span><span data-line="308"><span class="sd">    classifies hits → builds the score → writes PDF, JSON, and MIDI output.</span>
+</span><span data-line="309">
+</span><span data-line="310"><span class="sd">    :param audio_path: Path to the input audio file (full song or isolated drum stem).</span>
+</span><span data-line="311"><span class="sd">    :type audio_path: str</span>
+</span><span data-line="312"><span class="sd">    :param full_song: If True, run Demucs stem separation first to isolate the drum</span>
+</span><span data-line="313"><span class="sd">        track. Set to False if your input is already an isolated drum stem.</span>
+</span><span data-line="314"><span class="sd">    :type full_song: bool, optional</span>
+</span><span data-line="315"><span class="sd">    :param time_signature: Time signature string in &#39;N/D&#39; form (e.g. &#39;4/4&#39;, &#39;6/8&#39;).</span>
+</span><span data-line="316"><span class="sd">    :type time_signature: str, optional</span>
+</span><span data-line="317"><span class="sd">    :param is_rudiment: If True, use the simpler classifier optimised for isolated</span>
+</span><span data-line="318"><span class="sd">        single beats and rudiments rather than full polyphonic drum patterns.</span>
+</span><span data-line="319"><span class="sd">    :type is_rudiment: bool, optional</span>
+</span><span data-line="320"><span class="sd">    :param output_dir: Directory to save output files. Created if it doesn&#39;t exist.</span>
+</span><span data-line="321"><span class="sd">        Defaults to &#39;outputs/&#39;.</span>
+</span><span data-line="322"><span class="sd">    :type output_dir: str, optional</span>
+</span><span data-line="323"><span class="sd">    :param output_filename: Output filename without extension. Defaults to</span>
+</span><span data-line="324"><span class="sd">        &#39;&lt;input_stem&gt;_transcription&#39;.</span>
+</span><span data-line="325"><span class="sd">    :type output_filename: str, optional</span>
+</span><span data-line="326"><span class="sd">    :param verbose: If True, return a dict with all intermediate results (tempo, onsets,</span>
+</span><span data-line="327"><span class="sd">        events, paths) instead of just the output paths.</span>
+</span><span data-line="328"><span class="sd">    :type verbose: bool, optional</span>
+</span><span data-line="329"><span class="sd">    :param full: **Deprecated** since v0.1.6, will be removed in v1.0.0. Use ``verbose``</span>
+</span><span data-line="330"><span class="sd">        instead. Passing ``full=True`` still works but emits a ``DeprecationWarning``.</span>
+</span><span data-line="331"><span class="sd">        Note: this is unrelated to ``full_song``, which controls stem separation.</span>
+</span><span data-line="332"><span class="sd">    :type full: bool, optional</span>
+</span><span data-line="333">
+</span><span data-line="334"><span class="sd">    :param midi_only: If True, write only the MIDI file and skip the PDF and JSON</span>
+</span><span data-line="335"><span class="sd">        exports. The pipeline is unchanged: audio is still loaded, onsets detected</span>
+</span><span data-line="336"><span class="sd">        and hits classified, because a MIDI file of drum notes cannot be produced</span>
+</span><span data-line="337"><span class="sd">        without that work. Only the two other writes are suppressed. The returned</span>
+</span><span data-line="338"><span class="sd">        mapping then carries ``midi_path`` alone, so read it rather than assuming</span>
+</span><span data-line="339"><span class="sd">        all three keys are present.</span>
+</span><span data-line="340"><span class="sd">    :type midi_only: bool, optional</span>
+</span><span data-line="341">
+</span><span data-line="342"><span class="sd">    :return: A dict with ``pdf_path``, ``json_path``, and ``midi_path`` keys</span>
+</span><span data-line="343"><span class="sd">        (backwards-compatible as a string via the PDF path until v1.0.0).</span>
+</span><span data-line="344"><span class="sd">        If ``verbose=True``, returns an extended dict with tempo, onsets,</span>
+</span><span data-line="345"><span class="sd">        events, and other intermediate results.</span>
+</span><span data-line="346"><span class="sd">        Under ``midi_only=True`` only ``midi_path`` is populated.</span>
+</span><span data-line="347"><span class="sd">    :rtype: _TranscribeResult or dict</span>
+</span><span data-line="348">
+</span><span data-line="349"><span class="sd">    **Examples:**</span>
 </span><span data-line="350">
-</span><span data-line="351"><span class="sd">    Full song with stem separation, custom output, full results:</span>
+</span><span data-line="351"><span class="sd">    Quick transcription of an isolated drum stem:</span>
 </span><span data-line="352">
 </span><span data-line="353"><span class="sd">    .. code-block:: python</span>
 </span><span data-line="354">
-</span><span data-line="355"><span class="sd">       result = ds.transcribe(</span>
-</span><span data-line="356"><span class="sd">           &quot;full_song.mp3&quot;,</span>
-</span><span data-line="357"><span class="sd">           full_song=True,</span>
-</span><span data-line="358"><span class="sd">           time_signature=&quot;6/8&quot;,</span>
-</span><span data-line="359"><span class="sd">           output_dir=&quot;./my_transcriptions&quot;,</span>
-</span><span data-line="360"><span class="sd">           # full=True, # LEGACY CODE FROM V0.1.5 (--full flag replaced with deprecation shim, in place of --verbose)</span>
-</span><span data-line="361"><span class="sd">           verbose=True</span>
-</span><span data-line="362"><span class="sd">       )</span>
-</span><span data-line="363"><span class="sd">       print(f&quot;PDF: {result[&#39;pdf_path&#39;]}&quot;)</span>
-</span><span data-line="364"><span class="sd">       print(f&quot;Detected tempo: {result[&#39;tempo&#39;]:.1f} BPM&quot;)</span>
-</span><span data-line="365"><span class="sd">       print(f&quot;Onsets: {len(result[&#39;onsets&#39;])}&quot;)</span>
-</span><span data-line="366"><span class="sd">    &quot;&quot;&quot;</span>
-</span><span data-line="367">    <span class="n">verbose</span> <span class="o">=</span> <span class="n">_resolve_verbose_flag</span><span class="p">(</span><span class="n">full</span><span class="p">,</span> <span class="n">verbose</span><span class="p">,</span> <span class="s2">&quot;transcribe&quot;</span><span class="p">)</span>
-</span><span data-line="368">    <span class="n">audio_path</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">audio_path</span><span class="p">)</span>
-</span><span data-line="369">    <span class="n">input_stem</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="n">audio_path</span><span class="p">)</span><span class="o">.</span><span class="n">stem</span>
+</span><span data-line="355"><span class="sd">       import drumscript as ds</span>
+</span><span data-line="356"><span class="sd">       result = ds.transcribe(&quot;drum_loop.wav&quot;)</span>
+</span><span data-line="357"><span class="sd">       print(result[&quot;pdf_path&quot;])   # PDF sheet music</span>
+</span><span data-line="358"><span class="sd">       print(result[&quot;json_path&quot;])  # raw transcription data</span>
+</span><span data-line="359"><span class="sd">       print(result[&quot;midi_path&quot;])  # MIDI file for DAW import</span>
+</span><span data-line="360">
+</span><span data-line="361"><span class="sd">    MIDI only, for when you just want something to drop into a DAW:</span>
+</span><span data-line="362">
+</span><span data-line="363"><span class="sd">    .. code-block:: python</span>
+</span><span data-line="364">
+</span><span data-line="365"><span class="sd">       import drumscript as ds</span>
+</span><span data-line="366"><span class="sd">       result = ds.transcribe(&quot;drum_loop.wav&quot;, midi_only=True)</span>
+</span><span data-line="367"><span class="sd">       print(result[&quot;midi_path&quot;])  # outputs/drum_loop_transcription.mid</span>
+</span><span data-line="368">
+</span><span data-line="369"><span class="sd">    Use ``output_dir`` and ``output_filename`` to control where it lands:</span>
 </span><span data-line="370">
-</span><span data-line="371">    <span class="c1"># Validate input exists before doing anything</span>
-</span><span data-line="372">    <span class="k">if</span> <span class="ow">not</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="n">audio_path</span><span class="p">)</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
-</span><span data-line="373">        <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Audio file not found: </span><span class="si">{</span><span class="n">audio_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-</span><span data-line="374">
-</span><span data-line="375">    <span class="c1"># 1. Stem separation (optional)</span>
-</span><span data-line="376">    <span class="n">working_path</span> <span class="o">=</span> <span class="n">audio_path</span>
-</span><span data-line="377">    <span class="k">if</span> <span class="n">full_song</span><span class="p">:</span>
-</span><span data-line="378">        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;...Separating drum stem...&quot;</span><span class="p">)</span>
-</span><span data-line="379">        <span class="n">working_path</span> <span class="o">=</span> <span class="n">extract_drum_stem</span><span class="p">(</span><span class="n">audio_path</span><span class="p">)</span>
-</span><span data-line="380">
-</span><span data-line="381">    <span class="c1"># 2. Load + normalise</span>
-</span><span data-line="382">    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;...Loading &amp; analysing audio...&quot;</span><span class="p">)</span>
-</span><span data-line="383">    <span class="c1"># y, sr = load_audio(working_path)</span>
-</span><span data-line="384">    <span class="n">y</span><span class="p">,</span> <span class="n">sr</span> <span class="o">=</span> <span class="n">load_audio</span><span class="p">(</span><span class="n">working_path</span><span class="p">,</span> <span class="n">sr</span><span class="o">=</span><span class="n">SAMPLE_RATE</span><span class="p">)</span>
-</span><span data-line="385">    <span class="n">y</span> <span class="o">=</span> <span class="n">normalise_audio</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
-</span><span data-line="386">
-</span><span data-line="387">    <span class="c1"># 3. Tempo + onsets</span>
-</span><span data-line="388">    <span class="c1"># tempo = estimate_tempo(y, sr)</span>
-</span><span data-line="389">    <span class="n">tempo</span> <span class="o">=</span> <span class="n">_internal_estimate</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">sr</span><span class="p">)</span>
-</span><span data-line="390">    <span class="n">onsets</span> <span class="o">=</span> <span class="n">detect_onsets</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">sr</span><span class="p">)</span>
-</span><span data-line="391">    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   -&gt; Tempo: </span><span class="si">{</span><span class="n">tempo</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> BPM | Onsets: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">onsets</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-</span><span data-line="392">
-</span><span data-line="393">    <span class="c1"># 4. Classify</span>
-</span><span data-line="394">    <span class="k">if</span> <span class="n">is_rudiment</span><span class="p">:</span>
-</span><span data-line="395">        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;   -&gt; Classifier: rudiment / single-beat engine&quot;</span><span class="p">)</span>
-</span><span data-line="396">        <span class="n">classified_events</span> <span class="o">=</span> <span class="n">classify_rudiment_events</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">sr</span><span class="p">,</span> <span class="n">onsets</span><span class="p">)</span>
-</span><span data-line="397">    <span class="k">else</span><span class="p">:</span>
-</span><span data-line="398">        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;   -&gt; Classifier: standard polyphonic engine&quot;</span><span class="p">)</span>
-</span><span data-line="399">        <span class="n">classified_events</span> <span class="o">=</span> <span class="n">classify_events</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">sr</span><span class="p">,</span> <span class="n">onsets</span><span class="p">)</span>
-</span><span data-line="400">    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   -&gt; Classified </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">classified_events</span><span class="p">)</span><span class="si">}</span><span class="s2"> events&quot;</span><span class="p">)</span>
-</span><span data-line="401">
-</span><span data-line="402">    <span class="c1"># 5. Re-shape events for the score builder</span>
-</span><span data-line="403">    <span class="n">detected_events</span> <span class="o">=</span> <span class="p">[</span>
-</span><span data-line="404">        <span class="p">{</span>
-</span><span data-line="405">            <span class="s2">&quot;time_sec&quot;</span><span class="p">:</span> <span class="n">ev</span><span class="p">[</span><span class="s2">&quot;time_sec&quot;</span><span class="p">],</span>
-</span><span data-line="406">            <span class="s2">&quot;instruments&quot;</span><span class="p">:</span> <span class="n">ev</span><span class="p">[</span><span class="s2">&quot;instruments&quot;</span><span class="p">],</span>
-</span><span data-line="407">            <span class="s2">&quot;debug_features&quot;</span><span class="p">:</span> <span class="n">ev</span><span class="p">[</span><span class="s2">&quot;debug_features&quot;</span><span class="p">],</span>
-</span><span data-line="408">        <span class="p">}</span>
-</span><span data-line="409">        <span class="k">for</span> <span class="n">ev</span> <span class="ow">in</span> <span class="n">classified_events</span>
-</span><span data-line="410">    <span class="p">]</span>
+</span><span data-line="371"><span class="sd">    .. code-block:: python</span>
+</span><span data-line="372">
+</span><span data-line="373"><span class="sd">       result = ds.transcribe(&quot;drum_loop.wav&quot;, midi_only=True, output_dir=&quot;my_exports&quot;, output_filename=&quot;my_drums&quot;)</span>
+</span><span data-line="374"><span class="sd">       print(result[&quot;midi_path&quot;])  # my_exports/my_drums.mid</span>
+</span><span data-line="375">
+</span><span data-line="376"><span class="sd">    Full song with stem separation, custom output, full results:</span>
+</span><span data-line="377">
+</span><span data-line="378"><span class="sd">    .. code-block:: python</span>
+</span><span data-line="379">
+</span><span data-line="380"><span class="sd">       result = ds.transcribe(</span>
+</span><span data-line="381"><span class="sd">           &quot;full_song.mp3&quot;,</span>
+</span><span data-line="382"><span class="sd">           full_song=True,</span>
+</span><span data-line="383"><span class="sd">           time_signature=&quot;6/8&quot;,</span>
+</span><span data-line="384"><span class="sd">           output_dir=&quot;./my_transcriptions&quot;,</span>
+</span><span data-line="385"><span class="sd">           # full=True, # LEGACY CODE FROM V0.1.5 (--full flag replaced with deprecation shim, in place of --verbose)</span>
+</span><span data-line="386"><span class="sd">           verbose=True</span>
+</span><span data-line="387"><span class="sd">       )</span>
+</span><span data-line="388"><span class="sd">       print(f&quot;PDF: {result[&#39;pdf_path&#39;]}&quot;)</span>
+</span><span data-line="389"><span class="sd">       print(f&quot;Detected tempo: {result[&#39;tempo&#39;]:.1f} BPM&quot;)</span>
+</span><span data-line="390"><span class="sd">       print(f&quot;Onsets: {len(result[&#39;onsets&#39;])}&quot;)</span>
+</span><span data-line="391"><span class="sd">    &quot;&quot;&quot;</span>
+</span><span data-line="392">    <span class="n">verbose</span> <span class="o">=</span> <span class="n">_resolve_verbose_flag</span><span class="p">(</span><span class="n">full</span><span class="p">,</span> <span class="n">verbose</span><span class="p">,</span> <span class="s2">&quot;transcribe&quot;</span><span class="p">)</span>
+</span><span data-line="393">    <span class="n">audio_path</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">audio_path</span><span class="p">)</span>
+</span><span data-line="394">    <span class="n">input_stem</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="n">audio_path</span><span class="p">)</span><span class="o">.</span><span class="n">stem</span>
+</span><span data-line="395">
+</span><span data-line="396">    <span class="c1"># Validate input exists before doing anything</span>
+</span><span data-line="397">    <span class="k">if</span> <span class="ow">not</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="n">audio_path</span><span class="p">)</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+</span><span data-line="398">        <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Audio file not found: </span><span class="si">{</span><span class="n">audio_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span data-line="399">
+</span><span data-line="400">    <span class="c1"># 1. Stem separation (optional)</span>
+</span><span data-line="401">    <span class="n">working_path</span> <span class="o">=</span> <span class="n">audio_path</span>
+</span><span data-line="402">    <span class="k">if</span> <span class="n">full_song</span><span class="p">:</span>
+</span><span data-line="403">        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;...Separating drum stem...&quot;</span><span class="p">)</span>
+</span><span data-line="404">        <span class="n">working_path</span> <span class="o">=</span> <span class="n">extract_drum_stem</span><span class="p">(</span><span class="n">audio_path</span><span class="p">)</span>
+</span><span data-line="405">
+</span><span data-line="406">    <span class="c1"># 2. Load + normalise</span>
+</span><span data-line="407">    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;...Loading &amp; analysing audio...&quot;</span><span class="p">)</span>
+</span><span data-line="408">    <span class="c1"># y, sr = load_audio(working_path)</span>
+</span><span data-line="409">    <span class="n">y</span><span class="p">,</span> <span class="n">sr</span> <span class="o">=</span> <span class="n">load_audio</span><span class="p">(</span><span class="n">working_path</span><span class="p">,</span> <span class="n">sr</span><span class="o">=</span><span class="n">SAMPLE_RATE</span><span class="p">)</span>
+</span><span data-line="410">    <span class="n">y</span> <span class="o">=</span> <span class="n">normalise_audio</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
 </span><span data-line="411">
-</span><span data-line="412">    <span class="c1"># 6. Build &amp; export</span>
-</span><span data-line="413">    <span class="n">output_dir</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="n">output_dir</span><span class="p">)</span>
-</span><span data-line="414">    <span class="n">output_dir</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-</span><span data-line="415">    <span class="n">fname</span> <span class="o">=</span> <span class="n">output_filename</span> <span class="ow">or</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">input_stem</span><span class="si">}</span><span class="s2">_transcription&quot;</span>
-</span><span data-line="416">    <span class="n">pdf_path</span> <span class="o">=</span> <span class="n">output_dir</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">fname</span><span class="si">}</span><span class="s2">.pdf&quot;</span>
-</span><span data-line="417">    <span class="n">json_path</span> <span class="o">=</span> <span class="n">output_dir</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">fname</span><span class="si">}</span><span class="s2">.json&quot;</span>
-</span><span data-line="418">    <span class="n">midi_path</span> <span class="o">=</span> <span class="n">output_dir</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">fname</span><span class="si">}</span><span class="s2">.mid&quot;</span>
-</span><span data-line="419">
-</span><span data-line="420">    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;...Building score: </span><span class="si">{</span><span class="n">pdf_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-</span><span data-line="421">    <span class="c1"># build_score() returns a mapping of the files it SUCCESSFULLY wrote. Each of</span>
-</span><span data-line="422">    <span class="c1"># its three exports (JSON/PDF/MIDI) is individually fault-tolerant, so a</span>
-</span><span data-line="423">    <span class="c1"># failure in one does not stop the others - but it also means a path we</span>
-</span><span data-line="424">    <span class="c1"># computed above may never have been written to disk.</span>
-</span><span data-line="425">    <span class="c1">#</span>
-</span><span data-line="426">    <span class="c1"># Prefer what build_score actually reports. If it returns something other</span>
-</span><span data-line="427">    <span class="c1"># than a dict (e.g. an older build_score that returned None, or a test</span>
-</span><span data-line="428">    <span class="c1"># double), fall back to the computed paths so behaviour is unchanged.</span>
-</span><span data-line="429">    <span class="n">written</span> <span class="o">=</span> <span class="n">score_builder</span><span class="o">.</span><span class="n">build_score</span><span class="p">(</span>
-</span><span data-line="430">        <span class="n">detected_events</span><span class="o">=</span><span class="n">detected_events</span><span class="p">,</span>
-</span><span data-line="431">        <span class="n">tempo</span><span class="o">=</span><span class="n">tempo</span><span class="p">,</span>
-</span><span data-line="432">        <span class="n">output_path</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">pdf_path</span><span class="p">),</span>
-</span><span data-line="433">        <span class="n">time_signature</span><span class="o">=</span><span class="n">time_signature</span><span class="p">,</span>
-</span><span data-line="434">    <span class="p">)</span>
-</span><span data-line="435">    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">written</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
-</span><span data-line="436">        <span class="n">written</span> <span class="o">=</span> <span class="p">{</span>
-</span><span data-line="437">            <span class="s2">&quot;pdf_path&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">pdf_path</span><span class="p">),</span>
-</span><span data-line="438">            <span class="s2">&quot;json_path&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">json_path</span><span class="p">),</span>
-</span><span data-line="439">            <span class="s2">&quot;midi_path&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">midi_path</span><span class="p">),</span>
-</span><span data-line="440">        <span class="p">}</span>
-</span><span data-line="441">    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;--- Done ---&quot;</span><span class="p">)</span>
-</span><span data-line="442">
-</span><span data-line="443">    <span class="c1"># if full:</span>
-</span><span data-line="444">    <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
-</span><span data-line="445">        <span class="k">return</span> <span class="p">{</span>
-</span><span data-line="446">            <span class="s2">&quot;pdf_path&quot;</span><span class="p">:</span> <span class="n">written</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;pdf_path&quot;</span><span class="p">),</span>
-</span><span data-line="447">            <span class="s2">&quot;json_path&quot;</span><span class="p">:</span> <span class="n">written</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;json_path&quot;</span><span class="p">),</span>
-</span><span data-line="448">            <span class="s2">&quot;midi_path&quot;</span><span class="p">:</span> <span class="n">written</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;midi_path&quot;</span><span class="p">),</span>
-</span><span data-line="449">            <span class="s2">&quot;audio_path&quot;</span><span class="p">:</span> <span class="n">audio_path</span><span class="p">,</span>
-</span><span data-line="450">            <span class="s2">&quot;drum_stem_path&quot;</span><span class="p">:</span> <span class="n">working_path</span> <span class="k">if</span> <span class="n">full_song</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
-</span><span data-line="451">            <span class="s2">&quot;tempo&quot;</span><span class="p">:</span> <span class="n">tempo</span><span class="p">,</span>
-</span><span data-line="452">            <span class="s2">&quot;onsets&quot;</span><span class="p">:</span> <span class="n">onsets</span><span class="p">,</span>
-</span><span data-line="453">            <span class="s2">&quot;events&quot;</span><span class="p">:</span> <span class="n">detected_events</span><span class="p">,</span>
-</span><span data-line="454">            <span class="s2">&quot;time_signature&quot;</span><span class="p">:</span> <span class="n">time_signature</span><span class="p">,</span>
-</span><span data-line="455">            <span class="s2">&quot;sample_rate&quot;</span><span class="p">:</span> <span class="n">sr</span><span class="p">,</span>
-</span><span data-line="456">        <span class="p">}</span>
-</span><span data-line="457">    <span class="c1"># return str(pdf_path)  # LEGACY: v0.1.x returned only the PDF path as a string</span>
-</span><span data-line="458">    <span class="k">return</span> <span class="n">_TranscribeResult</span><span class="p">(</span><span class="n">written</span><span class="p">)</span></div>
+</span><span data-line="412">    <span class="c1"># 3. Tempo + onsets</span>
+</span><span data-line="413">    <span class="c1"># tempo = estimate_tempo(y, sr)</span>
+</span><span data-line="414">    <span class="n">tempo</span> <span class="o">=</span> <span class="n">_internal_estimate</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">sr</span><span class="p">)</span>
+</span><span data-line="415">    <span class="n">onsets</span> <span class="o">=</span> <span class="n">detect_onsets</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">sr</span><span class="p">)</span>
+</span><span data-line="416">    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   -&gt; Tempo: </span><span class="si">{</span><span class="n">tempo</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> BPM | Onsets: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">onsets</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span data-line="417">
+</span><span data-line="418">    <span class="c1"># 4. Classify</span>
+</span><span data-line="419">    <span class="k">if</span> <span class="n">is_rudiment</span><span class="p">:</span>
+</span><span data-line="420">        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;   -&gt; Classifier: rudiment / single-beat engine&quot;</span><span class="p">)</span>
+</span><span data-line="421">        <span class="n">classified_events</span> <span class="o">=</span> <span class="n">classify_rudiment_events</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">sr</span><span class="p">,</span> <span class="n">onsets</span><span class="p">)</span>
+</span><span data-line="422">    <span class="k">else</span><span class="p">:</span>
+</span><span data-line="423">        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;   -&gt; Classifier: standard polyphonic engine&quot;</span><span class="p">)</span>
+</span><span data-line="424">        <span class="n">classified_events</span> <span class="o">=</span> <span class="n">classify_events</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">sr</span><span class="p">,</span> <span class="n">onsets</span><span class="p">)</span>
+</span><span data-line="425">    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   -&gt; Classified </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">classified_events</span><span class="p">)</span><span class="si">}</span><span class="s2"> events&quot;</span><span class="p">)</span>
+</span><span data-line="426">
+</span><span data-line="427">    <span class="c1"># 5. Re-shape events for the score builder</span>
+</span><span data-line="428">    <span class="n">detected_events</span> <span class="o">=</span> <span class="p">[</span>
+</span><span data-line="429">        <span class="p">{</span>
+</span><span data-line="430">            <span class="s2">&quot;time_sec&quot;</span><span class="p">:</span> <span class="n">ev</span><span class="p">[</span><span class="s2">&quot;time_sec&quot;</span><span class="p">],</span>
+</span><span data-line="431">            <span class="s2">&quot;instruments&quot;</span><span class="p">:</span> <span class="n">ev</span><span class="p">[</span><span class="s2">&quot;instruments&quot;</span><span class="p">],</span>
+</span><span data-line="432">            <span class="s2">&quot;debug_features&quot;</span><span class="p">:</span> <span class="n">ev</span><span class="p">[</span><span class="s2">&quot;debug_features&quot;</span><span class="p">],</span>
+</span><span data-line="433">        <span class="p">}</span>
+</span><span data-line="434">        <span class="k">for</span> <span class="n">ev</span> <span class="ow">in</span> <span class="n">classified_events</span>
+</span><span data-line="435">    <span class="p">]</span>
+</span><span data-line="436">
+</span><span data-line="437">    <span class="c1"># 6. Build &amp; export</span>
+</span><span data-line="438">    <span class="n">output_dir</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="n">output_dir</span><span class="p">)</span>
+</span><span data-line="439">    <span class="n">output_dir</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span><span data-line="440">    <span class="n">fname</span> <span class="o">=</span> <span class="n">output_filename</span> <span class="ow">or</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">input_stem</span><span class="si">}</span><span class="s2">_transcription&quot;</span>
+</span><span data-line="441">    <span class="n">pdf_path</span> <span class="o">=</span> <span class="n">output_dir</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">fname</span><span class="si">}</span><span class="s2">.pdf&quot;</span>
+</span><span data-line="442">    <span class="n">json_path</span> <span class="o">=</span> <span class="n">output_dir</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">fname</span><span class="si">}</span><span class="s2">.json&quot;</span>
+</span><span data-line="443">    <span class="n">midi_path</span> <span class="o">=</span> <span class="n">output_dir</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">fname</span><span class="si">}</span><span class="s2">.mid&quot;</span>
+</span><span data-line="444">
+</span><span data-line="445">    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;...Building score: </span><span class="si">{</span><span class="n">pdf_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span data-line="446">    <span class="c1"># build_score() returns a mapping of the files it SUCCESSFULLY wrote. Each of</span>
+</span><span data-line="447">    <span class="c1"># its three exports (JSON/PDF/MIDI) is individually fault-tolerant, so a</span>
+</span><span data-line="448">    <span class="c1"># failure in one does not stop the others - but it also means a path we</span>
+</span><span data-line="449">    <span class="c1"># computed above may never have been written to disk.</span>
+</span><span data-line="450">    <span class="c1">#</span>
+</span><span data-line="451">    <span class="c1"># Prefer what build_score actually reports. If it returns something other</span>
+</span><span data-line="452">    <span class="c1"># than a dict (e.g. an older build_score that returned None, or a test</span>
+</span><span data-line="453">    <span class="c1"># double), fall back to the computed paths so behaviour is unchanged.</span>
+</span><span data-line="454">    <span class="n">written</span> <span class="o">=</span> <span class="n">score_builder</span><span class="o">.</span><span class="n">build_score</span><span class="p">(</span>
+</span><span data-line="455">        <span class="n">detected_events</span><span class="o">=</span><span class="n">detected_events</span><span class="p">,</span>
+</span><span data-line="456">        <span class="n">tempo</span><span class="o">=</span><span class="n">tempo</span><span class="p">,</span>
+</span><span data-line="457">        <span class="n">output_path</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">pdf_path</span><span class="p">),</span>
+</span><span data-line="458">        <span class="n">time_signature</span><span class="o">=</span><span class="n">time_signature</span><span class="p">,</span>
+</span><span data-line="459">        <span class="n">midi_only</span><span class="o">=</span><span class="n">midi_only</span><span class="p">,</span>
+</span><span data-line="460">    <span class="p">)</span>
+</span><span data-line="461">    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">written</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+</span><span data-line="462">        <span class="c1"># Under midi_only the other two were never attempted, so the fallback must</span>
+</span><span data-line="463">        <span class="c1"># not advertise them. Claiming a PDF that was deliberately skipped is the</span>
+</span><span data-line="464">        <span class="c1"># same bug this fallback exists to avoid.</span>
+</span><span data-line="465">        <span class="k">if</span> <span class="n">midi_only</span><span class="p">:</span>
+</span><span data-line="466">            <span class="n">written</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;midi_path&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">midi_path</span><span class="p">)}</span>
+</span><span data-line="467">        <span class="k">else</span><span class="p">:</span>
+</span><span data-line="468">            <span class="n">written</span> <span class="o">=</span> <span class="p">{</span>
+</span><span data-line="469">                <span class="s2">&quot;pdf_path&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">pdf_path</span><span class="p">),</span>
+</span><span data-line="470">                <span class="s2">&quot;json_path&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">json_path</span><span class="p">),</span>
+</span><span data-line="471">                <span class="s2">&quot;midi_path&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">midi_path</span><span class="p">),</span>
+</span><span data-line="472">            <span class="p">}</span>
+</span><span data-line="473">    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;--- Done ---&quot;</span><span class="p">)</span>
+</span><span data-line="474">
+</span><span data-line="475">    <span class="c1"># if full:</span>
+</span><span data-line="476">    <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+</span><span data-line="477">        <span class="k">return</span> <span class="p">{</span>
+</span><span data-line="478">            <span class="s2">&quot;pdf_path&quot;</span><span class="p">:</span> <span class="n">written</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;pdf_path&quot;</span><span class="p">),</span>
+</span><span data-line="479">            <span class="s2">&quot;json_path&quot;</span><span class="p">:</span> <span class="n">written</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;json_path&quot;</span><span class="p">),</span>
+</span><span data-line="480">            <span class="s2">&quot;midi_path&quot;</span><span class="p">:</span> <span class="n">written</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;midi_path&quot;</span><span class="p">),</span>
+</span><span data-line="481">            <span class="s2">&quot;audio_path&quot;</span><span class="p">:</span> <span class="n">audio_path</span><span class="p">,</span>
+</span><span data-line="482">            <span class="s2">&quot;drum_stem_path&quot;</span><span class="p">:</span> <span class="n">working_path</span> <span class="k">if</span> <span class="n">full_song</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
+</span><span data-line="483">            <span class="s2">&quot;tempo&quot;</span><span class="p">:</span> <span class="n">tempo</span><span class="p">,</span>
+</span><span data-line="484">            <span class="s2">&quot;onsets&quot;</span><span class="p">:</span> <span class="n">onsets</span><span class="p">,</span>
+</span><span data-line="485">            <span class="s2">&quot;events&quot;</span><span class="p">:</span> <span class="n">detected_events</span><span class="p">,</span>
+</span><span data-line="486">            <span class="s2">&quot;time_signature&quot;</span><span class="p">:</span> <span class="n">time_signature</span><span class="p">,</span>
+</span><span data-line="487">            <span class="s2">&quot;sample_rate&quot;</span><span class="p">:</span> <span class="n">sr</span><span class="p">,</span>
+</span><span data-line="488">        <span class="p">}</span>
+</span><span data-line="489">    <span class="c1"># return str(pdf_path)  # LEGACY: v0.1.x returned only the PDF path as a string</span>
+</span><span data-line="490">    <span class="k">return</span> <span class="n">_TranscribeResult</span><span class="p">(</span><span class="n">written</span><span class="p">)</span></div>
 
-</span><span data-line="459">
-</span><span data-line="460">
+</span><span data-line="491">
+</span><span data-line="492">
 <div class="viewcode-block" id="export_pdf">
 <a class="viewcode-back" href="../generated/drumscript.export_pdf.html#drumscript.export_pdf">[docs]</a>
-</span><span data-line="461"><span class="k">def</span><span class="w"> </span><span class="nf">export_pdf</span><span class="p">(</span><span class="n">score</span><span class="p">,</span> <span class="n">output_path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-</span><span data-line="462"><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span data-line="463"><span class="sd">    Exports a generated DrumScript score object to a beautifully rendered PDF file.</span>
-</span><span data-line="464">
-</span><span data-line="465"><span class="sd">    This function utilizes the ReportLab engine to generate clean, vector-based</span>
-</span><span data-line="466"><span class="sd">    sheet music optimized for standard A4 printing.</span>
-</span><span data-line="467">
-</span><span data-line="468"><span class="sd">    :param score: The internal score object generated by ``build_score()``.</span>
-</span><span data-line="469"><span class="sd">    :type score: object</span>
-</span><span data-line="470"><span class="sd">    :param output_path: The exact file path to save the PDF. Defaults to &#39;drumscript.pdf&#39; in CWD.</span>
-</span><span data-line="471"><span class="sd">    :type output_path: str, optional</span>
-</span><span data-line="472"><span class="sd">    :return: The absolute path to the generated PDF.</span>
-</span><span data-line="473"><span class="sd">    :rtype: str</span>
-</span><span data-line="474">
-</span><span data-line="475"><span class="sd">    .. note::</span>
-</span><span data-line="476"><span class="sd">       Because the PDF is generated using vector graphics, it can be scaled infinitely</span>
-</span><span data-line="477"><span class="sd">       without any loss of quality or pixelation.</span>
-</span><span data-line="478">
-</span><span data-line="479"><span class="sd">    **Example:**</span>
-</span><span data-line="480">
-</span><span data-line="481"><span class="sd">    .. code-block:: python</span>
-</span><span data-line="482">
-</span><span data-line="483"><span class="sd">       import drumscript as ds</span>
-</span><span data-line="484">
-</span><span data-line="485"><span class="sd">       # Assuming `score` is a previously generated score object</span>
-</span><span data-line="486"><span class="sd">       pdf_path = ds.export_pdf(score, output_path=&quot;./transcriptions/my_song.pdf&quot;)</span>
-</span><span data-line="487"><span class="sd">    &quot;&quot;&quot;</span>
-</span><span data-line="488">    <span class="k">if</span> <span class="n">output_path</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-</span><span data-line="489">        <span class="c1"># output_path = pathlib.Path.cwd() / &quot;drumscript.pdf&quot;  # previously named `output_path = pathlib.Path.cwd() / &quot;drum_score.pdf&quot;``</span>
-</span><span data-line="490">        <span class="n">output_path</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="o">.</span><span class="n">cwd</span><span class="p">()</span> <span class="o">/</span> <span class="s2">&quot;drumscript.pdf&quot;</span>
-</span><span data-line="491">
-</span><span data-line="492">    <span class="k">return</span> <span class="n">pdf_exporter</span><span class="o">.</span><span class="n">export_pdf</span><span class="p">(</span><span class="n">score</span><span class="p">,</span> <span class="n">output_path</span><span class="o">=</span><span class="n">output_path</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+</span><span data-line="493"><span class="k">def</span><span class="w"> </span><span class="nf">export_pdf</span><span class="p">(</span><span class="n">score</span><span class="p">,</span> <span class="n">output_path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+</span><span data-line="494"><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span data-line="495"><span class="sd">    Exports a generated DrumScript score object to a beautifully rendered PDF file.</span>
+</span><span data-line="496">
+</span><span data-line="497"><span class="sd">    This function utilizes the ReportLab engine to generate clean, vector-based</span>
+</span><span data-line="498"><span class="sd">    sheet music optimized for standard A4 printing.</span>
+</span><span data-line="499">
+</span><span data-line="500"><span class="sd">    :param score: The internal score object generated by ``build_score()``.</span>
+</span><span data-line="501"><span class="sd">    :type score: object</span>
+</span><span data-line="502"><span class="sd">    :param output_path: The exact file path to save the PDF. Defaults to &#39;drumscript.pdf&#39; in CWD.</span>
+</span><span data-line="503"><span class="sd">    :type output_path: str, optional</span>
+</span><span data-line="504"><span class="sd">    :return: The absolute path to the generated PDF.</span>
+</span><span data-line="505"><span class="sd">    :rtype: str</span>
+</span><span data-line="506">
+</span><span data-line="507"><span class="sd">    .. note::</span>
+</span><span data-line="508"><span class="sd">       Because the PDF is generated using vector graphics, it can be scaled infinitely</span>
+</span><span data-line="509"><span class="sd">       without any loss of quality or pixelation.</span>
+</span><span data-line="510">
+</span><span data-line="511"><span class="sd">    **Example:**</span>
+</span><span data-line="512">
+</span><span data-line="513"><span class="sd">    .. code-block:: python</span>
+</span><span data-line="514">
+</span><span data-line="515"><span class="sd">       import drumscript as ds</span>
+</span><span data-line="516">
+</span><span data-line="517"><span class="sd">       # Assuming `score` is a previously generated score object</span>
+</span><span data-line="518"><span class="sd">       pdf_path = ds.export_pdf(score, output_path=&quot;./transcriptions/my_song.pdf&quot;)</span>
+</span><span data-line="519"><span class="sd">    &quot;&quot;&quot;</span>
+</span><span data-line="520">    <span class="k">if</span> <span class="n">output_path</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+</span><span data-line="521">        <span class="c1"># output_path = pathlib.Path.cwd() / &quot;drumscript.pdf&quot;  # previously named `output_path = pathlib.Path.cwd() / &quot;drum_score.pdf&quot;``</span>
+</span><span data-line="522">        <span class="n">output_path</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="o">.</span><span class="n">cwd</span><span class="p">()</span> <span class="o">/</span> <span class="s2">&quot;drumscript.pdf&quot;</span>
+</span><span data-line="523">
+</span><span data-line="524">    <span class="k">return</span> <span class="n">pdf_exporter</span><span class="o">.</span><span class="n">export_pdf</span><span class="p">(</span><span class="n">score</span><span class="p">,</span> <span class="n">output_path</span><span class="o">=</span><span class="n">output_path</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
 
-</span><span data-line="493">
-</span><span data-line="494">
+</span><span data-line="525">
+</span><span data-line="526">
 <div class="viewcode-block" id="export_midi">
 <a class="viewcode-back" href="../generated/drumscript.export_midi.html#drumscript.export_midi">[docs]</a>
-</span><span data-line="495"><span class="k">def</span><span class="w"> </span><span class="nf">export_midi</span><span class="p">(</span>
-</span><span data-line="496">    <span class="n">score</span><span class="p">,</span>
-</span><span data-line="497">    <span class="n">output_path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-</span><span data-line="498">    <span class="o">*</span><span class="p">,</span>
-</span><span data-line="499">    <span class="n">from_audio</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-</span><span data-line="500">    <span class="n">full_song</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-</span><span data-line="501">    <span class="n">is_rudiment</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-</span><span data-line="502">    <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
-</span><span data-line="503"><span class="p">):</span>
-</span><span data-line="504"><span class="w">    </span><span class="sd">&quot;&quot;&quot;Export a DrumScript score or transcribe audio directly to MIDI.</span>
-</span><span data-line="505">
-</span><span data-line="506"><span class="sd">    :param score: A score object, or an audio file path when ``from_audio=True``.</span>
-</span><span data-line="507"><span class="sd">    :param output_path: Destination MIDI path. Audio mode defaults to</span>
-</span><span data-line="508"><span class="sd">        ``outputs/&lt;input_stem&gt;.mid``; score mode defaults to ``drumscript.mid``.</span>
-</span><span data-line="509"><span class="sd">    :param from_audio: If True, treat ``score`` as an audio file path and</span>
-</span><span data-line="510"><span class="sd">        export MIDI without generating PDF or JSON.</span>
-</span><span data-line="511"><span class="sd">    :param full_song: If True in audio mode, separate the drum stem first.</span>
-</span><span data-line="512"><span class="sd">    :param is_rudiment: If True in audio mode, use the rudiment classifier.</span>
-</span><span data-line="513"><span class="sd">    :param kwargs: Additional options forwarded to the MIDI exporter in score mode.</span>
-</span><span data-line="514"><span class="sd">    :return: The MIDI export result in score mode, or the absolute output path</span>
-</span><span data-line="515"><span class="sd">        in audio mode.</span>
-</span><span data-line="516"><span class="sd">    :rtype: str or None</span>
-</span><span data-line="517">
-</span><span data-line="518"><span class="sd">    **Example:**</span>
-</span><span data-line="519">
-</span><span data-line="520"><span class="sd">    .. code-block:: python</span>
-</span><span data-line="521">
-</span><span data-line="522"><span class="sd">        import drumscript as ds</span>
-</span><span data-line="523">
-</span><span data-line="524"><span class="sd">        midi_path = ds.export_midi(</span>
-</span><span data-line="525"><span class="sd">            &quot;drums.wav&quot;,</span>
-</span><span data-line="526"><span class="sd">            from_audio=True,</span>
-</span><span data-line="527"><span class="sd">        )</span>
-</span><span data-line="528"><span class="sd">    &quot;&quot;&quot;</span>
-</span><span data-line="529">    <span class="k">if</span> <span class="ow">not</span> <span class="n">from_audio</span><span class="p">:</span>
-</span><span data-line="530">        <span class="k">if</span> <span class="n">output_path</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-</span><span data-line="531">            <span class="n">output_path</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="o">.</span><span class="n">cwd</span><span class="p">()</span> <span class="o">/</span> <span class="s2">&quot;drumscript.mid&quot;</span>
-</span><span data-line="532">        <span class="k">return</span> <span class="n">midi_exporter</span><span class="o">.</span><span class="n">export_to_midi</span><span class="p">(</span><span class="n">score</span><span class="p">,</span> <span class="n">output_path</span><span class="o">=</span><span class="n">output_path</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-</span><span data-line="533">
-</span><span data-line="534">    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">score</span><span class="p">,</span> <span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">)):</span>
-</span><span data-line="535">        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;When from_audio=True, score must be a path to an audio file.&quot;</span><span class="p">)</span>
-</span><span data-line="536">
-</span><span data-line="537">    <span class="n">audio_file_path</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="n">score</span><span class="p">)</span>
-</span><span data-line="538">
-</span><span data-line="539">    <span class="k">if</span> <span class="ow">not</span> <span class="n">audio_file_path</span><span class="o">.</span><span class="n">is_file</span><span class="p">():</span>
-</span><span data-line="540">        <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Audio file not found: </span><span class="si">{</span><span class="n">audio_file_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-</span><span data-line="541">
-</span><span data-line="542">    <span class="n">working_path</span> <span class="o">=</span> <span class="n">audio_file_path</span>
-</span><span data-line="543">    <span class="k">if</span> <span class="n">full_song</span><span class="p">:</span>
-</span><span data-line="544">        <span class="n">working_path</span> <span class="o">=</span> <span class="n">extract_drum_stem</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">audio_file_path</span><span class="p">))</span>
-</span><span data-line="545">
-</span><span data-line="546">    <span class="n">y</span><span class="p">,</span> <span class="n">sr</span> <span class="o">=</span> <span class="n">load_audio</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">working_path</span><span class="p">),</span> <span class="n">sr</span><span class="o">=</span><span class="n">SAMPLE_RATE</span><span class="p">)</span>
-</span><span data-line="547">    <span class="n">y</span> <span class="o">=</span> <span class="n">normalise_audio</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+</span><span data-line="527"><span class="k">def</span><span class="w"> </span><span class="nf">export_midi</span><span class="p">(</span><span class="n">score</span><span class="p">,</span> <span class="n">output_path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+</span><span data-line="528"><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span data-line="529"><span class="sd">    Converts a DrumScript score object into a standard MIDI file for DAW integration.</span>
+</span><span data-line="530">
+</span><span data-line="531"><span class="sd">    The exported MIDI file adheres to the General MIDI (GM) Level 1 Percussion Key Map,</span>
+</span><span data-line="532"><span class="sd">    ensuring immediate compatibility with virtual drum instruments like Superior Drummer,</span>
+</span><span data-line="533"><span class="sd">    EZdrummer, or standard DAW drum racks.</span>
+</span><span data-line="534">
+</span><span data-line="535"><span class="sd">    :param score: The internal score object generated by ``build_score()``.</span>
+</span><span data-line="536"><span class="sd">    :type score: object</span>
+</span><span data-line="537"><span class="sd">    :param output_path: The exact file path to save the MIDI. Defaults to &#39;drumscript.mid&#39; in CWD.</span>
+</span><span data-line="538"><span class="sd">    :type output_path: str, optional</span>
+</span><span data-line="539">
+</span><span data-line="540"><span class="sd">    :return: The absolute path to the generated MIDI file.</span>
+</span><span data-line="541"><span class="sd">    :rtype: str</span>
+</span><span data-line="542">
+</span><span data-line="543"><span class="sd">    **Example:**</span>
+</span><span data-line="544">
+</span><span data-line="545"><span class="sd">    .. code-block:: python</span>
+</span><span data-line="546">
+</span><span data-line="547"><span class="sd">       import drumscript as ds</span>
 </span><span data-line="548">
-</span><span data-line="549">    <span class="n">tempo</span> <span class="o">=</span> <span class="n">_internal_estimate</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">sr</span><span class="p">)</span>
-</span><span data-line="550">    <span class="n">onsets</span> <span class="o">=</span> <span class="n">detect_onsets</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">sr</span><span class="p">)</span>
-</span><span data-line="551">
-</span><span data-line="552">    <span class="k">if</span> <span class="n">is_rudiment</span><span class="p">:</span>
-</span><span data-line="553">        <span class="n">classified_events</span> <span class="o">=</span> <span class="n">classify_rudiment_events</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">sr</span><span class="p">,</span> <span class="n">onsets</span><span class="p">)</span>
-</span><span data-line="554">    <span class="k">else</span><span class="p">:</span>
-</span><span data-line="555">        <span class="n">classified_events</span> <span class="o">=</span> <span class="n">classify_events</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">sr</span><span class="p">,</span> <span class="n">onsets</span><span class="p">)</span>
-</span><span data-line="556">
-</span><span data-line="557">    <span class="k">if</span> <span class="n">output_path</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-</span><span data-line="558">        <span class="n">output_path</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="s2">&quot;outputs&quot;</span><span class="p">)</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">audio_file_path</span><span class="o">.</span><span class="n">stem</span><span class="si">}</span><span class="s2">.mid&quot;</span>
-</span><span data-line="559">    <span class="k">else</span><span class="p">:</span>
-</span><span data-line="560">        <span class="n">output_path</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="n">output_path</span><span class="p">)</span>
-</span><span data-line="561">
-</span><span data-line="562">    <span class="n">output_path</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-</span><span data-line="563">
-</span><span data-line="564">    <span class="n">midi_exporter</span><span class="o">.</span><span class="n">export_to_midi</span><span class="p">(</span>
-</span><span data-line="565">        <span class="n">classified_events</span><span class="o">=</span><span class="n">classified_events</span><span class="p">,</span>
-</span><span data-line="566">        <span class="n">output_path</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">output_path</span><span class="p">),</span>
-</span><span data-line="567">        <span class="n">tempo</span><span class="o">=</span><span class="n">tempo</span><span class="p">,</span>
-</span><span data-line="568">    <span class="p">)</span>
-</span><span data-line="569">
-</span><span data-line="570">    <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">output_path</span><span class="o">.</span><span class="n">resolve</span><span class="p">())</span></div>
+</span><span data-line="549"><span class="sd">       # Assuming `score` is a previously generated score object</span>
+</span><span data-line="550"><span class="sd">       midi_path = ds.export_midi(score, output_path=&quot;./midi_exports/my_song.mid&quot;)</span>
+</span><span data-line="551"><span class="sd">    &quot;&quot;&quot;</span>
+</span><span data-line="552">    <span class="k">if</span> <span class="n">output_path</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+</span><span data-line="553">        <span class="c1"># output_path = pathlib.Path.cwd() / &quot;drumscript.mid&quot;  # previously named `output_path = pathlib.Path.cwd() / &quot;drum_score.mid&quot;``</span>
+</span><span data-line="554">        <span class="n">output_path</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="o">.</span><span class="n">cwd</span><span class="p">()</span> <span class="o">/</span> <span class="s2">&quot;drumscript.mid&quot;</span>
+</span><span data-line="555">
+</span><span data-line="556">    <span class="k">return</span> <span class="n">midi_exporter</span><span class="o">.</span><span class="n">export_to_midi</span><span class="p">(</span><span class="n">score</span><span class="p">,</span> <span class="n">output_path</span><span class="o">=</span><span class="n">output_path</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
 
-</span><span data-line="571">
-</span><span data-line="572">
+</span><span data-line="557">
+</span><span data-line="558">
 <div class="viewcode-block" id="export_xml">
 <a class="viewcode-back" href="../generated/drumscript.export_xml.html#drumscript.export_xml">[docs]</a>
-</span><span data-line="573"><span class="k">def</span><span class="w"> </span><span class="nf">export_xml</span><span class="p">(</span><span class="n">score</span><span class="p">,</span> <span class="n">output_path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-</span><span data-line="574"><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span data-line="575"><span class="sd">    Exports a DrumScript score object to MusicXML format.</span>
-</span><span data-line="576">
-</span><span data-line="577"><span class="sd">    MusicXML is the universal industry standard for sharing digital sheet music.</span>
-</span><span data-line="578"><span class="sd">    Generating an XML file allows you to seamlessly import your DrumScript</span>
-</span><span data-line="579"><span class="sd">    transcription into professional notation software like Sibelius, Finale,</span>
-</span><span data-line="580"><span class="sd">    MuseScore, or Guitar Pro for further editing.</span>
+</span><span data-line="559"><span class="k">def</span><span class="w"> </span><span class="nf">export_xml</span><span class="p">(</span><span class="n">score</span><span class="p">,</span> <span class="n">output_path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+</span><span data-line="560"><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span data-line="561"><span class="sd">    Exports a DrumScript score object to MusicXML format.</span>
+</span><span data-line="562">
+</span><span data-line="563"><span class="sd">    MusicXML is the universal industry standard for sharing digital sheet music.</span>
+</span><span data-line="564"><span class="sd">    Generating an XML file allows you to seamlessly import your DrumScript</span>
+</span><span data-line="565"><span class="sd">    transcription into professional notation software like Sibelius, Finale,</span>
+</span><span data-line="566"><span class="sd">    MuseScore, or Guitar Pro for further editing.</span>
+</span><span data-line="567">
+</span><span data-line="568"><span class="sd">    :param score: The internal score object generated by ``build_score()``.</span>
+</span><span data-line="569"><span class="sd">    :type score: object</span>
+</span><span data-line="570"><span class="sd">    :param output_path: The exact file path to save the XML. Defaults to &#39;drumscript.xml&#39; in CWD.</span>
+</span><span data-line="571"><span class="sd">    :type output_path: str, optional</span>
+</span><span data-line="572">
+</span><span data-line="573"><span class="sd">    :return: The absolute path to the generated XML file.</span>
+</span><span data-line="574"><span class="sd">    :rtype: str</span>
+</span><span data-line="575">
+</span><span data-line="576"><span class="sd">    .. note::</span>
+</span><span data-line="577"><span class="sd">       When importing MusicXML into MuseScore, you may need to right-click the staff</span>
+</span><span data-line="578"><span class="sd">       and select &quot;Edit Drumset&quot; to map the custom noteheads to your preference.</span>
+</span><span data-line="579">
+</span><span data-line="580"><span class="sd">    **Example:**</span>
 </span><span data-line="581">
-</span><span data-line="582"><span class="sd">    :param score: The internal score object generated by ``build_score()``.</span>
-</span><span data-line="583"><span class="sd">    :type score: object</span>
-</span><span data-line="584"><span class="sd">    :param output_path: The exact file path to save the XML. Defaults to &#39;drumscript.xml&#39; in CWD.</span>
-</span><span data-line="585"><span class="sd">    :type output_path: str, optional</span>
-</span><span data-line="586">
-</span><span data-line="587"><span class="sd">    :return: The absolute path to the generated XML file.</span>
-</span><span data-line="588"><span class="sd">    :rtype: str</span>
-</span><span data-line="589">
-</span><span data-line="590"><span class="sd">    .. note::</span>
-</span><span data-line="591"><span class="sd">       When importing MusicXML into MuseScore, you may need to right-click the staff</span>
-</span><span data-line="592"><span class="sd">       and select &quot;Edit Drumset&quot; to map the custom noteheads to your preference.</span>
-</span><span data-line="593">
-</span><span data-line="594"><span class="sd">    **Example:**</span>
-</span><span data-line="595">
-</span><span data-line="596"><span class="sd">    .. code-block:: python</span>
-</span><span data-line="597">
-</span><span data-line="598"><span class="sd">       import drumscript as ds</span>
-</span><span data-line="599">
-</span><span data-line="600"><span class="sd">       # Assuming `score` is a previously generated score object</span>
-</span><span data-line="601"><span class="sd">       xml_path = ds.export_xml(score, output_path=&quot;./xml_scores/my_song.xml&quot;)</span>
-</span><span data-line="602"><span class="sd">    &quot;&quot;&quot;</span>
-</span><span data-line="603">    <span class="k">if</span> <span class="n">output_path</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-</span><span data-line="604">        <span class="n">output_path</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="o">.</span><span class="n">cwd</span><span class="p">()</span> <span class="o">/</span> <span class="s2">&quot;drumscript.xml&quot;</span>
-</span><span data-line="605">
-</span><span data-line="606">    <span class="k">return</span> <span class="n">xml_exporter</span><span class="o">.</span><span class="n">export_xml</span><span class="p">(</span><span class="n">score</span><span class="p">,</span> <span class="n">output_path</span><span class="o">=</span><span class="n">output_path</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+</span><span data-line="582"><span class="sd">    .. code-block:: python</span>
+</span><span data-line="583">
+</span><span data-line="584"><span class="sd">       import drumscript as ds</span>
+</span><span data-line="585">
+</span><span data-line="586"><span class="sd">       # Assuming `score` is a previously generated score object</span>
+</span><span data-line="587"><span class="sd">       xml_path = ds.export_xml(score, output_path=&quot;./xml_scores/my_song.xml&quot;)</span>
+</span><span data-line="588"><span class="sd">    &quot;&quot;&quot;</span>
+</span><span data-line="589">    <span class="k">if</span> <span class="n">output_path</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+</span><span data-line="590">        <span class="n">output_path</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="o">.</span><span class="n">cwd</span><span class="p">()</span> <span class="o">/</span> <span class="s2">&quot;drumscript.xml&quot;</span>
+</span><span data-line="591">
+</span><span data-line="592">    <span class="k">return</span> <span class="n">xml_exporter</span><span class="o">.</span><span class="n">export_xml</span><span class="p">(</span><span class="n">score</span><span class="p">,</span> <span class="n">output_path</span><span class="o">=</span><span class="n">output_path</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
 
-</span><span data-line="607">
-</span><span data-line="608">
-</span><span data-line="609"><span class="c1"># 3. Explicitly define the Public API (Used by Sphinx and `from drumscript import *`)</span>
-</span><span data-line="610"><span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
-</span><span data-line="611">    <span class="c1"># High-level wrappers</span>
-</span><span data-line="612">    <span class="s2">&quot;transcribe&quot;</span><span class="p">,</span>
-</span><span data-line="613">    <span class="s2">&quot;extract_stems&quot;</span><span class="p">,</span>
-</span><span data-line="614">    <span class="s2">&quot;detect_tempo&quot;</span><span class="p">,</span>
-</span><span data-line="615">    <span class="s2">&quot;export_pdf&quot;</span><span class="p">,</span>
-</span><span data-line="616">    <span class="s2">&quot;export_midi&quot;</span><span class="p">,</span>
-</span><span data-line="617">    <span class="s2">&quot;export_xml&quot;</span><span class="p">,</span>
-</span><span data-line="618">    <span class="c1"># Core DSP &amp; Classification pipeline</span>
-</span><span data-line="619">    <span class="s2">&quot;load_audio&quot;</span><span class="p">,</span>
-</span><span data-line="620">    <span class="s2">&quot;normalise_audio&quot;</span><span class="p">,</span>
-</span><span data-line="621">    <span class="s2">&quot;detect_onsets&quot;</span><span class="p">,</span>
-</span><span data-line="622">    <span class="s2">&quot;extract_features&quot;</span><span class="p">,</span>
-</span><span data-line="623">    <span class="s2">&quot;classify_events&quot;</span><span class="p">,</span>
-</span><span data-line="624">    <span class="s2">&quot;classify_rudiment_events&quot;</span><span class="p">,</span>
-</span><span data-line="625">    <span class="s2">&quot;build_score&quot;</span><span class="p">,</span>
-</span><span data-line="626">    <span class="c1"># Utilities</span>
-</span><span data-line="627">    <span class="s2">&quot;install_ffmpeg&quot;</span><span class="p">,</span>
-</span><span data-line="628"><span class="p">]</span>
-</span><span data-line="629">
-</span><span data-line="630"><span class="c1"># __version__ = &quot;0.1.6&quot;</span>
-</span><span data-line="631">
-</span><span data-line="632"><span class="k">try</span><span class="p">:</span>
-</span><span data-line="633">    <span class="n">__version__</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">version</span><span class="p">(</span><span class="s2">&quot;drumscript&quot;</span><span class="p">)</span>
-</span><span data-line="634"><span class="k">except</span> <span class="n">importlib</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">PackageNotFoundError</span><span class="p">:</span>
-</span><span data-line="635">    <span class="n">__version__</span> <span class="o">=</span> <span class="s2">&quot;0.2.1&quot;</span>
+</span><span data-line="593">
+</span><span data-line="594">
+</span><span data-line="595"><span class="c1"># 3. Explicitly define the Public API (Used by Sphinx and `from drumscript import *`)</span>
+</span><span data-line="596"><span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
+</span><span data-line="597">    <span class="c1"># High-level wrappers</span>
+</span><span data-line="598">    <span class="s2">&quot;transcribe&quot;</span><span class="p">,</span>
+</span><span data-line="599">    <span class="s2">&quot;extract_stems&quot;</span><span class="p">,</span>
+</span><span data-line="600">    <span class="s2">&quot;detect_tempo&quot;</span><span class="p">,</span>
+</span><span data-line="601">    <span class="s2">&quot;export_pdf&quot;</span><span class="p">,</span>
+</span><span data-line="602">    <span class="s2">&quot;export_midi&quot;</span><span class="p">,</span>
+</span><span data-line="603">    <span class="s2">&quot;export_xml&quot;</span><span class="p">,</span>
+</span><span data-line="604">    <span class="c1"># Core DSP &amp; Classification pipeline</span>
+</span><span data-line="605">    <span class="s2">&quot;load_audio&quot;</span><span class="p">,</span>
+</span><span data-line="606">    <span class="s2">&quot;normalise_audio&quot;</span><span class="p">,</span>
+</span><span data-line="607">    <span class="s2">&quot;detect_onsets&quot;</span><span class="p">,</span>
+</span><span data-line="608">    <span class="s2">&quot;extract_features&quot;</span><span class="p">,</span>
+</span><span data-line="609">    <span class="s2">&quot;classify_events&quot;</span><span class="p">,</span>
+</span><span data-line="610">    <span class="s2">&quot;classify_rudiment_events&quot;</span><span class="p">,</span>
+</span><span data-line="611">    <span class="s2">&quot;build_score&quot;</span><span class="p">,</span>
+</span><span data-line="612">    <span class="c1"># Utilities</span>
+</span><span data-line="613">    <span class="s2">&quot;install_ffmpeg&quot;</span><span class="p">,</span>
+</span><span data-line="614"><span class="p">]</span>
+</span><span data-line="615">
+</span><span data-line="616"><span class="c1"># __version__ = &quot;0.1.6&quot;</span>
+</span><span data-line="617">
+</span><span data-line="618"><span class="k">try</span><span class="p">:</span>
+</span><span data-line="619">    <span class="n">__version__</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">version</span><span class="p">(</span><span class="s2">&quot;drumscript&quot;</span><span class="p">)</span>
+</span><span data-line="620"><span class="k">except</span> <span class="n">importlib</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">PackageNotFoundError</span><span class="p">:</span>
+</span><span data-line="621">    <span class="n">__version__</span> <span class="o">=</span> <span class="s2">&quot;0.2.1&quot;</span>
 </span></pre></div>
         </article><button class="back-to-top" type="button">
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">

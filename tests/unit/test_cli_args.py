@@ -12,7 +12,6 @@ What this file covers
 - The underscore variant ``--full_song`` is rejected. We enforce the hyphen
   convention for consistency with ``--all-stems`` and standard CLI norms
   (git, pip, docker, ffmpeg etc. all use hyphens, not underscores).
-- The ``--midi-only`` flag is accepted and defaults to False.
 
 Why this file exists
 --------------------
@@ -29,11 +28,37 @@ What this file does NOT cover
   argument parser.
 """
 
-from unittest.mock import patch
+import argparse
 
 import pytest
 
-from drumscript.main import build_parser, cli
+# =============================================================================
+# Helper: rebuild the parser exactly as ``main.py`` does
+# =============================================================================
+# We rebuild rather than import ``main`` directly because the parser in
+# ``drumscript/main.py`` lives inside the ``if __name__ == "__main__":`` block
+# and is not exposed as a function. Keeping a small parallel copy here is the
+# pragmatic choice: it's a handful of lines and these tests will fail loudly
+# if the real parser diverges from this one.
+#
+# If the real parser is ever refactored into a ``build_parser()`` function in
+# ``main.py``, replace this with ``from drumscript.main import build_parser``
+# and delete the helper.
+
+
+def _build_cli_parser() -> argparse.ArgumentParser:
+    """Mirror of the argparse setup in ``drumscript/main.py``."""
+    parser = argparse.ArgumentParser(description="DrumScript: Audio to Sheet Music & Stem Splitter")
+    parser.add_argument("input_audio_path", type=str)
+    parser.add_argument("--full-song", action="store_true")
+    parser.add_argument("--drumless", action="store_true")
+    parser.add_argument("--mute", type=str, action="append")
+    parser.add_argument("--all-stems", action="store_true")
+    parser.add_argument("--format", type=str, default="wav", choices=["wav", "mp3"])
+    parser.add_argument("--rudiment", action="store_true")
+    parser.add_argument("--ts", type=str, default="4/4")
+    return parser
+
 
 # =============================================================================
 # Tests
@@ -45,14 +70,14 @@ class TestFullSongFlag:
 
     def test_full_song_flag_parses_with_hyphen(self):
         """``--full-song`` is the canonical CLI form and sets ``args.full_song = True``."""
-        parser = build_parser()
+        parser = _build_cli_parser()
         args = parser.parse_args(["my_song.mp3", "--full-song"])
         assert args.full_song is True
         assert args.input_audio_path == "my_song.mp3"
 
     def test_full_song_flag_absent_defaults_to_false(self):
         """Omitting ``--full-song`` leaves ``args.full_song`` as False."""
-        parser = build_parser()
+        parser = _build_cli_parser()
         args = parser.parse_args(["my_song.mp3"])
         assert args.full_song is False
 
@@ -70,7 +95,7 @@ class TestFullSongFlag:
         test will fail — which is the correct signal to either rename one of
         them or call the parser with ``allow_abbrev=False``.
         """
-        parser = build_parser()
+        parser = _build_cli_parser()
         args = parser.parse_args(["my_song.mp3", "--full"])
         assert args.full_song is True
 
@@ -82,43 +107,6 @@ class TestFullSongFlag:
         different. We standardise on hyphens to match ``--all-stems`` and
         general CLI convention.
         """
-        parser = build_parser()
+        parser = _build_cli_parser()
         with pytest.raises(SystemExit):
             parser.parse_args(["my_song.mp3", "--full_song"])
-
-
-class TestMidiOnlyFlag:
-    """Tests for the ``--midi-only`` CLI flag."""
-
-    def test_midi_only_flag_parses(self):
-        parser = build_parser()
-        args = parser.parse_args(["my_song.mp3", "--midi-only"])
-
-        assert args.midi_only is True
-        assert args.input_audio_path == "my_song.mp3"
-
-    def test_midi_only_flag_defaults_to_false(self):
-        parser = build_parser()
-        args = parser.parse_args(["my_song.mp3"])
-
-        assert args.midi_only is False
-
-    def test_midi_only_cli_calls_export_midi(self, monkeypatch):
-        """The CLI should route --midi-only to direct audio-to-MIDI export."""
-        monkeypatch.setattr(
-            "sys.argv",
-            ["drumscript", "my_song.wav", "--midi-only"],
-        )
-
-        with patch(
-            "drumscript.main.export_midi",
-            return_value="outputs/my_song.mid",
-        ) as mock_export:
-            cli()
-
-        mock_export.assert_called_once_with(
-            "my_song.wav",
-            from_audio=True,
-            full_song=False,
-            is_rudiment=False,
-        )

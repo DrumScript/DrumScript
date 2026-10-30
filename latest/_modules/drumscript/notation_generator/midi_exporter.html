@@ -360,20 +360,23 @@ data-aria-dark="Switch to auto color mode">
 </span><span data-line="56">    <span class="c1"># 4. Add the finished track to the file and save it</span>
 </span><span data-line="57">    <span class="n">midi</span><span class="o">.</span><span class="n">instruments</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">drum_track</span><span class="p">)</span>
 </span><span data-line="58">
-</span><span data-line="59">    <span class="c1"># Ensure directory exists</span>
-</span><span data-line="60">    <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">output_path</span><span class="p">),</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-</span><span data-line="61">    <span class="n">midi</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">output_path</span><span class="p">)</span>
-</span><span data-line="62">
-</span><span data-line="63">    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;SUCCESS: MIDI file generated at -&gt; </span><span class="si">{</span><span class="n">output_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
-
-</span><span data-line="64">
+</span><span data-line="59">    <span class="c1"># Ensure directory exists when an output directory is specified</span>
+</span><span data-line="60">    <span class="n">output_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">output_path</span><span class="p">)</span>
+</span><span data-line="61">    <span class="k">if</span> <span class="n">output_dir</span><span class="p">:</span>
+</span><span data-line="62">        <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">output_dir</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span><span data-line="63">
+</span><span data-line="64">    <span class="n">midi</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">output_path</span><span class="p">)</span>
 </span><span data-line="65">
-</span><span data-line="66"><span class="c1"># --------------------------------------------------------------------------uncomment during testing</span>
-</span><span data-line="67"><span class="c1"># from datetime import datetime</span>
-</span><span data-line="68"><span class="c1"># print(&quot;\n# ------------------------------------------------------------------------------------&quot;)</span>
-</span><span data-line="69"><span class="c1"># datetimestamp = datetime.now()</span>
-</span><span data-line="70"><span class="c1"># print(f&#39;\ndate/time: {datetimestamp}&#39;)</span>
-</span><span data-line="71"><span class="c1"># --------------------------------------------------------------------------------------------------</span>
+</span><span data-line="66">    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;SUCCESS: MIDI file generated at -&gt; </span><span class="si">{</span><span class="n">output_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+</span><span data-line="67">
+</span><span data-line="68">
+</span><span data-line="69"><span class="c1"># --------------------------------------------------------------------------uncomment during testing</span>
+</span><span data-line="70"><span class="c1"># from datetime import datetime</span>
+</span><span data-line="71"><span class="c1"># print(&quot;\n# ------------------------------------------------------------------------------------&quot;)</span>
+</span><span data-line="72"><span class="c1"># datetimestamp = datetime.now()</span>
+</span><span data-line="73"><span class="c1"># print(f&#39;\ndate/time: {datetimestamp}&#39;)</span>
+</span><span data-line="74"><span class="c1"># --------------------------------------------------------------------------------------------------</span>
 </span></pre></div>
         </article><button class="back-to-top" type="button">
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">

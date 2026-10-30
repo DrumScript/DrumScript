@@ -248,7 +248,8 @@ data-aria-dark="Switch to auto color mode">
 <li><a class="reference internal" href="#create-drumless-backing-track-drumless">3. <strong>Create Drumless Backing Track (<code class="docutils literal notranslate"><span class="pre">--drumless</span></code>)</strong></a></li>
 <li><a class="reference internal" href="#extracting-stems-all-stems">4. Extracting Stems (<code class="docutils literal notranslate"><span class="pre">--all-stems</span></code>)</a></li>
 <li><a class="reference internal" href="#custom-time-signatures-ts">5. Custom Time Signatures (<code class="docutils literal notranslate"><span class="pre">--ts</span></code>)</a></li>
-<li><a class="reference internal" href="#full-audio-to-pdf-transcription-full-song">6. Full Audio to PDF Transcription (<code class="docutils literal notranslate"><span class="pre">--full-song</span></code>)</a><ul>
+<li><a class="reference internal" href="#full-audio-to-pdf-transcription-full-song">6. Full Audio to PDF Transcription (<code class="docutils literal notranslate"><span class="pre">--full-song</span></code>)</a></li>
+<li><a class="reference internal" href="#export-midi-only-midi-only">7. Export MIDI Only (<code class="docutils literal notranslate"><span class="pre">--midi-only</span></code>)</a><ul>
 <li><a class="reference internal" href="#audio-transcription"><strong>Audio Transcription</strong></a></li>
 <li><a class="reference internal" href="#stem-splitting"><strong>Stem Splitting</strong></a></li>
 <li><a class="reference internal" href="#id1"><strong>Audio Loading</strong></a></li>
@@ -455,6 +456,34 @@ y, sr = ds.load_audio("audio_path.wav")
 <blockquote>
 <div><p><strong>Note (v0.2.0):</strong> <code class="docutils literal notranslate"><span class="pre">transcribe()</span></code> now returns a dict with <code class="docutils literal notranslate"><span class="pre">pdf_path</span></code>, <code class="docutils literal notranslate"><span class="pre">json_path</span></code>, and <code class="docutils literal notranslate"><span class="pre">midi_path</span></code> keys. Using the return value as a plain string (e.g. <code class="docutils literal notranslate"><span class="pre">pdf</span> <span class="pre">=</span> <span class="pre">ds.transcribe(...)</span></code>) still works but is deprecated and will be removed in v1.0.0. Use <code class="docutils literal notranslate"><span class="pre">result[&quot;pdf_path&quot;]</span></code> instead.</p>
 </div></blockquote>
+</section>
+<section id="export-midi-only-midi-only">
+<h3>7. Export MIDI Only (<code class="docutils literal notranslate"><span class="pre">--midi-only</span></code>)<a class="headerlink" href="#export-midi-only-midi-only" title="Link to this heading">#</a></h3>
+<p>If you only need a MIDI file for your DAW, use <code class="docutils literal notranslate"><span class="pre">export_midi()</span></code> to transcribe audio directly to MIDI without generating PDF sheet music or JSON output.</p>
+<p><strong>CLI:</strong></p>
+<div class="highlight-zsh notranslate"><div class="highlight"><pre><span></span><span data-line="1">drumscript<span class="w"> </span><span class="s2">&quot;drum_loop.wav&quot;</span><span class="w"> </span>--midi-only
+</span></pre></div>
+</div>
+<p>This creates <code class="docutils literal notranslate"><span class="pre">outputs/drum_loop.mid</span></code> by default.</p>
+<p><strong>Python API:</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="kn">import</span><span class="w"> </span><span class="nn">drumscript</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">ds</span>
+</span><span data-line="2">
+</span><span data-line="3"><span class="n">midi_path</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">export_midi</span><span class="p">(</span>
+</span><span data-line="4">    <span class="s2">&quot;drum_loop.wav&quot;</span><span class="p">,</span>
+</span><span data-line="5">    <span class="n">from_audio</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+</span><span data-line="6"><span class="p">)</span>
+</span><span data-line="7"><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;MIDI saved to: </span><span class="si">{</span><span class="n">midi_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span></pre></div>
+</div>
+<p>For a full song, use <code class="docutils literal notranslate"><span class="pre">full_song=True</span></code> to separate the drum stem before transcription. To use the rudiment classifier, set <code class="docutils literal notranslate"><span class="pre">is_rudiment=True</span></code>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="n">midi_path</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">export_midi</span><span class="p">(</span>
+</span><span data-line="2">    <span class="s2">&quot;full_song.wav&quot;</span><span class="p">,</span>
+</span><span data-line="3">    <span class="n">from_audio</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+</span><span data-line="4">    <span class="n">full_song</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+</span><span data-line="5"><span class="p">)</span>
+</span></pre></div>
+</div>
+<p>You can also specify a custom output path using <code class="docutils literal notranslate"><span class="pre">output_path</span></code>, for example <code class="docutils literal notranslate"><span class="pre">output_path=&quot;my_drums.mid&quot;</span></code>.</p>
 <blockquote>
 <div><p><strong>Full commands</strong></p>
 </div></blockquote>

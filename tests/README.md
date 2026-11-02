@@ -1,7 +1,7 @@
 # DrumScript Tests
 
 <!--date_added:weds-29-apr-2026-->
-<!--date_updated:tues-20-october-2026-->
+<!--date_updated:fri-30-oct-2026-->
 
 This directory contains the pytest test suite for `DrumScript`.
 
@@ -23,10 +23,12 @@ DrumScript/
     │   ├── test_audio_loader.py            ← 13 tests
     │   ├── test_benchmarks_run.py          ←  7 tests
     │   ├── test_classify.py                ← 24 tests
-    │   ├── test_cli_args.py                ←  4 tests
+    │   ├── test_cli_args.py                ←  9 tests
     │   ├── test_deprecation_warnings.py    ← 13 tests
     │   ├── test_helpers.py                 ← 24 tests
     │   ├── test_idmt_dataset.py            ←  4 tests
+    │   ├── test_main_midi_only.py          ←  8 tests
+    │   ├── test_midi_exporter.py           ← 15 tests
     │   ├── test_onset_detector.py          ←  7 tests
     │   ├── test_pdf_time_signature.py      ←  3 tests
     │   ├── test_stem_splitter_helpers.py   ← 17 tests
@@ -35,7 +37,7 @@ DrumScript/
     ├── integration/                        ← real files; Demucs/ffmpeg where noted
     │   ├── __init__.py
     │   ├── test_stem_splitter_real.py      ←  8 tests (all require Demucs)
-    │   └── test_transcribe_real.py         ← 15 tests (added v0.2.0)
+    │   └── test_transcribe_real.py         ← 25 tests (added v0.2.0)
     │                                           12 need no Demucs, 3 do
     └── regression/                         ← before/after transcription harness
         ├── README.md                       ← full documentation
@@ -158,7 +160,7 @@ seconds because it never invokes Demucs. Those still run in the fast loop.
 | Marks | Example | Runs under `-m "not slow"`? |
 |---|---|---|
 | neither | `tests/unit/*` | Yes |
-| `integration` only | `test_transcribe_real.py` (12 cases) | Yes |
+| `integration` only | `test_transcribe_real.py` (22 cases), `test_midi_exporter.py` (15 cases) | Yes |
 | `integration` + `slow` | `test_stem_splitter_real.py`, and 3 cases in `test_transcribe_real.py` | No |
 
 Tests needing the `demucs` CLI also carry a `skipif` so they degrade to a clean

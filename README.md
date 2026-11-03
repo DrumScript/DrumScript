@@ -1,7 +1,7 @@
 # **DrumScript**
 
 <!--date_created: sun-15-june-2025-->
-<!--date_edited: thurs-15-october-2026--->
+<!--date_edited: fri-30-october-2026--->
 
 > **Python >=3.9, < 3.13**
 >
@@ -138,7 +138,7 @@ DrumScript/
 - **Onset Detection:** Onset detection method tuned to the physics of percussion audio rather than polyphonic instruments (piano, guitar, etc.).
 - **Stem Separation:** Uses the state-of-the-art [Demucs](https://github.com/adefossez/demucs) source separation model to isolate drums, bass, vocals, and other instruments from a full mix.
 - **Backing Track Generator:** Automatically remove the drums from any `.mp3` or `.wav` to create a drumless play-along track. Bass-only and vocal-only extraction also supported.
-- **Multiple Output Formats:** Export transcriptions to PDF sheet music, MIDI (`.mid`), and MusicXML (`.xml`) for import into DAWs and notation software (Logic Pro, Cubase, Ableton, MuseScore, Sibelius, etc.).
+- **Multiple Output Formats:** Export transcriptions to PDF sheet music, MIDI (`.mid`), and MusicXML (`.xml`) for import into DAWs and notation software (Logic Pro, Cubase, Ableton, MuseScore, Sibelius, etc.). Use `--midi-only` (or `midi_only=True`) when you want the MIDI alone, without the sheet music or the JSON.
 - **Deterministic Classification:** DrumScript's core classification engine uses physics-based rules derived from acoustic analysis of real drum samples, not probabilistic AI/ML models.
 
 > **Note:** Some dependencies used by DrumScript (e.g. [Demucs](https://github.com/adefossez/demucs), [librosa](https://librosa.org/)) may internally use probabilistic methods/machine learning/AI. 
@@ -230,6 +230,10 @@ result = ds.transcribe("drum_audio.wav")
 print(result["pdf_path"])   # PDF sheet music
 print(result["json_path"])  # raw transcription data (JSON)
 print(result["midi_path"])  # MIDI file for DAW import
+
+# MIDI only, skipping the PDF and JSON. The transcription itself is unchanged.
+result = ds.transcribe("drum_loop.wav", midi_only=True)
+print(result["midi_path"])
 
 # Transcribe a full song (separates drums automatically)
 result = ds.transcribe("full_song.mp3") # drum only audio
@@ -325,6 +329,7 @@ Options:
 --format FORMAT Output format for stems: wav (default) or mp3 (requires ffmpeg to be installed)
 --rudiment      Optimise classification for isolated single beats
 --ts SIG        Time signature (default: 4/4)
+--midi-only     Export MIDI only, skipping the PDF and JSON
 ```
 
 ### Examples
@@ -338,6 +343,9 @@ drumscript full_song.mp3 --all-stems --format mp3
 
 # Classify rudiments
 drumscript snare_hit.wav --rudiment
+
+# MIDI only, for dropping straight into a DAW
+drumscript drum_loop.wav --midi-only
 ```
 
 ---

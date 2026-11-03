@@ -117,6 +117,53 @@ print(f"MIDI: {result['midi_path']}")
 
 > **Note (v0.2.0):** `transcribe()` now returns a dict with `pdf_path`, `json_path`, and `midi_path` keys. Using the return value as a plain string (e.g. `pdf = ds.transcribe(...)`) still works but is deprecated and will be removed in v1.0.0. Use `result["pdf_path"]` instead.
 
+### 7. MIDI Only (`--midi-only`)
+
+If all you need is a MIDI file to drop into a DAW, `--midi-only` skips the sheet music
+and the transcription JSON. The audio is still analysed exactly as normal, because a
+MIDI file of drum notes cannot be produced without detecting the onsets and classifying
+the hits. Only the other two writes are suppressed.
+
+**CLI:**
+
+```bash
+drumscript "drum_loop.wav" --midi-only
+```
+
+This creates `outputs/drum_loop_transcription.mid`.
+
+**Python API:**
+
+```python
+import drumscript as ds
+
+result = ds.transcribe("drum_loop.wav", midi_only=True)
+print(result["midi_path"])
+```
+
+Combine it with the other options as usual. For a full song, add `full_song=True` to
+isolate the drum stem first; for isolated hits, add `is_rudiment=True`.
+
+```python
+result = ds.transcribe("full_song.wav", midi_only=True, full_song=True)
+```
+
+You can control where the file lands with `output_dir` and `output_filename`:
+
+```python
+result = ds.transcribe(
+    "drum_loop.wav",
+    midi_only=True,
+    output_dir="my_exports",
+    output_filename="my_drums",
+)
+print(result["midi_path"])  # my_exports/my_drums.mid
+```
+
+> **Note:** under `midi_only=True` only `midi_path` is populated in the returned
+> mapping. `pdf_path` and `json_path` are `None`, because those files were never
+> written. Read the key you asked for rather than assuming all three are present.
+
 > **Full commands**
 
 #### **Audio Transcription**

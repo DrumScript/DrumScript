@@ -296,6 +296,7 @@ def transcribe(
     is_rudiment=False,
     output_dir="outputs",
     output_filename=None,
+    midi_only=False,
     # full=False, # LEGACY CODE FROM V0.1.5 (--full flag replaced with deprecation shim, in place of --verbose)
     verbose=False,
     full=None,
@@ -330,10 +331,19 @@ def transcribe(
         Note: this is unrelated to ``full_song``, which controls stem separation.
     :type full: bool, optional
 
+    :param midi_only: If True, write only the MIDI file and skip the PDF and JSON
+        exports. The pipeline is unchanged: audio is still loaded, onsets detected
+        and hits classified, because a MIDI file of drum notes cannot be produced
+        without that work. Only the two other writes are suppressed. The returned
+        mapping then carries ``midi_path`` alone, so read it rather than assuming
+        all three keys are present.
+    :type midi_only: bool, optional
+
     :return: A dict with ``pdf_path``, ``json_path``, and ``midi_path`` keys
         (backwards-compatible as a string via the PDF path until v1.0.0).
         If ``verbose=True``, returns an extended dict with tempo, onsets,
         events, and other intermediate results.
+        Under ``midi_only=True`` only ``midi_path`` is populated.
     :rtype: _TranscribeResult or dict
 
     **Examples:**
@@ -347,6 +357,21 @@ def transcribe(
        print(result["pdf_path"])   # PDF sheet music
        print(result["json_path"])  # raw transcription data
        print(result["midi_path"])  # MIDI file for DAW import
+
+    MIDI only, for when you just want something to drop into a DAW:
+
+    .. code-block:: python
+
+       import drumscript as ds
+       result = ds.transcribe("drum_loop.wav", midi_only=True)
+       print(result["midi_path"])  # outputs/drum_loop_transcription.mid
+
+    Use ``output_dir`` and ``output_filename`` to control where it lands:
+
+    .. code-block:: python
+
+       result = ds.transcribe("drum_loop.wav", midi_only=True, output_dir="my_exports", output_filename="my_drums")
+       print(result["midi_path"])  # my_exports/my_drums.mid
 
     Full song with stem separation, custom output, full results:
 
@@ -431,13 +456,20 @@ def transcribe(
         tempo=tempo,
         output_path=str(pdf_path),
         time_signature=time_signature,
+        midi_only=midi_only,
     )
     if not isinstance(written, dict):
-        written = {
-            "pdf_path": str(pdf_path),
-            "json_path": str(json_path),
-            "midi_path": str(midi_path),
-        }
+        # Under midi_only the other two were never attempted, so the fallback must
+        # not advertise them. Claiming a PDF that was deliberately skipped is the
+        # same bug this fallback exists to avoid.
+        if midi_only:
+            written = {"midi_path": str(midi_path)}
+        else:
+            written = {
+                "pdf_path": str(pdf_path),
+                "json_path": str(json_path),
+                "midi_path": str(midi_path),
+            }
     print("--- Done ---")
 
     # if full:

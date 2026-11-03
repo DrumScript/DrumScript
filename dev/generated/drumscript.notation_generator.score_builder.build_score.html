@@ -2,7 +2,7 @@
 <html lang="en" data-accent-color="violet" data-content_root="../">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"><title>drumscript.notation_generator.score_builder.build_score - DrumScript 0.2.0 documentation</title><link rel="author" title="About these documents" href="../about.html" /><link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="drumscript.notation_generator.pdf_exporter" href="drumscript.notation_generator.pdf_exporter.html" /><link rel="prev" title="drumscript.notation_generator.score_builder" href="drumscript.notation_generator.score_builder.html" /><script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"><title>drumscript.notation_generator.score_builder.build_score - DrumScript 0.2.1 documentation</title><link rel="author" title="About these documents" href="../about.html" /><link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="drumscript.notation_generator.pdf_exporter" href="drumscript.notation_generator.pdf_exporter.html" /><link rel="prev" title="drumscript.notation_generator.score_builder" href="drumscript.notation_generator.score_builder.html" /><script>
     function setColorMode(t){let e=document.documentElement;e.setAttribute("data-color-mode",t);let a=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches,s=t;"auto"===t&&(s=a?"dark":"light"),"light"===s?(e.classList.remove("dark"),e.classList.add("light")):(e.classList.remove("light"),e.classList.add("dark"))}
     setColorMode(localStorage._theme||"auto");
   </script><link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=e1a1ceaf" />
@@ -25,7 +25,7 @@
   </head>
 <body><div class="announcement">
     <div class="announcement-inner">
-      <p>DrumScript v0.2.0 now available: with mir_eval benchmarking</p>
+      <p>DrumScript v0.2.1 now available: with mir_eval benchmarking</p>
       <button class="announcement-close" aria-label="Close announcement">
         <i class="i-lucide close"></i>
       </button>
@@ -39,14 +39,14 @@
       <strong>DrumScript</strong>
     </a>
     <div class="sy-head-nav" id="head-nav">
-      <nav class="sy-head-links"><ul><li class="link"><a href="../index.html">Getting Started</a></li><li class="link"><a href="../api.html">API Reference</a></li><li class="link"><a href="../guide/installation.html">Guide</a></li><li class="link"><a href="../guide/interactive/index.html">Runbooks</a></li><li class="link"><a href="../development/contributor_guidance.html">Contributing</a></li><li class="link"><a href="../release_notes/index.html">Release Notes</a></li><li class="link"><a href="../theory/drum_notation_guide.html">Fun Theory</a></li></ul></nav>
+      <nav class="sy-head-links"><ul><li class="link"><a href="../index.html">Getting Started</a></li><li class="link"><a href="../api.html">API Reference</a></li><li class="link"><a href="../guide/installation.html">Guide</a></li><li class="link"><a href="../guide/interactive/index.html">Runbooks</a></li><li class="link"><a href="../development/contributor_guidance.html">Contributing</a></li><li class="link"><a href="../guide/troubleshooting.html">Troubleshooting</a></li><li class="link"><a href="../release_notes/index.html">Release Notes</a></li><li class="link"><a href="../theory/drum_notation_guide.html">Fun Theory</a></li></ul></nav>
       <div class="sy-head-extra flex items-center print:hidden"><form class="searchbox flex items-center" action="../search.html" method="get">
   <input type="text" name="q" placeholder="Search" />
   <kbd>/</kbd>
 </form><div class="nav-versions">
     <button type="button" aria-label="Versions">
       <span class="md:hidden">Versions</span>
-      <span class="hidden md:inline">v0.2.0</span>
+      <span class="hidden md:inline">v0.2.1</span>
       <i class="i-lucide chevron-down"></i>
     </button>
     <div class="nav-versions-choices"><ul><li><a href="/DrumScript/latest/">latest</a></li><li><a href="/DrumScript/dev/">dev</a></li><li><a href="/DrumScript/v0.2.0/">v0.2.0</a></li><li><a href="/DrumScript/v0.1.6/">v0.1.6</a></li></ul></div>
@@ -152,6 +152,7 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l3"><a class="reference internal" href="drumscript.notation_generator.pdf_exporter.draw_time_signature.html">drumscript.notation_generator.pdf_exporter.draw_time_signature</a></li>
 <li class="toctree-l3"><a class="reference internal" href="drumscript.notation_generator.pdf_exporter.export_pdf.html">drumscript.notation_generator.pdf_exporter.export_pdf</a></li>
 <li class="toctree-l3"><a class="reference internal" href="drumscript.notation_generator.pdf_exporter.get_vertical_position.html">drumscript.notation_generator.pdf_exporter.get_vertical_position</a></li>
+<li class="toctree-l3"><a class="reference internal" href="drumscript.notation_generator.pdf_exporter.parse_time_signature.html">drumscript.notation_generator.pdf_exporter.parse_time_signature</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="drumscript.notation_generator.midi_exporter.html">drumscript.notation_generator.midi_exporter</a><ul>
@@ -194,6 +195,7 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l2"><a class="reference internal" href="../release_notes/0.1.5.html">v0.1.5 (Alpha)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../release_notes/0.1.6.html">v0.1.6 (Alpha)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../release_notes/0.2.0.html">v0.2.0 (Alpha)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes/0.2.1.html">DrumScript v0.2.1 - Python 3.13 install fix</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../changelog.html"><strong>Changelog</strong></a></li>
@@ -341,7 +343,7 @@ data-aria-dark="Switch to auto color mode">
 <h1>drumscript.notation_generator.score_builder.build_score<a class="headerlink" href="#drumscript-notation-generator-score-builder-build-score" title="Link to this heading">#</a></h1>
 <dl class="py function">
 <dt class="sig sig-object py" id="drumscript.notation_generator.score_builder.build_score">
-<span class="sig-name descname"><span class="pre">build_score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">detected_events</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tempo</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'outputs/score.pdf'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">quantization_subdivision</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">16</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_signature</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'4/4'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/drumscript/notation_generator/score_builder.html#build_score"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drumscript.notation_generator.score_builder.build_score" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">build_score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">detected_events</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tempo</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'outputs/score.pdf'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">quantization_subdivision</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">16</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_signature</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'4/4'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">midi_only</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/drumscript/notation_generator/score_builder.html#build_score"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drumscript.notation_generator.score_builder.build_score" title="Link to this definition">#</a></dt>
 <dd><p>Builds a drum score by saving event data to JSON and rendering to PDF.
 # Builds a drum score by saving the event data to JSON and then
 # rendering it directly to PDF using the custom engine.
@@ -353,8 +355,11 @@ data-aria-dark="Switch to auto color mode">
 <li><p><strong>detected_events</strong> (<em>List</em><em>[</em><em>Dict</em><em>[</em><em>str</em><em>, </em><em>Any</em><em>]</em><em>]</em>) – List of classified drum events.</p></li>
 <li><p><strong>tempo</strong> (<em>int</em>) – Tempo in BPM.</p></li>
 <li><p><strong>output_path</strong> (<em>str</em><em>, </em><em>optional</em>) – Path to save the PDF.</p></li>
-<li><p><strong>quantization_subdivision</strong> (<em>int</em><em>, </em><em>optional</em>) – Grid for quantization (e.g., 16 for 16th notes).</p></li>
-<li><p><strong>time_signature</strong> (<em>str</em><em>, </em><em>optional</em>) – Time signature string (e.g., “4/4”).</p></li>
+<li><p><strong>quantization_subdivision</strong> (<em>int</em><em>, </em><em>optional</em><em>, </em><em>must be non-zero</em>) – Grid for quantization (e.g., 1/n where n is the subdivision, 16 for 1/16th notes).</p></li>
+<li><p><strong>time_signature</strong> (<em>str</em><em>, </em><em>optional</em>) – Time signature string (e.g., “4/4”), default if time_sig is unspecified</p></li>
+<li><p><strong>midi_only</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, write the MIDI file and skip the JSON and PDF exports.
+The events are still quantised exactly as normal, so the MIDI is identical to
+the one a full run would produce. Only the other two writes are suppressed.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -413,7 +418,7 @@ export failed, so callers can report only files that actually exist.</p>
     </div>
   </div>
 </footer>
-      <script src="../_static/documentation_options.js?v=938c9ccc"></script>
+      <script src="../_static/documentation_options.js?v=37f418d5"></script>
       <script src="../_static/doctools.js?v=fd6eb6e6"></script>
       <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script src="../_static/shibuya.js?v=50760d75"></script></body>

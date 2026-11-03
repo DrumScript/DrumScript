@@ -1,7 +1,7 @@
 # Usage Guide
 
 <!--date_updated:sat-17-january-2026-->
-<!--date_updated:sun-16-august-2026-->
+<!--date_updated:tues-22-september-2026-->
 
 ## Quick Start
 
@@ -55,7 +55,7 @@ print(f"Files written to: {backing_track['output_directory']}")
 
 > `extract_stems()` writes to a `stems/` folder in your current working directory if `output_dir` is not specified.
 >
-> The verbose dict returns `status`, `drum_stem_path`, `original_file` and `output_directory`. The backing track itself is named `<input>_no_drums.<format>` inside `output_directory` — its path is not yet returned directly. See the [CHANGELOG](../changelog.md) for the planned fix.
+> The verbose dict returns `status`, `drum_stem_path`, `original_file` and `output_directory`. The backing track itself is named `<input>_no_drums.<format>` inside `output_directory` - its path is not yet returned directly. See the [CHANGELOG](../changelog.md) for the planned fix.
 
 
 ### 4. Extracting Stems (`--all-stems`)
@@ -80,7 +80,7 @@ drumscript "audio_path.wav" --ts 3/4
 drumscript "audio_path.wav" --ts 6/8
 ```
 
-> Use a forward slash. Any other form — including underscores like `3_4` — silently falls back to 4/4 with no warning.
+> Use a forward slash. Any other form - including underscores like `3_4` or a typo like `44` - falls back to 4/4 and prints a warning.
 
 <!--You can also use DrumScript directly from your terminal:-->
 
@@ -117,6 +117,53 @@ print(f"MIDI: {result['midi_path']}")
 
 > **Note (v0.2.0):** `transcribe()` now returns a dict with `pdf_path`, `json_path`, and `midi_path` keys. Using the return value as a plain string (e.g. `pdf = ds.transcribe(...)`) still works but is deprecated and will be removed in v1.0.0. Use `result["pdf_path"]` instead.
 
+### 7. MIDI Only (`--midi-only`)
+
+If all you need is a MIDI file to drop into a DAW, `--midi-only` skips the sheet music
+and the transcription JSON. The audio is still analysed exactly as normal, because a
+MIDI file of drum notes cannot be produced without detecting the onsets and classifying
+the hits. Only the other two writes are suppressed.
+
+**CLI:**
+
+```bash
+drumscript "drum_loop.wav" --midi-only
+```
+
+This creates `outputs/drum_loop_transcription.mid`.
+
+**Python API:**
+
+```python
+import drumscript as ds
+
+result = ds.transcribe("drum_loop.wav", midi_only=True)
+print(result["midi_path"])
+```
+
+Combine it with the other options as usual. For a full song, add `full_song=True` to
+isolate the drum stem first; for isolated hits, add `is_rudiment=True`.
+
+```python
+result = ds.transcribe("full_song.wav", midi_only=True, full_song=True)
+```
+
+You can control where the file lands with `output_dir` and `output_filename`:
+
+```python
+result = ds.transcribe(
+    "drum_loop.wav",
+    midi_only=True,
+    output_dir="my_exports",
+    output_filename="my_drums",
+)
+print(result["midi_path"])  # my_exports/my_drums.mid
+```
+
+> **Note:** under `midi_only=True` only `midi_path` is populated in the returned
+> mapping. `pdf_path` and `json_path` are `None`, because those files were never
+> written. Read the key you asked for rather than assuming all three are present.
+
 > **Full commands**
 
 #### **Audio Transcription**
@@ -130,7 +177,7 @@ result = ds.transcribe("audio_path.wav")
 print(result["pdf_path"])
 ```
 
-The CLI equivalent — `main()` is the orchestration function behind it, and takes the input path as its first argument:
+The CLI equivalent - `main()` is the orchestration function behind it, and takes the input path as its first argument:
 
 ```zsh
 drumscript "audio_path.wav"
@@ -157,7 +204,7 @@ main()
 
 #### **Stem Splitting**
 
-Isolate the drum track from a full music mix using `extract_drum_stem()`, or run a full separation with `separate_audio()`. Both are module-level functions — there is no class to instantiate.
+Isolate the drum track from a full music mix using `extract_drum_stem()`, or run a full separation with `separate_audio()`. Both are module-level functions - there is no class to instantiate.
 
 ```python
 from drumscript.audio_processor.stem_splitter import extract_drum_stem
@@ -188,7 +235,7 @@ print(results)   # dict of every file written, including "mix"
 ```
 
 <!-- SUPERSEDED (v0.2.0): documented a `StemSplitter` class with a
-     `split_drums()` method. No such class exists — stem_splitter.py
+     `split_drums()` method. No such class exists - stem_splitter.py
      exposes module-level functions only.
 ```python
 from drumscript.audio_processor.stem_splitter import StemSplitter
@@ -246,7 +293,7 @@ drumscript "full_song.wav" --mute bass --mute vocals
 
 #### Extract Drum-Only Audio
 
-Pull just the drum track out of a full mix — useful for studying a groove, or for feeding into transcription separately.
+Pull just the drum track out of a full mix - useful for studying a groove, or for feeding into transcription separately.
 
 ```python
 import drumscript as ds

@@ -2,7 +2,7 @@
 <html lang="en" data-accent-color="violet" data-content_root="../">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Roadmap for DrumScript - DrumScript 0.2.0 documentation</title><link rel="author" title="About these documents" href="../about.html" /><link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="DrumScript Security Policy" href="security.html" /><link rel="prev" title="Glossary of Terms" href="glossary.html" /><script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Roadmap for DrumScript - DrumScript 0.2.1 documentation</title><link rel="author" title="About these documents" href="../about.html" /><link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="DrumScript Security Policy" href="security.html" /><link rel="prev" title="Glossary of Terms" href="glossary.html" /><script>
     function setColorMode(t){let e=document.documentElement;e.setAttribute("data-color-mode",t);let a=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches,s=t;"auto"===t&&(s=a?"dark":"light"),"light"===s?(e.classList.remove("dark"),e.classList.add("light")):(e.classList.remove("light"),e.classList.add("dark"))}
     setColorMode(localStorage._theme||"auto");
   </script><link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=e1a1ceaf" />
@@ -25,7 +25,7 @@
   </head>
 <body><div class="announcement">
     <div class="announcement-inner">
-      <p>DrumScript v0.2.0 now available: with mir_eval benchmarking</p>
+      <p>DrumScript v0.2.1 now available: with mir_eval benchmarking</p>
       <button class="announcement-close" aria-label="Close announcement">
         <i class="i-lucide close"></i>
       </button>
@@ -39,14 +39,14 @@
       <strong>DrumScript</strong>
     </a>
     <div class="sy-head-nav" id="head-nav">
-      <nav class="sy-head-links"><ul><li class="link"><a href="../index.html">Getting Started</a></li><li class="link"><a href="../api.html">API Reference</a></li><li class="link"><a href="installation.html">Guide</a></li><li class="link"><a href="interactive/index.html">Runbooks</a></li><li class="link"><a href="../development/contributor_guidance.html">Contributing</a></li><li class="link"><a href="../release_notes/index.html">Release Notes</a></li><li class="link"><a href="../theory/drum_notation_guide.html">Fun Theory</a></li></ul></nav>
+      <nav class="sy-head-links"><ul><li class="link"><a href="../index.html">Getting Started</a></li><li class="link"><a href="../api.html">API Reference</a></li><li class="link"><a href="installation.html">Guide</a></li><li class="link"><a href="interactive/index.html">Runbooks</a></li><li class="link"><a href="../development/contributor_guidance.html">Contributing</a></li><li class="link"><a href="troubleshooting.html">Troubleshooting</a></li><li class="link"><a href="../release_notes/index.html">Release Notes</a></li><li class="link"><a href="../theory/drum_notation_guide.html">Fun Theory</a></li></ul></nav>
       <div class="sy-head-extra flex items-center print:hidden"><form class="searchbox flex items-center" action="../search.html" method="get">
   <input type="text" name="q" placeholder="Search" />
   <kbd>/</kbd>
 </form><div class="nav-versions">
     <button type="button" aria-label="Versions">
       <span class="md:hidden">Versions</span>
-      <span class="hidden md:inline">v0.2.0</span>
+      <span class="hidden md:inline">v0.2.1</span>
       <i class="i-lucide chevron-down"></i>
     </button>
     <div class="nav-versions-choices"><ul><li><a href="/DrumScript/latest/">latest</a></li><li><a href="/DrumScript/dev/">dev</a></li><li><a href="/DrumScript/v0.2.0/">v0.2.0</a></li><li><a href="/DrumScript/v0.1.6/">v0.1.6</a></li></ul></div>
@@ -152,6 +152,7 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l3"><a class="reference internal" href="../generated/drumscript.notation_generator.pdf_exporter.draw_time_signature.html">drumscript.notation_generator.pdf_exporter.draw_time_signature</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../generated/drumscript.notation_generator.pdf_exporter.export_pdf.html">drumscript.notation_generator.pdf_exporter.export_pdf</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../generated/drumscript.notation_generator.pdf_exporter.get_vertical_position.html">drumscript.notation_generator.pdf_exporter.get_vertical_position</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../generated/drumscript.notation_generator.pdf_exporter.parse_time_signature.html">drumscript.notation_generator.pdf_exporter.parse_time_signature</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../generated/drumscript.notation_generator.midi_exporter.html">drumscript.notation_generator.midi_exporter</a><ul>
@@ -194,6 +195,7 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l2"><a class="reference internal" href="../release_notes/0.1.5.html">v0.1.5 (Alpha)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../release_notes/0.1.6.html">v0.1.6 (Alpha)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../release_notes/0.2.0.html">v0.2.0 (Alpha)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes/0.2.1.html">DrumScript v0.2.1 - Python 3.13 install fix</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../changelog.html"><strong>Changelog</strong></a></li>
@@ -243,7 +245,7 @@ data-aria-dark="Switch to auto color mode">
 <li><a class="reference internal" href="#release-plan">Release Plan</a><ul>
 <li><a class="reference internal" href="#alpha-priorities-v0-3-0-v0-9-0">Alpha Priorities (v0.3.0 &#8211; v0.9.0)</a></li>
 <li><a class="reference internal" href="#beta-priorities-0-9-x-0-9-9">Beta Priorities <code class="docutils literal notranslate"><span class="pre">0.9.x</span></code> &#8211; <code class="docutils literal notranslate"><span class="pre">0.9.9</span></code></a></li>
-<li><a class="reference internal" href="#stable-version-1-0-0-and-beyond">Stable Version <code class="docutils literal notranslate"><span class="pre">1.0.0</span></code> and Beyond</a></li>
+<li><a class="reference internal" href="#also-planned">Also planned:</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#how-to-get-involved">How to Get Involved</a></li>
@@ -339,18 +341,18 @@ data-aria-dark="Switch to auto color mode">
           <section id="roadmap-for-drumscript">
 <h1>Roadmap for <code class="docutils literal notranslate"><span class="pre">DrumScript</span></code><a class="headerlink" href="#roadmap-for-drumscript" title="Link to this heading">#</a></h1>
 <!--date_created: thurs-21-may-2026-->
-<!--date_updated: weds-19-august-2026-->
+<!--date_updated: sat-29-august-2026-->
 <blockquote>
 <div><p>DrumScript follows <a class="reference external" href="https://semver.org/">Semantic Versioning</a>.
-The current phase is <strong>Alpha</strong> (<code class="docutils literal notranslate"><span class="pre">v{{version}}</span></code>) — the classification model and score generation/ API is out for testing.
-The alpha phase began on <strong>1st June 2026 and is ongoing</strong> — no fixed end date. Beta (<code class="docutils literal notranslate"><span class="pre">1.0.0</span></code>) follows once the API stabilises and the classification model is validated against standard ADT benchmarks.</p>
+The current phase is <strong>Alpha</strong> (<code class="docutils literal notranslate"><span class="pre">v{{version}}</span></code>) - the classification model and score generation/ API is out for testing.
+The alpha phase began on <strong>1st June 2026 and is ongoing</strong> - no fixed end date. Beta (<code class="docutils literal notranslate"><span class="pre">1.0.0</span></code>) follows once the API stabilises and the classification model is validated against standard ADT benchmarks.</p>
 </div></blockquote>
 <ul class="simple">
 <li><p><strong><a class="reference internal" href="#release-phases"><span class="xref myst">Release plan</span></a></strong></p>
 <ul>
 <li><p><strong><a class="reference internal" href="#alpha-priorities-v0-3-0-v0-9-0">Alpha priorities</a></strong></p></li>
 <li><p><strong><a class="reference internal" href="#beta-priorities-0-9-x-0-9-9">Beta</a></strong></p></li>
-<li><p><strong><a class="reference internal" href="#stable-version-1-0-0-and-beyond">Stable version (v1.0.0) and beyond</a></strong></p></li>
+<li><p><strong><a class="reference internal" href="#stable-version-100-and-beyond"><span class="xref myst">Stable version (v1.0.0) and beyond</span></a></strong></p></li>
 </ul>
 </li>
 <li><p><strong><a class="reference internal" href="#how-to-get-involved">How to get involved</a></strong></p></li>
@@ -381,7 +383,7 @@ The alpha phase began on <strong>1st June 2026 and is ongoing</strong> — no fi
 <tr class="row-even"><td><p><strong>Beta</strong></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">0.9.x</span></code> – <code class="docutils literal notranslate"><span class="pre">0.9.9</span></code></p></td>
 <td><p>Follows alpha (API-stability gated)</p></td>
-<td><p>API locked for each minor version. Focus on accuracy, edge cases, and evaluation against standard ADT datasets. Release <strong>free-to-use</strong> <code class="docutils literal notranslate"><span class="pre">WebGPU/WASM/ONNX</span></code> UI for non-coders</p></td>
+<td><p>API locked for each minor version. Focus on accuracy, edge cases, and evaluation against standard ADT datasets. Release first version of <strong>free-to-use</strong> <code class="docutils literal notranslate"><span class="pre">WebGPU/WASM/ONNX</span></code> UI for non-coders</p></td>
 </tr>
 <tr class="row-odd"><td><p><strong>Stable</strong></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">1.0.0</span></code></p></td>
@@ -404,32 +406,64 @@ The alpha phase began on <strong>1st June 2026 and is ongoing</strong> — no fi
 <hr class="docutils" />
 <section id="alpha-priorities-v0-3-0-v0-9-0">
 <h3>Alpha Priorities (v0.3.0 – v0.9.0)<a class="headerlink" href="#alpha-priorities-v0-3-0-v0-9-0" title="Link to this heading">#</a></h3>
-<p><strong>What we’re focused on during the alpha:</strong></p>
+<blockquote>
+<div><p>Before we can publish a <strong>confident v1.0.0 of <code class="docutils literal notranslate"><span class="pre">DrumScript</span></code> we need to:</strong>
+a. perfect the <strong>DrumScript deterministic engine</strong>: ie, the classification model and the score/PDF generation
+b. build an in-browser, zero storage for input or output audio and <strong>free-to-use</strong> UI for non-coders</p>
+</div></blockquote>
+<p><strong>1. Deterministic classification model</strong> (the core, and the part the MIR community is most interested in)</p>
 <ul class="simple">
-<li><p>Expanding test coverage across <strong>genres</strong>, <strong>kit types</strong>, and <strong>recording conditions</strong></p></li>
-<li><p>Fixing <strong>deterministic classification</strong> edge cases (deep snares vs clicky kicks, splash cymbals vs open hats)</p></li>
-<li><p>Improving onset detection sensitivity for ghost notes and fast passages</p></li>
-<li><p>Improve transcription notations, known bugs: ie note tails that dont mark up with note head, review cosmetic looks</p></li>
-<li><p>Fix time signatures and ensure the transcription timing is correct to semi-quaver</p></li>
-<li><p>Improving <strong>Demucs</strong> stem-separation quality outputs</p></li>
-<li><p>Community feedback from fellow drummers, audio, engineers and the TISMIR/MIR community</p></li>
-<li><p>Expanding benchmark dataset coverage (ENST-Drums, MDB-Drums) and recalibrating classifier thresholds based on benchmark findings</p></li>
+<li><p>Fixing classification edge cases (deep snares vs clicky kicks, splash cymbals vs open hats)</p></li>
+<li><p>Addressing crash/cymbal over-detection (centroid thresholds, de-bounce - see the classification-fixes note above)</p></li>
+<li><p>Improving onset detection sensitivity for ghost notes and fast passages, and reducing phantom/duplicate events</p></li>
+<li><p>Expanding coverage across <strong>genres</strong>, <strong>kit types</strong>, and <strong>recording conditions</strong></p></li>
+<li><p>Relative-frequency (per-track) calibration so the model is less tied to absolute Hz bands (see “Stable Version” below for the longer-term vision)</p></li>
 </ul>
+<p><strong>2. Score / PDF generation and readability</strong> (raised repeatedly by testers, including MIR researchers)</p>
+<ul class="simple">
+<li><p>Improve transcription notation; known bugs: note tails that don’t line up with note heads, review cosmetic layout/density</p></li>
+<li><p>Fix time signatures and ensure transcription timing is correct to semi-quaver</p></li>
+<li><p>Investigate onset-timing precision feeding into score placement (spurious rests from small timing errors)</p></li>
+</ul>
+<p><strong>3. Browser-based zero-code UI</strong></p>
+<blockquote>
+<div><p><strong>A major goal before Beta</strong></p>
+</div></blockquote>
+<ul class="simple">
+<li><p>We recognise DrumScript’s place as a Python package excludes non-coders from using it, so it is a major goal to publish, alongside 1. and 2. a browser deployment using WebGPU/WebAssembly/Pyodide-or-Java/ONNX-based UI</p></li>
+<li><p>We want this to be <strong>Free-to-use</strong></p></li>
+<li><p>We also want it to run completely in-browser, so it **never stores your audio or data, including the outputs so that DrumScript can run entirely client-side - no installation, no server, no account, no data leaves the user’s machine. The aim is a free, local-input/local-output tool that non-technical musicians can use without touching a terminal.</p></li>
+</ul>
+<p><strong>Measurement</strong></p>
+<ul class="simple">
+<li><p>Resuming the <code class="docutils literal notranslate"><span class="pre">mir_eval</span></code> benchmarking work (with <a class="reference external" href="https://github.com/nanaoto">&#64;nanaoto</a>); expanding dataset coverage (ENST-Drums, MDB-Drums) beyond the existing IDMT-SMT-Drums V2 adapter, and recalibrating classifier thresholds based on benchmark findings rather than by eye</p></li>
+</ul>
+<p><strong>Supporting work</strong></p>
+<ul class="simple">
+<li><p>Improving <strong>Demucs</strong> stem-separation quality outputs</p></li>
+<li><p>Community feedback from fellow drummers, audio engineers, and the <code class="docutils literal notranslate"><span class="pre">TISMIR/MIR</span></code> community</p></li>
+</ul>
+<p><strong>Bugs &amp; technical debt handled alongside (not at the expense of the two fundamentals above):</strong></p>
+<ul class="simple">
+<li><p>numpy 2.x migration, which unblocks Python 3.13 support (and testing 3.14) - one linked task</p></li>
+<li><p>Silencing the pydub <code class="docutils literal notranslate"><span class="pre">SyntaxWarning</span></code> in the CLI</p></li>
+</ul>
+<!---*Deferred until the fundamentals are solid (logged, not prioritised): manual `--tempo` / `--sr` / `--quantize` overrides, MusicXML as standard output*-->
 </section>
 <section id="beta-priorities-0-9-x-0-9-9">
 <h3>Beta Priorities <code class="docutils literal notranslate"><span class="pre">0.9.x</span></code> – <code class="docutils literal notranslate"><span class="pre">0.9.9</span></code><a class="headerlink" href="#beta-priorities-0-9-x-0-9-9" title="Link to this heading">#</a></h3>
 <p><strong>Immediately prior to release of DrumScript v1.0.0 some goals will be small fixes to ensure robustness, testing the UI, integrating the UI with current CI/CD pipelines</strong></p>
 </section>
-<section id="stable-version-1-0-0-and-beyond">
-<h3>Stable Version <code class="docutils literal notranslate"><span class="pre">1.0.0</span></code> and Beyond<a class="headerlink" href="#stable-version-1-0-0-and-beyond" title="Link to this heading">#</a></h3>
+<section id="also-planned">
+<h3>Also planned:<a class="headerlink" href="#also-planned" title="Link to this heading">#</a></h3>
 <ol class="arabic simple">
 <li><p><strong>Smarter classification across genres and kits</strong></p></li>
 </ol>
 <ul class="simple">
-<li><p>The current frequency thresholds were derived from a small sample set and are essentially absolute values — they work well for a typical rock/pop kit but can struggle with jazz kits, piccolo snares, deep floor toms, and non-standard tunings.</p></li>
+<li><p>The current frequency thresholds were derived from a small sample set and are essentially absolute values - they work well for a typical rock/pop kit but can struggle with jazz kits, piccolo snares, deep floor toms, and non-standard tunings.</p></li>
 <li><p>The plan is to introduce a <strong>per-track calibration step</strong>: before the deterministic classifier runs, DrumScript would first characterise the kit as a whole (identify the frequency clusters present in a given track) and then classify hits relative to those clusters, rather than relying on fixed Hz bands.</p></li>
 </ul>
-<p>The working theory is that all drum kits have relative frequency relationships regardless of absolute tuning — making the system far more genre-agnostic.</p>
+<p>The working theory is that all drum kits have relative frequency relationships regardless of absolute tuning - making the system far more genre-agnostic.</p>
 <ol class="arabic simple" start="2">
 <li><p><strong>Richer organological modelling</strong></p></li>
 </ol>
@@ -446,27 +480,27 @@ The alpha phase began on <strong>1st June 2026 and is ongoing</strong> — no fi
 <ul class="simple">
 <li><p>Accents and ghost notes</p></li>
 <li><p>Different beater styles (stick tip vs shoulder, brush sweeps, mallet rolls)</p></li>
-<li><p>Expressive techniques critical for accur  FIX 1: Restored minimal noise gate (2% of global max) in classify_events.
-Dead silence was passing through and generating phantom events.
-FIX 2: Aligned ride/crash centroid threshold from 2500 → 5500 in classify_events,
-matching classify_idiophone standalone function. 2500 was causing massive
-crash over-detection (859 crashes in TGOO transcription).
-FIX 3: Added minimal de-bounce lockout (50ms) in classify_events for full-song mode.
-Duplicate timestamps were appearing because consecutive onsets on the same
-transient were both being classified.ate transcription and meaningful notatio</p></li>
+<li><p>Expressive techniques critical for accurate transcription and meaningful notation</p></li>
 </ul>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>Classification fixes already applied in <code class="docutils literal notranslate"><span class="pre">classify_events</span></code></strong> These address known over-detection / phantom-event problems and are directly relevant to the ongoing score-readability work:</p></li>
+<li><p><strong>Noise gate</strong> - restored a minimal noise gate (2% of global max) in <code class="docutils literal notranslate"><span class="pre">classify_events</span></code>. Dead silence was passing through and generating phantom events.</p></li>
+<li><p><strong>Ride/crash centroid threshold</strong> - aligned from <code class="docutils literal notranslate"><span class="pre">2500</span></code> → <code class="docutils literal notranslate"><span class="pre">5500</span></code> in <code class="docutils literal notranslate"><span class="pre">classify_events</span></code>, matching the <code class="docutils literal notranslate"><span class="pre">classify_idiophone</span></code> standalone function. <code class="docutils literal notranslate"><span class="pre">2500</span></code> was causing massive crash over-detection (e.g. 859 crashes in the TGOO transcription).</p></li>
+<li><p><strong>De-bounce lockout</strong> - added a minimal 50ms lockout in <code class="docutils literal notranslate"><span class="pre">classify_events</span></code> for full-song mode. Duplicate timestamps were appearing because consecutive onsets on the same transient were both being classified.</p></li>
+</ul>
+<p><em>Note (Aug 2026): crash over-detection has been observed again in testing (e.g. ~291 crashes on a Peace Sells transcription), so the centroid threshold and de-bounce behaviour likely need revisiting - tracked as part of the alpha classification-model work below.</em></p>
+</div></blockquote>
 <ol class="arabic simple" start="4">
-<li><p>Broader stem separation uses</p></li>
+<li><p><strong>Broader stem separation uses</strong></p></li>
 </ol>
-<p>The Demucs integration currently targets drummers, but the same pipeline can produce vocal-only, bass-only, or instrument-only extractions. These will be exposed as first-class features so the tool is useful to vocalists, bassists, and producers — not just drummers.</p>
+<p>The Demucs integration currently targets drummers, but the same pipeline can produce vocal-only, bass-only, or instrument-only extractions. These will be exposed as first-class features so the tool is useful to vocalists, bassists, and producers - not just drummers.</p>
 <ol class="arabic simple" start="5">
-<li><p>Browser-based zero-code UI</p></li>
+<li><p>*<em>Formal evaluation/publishing a paper in academic journals (software engineering/open source/music information retrieval) on deterministic methods/the <code class="docutils literal notranslate"><span class="pre">DrumScript</span></code> repository/project. <em>scope as yet undecided</em></em></p></li>
 </ol>
-<p>A major goal: a browser deployment using WebGPU, WebAssembly, Pyodide, and ONNX Runtime so that DrumScript can run entirely client-side — no installation, no server, no account, no data leaves the user’s machine. The aim is a free, local-input/local-output tool that non-technical musicians can use without touching a terminal.</p>
-<ol class="arabic simple" start="6">
-<li><p>Formal evaluation and paper</p></li>
-</ol>
-<p>Benchmarking against standard ADT datasets using <code class="docutils literal notranslate"><span class="pre">mir_eval</span></code> metrics is now underway — the infrastructure shipped in v0.1.6 with IDMT-SMT-Drums V2 as the first verified benchmark. The write-up will target the <a class="reference external" href="https://transactions.ismir.net/">TISMIR</a> Educational Articles track covering the pipeline architecture, evaluation results, and design decisions.</p>
+<blockquote>
+<div><p>Benchmarking against standard ADT datasets using <code class="docutils literal notranslate"><span class="pre">mir_eval</span></code> metrics is now underway - the infrastructure shipped in v0.1.6 with IDMT-SMT-Drums V2 as the first verified benchmark. The write-up will target the <a class="reference external" href="https://transactions.ismir.net/">TISMIR</a> Educational Articles track covering the pipeline architecture, evaluation results, and design decisions.</p>
+</div></blockquote>
 </section>
 </section>
 <hr class="docutils" />
@@ -484,12 +518,13 @@ transient were both being classified.ate transcription and meaningful notatio</p
 <h2>Similar Projects<a class="headerlink" href="#similar-projects" title="Link to this heading">#</a></h2>
 <p>No affiliation as yet, however.</p>
 <ul class="simple">
-<li><p><strong><a class="reference external" href="https://librosa.org/">librosa</a></strong> — The spectral analysis library that powers DrumScript’s onset detection and feature extraction.</p></li>
-<li><p><strong><a class="reference external" href="https://github.com/adefossez/demucs">Demucs</a></strong> — The stem separation model we use for isolating drums from full mixes.</p></li>
-<li><p><strong><a class="reference external" href="https://github.com/tepreece/drumscript">tepreece/drumscript (Golang)</a></strong> — A <code class="docutils literal notranslate"><span class="pre">(Go)lang</span></code> MIDI drum pattern scripting language by Tom Preece. Different use case (composing drum patterns via script), different technology (MIDI output rather than audio transcription). If you’re looking to <em>write</em> drum patterns programmatically, check it out. Maintained by <a class="reference external" href="https://github.com/tepreece">&#64;tepreece</a></p></li>
+<li><p><strong><a class="reference external" href="https://librosa.org/">librosa</a></strong> - The spectral analysis library that powers DrumScript’s onset detection and feature extraction.</p></li>
+<li><p><strong><a class="reference external" href="https://github.com/adefossez/demucs">Demucs</a></strong> - The stem separation model we use for isolating drums from full mixes.</p></li>
+<li><p><strong><a class="reference external" href="https://github.com/tepreece/drumscript">tepreece/drumscript (Golang)</a></strong> - A <code class="docutils literal notranslate"><span class="pre">(Go)lang</span></code> MIDI drum pattern scripting language by Tom Preece. Different use case (composing drum patterns via script), different technology (MIDI output rather than audio transcription). If you’re looking to <em>write</em> drum patterns programmatically, check it out. Maintained by <a class="reference external" href="https://github.com/tepreece">&#64;tepreece</a></p></li>
 <li><p>**[basic-pitch][<strong>https://github.com/spotify/basic-pitch]</strong> - A lightweight yet powerful audio-to-MIDI converter with pitch bend detection (better for non-percussive audio)</p></li>
-<li><p><strong><a class="reference external" href="https://github.com/mir-evaluation/mir_eval">mir_eval</a></strong> — Standard evaluation metrics for music information retrieval tasks.</p></li>
+<li><p><strong><a class="reference external" href="https://github.com/mir-evaluation/mir_eval">mir_eval</a></strong> - Standard evaluation metrics for music information retrieval tasks.</p></li>
 <li><p><strong><a class="reference external" href="https://github.com/CPJKU/onset_db">onset_db</a></strong> - Provides a dataset of annotated musical onsets for tuning and evaluating audio detection algorithms. Maintained by JKU Linz.</p></li>
+<li><p><strong><a class="reference external" href="https://github.com/Whatang/DrumBurp">DrumBurp</a></strong> -  DrumBurp is a desktop GUI drum tab editor created by Michael Thomas (whatang) between 2011–2019. It’s a PyQt desktop application for manually writing drum notation - you type in notes by hand, specifying which drum, when, and how you hit it. It is not a transcription tool.</p></li>
 </ul>
 <hr class="docutils" />
 </section>
@@ -538,7 +573,7 @@ transient were both being classified.ate transcription and meaningful notatio</p
     </div>
   </div>
 </footer>
-      <script src="../_static/documentation_options.js?v=938c9ccc"></script>
+      <script src="../_static/documentation_options.js?v=37f418d5"></script>
       <script src="../_static/doctools.js?v=fd6eb6e6"></script>
       <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script src="../_static/shibuya.js?v=50760d75"></script></body>

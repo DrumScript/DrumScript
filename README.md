@@ -1,7 +1,7 @@
 # **DrumScript**
 
 <!--date_created: sun-15-june-2025-->
-<!--date_edited: tues-03-november-2026--->
+<!--date_edited: thurs-05-november-2026--->
 
 > **Python >=3.9, < 3.13**
 >
@@ -69,7 +69,7 @@ Before we can publish a **confident v1.0.0 of `DrumScript` we need to:**
 > * `DrumScript` is developed by part-timers who have full-time jobs and, like most modern software, it's built with the help of good tooling and occasional use of LLM for debugging and refining website content, but all the decisions are human-reviewed more than once at every step.
 > * If you feel any part of this hasn't been made clear, then please raise it in the **[Discussions](https://github.com/orgs/DrumScript/discussions)**
 
-> **Repo history rewritten to clean .git bloat (8 Oct 2026)** - if you have an existing clone or fork made prior to 08 October 2026, please **re-clone**; a normal `git pull` will no longer work. Details: **[Discussions announcement](https://github.com/orgs/DrumScript/discussions)**. The PyPI package, releases, and docs site are unaffected. On the plus side this will reduce any future clones or forks by 88% (from 2.4GB to 177MB)
+> **Repo history rewritten to clean .git bloat (8 Oct 2026)** - if you have an existing clone or fork made prior to 08 October 2026, please **re-clone**; a normal `git pull` will no longer work. Full details: **[Announcements](https://drumscript.github.io/DrumScript/latest/announcements.html)** or the **[Discussions announcement](https://github.com/orgs/DrumScript/discussions)**. The PyPI package, releases, and docs site are unaffected. On the plus side, clones and forks are now a fraction of their previous size (16MB versus 1.7GB before the rewrite)
 
 ---
 

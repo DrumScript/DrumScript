@@ -11,7 +11,7 @@
 <!--**Workflow Status**-->
 
 [![Run Tests](https://github.com/DrumScript/DrumScript/actions/workflows/tests.yml/badge.svg?branch=main)](https://github.com/DrumScript/DrumScript/actions/workflows/tests.yml)
-[![PyPI version](https://img.shields.io/pypi/v/drumscript)](https://pypi.org/project/drumscript/)
+<!--[![PyPI version](https://img.shields.io/pypi/v/drumscript)](https://pypi.org/project/drumscript/)-->
 [![PyPI downloads](https://img.shields.io/pypi/dm/drumscript)](https://pypistats.org/packages/drumscript)
 >
 >

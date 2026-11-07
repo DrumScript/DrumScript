@@ -1,16 +1,4 @@
 """
-Regression tests: the CLI deleted the user's working directory.
-
-What went wrong
----------------
-``extract_drum_stem()`` writes Demucs output to ``output_dir``, which defaults
-to ``Path.cwd()``. The variable holding it was named ``temp_output_dir``, left
-over from an earlier version that really did use ``tempfile.mkdtemp()``, and the
-three error paths all ended in ``shutil.rmtree(temp_output_dir)``.
-
-So running ``drumscript song.flac --full-song`` from a Downloads folder, with
-Demucs unavailable, deleted that Downloads folder and everything in it.
-
 What these tests pin
 --------------------
 1. No error path may delete the directory Demucs was told to write into, nor
@@ -53,7 +41,7 @@ def working_dir(tmp_path, monkeypatch):
 
 
 def assert_user_files_survived(working_dir):
-    """Every one of these is a file DrumScript did not create."""
+    """The whole point of #356. Every one of these is a file DrumScript did not create."""
     assert working_dir.is_dir(), "the working directory itself was deleted"
     assert (working_dir / "song.flac").is_file(), "the user's input audio was deleted"
     assert (working_dir / "tax_return.pdf").is_file(), "an unrelated user file was deleted"
@@ -168,6 +156,47 @@ class TestCleanupStillRemovesWhatDemucsCreated:
         # Assert
         assert tmp_path.is_dir()
         assert (tmp_path / "untouched.txt").is_file()
+
+    def test_empty_model_folder_is_removed(self, working_dir):
+        """
+        Demucs creates its model folder before it reads the audio.
+
+        A failure at the audio-loading stage therefore leaves an empty ``htdemucs/``
+        sitting in the user's directory. Cosmetic rather than harmful, but still ours.
+        """
+        # Arrange
+        model_dir = working_dir / DEMUCS_MODEL
+        model_dir.mkdir()
+
+        # Act
+        with patch("subprocess.run", side_effect=FileNotFoundError("demucs")):
+            with pytest.raises(FileNotFoundError):
+                extract_drum_stem(str(working_dir / "song.flac"))
+
+        # Assert
+        assert not model_dir.exists(), "an empty Demucs model folder was left behind"
+        assert_user_files_survived(working_dir)
+
+    def test_model_folder_with_unrelated_content_is_kept(self, working_dir):
+        """
+        The safety property behind using ``rmdir()`` rather than ``rmtree()``.
+
+        A user who happens to keep their own folder of this name, with files in it,
+        keeps it. ``rmdir()`` refuses to remove a non-empty directory.
+        """
+        # Arrange
+        model_dir = working_dir / DEMUCS_MODEL
+        model_dir.mkdir()
+        (model_dir / "my_notes.txt").write_text("mine, not DrumScript's")
+
+        # Act
+        with patch("subprocess.run", side_effect=FileNotFoundError("demucs")):
+            with pytest.raises(FileNotFoundError):
+                extract_drum_stem(str(working_dir / "song.flac"))
+
+        # Assert
+        assert model_dir.is_dir(), "a non-empty directory was removed"
+        assert (model_dir / "my_notes.txt").is_file(), "a user file inside it was removed"
 
 
 # =============================================================================

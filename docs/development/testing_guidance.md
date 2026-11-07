@@ -1,7 +1,7 @@
 # Testing Guidance
 
 <!--date_created: sat-21-june-2025-->
-<!--date_updated: sun-09-august-2026-->
+<!--date_updated: sat-07-nov-2026-->
 
 DrumScript ships with a [pytest](https://docs.pytest.org/) test suite organised
 around a clear separation between **fast unit tests** and **slower integration
@@ -29,13 +29,17 @@ the suite. For a copy-pasteable command reference, see the
 
 DrumScript follows the classic [test pyramid](https://martinfowler.com/articles/practical-test-pyramid.html):
 
-| Layer | Speed | Volume (as of v0.2.0) | What it covers |
+| Layer | Speed | Volume (as of v0.3.0) | What it covers |
 |---|---|---|---|
-| **Unit** | milliseconds | ~138 cases across 11 files | Pure functions, helper logic, no I/O |
+| **Unit** | milliseconds | ~178 cases across 15 files | Pure functions, helper logic, no I/O |
 | **Integration (fast)** | seconds | ~12 cases | Real audio and real file writes, no Demucs |
 | **Integration (slow)** | seconds–minutes | ~11 cases | Real Demucs runs, real ffmpeg |
 | **End-to-end** | minutes | very few | Full pipeline: audio → MIDI/PDF/XML |
 | **Transcription regression** | minutes | opt-in | Full pipeline on your own audio, compared against a previous run |
+
+<!-- KEEP FOR NOW -- kept for reference. v0.2.0 figures:
+| **Unit** | milliseconds | ~138 cases across 11 files | Pure functions, helper logic, no I/O |
+-->
 
 The dev loop (`pytest -m "not slow"`) runs the unit layer **and** the fast
 integration layer. The unit layer finishes in well under 10 seconds; the fast
@@ -80,6 +84,7 @@ tests/
 │   ├── test_midi_exporter.py
 │   ├── test_onset_detector.py
 │   ├── test_pdf_time_signature.py
+│   ├── test_stem_splitter_cleanup.py   ← issue #356 regression guard (added v0.3.0)
 │   ├── test_stem_splitter_helpers.py
 │   ├── test_tempo_detector.py
 │   └── test_transcribe.py
@@ -386,9 +391,17 @@ transcription harness covered in
   version (v1.0.0). Delete (or flip to expect `TypeError`) when `full` is
   removed in v1.0.0.
 
-When you find a class of bug that previously slipped through, the corresponding
-test belongs here too - not just as a pass/fail check, but with comments
-explaining *why* the test exists so it isn't deleted by accident later.
+`test_stem_splitter_cleanup.py`
+: Locks in the fix for [issue #356](https://github.com/DrumScript/DrumScript/issues/356).
+  All three error paths in `extract_drum_stem()` ended in
+  `shutil.rmtree(temp_output_dir)`, and `temp_output_dir` is the caller's
+  `output_dir`, which defaults to `Path.cwd()`. Running `--full-song` from a
+  folder with Demucs unavailable therefore deleted that folder and everything in
+  it. The tests assert that files DrumScript did not create survive every error
+  path, that the leaf folder Demucs *did* create is still cleaned up, and that
+  Demucs is invoked as `<python> -m demucs` rather than a console script on
+  `PATH`. Demucs, torch and audio are all stubbed out, so these run in the fast
+  loop.
 
 ---
 

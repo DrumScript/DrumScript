@@ -1,6 +1,7 @@
 # Release Notes
 
 <!--date_updated:tues-04-aug-2026-->
+<!--date_updated:tues-03-nov-2026-->
 
 This page details the history of changes, improvements, and bug fixes in `DrumScript`.
 
@@ -17,5 +18,6 @@ This page details the history of changes, improvements, and bug fixes in `DrumSc
 0.1.6
 0.2.0
 0.2.1
+0.3.0
 ```
 <!--release versions should match /release_notes/X.Y.Z exactly, ie NOT `v0.1.0`` or it will break the sphinx build-->

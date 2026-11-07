@@ -369,7 +369,7 @@ locking in that the warning text actually points users at the replacement.</a></
           <section id="testing-guidance">
 <h1>Testing Guidance<a class="headerlink" href="#testing-guidance" title="Link to this heading">#</a></h1>
 <!--date_created: sat-21-june-2025-->
-<!--date_updated: sun-09-august-2026-->
+<!--date_updated: sat-07-nov-2026-->
 <p>DrumScript ships with a <a class="reference external" href="https://docs.pytest.org/">pytest</a> test suite organised
 around a clear separation between <strong>fast unit tests</strong> and <strong>slower integration
 tests</strong>. This page covers the <em>philosophy</em> and <em>contribution conventions</em> for
@@ -398,14 +398,14 @@ the suite. For a copy-pasteable command reference, see the
 <thead>
 <tr class="row-odd"><th class="head"><p>Layer</p></th>
 <th class="head"><p>Speed</p></th>
-<th class="head"><p>Volume (as of v0.2.0)</p></th>
+<th class="head"><p>Volume (as of v0.3.0)</p></th>
 <th class="head"><p>What it covers</p></th>
 </tr>
 </thead>
 <tbody>
 <tr class="row-even"><td><p><strong>Unit</strong></p></td>
 <td><p>milliseconds</p></td>
-<td><p>~138 cases across 11 files</p></td>
+<td><p>~178 cases across 15 files</p></td>
 <td><p>Pure functions, helper logic, no I/O</p></td>
 </tr>
 <tr class="row-odd"><td><p><strong>Integration (fast)</strong></p></td>
@@ -431,6 +431,9 @@ the suite. For a copy-pasteable command reference, see the
 </tbody>
 </table>
 </div>
+<!-- KEEP FOR NOW -- kept for reference. v0.2.0 figures:
+| **Unit** | milliseconds | ~138 cases across 11 files | Pure functions, helper logic, no I/O |
+-->
 <p>The dev loop (<code class="docutils literal notranslate"><span class="pre">pytest</span> <span class="pre">-m</span> <span class="pre">&quot;not</span> <span class="pre">slow&quot;</span></code>) runs the unit layer <strong>and</strong> the fast
 integration layer. The unit layer finishes in well under 10 seconds; the fast
 integration tier adds roughly 30 seconds because it really loads audio and
@@ -470,16 +473,17 @@ when something fails. Unit tests catch <em>most</em> bugs <em>much</em> faster.<
 </span><span data-line="15">│   ├── test_midi_exporter.py
 </span><span data-line="16">│   ├── test_onset_detector.py
 </span><span data-line="17">│   ├── test_pdf_time_signature.py
-</span><span data-line="18">│   ├── test_stem_splitter_helpers.py
-</span><span data-line="19">│   ├── test_tempo_detector.py
-</span><span data-line="20">│   └── test_transcribe.py
-</span><span data-line="21">├── integration/             ← real files; Demucs/ffmpeg where noted
-</span><span data-line="22">│   ├── test_stem_splitter_real.py   ← all cases require Demucs (slow)
-</span><span data-line="23">│   └── test_transcribe_real.py      ← 22 cases need no Demucs, 3 do
-</span><span data-line="24">└── regression/              ← before/after transcription harness
-</span><span data-line="25">    ├── README.md
-</span><span data-line="26">    ├── songs.example.json   ← template; copy to songs.json (gitignored)
-</span><span data-line="27">    └── test_regression.py   ← pytest module AND command-line tool
+</span><span data-line="18">│   ├── test_stem_splitter_cleanup.py   ← issue #356 regression guard (added v0.3.0)
+</span><span data-line="19">│   ├── test_stem_splitter_helpers.py
+</span><span data-line="20">│   ├── test_tempo_detector.py
+</span><span data-line="21">│   └── test_transcribe.py
+</span><span data-line="22">├── integration/             ← real files; Demucs/ffmpeg where noted
+</span><span data-line="23">│   ├── test_stem_splitter_real.py   ← all cases require Demucs (slow)
+</span><span data-line="24">│   └── test_transcribe_real.py      ← 22 cases need no Demucs, 3 do
+</span><span data-line="25">└── regression/              ← before/after transcription harness
+</span><span data-line="26">    ├── README.md
+</span><span data-line="27">    ├── songs.example.json   ← template; copy to songs.json (gitignored)
+</span><span data-line="28">    └── test_regression.py   ← pytest module AND command-line tool
 </span></pre></div>
 </div>
 <p>Tests are auto-discovered by pytest - any file matching <code class="docutils literal notranslate"><span class="pre">test_*.py</span></code> under
@@ -774,9 +778,17 @@ still works, emits a <code class="docutils literal notranslate"><span class="pre
 mentions both the replacement parameter (<code class="docutils literal notranslate"><span class="pre">verbose</span></code>) and the removal
 version (v1.0.0). Delete (or flip to expect <code class="docutils literal notranslate"><span class="pre">TypeError</span></code>) when <code class="docutils literal notranslate"><span class="pre">full</span></code> is
 removed in v1.0.0.</p>
-<p>When you find a class of bug that previously slipped through, the corresponding
-test belongs here too - not just as a pass/fail check, but with comments
-explaining <em>why</em> the test exists so it isn’t deleted by accident later.</p>
+<p><code class="docutils literal notranslate"><span class="pre">test_stem_splitter_cleanup.py</span></code>
+: Locks in the fix for <a class="reference external" href="https://github.com/DrumScript/DrumScript/issues/356">issue #356</a>.
+All three error paths in <code class="docutils literal notranslate"><span class="pre">extract_drum_stem()</span></code> ended in
+<code class="docutils literal notranslate"><span class="pre">shutil.rmtree(temp_output_dir)</span></code>, and <code class="docutils literal notranslate"><span class="pre">temp_output_dir</span></code> is the caller’s
+<code class="docutils literal notranslate"><span class="pre">output_dir</span></code>, which defaults to <code class="docutils literal notranslate"><span class="pre">Path.cwd()</span></code>. Running <code class="docutils literal notranslate"><span class="pre">--full-song</span></code> from a
+folder with Demucs unavailable therefore deleted that folder and everything in
+it. The tests assert that files DrumScript did not create survive every error
+path, that the leaf folder Demucs <em>did</em> create is still cleaned up, and that
+Demucs is invoked as <code class="docutils literal notranslate"><span class="pre">&lt;python&gt;</span> <span class="pre">-m</span> <span class="pre">demucs</span></code> rather than a console script on
+<code class="docutils literal notranslate"><span class="pre">PATH</span></code>. Demucs, torch and audio are all stubbed out, so these run in the fast
+loop.</p>
 </section>
 <hr class="docutils" />
 <section id="coverage-reports">

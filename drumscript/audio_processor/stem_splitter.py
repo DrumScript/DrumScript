@@ -189,7 +189,9 @@ def separate_audio(
 
     # Demucs writes WAV (its default). soundfile reads WAV without
     # ffmpeg, so the WAV output path through this module is now ffmpeg-free.
-    command = ["demucs", "-o", str(temp_demucs_dir), "-n", DEMUCS_MODEL, str(input_path)]
+    # run as a module rather than relying on the console script being on PATH.
+    # command = ["demucs", "-o", str(temp_demucs_dir), "-n", DEMUCS_MODEL, str(input_path)]
+    command = [sys.executable, "-m", "demucs", "-o", str(temp_demucs_dir), "-n", DEMUCS_MODEL, str(input_path)]
     try:
         subprocess.run(command, check=True, capture_output=True, text=True)
     except subprocess.CalledProcessError as e:
@@ -305,6 +307,25 @@ def separate_audio(
 
 
 # ===============================================================================================
+def _cleanup_demucs_output(output_root: str, audio_path: str) -> None:
+    """
+    Removes only the folder Demucs itself created, never the directory it was told to write into.
+
+    Demucs writes its results to ``<output_root>/<DEMUCS_MODEL>/<input stem>/``. That leaf folder is ours to delete.
+    ``output_root`` is not: it is whatever the caller passed as ``output_dir``, and when they passed nothing it is
+    their current working directory. Deleting that destroys unrelated user files (see issue #356).
+
+    :param output_root: The directory Demucs was told to write into. Never deleted.
+    :type output_root: str
+    :param audio_path: The input audio path, used to work out the folder name Demucs chose.
+    :type audio_path: str
+    """
+    created = Path(output_root) / DEMUCS_MODEL / Path(audio_path).stem
+    if created.is_dir():
+        shutil.rmtree(created, ignore_errors=True)
+
+
+# ===============================================================================================
 # def extract_drum_stem(audio_path: str) -> str:
 def extract_drum_stem(audio_path: str, output_dir: str = None) -> str:
     """
@@ -357,7 +378,12 @@ def extract_drum_stem(audio_path: str, output_dir: str = None) -> str:
     # --- LEGACY v2: tried --backend soundfile. Demucs CLI doesn't support it.
     # Current: plain invocation, Demucs writes WAV natively. No ffmpeg needed
     # for the drum extraction path.
-    command = ["demucs", "-o", str(temp_output_dir), "-n", DEMUCS_MODEL, str(audio_path)]
+    # ["demucs", ...] needs the console script on PATH. Tools like 'uv tool install drumscript'
+    # only link DrumScript's own entry point, so the Demucs script is not exposed even though the package is
+    # installed. Running it as a module uses the same entry point (demucs/__main__.py calls separate:main)
+    # via the interpreter already running us, which is always available.
+    # command = ["demucs", "-o", str(temp_output_dir), "-n", DEMUCS_MODEL, str(audio_path)]
+    command = [sys.executable, "-m", "demucs", "-o", str(temp_output_dir), "-n", DEMUCS_MODEL, str(audio_path)]
     # 3. Run the Demucs separation process
     # print("\n# ------------------------------------------------------------------------------------")
     # print("\n# PLEASE NOTE: This is currently a test script. Original Demucs is no longer being maintained (owned by Meta/Facebook).
@@ -407,12 +433,30 @@ def extract_drum_stem(audio_path: str, output_dir: str = None) -> str:
         print(f"Demucs separation failed (exit code {e.returncode}).")
         print(f"--- STDOUT ---\n{e.stdout}")
         print(f"--- STDERR ---\n{e.stderr}")
-        shutil.rmtree(temp_output_dir, ignore_errors=True)  # Clean up
+        # temp_output_dir is the caller's output_dir, and defaults to Path.cwd(), so this
+        # deleted the user's working directory and everything in it. Only remove what Demucs created.
+        # shutil.rmtree(temp_output_dir, ignore_errors=True)  # Clean up
+        _cleanup_demucs_output(temp_output_dir, audio_path)  # Clean up
+        # Running Demucs as a module means a missing install surfaces here as a non-zero exit rather than
+        # as FileNotFoundError below, so give that case the clear message instead of a bare traceback.
+        if "No module named demucs" in (e.stderr or ""):
+            raise RuntimeError(
+                "Demucs is not installed in this environment, so --full-song cannot separate the drums. "
+                "Demucs ships as a dependency of DrumScript, so this usually means the install is incomplete. "
+                "Try 'pip install --force-reinstall drumscript'. "
+                "If you already have an isolated drum track, run DrumScript without --full-song."
+            ) from e
         raise RuntimeError(f"Demucs failed to process the audio (exit {e.returncode}).\nSTDERR: {e.stderr}")
 
     except FileNotFoundError:
-        shutil.rmtree(temp_output_dir, ignore_errors=True)  # Clean up
-        raise FileNotFoundError("The 'demucs' command was not found. Is it installed correctly in your environment's PATH?")
+        # as above. This was the path the reporter hit: Demucs was not installed, so nothing
+        # had been written yet, and the cleanup removed their Downloads folder instead.
+        # shutil.rmtree(temp_output_dir, ignore_errors=True)  # Clean up
+        _cleanup_demucs_output(temp_output_dir, audio_path)  # Clean up
+        raise FileNotFoundError(
+            "Demucs could not be run. It ships as a dependency of DrumScript, so this usually means the environment "
+            "is incomplete. Try reinstalling with 'pip install --force-reinstall drumscript'."
+        )
 
     # 4. Find and return the path to the drum file
     input_filename_stem = Path(audio_path).stem
@@ -423,8 +467,10 @@ def extract_drum_stem(audio_path: str, output_dir: str = None) -> str:
     expected_drum_path = Path(temp_output_dir) / DEMUCS_MODEL / input_filename_stem / "drums.wav"
 
     if not expected_drum_path.exists():
+        # as above, and this one had no ignore_errors, so it was the most destructive of the three.
         # shutil.rmtree(temp_output_dir, ignore_errors=True) # Clean up
-        shutil.rmtree(temp_output_dir)  # Clean up
+        # shutil.rmtree(temp_output_dir)  # Clean up
+        _cleanup_demucs_output(temp_output_dir, audio_path)  # Clean up
         raise FileNotFoundError(f"Demucs ran, but the drum output file was not found at {expected_drum_path}")
 
     print(f"Drum stem extracted successfully to: {expected_drum_path}")

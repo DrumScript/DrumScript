@@ -244,9 +244,16 @@ data-aria-dark="Switch to auto color mode">
       <i class="i-lucide close"></i>
     </button>
     <div class="sy-scrollbar sy-rside-inner px-6 xl:top-16 xl:sticky xl:pl-0 pt-6 pb-4"><div class="localtoc"><h3>On this page</h3><ul>
+<li><a class="reference internal" href="#repository-notice-git-history-was-rewritten-on-8-october-2026">Repository notice: git history was rewritten on 8 October 2026</a></li>
 <li><a class="reference internal" href="#highlights">Highlights</a></li>
-<li><a class="reference internal" href="#fixes">Fixes</a></li>
+<li><a class="reference internal" href="#new-features">New Features</a></li>
+<li><a class="reference internal" href="#fixes-improvements">Fixes &amp; Improvements</a></li>
 <li><a class="reference internal" href="#upgrading">Upgrading</a></li>
+<li><a class="reference internal" href="#contributors">&#128101; Contributors</a></li>
+<li><a class="reference internal" href="#id1">Highlights</a></li>
+<li><a class="reference internal" href="#fixes">Fixes</a></li>
+<li><a class="reference internal" href="#id2">Repository notice: git history was rewritten on 8 October 2026</a></li>
+<li><a class="reference internal" href="#id3">Upgrading</a></li>
 </ul>
 </div><a class="js-repo-stats repo-stats flex items-center" href="https://github.com/DrumScript/DrumScript"
   data-type="github" data-user="DrumScript" data-repo="DrumScript">
@@ -342,11 +349,99 @@ data-aria-dark="Switch to auto color mode">
           <section id="drumscript-v0-3-0">
 <h1>DrumScript v0.3.0<a class="headerlink" href="#drumscript-v0-3-0" title="Link to this heading">#</a></h1>
 <!--date_added:tues-03-nov-2026-->
-<!--date_updated:tues-03-nov-2026-->
+<!--date_updated:thurs-05-nov-2026-->
 <p><em>Release Date: Nov-26</em></p>
-<!-->> **Patch release.** Fixes a broken install experience on Python 3.13.
+<section id="repository-notice-git-history-was-rewritten-on-8-october-2026">
+<h2>Repository notice: git history was rewritten on 8 October 2026<a class="headerlink" href="#repository-notice-git-history-was-rewritten-on-8-october-2026" title="Link to this heading">#</a></h2>
+<p>This is the first release published since the repository history was rewritten.</p>
+<p>If you <strong>cloned or forked before 8 October 2026</strong>, you need to re-clone. A normal
+<code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">pull</span></code> will no longer work. Full detail, including how to preserve local work,
+is on the <a class="reference internal" href="../announcements.html"><span class="std std-doc">Announcements</span></a> page.</p>
+<p>This affects the git repository only. <strong>If you installed via <code class="docutils literal notranslate"><span class="pre">pip</span></code>, nothing
+changes for you.</strong> The PyPI package, all previous releases and the docs site were
+untouched.</p>
+</section>
 <section id="highlights">
 <h2>Highlights<a class="headerlink" href="#highlights" title="Link to this heading">#</a></h2>
+<p><strong>MIDI-only export.</strong> If all you need is a MIDI file for your DAW, you can now
+skip the sheet music and the transcription JSON:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span data-line="1">drumscript<span class="w"> </span><span class="s2">&quot;drum_loop.wav&quot;</span><span class="w"> </span>--midi-only
+</span></pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="kn">import</span><span class="w"> </span><span class="nn">drumscript</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">ds</span>
+</span><span data-line="2">
+</span><span data-line="3"><span class="n">result</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">transcribe</span><span class="p">(</span><span class="s2">&quot;drum_loop.wav&quot;</span><span class="p">,</span> <span class="n">midi_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span><span data-line="4"><span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s2">&quot;midi_path&quot;</span><span class="p">])</span>
+</span></pre></div>
+</div>
+<p>The transcription itself is unchanged. Onsets are still detected and hits still
+classified, because a MIDI file of drum notes cannot be produced without that
+work. Only the PDF and JSON writes are suppressed, so there is still one
+transcription pipeline rather than two.</p>
+<p><strong>A transcription regression harness.</strong> <code class="docutils literal notranslate"><span class="pre">tests/regression/</span></code> replaces the manual
+before-and-after routine used when tuning classification. One file,
+<code class="docutils literal notranslate"><span class="pre">test_regression.py</span></code>, is both a pytest module and a command-line tool with <code class="docutils literal notranslate"><span class="pre">run</span></code>,
+<code class="docutils literal notranslate"><span class="pre">compare</span></code> and <code class="docutils literal notranslate"><span class="pre">verify</span></code> subcommands. Point it at your own audio via a gitignored
+<code class="docutils literal notranslate"><span class="pre">songs.json</span></code>; the committed <code class="docutils literal notranslate"><span class="pre">songs.example.json</span></code> documents the schema.</p>
+<p><strong>Wider benchmark coverage.</strong> ENST-Drums and MDB-Drums adapters join the existing
+IDMT-SMT-Drums V2 support, with diagnostic scripts for per-onset stage
+attribution and threshold sweeps.</p>
+</section>
+<section id="new-features">
+<h2>New Features<a class="headerlink" href="#new-features" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">midi_only</span></code> on <code class="docutils literal notranslate"><span class="pre">transcribe()</span></code> and <code class="docutils literal notranslate"><span class="pre">score_builder.build_score()</span></code>, and a matching
+<code class="docutils literal notranslate"><span class="pre">--midi-only</span></code> CLI flag. <code class="docutils literal notranslate"><span class="pre">build_score()</span></code> is the single place that decides which
+files get written; both the CLI and the Python API pass the flag straight to it.</p></li>
+<li><p>Transcription regression harness at <code class="docutils literal notranslate"><span class="pre">tests/regression/</span></code>, with
+<code class="docutils literal notranslate"><span class="pre">songs.example.json</span></code> documenting the config schema and its own <code class="docutils literal notranslate"><span class="pre">README.md</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">scripts/check_harness.sh</span></code>, a smoke test for the harness itself.</p></li>
+<li><p>ENST-Drums and MDB-Drums benchmark adapters, registered in <code class="docutils literal notranslate"><span class="pre">benchmarks/run.py</span></code>.</p></li>
+<li><p>Diagnostic modes in the IDMT and ENST research scripts: per-onset pipeline-stage
+attribution, feature capture, and a threshold grid sweep scored by precision,
+recall and F-measure.</p></li>
+<li><p>Troubleshooting page covering known dependency warnings and install errors.</p></li>
+<li><p>Issue forms for bug reports, feature requests and submitted results.</p></li>
+<li><p>PyPI version and monthly download badges on the README and docs homepage.</p></li>
+</ul>
+</section>
+<section id="fixes-improvements">
+<h2>Fixes &amp; Improvements<a class="headerlink" href="#fixes-improvements" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>MIDI export no longer fails when the output filename has no parent directory.
+<code class="docutils literal notranslate"><span class="pre">os.path.dirname()</span></code> returns an empty string for a bare name such as
+<code class="docutils literal notranslate"><span class="pre">my_drums.mid</span></code>, and <code class="docutils literal notranslate"><span class="pre">os.makedirs(&quot;&quot;)</span></code> raised <code class="docutils literal notranslate"><span class="pre">FileNotFoundError</span></code>. Carried over
+from <a class="reference external" href="https://github.com/DrumScript/DrumScript/pull/348">#348</a>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">tests/unit/test_cli_args.py</span></code> now tests the real <code class="docutils literal notranslate"><span class="pre">build_parser()</span></code> from
+<code class="docutils literal notranslate"><span class="pre">main.py</span></code> rather than a parallel copy, so the tests cannot drift from the CLI.</p></li>
+<li><p>Expanded docstrings in <code class="docutils literal notranslate"><span class="pre">score_builder.py</span></code> for the time signature default and
+the non-zero constraint on <code class="docutils literal notranslate"><span class="pre">quantization_subdivision</span></code>.</p></li>
+</ul>
+</section>
+<section id="upgrading">
+<h2>Upgrading<a class="headerlink" href="#upgrading" title="Link to this heading">#</a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span data-line="1">pip<span class="w"> </span>install<span class="w"> </span>--upgrade<span class="w"> </span>drumscript
+</span></pre></div>
+</div>
+<p>No breaking changes. <code class="docutils literal notranslate"><span class="pre">transcribe()</span></code> behaves exactly as before unless you pass
+<code class="docutils literal notranslate"><span class="pre">midi_only=True</span></code>, in which case the returned mapping carries <code class="docutils literal notranslate"><span class="pre">midi_path</span></code> alone
+and <code class="docutils literal notranslate"><span class="pre">pdf_path</span></code> and <code class="docutils literal notranslate"><span class="pre">json_path</span></code> are <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
+<p>Python 3.9 through 3.12 are supported, unchanged from v0.2.1. Python 3.13 is
+still blocked, tracked in <a class="reference external" href="https://github.com/DrumScript/DrumScript/issues/303">#303</a>.</p>
+</section>
+<section id="contributors">
+<h2>👥 Contributors<a class="headerlink" href="#contributors" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/victoria-mckinney">&#64;victoria-mckinney</a></p></li>
+<li><p><a class="reference external" href="https://github.com/hungb2408994-ctu">&#64;hungb2408994-ctu</a> - first contribution.
+The original audio-to-MIDI export work in
+<a class="reference external" href="https://github.com/DrumScript/DrumScript/pull/348">#348</a> and the <code class="docutils literal notranslate"><span class="pre">os.makedirs</span></code>
+fix carried into this release.</p></li>
+</ul>
+<!-->> **Patch release.** Fixes a broken install experience on Python 3.13.
+</section>
+<section id="id1">
+<h2>Highlights<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
 <p>Python 3.13 installations of DrumScript v0.2.0 failed with an obscure
 <code class="docutils literal notranslate"><span class="pre">Compiler</span> <span class="pre">cc</span> <span class="pre">cannot</span> <span class="pre">compile</span> <span class="pre">programs</span></code> error, because pip fell back to
 building numpy 1.x from source (numpy 1.x has no Python 3.13 wheels on PyPI).</p>
@@ -362,8 +457,18 @@ tracked in #303.</p>
 <li><p><code class="docutils literal notranslate"><span class="pre">pyproject.toml</span></code>: <code class="docutils literal notranslate"><span class="pre">requires-python</span></code> lowered from <code class="docutils literal notranslate"><span class="pre">&lt;3.14</span></code> to <code class="docutils literal notranslate"><span class="pre">&lt;3.13</span></code>.</p></li>
 </ul>
 </section>
-<section id="upgrading">
-<h2>Upgrading<a class="headerlink" href="#upgrading" title="Link to this heading">#</a></h2>
+<section id="id2">
+<h2>Repository notice: git history was rewritten on 8 October 2026<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
+<p>This is the first release published since the repository history was rewritten.</p>
+<p>If you <strong>cloned or forked before 8 October 2026</strong>, you need to re-clone. A normal
+<code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">pull</span></code> will no longer work. Full detail, including how to preserve local work,
+is on the <a class="reference internal" href="../announcements.html"><span class="std std-doc">Announcements</span></a> page.</p>
+<p>This affects the git repository only. <strong>If you installed via <code class="docutils literal notranslate"><span class="pre">pip</span></code>, nothing
+changes for you.</strong> The PyPI package, all previous releases and the docs site were
+untouched.</p>
+</section>
+<section id="id3">
+<h2>Upgrading<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span data-line="1">pip<span class="w"> </span>install<span class="w"> </span>--upgrade<span class="w"> </span>drumscript
 </span></pre></div>
 </div>

@@ -343,11 +343,11 @@ data-aria-dark="Switch to auto color mode">
           <section id="roadmap-for-drumscript">
 <h1>Roadmap for <code class="docutils literal notranslate"><span class="pre">DrumScript</span></code><a class="headerlink" href="#roadmap-for-drumscript" title="Link to this heading">#</a></h1>
 <!--date_created: thurs-21-may-2026-->
-<!--date_updated: sat-29-august-2026-->
+<!--date_updated: sat-07-nov-2026-->
 <blockquote>
 <div><p>DrumScript follows <a class="reference external" href="https://semver.org/">Semantic Versioning</a>.
 The current phase is <strong>Alpha</strong> (<code class="docutils literal notranslate"><span class="pre">v{{version}}</span></code>) - the classification model and score generation/ API is out for testing.
-The alpha phase began on <strong>1st June 2026 and is ongoing</strong> - no fixed end date. Beta (<code class="docutils literal notranslate"><span class="pre">1.0.0</span></code>) follows once the API stabilises and the classification model is validated against standard ADT benchmarks.</p>
+The alpha phase began on <strong>1st June 2026 and is ongoing</strong> - no fixed end date. Beta (<code class="docutils literal notranslate"><span class="pre">0.9.x</span></code>) follows once the API stabilises and the classification model is validated against standard ADT benchmarks, with Stable (<code class="docutils literal notranslate"><span class="pre">1.0.0</span></code>) after that.</p>
 </div></blockquote>
 <ul class="simple">
 <li><p><strong><a class="reference internal" href="#release-phases"><span class="xref myst">Release plan</span></a></strong></p>
@@ -402,8 +402,11 @@ The alpha phase began on <strong>1st June 2026 and is ongoing</strong> - no fixe
 <li><p>Stem separation using Demucs (<code class="docutils literal notranslate"><span class="pre">htdemucs</span></code> 4-stem model)</p></li>
 <li><p>Drumless backing track generation</p></li>
 <li><p>CLI and Python API</p></li>
+<li><p>MIDI-only export via <code class="docutils literal notranslate"><span class="pre">--midi-only</span></code> / <code class="docutils literal notranslate"><span class="pre">midi_only=True</span></code>, for going straight into a DAW (added v0.3.0)</p></li>
 <li><p>Colab demo notebook</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">mir_eval</span></code> benchmarking framework with IDMT-SMT-Drums V2 adapter (added v0.1.6, contributed by <a class="reference external" href="https://github.com/nanaoto">&#64;nanaoto</a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">mir_eval</span></code> benchmarking framework (added v0.1.6, contributed by <a class="reference external" href="https://github.com/nanaoto">&#64;nanaoto</a>), now covering three datasets:
+IDMT-SMT-Drums V2, MDB-Drums and ENST-Drums</p></li>
+<li><p>Transcription regression harness at <code class="docutils literal notranslate"><span class="pre">tests/regression/</span></code> for before/after comparison when tuning classification (added v0.3.0)</p></li>
 </ul>
 <hr class="docutils" />
 <section id="alpha-priorities-v0-3-0-v0-9-0">
@@ -501,7 +504,7 @@ b. build an in-browser, zero storage for input or output audio and <strong>free-
 <li><p>*<em>Formal evaluation/publishing a paper in academic journals (software engineering/open source/music information retrieval) on deterministic methods/the <code class="docutils literal notranslate"><span class="pre">DrumScript</span></code> repository/project. <em>scope as yet undecided</em></em></p></li>
 </ol>
 <blockquote>
-<div><p>Benchmarking against standard ADT datasets using <code class="docutils literal notranslate"><span class="pre">mir_eval</span></code> metrics is now underway - the infrastructure shipped in v0.1.6 with IDMT-SMT-Drums V2 as the first verified benchmark. The write-up will target the <a class="reference external" href="https://transactions.ismir.net/">TISMIR</a> Educational Articles track covering the pipeline architecture, evaluation results, and design decisions.</p>
+<div><p>Benchmarking against standard ADT datasets using <code class="docutils literal notranslate"><span class="pre">mir_eval</span></code> metrics is now underway - the infrastructure shipped in v0.1.6 with IDMT-SMT-Drums V2 as the first verified benchmark, joined by MDB-Drums and ENST-Drums adapters in v0.3.0</p>
 </div></blockquote>
 </section>
 </section>

@@ -324,6 +324,13 @@ def _cleanup_demucs_output(output_root: str, audio_path: str) -> None:
     if created.is_dir():
         shutil.rmtree(created, ignore_errors=True)
 
+    # Demucs creates the model folder before it reads the audio, so a failure can leave it behind empty.
+    # rmdir() refuses to remove a non-empty directory
+    try:
+        (Path(output_root) / DEMUCS_MODEL).rmdir()
+    except OSError:
+        pass  # Not empty, or not there. Either way, not ours to remove.
+
 
 # ===============================================================================================
 # def extract_drum_stem(audio_path: str) -> str:

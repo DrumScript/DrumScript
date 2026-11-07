@@ -1,0 +1,70 @@
+/* docs/_static/custom.css */
+
+/* 1. FORCE LOGO SIZE */
+.sy-head .sy-brand img,
+.sy-drawer .sy-brand img {
+    height: 80px !important;       /* Set your desired height here */
+    width: auto !important;        /* Maintain aspect ratio */
+    max-height: none !important;   /* Remove theme restrictions */
+    max-width: none !important;    /* Allow it to be wide if needed */
+}
+
+/* 2. EXPAND NAV BAR*/
+/* We must unlock the header height so it can grow with the logo */
+.sy-head {
+    height: auto !important;       /* Let content dictate height */
+    padding-top: 15px !important;  /* Add breathing room top */
+    padding-bottom: 15px !important; /* Add breathing room bottom */
+}
+
+/* Optional: Center the nav links vertically if the logo is huge */
+.sy-head-nav {
+    align-items: center;
+}
+
+/* 3. ANNOUNCEMENT BANNER STYLING */
+/* Light mode: lilac background with dark text */
+.sy-announce {
+    background-color: #d8c9f0 !important;  /* soft lilac */
+    color: #1a1a2e !important;             /* near-black text */
+    font-weight: 600 !important;
+    text-align: center;
+    padding: 8px 16px !important;
+    font-size: 0.9rem;
+}
+
+.sy-announce a {
+    color: #4a2d7a !important;             /* darker purple for links */
+    text-decoration: underline;
+}
+
+/* Dark mode: deep purple background with white text */
+@media (prefers-color-scheme: dark) {
+    .sy-announce {
+        background-color: #2d1b4e !important;  /* deep purple */
+        color: #f0e6ff !important;             /* soft white text */
+    }
+
+    .sy-announce a {
+        color: #c9a6ff !important;             /* light purple for links */
+    }
+}
+
+/* Shibuya also uses a data attribute for dark mode, so cover that too */
+[data-theme="dark"] .sy-announce {
+    background-color: #2d1b4e !important;
+    color: #f0e6ff !important;
+}
+
+[data-theme="dark"] .sy-announce a {
+    color: #c9a6ff !important;
+}
+
+/* ── Dark mode banner text fix ─────────────────────────────────────
+   Shibuya's actual banner class is .announcement (not .sy-announce).
+   It reads colour from --sy-c-banner. Override that variable in dark
+   mode so the text matches the dark page background (#1a1a2e).
+   Light mode is NOT touched — it already looks correct. */
+html.dark {
+    --sy-c-banner: #1a1a2e;
+}

@@ -349,7 +349,7 @@ data-aria-dark="Switch to auto color mode">
           <section id="drumscript-v0-3-0">
 <h1>DrumScript v0.3.0<a class="headerlink" href="#drumscript-v0-3-0" title="Link to this heading">#</a></h1>
 <!--date_added:tues-03-nov-2026-->
-<!--date_updated:thurs-05-nov-2026-->
+<!--date_updated:sat-07-nov-2026-->
 <p><em>Release Date: Nov-26</em></p>
 <section id="repository-notice-git-history-was-rewritten-on-8-october-2026">
 <h2>Repository notice: git history was rewritten on 8 October 2026<a class="headerlink" href="#repository-notice-git-history-was-rewritten-on-8-october-2026" title="Link to this heading">#</a></h2>
@@ -408,6 +408,19 @@ recall and F-measure.</p></li>
 <section id="fixes-improvements">
 <h2>Fixes &amp; Improvements<a class="headerlink" href="#fixes-improvements" title="Link to this heading">#</a></h2>
 <ul class="simple">
+<li><p>When Demucs
+was unavailable or failed, <code class="docutils literal notranslate"><span class="pre">drumscript</span> <span class="pre">song.flac</span> <span class="pre">--full-song</span></code> tidied up by
+removing the directory it had been told to write into, which defaults to
+wherever you ran the command from. Cleanup now removes only the folder Demucs
+itself created. Reported in
+<a class="reference external" href="https://github.com/DrumScript/DrumScript/issues/356">#356</a>.
+<strong>If you use <code class="docutils literal notranslate"><span class="pre">--full-song</span></code> on v0.2.1 or earlier, please upgrade.</strong></p></li>
+<li><p>Demucs is now invoked through the running Python interpreter rather than the
+<code class="docutils literal notranslate"><span class="pre">demucs</span></code> command on <code class="docutils literal notranslate"><span class="pre">PATH</span></code>. Installing DrumScript as a tool
+(<code class="docutils literal notranslate"><span class="pre">uv</span> <span class="pre">tool</span> <span class="pre">install</span> <span class="pre">drumscript</span></code>) links DrumScript’s own entry point but not
+Demucs’s, so stem separation failed even though Demucs was installed and
+importable. A genuinely missing Demucs now says so plainly instead of printing
+a traceback.</p></li>
 <li><p>MIDI export no longer fails when the output filename has no parent directory.
 <code class="docutils literal notranslate"><span class="pre">os.path.dirname()</span></code> returns an empty string for a bare name such as
 <code class="docutils literal notranslate"><span class="pre">my_drums.mid</span></code>, and <code class="docutils literal notranslate"><span class="pre">os.makedirs(&quot;&quot;)</span></code> raised <code class="docutils literal notranslate"><span class="pre">FileNotFoundError</span></code>. Carried over

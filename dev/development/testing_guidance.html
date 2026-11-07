@@ -405,7 +405,7 @@ the suite. For a copy-pasteable command reference, see the
 <tbody>
 <tr class="row-even"><td><p><strong>Unit</strong></p></td>
 <td><p>milliseconds</p></td>
-<td><p>~178 cases across 15 files</p></td>
+<td><p>~180 cases across 15 files</p></td>
 <td><p>Pure functions, helper logic, no I/O</p></td>
 </tr>
 <tr class="row-odd"><td><p><strong>Integration (fast)</strong></p></td>
@@ -785,10 +785,21 @@ All three error paths in <code class="docutils literal notranslate"><span class=
 <code class="docutils literal notranslate"><span class="pre">output_dir</span></code>, which defaults to <code class="docutils literal notranslate"><span class="pre">Path.cwd()</span></code>. Running <code class="docutils literal notranslate"><span class="pre">--full-song</span></code> from a
 folder with Demucs unavailable therefore deleted that folder and everything in
 it. The tests assert that files DrumScript did not create survive every error
-path, that the leaf folder Demucs <em>did</em> create is still cleaned up, and that
-Demucs is invoked as <code class="docutils literal notranslate"><span class="pre">&lt;python&gt;</span> <span class="pre">-m</span> <span class="pre">demucs</span></code> rather than a console script on
-<code class="docutils literal notranslate"><span class="pre">PATH</span></code>. Demucs, torch and audio are all stubbed out, so these run in the fast
-loop.</p>
+path, that the folders Demucs <em>did</em> create are still cleaned up (including an
+empty model folder left behind by a failed run, while a non-empty folder of the
+same name is left alone), and that Demucs is invoked as <code class="docutils literal notranslate"><span class="pre">&lt;python&gt;</span> <span class="pre">-m</span> <span class="pre">demucs</span></code>
+rather than a console script on <code class="docutils literal notranslate"><span class="pre">PATH</span></code>. Demucs, torch and audio are all stubbed
+out, so these run in the fast loop.</p>
+<div class="warning admonition">
+<p class="admonition-title">Why this one is worth keeping forever</p>
+<p>The variable name <code class="docutils literal notranslate"><span class="pre">temp_output_dir</span></code> was left over from an earlier version that
+really did use <code class="docutils literal notranslate"><span class="pre">tempfile.mkdtemp()</span></code>. The name kept implying the directory was
+disposable long after it had stopped being so. A test that asserts on
+<em>behaviour</em> catches that; reading the code does not.</p>
+</div>
+<p>When you find a class of bug that previously slipped through, the corresponding
+test belongs here too - not just as a pass/fail check, but with comments
+explaining <em>why</em> the test exists so it isn’t deleted by accident later.</p>
 </section>
 <hr class="docutils" />
 <section id="coverage-reports">

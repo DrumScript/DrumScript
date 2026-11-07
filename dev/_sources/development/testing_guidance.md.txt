@@ -31,7 +31,7 @@ DrumScript follows the classic [test pyramid](https://martinfowler.com/articles/
 
 | Layer | Speed | Volume (as of v0.3.0) | What it covers |
 |---|---|---|---|
-| **Unit** | milliseconds | ~178 cases across 15 files | Pure functions, helper logic, no I/O |
+| **Unit** | milliseconds | ~180 cases across 15 files | Pure functions, helper logic, no I/O |
 | **Integration (fast)** | seconds | ~12 cases | Real audio and real file writes, no Demucs |
 | **Integration (slow)** | seconds–minutes | ~11 cases | Real Demucs runs, real ffmpeg |
 | **End-to-end** | minutes | very few | Full pipeline: audio → MIDI/PDF/XML |
@@ -398,10 +398,23 @@ transcription harness covered in
   `output_dir`, which defaults to `Path.cwd()`. Running `--full-song` from a
   folder with Demucs unavailable therefore deleted that folder and everything in
   it. The tests assert that files DrumScript did not create survive every error
-  path, that the leaf folder Demucs *did* create is still cleaned up, and that
-  Demucs is invoked as `<python> -m demucs` rather than a console script on
-  `PATH`. Demucs, torch and audio are all stubbed out, so these run in the fast
-  loop.
+  path, that the folders Demucs *did* create are still cleaned up (including an
+  empty model folder left behind by a failed run, while a non-empty folder of the
+  same name is left alone), and that Demucs is invoked as `<python> -m demucs`
+  rather than a console script on `PATH`. Demucs, torch and audio are all stubbed
+  out, so these run in the fast loop.
+
+```{admonition} Why this one is worth keeping forever
+:class: warning
+The variable name `temp_output_dir` was left over from an earlier version that
+really did use `tempfile.mkdtemp()`. The name kept implying the directory was
+disposable long after it had stopped being so. A test that asserts on
+*behaviour* catches that; reading the code does not.
+```
+
+When you find a class of bug that previously slipped through, the corresponding
+test belongs here too - not just as a pass/fail check, but with comments
+explaining *why* the test exists so it isn't deleted by accident later.
 
 ---
 

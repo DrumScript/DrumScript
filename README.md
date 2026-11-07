@@ -1,7 +1,7 @@
 # **DrumScript**
 
 <!--date_created: sun-15-june-2025-->
-<!--date_edited: thurs-05-november-2026--->
+<!--date_edited: sat-07-november-2026--->
 
 > **Python >=3.9, < 3.13**
 >
@@ -120,7 +120,7 @@ DrumScript/
 │   └── utils/                  # Helpers (ffmpeg installer, research scripts)
 ├── docs/                       # Sphinx documentation
 ├── scripts/                    # Developer helpers (backup, code bundle, test runner)
-├── tests/                      # pytest suite (170 unit + 33 integration + 8 regression)
+├── tests/                      # pytest suite (180 unit + 33 integration + 8 regression)
 ├── .github/workflows/          # CI/CD (tests, build, publish, docs)
 ├── pyproject.toml              # Package metadata and dependencies
 └── uv.lock                     # Pinned dependency versions

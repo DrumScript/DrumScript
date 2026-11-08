@@ -1,7 +1,7 @@
 # **DrumScript**
 
 <!--date_created: sun-15-june-2025-->
-<!--date_edited: thurs-15-october-2026--->
+<!--date_edited: sat-07-november-2026--->
 
 > **Python >=3.9, < 3.13**
 >
@@ -11,7 +11,7 @@
 <!--**Workflow Status**-->
 
 [![Run Tests](https://github.com/DrumScript/DrumScript/actions/workflows/tests.yml/badge.svg?branch=main)](https://github.com/DrumScript/DrumScript/actions/workflows/tests.yml)
-[![PyPI version](https://img.shields.io/pypi/v/drumscript)](https://pypi.org/project/drumscript/)
+<!--[![PyPI version](https://img.shields.io/pypi/v/drumscript)](https://pypi.org/project/drumscript/)-->
 [![PyPI downloads](https://img.shields.io/pypi/dm/drumscript)](https://pypistats.org/packages/drumscript)
 >
 >
@@ -69,7 +69,7 @@ Before we can publish a **confident v1.0.0 of `DrumScript` we need to:**
 > * `DrumScript` is developed by part-timers who have full-time jobs and, like most modern software, it's built with the help of good tooling and occasional use of LLM for debugging and refining website content, but all the decisions are human-reviewed more than once at every step.
 > * If you feel any part of this hasn't been made clear, then please raise it in the **[Discussions](https://github.com/orgs/DrumScript/discussions)**
 
-> **Repo history rewritten to clean .git bloat (8 Oct 2026)** - if you have an existing clone or fork made prior to 08 October 2026, please **re-clone**; a normal `git pull` will no longer work. Details: **[Discussions announcement](https://github.com/orgs/DrumScript/discussions)**. The PyPI package, releases, and docs site are unaffected. On the plus side this will reduce any future clones or forks by 88% (from 2.4GB to 177MB)
+> **Repo history rewritten to clean .git bloat (8 Oct 2026)** - if you have an existing clone or fork made prior to 08 October 2026, please **re-clone**; a normal `git pull` will no longer work. Full details: **[Announcements](https://drumscript.github.io/DrumScript/latest/announcements.html)** or the **[Discussions announcement](https://github.com/orgs/DrumScript/discussions)**. The PyPI package, releases, and docs site are unaffected. On the plus side, clones and forks are now a fraction of their previous size (16MB versus 1.7GB before the rewrite)
 
 ---
 
@@ -109,7 +109,7 @@ See [`repository_structure.md`](repository_structure.md) for the full project la
 
 ```
 DrumScript/
-├── benchmarks/                 # mir_eval scripts for benchmarking DrumScript 
+├── benchmarks/                 # Evaluation runners (see benchmarks/README.md)
 ├── drumscript/                 # Main source package
 │   ├── __init__.py             # Public API (transcribe, load_audio, etc.)
 │   ├── main.py                 # CLI entry point
@@ -118,9 +118,9 @@ DrumScript/
 │   ├── notation_generator/     # Score building, PDF/MIDI/XML export
 │   ├── datasets/               # Benchmark dataset adapters (IDMT, MDB, ENST)
 │   └── utils/                  # Helpers (ffmpeg installer, research scripts)
-├── benchmarks/                 # Evaluation runners (see benchmarks/README.md)
 ├── docs/                       # Sphinx documentation
-├── tests/                      # pytest test suite (142 unit + 23 integration)
+├── scripts/                    # Developer helpers (backup, code bundle, test runner)
+├── tests/                      # pytest suite (180 unit + 33 integration + 8 regression)
 ├── .github/workflows/          # CI/CD (tests, build, publish, docs)
 ├── pyproject.toml              # Package metadata and dependencies
 └── uv.lock                     # Pinned dependency versions
@@ -138,7 +138,7 @@ DrumScript/
 - **Onset Detection:** Onset detection method tuned to the physics of percussion audio rather than polyphonic instruments (piano, guitar, etc.).
 - **Stem Separation:** Uses the state-of-the-art [Demucs](https://github.com/adefossez/demucs) source separation model to isolate drums, bass, vocals, and other instruments from a full mix.
 - **Backing Track Generator:** Automatically remove the drums from any `.mp3` or `.wav` to create a drumless play-along track. Bass-only and vocal-only extraction also supported.
-- **Multiple Output Formats:** Export transcriptions to PDF sheet music, MIDI (`.mid`), and MusicXML (`.xml`) for import into DAWs and notation software (Logic Pro, Cubase, Ableton, MuseScore, Sibelius, etc.).
+- **Multiple Output Formats:** Export transcriptions to PDF sheet music, MIDI (`.mid`), and MusicXML (`.xml`) for import into DAWs and notation software (Logic Pro, Cubase, Ableton, MuseScore, Sibelius, etc.). Use `--midi-only` (or `midi_only=True`) when you want the MIDI alone, without the sheet music or the JSON.
 - **Deterministic Classification:** DrumScript's core classification engine uses physics-based rules derived from acoustic analysis of real drum samples, not probabilistic AI/ML models.
 
 > **Note:** Some dependencies used by DrumScript (e.g. [Demucs](https://github.com/adefossez/demucs), [librosa](https://librosa.org/)) may internally use probabilistic methods/machine learning/AI. 
@@ -231,6 +231,10 @@ print(result["pdf_path"])   # PDF sheet music
 print(result["json_path"])  # raw transcription data (JSON)
 print(result["midi_path"])  # MIDI file for DAW import
 
+# MIDI only, skipping the PDF and JSON. The transcription itself is unchanged.
+result = ds.transcribe("drum_loop.wav", midi_only=True)
+print(result["midi_path"])
+
 # Transcribe a full song (separates drums automatically)
 result = ds.transcribe("full_song.mp3") # drum only audio
 result = ds.transcribe("full_song.mp3", full_song=True) # full song, tells DrumScript to extract the drums first and then transcribe
@@ -252,8 +256,7 @@ import drumscript as ds
 
 # Load at native sample rate (for notebooks / exploration)
 audio, sr = ds.load_audio("drum_audio.wav")
-# print(f"Sample rate: {sr} Hz, Duration: {len(audio)/sr:.1f}s")
-print(f"Sample rate: {audio_file[1]} Hz, Duration: {len(audio_file[0])/audio_file[1]:.1f}s")
+print(f"Sample rate: {sr} Hz, Duration: {len(audio)/sr:.1f}s")
 
 # Detect tempo
 bpm = ds.detect_tempo("drum_audio.wav")
@@ -325,6 +328,7 @@ Options:
 --format FORMAT Output format for stems: wav (default) or mp3 (requires ffmpeg to be installed)
 --rudiment      Optimise classification for isolated single beats
 --ts SIG        Time signature (default: 4/4)
+--midi-only     Export MIDI only, skipping the PDF and JSON
 ```
 
 ### Examples
@@ -338,6 +342,9 @@ drumscript full_song.mp3 --all-stems --format mp3
 
 # Classify rudiments
 drumscript snare_hit.wav --rudiment
+
+# MIDI only, for dropping straight into a DAW
+drumscript drum_loop.wav --midi-only
 ```
 
 ---
@@ -529,14 +536,6 @@ A **[pull request](https://docs.github.com/en/pull-requests/reference/pull-reque
 
 
 
-### What is a `Pull Request`?
-
-A **[pull request](https://docs.github.com/en/pull-requests/reference/pull-requests)** is a formal proposal by a developer to merge code changes from a separate working branch into the main project codebase. It serves as a central place to review, discuss, and test code before it becomes part of the official codebase. ie. You suggest a fix or improvement to the code directly through a pull request.
-
-### What is `zero-egress`?
-
-`Zero egress` means a cloud or data hosting provider does not charge fees when you pull, transfer, or move your data out of their network and onto the internet. 
-
 ---
 
 ## Known dependency warnings
@@ -546,9 +545,9 @@ These warnings come from libraries that DrumScript depends on. They do **not** a
 
 |Error|Log|Source|Impact|Fix|
 |-|-|-|-|-|
-|`libmpg123` -- ID3 comment warning|`src/libmpg123/id3.c:process_comment():587] error: No comment text / valid description`?|Loading `.wav` or `.mp3` files that contain ID3 metadata tags with an empty or malformed comment field. Common with files converted from MP3, or exported from certain DAWs.|None. Audio data is loaded correctly.|None required. The message is cosmetic. Add warning suppression in DrumScript v0.2.1+|
-| `pydub` -- SyntaxWarning on import|`SyntaxWarning: invalid escape sequence`|On first import of `pydub`, particularly on Python 3.12+. The warning comes from unescaped backslashes in `pydub`'s source code.|`pydub` (v0.25.1). This is an [upstream issue](https://github.com/jiaaro/pydub/issues) in the `pydub` package itself. None. All `pydub` functionality (MP3 export, stem mixing) works correctly.|DrumScript will add warning suppression in v0.2.1+ ie `warnings.filterwarnings` in `main.py`. If you see it in a notebook or standalone script, you can suppress it manually with `warnings.filterwarnings("ignore", category=SyntaxWarning, module="pydub")`|
-|`audioread` / `aifc` / `audioop` / `sunau` -- DeprecationWarnings|`DeprecationWarning: 'aifc' is deprecated`; `DeprecationWarning: 'audioop' is deprecated`; `DeprecationWarning: 'sunau' is deprecated` |On Python 3.12+ when `librosa` loads audio via `audioread`. These standard library modules were deprecated in Python 3.11 and removed in Python 3.13. `audioread` (used by `librosa`).|None on Python 3.9--3.12. On Python 3.13+, `audioread` may fail entirely (this is tracked separately under the numpy 2.x / Python 3.13 migration).|DrumScript's `pyproject.toml` suppresses these warnings in pytest.|
+|`libmpg123` -- ID3 comment warning|`src/libmpg123/id3.c:process_comment():587] error: No comment text / valid description`?|Loading `.wav` or `.mp3` files that contain ID3 metadata tags with an empty or malformed comment field. Common with files converted from MP3, or exported from certain DAWs.|None. Audio data is loaded correctly.|None required. The message is cosmetic. Warning suppression is tracked as a future change.|
+| `pydub` -- SyntaxWarning on import|`SyntaxWarning: invalid escape sequence`|On first import of `pydub`, particularly on Python 3.12+. The warning comes from unescaped backslashes in `pydub`'s source code.|`pydub` (v0.25.1). This is an [upstream issue](https://github.com/jiaaro/pydub/issues) in the `pydub` package itself. None. All `pydub` functionality (MP3 export, stem mixing) works correctly.|DrumScript will add warning suppression via `warnings.filterwarnings` in `main.py`; tracked under Unreleased in the changelog. If you see it in a notebook or standalone script, you can suppress it manually with `warnings.filterwarnings("ignore", category=SyntaxWarning, module="pydub")`|
+|`audioread` / `aifc` / `audioop` / `sunau` -- DeprecationWarnings|`DeprecationWarning: 'aifc' is deprecated`; `DeprecationWarning: 'audioop' is deprecated`; `DeprecationWarning: 'sunau' is deprecated` |On Python 3.12+ when `librosa` loads audio via `audioread`. These standard library modules were deprecated in Python 3.11 and removed in Python 3.13. `audioread` (used by `librosa`).|None on Python 3.9--3.12. Python 3.13 removed `audioop` from the standard library, which `pydub` imports, so DrumScript pins `requires-python < 3.13` for now. Tracked under the Python 3.13 migration ([#303](https://github.com/DrumScript/DrumScript/issues/303)).|DrumScript's `pyproject.toml` suppresses these warnings in pytest.|
 |-|-|-|-|-|
 
 ---

@@ -1,0 +1,148 @@
+{
+  "_comment": [
+    "TEMPLATE -- copy to songs.json and point it at your own audio.",
+    "",
+    "    cp tests/regression/songs.example.json tests/regression/songs.json",
+    "",
+    "songs.json is gitignored, so your own file list never leaves your machine.",
+    "This template is committed, so a fresh clone always has something to copy.",
+    "",
+    "TOP-LEVEL KEYS",
+    "  audio_root   folder your 'file' paths are relative to (absolute paths also work)",
+    "  output_dir   where DrumScript writes; it has no --output-dir flag, so this",
+    "               must match what it actually uses ('outputs')",
+    "  archive_dir  where dated run folders are kept",
+    "  run_log      log the combined output is appended to",
+    "  extra_files  repo-relative files copied into every run folder, so the",
+    "               results travel with whatever context you want beside them",
+    "",
+    "PER-ENTRY KEYS",
+    "  name          output basename DrumScript will produce (<name>_transcription.json).",
+    "                Must be unique, and must match the audio file's stem.",
+    "  file          path relative to audio_root, or an absolute path",
+    "  kind          'track'      -- a full song. No known-correct answer, so it is",
+    "                                compared against a previous run, never asserted.",
+    "                'single_hit' -- one isolated drum or cymbal. Has a known answer,",
+    "                                so it is asserted.",
+    "  python_flags  flags for the python interpreter itself, e.g. ['-W', 'ignore', '-B']",
+    "  args          flags for drumscript.main, e.g. ['--rudiment']",
+    "",
+    "  expect        single_hit only: the exact instruments list expected",
+    "  expect_events single_hit only: exact number of onsets expected (usually 1)",
+    "  min_events    track only: a floor, to catch a track silently producing nothing",
+    "",
+    "VALID INSTRUMENT LABELS",
+    "  kick, snare, hi_hat_closed, hi_hat_open, low_tom, mid_tom, high_tom, crash, ride",
+    "",
+    "If you do not know what a file SHOULD classify as, make it a 'track'. It will",
+    "then be compared against your previous run rather than asserted against a",
+    "label you had to guess."
+  ],
+
+  "audio_root": "test_audio",
+  "output_dir": "outputs",
+  "archive_dir": "outputs/regression_runs",
+  "run_log": "drumscript/logs/drumscript.log",
+  "extra_files": [],
+
+  "entries": [
+    {
+      "name": "example_track_one",
+      "file": "example_track_one.wav",
+      "kind": "track",
+      "python_flags": [],
+      "args": [],
+      "min_events": 1
+    },
+    {
+      "name": "example_track_two",
+      "file": "example_track_two.wav",
+      "kind": "track",
+      "python_flags": [],
+      "args": [],
+      "min_events": 1
+    },
+
+    {
+      "name": "example_kick",
+      "file": "example_kick.wav",
+      "kind": "single_hit",
+      "python_flags": ["-W", "ignore", "-B"],
+      "args": ["--rudiment"],
+      "expect": ["kick"],
+      "expect_events": 1
+    },
+    {
+      "name": "example_snare",
+      "file": "example_snare.wav",
+      "kind": "single_hit",
+      "python_flags": ["-W", "ignore", "-B"],
+      "args": ["--rudiment"],
+      "expect": ["snare"],
+      "expect_events": 1
+    },
+    {
+      "name": "example_hi_hat_closed",
+      "file": "example_hi_hat_closed.wav",
+      "kind": "single_hit",
+      "python_flags": ["-W", "ignore", "-B"],
+      "args": ["--rudiment"],
+      "expect": ["hi_hat_closed"],
+      "expect_events": 1
+    },
+    {
+      "name": "example_hi_hat_open",
+      "file": "example_hi_hat_open.wav",
+      "kind": "single_hit",
+      "python_flags": ["-W", "ignore", "-B"],
+      "args": ["--rudiment"],
+      "expect": ["hi_hat_open"],
+      "expect_events": 1
+    },
+    {
+      "name": "example_crash",
+      "file": "example_crash.wav",
+      "kind": "single_hit",
+      "python_flags": ["-W", "ignore", "-B"],
+      "args": ["--rudiment"],
+      "expect": ["crash"],
+      "expect_events": 1
+    },
+    {
+      "name": "example_ride",
+      "file": "example_ride.wav",
+      "kind": "single_hit",
+      "python_flags": ["-W", "ignore", "-B"],
+      "args": ["--rudiment"],
+      "expect": ["ride"],
+      "expect_events": 1
+    },
+    {
+      "name": "example_high_tom",
+      "file": "example_high_tom.wav",
+      "kind": "single_hit",
+      "python_flags": ["-W", "ignore", "-B"],
+      "args": ["--rudiment"],
+      "expect": ["high_tom"],
+      "expect_events": 1
+    },
+    {
+      "name": "example_mid_tom",
+      "file": "example_mid_tom.wav",
+      "kind": "single_hit",
+      "python_flags": ["-W", "ignore", "-B"],
+      "args": ["--rudiment"],
+      "expect": ["mid_tom"],
+      "expect_events": 1
+    },
+    {
+      "name": "example_low_tom",
+      "file": "example_low_tom.wav",
+      "kind": "single_hit",
+      "python_flags": ["-W", "ignore", "-B"],
+      "args": ["--rudiment"],
+      "expect": ["low_tom"],
+      "expect_events": 1
+    }
+  ]
+}

@@ -78,7 +78,7 @@ html_theme_options = {
     # Logos: Shibuya prefers the full relative path from docs folder
     # "announcement": f"Alpha release - v{ds.__version__}",
     # "announcement": f"DrumScript v{ds.__version__} now available: with mir_eval benchmarking",
-    "announcement": f"DrumScript v{ds.__version__} now available: with regression testing and IDMT and MDB-Drums mir_eval adapters for benchmarking",
+    "announcement": f"DrumScript v{ds.__version__} available: now more lightweight, with both IDMT and MDB-Drums mir_eval adapters for benchmarking",
     "light_logo": "_static/logo-light.svg",
     "dark_logo": "_static/logo-dark.svg",
     "github_url": "https://github.com/DrumScript/DrumScript",

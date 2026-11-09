@@ -100,6 +100,7 @@ Need to know the speed of a groove or drum loop? DrumScript can accurately estim
 :maxdepth: 1
 :caption: Project Info
 about
+announcements
 ```
 
 ## API Reference

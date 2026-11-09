@@ -1,7 +1,7 @@
 # **Changelog**
 
 <!--date_added:thurs-28-may-2026-->
-<!--date_updated:fri-23-october-2026-->
+<!--date_updated:sat-07-november-2026-->
 
 
 * All notable changes related to the repository and pypi distribution of `DrumScript` will be documented here
@@ -25,82 +25,23 @@
 > ## ***Unreleased***
 *[back](#changelog)*
 
-*forthcoming/in progress* 
+*forthcoming/in progress*
 
 > Items listed below are **currently in development** but **have not been distributed on PyPi**
 
-> ### *Additions*
-
-**API/CLI:**
-* Added `export_midi(..., from_audio=True)` to export audio directly to MIDI without generating PDF or JSON files, and introduced the `--midi-only` CLI flag.
--->
-* Added a `midi_only` option to `transcribe()` and a matching `--midi-only` CLI flag, which write the MIDI file and skip the PDF and JSON exports. The transcription itself is unchanged: onsets are still detected and hits still classified, because a MIDI file of drum notes cannot be produced without that work. Only the two other writes are suppressed, so there is still one transcription pipeline rather than two.
-* Added `midi_only` to `score_builder.build_score()`, which is the single place that decides which files get written. Both the CLI and the Python API pass the flag straight through to it.
-* Fixed MIDI export when the output filename has no parent directory. `os.path.dirname()` returns an empty string for a bare filename such as `my_drums.mid`, and `os.makedirs("")` raises `FileNotFoundError`. Carried over from [#348](https://github.com/DrumScript/DrumScript/pull/348).
-
-**Documentation:** 
-* Added blurb to `README.md`, `docs/index.md` and `docs/about.md` about build process and current development people
-* Added troubleshooting page to documentation, with navigation tab for known dependency issues/errors impacting DrumScript
-* Added issue forms for `bug_report`, `feature_request` and `submit_results` to make giving feedback easier
-* Added PyPI version and monthly download badges to the badge blocks in `README.md` and `docs/index.md`, both served live by [shields.io](https://shields.io) so neither needs a workflow or a manual bump. The version badge tracks the latest published release; the downloads badge reads [pypistats.org](https://pypistats.org/packages/drumscript), which excludes mirror and bot traffic. Mirror-inclusive counts run roughly 2.3x higher, so the mirror-excluded figure was chosen as the honest one.
-* Added additional docstring to lines 23, 39-41 of `drumscript/notation_generator/score_builder.py` to indicate default behaviour for time signature (4/4 is default) and to specify non-zero constraint on quantization_subdivision
-
-**Testing:**
-* Added a transcription regression harness at `tests/regression/`, replacing the manual before/after routine. One file, `test_regression.py`, is both a pytest module and a command-line tool with `run`, `compare` and `verify` subcommands. `run` transcribes every file in the config, verifies the outputs and archives them to a dated folder with a `manifest.json` recording the commit, whether the tree was dirty, per-entry timings and results. `compare` diffs two archives and reports what moved. `verify` re-checks an archived folder against the current expectations.
-* Two kinds of check, driven by one config. A `track` entry has no known-correct transcription, so it is compared against a previous run. A `single_hit` entry is an isolated drum or cymbal recording with a known answer, so it is asserted: a kick sample must classify as `kick`. The `kind` field distinguishes them.
-* Added `tests/regression/songs.example.json`, a committed template documenting the config schema. The working copy, `songs.json`, is gitignored, so nobody's audio file list is published. Without it the pytest tests skip and the CLI prints setup instructions, so a fresh clone is never broken by its absence.
-* Added `scripts/check_harness.sh`, a smoke test for the harness itself. Runs the cheapest checks first, with `--full` and `--prove` for the slower ones. Per-step logs go to `scripts/logs/check_harness/<timestamp>/`.
-* Added `tests/regression/README.md` documenting the config schema, every flag, the exit codes and how to substitute your own audio.
-
 > ### *Changes*
+
 **Dependencies:**
-* **numpy 2 and Python 3.13 support** ([#303](https://github.com/DrumScript/DrumScript/issues/303)). `numpy<2` relaxed to `numpy<3` and `requires-python` raised from `<3.13` to `<3.14`. `uv.lock` regenerated with `uv lock --upgrade-package numpy` (numpy 2.0.2 on Python 3.9, 2.2.6 on 3.10, 2.4.6 on 3.11+). `ruff check --select NPY201` and a search for removed numpy 1.x APIs found nothing to change in the code. Python 3.13 added to the CI test matrix and the classifiers, and the supported-range line updated in `README.md`, `docs/index.md` and `docs/about.md`.
+* **numpy 2 and Python 3.13 support** ([#303](https://github.com/DrumScript/DrumScript/issues/303)). Needs at least a minor-version bump (0.4.0). `numpy<2` relaxed to `numpy<3` and `requires-python` raised from `<3.13` to `<3.14`. `uv.lock` regenerated with `uv lock --upgrade-package numpy` (numpy 2.0.2 on Python 3.9, 2.2.6 on 3.10, 2.4.6 on 3.11+). `ruff check --select NPY201` and a search for removed numpy 1.x APIs found nothing to change in the code. Python 3.13 added to the CI test matrix and the classifiers, and the supported-range line updated in `README.md`, `docs/index.md` and `docs/about.md`.
 * Added `audioop-lts` as a dependency on Python 3.13 only. `pydub` 0.25.1 (its latest release) imports the `audioop` module, which Python 3.13 removed (PEP 594), so `import drumscript` fails without it. It was already installed indirectly through `librosa`, but DrumScript imports `pydub` directly and should not rely on that.
-* Capped `librosa<1`. A plain `pip install` (no lock) resolves librosa 1.0.0, which no longer falls back to `audioread`, so loading a missing file raises `soundfile.LibsndfileError` instead of `FileNotFoundError` and `tests/unit/test_audio_loader.py::TestLoadAudio::test_raises_on_missing_file` fails. With librosa 1.0.0 nothing else installs `audioop-lts` on Python 3.13, so the direct dependency above is what keeps `import drumscript` working there.
-
-**Benchmarks:**
-*  Updated the IDMT benchmark dataset layout and documentation, including local dataset storage under `benchmarks/datasets/`, expanded setup guidance, and a template for adding future benchmark datasets. [#321](https://github.com/DrumScript/DrumScript/pull/321)
-* Added MDB-Drums full-kit benchmark support with dataset mappings, documentation, and adapter tests. [#330](https://github.com/DrumScript/DrumScript/pull/330)
-* Added diagnostic modes to `drumscript/utils/research/analyze_idmt_dataset.py`: per-onset pipeline-stage attribution (`--diagnose-kick`), capture of features for all detected onsets, and a threshold grid sweep scoring candidate rules by precision, recall and F-measure (`--sweep-csv`, `--top`).
-<!--* Added `drumscript/utils/research/analyze_mdb_dataset.py`: full-kit stage attribution, per-class confusion reporting, and per-class feature distributions for MDB-Drums.UNCOMMENT WHEN WORK IS DONE-->
-* Added ENST-Drums full-kit benchmark adapter (`drumscript/datasets/enst.py`), registered in `benchmarks/run.py`. Follows the MDB "direct notation equivalent or exclude" mapping; tom labels are left unmapped pending a decision, and are logged rather than silently dropped. First run pending.
-* Added `drumscript/utils/research/analyze_enst_dataset.py`: ENST-Drums equivalent of the MDB diagnostics script (stage attribution, confusion reporting, per-class feature distributions), with `--audio` and `--subset` flags.
-* Expanded benchmark dataset coverage (ENST-Drums, MDB-Drums) building on the IDMT-SMT-Drums V2 foundation shipped in v0.1.6.
-  
-**Classification:**
-* **Kick drum detection threshold recalibrated.** `KICK_LFER_MIN` lowered from `0.32` to `0.08` in `constants.py`. The original value was derived from isolated drum stems; because LFER is a ratio of sub-150Hz energy to total energy, simultaneous hi-hat energy in mixed audio suppresses it, so the threshold sat above the median LFER of a genuine kick (0.213 across 5,387 annotated IDMT onsets). Mean kick F-measure on IDMT-SMT-Drums V2 rose from a rule firing on 27.9% of reference kicks to one firing on 86.3%, with zero-scoring tracks falling from 31/95 to 0/95. On MDB-Drums, mean kick F-measure rose from 0.397 to 0.721. No other instrument class changed on either dataset. Frequency bounds (`KICK_FREQ_MIN`, `KICK_FREQ_MAX`) deliberately left unchanged to avoid widening the kick band into the snare and tom ranges.
--  *fix in progress* **Known issue:** Tom, ride and crash rules currently produce zero predictions against MDB-Drums (835 ride and 64 tom reference hits, 0 estimates). These are unreachable rules rather than mis-tuned thresholds.  
-* Tidied up branch tree on remote #311
-
-**Benchmarks:**
-* *(breaking, benchmark CLI only)* Each adapter's `DATASET_NAME` now matches the dataset's native unzipped folder name under `benchmarks/datasets/` (`IDMT-SMT-DRUMS-V2`, `MDBDrums-master`, `ENST-drums-public`), so datasets no longer need renaming. The `run.py` subcommands and the `outputs/benchmarks/<dataset>/` archive folders change to match (e.g. `run.py idmt` becomes `run.py IDMT-SMT-DRUMS-V2`). Earlier runs remain under the old folder names.
-* Adapter attribute `CODE_TO_DRUMSCRIPT` renamed to `DRUMSCRIPT_DICT` across the IDMT and MDB adapters, `benchmarks/run.py`, `analyze_mdb_dataset.py` and the adapter contract test.
-* `benchmarks/README.md`, `tests/README.md`, `tests/tree_tests.txt`, the root `README.md` and `tree.txt` updated for the ENST adapter, the renamed dataset folders and the current test counts (142 unit tests).
-
-**Testing:**
-<!--* `scripts/backup.sh` now runs without prompting when `E2E_TIMING`, `E2E_REASON` and `E2E_BACKUP_NUM` are set, so the harness can call it unattended. Any variable left unset still prompts exactly as before, so running it by hand is unchanged. The three original `read -r -p` lines are commented out above the new block rather than deleted, per project convention.-->
-* Renamed the "Regression tests" section to "Behaviour-locking unit tests" in both `tests/README.md` and `docs/development/testing_guidance.md`. Those are ordinary unit tests pinning previously-fixed behaviour, and the old name collided with the new `tests/regression/` harness. Both sections now cross-reference each other so the two cannot be confused.
-* `docs/development/testing_guidance.md`: the Suite Layout tree printed `tests/` twice, nested inside itself, and omitted `test_pdf_time_signature.py`. Replaced with a single correct tree including `regression/`. The Test Pyramid's bottom row, previously an unoccupied "End-to-end" entry, now describes the transcription regression tier.
-* `tests/tree_tests.txt` regenerated for the new folder.
-
-> ### *Fixes*
-* warn when an invalid time signature falls back to 4/4 instead of failing silently
-* Root `README.md` benchmarking section: the MDB code block was missing its closing fence, so the results paragraph rendered as code; and the IDMT example placed the global `--limit` flag after the dataset name, which `run.py` rejects.
-* **Python 3.13 not supported.** DrumScript pins `numpy<2`, and numpy 1.x has no cp313 wheels on PyPI. This caused `pip install drumscript` on Python 3.13 to fall back to a source build (which requires a C toolchain most users don't have), producing a confusing `Compiler cc cannot compile programs` error rather than a clear "unsupported Python version" message. `requires-python` lowered from `<3.14` to `<3.13` in `pyproject.toml`. Python 3.13 support planned once DrumScript migrates to `numpy>=2` (see [#303](https://github.com/DrumScript/DrumScript/issues/303)). Superseded by the numpy 2 / Python 3.13 entry under *Changes* above.
-* **E2E runs could fail silently.** `drumscript.main` prints errors but still exits 0, so a failing track did not stop the `&&` chain. In the 19 September before/after comparison, one of the songs failed with `Audio file not found` in *both* halves, so the side-by-side log diff looked clean while that track contributed nothing. `run_e2e.py` checks every audio file exists before running anything (exit 2, nothing run), and afterwards confirms the `.json`, `.pdf` and `.mid` were genuinely written - it never trusts the return code. The underlying exit-code behaviour in `main()` is unchanged and remains open.
-
-> **Known debt being paid down alongside the alpha's fundamental work (model + score generation).** These are treated as bugs to fix, not future features - but they are not allowed to displace the core classification/score-generation work:
-
-* **numpy 2.x migration** - *addressed in Unreleased (see Dependencies under Changes; 3.14 still untested).* Move from the `numpy<2` pin to `numpy>=2`. This was the blocker for Python 3.13 support: the two are a single linked task (migrate to numpy 2 -> unblocks 3.13 -> add 3.13, and test 3.14, to the CI matrix). Requires cross-checking numba, librosa, and scipy at numpy 2, and fixing any numpy 1.x-only API usage in the codebase (see [#303](https://github.com/DrumScript/DrumScript/issues/303)).
-* **pydub `SyntaxWarning` surfacing in the CLI** - pydub has an upstream `SyntaxWarning` on Python 3.12 that currently leaks to users when running the CLI. To be suppressed via `warnings.filterwarnings` targeting `pydub.utils`.
-
+* Capped `librosa<1`. On Python 3.12 and 3.13, a plain `pip install` (no lock) resolves librosa 1.0.0 (it requires Python >=3.12 and `numpy>=2.1`, so the old `numpy<2` pin kept it out), which no longer falls back to `audioread`, so loading a missing file raises `soundfile.LibsndfileError` instead of `FileNotFoundError` and `tests/unit/test_audio_loader.py::TestLoadAudio::test_raises_on_missing_file` fails. With librosa 1.0.0 nothing else installs `audioop-lts` on Python 3.13, so the direct dependency above is what keeps `import drumscript` working there.
 
 ---
 
 ### ***Future releases***
 *[back](#changelog)*
 
-Items listed below are fully implemented and **published to pypi** under an official version
+Planned changes
 
 <!--#### ***August 2026 and beyond***-->
 
@@ -110,7 +51,9 @@ Items listed below are fully implemented and **published to pypi** under an offi
 - `output_midi`, `output_json`, `output_xml` flags to be added to `transcribe()` for multi-format export
 - Code-to-DrumScript label mapping expanded beyond `KD`/`SD`/`HH` to cover full-kit classes (toms, crash, ride)
 - Repository statistics badge (shields.io endpoint) for README and docs homepage: extend `repo-stats.yml` to write a small JSON (`schemaVersion`, `label`, `message`, `color`) to the `github-repo-stats` branch on each daily run, so shields.io can render live view/clone counts rather than a static link #296
+<!-- SUPERSEDED: Python 3.13 support added in Unreleased (#303).
 - Check compatibility for Python 3.13 (#299)
+-->
 <!-- SUPERSEDED: shipped ahead of 1.0.0 as `midi_only` on `transcribe()`, see the Unreleased
      section above. The remaining `output_midi`/`output_json`/`output_xml` work above still stands.
 - Added `export_midi()` support for transcribing audio files directly to MIDI without generating PDF or JSON output, along with the CLI `--midi-only` flag.
@@ -152,6 +95,96 @@ Items listed below are fully implemented and **published to pypi** under an offi
 >
 > ## **Released**
 *[back](#changelog)*
+
+Items listed below are fully implemented and **published to pypi** under an official version
+
+### **[0.3.0] - November 2026**
+>
+
+> **Minor-version bump.** Adds MIDI-only export, a transcription regression
+> harness, and expanded benchmark dataset coverage.
+>
+
+> ### *Additions*
+
+**API/CLI:**
+* Added `export_midi(..., from_audio=True)` to export audio directly to MIDI without generating PDF or JSON files, and introduced the `--midi-only` CLI flag.
+-->
+* Added a `midi_only` option to `transcribe()` and a matching `--midi-only` CLI flag, which write the MIDI file and skip the PDF and JSON exports. The transcription itself is unchanged: onsets are still detected and hits still classified, because a MIDI file of drum notes cannot be produced without that work. Only the two other writes are suppressed, so there is still one transcription pipeline rather than two.
+* Added `midi_only` to `score_builder.build_score()`, which is the single place that decides which files get written. Both the CLI and the Python API pass the flag straight through to it.
+* Fixed MIDI export when the output filename has no parent directory. `os.path.dirname()` returns an empty string for a bare filename such as `my_drums.mid`, and `os.makedirs("")` raises `FileNotFoundError`. Carried over from [#348](https://github.com/DrumScript/DrumScript/pull/348).
+
+**Documentation:** 
+* Added blurb to `README.md`, `docs/index.md` and `docs/about.md` about build process and current development people
+* Added troubleshooting page to documentation, with navigation tab for known dependency issues/errors impacting DrumScript
+* Added issue forms for `bug_report`, `feature_request` and `submit_results` to make giving feedback easier
+* Added PyPI version and monthly download badges to the badge blocks in `README.md` and `docs/index.md`, both served live by [shields.io](https://shields.io) so neither needs a workflow or a manual bump. The version badge tracks the latest published release; the downloads badge reads [pypistats.org](https://pypistats.org/packages/drumscript), which excludes mirror and bot traffic. Mirror-inclusive counts run roughly 2.3x higher, so the mirror-excluded figure was chosen as the honest one.
+* Added additional docstring to lines 23, 39-41 of `drumscript/notation_generator/score_builder.py` to indicate default behaviour for time signature (4/4 is default) and to specify non-zero constraint on quantization_subdivision
+
+**Testing:**
+* Added a transcription regression harness at `tests/regression/`, replacing the manual before/after routine. One file, `test_regression.py`, is both a pytest module and a command-line tool with `run`, `compare` and `verify` subcommands. `run` transcribes every file in the config, verifies the outputs and archives them to a dated folder with a `manifest.json` recording the commit, whether the tree was dirty, per-entry timings and results. `compare` diffs two archives and reports what moved. `verify` re-checks an archived folder against the current expectations.
+* Two kinds of check, driven by one config. A `track` entry has no known-correct transcription, so it is compared against a previous run. A `single_hit` entry is an isolated drum or cymbal recording with a known answer, so it is asserted: a kick sample must classify as `kick`. The `kind` field distinguishes them.
+* Added `tests/regression/songs.example.json`, a committed template documenting the config schema. The working copy, `songs.json`, is gitignored, so nobody's audio file list is published. Without it the pytest tests skip and the CLI prints setup instructions, so a fresh clone is never broken by its absence.
+* Added `scripts/check_harness.sh`, a smoke test for the harness itself. Runs the cheapest checks first, with `--full` and `--prove` for the slower ones. Per-step logs go to `scripts/logs/check_harness/<timestamp>/`.
+* Added `tests/regression/README.md` documenting the config schema, every flag, the exit codes and how to substitute your own audio.
+
+> ### *Changes*
+**Benchmarks:**
+*  Updated the IDMT benchmark dataset layout and documentation, including local dataset storage under `benchmarks/datasets/`, expanded setup guidance, and a template for adding future benchmark datasets. [#321](https://github.com/DrumScript/DrumScript/pull/321)
+* Added MDB-Drums full-kit benchmark support with dataset mappings, documentation, and adapter tests. [#330](https://github.com/DrumScript/DrumScript/pull/330)
+* Added diagnostic modes to `drumscript/utils/research/analyze_idmt_dataset.py`: per-onset pipeline-stage attribution (`--diagnose-kick`), capture of features for all detected onsets, and a threshold grid sweep scoring candidate rules by precision, recall and F-measure (`--sweep-csv`, `--top`).
+<!--* Added `drumscript/utils/research/analyze_mdb_dataset.py`: full-kit stage attribution, per-class confusion reporting, and per-class feature distributions for MDB-Drums.UNCOMMENT WHEN WORK IS DONE-->
+* Added ENST-Drums full-kit benchmark adapter (`drumscript/datasets/enst.py`), registered in `benchmarks/run.py`. Follows the MDB "direct notation equivalent or exclude" mapping; tom labels are left unmapped pending a decision, and are logged rather than silently dropped. First run pending.
+* Added `drumscript/utils/research/analyze_enst_dataset.py`: ENST-Drums equivalent of the MDB diagnostics script (stage attribution, confusion reporting, per-class feature distributions), with `--audio` and `--subset` flags.
+* Expanded benchmark dataset coverage (ENST-Drums, MDB-Drums) building on the IDMT-SMT-Drums V2 foundation shipped in v0.1.6.
+  
+**Classification:**
+* **Kick drum detection threshold recalibrated.** `KICK_LFER_MIN` lowered from `0.32` to `0.08` in `constants.py`. The original value was derived from isolated drum stems; because LFER is a ratio of sub-150Hz energy to total energy, simultaneous hi-hat energy in mixed audio suppresses it, so the threshold sat above the median LFER of a genuine kick (0.213 across 5,387 annotated IDMT onsets). Mean kick F-measure on IDMT-SMT-Drums V2 rose from a rule firing on 27.9% of reference kicks to one firing on 86.3%, with zero-scoring tracks falling from 31/95 to 0/95. On MDB-Drums, mean kick F-measure rose from 0.397 to 0.721. No other instrument class changed on either dataset. Frequency bounds (`KICK_FREQ_MIN`, `KICK_FREQ_MAX`) deliberately left unchanged to avoid widening the kick band into the snare and tom ranges.
+-  *fix in progress* **Known issue:** Tom, ride and crash rules currently produce zero predictions against MDB-Drums (835 ride and 64 tom reference hits, 0 estimates). These are unreachable rules rather than mis-tuned thresholds.  
+* Tidied up branch tree on remote #311
+
+**Benchmarks:**
+* *(breaking, benchmark CLI only)* Each adapter's `DATASET_NAME` now matches the dataset's native unzipped folder name under `benchmarks/datasets/` (`IDMT-SMT-DRUMS-V2`, `MDBDrums-master`, `ENST-drums-public`), so datasets no longer need renaming. The `run.py` subcommands and the `outputs/benchmarks/<dataset>/` archive folders change to match (e.g. `run.py idmt` becomes `run.py IDMT-SMT-DRUMS-V2`). Earlier runs remain under the old folder names.
+* Adapter attribute `CODE_TO_DRUMSCRIPT` renamed to `DRUMSCRIPT_DICT` across the IDMT and MDB adapters, `benchmarks/run.py`, `analyze_mdb_dataset.py` and the adapter contract test.
+* `benchmarks/README.md`, `tests/README.md`, `tests/tree_tests.txt`, the root `README.md` and `tree.txt` updated for the ENST adapter, the renamed dataset folders and the current test counts (142 unit tests).
+
+**Testing:**
+<!--* `scripts/backup.sh` now runs without prompting when `E2E_TIMING`, `E2E_REASON` and `E2E_BACKUP_NUM` are set, so the harness can call it unattended. Any variable left unset still prompts exactly as before, so running it by hand is unchanged. The three original `read -r -p` lines are commented out above the new block rather than deleted, per project convention.-->
+* Renamed the "Regression tests" section to "Behaviour-locking unit tests" in both `tests/README.md` and `docs/development/testing_guidance.md`. Those are ordinary unit tests pinning previously-fixed behaviour, and the old name collided with the new `tests/regression/` harness. Both sections now cross-reference each other so the two cannot be confused.
+* `docs/development/testing_guidance.md`: the Suite Layout tree printed `tests/` twice, nested inside itself, and omitted `test_pdf_time_signature.py`. Replaced with a single correct tree including `regression/`. The Test Pyramid's bottom row, previously an unoccupied "End-to-end" entry, now describes the transcription regression tier.
+* `tests/tree_tests.txt` regenerated for the new folder.
+* Added `tests/unit/test_stem_splitter_cleanup.py` (10 tests) pinning the [#356](https://github.com/DrumScript/DrumScript/issues/356) behaviour: no error path deletes anything DrumScript did not create, including a directory the caller named explicitly; partial and empty Demucs output is still cleaned up; a non-empty folder of the same name is left alone; and Demucs is invoked as a module. Demucs, torch and audio are all stubbed out, so the file needs none of them and runs in the fast loop. Documented in `tests/README.md` and `docs/development/testing_guidance.md` under "Behaviour-locking unit tests". reported by [@TakeoIschiFan]
+* Unit case count updated to 180 across 15 files in `tests/README.md`, `docs/development/testing_guidance.md` and the root `README.md`. Superseded figures commented out rather than deleted, per project convention.
+
+> ### *Fixes*
+   [#356](https://github.com/DrumScript/DrumScript/issues/356). All three error paths in `extract_drum_stem()` ended in `shutil.rmtree(temp_output_dir)`. `temp_output_dir` is the caller's `output_dir`, which defaults to `Path.cwd()`, so `drumscript song.flac --full-song` run from a folder with Demucs unavailable deleted that folder and everything in it. The variable name was left over from an earlier version that genuinely did use `tempfile.mkdtemp()`, and kept implying the directory was disposable long after it had stopped being so. Cleanup now goes through a new `_cleanup_demucs_output()` helper, which removes only `<output_dir>/htdemucs/<input stem>/`, the folder Demucs itself created, then removes the `htdemucs/` parent with `rmdir()` so an empty folder left behind by a failed run is tidied while a non-empty folder of the same name is never touched. The three original `shutil.rmtree` calls are commented out above the replacements rather than deleted, per project convention.
+* **Demucs not found on `PATH` after `uv tool install`.** Demucs is now invoked as `[sys.executable, "-m", "demucs", ...]` rather than the bare `demucs` console script. `uv tool install drumscript` links DrumScript's own entry point but not Demucs's, so the package was installed and importable while the `demucs` command was absent from `PATH`. That is how the reporter in #356 reached the error path at all. A genuinely missing module now produces a targeted "Demucs is not installed" message rather than a raw Python traceback pasted into the error output.
+* warn when an invalid time signature falls back to 4/4 instead of failing silently
+* Root `README.md` benchmarking section: the MDB code block was missing its closing fence, so the results paragraph rendered as code; and the IDMT example placed the global `--limit` flag after the dataset name, which `run.py` rejects.
+* **Python 3.13 not supported.** DrumScript pins `numpy<2`, and numpy 1.x has no cp313 wheels on PyPI. This caused `pip install drumscript` on Python 3.13 to fall back to a source build (which requires a C toolchain most users don't have), producing a confusing `Compiler cc cannot compile programs` error rather than a clear "unsupported Python version" message. `requires-python` lowered from `<3.14` to `<3.13` in `pyproject.toml`. Python 3.13 support planned once DrumScript migrates to `numpy>=2` (see [#303](https://github.com/DrumScript/DrumScript/issues/303)).
+* **E2E runs could fail silently.** `drumscript.main` prints errors but still exits 0, so a failing track did not stop the `&&` chain. In the 19 September before/after comparison, one of the songs failed with `Audio file not found` in *both* halves, so the side-by-side log diff looked clean while that track contributed nothing. `run_e2e.py` checks every audio file exists before running anything (exit 2, nothing run), and afterwards confirms the `.json`, `.pdf` and `.mid` were genuinely written - it never trusts the return code. The underlying exit-code behaviour in `main()` is unchanged and remains open.
+
+> **Known debt being paid down alongside the alpha's fundamental work (model + score generation).** These are treated as bugs to fix, not future features - but they are not allowed to displace the core classification/score-generation work:
+
+* **numpy 2.x migration** - move from the current `numpy<2` pin to `numpy>=2`. This is the blocker for Python 3.13 support: the two are a single linked task (migrate to numpy 2 -> unblocks 3.13 -> add 3.13, and test 3.14, to the CI matrix). Requires cross-checking numba, librosa, and scipy at numpy 2, and fixing any numpy 1.x-only API usage in the codebase (see [#303](https://github.com/DrumScript/DrumScript/issues/303)).
+* **pydub `SyntaxWarning` surfacing in the CLI** - pydub has an upstream `SyntaxWarning` on Python 3.12 that currently leaks to users when running the CLI. To be suppressed via `warnings.filterwarnings` targeting `pydub.utils`.
+
+---
+
+### **[0.2.1] - August 2026**
+>
+
+> **Patch release.** Fixes a broken install experience on Python 3.13.
+>
+> ### *Fixes*
+>
+* `pyproject.toml`: `requires-python` lowered from `<3.14` to `<3.13`. Python 3.13
+  installs of v0.2.0 failed with an obscure `Compiler cc cannot compile programs`
+  error, because pip fell back to building numpy 1.x from source (numpy 1.x has no
+  Python 3.13 wheels). pip now refuses cleanly with a clear message instead.
+  Python 3.13 support is tracked in [#303](https://github.com/DrumScript/DrumScript/issues/303).
+
+---
 
 ### **[0.2.0] - August 2026**
 >

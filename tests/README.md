@@ -1,7 +1,7 @@
 # DrumScript Tests
 
 <!--date_added:weds-29-apr-2026-->
-<!--date_updated:fri-30-oct-2026-->
+<!--date_updated:sat-07-nov-2026-->
 
 This directory contains the pytest test suite for `DrumScript`.
 
@@ -31,6 +31,7 @@ DrumScript/
     │   ├── test_midi_exporter.py           ← 15 tests
     │   ├── test_onset_detector.py          ←  7 tests
     │   ├── test_pdf_time_signature.py      ←  3 tests
+    │   ├── test_stem_splitter_cleanup.py   ←  8 tests (added v0.3.0)
     │   ├── test_stem_splitter_helpers.py   ← 17 tests
     │   ├── test_tempo_detector.py          ←  6 tests
     │   └── test_transcribe.py              ← 20 tests
@@ -47,7 +48,8 @@ DrumScript/
 
 > **Note:** Counts above reflect pytest's collected case count, ie parametrised
 > tests are expanded into their individual cases. <!--Unit total: **138** cases
-> across **11** files.--> Unit total: **142** cases across **12** files. 
+> across **11** files.--> <!--Unit total: **142** cases across **12** files.-->
+> Unit total: **178** cases across **15** files.
 > Integration total: **23** cases across **2** files.
 
 > **`tests/regression/` is not collected as ordinary tests.** It is a
@@ -263,6 +265,15 @@ They shouldn't be removed without a deliberate decision:
   - locks in the v0.2.0 fix where `--drumless` / `--all-stems` / `--mute` were
   only reachable from inside an `except` handler, so they silently did nothing
   on the happy path. Requires Demucs.
+- `test_stem_splitter_cleanup.py` - locks in the fix for
+  [#356](https://github.com/DrumScript/DrumScript/issues/356), where the three
+  error paths in `extract_drum_stem()` called `shutil.rmtree()` on the caller's
+  `output_dir`, which defaults to `Path.cwd()`. Running `--full-song` from a
+  folder with Demucs unavailable therefore deleted that folder. The tests assert
+  that files DrumScript did not create survive every error path, that the leaf
+  folder Demucs *did* create is still cleaned up, and that Demucs is invoked as
+  `<python> -m demucs` rather than a console script on `PATH`. Needs no Demucs,
+  no torch and no audio, so it runs in the fast loop.
 
 ---
 

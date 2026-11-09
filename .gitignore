@@ -187,3 +187,5 @@ create_backing_track.ipynb
 backing_track/
 stems/
 _extract_midi.ipynb
+transcribe.ipynb
+transcription/*

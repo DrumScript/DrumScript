@@ -6,7 +6,6 @@ This job of this script is to orchestrate the End-to-End running of DrumScript m
 import argparse
 from pathlib import Path
 
-from drumscript import export_midi
 from drumscript.audio_processor import audio_loader, onset_detector, tempo_detector
 from drumscript.audio_processor.stem_splitter import extract_drum_stem, separate_audio
 from drumscript.drum_classifier.classify import classify_events, classify_rudiment_events
@@ -46,18 +45,9 @@ def main(
     :type output_format: str, optional
     :param is_rudiment: If True, optimises classification for isolated single beats, rudiments, or paradiddles by applying dynamic transient gating.
     :type is_rudiment: bool, optional
+    :param midi_only: If True, write only the MIDI file and skip the PDF and JSON exports. The pipeline itself is unchanged.
+    :type midi_only: bool, optional
     """
-
-    if midi_only:
-        midi_path = export_midi(
-            input_audio_path,
-            from_audio=True,
-            full_song=full_song,
-            is_rudiment=is_rudiment,
-        )
-        print(f"MIDI-only export complete: {midi_path}")
-        return
-
     print("\n--- Starting DrumScript ---")
     print(f"Target: {input_audio_path}")
 
@@ -186,7 +176,11 @@ def main(
         print(f"...Building Score & JSON: {pdf_path}...")
 
         # score_builder.build_and_export_drum_score(
-        score_builder.build_score(detected_events=detected_events, tempo=tempo, output_path=pdf_path, time_signature=time_signature)
+        # SUPERSEDED: wrote all three outputs unconditionally, so --midi-only had nowhere to act.
+        # score_builder.build_score(detected_events=detected_events, tempo=tempo, output_path=pdf_path, time_signature=time_signature)
+        score_builder.build_score(
+            detected_events=detected_events, tempo=tempo, output_path=pdf_path, time_signature=time_signature, midi_only=midi_only
+        )
 
         print("--- Done! ---\n")
 
@@ -331,11 +325,7 @@ def build_parser() -> argparse.ArgumentParser:
 
     parser.add_argument("--full-song", action="store_true", help="Transcribe the full song (isolates drums first)")
 
-    parser.add_argument(
-        "--midi-only",
-        action="store_true",
-        help="Export MIDI only without generating sheet music or JSON.",
-    )
+    parser.add_argument("--midi-only", action="store_true", help="Export MIDI only, without generating sheet music or JSON.")
 
     # Stem Splitter arguments
     parser.add_argument(

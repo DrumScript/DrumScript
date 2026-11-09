@@ -57,10 +57,12 @@ def export_to_midi(classified_events: list[dict], output_path: str, tempo: float
     midi.instruments.append(drum_track)
 
     # Ensure directory exists when an output directory is specified
+    # SUPERSEDED: os.path.dirname() returns "" for a bare filename such as
+    # "my_drums.mid", and os.makedirs("") raises FileNotFoundError. Kept from #348.
+    # os.makedirs(os.path.dirname(output_path), exist_ok=True)
     output_dir = os.path.dirname(output_path)
     if output_dir:
         os.makedirs(output_dir, exist_ok=True)
-
     midi.write(output_path)
 
     print(f"SUCCESS: MIDI file generated at -> {output_path}")

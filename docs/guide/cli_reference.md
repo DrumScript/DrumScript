@@ -29,7 +29,7 @@ python drumscript/main.py <audio_path> [options]     # only from the repo root
 ### **Transcription Options**
 
 * **`--full-song`**: Instructs the pipeline to isolate the drum stem using Demucs before proceeding with transcription.
-* **`--midi-only`**: Exports only a MIDI file from the input audio, without generating sheet music (PDF) or transcription data (JSON). By default, the MIDI file is saved to `outputs/<audio_stem>.mid`. Combine with `--full-song` to isolate the drum stem first, or `--rudiment` to use rudiment classification.
+* **`--midi-only`**: Exports only a MIDI file from the input audio, without generating sheet music (PDF) or transcription data (JSON). By default, the MIDI file is saved to `outputs/<audio_stem>.mid`. Combine with `--full-song` to isolate the drum stem first, or `--rudiment` to use rudiment classification. The transcription itself is unchanged; only the PDF and JSON writes are skipped.
 
 **Example:**
 

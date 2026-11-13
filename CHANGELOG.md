@@ -1,7 +1,7 @@
 # **Changelog**
 
 <!--date_added:thurs-28-may-2026-->
-<!--date_updated:sat-07-november-2026-->
+<!--date_updated:fri-13-november-2026-->
 
 
 * All notable changes related to the repository and pypi distribution of `DrumScript` will be documented here
@@ -18,31 +18,33 @@
 
 - **[Unreleased](#unreleased)**
 - **[Released](#released)**
-- **[Future releases](#future-releases)**
+- **[Planned](#planned)**
+<!--- **[Future releases](#future-releases)**-->
 
 ---
-
-> ## ***Unreleased***
+## ***Unreleased***
 *[back](#changelog)*
 
 *forthcoming/in progress*
 
 > Items listed below are **currently in development** but **have not been distributed on PyPi**
 
-> ### *Changes*
+<!---*Nothing currently in progress. Items land here as they are merged to `main`.*--->
 
-**Dependencies:**
-* **numpy 2 and Python 3.13 support** ([#303](https://github.com/DrumScript/DrumScript/issues/303)). Needs at least a minor-version bump (0.4.0). `numpy<2` relaxed to `numpy<3` and `requires-python` raised from `<3.13` to `<3.14`. `uv.lock` regenerated with `uv lock --upgrade-package numpy` (numpy 2.0.2 on Python 3.9, 2.2.6 on 3.10, 2.4.6 on 3.11+). `ruff check --select NPY201` and a search for removed numpy 1.x APIs found nothing to change in the code. Python 3.13 added to the CI test matrix and the classifiers, and the supported-range line updated in `README.md`, `docs/index.md` and `docs/about.md`.
-* Added `audioop-lts` as a dependency on Python 3.13 only. `pydub` 0.25.1 (its latest release) imports the `audioop` module, which Python 3.13 removed (PEP 594), so `import drumscript` fails without it. It was already installed indirectly through `librosa`, but DrumScript imports `pydub` directly and should not rely on that.
-* Capped `librosa<1`. On Python 3.12 and 3.13, a plain `pip install` (no lock) resolves librosa 1.0.0 (it requires Python >=3.12 and `numpy>=2.1`, so the old `numpy<2` pin kept it out), which no longer falls back to `audioread`, so loading a missing file raises `soundfile.LibsndfileError` instead of `FileNotFoundError` and `tests/unit/test_audio_loader.py::TestLoadAudio::test_raises_on_missing_file` fails. With librosa 1.0.0 nothing else installs `audioop-lts` on Python 3.13, so the direct dependency above is what keeps `import drumscript` working there.
+* Migration of dependencies to python 3.13
 
 ---
 
-### ***Future releases***
+## ***Planned***
 *[back](#changelog)*
 
-Planned changes
+* *in development* **DrumScript-web:** free-to-use browser-based UI
 
+
+--- 
+
+## **Roadmap**
+see also https://drumscript.github.io/DrumScript/latest/guide/roadmap.html
 <!--#### ***August 2026 and beyond***-->
 
 ##### **[1.0.0] - Beta release - Target: late-2026**

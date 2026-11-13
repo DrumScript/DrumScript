@@ -1,7 +1,7 @@
 # **Changelog**
 
 <!--date_added:thurs-28-may-2026-->
-<!--date_updated:sat-07-november-2026-->
+<!--date_updated:fri-13-november-2026-->
 
 
 * All notable changes related to the repository and pypi distribution of `DrumScript` will be documented here
@@ -18,13 +18,11 @@
 
 - **[Unreleased](#unreleased)**
 - **[Released](#released)**
-- **[Future releases](#future-releases)**
+- **[Planned](#planned)**
+<!--- **[Future releases](#future-releases)**-->
 
 ---
-
-<!--
-
->> ## ***Unreleased***
+## ***Unreleased***
 *[back](#changelog)*
 
 
@@ -33,15 +31,21 @@
 > Items listed below are **currently in development** but **have not been distributed on PyPi**
 
 <!---*Nothing currently in progress. Items land here as they are merged to `main`.*--->
--->
+
+* Migration of dependencies to python 3.13
 
 ---
 
-### ***Future releases***
+## ***Planned***
 *[back](#changelog)*
 
-Planned changes
+* *in development* **DrumScript-web:** free-to-use browser-based UI
 
+
+--- 
+
+## **Roadmap**
+see also https://drumscript.github.io/DrumScript/latest/guide/roadmap.html
 <!--#### ***August 2026 and beyond***-->
 
 ##### **[1.0.0] - Beta release - Target: late-2026**

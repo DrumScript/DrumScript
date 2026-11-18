@@ -1,7 +1,7 @@
 # Testing Guidance
 
 <!--date_created: sat-21-june-2025-->
-<!--date_updated: sat-07-nov-2026-->
+<!--date_updated: weds-18-november-2026-->
 
 DrumScript ships with a [pytest](https://docs.pytest.org/) test suite organised
 around a clear separation between **fast unit tests** and **slower integration
@@ -52,8 +52,20 @@ build_score told it"* - it can never prove the files landed on disk. The fast
 integration tests close that gap, and because they don't need model weights they
 can run in CI on every push.
 
-The slow tier (real Demucs) stays opt-in and is triggered before a release with
-a plain `pytest`.
+The slow tier (real Demucs) stays opt-in and is triggered with a plain `pytest`.
+Run it before a release, and before submitting any pull request that touches Demucs,
+audio loading or stem splitting.
+
+```{admonition} CI does not run the slow tier
+:class: warning
+Both `tests.yml` and `pull_requests.yml` run `pytest -m "not slow"`. Nothing in
+automation ever exercises a real Demucs run. That coverage exists only when a person
+runs it, so a change to the stem-splitting path is unverified until someone does.
+
+This also means a change can *unskip* tests without anyone noticing. Skip guards such as
+`importlib.util.find_spec("demucs")` decide whether a whole module runs, so altering one
+can bring dormant tests to life on contributors' machines while CI stays silent.
+```
 
 ```{admonition} Why this matters
 :class: tip

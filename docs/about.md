@@ -59,4 +59,4 @@ Please also get involved at: **[Discussions](https://github.com/orgs/DrumScript/
 > * `GitActions[Bot]` is used in the automated daily workflow that gathers repository statistics: [**repo-stats**](https://github.com/DrumScript/DrumScript/blob/github-repo-stats/DrumScript/DrumScript/latest-report/report.pdf)
 > * If you feel any part of this hasn't been made clear, then please raise it in the **[Discussions](https://github.com/orgs/DrumScript/discussions)**
 
-> **Python >=3.9, < 3.13**
+> **Python >=3.9, < 3.14**

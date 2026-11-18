@@ -33,6 +33,7 @@
 <!---*Nothing currently in progress. Items land here as they are merged to `main`.*--->
 
 * Migration of dependencies to python 3.13
+* Fixed stem separation's missing-Demucs error message and integration-test skips when Demucs is importable but its console script is not on PATH (#359).
 
 ---
 

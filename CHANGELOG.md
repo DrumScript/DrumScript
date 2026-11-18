@@ -1,7 +1,7 @@
 # **Changelog**
 
 <!--date_added:thurs-28-may-2026-->
-<!--date_updated:fri-13-november-2026-->
+<!--date_updated:weds-18-november-2026-->
 
 
 * All notable changes related to the repository and pypi distribution of `DrumScript` will be documented here
@@ -25,15 +25,28 @@
 ## ***Unreleased***
 *[back](#changelog)*
 
-
 *forthcoming/in progress*
 
 > Items listed below are **currently in development** but **have not been distributed on PyPi**
 
 <!---*Nothing currently in progress. Items land here as they are merged to `main`.*--->
 
-* Migration of dependencies to python 3.13
-* Fixed stem separation's missing-Demucs error message and integration-test skips when Demucs is importable but its console script is not on PATH (#359).
+<!--* Migration of dependencies to python 3.13-->
+
+> ### *Changes*
+
+**Dependencies:**
+* **Python 3.13 support, via the numpy 2.x migration** ([#303](https://github.com/DrumScript/DrumScript/issues/303), [#355](https://github.com/DrumScript/DrumScript/pull/355) by [@yucheng-du](https://github.com/yucheng-du)). `numpy<2` relaxed to `numpy<3`, and `requires-python` raised from `<3.13` to `<3.14`. numpy 1.x has no cp313 wheels on PyPI, which is why the two were always a single linked task. No source changes were needed for numpy 2: `ruff check --select NPY201` and a search for removed numpy 1.x APIs found nothing to fix.
+* Added `audioop-lts` as a dependency on Python 3.13 and above only. Python 3.13 removed the stdlib `audioop` module (PEP 594), which `pydub` imports at import time, so `import drumscript` fails on 3.13 without it. It does arrive indirectly through `librosa`, but DrumScript imports `pydub` directly and should declare what it needs rather than rely on a transitive dependency.
+* `librosa` capped to `<1`. librosa 1.0 removed the `audioread` fallback, so a missing file raises `soundfile.LibsndfileError` rather than `FileNotFoundError`, which `tests/unit/test_audio_loader.py::TestLoadAudio::test_raises_on_missing_file` asserts. This is a holding measure rather than the intended end state ([#365](https://github.com/DrumScript/DrumScript/issues/365)). On Python 3.13 the cap also keeps `audioread`, `standard-aifc`, `standard-chunk` and `standard-sunau` in the dependency tree, all PEP 594 "dead battery" redistributions.
+* `uv.lock` regenerated.
+
+**CI and documentation:**
+* Python 3.13 added to the test matrix in `tests.yml` and to the classifiers in `pyproject.toml`. The supported-range line updated in `README.md`, `docs/index.md` and `docs/about.md`, and the `audioread` row in `docs/guide/troubleshooting.md` rewritten to explain the 3.13 backport packages.
+* `tests.yml` pinned to `ubuntu-24.04`. The `ubuntu-latest` label moved to Ubuntu 26.04 in October 2026, and `actions/python-versions` has no 26.04 build for Python 3.9 because it is end of life, so the 3.9 matrix entry could no longer start. 3.10 through 3.13 all have 26.04 builds, so this pin comes out as soon as 3.9 is dropped ([#364](https://github.com/DrumScript/DrumScript/issues/364)).
+
+> ### *Deprecated*
+* **Python 3.9 support will be removed in a future release** ([#364](https://github.com/DrumScript/DrumScript/issues/364)). 3.9 reached end of life in October 2025. Supporting it caps numpy at 2.0 (2.1 requires 3.10, 2.3 requires 3.11, 2.5 requires 3.12), it is the only version where the Demucs integration tests fail, it requires a lameenc downgrade because the locked 1.8.2 has no macOS wheel for 3.9, and it now forces the CI runner to stay on an older Ubuntu image.
 
 ---
 
@@ -55,7 +68,9 @@ see also https://drumscript.github.io/DrumScript/latest/guide/roadmap.html
 - `output_midi`, `output_json`, `output_xml` flags to be added to `transcribe()` for multi-format export
 - Code-to-DrumScript label mapping expanded beyond `KD`/`SD`/`HH` to cover full-kit classes (toms, crash, ride)
 - Repository statistics badge (shields.io endpoint) for README and docs homepage: extend `repo-stats.yml` to write a small JSON (`schemaVersion`, `label`, `message`, `color`) to the `github-repo-stats` branch on each daily run, so shields.io can render live view/clone counts rather than a static link #296
+<!-- SUPERSEDED: Python 3.13 support added in Unreleased (#303).
 - Check compatibility for Python 3.13 (#299)
+-->
 <!-- SUPERSEDED: shipped ahead of 1.0.0 as `midi_only` on `transcribe()`, see the Unreleased
      section above. The remaining `output_midi`/`output_json`/`output_xml` work above still stands.
 - Added `export_midi()` support for transcribing audio files directly to MIDI without generating PDF or JSON output, along with the CLI `--midi-only` flag.

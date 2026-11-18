@@ -8,7 +8,7 @@ version = "0.3.0"
 description = "A Python package to convert drum audio to sheet music."
 license = "Apache-2.0"
 readme = "README.md"
-requires-python = ">=3.9,<3.13"
+requires-python = ">=3.9,<3.14"
 authors = [
   { name="drumscript-admin", email="hello.drumscript@gmail.com" },
 ]
@@ -21,6 +21,7 @@ classifiers = [
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
     "Operating System :: OS Independent",
     "Development Status :: 3 - Alpha",
     "Intended Audience :: End Users/Desktop",
@@ -40,12 +41,16 @@ classifiers = [
 ]
 
 dependencies = [
+    # pydub imports audioop, which Python 3.13 removed (PEP 594); audioop-lts provides it.
+    "audioop-lts; python_version >= '3.13'",
     "demucs",
-    "librosa",
+    # librosa 1.0 no longer falls back to audioread, so a missing file raises
+    # soundfile.LibsndfileError instead of FileNotFoundError (test_raises_on_missing_file).
+    "librosa<1",
     "matplotlib",
     "music21",
     "numba",
-    "numpy<2",
+    "numpy<3",
     "pretty-midi",
     "pydub",
     "reportlab",
@@ -54,7 +59,8 @@ dependencies = [
     "torch>=2.4,<2.9",
     "torchaudio>=2.4,<2.9",
 ]
-# Note: torch only compatible with Python ABI tags cp39-cp312. Not yet compatible with 3.13.
+# Note: on Python 3.13, torch and torchaudio have cp313 wheels from 2.6 within this range
+# (torch 2.5 shipped a Linux x86_64 cp313 wheel only; torchaudio 2.4-2.5 none).
 
 [project.urls]
 "Homepage" = "https://drumscript.github.io/DrumScript/"

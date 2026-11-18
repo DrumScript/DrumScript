@@ -1,9 +1,9 @@
 # Installation
 
-<!--date_updated:sun-16-august-2026-->
+<!--date_updated:weds-18-november-2026-->
 
 ## Prerequisites
-* **Python:** 3.9 – 3.13 (`torch` is not yet compatible with 3.14)
+* **Python:** 3.9 – 3.13 (3.14 untested: DrumScript pins `torch<2.9`, and torch ships 3.14 wheels only from 2.9)
 * **System Tools:** `FFmpeg` (for users uploading `.mp3`)
 
 ```bash

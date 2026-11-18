@@ -25,7 +25,6 @@
 ## ***Unreleased***
 *[back](#changelog)*
 
-
 *forthcoming/in progress*
 
 > Items listed below are **currently in development** but **have not been distributed on PyPi**
@@ -54,7 +53,9 @@ see also https://drumscript.github.io/DrumScript/latest/guide/roadmap.html
 - `output_midi`, `output_json`, `output_xml` flags to be added to `transcribe()` for multi-format export
 - Code-to-DrumScript label mapping expanded beyond `KD`/`SD`/`HH` to cover full-kit classes (toms, crash, ride)
 - Repository statistics badge (shields.io endpoint) for README and docs homepage: extend `repo-stats.yml` to write a small JSON (`schemaVersion`, `label`, `message`, `color`) to the `github-repo-stats` branch on each daily run, so shields.io can render live view/clone counts rather than a static link #296
+<!-- SUPERSEDED: Python 3.13 support added in Unreleased (#303).
 - Check compatibility for Python 3.13 (#299)
+-->
 <!-- SUPERSEDED: shipped ahead of 1.0.0 as `midi_only` on `transcribe()`, see the Unreleased
      section above. The remaining `output_midi`/`output_json`/`output_xml` work above still stands.
 - Added `export_midi()` support for transcribing audio files directly to MIDI without generating PDF or JSON output, along with the CLI `--midi-only` flag.

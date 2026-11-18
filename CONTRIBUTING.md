@@ -1,7 +1,7 @@
 # Contributing to `DrumScript`
 
 <!--date_added:sun-10-may-2026->
-<!--date_updated:weds-25-aug-2026-->
+<!--date_updated:weds-18-november-2026-->
 
 > This is a **summarised version** 
 > **Full contributor guide:** [docs/development/contributor_guidance.md](docs/development/contributor_guidance.md)
@@ -41,6 +41,44 @@ pytest -m "not slow"
 
 Please see Issues tab for full list of development opportunities; or feel free to add your own.
 
+---
+
+## Before you submit a pull request
+
+Please run the test suite and the linter locally, and tell us what you ran. The
+[pull request template](.github/PULL_REQUEST_TEMPLATE.md) asks for this, and we do read it.
+
+```bash
+uv sync --all-extras
+pytest                                    # the whole suite, including the slow Demucs tier
+ruff check . && ruff format --check .
+```
+
+`pytest -m "not slow"` is fine for a quick loop, but it skips every test that needs Demucs,
+which is a large part of what DrumScript does. CI runs the fast tier only, so if you have not
+run the slow tier, nobody has.
+
+Please also:
+
+* Say which Python version and operating system you tested on.
+* Say plainly if you could not run something, and why. That is genuinely more useful than silence,
+  and it is never held against you.
+* Add a changelog entry under `[Unreleased]`.
+* Strip output from any notebooks (`nbstripout`).
+
+## How pull requests are reviewed
+
+Every pull request is read line by line before it is merged, and the maintainer runs it locally
+as well. This applies to everyone, maintainers included. It is not a comment on any contributor.
+
+Changes to these get read with particular care, because a mistake there is expensive to undo:
+
+* `.github/workflows/` - anything that runs in CI
+* `uv.lock` and the dependency lists in `pyproject.toml` - anything that changes what gets installed
+
+Expect questions. They are about understanding the change, not about doubting you.
+
+---
 
 ## Similar Projects
 

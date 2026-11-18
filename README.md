@@ -3,7 +3,7 @@
 <!--date_created: sun-15-june-2025-->
 <!--date_edited: sat-07-november-2026--->
 
-> **Python >=3.9, < 3.13**
+> **Python >=3.9, < 3.14**
 >
 **[drumscript.github.io](https://drumscript.github.io/DrumScript/)**
 >
@@ -547,7 +547,7 @@ These warnings come from libraries that DrumScript depends on. They do **not** a
 |-|-|-|-|-|
 |`libmpg123` -- ID3 comment warning|`src/libmpg123/id3.c:process_comment():587] error: No comment text / valid description`?|Loading `.wav` or `.mp3` files that contain ID3 metadata tags with an empty or malformed comment field. Common with files converted from MP3, or exported from certain DAWs.|None. Audio data is loaded correctly.|None required. The message is cosmetic. Warning suppression is tracked as a future change.|
 | `pydub` -- SyntaxWarning on import|`SyntaxWarning: invalid escape sequence`|On first import of `pydub`, particularly on Python 3.12+. The warning comes from unescaped backslashes in `pydub`'s source code.|`pydub` (v0.25.1). This is an [upstream issue](https://github.com/jiaaro/pydub/issues) in the `pydub` package itself. None. All `pydub` functionality (MP3 export, stem mixing) works correctly.|DrumScript will add warning suppression via `warnings.filterwarnings` in `main.py`; tracked under Unreleased in the changelog. If you see it in a notebook or standalone script, you can suppress it manually with `warnings.filterwarnings("ignore", category=SyntaxWarning, module="pydub")`|
-|`audioread` / `aifc` / `audioop` / `sunau` -- DeprecationWarnings|`DeprecationWarning: 'aifc' is deprecated`; `DeprecationWarning: 'audioop' is deprecated`; `DeprecationWarning: 'sunau' is deprecated` |On Python 3.12+ when `librosa` loads audio via `audioread`. These standard library modules were deprecated in Python 3.11 and removed in Python 3.13. `audioread` (used by `librosa`).|None on Python 3.9--3.12. Python 3.13 removed `audioop` from the standard library, which `pydub` imports, so DrumScript pins `requires-python < 3.13` for now. Tracked under the Python 3.13 migration ([#303](https://github.com/DrumScript/DrumScript/issues/303)).|DrumScript's `pyproject.toml` suppresses these warnings in pytest.|
+|`audioread` / `aifc` / `audioop` / `sunau` -- DeprecationWarnings|`DeprecationWarning: 'aifc' is deprecated`; `DeprecationWarning: 'audioop' is deprecated`; `DeprecationWarning: 'sunau' is deprecated`. On Python 3.13: `DeprecationWarning: aifc was removed in Python 3.13. Please be aware that you are currently NOT using standard 'aifc', but instead a separately installed 'standard-aifc'.` (and the same for `sunau`)|On Python 3.12+ when `librosa` loads audio via `audioread`. These standard library modules were deprecated in Python 3.11 and removed in Python 3.13. `audioread` (used by `librosa`).|None. Python 3.13 removed the `aifc`, `sunau` and `audioop` modules from the standard library. On 3.13, PyPI packages provide the same modules instead: `standard-aifc` and `standard-sunau` (required by `librosa` and `audioread`) and `audioop-lts` (required by `standard-aifc` and `standard-sunau`, and declared by DrumScript too because `pydub` imports `audioop`).|DrumScript's `pyproject.toml` suppresses these warnings in pytest.|
 |-|-|-|-|-|
 
 ---

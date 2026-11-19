@@ -274,3 +274,12 @@ class TestSeparateAudioDemucsErrors:
 
         assert "model download failed" in str(error.value)
         assert_user_files_survived(working_dir)
+
+
+    def test_missing_python_interpreter_is_reported_clearly(self, working_dir):
+        """An unavailable interpreter is not misdiagnosed as a missing Demucs CLI."""
+        with patch("subprocess.run", side_effect=FileNotFoundError("python executable missing")):
+            with pytest.raises(RuntimeError, match="Unable to start the Python interpreter"):
+                stem_splitter.separate_audio(str(working_dir / "song.flac"))
+
+        assert_user_files_survived(working_dir)

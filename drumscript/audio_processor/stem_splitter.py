@@ -198,10 +198,16 @@ def separate_audio(
         shutil.rmtree(temp_demucs_dir, ignore_errors=True)
         # Surface BOTH stdout and stderr. Demucs writes the progress bar to stderr,
         # so the real error often sits at the END of stderr, not the start.
-        # --- LEGACY: raise RuntimeError(f"Demucs failed: {e.stderr}")
-        raise RuntimeError(f"Demucs failed (exit code {e.returncode}).\n--- STDOUT ---\n{e.stdout}\n--- STDERR ---\n{e.stderr}")
-    except FileNotFoundError:
-        raise FileNotFoundError("The 'demucs' command was not found. Please install it.")
+        # A missing Python module causes a non-zero exit, not FileNotFoundError.
+        if "No module named demucs" in (e.stderr or ""):
+            raise RuntimeError(
+                "Demucs is not installed in this environment, so stem separation cannot run. "
+                "Demucs is a DrumScript dependency; the installation may be incomplete. "
+                "Try 'pip install --force-reinstall drumscript'."
+            ) from e
+        raise RuntimeError(f"Demucs failed (exit code {e.returncode}).\n--- STDOUT ---\n{e.stdout}\n--- STDERR ---\n{e.stderr}") from e
+    except FileNotFoundError as e:
+        raise RuntimeError("Unable to start the Python interpreter to run Demucs.") from e
 
     print(f"Demucs raw separation finished in {((time.monotonic() - start_time) / 60):.2f} minutes.")
 

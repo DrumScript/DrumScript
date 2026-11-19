@@ -20,7 +20,7 @@ but **not** ``slow`` — they finish in seconds and therefore still run under
 ``_TranscribeResult`` change genuine end-to-end coverage in CI.
 
 ``TestCliStemFlagsReal`` **does** invoke Demucs and is marked ``slow`` as well,
-plus skipped entirely when the ``demucs`` CLI is not on PATH.
+plus skipped entirely when the ``demucs`` Python module is not importable.
 
 Why this file exists
 --------------------
@@ -41,7 +41,7 @@ How to run
     pytest -m integration                                 # everything here
 """
 
-import shutil
+import importlib.util
 import warnings
 from pathlib import Path
 
@@ -52,7 +52,7 @@ import soundfile as sf
 
 import drumscript as ds
 
-DEMUCS_AVAILABLE = shutil.which("demucs") is not None
+DEMUCS_AVAILABLE = importlib.util.find_spec("demucs") is not None
 
 # Applies to every test in the module. Individual classes add `slow` on top
 # where they actually need Demucs.
@@ -261,7 +261,7 @@ class TestBuildScoreRealOutputs:
 
 
 @pytest.mark.slow
-@pytest.mark.skipif(not DEMUCS_AVAILABLE, reason="demucs CLI not found on PATH")
+@pytest.mark.skipif(not DEMUCS_AVAILABLE, reason="demucs Python module is not importable")
 class TestCliStemFlagsReal:
     """The v0.2.0 fix: stem flags must work on the happy path, not only after an error.
 

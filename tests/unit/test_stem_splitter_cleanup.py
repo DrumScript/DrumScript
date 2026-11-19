@@ -241,3 +241,44 @@ class TestDemucsIsInvokedAsAModule:
 
         # Assert
         assert_user_files_survived(working_dir)
+
+
+class TestSeparateAudioDemucsErrors:
+    """Missing Demucs should be diagnosed without a raw module traceback."""
+
+    def test_missing_module_gives_an_actionable_message(self, working_dir):
+        """Separate-audio users see the same install guidance as the extraction path."""
+        failure = subprocess.CalledProcessError(
+            returncode=1,
+            cmd=["python", "-m", "demucs"],
+            output="",
+            stderr="/usr/bin/python: No module named demucs",
+        )
+        with patch("subprocess.run", side_effect=failure):
+            with pytest.raises(RuntimeError, match="Demucs is not installed"):
+                stem_splitter.separate_audio(str(working_dir / "song.flac"))
+
+        assert_user_files_survived(working_dir)
+
+    def test_other_demucs_failure_keeps_diagnostics(self, working_dir):
+        """Unrelated Demucs errors retain the exit code and stderr for debugging."""
+        failure = subprocess.CalledProcessError(
+            returncode=7,
+            cmd=["python", "-m", "demucs"],
+            output="progress",
+            stderr="model download failed",
+        )
+        with patch("subprocess.run", side_effect=failure):
+            with pytest.raises(RuntimeError, match=r"Demucs failed \(exit code 7\)") as error:
+                stem_splitter.separate_audio(str(working_dir / "song.flac"))
+
+        assert "model download failed" in str(error.value)
+        assert_user_files_survived(working_dir)
+
+    def test_missing_python_interpreter_is_reported_clearly(self, working_dir):
+        """An unavailable interpreter is not misdiagnosed as a missing Demucs CLI."""
+        with patch("subprocess.run", side_effect=FileNotFoundError("python executable missing")):
+            with pytest.raises(RuntimeError, match="Unable to start the Python interpreter"):
+                stem_splitter.separate_audio(str(working_dir / "song.flac"))
+
+        assert_user_files_survived(working_dir)

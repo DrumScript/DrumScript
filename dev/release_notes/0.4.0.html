@@ -2,7 +2,7 @@
 <html lang="en" data-accent-color="violet" data-content_root="../">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"><title>vX.Y.Z (Release Type) - DrumScript 0.3.0 documentation</title><link rel="author" title="About these documents" href="../about.html" /><link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Changelog" href="../changelog.html" /><link rel="prev" title="DrumScript v0.3.0" href="0.3.0.html" /><script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"><title>DrumScript v0.4.0 - DrumScript 0.3.0 documentation</title><link rel="author" title="About these documents" href="../about.html" /><link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Changelog" href="../changelog.html" /><link rel="prev" title="DrumScript v0.3.0" href="0.3.0.html" /><script>
     function setColorMode(t){let e=document.documentElement;e.setAttribute("data-color-mode",t);let a=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches,s=t;"auto"===t&&(s=a?"dark":"light"),"light"===s?(e.classList.remove("dark"),e.classList.add("light")):(e.classList.remove("light"),e.classList.add("dark"))}
     setColorMode(localStorage._theme||"auto");
   </script><link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=e1a1ceaf" />
@@ -20,7 +20,7 @@
 }
 </style>
     
-  <meta property="og:type" content="website"/><meta property="og:title" content="vX.Y.Z (Release Type)"/>
+  <meta property="og:type" content="website"/><meta property="og:title" content="DrumScript v0.4.0"/>
     <meta name="twitter:card" content="summary"/>
   </head>
 <body><div class="announcement">
@@ -198,7 +198,7 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l2"><a class="reference internal" href="0.2.0.html">v0.2.0 (Alpha)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="0.2.1.html">DrumScript v0.2.1 - Python 3.13 install fix</a></li>
 <li class="toctree-l2"><a class="reference internal" href="0.3.0.html">DrumScript v0.3.0</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">vX.Y.Z (Release Type)</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">DrumScript v0.4.0</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../changelog.html"><strong>Changelog</strong></a></li>
@@ -246,11 +246,11 @@ data-aria-dark="Switch to auto color mode">
     </button>
     <div class="sy-scrollbar sy-rside-inner px-6 xl:top-16 xl:sticky xl:pl-0 pt-6 pb-4"><div class="localtoc"><h3>On this page</h3><ul>
 <li><a class="reference internal" href="#highlights">Highlights</a></li>
-<li><a class="reference internal" href="#breaking-changes">Breaking Changes</a></li>
-<li><a class="reference internal" href="#new-features">New Features</a></li>
-<li><a class="reference internal" href="#fixes-improvements">Fixes &amp; Improvements</a></li>
+<li><a class="reference internal" href="#deprecated">Deprecated</a></li>
 <li><a class="reference internal" href="#dependency-updates">Dependency Updates</a></li>
-<li><a class="reference internal" href="#contributors">&#128101; Contributors</a></li>
+<li><a class="reference internal" href="#fixes-improvements">Fixes &amp; Improvements</a></li>
+<li><a class="reference internal" href="#upgrading">Upgrading</a></li>
+<li><a class="reference internal" href="#contributors">Contributors</a></li>
 </ul>
 </div><a class="js-repo-stats repo-stats flex items-center" href="https://github.com/DrumScript/DrumScript"
   data-type="github" data-user="DrumScript" data-repo="DrumScript">
@@ -295,7 +295,7 @@ data-aria-dark="Switch to auto color mode">
         <span>/</span>
         <meta itemprop="position" content="2" />
       </li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-        <strong itemprop="name">vX.Y.Z (Release Type)</strong>
+        <strong itemprop="name">DrumScript v0.4.0</strong>
         <meta itemprop="position" content="3" />
       </li></ol>
     <div class="xl:hidden ml-1">
@@ -343,54 +343,116 @@ data-aria-dark="Switch to auto color mode">
     </div>
   </div>
 </div><article class="yue" role="main">
-          <section id="vx-y-z-release-type">
-<h1>vX.Y.Z (Release Type)<a class="headerlink" href="#vx-y-z-release-type" title="Link to this heading">#</a></h1>
-<!--REMOVE THE FOLLOWING BEFORE COMMITTING ============================== -->
-<!--Use this when publshing a new release of drumscript-->
-<!--Versions should be Major (1.Y.Z), Minor (X.1.Z), or Patch (X.Y.1) -->
-<!--Release Type should be one of `Alpha`, `Beta` -->
-<!--Only Stable releases should be Major. Any backward-compatible feature integrations should be Minor. Patch is for back-ward compatible bug fixes>
----
-<!--===================================================================== -->
-<p><em>Release Date: YYYY-MM-DD</em></p>
+          <section id="drumscript-v0-4-0">
+<h1>DrumScript v0.4.0<a class="headerlink" href="#drumscript-v0-4-0" title="Link to this heading">#</a></h1>
+<!--date_added:sat-21-november-2026-->
+<p><em>Release Date: 21-Nov-26</em></p>
+<blockquote>
+<div><p><strong>Minor-version bump.</strong> A compatibility release. DrumScript now installs and
+runs on Python 3.13, and Python 3.9 support is deprecated.</p>
+</div></blockquote>
 <section id="highlights">
 <h2>Highlights<a class="headerlink" href="#highlights" title="Link to this heading">#</a></h2>
-<ul class="simple">
-<li><p><strong>Major Feature 1:</strong> Description…</p></li>
-<li><p><strong>Major Feature 2:</strong> Description…</p></li>
-</ul>
+<p><strong>Python 3.13 support.</strong> DrumScript installs and runs on Python 3.13. This was
+the most requested change on the tracker and had been blocked since v0.2.1,
+which declared <code class="docutils literal notranslate"><span class="pre">requires-python</span> <span class="pre">=</span> <span class="pre">&quot;&lt;3.13&quot;</span></code> so that pip would refuse the install
+cleanly rather than fail with a confusing numpy build error.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span data-line="1">python3.13<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>drumscript
+</span><span data-line="2">drumscript<span class="w"> </span><span class="s2">&quot;drum_loop.wav&quot;</span>
+</span></pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">requires-python</span></code> is now <code class="docutils literal notranslate"><span class="pre">&gt;=3.9,&lt;3.14</span></code>. Python 3.14 is untested rather than
+blocked on purpose: DrumScript pins <code class="docutils literal notranslate"><span class="pre">torch&lt;2.9</span></code>, and torch ships 3.14 wheels
+only from 2.9.</p>
+<p><strong>The numpy 2.x migration that unblocked it.</strong> <code class="docutils literal notranslate"><span class="pre">numpy&lt;2</span></code> is relaxed to
+<code class="docutils literal notranslate"><span class="pre">numpy&lt;3</span></code>. The two were always one task rather than two, because numpy 1.x has
+no cp313 wheels on PyPI, so a 3.13 install could only ever have built numpy
+from source.</p>
+<p>No source changes were needed for numpy 2 itself. <code class="docutils literal notranslate"><span class="pre">ruff</span> <span class="pre">check</span> <span class="pre">--select</span> <span class="pre">NPY201</span></code>
+and a search for removed numpy 1.x APIs found nothing in the package to fix.</p>
+<p><strong>No API changes.</strong> <code class="docutils literal notranslate"><span class="pre">transcribe()</span></code>, <code class="docutils literal notranslate"><span class="pre">export_midi()</span></code>, <code class="docutils literal notranslate"><span class="pre">build_score()</span></code> and every
+CLI flag behave exactly as they did in v0.3.0. If you are on Python 3.9 to
+3.12, this release changes nothing you can observe.</p>
 </section>
-<section id="breaking-changes">
-<h2>Breaking Changes<a class="headerlink" href="#breaking-changes" title="Link to this heading">#</a></h2>
+<section id="deprecated">
+<h2>Deprecated<a class="headerlink" href="#deprecated" title="Link to this heading">#</a></h2>
+<p><strong>Python 3.9 support will be removed in a future release.</strong> Python 3.9 reached
+end of life in October 2025. Nothing breaks in v0.4.0, and the 3.9 classifier
+and test-matrix entry both remain, but the removal is now announced and tracked
+in <a class="reference external" href="https://github.com/DrumScript/DrumScript/issues/364">#364</a>.</p>
+<p>The reasons, if you are curious:</p>
 <ul class="simple">
-<li><p><strong>API Change:</strong> …</p></li>
-<li><p><strong>Dependency Update:</strong> …</p></li>
+<li><p>It caps numpy at 2.0. numpy 2.1 requires 3.10, 2.3 requires 3.11, and 2.5
+requires 3.12.</p></li>
+<li><p>It is the only version where the Demucs integration tests fail.</p></li>
+<li><p>It forces a <code class="docutils literal notranslate"><span class="pre">lameenc</span></code> downgrade, because the locked 1.8.2 has no macOS wheel
+for 3.9.</p></li>
+<li><p>It now holds the CI runner on an older Ubuntu image, below.</p></li>
 </ul>
-</section>
-<section id="new-features">
-<h2>New Features<a class="headerlink" href="#new-features" title="Link to this heading">#</a></h2>
-<ul class="simple">
-<li><p>Added support for…</p></li>
-<li><p>New flag <code class="docutils literal notranslate"><span class="pre">--example</span></code> added to CLI…</p></li>
-</ul>
-</section>
-<section id="fixes-improvements">
-<h2>Fixes &amp; Improvements<a class="headerlink" href="#fixes-improvements" title="Link to this heading">#</a></h2>
-<ul class="simple">
-<li><p>Fixed issue where…</p></li>
-<li><p>Improved performance of…</p></li>
-</ul>
+<p>If you are on 3.9, moving to 3.10 or later at your convenience is the
+recommendation. There is no deadline yet.</p>
 </section>
 <section id="dependency-updates">
 <h2>Dependency Updates<a class="headerlink" href="#dependency-updates" title="Link to this heading">#</a></h2>
 <ul class="simple">
-<li><p>Updated <code class="docutils literal notranslate"><span class="pre">numpy</span></code> to v2.0…</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">numpy&lt;2</span></code> relaxed to <code class="docutils literal notranslate"><span class="pre">numpy&lt;3</span></code>. There is no lower bound, so numpy 1.x still
+satisfies the constraint on Python 3.12 and below. Nothing is forced on an
+existing install.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">audioop-lts</span></code> added, on Python 3.13 and above only. Python 3.13 removed the
+stdlib <code class="docutils literal notranslate"><span class="pre">audioop</span></code> module under PEP 594, and <code class="docutils literal notranslate"><span class="pre">pydub</span></code> imports it at import time,
+so <code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">drumscript</span></code> fails on 3.13 without it. It does arrive indirectly
+through <code class="docutils literal notranslate"><span class="pre">librosa</span></code>, but DrumScript imports <code class="docutils literal notranslate"><span class="pre">pydub</span></code> directly and should declare
+what it needs rather than lean on a transitive dependency.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">librosa</span></code> capped to <code class="docutils literal notranslate"><span class="pre">&lt;1</span></code>. librosa 1.0 removed the <code class="docutils literal notranslate"><span class="pre">audioread</span></code> fallback, which
+changed the error for a missing file from <code class="docutils literal notranslate"><span class="pre">FileNotFoundError</span></code> to
+<code class="docutils literal notranslate"><span class="pre">soundfile.LibsndfileError</span></code>. <code class="docutils literal notranslate"><span class="pre">load_audio()</span></code> documents the former, so the cap
+holds the documented behaviour steady while the contract is fixed properly in
+<a class="reference external" href="https://github.com/DrumScript/DrumScript/issues/365">#365</a>. This is a holding
+measure, not the intended end state.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">uv.lock</span></code> regenerated.</p></li>
+</ul>
+<p>On Python 3.13 the librosa cap also keeps <code class="docutils literal notranslate"><span class="pre">audioread</span></code>, <code class="docutils literal notranslate"><span class="pre">standard-aifc</span></code>,
+<code class="docutils literal notranslate"><span class="pre">standard-chunk</span></code> and <code class="docutils literal notranslate"><span class="pre">standard-sunau</span></code> in the dependency tree. All four are PEP
+594 “dead battery” redistributions of modules the stdlib dropped. They are
+harmless, and lifting the cap in a later release removes them.</p>
+</section>
+<section id="fixes-improvements">
+<h2>Fixes &amp; Improvements<a class="headerlink" href="#fixes-improvements" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Python 3.13 added to the test matrix in <code class="docutils literal notranslate"><span class="pre">tests.yml</span></code> and to the classifiers in
+<code class="docutils literal notranslate"><span class="pre">pyproject.toml</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">tests.yml</span></code> pinned to <code class="docutils literal notranslate"><span class="pre">ubuntu-24.04</span></code>. The <code class="docutils literal notranslate"><span class="pre">ubuntu-latest</span></code> label moved to
+Ubuntu 26.04 in October 2026, and <code class="docutils literal notranslate"><span class="pre">actions/python-versions</span></code> has no 26.04 build
+for Python 3.9 because it is end of life, so the 3.9 matrix entry could no
+longer start at all. Python 3.10 through 3.13 all have 26.04 builds, so this
+pin comes out as soon as 3.9 is dropped.</p></li>
+<li><p>The supported-range line corrected in <code class="docutils literal notranslate"><span class="pre">README.md</span></code>, <code class="docutils literal notranslate"><span class="pre">docs/index.md</span></code>,
+<code class="docutils literal notranslate"><span class="pre">docs/about.md</span></code> and <code class="docutils literal notranslate"><span class="pre">docs/guide/installation.md</span></code>.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">audioread</span></code> row in <a class="reference internal" href="../guide/troubleshooting.html"><span class="std std-doc">Troubleshooting</span></a> rewritten
+to explain the 3.13 backport packages, so the warning is recognisable rather
+than alarming.</p></li>
 </ul>
 </section>
+<section id="upgrading">
+<h2>Upgrading<a class="headerlink" href="#upgrading" title="Link to this heading">#</a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span data-line="1">pip<span class="w"> </span>install<span class="w"> </span>--upgrade<span class="w"> </span>drumscript
+</span></pre></div>
+</div>
+<p>No breaking changes, and no code to change. Python 3.9 through 3.13 are
+supported.</p>
+<p>If you were previously blocked on 3.13, a fresh install is all that is needed:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span data-line="1">pip<span class="w"> </span>install<span class="w"> </span>drumscript
+</span></pre></div>
+</div>
+</section>
 <section id="contributors">
-<h2>👥 Contributors<a class="headerlink" href="#contributors" title="Link to this heading">#</a></h2>
+<h2>Contributors<a class="headerlink" href="#contributors" title="Link to this heading">#</a></h2>
 <ul class="simple">
-<li><p>&#64;Username</p></li>
+<li><p><a class="reference external" href="https://github.com/victoria-mckinney">&#64;victoria-mckinney</a></p></li>
+<li><p><a class="reference external" href="https://github.com/yucheng-du">&#64;yucheng-du</a> - first contribution. The
+Python 3.13 and numpy 2.x migration in
+<a class="reference external" href="https://github.com/DrumScript/DrumScript/pull/355">#355</a>, closing
+<a class="reference external" href="https://github.com/DrumScript/DrumScript/issues/303">#303</a>.</p></li>
 </ul>
 </section>
 </section>

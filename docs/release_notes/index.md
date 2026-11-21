@@ -1,7 +1,8 @@
 # Release Notes
 
 <!--date_updated:tues-04-aug-2026-->
-<!--date_updated:sat-21-nov-2026-->
+<!--date_updated:tues-03-nov-2026-->
+<!--date_updated:sat-21-november-2026-->
 
 This page details the history of changes, improvements, and bug fixes in `DrumScript`.
 

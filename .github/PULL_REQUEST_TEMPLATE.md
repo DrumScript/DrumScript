@@ -14,15 +14,24 @@ Link to the related issue if there is one: Closes #___
 
 ## How has this been tested?
 
-Describe the tests you ran or added. Include the pytest command you used.
+Describe the tests you ran or added, and include the commands you used.
 
 ```bash
 pytest tests/unit/test_...
 ```
 
+* **Python version and OS:**
+* **Anything you could not run, and why:**
+
+Saying plainly that you could not run something is more useful than leaving it
+unsaid, and it is never held against you.
+
 ## Checklist
 
-- [ ] All tests pass locally: `pytest -m "not slow"`
+- [ ] Fast tests pass locally: `pytest -m "not slow"`
+- [ ] **If this touches Demucs, audio loading or stem splitting:** the full suite passes
+  locally with a plain `pytest`, no marker filter. CI does not run these, so if you have
+  not run them, nobody has.
 - [ ] Code is formatted: `uv run ruff format .`
 - [ ] Linter is clean: `uv run ruff check .`
 - [ ] I have added or updated tests to cover my changes (where applicable).

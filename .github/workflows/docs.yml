@@ -12,6 +12,25 @@ on:
 permissions:
   contents: write
 
+# Every job in this workflow ends by pushing to the `gh-pages` branch. Two runs that
+# overlap both check out `gh-pages`, commit, and push: the first wins, the second finds
+# the ref has moved and fails with `! [rejected] (fetch first)`. peaceiris/actions-gh-pages
+# does not fetch and retry, so the losing run's docs are simply never published.
+#
+# One global group serialises every run of this workflow, whatever triggered it, so a
+# `main` push, a `release/*` push and a `v*` tag push can never race each other.
+#
+# cancel-in-progress is false on purpose. Cancelling the in-flight run would abandon it
+# part-way through its three deploy steps (/vX.Y.Z/, /latest/, root redirect) and leave
+# the site inconsistent. Letting it finish is always safer than killing it.
+#
+# Caveat: GitHub holds only one run pending per group. Three pushes in quick succession
+# give A running, C pending, and B cancelled before it starts. For docs that is
+# acceptable, because the newest content is the content we want published.
+concurrency:
+  group: gh-pages-deploy
+  cancel-in-progress: false
+
 jobs:
   deploy:
     runs-on: ubuntu-latest

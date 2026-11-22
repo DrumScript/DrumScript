@@ -1,7 +1,7 @@
 # **DrumScript**
 
 <!--date_created: sun-15-june-2025-->
-<!--date_edited: weds-18-november-2026--->
+<!--date_edited: sun-22-november-2026--->
 
 > **Python >=3.9, < 3.14**
 >
@@ -11,7 +11,7 @@
 <!--**Workflow Status**-->
 
 [![Run Tests](https://github.com/DrumScript/DrumScript/actions/workflows/tests.yml/badge.svg?branch=main)](https://github.com/DrumScript/DrumScript/actions/workflows/tests.yml)
-<!--[![PyPI version](https://img.shields.io/pypi/v/drumscript)](https://pypi.org/project/drumscript/)-->
+[![PyPI version](https://img.shields.io/pypi/v/drumscript)](https://pypi.org/project/drumscript/)
 [![PyPI downloads](https://img.shields.io/pypi/dm/drumscript)](https://pypistats.org/packages/drumscript)
 >
 >

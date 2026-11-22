@@ -73,7 +73,7 @@
 - Community feedback from fellow drummers, audio engineers, and the `TISMIR/MIR` community
 
 **Bugs & technical debt handled alongside (not at the expense of the two fundamentals above):**
-- numpy 2.x migration and Python 3.13 support - done in Unreleased; testing 3.14 still to do
+- numpy 2.x migration and Python 3.13 support - done in v0.4.0; testing 3.14 still to do
 - Silencing the pydub `SyntaxWarning` in the CLI
 
 <!---*Deferred until the fundamentals are solid (logged, not prioritised): manual `--tempo` / `--sr` / `--quantize` overrides, MusicXML as standard output*-->

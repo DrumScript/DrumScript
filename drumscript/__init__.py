@@ -612,10 +612,7 @@ __all__ = [
     # Utilities
     "install_ffmpeg",
 ]
-
-# __version__ = "0.1.6"
-
 try:
     __version__ = importlib.metadata.version("drumscript")
 except importlib.metadata.PackageNotFoundError:
-    __version__ = "0.3.0"
+    __version__ = "0.4.0"

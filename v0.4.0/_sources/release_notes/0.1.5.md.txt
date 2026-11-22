@@ -1,0 +1,20 @@
+# v0.1.5 (Alpha)
+
+*Release Date: 2026-05-24*
+
+## What's Changed
+
+Major bug fix: 
+
+1. Restored minimal noise gate (2% of global max) in classify_events.
+        Dead silence was passing through and generating phantom events.
+2. Aligned ride/crash centroid threshold from 2500 → 5500 in classify_events,
+         matching classify_idiophone standalone function. 2500 was causing massive
+         crash over-detection (859 crashes in TGOO transcription).
+3. Added minimal de-bounce lockout (50ms) in classify_events for full-song mode.
+         Duplicate timestamps were appearing because consecutive onsets on the same
+         transient were both being classified.
+
+## Contributors
+* @victoria-mckinney
+* @drumscript-admin

@@ -1,0 +1,6 @@
+drumscript.notation\_generator.pdf\_exporter.parse\_time\_signature
+===================================================================
+
+.. currentmodule:: drumscript.notation_generator.pdf_exporter
+
+.. autofunction:: parse_time_signature

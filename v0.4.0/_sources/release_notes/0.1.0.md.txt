@@ -1,0 +1,25 @@
+# v0.1.0 (Planning)
+
+*Release Date:2025-10-25*
+
+Welcome to the first alpha release of **DrumScript**! 🥁
+
+This initial release focuses on the core pipeline: converting raw drum audio into readable sheet music and providing tools for stem separation.
+
+## Highlights
+* **Core Transcription Engine:** Added support for Kick, Snare, and Hi-Hat detection.
+* **Stem Splitting:** Integrated `Demucs` for isolating drums from full music mixes.
+* **CLI Tool:** Introduced the `drumscript` command-line interface for batch processing.
+
+## New Features
+* **Audio Loader:** Added `load_audio()` with automatic mono conversion and peak normalisation.
+* **Tempo Detection:** Implemented deterministic tempo estimation (Tempogram method).
+* **PDF Generation:** Added `score_builder` to export detected hits to standard drum notation.
+* **Backing Tracks:** Added `--drumless` flag to generate play-along tracks.
+
+## Fixes & Improvements
+* *N/A (First Release)*
+
+## Contributors
+A huge thanks to the original creators and contributors of this project:
+* @victoria-mckinney

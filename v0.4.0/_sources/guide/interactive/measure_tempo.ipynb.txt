@@ -1,0 +1,97 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "id": "0",
+   "metadata": {},
+   "source": [
+    "# Measure Tempo\n",
+    "\n",
+    "DrumScript estimates the tempo (BPM) of any audio file using a **spectral onset envelope** approach.\n",
+    "\n",
+    "Under the hood, `ds.detect_tempo()` works by:\n",
+    "1. Computing an **onset strength envelope** — a curve that peaks wherever a drum hit occurs.\n",
+    "2. Building a **tempogram** — a matrix that measures how periodic (i.e. \"beat-like\") the onset envelope is at every possible BPM.\n",
+    "3. Summing the tempogram energy across time, then picking the BPM with the strongest peak — but only within a plausible musical range (60–240 BPM) to avoid artifacts.\n",
+    "\n",
+    "If the audio is shorter than 1 second, tempo estimation is unreliable, so DrumScript defaults to 120 BPM.\n",
+    "\n",
+    "*(Note: We are using a copyright-free synthetic track for this demonstration.)*\n",
+    "\n",
+    "<!--date_created:sat-16-may-2026-->\n",
+    "<!--date_updated:tues-19-may-2026-->\n",
+    "\n",
+    "---"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "1",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "from IPython.display import Audio, display\n",
+    "\n",
+    "import drumscript as ds"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "2",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# 1. Load audio\n",
+    "audio_file_path = \"audio/test_track_1.wav\"\n",
+    "audio_file = ds.load_audio(audio_file_path)\n",
+    "print(\"Audio loaded!\")\n",
+    "display(Audio(audio_file_path))"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "3",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# 2. Detect tempo\n",
+    "bpm = ds.detect_tempo(audio_file_path)\n",
+    "\n",
+    "print(f\"Detected Tempo: {bpm:.2f} BPM\")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "4",
+   "metadata": {},
+   "source": [
+    "---\n",
+    "<!--END-->"
+   ]
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "drumscript",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.12.12"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 5
+}

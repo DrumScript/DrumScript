@@ -198,6 +198,7 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l2"><a class="reference internal" href="../release_notes/0.2.0.html">v0.2.0 (Alpha)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../release_notes/0.2.1.html">DrumScript v0.2.1 - Python 3.13 install fix</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../release_notes/0.3.0.html">DrumScript v0.3.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../release_notes/0.4.0.html">DrumScript v0.4.0</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../changelog.html"><strong>Changelog</strong></a></li>
@@ -369,7 +370,7 @@ locking in that the warning text actually points users at the replacement.</a></
           <section id="testing-guidance">
 <h1>Testing Guidance<a class="headerlink" href="#testing-guidance" title="Link to this heading">#</a></h1>
 <!--date_created: sat-21-june-2025-->
-<!--date_updated: sat-07-nov-2026-->
+<!--date_updated: weds-18-november-2026-->
 <p>DrumScript ships with a <a class="reference external" href="https://docs.pytest.org/">pytest</a> test suite organised
 around a clear separation between <strong>fast unit tests</strong> and <strong>slower integration
 tests</strong>. This page covers the <em>philosophy</em> and <em>contribution conventions</em> for
@@ -443,8 +444,18 @@ mocks <code class="docutils literal notranslate"><span class="pre">build_score</
 build_score told it”</em> - it can never prove the files landed on disk. The fast
 integration tests close that gap, and because they don’t need model weights they
 can run in CI on every push.</p>
-<p>The slow tier (real Demucs) stays opt-in and is triggered before a release with
-a plain <code class="docutils literal notranslate"><span class="pre">pytest</span></code>.</p>
+<p>The slow tier (real Demucs) stays opt-in and is triggered with a plain <code class="docutils literal notranslate"><span class="pre">pytest</span></code>.
+Run it before a release, and before submitting any pull request that touches Demucs,
+audio loading or stem splitting.</p>
+<div class="warning admonition">
+<p class="admonition-title">CI does not run the slow tier</p>
+<p>Both <code class="docutils literal notranslate"><span class="pre">tests.yml</span></code> and <code class="docutils literal notranslate"><span class="pre">pull_requests.yml</span></code> run <code class="docutils literal notranslate"><span class="pre">pytest</span> <span class="pre">-m</span> <span class="pre">&quot;not</span> <span class="pre">slow&quot;</span></code>. Nothing in
+automation ever exercises a real Demucs run. That coverage exists only when a person
+runs it, so a change to the stem-splitting path is unverified until someone does.</p>
+<p>This also means a change can <em>unskip</em> tests without anyone noticing. Skip guards such as
+<code class="docutils literal notranslate"><span class="pre">importlib.util.find_spec(&quot;demucs&quot;)</span></code> decide whether a whole module runs, so altering one
+can bring dormant tests to life on contributors’ machines while CI stays silent.</p>
+</div>
 <div class="tip admonition">
 <p class="admonition-title">Why this matters</p>
 <p>Trying to test everything end-to-end is the most common testing mistake. It

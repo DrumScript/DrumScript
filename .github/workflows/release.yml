@@ -148,15 +148,37 @@ jobs:
 
       # ── Commit, tag, release ───────────────────────────────────
 
-      - name: Commit version bump
+      # - name: Commit version bump
+      #   run: |
+      #     git config user.name "github-actions[bot]"
+      #     git config user.email "github-actions[bot]@users.noreply.github.com"
+      #     git add -A
+      #     git diff --cached --quiet && echo "No changes to commit" && exit 0
+      #     git commit -m "release: bump version to ${{ env.VERSION }}"
+      #     git tag "${{ env.TAG }}"
+      #     git push origin HEAD --tags
+
+      - name: Verify version is already bumped, then tag
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          FILE_VERSION=$(grep -m1 '^version = ' pyproject.toml | sed 's/^version = "\(.*\)"/\1/')
+          if [ "$FILE_VERSION" != "${{ env.VERSION }}" ]; then
+            echo "::error::pyproject.toml is at $FILE_VERSION, but you asked to release ${{ env.VERSION }}."
+            echo "::error::Bump the version in a pull request, merge it, then run this workflow again."
+            exit 1
+          fi
+
           git add -A
-          git diff --cached --quiet && echo "No changes to commit" && exit 0
-          git commit -m "release: bump version to ${{ env.VERSION }}"
+          if ! git diff --cached --quiet; then
+            echo "::error::These files are not yet at ${{ env.VERSION }}. Fix them in a pull request first:"
+            git --no-pager diff --cached --stat
+            exit 1
+          fi
+
           git tag "${{ env.TAG }}"
-          git push origin HEAD --tags
+          git push origin "${{ env.TAG }}"
 
       - name: Generate changelog from commits
         id: changelog

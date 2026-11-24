@@ -29,8 +29,20 @@
 
 > Items listed below are **currently in development** but **have not been distributed on PyPi**
 
-* PR #369 https://github.com/DrumScript/DrumScript/pull/369 [@ashenthefox](https://github.com/ashenthefox), [@drumscript-admin](https://github.com/drumscript-admin)
-* PR #362 https://github.com/DrumScript/DrumScript/pull/362 [@ashenthefox](https://github.com/ashenthefox), [@drumscript-admin](https://github.com/drumscript-admin)
+> ### *Changes*
+
+* Integration test skip guards switched from `shutil.which("demucs")` to `importlib.util.find_spec("demucs")` in `tests/integration/test_stem_splitter_real.py` and `tests/integration/test_transcribe_real.py` ([#362](https://github.com/DrumScript/DrumScript/pull/362) by [@ashenthefox](https://github.com/ashenthefox)). The PATH check stopped matching how DrumScript invokes Demucs when the call moved to `python -m demucs`, so the guards could skip on a machine where the module was importable, or let the tests run on one where it was not.
+* `separate_audio()` now raises `RuntimeError` rather than `FileNotFoundError` when the Python interpreter itself cannot be started ([#362](https://github.com/DrumScript/DrumScript/pull/362)). This is a rare path, reachable only if `sys.executable` is missing or unrunnable, but any caller catching `FileNotFoundError` around `separate_audio()` will no longer see it. `extract_drum_stem()` still raises `FileNotFoundError` in the same situation, so the two paths currently disagree.
+
+> ### *Fixes*
+
+* `separate_audio()` now reports a missing Demucs install clearly instead of dumping a raw traceback ([#359](https://github.com/DrumScript/DrumScript/issues/359), [#362](https://github.com/DrumScript/DrumScript/pull/362) by [@ashenthefox](https://github.com/ashenthefox)). Running Demucs as a module means an absent install surfaces as a non-zero exit from `subprocess`, not as `FileNotFoundError`, so the old handler fell through to the generic branch. It now checks stderr for `No module named demucs` and returns the same install guidance `extract_drum_stem()` already gave.
+* Roadmap links repaired in `docs/index.md` and `docs/about.md` ([#354](https://github.com/DrumScript/DrumScript/issues/354), [#369](https://github.com/DrumScript/DrumScript/pull/369) by [@ashenthefox](https://github.com/ashenthefox)). Both read `./docs/guide/roadmap.md`, which resolves to `docs/docs/guide/roadmap.md` from a page already inside `docs/` and 404s on the published site. Corrected to `guide/roadmap.md`.
+
+> ### *Tests*
+
+* `TestSeparateAudioDemucsErrors` added to `tests/unit/test_stem_splitter_cleanup.py` ([#362](https://github.com/DrumScript/DrumScript/pull/362)). Three cases: a missing module gives actionable guidance, an unrelated Demucs failure keeps its exit code and stderr for debugging, and an unstartable interpreter is not misdiagnosed as a missing CLI. Each also asserts the user's files survived.
+* `tests/unit/test_docs_roadmap_links.py` added ([#369](https://github.com/DrumScript/DrumScript/pull/369)). Parametrised over `index.md` and `about.md`, it resolves every markdown `[roadmap](...)` link against its source page and asserts it lands on `docs/guide/roadmap.md`, so this class of broken link cannot return silently.
 
 <!--* Migration of dependencies to python 3.13-->
 

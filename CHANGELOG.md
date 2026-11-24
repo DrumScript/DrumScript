@@ -1,7 +1,7 @@
 # **Changelog**
 
 <!--date_added:thurs-28-may-2026-->
-<!--date_updated:sat-21-november-2026-->
+<!--date_updated:tue-24-november-2026-->
 
 
 * All notable changes related to the repository and pypi distribution of `DrumScript` will be documented here
@@ -29,7 +29,8 @@
 
 > Items listed below are **currently in development** but **have not been distributed on PyPi**
 
-*Nothing currently in progress. Items land here as they are merged to `main`.*
+* PR #369 https://github.com/DrumScript/DrumScript/pull/369 [@ashenthefox](https://github.com/ashenthefox), [@drumscript-admin](https://github.com/drumscript-admin)
+* PR #362 https://github.com/DrumScript/DrumScript/pull/362 [@ashenthefox](https://github.com/ashenthefox), [@drumscript-admin](https://github.com/drumscript-admin)
 
 <!--* Migration of dependencies to python 3.13-->
 

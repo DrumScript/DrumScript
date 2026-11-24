@@ -52,7 +52,7 @@ behaves as expected"; these tests verify "Demucs actually behaves as
 expected on this machine".
 """
 
-import shutil
+import importlib.util
 from pathlib import Path
 
 import numpy as np
@@ -65,18 +65,18 @@ from drumscript.audio_processor.stem_splitter import (
 )
 
 # =============================================================================
-# Module-level skip if Demucs isn't on PATH
+# Module-level skip if the Demucs Python module is not importable
 # =============================================================================
 #
 # Without this, integration tests fail noisily on machines where Demucs
 # isn't installed. With it, they're cleanly skipped with a clear reason.
-DEMUCS_AVAILABLE = shutil.which("demucs") is not None
+DEMUCS_AVAILABLE = importlib.util.find_spec("demucs") is not None
 pytestmark = [
     pytest.mark.slow,
     pytest.mark.integration,
     pytest.mark.skipif(
         not DEMUCS_AVAILABLE,
-        reason="demucs CLI not found on PATH; skipping integration tests",
+        reason="demucs Python module is not importable; skipping integration tests",
     ),
 ]
 

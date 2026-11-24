@@ -771,180 +771,185 @@ data-aria-dark="Switch to auto color mode">
 </span><span data-line="461">            <span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">e</span>
 </span><span data-line="462">        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Demucs failed to process the audio (exit </span><span class="si">{</span><span class="n">e</span><span class="o">.</span><span class="n">returncode</span><span class="si">}</span><span class="s2">).</span><span class="se">\n</span><span class="s2">STDERR: </span><span class="si">{</span><span class="n">e</span><span class="o">.</span><span class="n">stderr</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </span><span data-line="463">
-</span><span data-line="464">    <span class="k">except</span> <span class="ne">FileNotFoundError</span><span class="p">:</span>
+</span><span data-line="464">    <span class="k">except</span> <span class="ne">FileNotFoundError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
 </span><span data-line="465">        <span class="c1"># as above. This was the path the reporter hit: Demucs was not installed, so nothing</span>
 </span><span data-line="466">        <span class="c1"># had been written yet, and the cleanup removed their Downloads folder instead.</span>
 </span><span data-line="467">        <span class="c1"># shutil.rmtree(temp_output_dir, ignore_errors=True)  # Clean up</span>
 </span><span data-line="468">        <span class="n">_cleanup_demucs_output</span><span class="p">(</span><span class="n">temp_output_dir</span><span class="p">,</span> <span class="n">audio_path</span><span class="p">)</span>  <span class="c1"># Clean up</span>
-</span><span data-line="469">        <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span>
-</span><span data-line="470">            <span class="s2">&quot;Demucs could not be run. It ships as a dependency of DrumScript, so this usually means the environment &quot;</span>
-</span><span data-line="471">            <span class="s2">&quot;is incomplete. Try reinstalling with &#39;pip install --force-reinstall drumscript&#39;.&quot;</span>
-</span><span data-line="472">        <span class="p">)</span>
-</span><span data-line="473">
-</span><span data-line="474">    <span class="c1"># 4. Find and return the path to the drum file</span>
-</span><span data-line="475">    <span class="n">input_filename_stem</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">audio_path</span><span class="p">)</span><span class="o">.</span><span class="n">stem</span>
-</span><span data-line="476">
-</span><span data-line="477">    <span class="c1"># --- LEGACY: Demucs used to output FLAC because we passed --flac. Now it</span>
-</span><span data-line="478">    <span class="c1"># --- writes WAV, which soundfile can read with no ffmpeg dependency.</span>
-</span><span data-line="479">    <span class="c1"># expected_drum_path = Path(temp_output_dir) / DEMUCS_MODEL / input_filename_stem / &quot;drums.flac&quot;</span>
-</span><span data-line="480">    <span class="n">expected_drum_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">temp_output_dir</span><span class="p">)</span> <span class="o">/</span> <span class="n">DEMUCS_MODEL</span> <span class="o">/</span> <span class="n">input_filename_stem</span> <span class="o">/</span> <span class="s2">&quot;drums.wav&quot;</span>
+</span><span data-line="469">        <span class="c1"># Since the call became [sys.executable, &quot;-m&quot;, &quot;demucs&quot;, ...], a missing Demucs exits non-zero and is</span>
+</span><span data-line="470">        <span class="c1"># handled above. The only way to reach here now is an interpreter that cannot be started, so the old</span>
+</span><span data-line="471">        <span class="c1"># message sent users to reinstall DrumScript for a problem a reinstall would not touch. Matches</span>
+</span><span data-line="472">        <span class="c1"># separate_audio(), which raises RuntimeError for the same condition.</span>
+</span><span data-line="473">        <span class="c1"># raise FileNotFoundError(</span>
+</span><span data-line="474">        <span class="c1">#     &quot;Demucs could not be run. It ships as a dependency of DrumScript, so this usually means the environment &quot;</span>
+</span><span data-line="475">        <span class="c1">#     &quot;is incomplete. Try reinstalling with &#39;pip install --force-reinstall drumscript&#39;.&quot;</span>
+</span><span data-line="476">        <span class="c1"># )</span>
+</span><span data-line="477">        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Unable to start the Python interpreter to run Demucs.&quot;</span><span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">e</span>
+</span><span data-line="478">
+</span><span data-line="479">    <span class="c1"># 4. Find and return the path to the drum file</span>
+</span><span data-line="480">    <span class="n">input_filename_stem</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">audio_path</span><span class="p">)</span><span class="o">.</span><span class="n">stem</span>
 </span><span data-line="481">
-</span><span data-line="482">    <span class="k">if</span> <span class="ow">not</span> <span class="n">expected_drum_path</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
-</span><span data-line="483">        <span class="c1"># as above, and this one had no ignore_errors, so it was the most destructive of the three.</span>
-</span><span data-line="484">        <span class="c1"># shutil.rmtree(temp_output_dir, ignore_errors=True) # Clean up</span>
-</span><span data-line="485">        <span class="c1"># shutil.rmtree(temp_output_dir)  # Clean up</span>
-</span><span data-line="486">        <span class="n">_cleanup_demucs_output</span><span class="p">(</span><span class="n">temp_output_dir</span><span class="p">,</span> <span class="n">audio_path</span><span class="p">)</span>  <span class="c1"># Clean up</span>
-</span><span data-line="487">        <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Demucs ran, but the drum output file was not found at </span><span class="si">{</span><span class="n">expected_drum_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-</span><span data-line="488">
-</span><span data-line="489">    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Drum stem extracted successfully to: </span><span class="si">{</span><span class="n">expected_drum_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-</span><span data-line="490">
-</span><span data-line="491">    <span class="c1"># Return the full path to the drum file.</span>
-</span><span data-line="492">    <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">expected_drum_path</span><span class="p">)</span></div>
-
+</span><span data-line="482">    <span class="c1"># --- LEGACY: Demucs used to output FLAC because we passed --flac. Now it</span>
+</span><span data-line="483">    <span class="c1"># --- writes WAV, which soundfile can read with no ffmpeg dependency.</span>
+</span><span data-line="484">    <span class="c1"># expected_drum_path = Path(temp_output_dir) / DEMUCS_MODEL / input_filename_stem / &quot;drums.flac&quot;</span>
+</span><span data-line="485">    <span class="n">expected_drum_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">temp_output_dir</span><span class="p">)</span> <span class="o">/</span> <span class="n">DEMUCS_MODEL</span> <span class="o">/</span> <span class="n">input_filename_stem</span> <span class="o">/</span> <span class="s2">&quot;drums.wav&quot;</span>
+</span><span data-line="486">
+</span><span data-line="487">    <span class="k">if</span> <span class="ow">not</span> <span class="n">expected_drum_path</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+</span><span data-line="488">        <span class="c1"># as above, and this one had no ignore_errors, so it was the most destructive of the three.</span>
+</span><span data-line="489">        <span class="c1"># shutil.rmtree(temp_output_dir, ignore_errors=True) # Clean up</span>
+</span><span data-line="490">        <span class="c1"># shutil.rmtree(temp_output_dir)  # Clean up</span>
+</span><span data-line="491">        <span class="n">_cleanup_demucs_output</span><span class="p">(</span><span class="n">temp_output_dir</span><span class="p">,</span> <span class="n">audio_path</span><span class="p">)</span>  <span class="c1"># Clean up</span>
+</span><span data-line="492">        <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Demucs ran, but the drum output file was not found at </span><span class="si">{</span><span class="n">expected_drum_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </span><span data-line="493">
-</span><span data-line="494">
-</span><span data-line="495"><span class="c1"># ===============================================================================================</span>
+</span><span data-line="494">    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Drum stem extracted successfully to: </span><span class="si">{</span><span class="n">expected_drum_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span data-line="495">
+</span><span data-line="496">    <span class="c1"># Return the full path to the drum file.</span>
+</span><span data-line="497">    <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">expected_drum_path</span><span class="p">)</span></div>
+
+</span><span data-line="498">
+</span><span data-line="499">
+</span><span data-line="500"><span class="c1"># ===============================================================================================</span>
 <div class="viewcode-block" id="mix_stems">
 <a class="viewcode-back" href="../../../generated/drumscript.audio_processor.stem_splitter.mix_stems.html#drumscript.audio_processor.stem_splitter.mix_stems">[docs]</a>
-</span><span data-line="496"><span class="k">def</span><span class="w"> </span><span class="nf">mix_stems</span><span class="p">(</span><span class="n">stems_dict</span><span class="p">,</span> <span class="n">stems_to_mix</span><span class="p">,</span> <span class="n">output_path</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="s2">&quot;wav&quot;</span><span class="p">):</span>
-</span><span data-line="497"><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span data-line="498">
-</span><span data-line="499"><span class="sd">    Uses soundfile + numpy so the WAV output path is ffmpeg-free. MP3 output</span>
-</span><span data-line="500"><span class="sd">    still passes through pydub/ffmpeg via the _write_audio helper.</span>
-</span><span data-line="501">
-</span><span data-line="502"><span class="sd">    :param stems_dict: Dictionary mapping stem names to file paths.</span>
-</span><span data-line="503"><span class="sd">    :type stems_dict: dict</span>
-</span><span data-line="504"><span class="sd">    :param stems_to_mix: List of stem names to combine.</span>
-</span><span data-line="505"><span class="sd">    :type stems_to_mix: list</span>
-</span><span data-line="506"><span class="sd">    :param output_path: Destination path, if provided by user, otherwise assumes cwd</span>
-</span><span data-line="507"><span class="sd">    :type output_path: Path</span>
-</span><span data-line="508"><span class="sd">    :param fmt: Output format (&#39;wav&#39; or &#39;mp3&#39;).</span>
-</span><span data-line="509"><span class="sd">    :type fmt: str</span>
-</span><span data-line="510"><span class="sd">    &quot;&quot;&quot;</span>
-</span><span data-line="511">    <span class="n">first_stem_path</span> <span class="o">=</span> <span class="n">stems_dict</span><span class="p">[</span><span class="n">stems_to_mix</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
-</span><span data-line="512">    <span class="n">mixed</span><span class="p">,</span> <span class="n">sample_rate</span> <span class="o">=</span> <span class="n">_read_stem_as_array</span><span class="p">(</span><span class="n">first_stem_path</span><span class="p">)</span>
-</span><span data-line="513">
-</span><span data-line="514">    <span class="k">for</span> <span class="n">stem_name</span> <span class="ow">in</span> <span class="n">stems_to_mix</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
-</span><span data-line="515">        <span class="k">if</span> <span class="n">stem_name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">stems_dict</span><span class="p">:</span>
-</span><span data-line="516">            <span class="k">continue</span>
-</span><span data-line="517">        <span class="n">track</span><span class="p">,</span> <span class="n">sr</span> <span class="o">=</span> <span class="n">_read_stem_as_array</span><span class="p">(</span><span class="n">stems_dict</span><span class="p">[</span><span class="n">stem_name</span><span class="p">])</span>
-</span><span data-line="518">        <span class="c1"># Sanity check: Demucs always outputs at the same sample rate and</span>
-</span><span data-line="519">        <span class="c1"># length for all stems of a given input, so these should match.</span>
-</span><span data-line="520">        <span class="k">if</span> <span class="n">sr</span> <span class="o">!=</span> <span class="n">sample_rate</span><span class="p">:</span>
-</span><span data-line="521">            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Sample rate mismatch while mixing: </span><span class="si">{</span><span class="n">sample_rate</span><span class="si">}</span><span class="s2"> vs </span><span class="si">{</span><span class="n">sr</span><span class="si">}</span><span class="s2"> for stem </span><span class="si">{</span><span class="n">stem_name</span><span class="si">}</span><span class="s2">. Cannot mix stems with different rates.&quot;</span><span class="p">)</span>
-</span><span data-line="522">        <span class="k">if</span> <span class="n">track</span><span class="o">.</span><span class="n">shape</span> <span class="o">!=</span> <span class="n">mixed</span><span class="o">.</span><span class="n">shape</span><span class="p">:</span>
-</span><span data-line="523">            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Shape mismatch while mixing: </span><span class="si">{</span><span class="n">mixed</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2"> vs </span><span class="si">{</span><span class="n">track</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2"> for stem </span><span class="si">{</span><span class="n">stem_name</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
-</span><span data-line="524">        <span class="n">mixed</span> <span class="o">=</span> <span class="n">mixed</span> <span class="o">+</span> <span class="n">track</span>
-</span><span data-line="525">
-</span><span data-line="526">    <span class="c1"># Clip to [-1, 1] so samples stay in valid range if the summed stems</span>
-</span><span data-line="527">    <span class="c1"># exceed full scale. (Simple clipping; for production-grade mixing you</span>
-</span><span data-line="528">    <span class="c1"># might want gain reduction or a soft limiter, but clipping is what</span>
-</span><span data-line="529">    <span class="c1"># pydub.overlay() effectively did too.)</span>
-</span><span data-line="530">    <span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">mixed</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">out</span><span class="o">=</span><span class="n">mixed</span><span class="p">)</span>
-</span><span data-line="531">
-</span><span data-line="532">    <span class="n">_write_audio</span><span class="p">(</span><span class="n">mixed</span><span class="p">,</span> <span class="n">sample_rate</span><span class="p">,</span> <span class="n">output_path</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="n">fmt</span><span class="p">)</span>
-</span><span data-line="533">    <span class="k">return</span> <span class="n">output_path</span></div>
+</span><span data-line="501"><span class="k">def</span><span class="w"> </span><span class="nf">mix_stems</span><span class="p">(</span><span class="n">stems_dict</span><span class="p">,</span> <span class="n">stems_to_mix</span><span class="p">,</span> <span class="n">output_path</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="s2">&quot;wav&quot;</span><span class="p">):</span>
+</span><span data-line="502"><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span data-line="503">
+</span><span data-line="504"><span class="sd">    Uses soundfile + numpy so the WAV output path is ffmpeg-free. MP3 output</span>
+</span><span data-line="505"><span class="sd">    still passes through pydub/ffmpeg via the _write_audio helper.</span>
+</span><span data-line="506">
+</span><span data-line="507"><span class="sd">    :param stems_dict: Dictionary mapping stem names to file paths.</span>
+</span><span data-line="508"><span class="sd">    :type stems_dict: dict</span>
+</span><span data-line="509"><span class="sd">    :param stems_to_mix: List of stem names to combine.</span>
+</span><span data-line="510"><span class="sd">    :type stems_to_mix: list</span>
+</span><span data-line="511"><span class="sd">    :param output_path: Destination path, if provided by user, otherwise assumes cwd</span>
+</span><span data-line="512"><span class="sd">    :type output_path: Path</span>
+</span><span data-line="513"><span class="sd">    :param fmt: Output format (&#39;wav&#39; or &#39;mp3&#39;).</span>
+</span><span data-line="514"><span class="sd">    :type fmt: str</span>
+</span><span data-line="515"><span class="sd">    &quot;&quot;&quot;</span>
+</span><span data-line="516">    <span class="n">first_stem_path</span> <span class="o">=</span> <span class="n">stems_dict</span><span class="p">[</span><span class="n">stems_to_mix</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+</span><span data-line="517">    <span class="n">mixed</span><span class="p">,</span> <span class="n">sample_rate</span> <span class="o">=</span> <span class="n">_read_stem_as_array</span><span class="p">(</span><span class="n">first_stem_path</span><span class="p">)</span>
+</span><span data-line="518">
+</span><span data-line="519">    <span class="k">for</span> <span class="n">stem_name</span> <span class="ow">in</span> <span class="n">stems_to_mix</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
+</span><span data-line="520">        <span class="k">if</span> <span class="n">stem_name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">stems_dict</span><span class="p">:</span>
+</span><span data-line="521">            <span class="k">continue</span>
+</span><span data-line="522">        <span class="n">track</span><span class="p">,</span> <span class="n">sr</span> <span class="o">=</span> <span class="n">_read_stem_as_array</span><span class="p">(</span><span class="n">stems_dict</span><span class="p">[</span><span class="n">stem_name</span><span class="p">])</span>
+</span><span data-line="523">        <span class="c1"># Sanity check: Demucs always outputs at the same sample rate and</span>
+</span><span data-line="524">        <span class="c1"># length for all stems of a given input, so these should match.</span>
+</span><span data-line="525">        <span class="k">if</span> <span class="n">sr</span> <span class="o">!=</span> <span class="n">sample_rate</span><span class="p">:</span>
+</span><span data-line="526">            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Sample rate mismatch while mixing: </span><span class="si">{</span><span class="n">sample_rate</span><span class="si">}</span><span class="s2"> vs </span><span class="si">{</span><span class="n">sr</span><span class="si">}</span><span class="s2"> for stem </span><span class="si">{</span><span class="n">stem_name</span><span class="si">}</span><span class="s2">. Cannot mix stems with different rates.&quot;</span><span class="p">)</span>
+</span><span data-line="527">        <span class="k">if</span> <span class="n">track</span><span class="o">.</span><span class="n">shape</span> <span class="o">!=</span> <span class="n">mixed</span><span class="o">.</span><span class="n">shape</span><span class="p">:</span>
+</span><span data-line="528">            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Shape mismatch while mixing: </span><span class="si">{</span><span class="n">mixed</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2"> vs </span><span class="si">{</span><span class="n">track</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2"> for stem </span><span class="si">{</span><span class="n">stem_name</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+</span><span data-line="529">        <span class="n">mixed</span> <span class="o">=</span> <span class="n">mixed</span> <span class="o">+</span> <span class="n">track</span>
+</span><span data-line="530">
+</span><span data-line="531">    <span class="c1"># Clip to [-1, 1] so samples stay in valid range if the summed stems</span>
+</span><span data-line="532">    <span class="c1"># exceed full scale. (Simple clipping; for production-grade mixing you</span>
+</span><span data-line="533">    <span class="c1"># might want gain reduction or a soft limiter, but clipping is what</span>
+</span><span data-line="534">    <span class="c1"># pydub.overlay() effectively did too.)</span>
+</span><span data-line="535">    <span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">mixed</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">out</span><span class="o">=</span><span class="n">mixed</span><span class="p">)</span>
+</span><span data-line="536">
+</span><span data-line="537">    <span class="n">_write_audio</span><span class="p">(</span><span class="n">mixed</span><span class="p">,</span> <span class="n">sample_rate</span><span class="p">,</span> <span class="n">output_path</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="n">fmt</span><span class="p">)</span>
+</span><span data-line="538">    <span class="k">return</span> <span class="n">output_path</span></div>
 
-</span><span data-line="534">
-</span><span data-line="535">
-</span><span data-line="536"><span class="c1"># ===============================================================================================</span>
-</span><span data-line="537"><span class="c1">## Extended legacy orchestration script, ie before adding in the extraction/mute drums etc functionality,</span>
-</span><span data-line="538"><span class="c1">## Expanded with more advanced functionality for stem extraction</span>
-</span><span data-line="539"><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
-</span><span data-line="540">    <span class="kn">import</span><span class="w"> </span><span class="nn">argparse</span>
-</span><span data-line="541">
-</span><span data-line="542">    <span class="c1"># --------------------------------------------------------------------------uncomment during testing</span>
-</span><span data-line="543">    <span class="c1"># from datetime import datetime</span>
-</span><span data-line="544">    <span class="c1"># print(&quot;\n# ------------------------------------------------------------------------------------&quot;)</span>
-</span><span data-line="545">    <span class="c1"># datetimestamp = datetime.now()</span>
-</span><span data-line="546">    <span class="c1"># print(f&#39;\ndate/time: {datetimestamp}&#39;)</span>
-</span><span data-line="547">    <span class="c1"># --------------------------------------------------------------------------------------------------</span>
-</span><span data-line="548">
-</span><span data-line="549">    <span class="c1">## Banner / timestamp (moved here from module top-level so it only fires when this file is run</span>
-</span><span data-line="550">    <span class="c1">## DIRECTLY via `python3 -m drumscript.audio_processor.stem_splitter ...`, not on every `from</span>
-</span><span data-line="551">    <span class="c1">## drumscript ## audio_processor.stem_splitter import ...`)</span>
-</span><span data-line="552">
-</span><span data-line="553">    <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">&quot;Extract stems from an audio file.&quot;</span><span class="p">)</span>
-</span><span data-line="554">    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;input_file&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Path to the input audio file.&quot;</span><span class="p">)</span>
-</span><span data-line="555">    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;-o&quot;</span><span class="p">,</span> <span class="s2">&quot;--output_dir&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Directory to save the stems.&quot;</span><span class="p">)</span>
-</span><span data-line="556">    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--drumless&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Generate a mix without drums.&quot;</span><span class="p">)</span>
-</span><span data-line="557">    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--mp3&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Output as MP3 instead of WAV.&quot;</span><span class="p">)</span>
-</span><span data-line="558">    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--all&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Export all individual stems.&quot;</span><span class="p">)</span>
-</span><span data-line="559">
-</span><span data-line="560">    <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
-</span><span data-line="561">
-</span><span data-line="562">    <span class="k">if</span> <span class="ow">not</span> <span class="n">Path</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">input_file</span><span class="p">)</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
-</span><span data-line="563">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error: File not found at </span><span class="si">{</span><span class="n">args</span><span class="o">.</span><span class="n">input_file</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-</span><span data-line="564">        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-</span><span data-line="565">
-</span><span data-line="566">    <span class="n">fmt</span> <span class="o">=</span> <span class="s2">&quot;mp3&quot;</span> <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">mp3</span> <span class="k">else</span> <span class="s2">&quot;wav&quot;</span>
-</span><span data-line="567">
-</span><span data-line="568">    <span class="n">separate_audio</span><span class="p">(</span><span class="n">audio_path</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">input_file</span><span class="p">,</span> <span class="n">output_format</span><span class="o">=</span><span class="n">fmt</span><span class="p">,</span> <span class="n">drumless</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">drumless</span><span class="p">,</span> <span class="n">all_stems</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">all</span><span class="p">,</span> <span class="n">output_dir</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">output_dir</span><span class="p">)</span>
-</span><span data-line="569">
-</span><span data-line="570"><span class="sd">&quot;&quot;&quot; LEGACY CODE (KEEP FOR NOW)</span>
-</span><span data-line="571"><span class="sd"># if __name__ == &quot;__main__&quot;:</span>
-</span><span data-line="572"><span class="sd">#</span>
-</span><span data-line="573"><span class="sd"># Allows the script to be run directly for testing.</span>
-</span><span data-line="574"><span class="sd"># Default arguments if not specified otherwise are: .wav for output format, extract all stems and output all separately and NO concatenation of stems</span>
-</span><span data-line="575"><span class="sd">#</span>
-</span><span data-line="576"><span class="sd"># Usage:</span>
-</span><span data-line="577"><span class="sd">#   python drumscript/audio_processor/stem_splitter.py &quot;path/to/song.mp3&quot; (OR .wav, as required)</span>
-</span><span data-line="578"><span class="sd">#</span>
-</span><span data-line="579"><span class="sd"># if len(sys.argv) &lt; 2:</span>
-</span><span data-line="580"><span class="sd"># print(&quot;Usage: python stem_splitter.py &lt;path_to_audio_file&gt;&quot;)</span>
-</span><span data-line="581"><span class="sd">#    print(&quot;Usage: python stem_splitter.py &lt;file&gt; [--drumless] [--mp3] [--all]&quot;)</span>
-</span><span data-line="582"><span class="sd">#    sys.exit(1)</span>
-</span><span data-line="583">
-</span><span data-line="584"><span class="sd"># input_file = sys.argv[1]</span>
-</span><span data-line="585">
-</span><span data-line="586"><span class="sd"># if not Path(input_file).exists():</span>
-</span><span data-line="587"><span class="sd">#   print(f&quot;Error: File not found at {input_file}&quot;)</span>
-</span><span data-line="588"><span class="sd">#   sys.exit(1)</span>
-</span><span data-line="589">
-</span><span data-line="590"><span class="sd"># dl = &quot;--drumless&quot; in sys.argv</span>
-</span><span data-line="591"><span class="sd"># mp3 = &quot;--mp3&quot; in sys.argv</span>
-</span><span data-line="592"><span class="sd"># all_s = &quot;--all&quot; in sys.argv</span>
-</span><span data-line="593">
-</span><span data-line="594"><span class="sd"># --- LEGACY: this line was ACCIDENTALLY at module scope (not indented into</span>
-</span><span data-line="595"><span class="sd"># --- the commented-out __main__ block), so it would NameError on every</span>
-</span><span data-line="596"><span class="sd"># --- `import stem_splitter` because `mp3` is undefined here. Commented out.</span>
-</span><span data-line="597"><span class="sd"># fmt = &quot;mp3&quot; if mp3 else &quot;wav&quot;</span>
-</span><span data-line="598"><span class="sd"># separate_audio(input_file, output_format=fmt, drumless=dl, all_stems=all_s)</span>
-</span><span data-line="599">
-</span><span data-line="600"><span class="sd">## The following block was for testing when the original demucs-extraction stem_splitter.py was built</span>
-</span><span data-line="601"><span class="sd"># temp_drum_file_path = None</span>
-</span><span data-line="602"><span class="sd"># temp_dir_to_clean = None</span>
-</span><span data-line="603"><span class="sd"># try:</span>
-</span><span data-line="604"><span class="sd"># Run the function</span>
-</span><span data-line="605"><span class="sd">#  temp_drum_file_path = extract_drum_stem(input_file)</span>
-</span><span data-line="606">
-</span><span data-line="607"><span class="sd"># On success, find the root temp directory</span>
-</span><span data-line="608"><span class="sd"># if temp_drum_file_path:</span>
-</span><span data-line="609"><span class="sd"># Path is .../temp_dir_xyz/htdemucs/song_name/drums.wav</span>
-</span><span data-line="610"><span class="sd"># We must delete the root temp directory, 3 levels up.</span>
-</span><span data-line="611"><span class="sd">#    temp_dir_to_clean = Path(temp_drum_file_path).parent.parent.parent</span>
-</span><span data-line="612"><span class="sd">#    print(f&quot;\n--- TEST SUCCESSFUL ---&quot;)</span>
-</span><span data-line="613"><span class="sd">#    print(f&quot;Drum file created at: {temp_drum_file_path}&quot;)</span>
-</span><span data-line="614"><span class="sd">#    print(f&quot;Root temp directory: {temp_dir_to_clean}&quot;)</span>
-</span><span data-line="615">
-</span><span data-line="616"><span class="sd"># except Exception as e:</span>
-</span><span data-line="617"><span class="sd">#  print(f&quot;\n--- TEST FAILED ---&quot;)</span>
-</span><span data-line="618"><span class="sd">#  print(f&quot;An error occurred: {e}&quot;)</span>
-</span><span data-line="619">
-</span><span data-line="620"><span class="sd"># commenting out the cleaning step (for now)</span>
-</span><span data-line="621"><span class="sd"># finally:</span>
-</span><span data-line="622"><span class="sd"># Clean up the temporary directory AFTER the test</span>
-</span><span data-line="623"><span class="sd"># if temp_dir_to_clean and Path(temp_dir_to_clean).exists():</span>
-</span><span data-line="624"><span class="sd"># try:</span>
-</span><span data-line="625"><span class="sd">#   shutil.rmtree(temp_dir_to_clean)</span>
-</span><span data-line="626"><span class="sd">#   print(f&quot;Successfully cleaned up temporary directory.&quot;)</span>
-</span><span data-line="627"><span class="sd"># except OSError as e:</span>
-</span><span data-line="628"><span class="sd">#   print(f&quot;Error cleaning up directory {temp_dir_to_clean}: {e}&quot;)</span>
-</span><span data-line="629"><span class="sd"># else:</span>
-</span><span data-line="630"><span class="sd">#   print(&quot;No temporary directory to clean up.&quot;)</span>
-</span><span data-line="631">
-</span><span data-line="632"><span class="sd"># ===============================================================================================</span>
-</span><span data-line="633"><span class="sd">&quot;&quot;&quot;</span>
+</span><span data-line="539">
+</span><span data-line="540">
+</span><span data-line="541"><span class="c1"># ===============================================================================================</span>
+</span><span data-line="542"><span class="c1">## Extended legacy orchestration script, ie before adding in the extraction/mute drums etc functionality,</span>
+</span><span data-line="543"><span class="c1">## Expanded with more advanced functionality for stem extraction</span>
+</span><span data-line="544"><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+</span><span data-line="545">    <span class="kn">import</span><span class="w"> </span><span class="nn">argparse</span>
+</span><span data-line="546">
+</span><span data-line="547">    <span class="c1"># --------------------------------------------------------------------------uncomment during testing</span>
+</span><span data-line="548">    <span class="c1"># from datetime import datetime</span>
+</span><span data-line="549">    <span class="c1"># print(&quot;\n# ------------------------------------------------------------------------------------&quot;)</span>
+</span><span data-line="550">    <span class="c1"># datetimestamp = datetime.now()</span>
+</span><span data-line="551">    <span class="c1"># print(f&#39;\ndate/time: {datetimestamp}&#39;)</span>
+</span><span data-line="552">    <span class="c1"># --------------------------------------------------------------------------------------------------</span>
+</span><span data-line="553">
+</span><span data-line="554">    <span class="c1">## Banner / timestamp (moved here from module top-level so it only fires when this file is run</span>
+</span><span data-line="555">    <span class="c1">## DIRECTLY via `python3 -m drumscript.audio_processor.stem_splitter ...`, not on every `from</span>
+</span><span data-line="556">    <span class="c1">## drumscript ## audio_processor.stem_splitter import ...`)</span>
+</span><span data-line="557">
+</span><span data-line="558">    <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">&quot;Extract stems from an audio file.&quot;</span><span class="p">)</span>
+</span><span data-line="559">    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;input_file&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Path to the input audio file.&quot;</span><span class="p">)</span>
+</span><span data-line="560">    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;-o&quot;</span><span class="p">,</span> <span class="s2">&quot;--output_dir&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Directory to save the stems.&quot;</span><span class="p">)</span>
+</span><span data-line="561">    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--drumless&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Generate a mix without drums.&quot;</span><span class="p">)</span>
+</span><span data-line="562">    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--mp3&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Output as MP3 instead of WAV.&quot;</span><span class="p">)</span>
+</span><span data-line="563">    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--all&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Export all individual stems.&quot;</span><span class="p">)</span>
+</span><span data-line="564">
+</span><span data-line="565">    <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
+</span><span data-line="566">
+</span><span data-line="567">    <span class="k">if</span> <span class="ow">not</span> <span class="n">Path</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">input_file</span><span class="p">)</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+</span><span data-line="568">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error: File not found at </span><span class="si">{</span><span class="n">args</span><span class="o">.</span><span class="n">input_file</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span data-line="569">        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</span><span data-line="570">
+</span><span data-line="571">    <span class="n">fmt</span> <span class="o">=</span> <span class="s2">&quot;mp3&quot;</span> <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">mp3</span> <span class="k">else</span> <span class="s2">&quot;wav&quot;</span>
+</span><span data-line="572">
+</span><span data-line="573">    <span class="n">separate_audio</span><span class="p">(</span><span class="n">audio_path</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">input_file</span><span class="p">,</span> <span class="n">output_format</span><span class="o">=</span><span class="n">fmt</span><span class="p">,</span> <span class="n">drumless</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">drumless</span><span class="p">,</span> <span class="n">all_stems</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">all</span><span class="p">,</span> <span class="n">output_dir</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">output_dir</span><span class="p">)</span>
+</span><span data-line="574">
+</span><span data-line="575"><span class="sd">&quot;&quot;&quot; LEGACY CODE (KEEP FOR NOW)</span>
+</span><span data-line="576"><span class="sd"># if __name__ == &quot;__main__&quot;:</span>
+</span><span data-line="577"><span class="sd">#</span>
+</span><span data-line="578"><span class="sd"># Allows the script to be run directly for testing.</span>
+</span><span data-line="579"><span class="sd"># Default arguments if not specified otherwise are: .wav for output format, extract all stems and output all separately and NO concatenation of stems</span>
+</span><span data-line="580"><span class="sd">#</span>
+</span><span data-line="581"><span class="sd"># Usage:</span>
+</span><span data-line="582"><span class="sd">#   python drumscript/audio_processor/stem_splitter.py &quot;path/to/song.mp3&quot; (OR .wav, as required)</span>
+</span><span data-line="583"><span class="sd">#</span>
+</span><span data-line="584"><span class="sd"># if len(sys.argv) &lt; 2:</span>
+</span><span data-line="585"><span class="sd"># print(&quot;Usage: python stem_splitter.py &lt;path_to_audio_file&gt;&quot;)</span>
+</span><span data-line="586"><span class="sd">#    print(&quot;Usage: python stem_splitter.py &lt;file&gt; [--drumless] [--mp3] [--all]&quot;)</span>
+</span><span data-line="587"><span class="sd">#    sys.exit(1)</span>
+</span><span data-line="588">
+</span><span data-line="589"><span class="sd"># input_file = sys.argv[1]</span>
+</span><span data-line="590">
+</span><span data-line="591"><span class="sd"># if not Path(input_file).exists():</span>
+</span><span data-line="592"><span class="sd">#   print(f&quot;Error: File not found at {input_file}&quot;)</span>
+</span><span data-line="593"><span class="sd">#   sys.exit(1)</span>
+</span><span data-line="594">
+</span><span data-line="595"><span class="sd"># dl = &quot;--drumless&quot; in sys.argv</span>
+</span><span data-line="596"><span class="sd"># mp3 = &quot;--mp3&quot; in sys.argv</span>
+</span><span data-line="597"><span class="sd"># all_s = &quot;--all&quot; in sys.argv</span>
+</span><span data-line="598">
+</span><span data-line="599"><span class="sd"># --- LEGACY: this line was ACCIDENTALLY at module scope (not indented into</span>
+</span><span data-line="600"><span class="sd"># --- the commented-out __main__ block), so it would NameError on every</span>
+</span><span data-line="601"><span class="sd"># --- `import stem_splitter` because `mp3` is undefined here. Commented out.</span>
+</span><span data-line="602"><span class="sd"># fmt = &quot;mp3&quot; if mp3 else &quot;wav&quot;</span>
+</span><span data-line="603"><span class="sd"># separate_audio(input_file, output_format=fmt, drumless=dl, all_stems=all_s)</span>
+</span><span data-line="604">
+</span><span data-line="605"><span class="sd">## The following block was for testing when the original demucs-extraction stem_splitter.py was built</span>
+</span><span data-line="606"><span class="sd"># temp_drum_file_path = None</span>
+</span><span data-line="607"><span class="sd"># temp_dir_to_clean = None</span>
+</span><span data-line="608"><span class="sd"># try:</span>
+</span><span data-line="609"><span class="sd"># Run the function</span>
+</span><span data-line="610"><span class="sd">#  temp_drum_file_path = extract_drum_stem(input_file)</span>
+</span><span data-line="611">
+</span><span data-line="612"><span class="sd"># On success, find the root temp directory</span>
+</span><span data-line="613"><span class="sd"># if temp_drum_file_path:</span>
+</span><span data-line="614"><span class="sd"># Path is .../temp_dir_xyz/htdemucs/song_name/drums.wav</span>
+</span><span data-line="615"><span class="sd"># We must delete the root temp directory, 3 levels up.</span>
+</span><span data-line="616"><span class="sd">#    temp_dir_to_clean = Path(temp_drum_file_path).parent.parent.parent</span>
+</span><span data-line="617"><span class="sd">#    print(f&quot;\n--- TEST SUCCESSFUL ---&quot;)</span>
+</span><span data-line="618"><span class="sd">#    print(f&quot;Drum file created at: {temp_drum_file_path}&quot;)</span>
+</span><span data-line="619"><span class="sd">#    print(f&quot;Root temp directory: {temp_dir_to_clean}&quot;)</span>
+</span><span data-line="620">
+</span><span data-line="621"><span class="sd"># except Exception as e:</span>
+</span><span data-line="622"><span class="sd">#  print(f&quot;\n--- TEST FAILED ---&quot;)</span>
+</span><span data-line="623"><span class="sd">#  print(f&quot;An error occurred: {e}&quot;)</span>
+</span><span data-line="624">
+</span><span data-line="625"><span class="sd"># commenting out the cleaning step (for now)</span>
+</span><span data-line="626"><span class="sd"># finally:</span>
+</span><span data-line="627"><span class="sd"># Clean up the temporary directory AFTER the test</span>
+</span><span data-line="628"><span class="sd"># if temp_dir_to_clean and Path(temp_dir_to_clean).exists():</span>
+</span><span data-line="629"><span class="sd"># try:</span>
+</span><span data-line="630"><span class="sd">#   shutil.rmtree(temp_dir_to_clean)</span>
+</span><span data-line="631"><span class="sd">#   print(f&quot;Successfully cleaned up temporary directory.&quot;)</span>
+</span><span data-line="632"><span class="sd"># except OSError as e:</span>
+</span><span data-line="633"><span class="sd">#   print(f&quot;Error cleaning up directory {temp_dir_to_clean}: {e}&quot;)</span>
+</span><span data-line="634"><span class="sd"># else:</span>
+</span><span data-line="635"><span class="sd">#   print(&quot;No temporary directory to clean up.&quot;)</span>
+</span><span data-line="636">
+</span><span data-line="637"><span class="sd"># ===============================================================================================</span>
+</span><span data-line="638"><span class="sd">&quot;&quot;&quot;</span>
 </span></pre></div>
         </article><button class="back-to-top" type="button">
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">

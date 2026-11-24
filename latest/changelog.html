@@ -250,25 +250,25 @@ data-aria-dark="Switch to auto color mode">
 <li><a class="reference internal" href="#roadmap"><strong>Roadmap</strong></a><ul>
 <li><a class="reference internal" href="#beta-release-target-late-2026"><strong>[1.0.0] - Beta release - Target: late-2026</strong></a><ul>
 <li><a class="reference internal" href="#additions"><em>Additions</em></a></li>
-<li><a class="reference internal" href="#changes"><em>Changes</em></a></li>
-<li><a class="reference internal" href="#fixes"><em>Fixes</em></a></li>
-<li><a class="reference internal" href="#tests"><em>Tests</em></a></li>
+<li><a class="reference internal" href="#id1"><em>Changes</em></a></li>
+<li><a class="reference internal" href="#id2"><em>Fixes</em></a></li>
+<li><a class="reference internal" href="#id3"><em>Tests</em></a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#november-2026"><strong>[0.4.0] - November 2026</strong></a></li>
-<li><a class="reference internal" href="#id2"><strong>[0.3.0] - November 2026</strong></a></li>
+<li><a class="reference internal" href="#id5"><strong>[0.3.0] - November 2026</strong></a></li>
 <li><a class="reference internal" href="#august-2026"><strong>[0.2.1] - August 2026</strong></a></li>
-<li><a class="reference internal" href="#id7"><strong>[0.2.0] - August 2026</strong></a></li>
+<li><a class="reference internal" href="#id10"><strong>[0.2.0] - August 2026</strong></a></li>
 <li><a class="reference internal" href="#june-2026"><strong>[0.1.6] - June 2026</strong></a><ul>
-<li><a class="reference internal" href="#id12"><em>Additions</em></a></li>
-<li><a class="reference internal" href="#id13"><em>Fixes</em></a></li>
+<li><a class="reference internal" href="#id15"><em>Additions</em></a></li>
+<li><a class="reference internal" href="#id16"><em>Fixes</em></a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#may-2026"><strong>[0.1.5] - 25 May 2026</strong></a><ul>
-<li><a class="reference internal" href="#id14"><em>Fixes</em></a></li>
+<li><a class="reference internal" href="#id17"><em>Fixes</em></a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#id15"><strong>[0.1.4] - 20 May 2026</strong></a><ul>
+<li><a class="reference internal" href="#id18"><strong>[0.1.4] - 20 May 2026</strong></a><ul>
 <li><a class="reference internal" href="#initial-public-alpha-release-to-pypi"><em>Initial public alpha release to PyPI</em></a></li>
 </ul>
 </li>
@@ -365,7 +365,7 @@ data-aria-dark="Switch to auto color mode">
           <section id="changelog">
 <h1><strong>Changelog</strong><a class="headerlink" href="#changelog" title="Link to this heading">#</a></h1>
 <!--date_added:thurs-28-may-2026-->
-<!--date_updated:sat-21-november-2026-->
+<!--date_updated:tue-24-november-2026-->
 <ul class="simple">
 <li><p>All notable changes related to the repository and pypi distribution of <code class="docutils literal notranslate"><span class="pre">DrumScript</span></code> will be documented here</p></li>
 <li><p>Format follows <strong><a class="reference external" href="https://keepachangelog.com/en/1.0.0/">Keep a Changelog</a></strong> and <strong><a class="reference external" href="https://semver.org/">Semantic Versioning</a></strong>.</p></li>
@@ -395,7 +395,27 @@ data-aria-dark="Switch to auto color mode">
 <blockquote>
 <div><p>Items listed below are <strong>currently in development</strong> but <strong>have not been distributed on PyPi</strong></p>
 </div></blockquote>
-<p><em>Nothing currently in progress. Items land here as they are merged to <code class="docutils literal notranslate"><span class="pre">main</span></code>.</em></p>
+<blockquote>
+<div><p class="rubric" id="changes"><em>Changes</em></p>
+</div></blockquote>
+<ul class="simple">
+<li><p>Integration test skip guards switched from <code class="docutils literal notranslate"><span class="pre">shutil.which(&quot;demucs&quot;)</span></code> to <code class="docutils literal notranslate"><span class="pre">importlib.util.find_spec(&quot;demucs&quot;)</span></code> in <code class="docutils literal notranslate"><span class="pre">tests/integration/test_stem_splitter_real.py</span></code> and <code class="docutils literal notranslate"><span class="pre">tests/integration/test_transcribe_real.py</span></code> (<a class="reference external" href="https://github.com/DrumScript/DrumScript/pull/362">#362</a> by <a class="reference external" href="https://github.com/ashenthefox">&#64;ashenthefox</a>). The PATH check stopped matching how DrumScript invokes Demucs when the call moved to <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">-m</span> <span class="pre">demucs</span></code>, so the guards could skip on a machine where the module was importable, or let the tests run on one where it was not.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">separate_audio()</span></code> now raises <code class="docutils literal notranslate"><span class="pre">RuntimeError</span></code> rather than <code class="docutils literal notranslate"><span class="pre">FileNotFoundError</span></code> when the Python interpreter itself cannot be started (<a class="reference external" href="https://github.com/DrumScript/DrumScript/pull/362">#362</a>). This is a rare path, reachable only if <code class="docutils literal notranslate"><span class="pre">sys.executable</span></code> is missing or unrunnable, but any caller catching <code class="docutils literal notranslate"><span class="pre">FileNotFoundError</span></code> around <code class="docutils literal notranslate"><span class="pre">separate_audio()</span></code> will no longer see it. <code class="docutils literal notranslate"><span class="pre">extract_drum_stem()</span></code> still raises <code class="docutils literal notranslate"><span class="pre">FileNotFoundError</span></code> in the same situation, so the two paths currently disagree.</p></li>
+</ul>
+<blockquote>
+<div><p class="rubric" id="fixes"><em>Fixes</em></p>
+</div></blockquote>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">separate_audio()</span></code> now reports a missing Demucs install clearly instead of dumping a raw traceback (<a class="reference external" href="https://github.com/DrumScript/DrumScript/issues/359">#359</a>, <a class="reference external" href="https://github.com/DrumScript/DrumScript/pull/362">#362</a> by <a class="reference external" href="https://github.com/ashenthefox">&#64;ashenthefox</a>). Running Demucs as a module means an absent install surfaces as a non-zero exit from <code class="docutils literal notranslate"><span class="pre">subprocess</span></code>, not as <code class="docutils literal notranslate"><span class="pre">FileNotFoundError</span></code>, so the old handler fell through to the generic branch. It now checks stderr for <code class="docutils literal notranslate"><span class="pre">No</span> <span class="pre">module</span> <span class="pre">named</span> <span class="pre">demucs</span></code> and returns the same install guidance <code class="docutils literal notranslate"><span class="pre">extract_drum_stem()</span></code> already gave.</p></li>
+<li><p>Roadmap links repaired in <code class="docutils literal notranslate"><span class="pre">docs/index.md</span></code> and <code class="docutils literal notranslate"><span class="pre">docs/about.md</span></code> (<a class="reference external" href="https://github.com/DrumScript/DrumScript/issues/354">#354</a>, <a class="reference external" href="https://github.com/DrumScript/DrumScript/pull/369">#369</a> by <a class="reference external" href="https://github.com/ashenthefox">&#64;ashenthefox</a>). Both read <code class="docutils literal notranslate"><span class="pre">./docs/guide/roadmap.md</span></code>, which resolves to <code class="docutils literal notranslate"><span class="pre">docs/docs/guide/roadmap.md</span></code> from a page already inside <code class="docutils literal notranslate"><span class="pre">docs/</span></code> and 404s on the published site. Corrected to <code class="docutils literal notranslate"><span class="pre">guide/roadmap.md</span></code>.</p></li>
+</ul>
+<blockquote>
+<div><p class="rubric" id="tests"><em>Tests</em></p>
+</div></blockquote>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">TestSeparateAudioDemucsErrors</span></code> added to <code class="docutils literal notranslate"><span class="pre">tests/unit/test_stem_splitter_cleanup.py</span></code> (<a class="reference external" href="https://github.com/DrumScript/DrumScript/pull/362">#362</a>). Three cases: a missing module gives actionable guidance, an unrelated Demucs failure keeps its exit code and stderr for debugging, and an unstartable interpreter is not misdiagnosed as a missing CLI. Each also asserts the user’s files survived.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">tests/unit/test_docs_roadmap_links.py</span></code> added (<a class="reference external" href="https://github.com/DrumScript/DrumScript/pull/369">#369</a>). Parametrised over <code class="docutils literal notranslate"><span class="pre">index.md</span></code> and <code class="docutils literal notranslate"><span class="pre">about.md</span></code>, it resolves every markdown <code class="docutils literal notranslate"><span class="pre">[roadmap](...)</span></code> link against its source page and asserts it lands on <code class="docutils literal notranslate"><span class="pre">docs/guide/roadmap.md</span></code>, so this class of broken link cannot return silently.</p></li>
+</ul>
 <!--* Migration of dependencies to python 3.13-->
 </section>
 <hr class="docutils" />
@@ -430,8 +450,8 @@ data-aria-dark="Switch to auto color mode">
 <blockquote>
 <div></div></blockquote>
 </section>
-<section id="changes">
-<h4><em>Changes</em><a class="headerlink" href="#changes" title="Link to this heading">#</a></h4>
+<section id="id1">
+<h4><em>Changes</em><a class="headerlink" href="#id1" title="Link to this heading">#</a></h4>
 <ul class="simple">
 <li><p>Transcription function docstrings to be updated to make clear that drum-only audio is expected as standard input</p></li>
 <li><p>README to be updated to clarify expected input for transcription functions</p></li>
@@ -456,8 +476,8 @@ data-aria-dark="Switch to auto color mode">
 <li><p><code class="docutils literal notranslate"><span class="pre">docs/guide/usage.md</span></code>: the silent 4/4 fallback in <code class="docutils literal notranslate"><span class="pre">pdf_exporter.py</span></code> line 138 is a code smell independent of the docs - a user typo like <code class="docutils literal notranslate"><span class="pre">--ts</span> <span class="pre">44</span></code> also silently becomes 4/4. A <code class="docutils literal notranslate"><span class="pre">print</span></code> warning in that <code class="docutils literal notranslate"><span class="pre">except</span> <span class="pre">ValueError</span></code> would be a small improvement on documentation #297</p></li>
 </ul>
 </section>
-<section id="fixes">
-<h4><em>Fixes</em><a class="headerlink" href="#fixes" title="Link to this heading">#</a></h4>
+<section id="id2">
+<h4><em>Fixes</em><a class="headerlink" href="#id2" title="Link to this heading">#</a></h4>
 <ul class="simple">
 <li><p>Cymbal and hi-hat stem rendering: note tails and heads correctly aligned</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">main.py</span></code> structural bug: duplicated pipeline inside <code class="docutils literal notranslate"><span class="pre">except</span></code> block needs removing, error handling needs restructuring</p></li>
@@ -465,8 +485,8 @@ data-aria-dark="Switch to auto color mode">
 <li><p><code class="docutils literal notranslate"><span class="pre">ds.extract_stems(verbose=True)</span></code> does not return the backing-track path (#266). It calls <code class="docutils literal notranslate"><span class="pre">separate_audio()</span></code>, whose dict includes the backing-track path under <code class="docutils literal notranslate"><span class="pre">mix</span></code>, but then discards that dict and builds its own (<code class="docutils literal notranslate"><span class="pre">status</span></code>, <code class="docutils literal notranslate"><span class="pre">drum_stem_path</span></code>, <code class="docutils literal notranslate"><span class="pre">original_file</span></code>, <code class="docutils literal notranslate"><span class="pre">output_directory</span></code>) - dropping the one path the user asked for when calling with <code class="docutils literal notranslate"><span class="pre">drumless=True</span></code>. The backing track is created on disk but its location is never reported, so the caller has to reconstruct it from <code class="docutils literal notranslate"><span class="pre">output_directory</span></code> plus the <code class="docutils literal notranslate"><span class="pre">&lt;input&gt;_no_drums.&lt;ext&gt;</span></code> naming convention. Fix: carry the path through from <code class="docutils literal notranslate"><span class="pre">separate_audio()</span></code> under a readable key, <code class="docutils literal notranslate"><span class="pre">backing_track_path</span></code> (rather than reintroducing the terse <code class="docutils literal notranslate"><span class="pre">mix</span></code>), and update the README backing-track example to use it. Keeps the readable key names introduced in v0.2.0 while restoring the missing path (#298)</p></li>
 </ul>
 </section>
-<section id="tests">
-<h4><em>Tests</em><a class="headerlink" href="#tests" title="Link to this heading">#</a></h4>
+<section id="id3">
+<h4><em>Tests</em><a class="headerlink" href="#id3" title="Link to this heading">#</a></h4>
 <ul class="simple">
 <li><p><strong>Onset timing precision</strong>: investigate user feedback on score generation. Though quantisation is used, look at the extent to which slight imperfections in onset detection cause notes to be placed at incorrect positions in the score (e.g. snare hit at 0.503s instead of 0.500s generates spurious rests). https://github.com/DrumScript/DrumScript/issues/274</p></li>
 </ul>
@@ -485,7 +505,7 @@ data-aria-dark="Switch to auto color mode">
 announces the deprecation of Python 3.9.</p>
 </div></blockquote>
 <blockquote>
-<div><p class="rubric" id="id1"><em>Changes</em></p>
+<div><p class="rubric" id="id4"><em>Changes</em></p>
 </div></blockquote>
 <p><strong>Dependencies:</strong></p>
 <ul class="simple">
@@ -506,14 +526,14 @@ announces the deprecation of Python 3.9.</p>
 <li><p><strong>Python 3.9 support will be removed in a future release</strong> (<a class="reference external" href="https://github.com/DrumScript/DrumScript/issues/364">#364</a>). 3.9 reached end of life in October 2025. Supporting it caps numpy at 2.0 (2.1 requires 3.10, 2.3 requires 3.11, 2.5 requires 3.12), it is the only version where the Demucs integration tests fail, it requires a lameenc downgrade because the locked 1.8.2 has no macOS wheel for 3.9, and it now forces the CI runner to stay on an older Ubuntu image.</p></li>
 </ul>
 </section>
-<section id="id2">
-<h3><strong>[0.3.0] - November 2026</strong><a class="headerlink" href="#id2" title="Link to this heading">#</a></h3>
+<section id="id5">
+<h3><strong>[0.3.0] - November 2026</strong><a class="headerlink" href="#id5" title="Link to this heading">#</a></h3>
 <blockquote>
 <div><p><strong>Minor-version bump.</strong> Adds MIDI-only export, a transcription regression
 harness, and expanded benchmark dataset coverage.</p>
 </div></blockquote>
 <blockquote>
-<div><p class="rubric" id="id3"><em>Additions</em></p>
+<div><p class="rubric" id="id6"><em>Additions</em></p>
 </div></blockquote>
 <p><strong>API/CLI:</strong></p>
 <ul class="simple">
@@ -540,7 +560,7 @@ harness, and expanded benchmark dataset coverage.</p>
 <li><p>Added <code class="docutils literal notranslate"><span class="pre">tests/regression/README.md</span></code> documenting the config schema, every flag, the exit codes and how to substitute your own audio.</p></li>
 </ul>
 <blockquote>
-<div><p class="rubric" id="id4"><em>Changes</em></p>
+<div><p class="rubric" id="id7"><em>Changes</em></p>
 </div></blockquote>
 <p><strong>Benchmarks:</strong></p>
 <ul class="simple">
@@ -580,7 +600,7 @@ harness, and expanded benchmark dataset coverage.</p>
 <li><p>Unit case count updated to 180 across 15 files in <code class="docutils literal notranslate"><span class="pre">tests/README.md</span></code>, <code class="docutils literal notranslate"><span class="pre">docs/development/testing_guidance.md</span></code> and the root <code class="docutils literal notranslate"><span class="pre">README.md</span></code>. Superseded figures commented out rather than deleted, per project convention.</p></li>
 </ul>
 <blockquote>
-<div><p class="rubric" id="id5"><em>Fixes</em></p>
+<div><p class="rubric" id="id8"><em>Fixes</em></p>
 </div></blockquote>
 <p><a class="reference external" href="https://github.com/DrumScript/DrumScript/issues/356">#356</a>. All three error paths in <code class="docutils literal notranslate"><span class="pre">extract_drum_stem()</span></code> ended in <code class="docutils literal notranslate"><span class="pre">shutil.rmtree(temp_output_dir)</span></code>. <code class="docutils literal notranslate"><span class="pre">temp_output_dir</span></code> is the caller’s <code class="docutils literal notranslate"><span class="pre">output_dir</span></code>, which defaults to <code class="docutils literal notranslate"><span class="pre">Path.cwd()</span></code>, so <code class="docutils literal notranslate"><span class="pre">drumscript</span> <span class="pre">song.flac</span> <span class="pre">--full-song</span></code> run from a folder with Demucs unavailable deleted that folder and everything in it. The variable name was left over from an earlier version that genuinely did use <code class="docutils literal notranslate"><span class="pre">tempfile.mkdtemp()</span></code>, and kept implying the directory was disposable long after it had stopped being so. Cleanup now goes through a new <code class="docutils literal notranslate"><span class="pre">_cleanup_demucs_output()</span></code> helper, which removes only <code class="docutils literal notranslate"><span class="pre">&lt;output_dir&gt;/htdemucs/&lt;input</span> <span class="pre">stem&gt;/</span></code>, the folder Demucs itself created, then removes the <code class="docutils literal notranslate"><span class="pre">htdemucs/</span></code> parent with <code class="docutils literal notranslate"><span class="pre">rmdir()</span></code> so an empty folder left behind by a failed run is tidied while a non-empty folder of the same name is never touched. The three original <code class="docutils literal notranslate"><span class="pre">shutil.rmtree</span></code> calls are commented out above the replacements rather than deleted, per project convention.</p>
 <ul class="simple">
@@ -603,7 +623,7 @@ harness, and expanded benchmark dataset coverage.</p>
 <h3><strong>[0.2.1] - August 2026</strong><a class="headerlink" href="#august-2026" title="Link to this heading">#</a></h3>
 <blockquote>
 <div><p><strong>Patch release.</strong> Fixes a broken install experience on Python 3.13.</p>
-<p class="rubric" id="id6"><em>Fixes</em></p>
+<p class="rubric" id="id9"><em>Fixes</em></p>
 </div></blockquote>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">pyproject.toml</span></code>: <code class="docutils literal notranslate"><span class="pre">requires-python</span></code> lowered from <code class="docutils literal notranslate"><span class="pre">&lt;3.14</span></code> to <code class="docutils literal notranslate"><span class="pre">&lt;3.13</span></code>. Python 3.13
@@ -614,12 +634,12 @@ Python 3.13 support is tracked in <a class="reference external" href="https://gi
 </ul>
 </section>
 <hr class="docutils" />
-<section id="id7">
-<h3><strong>[0.2.0] - August 2026</strong><a class="headerlink" href="#id7" title="Link to this heading">#</a></h3>
+<section id="id10">
+<h3><strong>[0.2.0] - August 2026</strong><a class="headerlink" href="#id10" title="Link to this heading">#</a></h3>
 <blockquote>
 <div><p><strong>First minor-version bump</strong></p>
 <p>Signals the start of the breaking-change track for –full flag (replaced by –verbose) ahead of v1.0.0 beta.–&gt;</p>
-<p class="rubric" id="id8"><em>Additions</em></p>
+<p class="rubric" id="id11"><em>Additions</em></p>
 </div></blockquote>
 <ul class="simple">
 <li><p>Versioned documentation deployment via <code class="docutils literal notranslate"><span class="pre">docs.yml</span></code> GitHub Actions workflow (<code class="docutils literal notranslate"><span class="pre">docs/versioned-deploy</span></code> branch):</p>
@@ -647,7 +667,7 @@ Python 3.13 support is tracked in <a class="reference external" href="https://gi
 <li><p><code class="docutils literal notranslate"><span class="pre">scripts/backup.sh</span></code> and <code class="docutils literal notranslate"><span class="pre">scripts/collect_code.sh</span></code> are now tracked in the repository rather than gitignored, so the archiving and code-bundling helpers are public.</p></li>
 </ul>
 <blockquote>
-<div><p class="rubric" id="id9"><em>Changes</em></p>
+<div><p class="rubric" id="id12"><em>Changes</em></p>
 </div></blockquote>
 <ul class="simple">
 <li><p>Updated table ordering in <code class="docutils literal notranslate"><span class="pre">docs/index.md</span></code> to match right sidebar ordering and added missing sidebar navigation point for tempogram-detection</p></li>
@@ -668,7 +688,7 @@ Python 3.13 support is tracked in <a class="reference external" href="https://gi
 <li><p>Ruff now excludes <code class="docutils literal notranslate"><span class="pre">*.sh</span></code>, so a shell script passed to it explicitly is not parsed as Python (#344)</p></li>
 </ul>
 <blockquote>
-<div><p class="rubric" id="id10"><em>Fixes</em></p>
+<div><p class="rubric" id="id13"><em>Fixes</em></p>
 </div></blockquote>
 <ul class="simple">
 <li><p>Adjusted documentation so that when version appears in documentation it is no longer hardcoded, but linked to <code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">importlib.metadata</span></code> in <code class="docutils literal notranslate"><span class="pre">drumscript/__init__.py</span></code> [Reduces maintenance burden on contributors]</p></li>
@@ -686,7 +706,7 @@ Python 3.13 support is tracked in <a class="reference external" href="https://gi
 <li><p>Confirmed <code class="docutils literal notranslate"><span class="pre">onset_detector.py</span></code> standalone mode takes a user-supplied audio path (<code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">-m</span> <span class="pre">drumscript.audio_processor.onset_detector</span> <span class="pre">&lt;audio_file&gt;</span></code>) rather than hardcoded test paths, and documented it in <code class="docutils literal notranslate"><span class="pre">cli_reference.md</span></code>. (#102)</p></li>
 </ul>
 <blockquote>
-<div><p class="rubric" id="id11"><em>Tests</em></p>
+<div><p class="rubric" id="id14"><em>Tests</em></p>
 </div></blockquote>
 <ul class="simple">
 <li><p>Did full audit of all <code class="docutils literal notranslate"><span class="pre">drumscript</span></code> code to ensure <code class="docutils literal notranslate"><span class="pre">full-flag</span></code> / <code class="docutils literal notranslate"><span class="pre">full_flag</span></code> consistency throughout, following v0.1.6 release fix replacing <code class="docutils literal notranslate"><span class="pre">full=True</span></code> with <code class="docutils literal notranslate"><span class="pre">verbose=True</span></code> (<code class="docutils literal notranslate"><span class="pre">DeprecationShim</span></code>)</p></li>
@@ -703,8 +723,8 @@ Python 3.13 support is tracked in <a class="reference external" href="https://gi
 <div><p><strong><code class="docutils literal notranslate"><span class="pre">v0.1.6</span></code> is the final v0.1.<em>x</em> release.</strong>
 After this, the next release jumps to v0.2.0 to signal the deprecation shim for the <code class="docutils literal notranslate"><span class="pre">full</span></code> → <code class="docutils literal notranslate"><span class="pre">verbose</span></code> removal.</p>
 </div></blockquote>
-<section id="id12">
-<h4><em>Additions</em><a class="headerlink" href="#id12" title="Link to this heading">#</a></h4>
+<section id="id15">
+<h4><em>Additions</em><a class="headerlink" href="#id15" title="Link to this heading">#</a></h4>
 <ul class="simple">
 <li><p>Deprecation shim for <code class="docutils literal notranslate"><span class="pre">full</span></code> parameter on the Python API:</p>
 <ul>
@@ -729,8 +749,8 @@ After this, the next release jumps to v0.2.0 to signal the deprecation shim for 
 <li><p>New unit test file <code class="docutils literal notranslate"><span class="pre">tests/unit/test_cli_args.py</span></code> (4 tests)</p></li>
 </ul>
 </section>
-<section id="id13">
-<h4><em>Fixes</em><a class="headerlink" href="#id13" title="Link to this heading">#</a></h4>
+<section id="id16">
+<h4><em>Fixes</em><a class="headerlink" href="#id16" title="Link to this heading">#</a></h4>
 <ul class="simple">
 <li><p>Commented-out dead code removed from <code class="docutils literal notranslate"><span class="pre">drumscript/__init__.py</span></code> and <code class="docutils literal notranslate"><span class="pre">drumscript/main.py</span></code></p></li>
 <li><p>Flag inconsistency between <code class="docutils literal notranslate"><span class="pre">drumscript/main.py</span></code> and <code class="docutils literal notranslate"><span class="pre">drumscript/__init__.py</span></code> resolved: <code class="docutils literal notranslate"><span class="pre">argparse</span></code> in main block updated so the CLI flag is now <code class="docutils literal notranslate"><span class="pre">--full-song</span></code> (hyphenated, consistent with <code class="docutils literal notranslate"><span class="pre">--all-stems</span></code>). Auto-converts to <code class="docutils literal notranslate"><span class="pre">args.full_song</span></code> matching the Python API parameter name.</p></li>
@@ -739,8 +759,8 @@ After this, the next release jumps to v0.2.0 to signal the deprecation shim for 
 </section>
 <section id="may-2026">
 <h3><strong>[0.1.5] - 25 May 2026</strong><a class="headerlink" href="#may-2026" title="Link to this heading">#</a></h3>
-<section id="id14">
-<h4><em>Fixes</em><a class="headerlink" href="#id14" title="Link to this heading">#</a></h4>
+<section id="id17">
+<h4><em>Fixes</em><a class="headerlink" href="#id17" title="Link to this heading">#</a></h4>
 <ul class="simple">
 <li><p>Emergency fix: transcription outputs</p></li>
 <li><p>Updated docstrings to clarify expected input for transcription functions</p></li>
@@ -749,8 +769,8 @@ After this, the next release jumps to v0.2.0 to signal the deprecation shim for 
 <div></div></blockquote>
 </section>
 </section>
-<section id="id15">
-<h3><strong>[0.1.4] - 20 May 2026</strong><a class="headerlink" href="#id15" title="Link to this heading">#</a></h3>
+<section id="id18">
+<h3><strong>[0.1.4] - 20 May 2026</strong><a class="headerlink" href="#id18" title="Link to this heading">#</a></h3>
 <blockquote>
 <div><p><strong>First PyPI publication</strong></p>
 </div></blockquote>

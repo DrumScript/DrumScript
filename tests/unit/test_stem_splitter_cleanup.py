@@ -56,16 +56,24 @@ def assert_user_files_survived(working_dir):
 class TestErrorPathsDoNotDeleteTheWorkingDirectory:
     """Each error path in extract_drum_stem, driven with Demucs stubbed out."""
 
-    def test_demucs_not_installed(self, working_dir):
+    # def test_demucs_not_installed(self, working_dir):
+    def test_python_interpreter_cannot_be_started(self, working_dir):
         """
-        The reporter's exact case: Demucs missing, nothing written yet.
+        Subprocess cannot start the program at all, so nothing was written yet.
 
-        Before the fix this deleted the working directory and raised afterwards,
-        so the user saw the error message and lost the folder anyway.
+        This was the reporter's exact case in v0.2.1, when the command was a bare
+        ``demucs`` and a missing install surfaced here as ``FileNotFoundError``. Since
+        the command became ``[sys.executable, "-m", "demucs", ...]`` a missing Demucs
+        exits non-zero and is handled by the branch above, so the only way to reach this
+        path now is an interpreter that will not run. Hence the rename.
+
+        What the test asserts is unchanged: this path must not delete the working
+        directory. Before the fix it deleted the folder and raised afterwards, so the
+        user saw the error message and lost their files anyway.
         """
         # Arrange / Act
         with patch("subprocess.run", side_effect=FileNotFoundError("demucs")):
-            with pytest.raises(FileNotFoundError):
+            with pytest.raises(RuntimeError):
                 extract_drum_stem(str(working_dir / "song.flac"))
 
         # Assert
@@ -113,7 +121,7 @@ class TestErrorPathsDoNotDeleteTheWorkingDirectory:
 
         # Act
         with patch("subprocess.run", side_effect=FileNotFoundError("demucs")):
-            with pytest.raises(FileNotFoundError):
+            with pytest.raises(RuntimeError):
                 extract_drum_stem(str(working_dir / "song.flac"), output_dir=str(chosen))
 
         # Assert
@@ -138,7 +146,7 @@ class TestCleanupStillRemovesWhatDemucsCreated:
 
         # Act
         with patch("subprocess.run", side_effect=FileNotFoundError("demucs")):
-            with pytest.raises(FileNotFoundError):
+            with pytest.raises(RuntimeError):
                 extract_drum_stem(str(working_dir / "song.flac"))
 
         # Assert
@@ -170,7 +178,7 @@ class TestCleanupStillRemovesWhatDemucsCreated:
 
         # Act
         with patch("subprocess.run", side_effect=FileNotFoundError("demucs")):
-            with pytest.raises(FileNotFoundError):
+            with pytest.raises(RuntimeError):
                 extract_drum_stem(str(working_dir / "song.flac"))
 
         # Assert
@@ -191,7 +199,7 @@ class TestCleanupStillRemovesWhatDemucsCreated:
 
         # Act
         with patch("subprocess.run", side_effect=FileNotFoundError("demucs")):
-            with pytest.raises(FileNotFoundError):
+            with pytest.raises(RuntimeError):
                 extract_drum_stem(str(working_dir / "song.flac"))
 
         # Assert
@@ -217,7 +225,7 @@ class TestDemucsIsInvokedAsAModule:
         """The command must be ``<python> -m demucs ...``, not a bare ``demucs``."""
         # Arrange / Act
         with patch("subprocess.run", side_effect=FileNotFoundError("x")) as mock_run:
-            with pytest.raises(FileNotFoundError):
+            with pytest.raises(RuntimeError):
                 extract_drum_stem(str(working_dir / "song.flac"))
 
         # Assert

@@ -198,10 +198,16 @@ def separate_audio(
         shutil.rmtree(temp_demucs_dir, ignore_errors=True)
         # Surface BOTH stdout and stderr. Demucs writes the progress bar to stderr,
         # so the real error often sits at the END of stderr, not the start.
-        # --- LEGACY: raise RuntimeError(f"Demucs failed: {e.stderr}")
-        raise RuntimeError(f"Demucs failed (exit code {e.returncode}).\n--- STDOUT ---\n{e.stdout}\n--- STDERR ---\n{e.stderr}")
-    except FileNotFoundError:
-        raise FileNotFoundError("The 'demucs' command was not found. Please install it.")
+        # A missing Python module causes a non-zero exit, not FileNotFoundError.
+        if "No module named demucs" in (e.stderr or ""):
+            raise RuntimeError(
+                "Demucs is not installed in this environment, so stem separation cannot run. "
+                "Demucs is a DrumScript dependency; the installation may be incomplete. "
+                "Try 'pip install --force-reinstall drumscript'."
+            ) from e
+        raise RuntimeError(f"Demucs failed (exit code {e.returncode}).\n--- STDOUT ---\n{e.stdout}\n--- STDERR ---\n{e.stderr}") from e
+    except FileNotFoundError as e:
+        raise RuntimeError("Unable to start the Python interpreter to run Demucs.") from e
 
     print(f"Demucs raw separation finished in {((time.monotonic() - start_time) / 60):.2f} minutes.")
 
@@ -455,15 +461,20 @@ def extract_drum_stem(audio_path: str, output_dir: str = None) -> str:
             ) from e
         raise RuntimeError(f"Demucs failed to process the audio (exit {e.returncode}).\nSTDERR: {e.stderr}")
 
-    except FileNotFoundError:
+    except FileNotFoundError as e:
         # as above. This was the path the reporter hit: Demucs was not installed, so nothing
         # had been written yet, and the cleanup removed their Downloads folder instead.
         # shutil.rmtree(temp_output_dir, ignore_errors=True)  # Clean up
         _cleanup_demucs_output(temp_output_dir, audio_path)  # Clean up
-        raise FileNotFoundError(
-            "Demucs could not be run. It ships as a dependency of DrumScript, so this usually means the environment "
-            "is incomplete. Try reinstalling with 'pip install --force-reinstall drumscript'."
-        )
+        # Since the call became [sys.executable, "-m", "demucs", ...], a missing Demucs exits non-zero and is
+        # handled above. The only way to reach here now is an interpreter that cannot be started, so the old
+        # message sent users to reinstall DrumScript for a problem a reinstall would not touch. Matches
+        # separate_audio(), which raises RuntimeError for the same condition.
+        # raise FileNotFoundError(
+        #     "Demucs could not be run. It ships as a dependency of DrumScript, so this usually means the environment "
+        #     "is incomplete. Try reinstalling with 'pip install --force-reinstall drumscript'."
+        # )
+        raise RuntimeError("Unable to start the Python interpreter to run Demucs.") from e
 
     # 4. Find and return the path to the drum file
     input_filename_stem = Path(audio_path).stem

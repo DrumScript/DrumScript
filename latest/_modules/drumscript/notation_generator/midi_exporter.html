@@ -304,11 +304,11 @@ data-aria-dark="Switch to auto color mode">
   <article class="yue" role="main">
           <h1>Source code for drumscript.notation_generator.midi_exporter</h1><div class="highlight"><pre>
 <span></span><span data-line="1"><span class="c1"># DrumScript/notation_generator/midi_exporter.py</span>
-</span><span data-line="2"><span class="sd">&quot;&quot;&quot;</span>
+</span><span data-line="2"><span class="sd">"""</span>
 </span><span data-line="3"><span class="sd">This module takes classified drum events and renders them into a standard MIDI file.</span>
 </span><span data-line="4">
-</span><span data-line="5"><span class="sd">Uses event[&#39;time&#39;] and event[&#39;drums&#39;].</span>
-</span><span data-line="6"><span class="sd">&quot;&quot;&quot;</span>
+</span><span data-line="5"><span class="sd">Uses event['time'] and event['drums'].</span>
+</span><span data-line="6"><span class="sd">"""</span>
 </span><span data-line="7">
 </span><span data-line="8"><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
 </span><span data-line="9">
@@ -320,34 +320,34 @@ data-aria-dark="Switch to auto color mode">
 <div class="viewcode-block" id="export_to_midi">
 <a class="viewcode-back" href="../../../generated/drumscript.notation_generator.midi_exporter.export_to_midi.html#drumscript.notation_generator.midi_exporter.export_to_midi">[docs]</a>
 </span><span data-line="15"><span class="k">def</span><span class="w"> </span><span class="nf">export_to_midi</span><span class="p">(</span><span class="n">classified_events</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">],</span> <span class="n">output_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">tempo</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">120.0</span><span class="p">):</span>
-</span><span data-line="16"><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span data-line="16"><span class="w">    </span><span class="sd">"""</span>
 </span><span data-line="17"><span class="sd">    Takes a list of event dictionaries and writes a standard .mid file.</span>
 </span><span data-line="18">
-</span><span data-line="19"><span class="sd">    :param classified_events: List of dicts containing &#39;time_sec&#39; and &#39;instruments&#39;.</span>
-</span><span data-line="20"><span class="sd">    :param output_path: Where to save the file (e.g., &#39;output/drum_score.mid&#39;).</span>
+</span><span data-line="19"><span class="sd">    :param classified_events: List of dicts containing 'time_sec' and 'instruments'.</span>
+</span><span data-line="20"><span class="sd">    :param output_path: Where to save the file (e.g., 'output/drum_score.mid').</span>
 </span><span data-line="21"><span class="sd">    :param tempo: The detected BPM of the track.</span>
-</span><span data-line="22"><span class="sd">    &quot;&quot;&quot;</span>
+</span><span data-line="22"><span class="sd">    """</span>
 </span><span data-line="23">    <span class="c1"># 1. Initialise a new MIDI object with the detected tempo</span>
 </span><span data-line="24">    <span class="n">midi</span> <span class="o">=</span> <span class="n">pretty_midi</span><span class="o">.</span><span class="n">PrettyMIDI</span><span class="p">(</span><span class="n">initial_tempo</span><span class="o">=</span><span class="n">tempo</span><span class="p">)</span>
 </span><span data-line="25">
 </span><span data-line="26">    <span class="c1"># 2. Create a Drum Track (program=0, is_drum=True forces it to MIDI Channel 10)</span>
-</span><span data-line="27">    <span class="n">drum_track</span> <span class="o">=</span> <span class="n">pretty_midi</span><span class="o">.</span><span class="n">Instrument</span><span class="p">(</span><span class="n">program</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">is_drum</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;DrumScript Output&quot;</span><span class="p">)</span>
+</span><span data-line="27">    <span class="n">drum_track</span> <span class="o">=</span> <span class="n">pretty_midi</span><span class="o">.</span><span class="n">Instrument</span><span class="p">(</span><span class="n">program</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">is_drum</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">"DrumScript Output"</span><span class="p">)</span>
 </span><span data-line="28">
 </span><span data-line="29">    <span class="c1"># 3. Loop through your beautifully classified timeline</span>
 </span><span data-line="30">    <span class="k">for</span> <span class="n">event</span> <span class="ow">in</span> <span class="n">classified_events</span><span class="p">:</span>
-</span><span data-line="31">        <span class="c1"># time_sec = event[&quot;time&quot;]</span>
-</span><span data-line="32">        <span class="n">time_sec</span> <span class="o">=</span> <span class="n">event</span><span class="p">[</span><span class="s2">&quot;time_sec&quot;</span><span class="p">]</span>
-</span><span data-line="33">        <span class="c1"># instruments = event[&quot;drums&quot;]</span>
-</span><span data-line="34">        <span class="n">instruments</span> <span class="o">=</span> <span class="n">event</span><span class="p">[</span><span class="s2">&quot;instruments&quot;</span><span class="p">]</span>
+</span><span data-line="31">        <span class="c1"># time_sec = event["time"]</span>
+</span><span data-line="32">        <span class="n">time_sec</span> <span class="o">=</span> <span class="n">event</span><span class="p">[</span><span class="s2">"time_sec"</span><span class="p">]</span>
+</span><span data-line="33">        <span class="c1"># instruments = event["drums"]</span>
+</span><span data-line="34">        <span class="n">instruments</span> <span class="o">=</span> <span class="n">event</span><span class="p">[</span><span class="s2">"instruments"</span><span class="p">]</span>
 </span><span data-line="35">
 </span><span data-line="36">        <span class="c1"># Multiple instruments can hit at the exact same millisecond!</span>
 </span><span data-line="37">        <span class="k">for</span> <span class="n">inst</span> <span class="ow">in</span> <span class="n">instruments</span><span class="p">:</span>
 </span><span data-line="38">            <span class="c1"># Check if our physics engine spit out an instrument we have in our map</span>
 </span><span data-line="39">            <span class="k">if</span> <span class="n">inst</span> <span class="ow">in</span> <span class="n">DRUM_NOTATION_MAP</span><span class="p">:</span>
-</span><span data-line="40">                <span class="n">midi_pitch</span> <span class="o">=</span> <span class="n">DRUM_NOTATION_MAP</span><span class="p">[</span><span class="n">inst</span><span class="p">][</span><span class="s2">&quot;midi_program&quot;</span><span class="p">]</span>
+</span><span data-line="40">                <span class="n">midi_pitch</span> <span class="o">=</span> <span class="n">DRUM_NOTATION_MAP</span><span class="p">[</span><span class="n">inst</span><span class="p">][</span><span class="s2">"midi_program"</span><span class="p">]</span>
 </span><span data-line="41">
 </span><span data-line="42">                <span class="c1"># Create the MIDI Note.</span>
-</span><span data-line="43">                <span class="c1"># (Drums don&#39;t hold sustain, so a 0.1s duration is standard for sheet music)</span>
+</span><span data-line="43">                <span class="c1"># (Drums don't hold sustain, so a 0.1s duration is standard for sheet music)</span>
 </span><span data-line="44">                <span class="n">note</span> <span class="o">=</span> <span class="n">pretty_midi</span><span class="o">.</span><span class="n">Note</span><span class="p">(</span>
 </span><span data-line="45">                    <span class="n">velocity</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>  <span class="c1"># Default strong hit</span>
 </span><span data-line="46">                    <span class="n">pitch</span><span class="o">=</span><span class="n">midi_pitch</span><span class="p">,</span>  <span class="c1"># E.g., 36 for Kick, 38 for Snare</span>
@@ -357,30 +357,30 @@ data-aria-dark="Switch to auto color mode">
 </span><span data-line="50">
 </span><span data-line="51">                <span class="n">drum_track</span><span class="o">.</span><span class="n">notes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">note</span><span class="p">)</span>
 </span><span data-line="52">            <span class="k">else</span><span class="p">:</span>
-</span><span data-line="53">                <span class="c1"># If the classifier guessed &#39;unknown&#39;, we skip it for the clean score</span>
+</span><span data-line="53">                <span class="c1"># If the classifier guessed 'unknown', we skip it for the clean score</span>
 </span><span data-line="54">                <span class="k">pass</span>
 </span><span data-line="55">
 </span><span data-line="56">    <span class="c1"># 4. Add the finished track to the file and save it</span>
 </span><span data-line="57">    <span class="n">midi</span><span class="o">.</span><span class="n">instruments</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">drum_track</span><span class="p">)</span>
 </span><span data-line="58">
 </span><span data-line="59">    <span class="c1"># Ensure directory exists when an output directory is specified</span>
-</span><span data-line="60">    <span class="c1"># SUPERSEDED: os.path.dirname() returns &quot;&quot; for a bare filename such as</span>
-</span><span data-line="61">    <span class="c1"># &quot;my_drums.mid&quot;, and os.makedirs(&quot;&quot;) raises FileNotFoundError. Kept from #348.</span>
+</span><span data-line="60">    <span class="c1"># SUPERSEDED: os.path.dirname() returns "" for a bare filename such as</span>
+</span><span data-line="61">    <span class="c1"># "my_drums.mid", and os.makedirs("") raises FileNotFoundError. Kept from #348.</span>
 </span><span data-line="62">    <span class="c1"># os.makedirs(os.path.dirname(output_path), exist_ok=True)</span>
 </span><span data-line="63">    <span class="n">output_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">output_path</span><span class="p">)</span>
 </span><span data-line="64">    <span class="k">if</span> <span class="n">output_dir</span><span class="p">:</span>
 </span><span data-line="65">        <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">output_dir</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </span><span data-line="66">    <span class="n">midi</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">output_path</span><span class="p">)</span>
 </span><span data-line="67">
-</span><span data-line="68">    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;SUCCESS: MIDI file generated at -&gt; </span><span class="si">{</span><span class="n">output_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+</span><span data-line="68">    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"SUCCESS: MIDI file generated at -&gt; </span><span class="si">{</span><span class="n">output_path</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span></div>
 
 </span><span data-line="69">
 </span><span data-line="70">
 </span><span data-line="71"><span class="c1"># --------------------------------------------------------------------------uncomment during testing</span>
 </span><span data-line="72"><span class="c1"># from datetime import datetime</span>
-</span><span data-line="73"><span class="c1"># print(&quot;\n# ------------------------------------------------------------------------------------&quot;)</span>
+</span><span data-line="73"><span class="c1"># print("\n# ------------------------------------------------------------------------------------")</span>
 </span><span data-line="74"><span class="c1"># datetimestamp = datetime.now()</span>
-</span><span data-line="75"><span class="c1"># print(f&#39;\ndate/time: {datetimestamp}&#39;)</span>
+</span><span data-line="75"><span class="c1"># print(f'\ndate/time: {datetimestamp}')</span>
 </span><span data-line="76"><span class="c1"># --------------------------------------------------------------------------------------------------</span>
 </span></pre></div>
         </article><button class="back-to-top" type="button">

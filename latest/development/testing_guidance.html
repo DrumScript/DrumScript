@@ -512,7 +512,7 @@ development.</p>
 : Tests that require external dependencies - Demucs, ffmpeg, real audio
 files. Always combined with <code class="docutils literal notranslate"><span class="pre">slow</span></code>.</p>
 <div class="highlight-zsh notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="c1"># Fast loop (default)</span>
-</span><span data-line="2">pytest<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;not slow&quot;</span>
+</span><span data-line="2">pytest<span class="w"> </span>-m<span class="w"> </span><span class="s2">"not slow"</span>
 </span><span data-line="3">
 </span><span data-line="4"><span class="c1"># Integration tests only</span>
 </span><span data-line="5">pytest<span class="w"> </span>-m<span class="w"> </span>integration
@@ -532,7 +532,7 @@ If you add a new marker category, register it in <code class="docutils literal n
 <section id="writing-a-new-test">
 <h2>Writing a New Test<a class="headerlink" href="#writing-a-new-test" title="Link to this heading">#</a></h2>
 <section id="pick-the-right-layer">
-<h3>1. Pick the right layer<a class="headerlink" href="#pick-the-right-layer" title="Link to this heading">#</a></h3>
+<span id="1-pick-the-right-layer"></span><h3>1. Pick the right layer<a class="headerlink" href="#pick-the-right-layer" title="Link to this heading">#</a></h3>
 <p>Ask yourself: <em>does my test need to touch the filesystem, run a subprocess, or
 load audio that takes more than 100ms?</em></p>
 <ul class="simple">
@@ -542,7 +542,7 @@ load audio that takes more than 100ms?</em></p>
 </ul>
 </section>
 <section id="follow-the-file-conventions">
-<h3>2. Follow the file conventions<a class="headerlink" href="#follow-the-file-conventions" title="Link to this heading">#</a></h3>
+<span id="2-follow-the-file-conventions"></span><h3>2. Follow the file conventions<a class="headerlink" href="#follow-the-file-conventions" title="Link to this heading">#</a></h3>
 <ul class="simple">
 <li><p>Filename: <code class="docutils literal notranslate"><span class="pre">test_*.py</span></code></p></li>
 <li><p>Class names: <code class="docutils literal notranslate"><span class="pre">Test*</span></code></p></li>
@@ -552,7 +552,7 @@ treats each method as a separate test.</p></li>
 </ul>
 </section>
 <section id="use-arrange-act-assert">
-<h3>3. Use Arrange / Act / Assert<a class="headerlink" href="#use-arrange-act-assert" title="Link to this heading">#</a></h3>
+<span id="3-use-arrange--act--assert"></span><h3>3. Use Arrange / Act / Assert<a class="headerlink" href="#use-arrange-act-assert" title="Link to this heading">#</a></h3>
 <p>Every test should follow this shape:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="k">def</span><span class="w"> </span><span class="nf">test_normalises_to_unit_peak</span><span class="p">():</span>
 </span><span data-line="2">    <span class="c1"># Arrange - set up inputs</span>
@@ -569,12 +569,12 @@ treats each method as a separate test.</p></li>
 writing more than one <em>act</em> in a single test, split it into two.</p>
 </section>
 <section id="use-tmp-path-for-file-output">
-<h3>4. Use <code class="docutils literal notranslate"><span class="pre">tmp_path</span></code> for file output<a class="headerlink" href="#use-tmp-path-for-file-output" title="Link to this heading">#</a></h3>
+<span id="4-use-tmp_path-for-file-output"></span><h3>4. Use <code class="docutils literal notranslate"><span class="pre">tmp_path</span></code> for file output<a class="headerlink" href="#use-tmp-path-for-file-output" title="Link to this heading">#</a></h3>
 <p>Pytest gives you a fresh temp directory per test, automatically cleaned up.
 <strong>Always use it</strong> instead of writing to the working directory or hardcoded
 paths.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="k">def</span><span class="w"> </span><span class="nf">test_writes_output_file</span><span class="p">(</span><span class="n">tmp_path</span><span class="p">):</span>
-</span><span data-line="2">    <span class="n">output</span> <span class="o">=</span> <span class="n">tmp_path</span> <span class="o">/</span> <span class="s2">&quot;out.wav&quot;</span>
+</span><span data-line="2">    <span class="n">output</span> <span class="o">=</span> <span class="n">tmp_path</span> <span class="o">/</span> <span class="s2">"out.wav"</span>
 </span><span data-line="3">    <span class="c1"># ... do stuff that writes to output ...</span>
 </span><span data-line="4">    <span class="k">assert</span> <span class="n">output</span><span class="o">.</span><span class="n">exists</span><span class="p">()</span>
 </span><span data-line="5">    <span class="k">assert</span> <span class="n">output</span><span class="o">.</span><span class="n">stat</span><span class="p">()</span><span class="o">.</span><span class="n">st_size</span> <span class="o">&gt;</span> <span class="mi">0</span>
@@ -582,7 +582,7 @@ paths.</p>
 </div>
 </section>
 <section id="reuse-fixtures-from-conftest-py">
-<h3>5. Reuse fixtures from <code class="docutils literal notranslate"><span class="pre">conftest.py</span></code><a class="headerlink" href="#reuse-fixtures-from-conftest-py" title="Link to this heading">#</a></h3>
+<span id="5-reuse-fixtures-from-conftestpy"></span><h3>5. Reuse fixtures from <code class="docutils literal notranslate"><span class="pre">conftest.py</span></code><a class="headerlink" href="#reuse-fixtures-from-conftest-py" title="Link to this heading">#</a></h3>
 <p>The shared fixtures already cover most needs:</p>
 <div class="table-wrapper colwidths-auto docutils container">
 <table class="docutils align-default">
@@ -619,13 +619,13 @@ Single-use fixtures belong in the test file itself.</p>
 </section>
 <hr class="docutils" />
 <section id="patterns-you-ll-use-often">
-<h2>Patterns You’ll Use Often<a class="headerlink" href="#patterns-you-ll-use-often" title="Link to this heading">#</a></h2>
+<span id="patterns-youll-use-often"></span><h2>Patterns You’ll Use Often<a class="headerlink" href="#patterns-you-ll-use-often" title="Link to this heading">#</a></h2>
 <p><a class="reference internal" href="#testing-guidance"><em>back to top</em></a></p>
 <section id="parametrised-tests">
 <h3>Parametrised tests<a class="headerlink" href="#parametrised-tests" title="Link to this heading">#</a></h3>
 <p>When the same logic needs to be checked against many inputs, use
 <code class="docutils literal notranslate"><span class="pre">&#64;pytest.mark.parametrize</span></code> rather than copying the test:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">parametrize</span><span class="p">(</span><span class="s2">&quot;input_beats,subdivision,expected&quot;</span><span class="p">,</span> <span class="p">[</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">parametrize</span><span class="p">(</span><span class="s2">"input_beats,subdivision,expected"</span><span class="p">,</span> <span class="p">[</span>
 </span><span data-line="2">    <span class="p">(</span><span class="mf">0.24</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">),</span>
 </span><span data-line="3">    <span class="p">(</span><span class="mf">0.51</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mf">0.50</span><span class="p">),</span>
 </span><span data-line="4">    <span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">),</span>
@@ -646,7 +646,7 @@ instead:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="k">def</span><span class="w"> </span><span class="nf">test_tempo_detection_on_120bpm_click</span><span class="p">(</span><span class="n">click_track_120bpm</span><span class="p">):</span>
 </span><span data-line="2">    <span class="n">audio</span><span class="p">,</span> <span class="n">sr</span> <span class="o">=</span> <span class="n">click_track_120bpm</span>
 </span><span data-line="3">    <span class="n">bpm</span> <span class="o">=</span> <span class="n">estimate_tempo</span><span class="p">(</span><span class="n">audio</span><span class="p">,</span> <span class="n">sr</span><span class="p">)</span>
-</span><span data-line="4">    <span class="c1"># ±10% - accepts 108-132 BPM. Wide enough for librosa&#39;s variance,</span>
+</span><span data-line="4">    <span class="c1"># ±10% - accepts 108-132 BPM. Wide enough for librosa's variance,</span>
 </span><span data-line="5">    <span class="c1"># narrow enough to catch real regressions.</span>
 </span><span data-line="6">    <span class="k">assert</span> <span class="mi">108</span> <span class="o">&lt;=</span> <span class="n">bpm</span> <span class="o">&lt;=</span> <span class="mi">132</span>
 </span></pre></div>
@@ -680,14 +680,14 @@ alters <em>what ends up on disk</em>, a unit test alone is not enough.</p>
 <p>When testing deprecated APIs or other code paths that should emit warnings,
 use <code class="docutils literal notranslate"><span class="pre">pytest.warns()</span></code> rather than <code class="docutils literal notranslate"><span class="pre">try</span></code>/<code class="docutils literal notranslate"><span class="pre">except</span></code>:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="k">def</span><span class="w"> </span><span class="nf">test_deprecated_param_warns</span><span class="p">():</span>
-</span><span data-line="2">    <span class="k">with</span> <span class="n">pytest</span><span class="o">.</span><span class="n">warns</span><span class="p">(</span><span class="ne">DeprecationWarning</span><span class="p">,</span> <span class="n">match</span><span class="o">=</span><span class="s2">&quot;verbose&quot;</span><span class="p">):</span>
+</span><span data-line="2">    <span class="k">with</span> <span class="n">pytest</span><span class="o">.</span><span class="n">warns</span><span class="p">(</span><span class="ne">DeprecationWarning</span><span class="p">,</span> <span class="n">match</span><span class="o">=</span><span class="s2">"verbose"</span><span class="p">):</span>
 </span><span data-line="3">        <span class="n">ds</span><span class="o">.</span><span class="n">detect_tempo</span><span class="p">(</span><span class="n">audio</span><span class="p">,</span> <span class="n">full</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </span></pre></div>
 </div>
 </section>
 </section>
 <section id="the-match-argument-is-a-regex-against-the-warning-message-useful-for-locking-in-that-the-warning-text-actually-points-users-at-the-replacement">
-<h2>The <code class="docutils literal notranslate"><span class="pre">match</span></code> argument is a regex against the warning message - useful for
+<span id="the-match-argument-is-a-regex-against-the-warning-message---useful-forlocking-in-that-the-warning-text-actually-points-users-at-the-replacement"></span><h2>The <code class="docutils literal notranslate"><span class="pre">match</span></code> argument is a regex against the warning message - useful for
 locking in that the warning text actually points users at the replacement.<a class="headerlink" href="#the-match-argument-is-a-regex-against-the-warning-message-useful-for-locking-in-that-the-warning-text-actually-points-users-at-the-replacement" title="Link to this heading">#</a></h2>
 </section>
 <section id="transcription-regression-checks">
@@ -729,7 +729,7 @@ prints these instructions.</p>
 </span><span data-line="7"><span class="c1"># compare the two folders it printed</span>
 </span><span data-line="8">python3<span class="w"> </span>tests/regression/test_regression.py<span class="w"> </span>compare<span class="w"> </span>&lt;before&gt;<span class="w"> </span>&lt;after&gt;<span class="w"> </span>--markdown
 </span><span data-line="9">
-</span><span data-line="10"><span class="c1"># re-check an archived run against today&#39;s expectations</span>
+</span><span data-line="10"><span class="c1"># re-check an archived run against today's expectations</span>
 </span><span data-line="11">python3<span class="w"> </span>tests/regression/test_regression.py<span class="w"> </span>verify<span class="w"> </span>&lt;run_folder&gt;
 </span></pre></div>
 </div>

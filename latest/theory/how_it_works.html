@@ -353,7 +353,7 @@ data-aria-dark="Switch to auto color mode">
 <section id="drumscript-how-it-works">
 <h2><code class="docutils literal notranslate"><span class="pre">DrumScript</span></code>: How it works<a class="headerlink" href="#drumscript-how-it-works" title="Link to this heading">#</a></h2>
 <section id="audio-processor">
-<h3><code class="docutils literal notranslate"><span class="pre">audio_processor/</span></code><a class="headerlink" href="#audio-processor" title="Link to this heading">#</a></h3>
+<span id="audio_processor"></span><h3><code class="docutils literal notranslate"><span class="pre">audio_processor/</span></code><a class="headerlink" href="#audio-processor" title="Link to this heading">#</a></h3>
 <p><strong>Module overview</strong></p>
 <p>This module handles all raw audio manipulation. It is currently the most active part of the package, handling:</p>
 <ul class="simple">
@@ -365,7 +365,7 @@ data-aria-dark="Switch to auto color mode">
 </section>
 <hr class="docutils" />
 <section id="drum-classifier">
-<h3><code class="docutils literal notranslate"><span class="pre">drum_classifier/</span></code><a class="headerlink" href="#drum-classifier" title="Link to this heading">#</a></h3>
+<span id="drum_classifier"></span><h3><code class="docutils literal notranslate"><span class="pre">drum_classifier/</span></code><a class="headerlink" href="#drum-classifier" title="Link to this heading">#</a></h3>
 <p><strong>Module overview</strong></p>
 <p>This module is the core logic engine of the package (currently in active R&amp;D). It no longer involves training a model. Instead, it:</p>
 <ul class="simple">
@@ -375,7 +375,7 @@ data-aria-dark="Switch to auto color mode">
 </ul>
 </section>
 <section id="classify-py">
-<h3><code class="docutils literal notranslate"><span class="pre">classify.py</span></code><a class="headerlink" href="#classify-py" title="Link to this heading">#</a></h3>
+<span id="classifypy"></span><h3><code class="docutils literal notranslate"><span class="pre">classify.py</span></code><a class="headerlink" href="#classify-py" title="Link to this heading">#</a></h3>
 <p>This script is the <strong>Rule Engine</strong>. It contains the core logic for the classification. Its main job is to take the acoustic features of a drum hit and make a decision. Specifically, <code class="docutils literal notranslate"><span class="pre">classify.py</span></code>:</p>
 <ul class="simple">
 <li><p>Loads the features extracted for every onset in an audio file.</p></li>
@@ -384,7 +384,7 @@ data-aria-dark="Switch to auto color mode">
 </ul>
 </section>
 <section id="generate-score-py">
-<h3><code class="docutils literal notranslate"><span class="pre">generate_score.py</span></code><a class="headerlink" href="#generate-score-py" title="Link to this heading">#</a></h3>
+<span id="generate_scorepy"></span><h3><code class="docutils literal notranslate"><span class="pre">generate_score.py</span></code><a class="headerlink" href="#generate-score-py" title="Link to this heading">#</a></h3>
 <p>This is a <strong>Utility and Testing Script</strong>. It’s designed to quickly visualise the output of the classifier without running the entire application pipeline. Specifically, <code class="docutils literal notranslate"><span class="pre">generate_score.py</span></code>:</p>
 <ul class="simple">
 <li><p>Reads the list of classified events produced by <code class="docutils literal notranslate"><span class="pre">classify.py</span></code>.</p></li>

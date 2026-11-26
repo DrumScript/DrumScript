@@ -313,36 +313,36 @@ data-aria-dark="Switch to auto color mode">
 <div class="viewcode-block" id="is_ffmpeg_installed">
 <a class="viewcode-back" href="../../../generated/drumscript.utils.ffmpeg_installer.is_ffmpeg_installed.html#drumscript.utils.ffmpeg_installer.is_ffmpeg_installed">[docs]</a>
 </span><span data-line="8"><span class="k">def</span><span class="w"> </span><span class="nf">is_ffmpeg_installed</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-</span><span data-line="9"><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span data-line="10"><span class="sd">    Checks if FFmpeg is installed and accessible in the system&#39;s PATH.</span>
+</span><span data-line="9"><span class="w">    </span><span class="sd">"""</span>
+</span><span data-line="10"><span class="sd">    Checks if FFmpeg is installed and accessible in the system's PATH.</span>
 </span><span data-line="11">
 </span><span data-line="12"><span class="sd">    :return:  True if FFmpeg (ffmpeg and ffprobe) is found, False otherwise.</span>
 </span><span data-line="13"><span class="sd">    :rtype: bool</span>
-</span><span data-line="14"><span class="sd">    &quot;&quot;&quot;</span>
-</span><span data-line="15">    <span class="c1"># Check for &#39;ffmpeg&#39; executable</span>
-</span><span data-line="16">    <span class="n">ffmpeg_path</span> <span class="o">=</span> <span class="n">shutil</span><span class="o">.</span><span class="n">which</span><span class="p">(</span><span class="s2">&quot;ffmpeg&quot;</span><span class="p">)</span>
+</span><span data-line="14"><span class="sd">    """</span>
+</span><span data-line="15">    <span class="c1"># Check for 'ffmpeg' executable</span>
+</span><span data-line="16">    <span class="n">ffmpeg_path</span> <span class="o">=</span> <span class="n">shutil</span><span class="o">.</span><span class="n">which</span><span class="p">(</span><span class="s2">"ffmpeg"</span><span class="p">)</span>
 </span><span data-line="17">    <span class="k">if</span> <span class="n">ffmpeg_path</span><span class="p">:</span>
-</span><span data-line="18">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;FFmpeg executable found at: </span><span class="si">{</span><span class="n">ffmpeg_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span data-line="18">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"FFmpeg executable found at: </span><span class="si">{</span><span class="n">ffmpeg_path</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 </span><span data-line="19">    <span class="k">else</span><span class="p">:</span>
-</span><span data-line="20">        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;FFmpeg executable not found in PATH.&quot;</span><span class="p">)</span>
+</span><span data-line="20">        <span class="nb">print</span><span class="p">(</span><span class="s2">"FFmpeg executable not found in PATH."</span><span class="p">)</span>
 </span><span data-line="21">        <span class="k">return</span> <span class="kc">False</span>
 </span><span data-line="22">
-</span><span data-line="23">    <span class="c1"># Also check for &#39;ffprobe&#39; as it&#39;s often used alongside ffmpeg by librosa/pydub</span>
-</span><span data-line="24">    <span class="n">ffprobe_path</span> <span class="o">=</span> <span class="n">shutil</span><span class="o">.</span><span class="n">which</span><span class="p">(</span><span class="s2">&quot;ffprobe&quot;</span><span class="p">)</span>
+</span><span data-line="23">    <span class="c1"># Also check for 'ffprobe' as it's often used alongside ffmpeg by librosa/pydub</span>
+</span><span data-line="24">    <span class="n">ffprobe_path</span> <span class="o">=</span> <span class="n">shutil</span><span class="o">.</span><span class="n">which</span><span class="p">(</span><span class="s2">"ffprobe"</span><span class="p">)</span>
 </span><span data-line="25">    <span class="k">if</span> <span class="n">ffprobe_path</span><span class="p">:</span>
-</span><span data-line="26">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;FFprobe executable found at: </span><span class="si">{</span><span class="n">ffprobe_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span data-line="26">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"FFprobe executable found at: </span><span class="si">{</span><span class="n">ffprobe_path</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 </span><span data-line="27">    <span class="k">else</span><span class="p">:</span>
-</span><span data-line="28">        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;FFprobe executable not found in PATH.&quot;</span><span class="p">)</span>
+</span><span data-line="28">        <span class="nb">print</span><span class="p">(</span><span class="s2">"FFprobe executable not found in PATH."</span><span class="p">)</span>
 </span><span data-line="29">        <span class="k">return</span> <span class="kc">False</span>
 </span><span data-line="30">
 </span><span data-line="31">    <span class="c1"># Optional: Verify FFmpeg version by running it</span>
 </span><span data-line="32">    <span class="k">try</span><span class="p">:</span>
 </span><span data-line="33">        <span class="c1"># Run ffmpeg -version and check for non-zero exit code</span>
-</span><span data-line="34">        <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">([</span><span class="s2">&quot;ffmpeg&quot;</span><span class="p">,</span> <span class="s2">&quot;-version&quot;</span><span class="p">],</span> <span class="n">check</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">capture_output</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-</span><span data-line="35">        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;FFmpeg seems to be working correctly.&quot;</span><span class="p">)</span>
+</span><span data-line="34">        <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">([</span><span class="s2">"ffmpeg"</span><span class="p">,</span> <span class="s2">"-version"</span><span class="p">],</span> <span class="n">check</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">capture_output</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span><span data-line="35">        <span class="nb">print</span><span class="p">(</span><span class="s2">"FFmpeg seems to be working correctly."</span><span class="p">)</span>
 </span><span data-line="36">        <span class="k">return</span> <span class="kc">True</span>
 </span><span data-line="37">    <span class="k">except</span> <span class="p">(</span><span class="n">subprocess</span><span class="o">.</span><span class="n">CalledProcessError</span><span class="p">,</span> <span class="ne">FileNotFoundError</span><span class="p">):</span>
-</span><span data-line="38">        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;FFmpeg found but is not runnable or encountered an error. It might be corrupted or improperly installed.&quot;</span><span class="p">)</span>
+</span><span data-line="38">        <span class="nb">print</span><span class="p">(</span><span class="s2">"FFmpeg found but is not runnable or encountered an error. It might be corrupted or improperly installed."</span><span class="p">)</span>
 </span><span data-line="39">        <span class="k">return</span> <span class="kc">False</span></div>
 
 </span><span data-line="40">
@@ -350,96 +350,96 @@ data-aria-dark="Switch to auto color mode">
 <div class="viewcode-block" id="install_ffmpeg">
 <a class="viewcode-back" href="../../../generated/drumscript.utils.ffmpeg_installer.install_ffmpeg.html#drumscript.utils.ffmpeg_installer.install_ffmpeg">[docs]</a>
 </span><span data-line="42"><span class="k">def</span><span class="w"> </span><span class="nf">install_ffmpeg</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-</span><span data-line="43"><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span data-line="43"><span class="w">    </span><span class="sd">"""</span>
 </span><span data-line="44"><span class="sd">    Checks for FFmpeg installation and provides OS-specific instructions if not found.</span>
 </span><span data-line="45"><span class="sd">    For Linux/macOS, it can offer to attempt an installation via package manager (requires sudo).</span>
 </span><span data-line="46"><span class="sd">    For Windows, it provides manual download instructions.</span>
 </span><span data-line="47">
 </span><span data-line="48"><span class="sd">    This function is intended to be called by the user or a setup script,</span>
 </span><span data-line="49"><span class="sd">    not as an automatic silent installer due to permission requirements.</span>
-</span><span data-line="50"><span class="sd">    &quot;&quot;&quot;</span>
-</span><span data-line="51">    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">--- Checking for FFmpeg installation ---&quot;</span><span class="p">)</span>
+</span><span data-line="50"><span class="sd">    """</span>
+</span><span data-line="51">    <span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">--- Checking for FFmpeg installation ---"</span><span class="p">)</span>
 </span><span data-line="52">
 </span><span data-line="53">    <span class="k">if</span> <span class="n">is_ffmpeg_installed</span><span class="p">():</span>
-</span><span data-line="54">        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;FFmpeg is already installed and detected in your system&#39;s PATH.&quot;</span><span class="p">)</span>
-</span><span data-line="55">        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;You are ready to process all audio file types with DrumScript.&quot;</span><span class="p">)</span>
+</span><span data-line="54">        <span class="nb">print</span><span class="p">(</span><span class="s2">"FFmpeg is already installed and detected in your system's PATH."</span><span class="p">)</span>
+</span><span data-line="55">        <span class="nb">print</span><span class="p">(</span><span class="s2">"You are ready to process all audio file types with DrumScript."</span><span class="p">)</span>
 </span><span data-line="56">        <span class="k">return</span>
 </span><span data-line="57">
-</span><span data-line="58">    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">FFmpeg is NOT detected in your system&#39;s PATH.&quot;</span><span class="p">)</span>
-</span><span data-line="59">    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;FFmpeg is required by DrumScript to process MP3 and other non-WAV audio files.&quot;</span><span class="p">)</span>
-</span><span data-line="60">    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;WAV files can usually be processed without FFmpeg.&quot;</span><span class="p">)</span>
+</span><span data-line="58">    <span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">FFmpeg is NOT detected in your system's PATH."</span><span class="p">)</span>
+</span><span data-line="59">    <span class="nb">print</span><span class="p">(</span><span class="s2">"FFmpeg is required by DrumScript to process MP3 and other non-WAV audio files."</span><span class="p">)</span>
+</span><span data-line="60">    <span class="nb">print</span><span class="p">(</span><span class="s2">"WAV files can usually be processed without FFmpeg."</span><span class="p">)</span>
 </span><span data-line="61">
 </span><span data-line="62">    <span class="n">system</span> <span class="o">=</span> <span class="n">platform</span><span class="o">.</span><span class="n">system</span><span class="p">()</span>
 </span><span data-line="63">
-</span><span data-line="64">    <span class="k">if</span> <span class="n">system</span> <span class="o">==</span> <span class="s2">&quot;Linux&quot;</span><span class="p">:</span>
-</span><span data-line="65">        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">--- Installation instructions for Linux (Debian/Ubuntu-based) ---&quot;</span><span class="p">)</span>
-</span><span data-line="66">        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;1. Update package lists:&quot;</span><span class="p">)</span>
-</span><span data-line="67">        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;   sudo apt update&quot;</span><span class="p">)</span>
-</span><span data-line="68">        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;2. Install FFmpeg:&quot;</span><span class="p">)</span>
-</span><span data-line="69">        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;   sudo apt install ffmpeg&quot;</span><span class="p">)</span>
-</span><span data-line="70">        <span class="n">user_choice</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Attempt to install FFmpeg using &#39;sudo apt install ffmpeg&#39; now? (y/N): &quot;</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
-</span><span data-line="71">        <span class="k">if</span> <span class="n">user_choice</span> <span class="o">==</span> <span class="s2">&quot;y&quot;</span><span class="p">:</span>
+</span><span data-line="64">    <span class="k">if</span> <span class="n">system</span> <span class="o">==</span> <span class="s2">"Linux"</span><span class="p">:</span>
+</span><span data-line="65">        <span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">--- Installation instructions for Linux (Debian/Ubuntu-based) ---"</span><span class="p">)</span>
+</span><span data-line="66">        <span class="nb">print</span><span class="p">(</span><span class="s2">"1. Update package lists:"</span><span class="p">)</span>
+</span><span data-line="67">        <span class="nb">print</span><span class="p">(</span><span class="s2">"   sudo apt update"</span><span class="p">)</span>
+</span><span data-line="68">        <span class="nb">print</span><span class="p">(</span><span class="s2">"2. Install FFmpeg:"</span><span class="p">)</span>
+</span><span data-line="69">        <span class="nb">print</span><span class="p">(</span><span class="s2">"   sudo apt install ffmpeg"</span><span class="p">)</span>
+</span><span data-line="70">        <span class="n">user_choice</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">"Attempt to install FFmpeg using 'sudo apt install ffmpeg' now? (y/N): "</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+</span><span data-line="71">        <span class="k">if</span> <span class="n">user_choice</span> <span class="o">==</span> <span class="s2">"y"</span><span class="p">:</span>
 </span><span data-line="72">            <span class="k">try</span><span class="p">:</span>
-</span><span data-line="73">                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Attempting to run: sudo apt install ffmpeg...&quot;</span><span class="p">)</span>
+</span><span data-line="73">                <span class="nb">print</span><span class="p">(</span><span class="s2">"Attempting to run: sudo apt install ffmpeg..."</span><span class="p">)</span>
 </span><span data-line="74">                <span class="c1"># Use shell=True for sudo commands to work as expected, but be cautious</span>
-</span><span data-line="75">                <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">([</span><span class="s2">&quot;sudo&quot;</span><span class="p">,</span> <span class="s2">&quot;apt&quot;</span><span class="p">,</span> <span class="s2">&quot;install&quot;</span><span class="p">,</span> <span class="s2">&quot;-y&quot;</span><span class="p">,</span> <span class="s2">&quot;ffmpeg&quot;</span><span class="p">],</span> <span class="n">check</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-</span><span data-line="76">                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">FFmpeg installation attempt finished. Please re-run this check.&quot;</span><span class="p">)</span>
-</span><span data-line="77">                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;You may need to restart your terminal for PATH changes to take effect.&quot;</span><span class="p">)</span>
+</span><span data-line="75">                <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">([</span><span class="s2">"sudo"</span><span class="p">,</span> <span class="s2">"apt"</span><span class="p">,</span> <span class="s2">"install"</span><span class="p">,</span> <span class="s2">"-y"</span><span class="p">,</span> <span class="s2">"ffmpeg"</span><span class="p">],</span> <span class="n">check</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span><span data-line="76">                <span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">FFmpeg installation attempt finished. Please re-run this check."</span><span class="p">)</span>
+</span><span data-line="77">                <span class="nb">print</span><span class="p">(</span><span class="s2">"You may need to restart your terminal for PATH changes to take effect."</span><span class="p">)</span>
 </span><span data-line="78">            <span class="k">except</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">CalledProcessError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-</span><span data-line="79">                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error during automated FFmpeg installation: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-</span><span data-line="80">                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Please try installing manually using the commands above.&quot;</span><span class="p">)</span>
+</span><span data-line="79">                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Error during automated FFmpeg installation: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</span><span data-line="80">                <span class="nb">print</span><span class="p">(</span><span class="s2">"Please try installing manually using the commands above."</span><span class="p">)</span>
 </span><span data-line="81">            <span class="k">except</span> <span class="ne">FileNotFoundError</span><span class="p">:</span>
-</span><span data-line="82">                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Apt command not found. Are you on a Debian/Ubuntu-based system?&quot;</span><span class="p">)</span>
-</span><span data-line="83">                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Please install FFmpeg manually for your specific Linux distribution.&quot;</span><span class="p">)</span>
+</span><span data-line="82">                <span class="nb">print</span><span class="p">(</span><span class="s2">"Apt command not found. Are you on a Debian/Ubuntu-based system?"</span><span class="p">)</span>
+</span><span data-line="83">                <span class="nb">print</span><span class="p">(</span><span class="s2">"Please install FFmpeg manually for your specific Linux distribution."</span><span class="p">)</span>
 </span><span data-line="84">        <span class="k">else</span><span class="p">:</span>
-</span><span data-line="85">            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Please install FFmpeg manually using the instructions above.&quot;</span><span class="p">)</span>
+</span><span data-line="85">            <span class="nb">print</span><span class="p">(</span><span class="s2">"Please install FFmpeg manually using the instructions above."</span><span class="p">)</span>
 </span><span data-line="86">
-</span><span data-line="87">    <span class="k">elif</span> <span class="n">system</span> <span class="o">==</span> <span class="s2">&quot;Darwin&quot;</span><span class="p">:</span>  <span class="c1"># macOS</span>
-</span><span data-line="88">        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">--- Installation instructions for macOS (using Homebrew) ---&quot;</span><span class="p">)</span>
-</span><span data-line="89">        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;1. Install Homebrew (if you don&#39;t have it):&quot;</span><span class="p">)</span>
-</span><span data-line="90">        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;   /bin/bash -c &quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)&quot;&#39;</span><span class="p">)</span>
-</span><span data-line="91">        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;2. Install FFmpeg using Homebrew:&quot;</span><span class="p">)</span>
-</span><span data-line="92">        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;   brew install ffmpeg&quot;</span><span class="p">)</span>
-</span><span data-line="93">        <span class="n">user_choice</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Attempt to install FFmpeg using &#39;brew install ffmpeg&#39; now? (y/N): &quot;</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
-</span><span data-line="94">        <span class="k">if</span> <span class="n">user_choice</span> <span class="o">==</span> <span class="s2">&quot;y&quot;</span><span class="p">:</span>
+</span><span data-line="87">    <span class="k">elif</span> <span class="n">system</span> <span class="o">==</span> <span class="s2">"Darwin"</span><span class="p">:</span>  <span class="c1"># macOS</span>
+</span><span data-line="88">        <span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">--- Installation instructions for macOS (using Homebrew) ---"</span><span class="p">)</span>
+</span><span data-line="89">        <span class="nb">print</span><span class="p">(</span><span class="s2">"1. Install Homebrew (if you don't have it):"</span><span class="p">)</span>
+</span><span data-line="90">        <span class="nb">print</span><span class="p">(</span><span class="s1">'   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"'</span><span class="p">)</span>
+</span><span data-line="91">        <span class="nb">print</span><span class="p">(</span><span class="s2">"2. Install FFmpeg using Homebrew:"</span><span class="p">)</span>
+</span><span data-line="92">        <span class="nb">print</span><span class="p">(</span><span class="s2">"   brew install ffmpeg"</span><span class="p">)</span>
+</span><span data-line="93">        <span class="n">user_choice</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">"Attempt to install FFmpeg using 'brew install ffmpeg' now? (y/N): "</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+</span><span data-line="94">        <span class="k">if</span> <span class="n">user_choice</span> <span class="o">==</span> <span class="s2">"y"</span><span class="p">:</span>
 </span><span data-line="95">            <span class="k">try</span><span class="p">:</span>
-</span><span data-line="96">                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Attempting to run: brew install ffmpeg...&quot;</span><span class="p">)</span>
-</span><span data-line="97">                <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">([</span><span class="s2">&quot;brew&quot;</span><span class="p">,</span> <span class="s2">&quot;install&quot;</span><span class="p">,</span> <span class="s2">&quot;ffmpeg&quot;</span><span class="p">],</span> <span class="n">check</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-</span><span data-line="98">                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">FFmpeg installation attempt finished. Please re-run this check.&quot;</span><span class="p">)</span>
-</span><span data-line="99">                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;You may need to restart your terminal for PATH changes to take effect.&quot;</span><span class="p">)</span>
+</span><span data-line="96">                <span class="nb">print</span><span class="p">(</span><span class="s2">"Attempting to run: brew install ffmpeg..."</span><span class="p">)</span>
+</span><span data-line="97">                <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">([</span><span class="s2">"brew"</span><span class="p">,</span> <span class="s2">"install"</span><span class="p">,</span> <span class="s2">"ffmpeg"</span><span class="p">],</span> <span class="n">check</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span><span data-line="98">                <span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">FFmpeg installation attempt finished. Please re-run this check."</span><span class="p">)</span>
+</span><span data-line="99">                <span class="nb">print</span><span class="p">(</span><span class="s2">"You may need to restart your terminal for PATH changes to take effect."</span><span class="p">)</span>
 </span><span data-line="100">            <span class="k">except</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">CalledProcessError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-</span><span data-line="101">                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error during automated FFmpeg installation: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-</span><span data-line="102">                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Please try installing manually using the commands above.&quot;</span><span class="p">)</span>
+</span><span data-line="101">                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Error during automated FFmpeg installation: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</span><span data-line="102">                <span class="nb">print</span><span class="p">(</span><span class="s2">"Please try installing manually using the commands above."</span><span class="p">)</span>
 </span><span data-line="103">            <span class="k">except</span> <span class="ne">FileNotFoundError</span><span class="p">:</span>
-</span><span data-line="104">                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Homebrew command not found. Is Homebrew installed?&quot;</span><span class="p">)</span>
-</span><span data-line="105">                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Please install FFmpeg manually using the instructions above.&quot;</span><span class="p">)</span>
+</span><span data-line="104">                <span class="nb">print</span><span class="p">(</span><span class="s2">"Homebrew command not found. Is Homebrew installed?"</span><span class="p">)</span>
+</span><span data-line="105">                <span class="nb">print</span><span class="p">(</span><span class="s2">"Please install FFmpeg manually using the instructions above."</span><span class="p">)</span>
 </span><span data-line="106">        <span class="k">else</span><span class="p">:</span>
-</span><span data-line="107">            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Please install FFmpeg manually using the instructions above.&quot;</span><span class="p">)</span>
+</span><span data-line="107">            <span class="nb">print</span><span class="p">(</span><span class="s2">"Please install FFmpeg manually using the instructions above."</span><span class="p">)</span>
 </span><span data-line="108">
-</span><span data-line="109">    <span class="k">elif</span> <span class="n">system</span> <span class="o">==</span> <span class="s2">&quot;Windows&quot;</span><span class="p">:</span>
-</span><span data-line="110">        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">--- Installation instructions for Windows ---&quot;</span><span class="p">)</span>
-</span><span data-line="111">        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;1. Download FFmpeg binaries from the official website:&quot;</span><span class="p">)</span>
-</span><span data-line="112">        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;   Go to https://ffmpeg.org/download.html&quot;</span><span class="p">)</span>
-</span><span data-line="113">        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;   Click on the Windows icon and then select a &#39;release build&#39; provider (e.g., gyan.dev or BtbN).&quot;</span><span class="p">)</span>
-</span><span data-line="114">        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;2. Extract the downloaded ZIP file to a location like C:</span><span class="se">\\</span><span class="s2">ffmpeg.&quot;</span><span class="p">)</span>
-</span><span data-line="115">        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;   You should have a folder structure like C:</span><span class="se">\\</span><span class="s2">ffmpeg</span><span class="se">\\</span><span class="s2">bin containing ffmpeg.exe, ffprobe.exe, etc.&quot;</span><span class="p">)</span>
-</span><span data-line="116">        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;3. Add the &#39;bin&#39; folder (e.g., C:</span><span class="se">\\</span><span class="s2">ffmpeg</span><span class="se">\\</span><span class="s2">bin) to your System PATH environment variable.&quot;</span><span class="p">)</span>
-</span><span data-line="117">        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;   - Search for &#39;Environment Variables&#39; in Windows search bar.&quot;</span><span class="p">)</span>
-</span><span data-line="118">        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;   - Click &#39;Edit the system environment variables&#39;.&quot;</span><span class="p">)</span>
-</span><span data-line="119">        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;   - Click &#39;Environment Variables...&#39; button.&quot;</span><span class="p">)</span>
-</span><span data-line="120">        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;   - Under &#39;System variables&#39;, find and select the &#39;Path&#39; variable, then click &#39;Edit...&#39;.&quot;</span><span class="p">)</span>
-</span><span data-line="121">        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;   - Click &#39;New&#39; and paste the path to your FFmpeg &#39;bin&#39; folder (e.g., C:</span><span class="se">\\</span><span class="s2">ffmpeg</span><span class="se">\\</span><span class="s2">bin).&quot;</span><span class="p">)</span>
-</span><span data-line="122">        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;   - Click &#39;OK&#39; on all dialogs.&quot;</span><span class="p">)</span>
-</span><span data-line="123">        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;4. Restart your Command Prompt/PowerShell or IDE to ensure PATH changes take effect.&quot;</span><span class="p">)</span>
-</span><span data-line="124">        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Once installed, re-run &#39;drumscript.install_ffmpeg()&#39; to verify.&quot;</span><span class="p">)</span>
+</span><span data-line="109">    <span class="k">elif</span> <span class="n">system</span> <span class="o">==</span> <span class="s2">"Windows"</span><span class="p">:</span>
+</span><span data-line="110">        <span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">--- Installation instructions for Windows ---"</span><span class="p">)</span>
+</span><span data-line="111">        <span class="nb">print</span><span class="p">(</span><span class="s2">"1. Download FFmpeg binaries from the official website:"</span><span class="p">)</span>
+</span><span data-line="112">        <span class="nb">print</span><span class="p">(</span><span class="s2">"   Go to https://ffmpeg.org/download.html"</span><span class="p">)</span>
+</span><span data-line="113">        <span class="nb">print</span><span class="p">(</span><span class="s2">"   Click on the Windows icon and then select a 'release build' provider (e.g., gyan.dev or BtbN)."</span><span class="p">)</span>
+</span><span data-line="114">        <span class="nb">print</span><span class="p">(</span><span class="s2">"2. Extract the downloaded ZIP file to a location like C:</span><span class="se">\\</span><span class="s2">ffmpeg."</span><span class="p">)</span>
+</span><span data-line="115">        <span class="nb">print</span><span class="p">(</span><span class="s2">"   You should have a folder structure like C:</span><span class="se">\\</span><span class="s2">ffmpeg</span><span class="se">\\</span><span class="s2">bin containing ffmpeg.exe, ffprobe.exe, etc."</span><span class="p">)</span>
+</span><span data-line="116">        <span class="nb">print</span><span class="p">(</span><span class="s2">"3. Add the 'bin' folder (e.g., C:</span><span class="se">\\</span><span class="s2">ffmpeg</span><span class="se">\\</span><span class="s2">bin) to your System PATH environment variable."</span><span class="p">)</span>
+</span><span data-line="117">        <span class="nb">print</span><span class="p">(</span><span class="s2">"   - Search for 'Environment Variables' in Windows search bar."</span><span class="p">)</span>
+</span><span data-line="118">        <span class="nb">print</span><span class="p">(</span><span class="s2">"   - Click 'Edit the system environment variables'."</span><span class="p">)</span>
+</span><span data-line="119">        <span class="nb">print</span><span class="p">(</span><span class="s2">"   - Click 'Environment Variables...' button."</span><span class="p">)</span>
+</span><span data-line="120">        <span class="nb">print</span><span class="p">(</span><span class="s2">"   - Under 'System variables', find and select the 'Path' variable, then click 'Edit...'."</span><span class="p">)</span>
+</span><span data-line="121">        <span class="nb">print</span><span class="p">(</span><span class="s2">"   - Click 'New' and paste the path to your FFmpeg 'bin' folder (e.g., C:</span><span class="se">\\</span><span class="s2">ffmpeg</span><span class="se">\\</span><span class="s2">bin)."</span><span class="p">)</span>
+</span><span data-line="122">        <span class="nb">print</span><span class="p">(</span><span class="s2">"   - Click 'OK' on all dialogs."</span><span class="p">)</span>
+</span><span data-line="123">        <span class="nb">print</span><span class="p">(</span><span class="s2">"4. Restart your Command Prompt/PowerShell or IDE to ensure PATH changes take effect."</span><span class="p">)</span>
+</span><span data-line="124">        <span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Once installed, re-run 'drumscript.install_ffmpeg()' to verify."</span><span class="p">)</span>
 </span><span data-line="125">
 </span><span data-line="126">    <span class="k">else</span><span class="p">:</span>
-</span><span data-line="127">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">--- Installation instructions for </span><span class="si">{</span><span class="n">system</span><span class="si">}</span><span class="s2"> ---&quot;</span><span class="p">)</span>
-</span><span data-line="128">        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Please consult your operating system&#39;s documentation for installing FFmpeg.&quot;</span><span class="p">)</span>
-</span><span data-line="129">        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;You can typically find pre-built binaries on https://ffmpeg.org/download.html&quot;</span><span class="p">)</span>
-</span><span data-line="130">        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Ensure FFmpeg executables (ffmpeg, ffprobe) are added to your system&#39;s PATH.&quot;</span><span class="p">)</span>
+</span><span data-line="127">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="se">\n</span><span class="s2">--- Installation instructions for </span><span class="si">{</span><span class="n">system</span><span class="si">}</span><span class="s2"> ---"</span><span class="p">)</span>
+</span><span data-line="128">        <span class="nb">print</span><span class="p">(</span><span class="s2">"Please consult your operating system's documentation for installing FFmpeg."</span><span class="p">)</span>
+</span><span data-line="129">        <span class="nb">print</span><span class="p">(</span><span class="s2">"You can typically find pre-built binaries on https://ffmpeg.org/download.html"</span><span class="p">)</span>
+</span><span data-line="130">        <span class="nb">print</span><span class="p">(</span><span class="s2">"Ensure FFmpeg executables (ffmpeg, ffprobe) are added to your system's PATH."</span><span class="p">)</span>
 </span><span data-line="131">
-</span><span data-line="132">    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">--- FFmpeg check complete ---&quot;</span><span class="p">)</span></div>
+</span><span data-line="132">    <span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">--- FFmpeg check complete ---"</span><span class="p">)</span></div>
 
 </span><span data-line="133">
 </span><span data-line="134">

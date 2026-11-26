@@ -370,13 +370,13 @@ data-aria-dark="Switch to auto color mode">
 <p><strong>Examples:</strong></p>
 <p>Load at native sample rate (for exploration / notebooks):</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="kn">import</span><span class="w"> </span><span class="nn">drumscript</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">ds</span>
-</span><span data-line="2"><span class="n">audio</span><span class="p">,</span> <span class="n">sr</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">load_audio</span><span class="p">(</span><span class="s2">&quot;my_drum_loop.wav&quot;</span><span class="p">)</span>
-</span><span data-line="3"><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Native rate: </span><span class="si">{</span><span class="n">sr</span><span class="si">}</span><span class="s2"> Hz&quot;</span><span class="p">)</span>
+</span><span data-line="2"><span class="n">audio</span><span class="p">,</span> <span class="n">sr</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">load_audio</span><span class="p">(</span><span class="s2">"my_drum_loop.wav"</span><span class="p">)</span>
+</span><span data-line="3"><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Native rate: </span><span class="si">{</span><span class="n">sr</span><span class="si">}</span><span class="s2"> Hz"</span><span class="p">)</span>
 </span></pre></div>
 </div>
 <p>Load and resample to 44100 Hz (for the transcription pipeline):</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="kn">from</span><span class="w"> </span><span class="nn">drumscript.notation_generator.constants</span><span class="w"> </span><span class="kn">import</span> <span class="n">SAMPLE_RATE</span>
-</span><span data-line="2"><span class="n">audio</span><span class="p">,</span> <span class="n">sr</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">load_audio</span><span class="p">(</span><span class="s2">&quot;my_drum_loop.wav&quot;</span><span class="p">,</span> <span class="n">sr</span><span class="o">=</span><span class="n">SAMPLE_RATE</span><span class="p">)</span>
+</span><span data-line="2"><span class="n">audio</span><span class="p">,</span> <span class="n">sr</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">load_audio</span><span class="p">(</span><span class="s2">"my_drum_loop.wav"</span><span class="p">,</span> <span class="n">sr</span><span class="o">=</span><span class="n">SAMPLE_RATE</span><span class="p">)</span>
 </span></pre></div>
 </div>
 </dd></dl>

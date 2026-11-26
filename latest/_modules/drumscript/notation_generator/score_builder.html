@@ -305,9 +305,9 @@ data-aria-dark="Switch to auto color mode">
           <h1>Source code for drumscript.notation_generator.score_builder</h1><div class="highlight"><pre>
 <span></span><span data-line="1"><span class="c1"># DrumScript/drumscript/notation_generator/score_builder.py</span>
 </span><span data-line="2">
-</span><span data-line="3"><span class="sd">&quot;&quot;&quot;</span>
+</span><span data-line="3"><span class="sd">"""</span>
 </span><span data-line="4"><span class="sd">Module to build the final score from classified events.</span>
-</span><span data-line="5"><span class="sd">&quot;&quot;&quot;</span>
+</span><span data-line="5"><span class="sd">"""</span>
 </span><span data-line="6">
 </span><span data-line="7"><span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
 </span><span data-line="8"><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
@@ -326,13 +326,13 @@ data-aria-dark="Switch to auto color mode">
 </span><span data-line="19">    <span class="c1"># tempo: int = 120,</span>
 </span><span data-line="20">    <span class="c1"># tempo: int, # &lt;-- forces the caller to provide tempo</span>
 </span><span data-line="21">    <span class="n">tempo</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
-</span><span data-line="22">    <span class="n">output_path</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;outputs/score.pdf&quot;</span><span class="p">,</span>
+</span><span data-line="22">    <span class="n">output_path</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"outputs/score.pdf"</span><span class="p">,</span>
 </span><span data-line="23">    <span class="c1"># quantization_subdivision: int = 16,  # must be non-zero or transcription fails</span>
 </span><span data-line="24">    <span class="n">quantization_subdivision</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-</span><span data-line="25">    <span class="n">time_signature</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;4/4&quot;</span><span class="p">,</span>
+</span><span data-line="25">    <span class="n">time_signature</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"4/4"</span><span class="p">,</span>
 </span><span data-line="26">    <span class="n">midi_only</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
 </span><span data-line="27"><span class="p">):</span>
-</span><span data-line="28"><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span data-line="28"><span class="w">    </span><span class="sd">"""</span>
 </span><span data-line="29"><span class="sd">    Builds a drum score by saving event data to JSON and rendering to PDF.</span>
 </span><span data-line="30"><span class="sd">    # Builds a drum score by saving the event data to JSON and then</span>
 </span><span data-line="31"><span class="sd">    # rendering it directly to PDF using the custom engine.</span>
@@ -347,7 +347,7 @@ data-aria-dark="Switch to auto color mode">
 </span><span data-line="40"><span class="sd">    :type output_path: str, optional</span>
 </span><span data-line="41"><span class="sd">    :param quantization_subdivision: Grid for quantization (e.g., 1/n where n is the subdivision, 16 for 1/16th notes).</span>
 </span><span data-line="42"><span class="sd">    :type quantization_subdivision: int, optional, must be non-zero</span>
-</span><span data-line="43"><span class="sd">    :param time_signature: Time signature string (e.g., &quot;4/4&quot;), default if time_sig is unspecified</span>
+</span><span data-line="43"><span class="sd">    :param time_signature: Time signature string (e.g., "4/4"), default if time_sig is unspecified</span>
 </span><span data-line="44"><span class="sd">    :type time_signature: str, optional</span>
 </span><span data-line="45"><span class="sd">    :param midi_only: If True, write the MIDI file and skip the JSON and PDF exports.</span>
 </span><span data-line="46"><span class="sd">        The events are still quantised exactly as normal, so the MIDI is identical to</span>
@@ -358,13 +358,13 @@ data-aria-dark="Switch to auto color mode">
 </span><span data-line="51"><span class="sd">        ``pdf_path``, ``json_path`` and ``midi_path``. A key is absent if that</span>
 </span><span data-line="52"><span class="sd">        export failed, so callers can report only files that actually exist.</span>
 </span><span data-line="53"><span class="sd">    :rtype: dict[str, str]</span>
-</span><span data-line="54"><span class="sd">    &quot;&quot;&quot;</span>
+</span><span data-line="54"><span class="sd">    """</span>
 </span><span data-line="55">
-</span><span data-line="56">    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;--- Building Score for: </span><span class="si">{</span><span class="n">output_path</span><span class="si">}</span><span class="s2"> [Time Sig: </span><span class="si">{</span><span class="n">time_signature</span><span class="si">}</span><span class="s2">] ---&quot;</span><span class="p">)</span>
+</span><span data-line="56">    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"--- Building Score for: </span><span class="si">{</span><span class="n">output_path</span><span class="si">}</span><span class="s2"> [Time Sig: </span><span class="si">{</span><span class="n">time_signature</span><span class="si">}</span><span class="s2">] ---"</span><span class="p">)</span>
 </span><span data-line="57">
 </span><span data-line="58">    <span class="c1"># --- MUSICAL INTERPRETATION LOGIC ---</span>
-</span><span data-line="59">    <span class="c1"># Drum algorithms often detect the &quot;double time&quot; tempo (e.g. 130 BPM instead of 65 BPM).</span>
-</span><span data-line="60">    <span class="c1"># To make the sheet music readable in standard 4/4 time (giving it a &quot;half-time feel&quot;</span>
+</span><span data-line="59">    <span class="c1"># Drum algorithms often detect the "double time" tempo (e.g. 130 BPM instead of 65 BPM).</span>
+</span><span data-line="60">    <span class="c1"># To make the sheet music readable in standard 4/4 time (giving it a "half-time feel"</span>
 </span><span data-line="61">    <span class="c1"># where the snare lands heavily on beat 3), we halve the raw detected tempo for notation.</span>
 </span><span data-line="62">    <span class="c1">#    tempo = tempo / 2.0</span>
 </span><span data-line="63">    <span class="n">tempo</span> <span class="o">=</span> <span class="n">tempo</span>
@@ -372,8 +372,8 @@ data-aria-dark="Switch to auto color mode">
 </span><span data-line="65">    <span class="c1"># --- DYNAMIC QUANTIZATION SUBDIVISION DERIVATION ---</span>
 </span><span data-line="66">    <span class="c1"># Parse the time signature to extract its denominator</span>
 </span><span data-line="67">    <span class="k">try</span><span class="p">:</span>
-</span><span data-line="68">        <span class="c1"># ts_denominator = float(time_signature.split(&quot;/&quot;)[1])</span>
-</span><span data-line="69">        <span class="n">parts</span> <span class="o">=</span> <span class="n">time_signature</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)</span>
+</span><span data-line="68">        <span class="c1"># ts_denominator = float(time_signature.split("/")[1])</span>
+</span><span data-line="69">        <span class="n">parts</span> <span class="o">=</span> <span class="n">time_signature</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">"/"</span><span class="p">)</span>
 </span><span data-line="70">        <span class="n">ts_numerator</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">parts</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
 </span><span data-line="71">        <span class="n">ts_denominator</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">parts</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 </span><span data-line="72">    <span class="k">except</span> <span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="ne">IndexError</span><span class="p">):</span>
@@ -403,23 +403,23 @@ data-aria-dark="Switch to auto color mode">
 </span><span data-line="96">        <span class="n">grid_step_seconds</span> <span class="o">=</span> <span class="n">seconds_per_beat</span> <span class="o">*</span> <span class="p">(</span><span class="n">ts_denominator</span> <span class="o">/</span> <span class="n">quantization_subdivision</span><span class="p">)</span>
 </span><span data-line="97">
 </span><span data-line="98">        <span class="k">for</span> <span class="n">event</span> <span class="ow">in</span> <span class="n">detected_events</span><span class="p">:</span>
-</span><span data-line="99">            <span class="c1"># raw_time = event[&#39;time&#39;]</span>
-</span><span data-line="100">            <span class="n">raw_time</span> <span class="o">=</span> <span class="n">event</span><span class="p">[</span><span class="s2">&quot;time_sec&quot;</span><span class="p">]</span>
+</span><span data-line="99">            <span class="c1"># raw_time = event['time']</span>
+</span><span data-line="100">            <span class="n">raw_time</span> <span class="o">=</span> <span class="n">event</span><span class="p">[</span><span class="s2">"time_sec"</span><span class="p">]</span>
 </span><span data-line="101">            <span class="c1"># Round the raw human time to the nearest perfect grid step</span>
 </span><span data-line="102">            <span class="n">quantized_time</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">raw_time</span> <span class="o">/</span> <span class="n">grid_step_seconds</span><span class="p">)</span> <span class="o">*</span> <span class="n">grid_step_seconds</span>
-</span><span data-line="103">            <span class="c1"># Overwrite the raw time with the &quot;snapped&quot; perfect time</span>
-</span><span data-line="104">            <span class="c1"># event[&#39;time&#39;] = quantized_time</span>
-</span><span data-line="105">            <span class="n">event</span><span class="p">[</span><span class="s2">&quot;time_sec&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">quantized_time</span>
+</span><span data-line="103">            <span class="c1"># Overwrite the raw time with the "snapped" perfect time</span>
+</span><span data-line="104">            <span class="c1"># event['time'] = quantized_time</span>
+</span><span data-line="105">            <span class="n">event</span><span class="p">[</span><span class="s2">"time_sec"</span><span class="p">]</span> <span class="o">=</span> <span class="n">quantized_time</span>
 </span><span data-line="106">
 </span><span data-line="107">    <span class="c1"># ----------------------------------------------------</span>
 </span><span data-line="108">    <span class="c1"># 1. Prepare File Paths</span>
-</span><span data-line="109">    <span class="c1"># output_path e.g. &quot;outputs/mysong.pdf&quot;</span>
-</span><span data-line="110">    <span class="n">base_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">output_path</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>  <span class="c1"># &quot;outputs/mysong&quot;</span>
-</span><span data-line="111">    <span class="n">json_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">base_path</span><span class="si">}</span><span class="s2">.json&quot;</span>
+</span><span data-line="109">    <span class="c1"># output_path e.g. "outputs/mysong.pdf"</span>
+</span><span data-line="110">    <span class="n">base_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">output_path</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>  <span class="c1"># "outputs/mysong"</span>
+</span><span data-line="111">    <span class="n">json_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">base_path</span><span class="si">}</span><span class="s2">.json"</span>
 </span><span data-line="112">
 </span><span data-line="113">    <span class="c1">## Derive specific file paths from the base string</span>
-</span><span data-line="114">    <span class="n">pdf_filepath</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">base_path</span><span class="si">}</span><span class="s2">.pdf&quot;</span>
-</span><span data-line="115">    <span class="n">midi_filepath</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">base_path</span><span class="si">}</span><span class="s2">.mid&quot;</span>
+</span><span data-line="114">    <span class="n">pdf_filepath</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">base_path</span><span class="si">}</span><span class="s2">.pdf"</span>
+</span><span data-line="115">    <span class="n">midi_filepath</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">base_path</span><span class="si">}</span><span class="s2">.mid"</span>
 </span><span data-line="116">
 </span><span data-line="117">    <span class="c1"># Ensure the destination directory exists before any export runs.</span>
 </span><span data-line="118">    <span class="c1"># midi_exporter and xml_exporter each create it themselves, but the JSON</span>
@@ -438,16 +438,16 @@ data-aria-dark="Switch to auto color mode">
 </span><span data-line="131">    <span class="n">written_paths</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
 </span><span data-line="132">
 </span><span data-line="133">    <span class="c1"># 2. Save Transcription Data to JSON</span>
-</span><span data-line="134">    <span class="c1"># This file serves as the &quot;Source of Truth&quot; for the PDF renderer.</span>
+</span><span data-line="134">    <span class="c1"># This file serves as the "Source of Truth" for the PDF renderer.</span>
 </span><span data-line="135">    <span class="c1"># Skipped under midi_only: the caller asked for a MIDI file and nothing else.</span>
 </span><span data-line="136">    <span class="k">if</span> <span class="ow">not</span> <span class="n">midi_only</span><span class="p">:</span>
 </span><span data-line="137">        <span class="k">try</span><span class="p">:</span>
-</span><span data-line="138">            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Saving to: </span><span class="si">{</span><span class="n">json_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-</span><span data-line="139">            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">json_path</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+</span><span data-line="138">            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Saving to: </span><span class="si">{</span><span class="n">json_path</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</span><span data-line="139">            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">json_path</span><span class="p">,</span> <span class="s2">"w"</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
 </span><span data-line="140">                <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">detected_events</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
-</span><span data-line="141">            <span class="n">written_paths</span><span class="p">[</span><span class="s2">&quot;json_path&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">json_path</span>
+</span><span data-line="141">            <span class="n">written_paths</span><span class="p">[</span><span class="s2">"json_path"</span><span class="p">]</span> <span class="o">=</span> <span class="n">json_path</span>
 </span><span data-line="142">        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-</span><span data-line="143">            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot; Warning: Could not save JSON transcription: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span data-line="143">            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">" Warning: Could not save JSON transcription: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 </span><span data-line="144">
 </span><span data-line="145">    <span class="c1"># 3. Generate Visual PDF (Directly from Data)</span>
 </span><span data-line="146">    <span class="c1"># Skipped under midi_only, as above.</span>
@@ -461,11 +461,11 @@ data-aria-dark="Switch to auto color mode">
 </span><span data-line="154">                <span class="n">tempo</span><span class="o">=</span><span class="n">tempo</span><span class="p">,</span>
 </span><span data-line="155">                <span class="n">time_signature</span><span class="o">=</span><span class="n">time_signature</span><span class="p">,</span>
 </span><span data-line="156">            <span class="p">)</span>
-</span><span data-line="157">            <span class="n">written_paths</span><span class="p">[</span><span class="s2">&quot;pdf_path&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pdf_filepath</span>
+</span><span data-line="157">            <span class="n">written_paths</span><span class="p">[</span><span class="s2">"pdf_path"</span><span class="p">]</span> <span class="o">=</span> <span class="n">pdf_filepath</span>
 </span><span data-line="158">
 </span><span data-line="159">        <span class="c1"># Success message is handled inside generate_custom_pdf/export_pdf in pdf_exporter.py</span>
 </span><span data-line="160">        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-</span><span data-line="161">            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;PDF Export Failed: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span data-line="161">            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"PDF Export Failed: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 </span><span data-line="162">            <span class="kn">import</span><span class="w"> </span><span class="nn">traceback</span>
 </span><span data-line="163">
 </span><span data-line="164">            <span class="n">traceback</span><span class="o">.</span><span class="n">print_exc</span><span class="p">()</span>
@@ -477,9 +477,9 @@ data-aria-dark="Switch to auto color mode">
 </span><span data-line="170">            <span class="n">output_path</span><span class="o">=</span><span class="n">midi_filepath</span><span class="p">,</span>  <span class="c1"># Updated to explicitly map to .mid</span>
 </span><span data-line="171">            <span class="n">tempo</span><span class="o">=</span><span class="n">tempo</span><span class="p">,</span>
 </span><span data-line="172">        <span class="p">)</span>
-</span><span data-line="173">        <span class="n">written_paths</span><span class="p">[</span><span class="s2">&quot;midi_path&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">midi_filepath</span>
+</span><span data-line="173">        <span class="n">written_paths</span><span class="p">[</span><span class="s2">"midi_path"</span><span class="p">]</span> <span class="o">=</span> <span class="n">midi_filepath</span>
 </span><span data-line="174">    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-</span><span data-line="175">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;MIDI Export Failed: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span data-line="175">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"MIDI Export Failed: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 </span><span data-line="176">        <span class="kn">import</span><span class="w"> </span><span class="nn">traceback</span>
 </span><span data-line="177">
 </span><span data-line="178">        <span class="n">traceback</span><span class="o">.</span><span class="n">print_exc</span><span class="p">()</span>
@@ -490,9 +490,9 @@ data-aria-dark="Switch to auto color mode">
 </span><span data-line="182">
 </span><span data-line="183"><span class="c1"># --------------------------------------------------------------------------uncomment during testing</span>
 </span><span data-line="184"><span class="c1"># from datetime import datetime</span>
-</span><span data-line="185"><span class="c1"># print(&quot;\n# ------------------------------------------------------------------------------------&quot;)</span>
+</span><span data-line="185"><span class="c1"># print("\n# ------------------------------------------------------------------------------------")</span>
 </span><span data-line="186"><span class="c1"># datetimestamp = datetime.now()</span>
-</span><span data-line="187"><span class="c1"># print(f&#39;\ndate/time: {datetimestamp}&#39;)</span>
+</span><span data-line="187"><span class="c1"># print(f'\ndate/time: {datetimestamp}')</span>
 </span><span data-line="188"><span class="c1"># --------------------------------------------------------------------------------------------------</span>
 </span></pre></div>
         </article><button class="back-to-top" type="button">

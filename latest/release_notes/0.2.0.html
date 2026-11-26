@@ -347,7 +347,7 @@ data-aria-dark="Switch to auto color mode">
   </div>
 </div><article class="yue" role="main">
           <section id="v0-2-0-alpha">
-<h1>v0.2.0 (Alpha)<a class="headerlink" href="#v0-2-0-alpha" title="Link to this heading">#</a></h1>
+<span id="v020-alpha"></span><h1>v0.2.0 (Alpha)<a class="headerlink" href="#v0-2-0-alpha" title="Link to this heading">#</a></h1>
 <!--date_updated:weds-25-aug-2026-->
 <p><em>Release Date: 20 August 2026</em></p>
 <section id="important-note">
@@ -367,14 +367,14 @@ data-aria-dark="Switch to auto color mode">
 <p>For backwards compatibility, using the return value as a string still works (returns the PDF path) but emits a <code class="docutils literal notranslate"><span class="pre">DeprecationWarning</span></code>. String behaviour will be removed in <code class="docutils literal notranslate"><span class="pre">v1.0.0</span></code>.</p>
 <p><strong>Migration:</strong></p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="c1"># v0.1.x (still works, but deprecated)</span>
-</span><span data-line="2"><span class="n">pdf</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">transcribe</span><span class="p">(</span><span class="s2">&quot;drums.wav&quot;</span><span class="p">)</span>
+</span><span data-line="2"><span class="n">pdf</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">transcribe</span><span class="p">(</span><span class="s2">"drums.wav"</span><span class="p">)</span>
 </span><span data-line="3"><span class="nb">print</span><span class="p">(</span><span class="n">pdf</span><span class="p">)</span>  <span class="c1"># warns</span>
 </span><span data-line="4">
 </span><span data-line="5"><span class="c1"># v0.2.0+ (recommended)</span>
-</span><span data-line="6"><span class="n">result</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">transcribe</span><span class="p">(</span><span class="s2">&quot;drums.wav&quot;</span><span class="p">)</span>
-</span><span data-line="7"><span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s2">&quot;pdf_path&quot;</span><span class="p">])</span>
-</span><span data-line="8"><span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s2">&quot;json_path&quot;</span><span class="p">])</span>
-</span><span data-line="9"><span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s2">&quot;midi_path&quot;</span><span class="p">])</span>
+</span><span data-line="6"><span class="n">result</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">transcribe</span><span class="p">(</span><span class="s2">"drums.wav"</span><span class="p">)</span>
+</span><span data-line="7"><span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s2">"pdf_path"</span><span class="p">])</span>
+</span><span data-line="8"><span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s2">"json_path"</span><span class="p">])</span>
+</span><span data-line="9"><span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s2">"midi_path"</span><span class="p">])</span>
 </span></pre></div>
 </div>
 </section>
@@ -385,7 +385,7 @@ data-aria-dark="Switch to auto color mode">
 </section>
 <hr class="docutils" />
 <section id="v0-2-0-release">
-<h2>v0.2.0 release<a class="headerlink" href="#v0-2-0-release" title="Link to this heading">#</a></h2>
+<span id="v020-release"></span><h2>v0.2.0 release<a class="headerlink" href="#v0-2-0-release" title="Link to this heading">#</a></h2>
 <blockquote>
 <div><p class="rubric" id="additions">Additions</p>
 </div></blockquote>

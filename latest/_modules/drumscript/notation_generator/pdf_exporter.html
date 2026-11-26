@@ -305,9 +305,9 @@ data-aria-dark="Switch to auto color mode">
           <h1>Source code for drumscript.notation_generator.pdf_exporter</h1><div class="highlight"><pre>
 <span></span><span data-line="1"><span class="c1"># DrumScript/notation_generator/pdf_exporter.py</span>
 </span><span data-line="2">
-</span><span data-line="3"><span class="sd">&quot;&quot;&quot;</span>
+</span><span data-line="3"><span class="sd">"""</span>
 </span><span data-line="4"><span class="sd">Module for rendering the drum score to PDF using ReportLab.</span>
-</span><span data-line="5"><span class="sd">&quot;&quot;&quot;</span>
+</span><span data-line="5"><span class="sd">"""</span>
 </span><span data-line="6">
 </span><span data-line="7"><span class="kn">from</span><span class="w"> </span><span class="nn">collections</span><span class="w"> </span><span class="kn">import</span> <span class="n">defaultdict</span>
 </span><span data-line="8">
@@ -340,7 +340,7 @@ data-aria-dark="Switch to auto color mode">
 </span><span data-line="35"><span class="n">BARS_PER_SYSTEM</span> <span class="o">=</span> <span class="mi">4</span>
 </span><span data-line="36">
 </span><span data-line="37"><span class="k">try</span><span class="p">:</span>
-</span><span data-line="38">    <span class="n">REF_PITCH_MIDDLE_LINE</span> <span class="o">=</span> <span class="n">music21</span><span class="o">.</span><span class="n">pitch</span><span class="o">.</span><span class="n">Pitch</span><span class="p">(</span><span class="s2">&quot;B3&quot;</span><span class="p">)</span>
+</span><span data-line="38">    <span class="n">REF_PITCH_MIDDLE_LINE</span> <span class="o">=</span> <span class="n">music21</span><span class="o">.</span><span class="n">pitch</span><span class="o">.</span><span class="n">Pitch</span><span class="p">(</span><span class="s2">"B3"</span><span class="p">)</span>
 </span><span data-line="39"><span class="k">except</span> <span class="p">(</span><span class="ne">AttributeError</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">):</span>
 </span><span data-line="40">    <span class="n">REF_PITCH_MIDDLE_LINE</span> <span class="o">=</span> <span class="kc">None</span>
 </span><span data-line="41">
@@ -348,7 +348,7 @@ data-aria-dark="Switch to auto color mode">
 <div class="viewcode-block" id="get_vertical_position">
 <a class="viewcode-back" href="../../../generated/drumscript.notation_generator.pdf_exporter.get_vertical_position.html#drumscript.notation_generator.pdf_exporter.get_vertical_position">[docs]</a>
 </span><span data-line="43"><span class="k">def</span><span class="w"> </span><span class="nf">get_vertical_position</span><span class="p">(</span><span class="n">staff_position_str</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">staff_y_base</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-</span><span data-line="44"><span class="w">    </span><span class="sd">&quot;&quot;&quot;Calculates the Y-coordinate for a note based on its staff position.&quot;&quot;&quot;</span>
+</span><span data-line="44"><span class="w">    </span><span class="sd">"""Calculates the Y-coordinate for a note based on its staff position."""</span>
 </span><span data-line="45">    <span class="k">if</span> <span class="ow">not</span> <span class="n">staff_position_str</span><span class="p">:</span>
 </span><span data-line="46">        <span class="k">return</span> <span class="n">staff_y_base</span> <span class="o">+</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">LINE_SPACING</span><span class="p">)</span>
 </span><span data-line="47">
@@ -363,7 +363,7 @@ data-aria-dark="Switch to auto color mode">
 <div class="viewcode-block" id="draw_staff">
 <a class="viewcode-back" href="../../../generated/drumscript.notation_generator.pdf_exporter.draw_staff.html#drumscript.notation_generator.pdf_exporter.draw_staff">[docs]</a>
 </span><span data-line="55"><span class="k">def</span><span class="w"> </span><span class="nf">draw_staff</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">width</span><span class="p">):</span>
-</span><span data-line="56"><span class="w">    </span><span class="sd">&quot;&quot;&quot;Draws the 5 lines of the percussion staff.&quot;&quot;&quot;</span>
+</span><span data-line="56"><span class="w">    </span><span class="sd">"""Draws the 5 lines of the percussion staff."""</span>
 </span><span data-line="57">    <span class="c1"># c.setLineWidth(1)</span>
 </span><span data-line="58">    <span class="n">c</span><span class="o">.</span><span class="n">setLineWidth</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>  <span class="c1"># Tweak 5: Thinner staff lines for a cleaner look</span>
 </span><span data-line="59">    <span class="n">c</span><span class="o">.</span><span class="n">setStrokeColor</span><span class="p">(</span><span class="n">colors</span><span class="o">.</span><span class="n">black</span><span class="p">)</span>
@@ -376,7 +376,7 @@ data-aria-dark="Switch to auto color mode">
 <div class="viewcode-block" id="draw_clef">
 <a class="viewcode-back" href="../../../generated/drumscript.notation_generator.pdf_exporter.draw_clef.html#drumscript.notation_generator.pdf_exporter.draw_clef">[docs]</a>
 </span><span data-line="65"><span class="k">def</span><span class="w"> </span><span class="nf">draw_clef</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
-</span><span data-line="66"><span class="w">    </span><span class="sd">&quot;&quot;&quot;Draws the Percussion Clef (two vertical blocks).&quot;&quot;&quot;</span>
+</span><span data-line="66"><span class="w">    </span><span class="sd">"""Draws the Percussion Clef (two vertical blocks)."""</span>
 </span><span data-line="67">    <span class="n">clef_h</span> <span class="o">=</span> <span class="mf">2.5</span> <span class="o">*</span> <span class="n">LINE_SPACING</span>
 </span><span data-line="68">    <span class="n">clef_y</span> <span class="o">=</span> <span class="n">y</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">*</span> <span class="n">LINE_SPACING</span>
 </span><span data-line="69">    <span class="n">c</span><span class="o">.</span><span class="n">rect</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">clef_y</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="n">clef_h</span><span class="p">,</span> <span class="n">fill</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">stroke</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
@@ -387,18 +387,18 @@ data-aria-dark="Switch to auto color mode">
 <div class="viewcode-block" id="draw_time_signature">
 <a class="viewcode-back" href="../../../generated/drumscript.notation_generator.pdf_exporter.draw_time_signature.html#drumscript.notation_generator.pdf_exporter.draw_time_signature">[docs]</a>
 </span><span data-line="73"><span class="k">def</span><span class="w"> </span><span class="nf">draw_time_signature</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">numerator</span><span class="p">,</span> <span class="n">denominator</span><span class="p">):</span>
-</span><span data-line="74"><span class="w">    </span><span class="sd">&quot;&quot;&quot;Draws the time signature numbers centered in the correct staff spaces.&quot;&quot;&quot;</span>
-</span><span data-line="75">    <span class="n">c</span><span class="o">.</span><span class="n">setFont</span><span class="p">(</span><span class="s2">&quot;Helvetica-Bold&quot;</span><span class="p">,</span> <span class="mi">16</span><span class="p">)</span>
+</span><span data-line="74"><span class="w">    </span><span class="sd">"""Draws the time signature numbers centered in the correct staff spaces."""</span>
+</span><span data-line="75">    <span class="n">c</span><span class="o">.</span><span class="n">setFont</span><span class="p">(</span><span class="s2">"Helvetica-Bold"</span><span class="p">,</span> <span class="mi">16</span><span class="p">)</span>
 </span><span data-line="76">    <span class="n">text_x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">20</span>
-</span><span data-line="77">    <span class="n">c</span><span class="o">.</span><span class="n">drawString</span><span class="p">(</span><span class="n">text_x</span><span class="p">,</span> <span class="n">y</span> <span class="o">+</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">LINE_SPACING</span><span class="p">),</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">numerator</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-</span><span data-line="78">    <span class="n">c</span><span class="o">.</span><span class="n">drawString</span><span class="p">(</span><span class="n">text_x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">denominator</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+</span><span data-line="77">    <span class="n">c</span><span class="o">.</span><span class="n">drawString</span><span class="p">(</span><span class="n">text_x</span><span class="p">,</span> <span class="n">y</span> <span class="o">+</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">LINE_SPACING</span><span class="p">),</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">numerator</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</span><span data-line="78">    <span class="n">c</span><span class="o">.</span><span class="n">drawString</span><span class="p">(</span><span class="n">text_x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">denominator</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span></div>
 
 </span><span data-line="79">
 </span><span data-line="80">
 <div class="viewcode-block" id="draw_bar_line">
 <a class="viewcode-back" href="../../../generated/drumscript.notation_generator.pdf_exporter.draw_bar_line.html#drumscript.notation_generator.pdf_exporter.draw_bar_line">[docs]</a>
 </span><span data-line="81"><span class="k">def</span><span class="w"> </span><span class="nf">draw_bar_line</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
-</span><span data-line="82"><span class="w">    </span><span class="sd">&quot;&quot;&quot;Draws a vertical bar line.&quot;&quot;&quot;</span>
+</span><span data-line="82"><span class="w">    </span><span class="sd">"""Draws a vertical bar line."""</span>
 </span><span data-line="83">    <span class="c1"># c.setLineWidth(1)</span>
 </span><span data-line="84">    <span class="n">c</span><span class="o">.</span><span class="n">setLineWidth</span><span class="p">(</span><span class="mf">0.75</span><span class="p">)</span>  <span class="c1"># Tweak 5: Cleaner bar lines</span>
 </span><span data-line="85">    <span class="n">staff_height</span> <span class="o">=</span> <span class="mi">4</span> <span class="o">*</span> <span class="n">LINE_SPACING</span>
@@ -409,7 +409,7 @@ data-aria-dark="Switch to auto color mode">
 <div class="viewcode-block" id="draw_notehead">
 <a class="viewcode-back" href="../../../generated/drumscript.notation_generator.pdf_exporter.draw_notehead.html#drumscript.notation_generator.pdf_exporter.draw_notehead">[docs]</a>
 </span><span data-line="89"><span class="k">def</span><span class="w"> </span><span class="nf">draw_notehead</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">note_type</span><span class="p">,</span> <span class="n">staff_y_base</span><span class="p">,</span> <span class="n">accent</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-</span><span data-line="90"><span class="w">    </span><span class="sd">&quot;&quot;&quot;Draws ONLY the notehead and ledger lines (stems are handled by beaming).&quot;&quot;&quot;</span>
+</span><span data-line="90"><span class="w">    </span><span class="sd">"""Draws ONLY the notehead and ledger lines (stems are handled by beaming)."""</span>
 </span><span data-line="91">    <span class="n">r</span> <span class="o">=</span> <span class="mf">3.5</span>
 </span><span data-line="92">    <span class="n">top_line_y</span> <span class="o">=</span> <span class="n">staff_y_base</span> <span class="o">+</span> <span class="p">(</span><span class="mi">4</span> <span class="o">*</span> <span class="n">LINE_SPACING</span><span class="p">)</span>
 </span><span data-line="93">    <span class="n">bottom_line_y</span> <span class="o">=</span> <span class="n">staff_y_base</span>
@@ -424,12 +424,12 @@ data-aria-dark="Switch to auto color mode">
 </span><span data-line="102">        <span class="n">c</span><span class="o">.</span><span class="n">setLineWidth</span><span class="p">(</span><span class="mf">0.75</span><span class="p">)</span>
 </span><span data-line="103">        <span class="n">c</span><span class="o">.</span><span class="n">line</span><span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="mi">8</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">8</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
 </span><span data-line="104">
-</span><span data-line="105">    <span class="k">if</span> <span class="n">note_type</span> <span class="o">==</span> <span class="s2">&quot;x&quot;</span> <span class="ow">or</span> <span class="n">note_type</span> <span class="o">==</span> <span class="s2">&quot;circle-x&quot;</span><span class="p">:</span>
+</span><span data-line="105">    <span class="k">if</span> <span class="n">note_type</span> <span class="o">==</span> <span class="s2">"x"</span> <span class="ow">or</span> <span class="n">note_type</span> <span class="o">==</span> <span class="s2">"circle-x"</span><span class="p">:</span>
 </span><span data-line="106">        <span class="c1"># c.setLineWidth(2)</span>
 </span><span data-line="107">        <span class="n">c</span><span class="o">.</span><span class="n">setLineWidth</span><span class="p">(</span><span class="mf">1.5</span><span class="p">)</span>  <span class="c1"># Tweak 5: Cleaner hi-hat cross lines</span>
 </span><span data-line="108">        <span class="n">c</span><span class="o">.</span><span class="n">line</span><span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">r</span><span class="p">,</span> <span class="n">y</span> <span class="o">-</span> <span class="n">r</span><span class="p">,</span> <span class="n">x</span> <span class="o">+</span> <span class="n">r</span><span class="p">,</span> <span class="n">y</span> <span class="o">+</span> <span class="n">r</span><span class="p">)</span>
 </span><span data-line="109">        <span class="n">c</span><span class="o">.</span><span class="n">line</span><span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">r</span><span class="p">,</span> <span class="n">y</span> <span class="o">+</span> <span class="n">r</span><span class="p">,</span> <span class="n">x</span> <span class="o">+</span> <span class="n">r</span><span class="p">,</span> <span class="n">y</span> <span class="o">-</span> <span class="n">r</span><span class="p">)</span>
-</span><span data-line="110">        <span class="k">if</span> <span class="n">note_type</span> <span class="o">==</span> <span class="s2">&quot;circle-x&quot;</span><span class="p">:</span>
+</span><span data-line="110">        <span class="k">if</span> <span class="n">note_type</span> <span class="o">==</span> <span class="s2">"circle-x"</span><span class="p">:</span>
 </span><span data-line="111">            <span class="c1"># c.setLineWidth(1)</span>
 </span><span data-line="112">            <span class="n">c</span><span class="o">.</span><span class="n">setLineWidth</span><span class="p">(</span><span class="mf">0.75</span><span class="p">)</span>
 </span><span data-line="113">            <span class="n">c</span><span class="o">.</span><span class="n">circle</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">r</span> <span class="o">+</span> <span class="mf">1.5</span><span class="p">,</span> <span class="n">stroke</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">fill</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
@@ -440,7 +440,7 @@ data-aria-dark="Switch to auto color mode">
 </span><span data-line="118">        <span class="n">c</span><span class="o">.</span><span class="n">circle</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">fill</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">stroke</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 </span><span data-line="119">        <span class="n">c</span><span class="o">.</span><span class="n">restoreState</span><span class="p">()</span>
 </span><span data-line="120">
-</span><span data-line="121">    <span class="c1"># Tweak 4: Future-proofing for Accents! Draws a &quot;&gt;&quot; symbol above the notehead.</span>
+</span><span data-line="121">    <span class="c1"># Tweak 4: Future-proofing for Accents! Draws a "&gt;" symbol above the notehead.</span>
 </span><span data-line="122">    <span class="k">if</span> <span class="n">accent</span><span class="p">:</span>
 </span><span data-line="123">        <span class="n">c</span><span class="o">.</span><span class="n">setLineWidth</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 </span><span data-line="124">        <span class="n">c</span><span class="o">.</span><span class="n">line</span><span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="mi">4</span><span class="p">,</span> <span class="n">y</span> <span class="o">+</span> <span class="mi">12</span><span class="p">,</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">4</span><span class="p">,</span> <span class="n">y</span> <span class="o">+</span> <span class="mi">9</span><span class="p">)</span>
@@ -448,36 +448,36 @@ data-aria-dark="Switch to auto color mode">
 
 </span><span data-line="126">
 </span><span data-line="127">
-</span><span data-line="128"><span class="c1"># def generate_custom_pdf(detected_events, output_path, tempo, time_signature=&quot;4/4&quot;):</span>
+</span><span data-line="128"><span class="c1"># def generate_custom_pdf(detected_events, output_path, tempo, time_signature="4/4"):</span>
 <div class="viewcode-block" id="parse_time_signature">
 <a class="viewcode-back" href="../../../generated/drumscript.notation_generator.pdf_exporter.parse_time_signature.html#drumscript.notation_generator.pdf_exporter.parse_time_signature">[docs]</a>
-</span><span data-line="129"><span class="k">def</span><span class="w"> </span><span class="nf">parse_time_signature</span><span class="p">(</span><span class="n">time_signature</span><span class="o">=</span><span class="s2">&quot;4/4&quot;</span><span class="p">):</span>
-</span><span data-line="130"><span class="w">    </span><span class="sd">&quot;&quot;&quot;Parse ``numerator/denominator``. Invalid values fall back to 4/4 with a warning.&quot;&quot;&quot;</span>
+</span><span data-line="129"><span class="k">def</span><span class="w"> </span><span class="nf">parse_time_signature</span><span class="p">(</span><span class="n">time_signature</span><span class="o">=</span><span class="s2">"4/4"</span><span class="p">):</span>
+</span><span data-line="130"><span class="w">    </span><span class="sd">"""Parse ``numerator/denominator``. Invalid values fall back to 4/4 with a warning."""</span>
 </span><span data-line="131">    <span class="k">try</span><span class="p">:</span>
-</span><span data-line="132">        <span class="n">numerator</span><span class="p">,</span> <span class="n">denominator</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">time_signature</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">))</span>
+</span><span data-line="132">        <span class="n">numerator</span><span class="p">,</span> <span class="n">denominator</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">time_signature</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">"/"</span><span class="p">))</span>
 </span><span data-line="133">        <span class="k">return</span> <span class="n">numerator</span><span class="p">,</span> <span class="n">denominator</span>
 </span><span data-line="134">    <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
-</span><span data-line="135">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Warning: invalid time signature </span><span class="si">{</span><span class="n">time_signature</span><span class="si">!r}</span><span class="s2">; falling back to 4/4. Use a forward slash, e.g. 3/4 or 6/8.&quot;</span><span class="p">)</span>
+</span><span data-line="135">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Warning: invalid time signature </span><span class="si">{</span><span class="n">time_signature</span><span class="si">!r}</span><span class="s2">; falling back to 4/4. Use a forward slash, e.g. 3/4 or 6/8."</span><span class="p">)</span>
 </span><span data-line="136">        <span class="k">return</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span></div>
 
 </span><span data-line="137">
 </span><span data-line="138">
 <div class="viewcode-block" id="export_pdf">
 <a class="viewcode-back" href="../../../generated/drumscript.notation_generator.pdf_exporter.export_pdf.html#drumscript.notation_generator.pdf_exporter.export_pdf">[docs]</a>
-</span><span data-line="139"><span class="k">def</span><span class="w"> </span><span class="nf">export_pdf</span><span class="p">(</span><span class="n">detected_events</span><span class="p">,</span> <span class="n">output_path</span><span class="p">,</span> <span class="n">tempo</span><span class="p">,</span> <span class="n">time_signature</span><span class="o">=</span><span class="s2">&quot;4/4&quot;</span><span class="p">):</span>
-</span><span data-line="140"><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span data-line="139"><span class="k">def</span><span class="w"> </span><span class="nf">export_pdf</span><span class="p">(</span><span class="n">detected_events</span><span class="p">,</span> <span class="n">output_path</span><span class="p">,</span> <span class="n">tempo</span><span class="p">,</span> <span class="n">time_signature</span><span class="o">=</span><span class="s2">"4/4"</span><span class="p">):</span>
+</span><span data-line="140"><span class="w">    </span><span class="sd">"""</span>
 </span><span data-line="141"><span class="sd">    Generates a PDF drum score using ReportLab engine.</span>
-</span><span data-line="142"><span class="sd">    &quot;&quot;&quot;</span>
+</span><span data-line="142"><span class="sd">    """</span>
 </span><span data-line="143">    <span class="k">if</span> <span class="n">canvas</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-</span><span data-line="144">        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;ReportLab missing.&quot;</span><span class="p">)</span>
+</span><span data-line="144">        <span class="nb">print</span><span class="p">(</span><span class="s2">"ReportLab missing."</span><span class="p">)</span>
 </span><span data-line="145">        <span class="k">return</span>
 </span><span data-line="146">
 </span><span data-line="147">    <span class="n">numerator</span><span class="p">,</span> <span class="n">denominator</span> <span class="o">=</span> <span class="n">parse_time_signature</span><span class="p">(</span><span class="n">time_signature</span><span class="p">)</span>
 </span><span data-line="148">
-</span><span data-line="149">    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Generating PDF: </span><span class="si">{</span><span class="n">output_path</span><span class="si">}</span><span class="s2"> (Sig: </span><span class="si">{</span><span class="n">numerator</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">denominator</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="nb">int</span><span class="p">(</span><span class="n">tempo</span><span class="p">)</span><span class="si">}</span><span class="s2"> BPM)&quot;</span><span class="p">)</span>
+</span><span data-line="149">    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Generating PDF: </span><span class="si">{</span><span class="n">output_path</span><span class="si">}</span><span class="s2"> (Sig: </span><span class="si">{</span><span class="n">numerator</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">denominator</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="nb">int</span><span class="p">(</span><span class="n">tempo</span><span class="p">)</span><span class="si">}</span><span class="s2"> BPM)"</span><span class="p">)</span>
 </span><span data-line="150">
 </span><span data-line="151">    <span class="n">c</span> <span class="o">=</span> <span class="n">canvas</span><span class="o">.</span><span class="n">Canvas</span><span class="p">(</span><span class="n">output_path</span><span class="p">,</span> <span class="n">pagesize</span><span class="o">=</span><span class="n">A4</span><span class="p">)</span>
-</span><span data-line="152">    <span class="n">c</span><span class="o">.</span><span class="n">setTitle</span><span class="p">(</span><span class="s2">&quot;DrumScript Transcription&quot;</span><span class="p">)</span>
+</span><span data-line="152">    <span class="n">c</span><span class="o">.</span><span class="n">setTitle</span><span class="p">(</span><span class="s2">"DrumScript Transcription"</span><span class="p">)</span>
 </span><span data-line="153">
 </span><span data-line="154">    <span class="n">system_width</span> <span class="o">=</span> <span class="n">PAGE_WIDTH</span> <span class="o">-</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">MARGIN_X</span><span class="p">)</span>
 </span><span data-line="155">    <span class="n">music_width</span> <span class="o">=</span> <span class="n">system_width</span> <span class="o">-</span> <span class="n">CLEF_WIDTH</span>
@@ -490,26 +490,26 @@ data-aria-dark="Switch to auto color mode">
 </span><span data-line="162">
 </span><span data-line="163">    <span class="n">sec_per_measure</span> <span class="o">=</span> <span class="n">seconds_per_beat</span> <span class="o">*</span> <span class="n">numerator</span>
 </span><span data-line="164">
-</span><span data-line="165">    <span class="c1"># detected_events.sort(key=lambda x: x[&#39;time&#39;])</span>
-</span><span data-line="166">    <span class="c1"># ADAPTED KEY: Using &#39;time_sec&#39;</span>
-</span><span data-line="167">    <span class="n">detected_events</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="s2">&quot;time_sec&quot;</span><span class="p">])</span>
+</span><span data-line="165">    <span class="c1"># detected_events.sort(key=lambda x: x['time'])</span>
+</span><span data-line="166">    <span class="c1"># ADAPTED KEY: Using 'time_sec'</span>
+</span><span data-line="167">    <span class="n">detected_events</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="s2">"time_sec"</span><span class="p">])</span>
 </span><span data-line="168">    <span class="n">events_by_measure</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
 </span><span data-line="169">
 </span><span data-line="170">    <span class="n">last_measure_idx</span> <span class="o">=</span> <span class="mi">0</span>
 </span><span data-line="171">    <span class="k">for</span> <span class="n">event</span> <span class="ow">in</span> <span class="n">detected_events</span><span class="p">:</span>
-</span><span data-line="172">        <span class="c1"># LEGACY CODE - m_idx = int(event[&#39;time&#39;] / sec_per_measure)</span>
-</span><span data-line="173">        <span class="c1"># ADAPTED KEY: Using &#39;time_sec&#39;</span>
-</span><span data-line="174">        <span class="n">m_idx</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">event</span><span class="p">[</span><span class="s2">&quot;time_sec&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="n">sec_per_measure</span><span class="p">)</span>
+</span><span data-line="172">        <span class="c1"># LEGACY CODE - m_idx = int(event['time'] / sec_per_measure)</span>
+</span><span data-line="173">        <span class="c1"># ADAPTED KEY: Using 'time_sec'</span>
+</span><span data-line="174">        <span class="n">m_idx</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">event</span><span class="p">[</span><span class="s2">"time_sec"</span><span class="p">]</span> <span class="o">/</span> <span class="n">sec_per_measure</span><span class="p">)</span>
 </span><span data-line="175">        <span class="n">events_by_measure</span><span class="p">[</span><span class="n">m_idx</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">event</span><span class="p">)</span>
 </span><span data-line="176">        <span class="k">if</span> <span class="n">m_idx</span> <span class="o">&gt;</span> <span class="n">last_measure_idx</span><span class="p">:</span>
 </span><span data-line="177">            <span class="n">last_measure_idx</span> <span class="o">=</span> <span class="n">m_idx</span>
 </span><span data-line="178">
 </span><span data-line="179">    <span class="n">current_y</span> <span class="o">=</span> <span class="n">PAGE_HEIGHT</span> <span class="o">-</span> <span class="mi">150</span>
 </span><span data-line="180">
-</span><span data-line="181">    <span class="n">c</span><span class="o">.</span><span class="n">setFont</span><span class="p">(</span><span class="s2">&quot;Helvetica-Bold&quot;</span><span class="p">,</span> <span class="mi">24</span><span class="p">)</span>
-</span><span data-line="182">    <span class="n">c</span><span class="o">.</span><span class="n">drawString</span><span class="p">(</span><span class="n">MARGIN_X</span><span class="p">,</span> <span class="n">PAGE_HEIGHT</span> <span class="o">-</span> <span class="mi">50</span><span class="p">,</span> <span class="s2">&quot;DrumScript Transcription&quot;</span><span class="p">)</span>
-</span><span data-line="183">    <span class="n">c</span><span class="o">.</span><span class="n">setFont</span><span class="p">(</span><span class="s2">&quot;Helvetica&quot;</span><span class="p">,</span> <span class="mi">12</span><span class="p">)</span>
-</span><span data-line="184">    <span class="n">c</span><span class="o">.</span><span class="n">drawString</span><span class="p">(</span><span class="n">MARGIN_X</span><span class="p">,</span> <span class="n">PAGE_HEIGHT</span> <span class="o">-</span> <span class="mi">70</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;Tempo: </span><span class="si">{</span><span class="nb">int</span><span class="p">(</span><span class="n">tempo</span><span class="p">)</span><span class="si">}</span><span class="s2"> BPM&quot;</span><span class="p">)</span>
+</span><span data-line="181">    <span class="n">c</span><span class="o">.</span><span class="n">setFont</span><span class="p">(</span><span class="s2">"Helvetica-Bold"</span><span class="p">,</span> <span class="mi">24</span><span class="p">)</span>
+</span><span data-line="182">    <span class="n">c</span><span class="o">.</span><span class="n">drawString</span><span class="p">(</span><span class="n">MARGIN_X</span><span class="p">,</span> <span class="n">PAGE_HEIGHT</span> <span class="o">-</span> <span class="mi">50</span><span class="p">,</span> <span class="s2">"DrumScript Transcription"</span><span class="p">)</span>
+</span><span data-line="183">    <span class="n">c</span><span class="o">.</span><span class="n">setFont</span><span class="p">(</span><span class="s2">"Helvetica"</span><span class="p">,</span> <span class="mi">12</span><span class="p">)</span>
+</span><span data-line="184">    <span class="n">c</span><span class="o">.</span><span class="n">drawString</span><span class="p">(</span><span class="n">MARGIN_X</span><span class="p">,</span> <span class="n">PAGE_HEIGHT</span> <span class="o">-</span> <span class="mi">70</span><span class="p">,</span> <span class="sa">f</span><span class="s2">"Tempo: </span><span class="si">{</span><span class="nb">int</span><span class="p">(</span><span class="n">tempo</span><span class="p">)</span><span class="si">}</span><span class="s2"> BPM"</span><span class="p">)</span>
 </span><span data-line="185">
 </span><span data-line="186">    <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">last_measure_idx</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
 </span><span data-line="187">        <span class="k">if</span> <span class="n">m</span> <span class="o">%</span> <span class="n">BARS_PER_SYSTEM</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
@@ -518,8 +518,8 @@ data-aria-dark="Switch to auto color mode">
 </span><span data-line="190">            <span class="k">if</span> <span class="n">current_y</span> <span class="o">&lt;</span> <span class="n">MARGIN_Y</span><span class="p">:</span>
 </span><span data-line="191">                <span class="n">c</span><span class="o">.</span><span class="n">showPage</span><span class="p">()</span>
 </span><span data-line="192">                <span class="n">current_y</span> <span class="o">=</span> <span class="n">PAGE_HEIGHT</span> <span class="o">-</span> <span class="mi">100</span>
-</span><span data-line="193">                <span class="n">c</span><span class="o">.</span><span class="n">setFont</span><span class="p">(</span><span class="s2">&quot;Helvetica&quot;</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
-</span><span data-line="194">                <span class="n">c</span><span class="o">.</span><span class="n">drawString</span><span class="p">(</span><span class="n">MARGIN_X</span><span class="p">,</span> <span class="n">PAGE_HEIGHT</span> <span class="o">-</span> <span class="mi">50</span><span class="p">,</span> <span class="s2">&quot;DrumScript Transcription (Cont.)&quot;</span><span class="p">)</span>
+</span><span data-line="193">                <span class="n">c</span><span class="o">.</span><span class="n">setFont</span><span class="p">(</span><span class="s2">"Helvetica"</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+</span><span data-line="194">                <span class="n">c</span><span class="o">.</span><span class="n">drawString</span><span class="p">(</span><span class="n">MARGIN_X</span><span class="p">,</span> <span class="n">PAGE_HEIGHT</span> <span class="o">-</span> <span class="mi">50</span><span class="p">,</span> <span class="s2">"DrumScript Transcription (Cont.)"</span><span class="p">)</span>
 </span><span data-line="195">
 </span><span data-line="196">            <span class="n">draw_staff</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">MARGIN_X</span><span class="p">,</span> <span class="n">current_y</span><span class="p">,</span> <span class="n">system_width</span><span class="p">)</span>
 </span><span data-line="197">            <span class="n">draw_clef</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">MARGIN_X</span> <span class="o">+</span> <span class="mi">5</span><span class="p">,</span> <span class="n">current_y</span><span class="p">)</span>
@@ -531,11 +531,11 @@ data-aria-dark="Switch to auto color mode">
 </span><span data-line="203">        <span class="n">draw_bar_line</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">measure_start_x</span> <span class="o">+</span> <span class="n">measure_width</span><span class="p">,</span> <span class="n">current_y</span><span class="p">)</span>
 </span><span data-line="204">
 </span><span data-line="205">        <span class="c1"># --- LEGACY CODE - DRAW MEASURE NUMBERS (Italics and Offset) ---</span>
-</span><span data-line="206">        <span class="c1"># c.setFont(&quot;Helvetica-Oblique&quot;, 9)</span>
+</span><span data-line="206">        <span class="c1"># c.setFont("Helvetica-Oblique", 9)</span>
 </span><span data-line="207">        <span class="c1"># c.drawString(measure_start_x + 5, current_y + (6 * LINE_SPACING), str(m + 1))</span>
 </span><span data-line="208">
 </span><span data-line="209">        <span class="c1"># --- DRAW MEASURE NUMBERS (Tweak 1: Flush left, Roboto-style Helvetica) ---</span>
-</span><span data-line="210">        <span class="n">c</span><span class="o">.</span><span class="n">setFont</span><span class="p">(</span><span class="s2">&quot;Helvetica&quot;</span><span class="p">,</span> <span class="mi">9</span><span class="p">)</span>
+</span><span data-line="210">        <span class="n">c</span><span class="o">.</span><span class="n">setFont</span><span class="p">(</span><span class="s2">"Helvetica"</span><span class="p">,</span> <span class="mi">9</span><span class="p">)</span>
 </span><span data-line="211">        <span class="n">c</span><span class="o">.</span><span class="n">drawString</span><span class="p">(</span><span class="n">measure_start_x</span><span class="p">,</span> <span class="n">current_y</span> <span class="o">+</span> <span class="p">(</span><span class="mi">6</span> <span class="o">*</span> <span class="n">LINE_SPACING</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="n">m</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
 </span><span data-line="212">
 </span><span data-line="213">        <span class="c1"># --- DUAL-VOICE BEAMING RENDERING LOOP ---</span>
@@ -543,9 +543,9 @@ data-aria-dark="Switch to auto color mode">
 </span><span data-line="215">            <span class="c1"># 1. Group all events in this measure by Beat (Quarter Note)</span>
 </span><span data-line="216">            <span class="n">beats</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
 </span><span data-line="217">            <span class="k">for</span> <span class="n">event</span> <span class="ow">in</span> <span class="n">events_by_measure</span><span class="p">[</span><span class="n">m</span><span class="p">]:</span>
-</span><span data-line="218">                <span class="c1"># LEGACY CODE - rel_time = event[&#39;time&#39;] % sec_per_measure</span>
-</span><span data-line="219">                <span class="c1"># ADAPTED KEY: Using &#39;time_sec&#39;</span>
-</span><span data-line="220">                <span class="n">rel_time</span> <span class="o">=</span> <span class="n">event</span><span class="p">[</span><span class="s2">&quot;time_sec&quot;</span><span class="p">]</span> <span class="o">%</span> <span class="n">sec_per_measure</span>
+</span><span data-line="218">                <span class="c1"># LEGACY CODE - rel_time = event['time'] % sec_per_measure</span>
+</span><span data-line="219">                <span class="c1"># ADAPTED KEY: Using 'time_sec'</span>
+</span><span data-line="220">                <span class="n">rel_time</span> <span class="o">=</span> <span class="n">event</span><span class="p">[</span><span class="s2">"time_sec"</span><span class="p">]</span> <span class="o">%</span> <span class="n">sec_per_measure</span>
 </span><span data-line="221">                <span class="n">beat_idx</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">rel_time</span> <span class="o">/</span> <span class="n">seconds_per_beat</span><span class="p">)</span>
 </span><span data-line="222">                <span class="n">beats</span><span class="p">[</span><span class="n">beat_idx</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">event</span><span class="p">)</span>
 </span><span data-line="223">
@@ -558,28 +558,28 @@ data-aria-dark="Switch to auto color mode">
 </span><span data-line="230">                <span class="n">x_coords_down</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
 </span><span data-line="231">
 </span><span data-line="232">                <span class="k">for</span> <span class="n">event</span> <span class="ow">in</span> <span class="n">event_list</span><span class="p">:</span>
-</span><span data-line="233">                    <span class="c1"># LEGACY CODE - rel_time = event[&#39;time&#39;] % sec_per_measure</span>
-</span><span data-line="234">                    <span class="c1"># ADAPTED KEY: Using &#39;time_sec&#39;</span>
-</span><span data-line="235">                    <span class="n">rel_time</span> <span class="o">=</span> <span class="n">event</span><span class="p">[</span><span class="s2">&quot;time_sec&quot;</span><span class="p">]</span> <span class="o">%</span> <span class="n">sec_per_measure</span>
+</span><span data-line="233">                    <span class="c1"># LEGACY CODE - rel_time = event['time'] % sec_per_measure</span>
+</span><span data-line="234">                    <span class="c1"># ADAPTED KEY: Using 'time_sec'</span>
+</span><span data-line="235">                    <span class="n">rel_time</span> <span class="o">=</span> <span class="n">event</span><span class="p">[</span><span class="s2">"time_sec"</span><span class="p">]</span> <span class="o">%</span> <span class="n">sec_per_measure</span>
 </span><span data-line="236">                    <span class="n">padding</span> <span class="o">=</span> <span class="mi">15</span>
 </span><span data-line="237">                    <span class="n">usable_width</span> <span class="o">=</span> <span class="n">measure_width</span> <span class="o">-</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">padding</span><span class="p">)</span>
 </span><span data-line="238">                    <span class="n">rel_x</span> <span class="o">=</span> <span class="p">(</span><span class="n">rel_time</span> <span class="o">/</span> <span class="n">sec_per_measure</span><span class="p">)</span> <span class="o">*</span> <span class="n">usable_width</span>
 </span><span data-line="239">                    <span class="n">note_x</span> <span class="o">=</span> <span class="n">measure_start_x</span> <span class="o">+</span> <span class="n">padding</span> <span class="o">+</span> <span class="n">rel_x</span>
 </span><span data-line="240">
 </span><span data-line="241">                    <span class="c1"># Tweak 4: Grab accent status (defaults to False if not yet implemented in classifier)</span>
-</span><span data-line="242">                    <span class="n">is_accent</span> <span class="o">=</span> <span class="n">event</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;accent&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+</span><span data-line="242">                    <span class="n">is_accent</span> <span class="o">=</span> <span class="n">event</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"accent"</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
 </span><span data-line="243">
 </span><span data-line="244">                    <span class="c1"># Split instruments into voices based on physical type</span>
-</span><span data-line="245">                    <span class="c1"># LEGACY CODE - for drum_type in event[&#39;drums&#39;]:</span>
-</span><span data-line="246">                    <span class="c1"># ADAPTED KEY: Using &#39;instruments&#39;</span>
-</span><span data-line="247">                    <span class="k">for</span> <span class="n">drum_type</span> <span class="ow">in</span> <span class="n">event</span><span class="p">[</span><span class="s2">&quot;instruments&quot;</span><span class="p">]:</span>
-</span><span data-line="248">                        <span class="n">d_map</span> <span class="o">=</span> <span class="n">constants</span><span class="o">.</span><span class="n">DRUM_NOTATION_MAP</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">drum_type</span><span class="p">,</span> <span class="n">constants</span><span class="o">.</span><span class="n">DRUM_NOTATION_MAP</span><span class="p">[</span><span class="s2">&quot;kick&quot;</span><span class="p">])</span>
-</span><span data-line="249">                        <span class="n">staff_pos</span> <span class="o">=</span> <span class="n">d_map</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;staff_position&quot;</span><span class="p">,</span> <span class="s2">&quot;F3&quot;</span><span class="p">)</span>
-</span><span data-line="250">                        <span class="n">note_head</span> <span class="o">=</span> <span class="n">d_map</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;note_head&quot;</span><span class="p">,</span> <span class="s2">&quot;normal&quot;</span><span class="p">)</span>
+</span><span data-line="245">                    <span class="c1"># LEGACY CODE - for drum_type in event['drums']:</span>
+</span><span data-line="246">                    <span class="c1"># ADAPTED KEY: Using 'instruments'</span>
+</span><span data-line="247">                    <span class="k">for</span> <span class="n">drum_type</span> <span class="ow">in</span> <span class="n">event</span><span class="p">[</span><span class="s2">"instruments"</span><span class="p">]:</span>
+</span><span data-line="248">                        <span class="n">d_map</span> <span class="o">=</span> <span class="n">constants</span><span class="o">.</span><span class="n">DRUM_NOTATION_MAP</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">drum_type</span><span class="p">,</span> <span class="n">constants</span><span class="o">.</span><span class="n">DRUM_NOTATION_MAP</span><span class="p">[</span><span class="s2">"kick"</span><span class="p">])</span>
+</span><span data-line="249">                        <span class="n">staff_pos</span> <span class="o">=</span> <span class="n">d_map</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"staff_position"</span><span class="p">,</span> <span class="s2">"F3"</span><span class="p">)</span>
+</span><span data-line="250">                        <span class="n">note_head</span> <span class="o">=</span> <span class="n">d_map</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"note_head"</span><span class="p">,</span> <span class="s2">"normal"</span><span class="p">)</span>
 </span><span data-line="251">                        <span class="n">note_y</span> <span class="o">=</span> <span class="n">get_vertical_position</span><span class="p">(</span><span class="n">staff_pos</span><span class="p">,</span> <span class="n">current_y</span><span class="p">)</span>
 </span><span data-line="252">
 </span><span data-line="253">                        <span class="c1"># Tweak 4: Expanded Idiophone routing list for future-proofing</span>
-</span><span data-line="254">                        <span class="n">idiophones</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;hi_hat_closed&quot;</span><span class="p">,</span> <span class="s2">&quot;hi_hat_open&quot;</span><span class="p">,</span> <span class="s2">&quot;ride&quot;</span><span class="p">,</span> <span class="s2">&quot;crash&quot;</span><span class="p">,</span> <span class="s2">&quot;splash&quot;</span><span class="p">,</span> <span class="s2">&quot;china&quot;</span><span class="p">,</span> <span class="s2">&quot;bell&quot;</span><span class="p">]</span>
+</span><span data-line="254">                        <span class="n">idiophones</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"hi_hat_closed"</span><span class="p">,</span> <span class="s2">"hi_hat_open"</span><span class="p">,</span> <span class="s2">"ride"</span><span class="p">,</span> <span class="s2">"crash"</span><span class="p">,</span> <span class="s2">"splash"</span><span class="p">,</span> <span class="s2">"china"</span><span class="p">,</span> <span class="s2">"bell"</span><span class="p">]</span>
 </span><span data-line="255">
 </span><span data-line="256">                        <span class="c1"># Idiophones get upward stems, Membranophones get downward stems</span>
 </span><span data-line="257">                        <span class="k">if</span> <span class="n">drum_type</span> <span class="ow">in</span> <span class="n">idiophones</span><span class="p">:</span>
@@ -662,12 +662,12 @@ data-aria-dark="Switch to auto color mode">
 </span><span data-line="334">                    <span class="c1">#     c.line(nx - stem_offset, beam_y, nx + 2, beam_y + 6) # Downward flag hook</span>
 </span><span data-line="335">
 </span><span data-line="336">    <span class="n">c</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
-</span><span data-line="337">    <span class="c1"># print(&quot;\n# ------------------------------------------------------------------------------------&quot;)</span>
-</span><span data-line="338">    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;PDF successfully saved to: </span><span class="si">{</span><span class="n">output_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+</span><span data-line="337">    <span class="c1"># print("\n# ------------------------------------------------------------------------------------")</span>
+</span><span data-line="338">    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"PDF successfully saved to: </span><span class="si">{</span><span class="n">output_path</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span></div>
 
 </span><span data-line="339">
 </span><span data-line="340">
-</span><span data-line="341"><span class="sd">&quot;&quot;&quot; LEGACY (KEEP FOR ALPHA)</span>
+</span><span data-line="341"><span class="sd">""" LEGACY (KEEP FOR ALPHA)</span>
 </span><span data-line="342">
 </span><span data-line="343">
 </span><span data-line="344"><span class="sd"># --- COMMENTED OUT LEGACY DRAW_NOTE (Individual Upward Stems) ---</span>
@@ -683,11 +683,11 @@ data-aria-dark="Switch to auto color mode">
 </span><span data-line="354"><span class="sd">#         c.setLineWidth(1)</span>
 </span><span data-line="355"><span class="sd">#         c.line(x - 6, y, x + 6, y)</span>
 </span><span data-line="356"><span class="sd">#</span>
-</span><span data-line="357"><span class="sd">#     if note_type == &#39;x&#39; or note_type == &#39;circle-x&#39;:</span>
+</span><span data-line="357"><span class="sd">#     if note_type == 'x' or note_type == 'circle-x':</span>
 </span><span data-line="358"><span class="sd">#         c.setLineWidth(2)</span>
 </span><span data-line="359"><span class="sd">#         c.line(x - r, y - r, x + r, y + r)</span>
 </span><span data-line="360"><span class="sd">#         c.line(x - r, y + r, x + r, y - r)</span>
-</span><span data-line="361"><span class="sd">#         if note_type == &#39;circle-x&#39;:</span>
+</span><span data-line="361"><span class="sd">#         if note_type == 'circle-x':</span>
 </span><span data-line="362"><span class="sd">#             c.setLineWidth(1)</span>
 </span><span data-line="363"><span class="sd">#             c.circle(x, y, r + 1.5, stroke=1, fill=0)</span>
 </span><span data-line="364"><span class="sd">#     else:</span>
@@ -716,11 +716,11 @@ data-aria-dark="Switch to auto color mode">
 </span><span data-line="387"><span class="sd">#         c.setLineWidth(1)</span>
 </span><span data-line="388"><span class="sd">#         c.line(x - 8, y, x + 8, y)</span>
 </span><span data-line="389"><span class="sd">#</span>
-</span><span data-line="390"><span class="sd">#     if note_type == &#39;x&#39; or note_type == &#39;circle-x&#39;:</span>
+</span><span data-line="390"><span class="sd">#     if note_type == 'x' or note_type == 'circle-x':</span>
 </span><span data-line="391"><span class="sd">#         c.setLineWidth(2)</span>
 </span><span data-line="392"><span class="sd">#         c.line(x - r, y - r, x + r, y + r)</span>
 </span><span data-line="393"><span class="sd">#         c.line(x - r, y + r, x + r, y - r)</span>
-</span><span data-line="394"><span class="sd">#         if note_type == &#39;circle-x&#39;:</span>
+</span><span data-line="394"><span class="sd">#         if note_type == 'circle-x':</span>
 </span><span data-line="395"><span class="sd">#             c.setLineWidth(1)</span>
 </span><span data-line="396"><span class="sd">#             c.circle(x, y, r + 1.5, stroke=1, fill=0)</span>
 </span><span data-line="397"><span class="sd">#     else:</span>
@@ -733,8 +733,8 @@ data-aria-dark="Switch to auto color mode">
 </span><span data-line="404"><span class="sd"># --- COMMENTED OUT OLD RENDERING LOOP ---</span>
 </span><span data-line="405"><span class="sd">        # if m in events_by_measure:</span>
 </span><span data-line="406"><span class="sd">        #     for event in events_by_measure[m]:</span>
-</span><span data-line="407"><span class="sd">        #         time_sec = event[&#39;time&#39;]</span>
-</span><span data-line="408"><span class="sd">        #         drum_types = event[&#39;drums&#39;]</span>
+</span><span data-line="407"><span class="sd">        #         time_sec = event['time']</span>
+</span><span data-line="408"><span class="sd">        #         drum_types = event['drums']</span>
 </span><span data-line="409"><span class="sd">        #         rel_time = time_sec % sec_per_measure</span>
 </span><span data-line="410"><span class="sd">        #         padding = 15</span>
 </span><span data-line="411"><span class="sd">        #         usable_width = measure_width - (2 * padding)</span>
@@ -742,9 +742,9 @@ data-aria-dark="Switch to auto color mode">
 </span><span data-line="413"><span class="sd">        #         note_x = measure_start_x + padding + rel_x</span>
 </span><span data-line="414"><span class="sd">        #</span>
 </span><span data-line="415"><span class="sd">        #         for drum_type in drum_types:</span>
-</span><span data-line="416"><span class="sd">        #             d_map = constants.DRUM_NOTATION_MAP.get(drum_type, constants.DRUM_NOTATION_MAP[&#39;kick&#39;])</span>
-</span><span data-line="417"><span class="sd">        #             staff_pos = d_map.get(&#39;staff_position&#39;, &#39;F3&#39;)</span>
-</span><span data-line="418"><span class="sd">        #             note_head = d_map.get(&#39;note_head&#39;, &#39;normal&#39;)</span>
+</span><span data-line="416"><span class="sd">        #             d_map = constants.DRUM_NOTATION_MAP.get(drum_type, constants.DRUM_NOTATION_MAP['kick'])</span>
+</span><span data-line="417"><span class="sd">        #             staff_pos = d_map.get('staff_position', 'F3')</span>
+</span><span data-line="418"><span class="sd">        #             note_head = d_map.get('note_head', 'normal')</span>
 </span><span data-line="419"><span class="sd">        #             note_y = get_vertical_position(staff_pos, current_y)</span>
 </span><span data-line="420"><span class="sd">        #             draw_note(c, note_x, note_y, note_head, current_y)</span>
 </span><span data-line="421">
@@ -753,7 +753,7 @@ data-aria-dark="Switch to auto color mode">
 </span><span data-line="424"><span class="sd">        #     # 1. Group all events in this measure by Beat (Quarter Note)</span>
 </span><span data-line="425"><span class="sd">        #     beats = defaultdict(list)</span>
 </span><span data-line="426"><span class="sd">        #     for event in events_by_measure[m]:</span>
-</span><span data-line="427"><span class="sd">        #         rel_time = event[&#39;time&#39;] % sec_per_measure</span>
+</span><span data-line="427"><span class="sd">        #         rel_time = event['time'] % sec_per_measure</span>
 </span><span data-line="428"><span class="sd">        #         beat_idx = int(rel_time / seconds_per_beat)</span>
 </span><span data-line="429"><span class="sd">        #         beats[beat_idx].append(event)</span>
 </span><span data-line="430"><span class="sd">        #</span>
@@ -766,7 +766,7 @@ data-aria-dark="Switch to auto color mode">
 </span><span data-line="437"><span class="sd">        #         lowest_y = current_y + 100</span>
 </span><span data-line="438"><span class="sd">        #</span>
 </span><span data-line="439"><span class="sd">        #         for event in event_list:</span>
-</span><span data-line="440"><span class="sd">        #             rel_time = event[&#39;time&#39;] % sec_per_measure</span>
+</span><span data-line="440"><span class="sd">        #             rel_time = event['time'] % sec_per_measure</span>
 </span><span data-line="441"><span class="sd">        #             padding = 15</span>
 </span><span data-line="442"><span class="sd">        #             usable_width = measure_width - (2 * padding)</span>
 </span><span data-line="443"><span class="sd">        #             rel_x = (rel_time / sec_per_measure) * usable_width</span>
@@ -774,10 +774,10 @@ data-aria-dark="Switch to auto color mode">
 </span><span data-line="445"><span class="sd">        #</span>
 </span><span data-line="446"><span class="sd">        #             beat_x_coords.append(note_x)</span>
 </span><span data-line="447"><span class="sd">        #</span>
-</span><span data-line="448"><span class="sd">        #             for drum_type in event[&#39;drums&#39;]:</span>
-</span><span data-line="449"><span class="sd">        #                 d_map = constants.DRUM_NOTATION_MAP.get(drum_type, constants.DRUM_NOTATION_MAP[&#39;kick&#39;])</span>
-</span><span data-line="450"><span class="sd">        #                 staff_pos = d_map.get(&#39;staff_position&#39;, &#39;F3&#39;)</span>
-</span><span data-line="451"><span class="sd">        #                 note_head = d_map.get(&#39;note_head&#39;, &#39;normal&#39;)</span>
+</span><span data-line="448"><span class="sd">        #             for drum_type in event['drums']:</span>
+</span><span data-line="449"><span class="sd">        #                 d_map = constants.DRUM_NOTATION_MAP.get(drum_type, constants.DRUM_NOTATION_MAP['kick'])</span>
+</span><span data-line="450"><span class="sd">        #                 staff_pos = d_map.get('staff_position', 'F3')</span>
+</span><span data-line="451"><span class="sd">        #                 note_head = d_map.get('note_head', 'normal')</span>
 </span><span data-line="452"><span class="sd">        #                 note_y = get_vertical_position(staff_pos, current_y)</span>
 </span><span data-line="453"><span class="sd">        #</span>
 </span><span data-line="454"><span class="sd">        #                 if note_y &lt; lowest_y:</span>
@@ -821,18 +821,18 @@ data-aria-dark="Switch to auto color mode">
 </span><span data-line="492"><span class="sd">        #                 if len(unique_x_coords) &gt; 2:</span>
 </span><span data-line="493"><span class="sd">        #                     c.line(first_x - 2.7, beam_y + 4, last_x - 2.7, beam_y + 4)</span>
 </span><span data-line="494"><span class="sd">        #             else:</span>
-</span><span data-line="495"><span class="sd">        #                 # If it&#39;s a single note, give it a tiny &#39;flag&#39; hook to indicate 8th note</span>
+</span><span data-line="495"><span class="sd">        #                 # If it's a single note, give it a tiny 'flag' hook to indicate 8th note</span>
 </span><span data-line="496"><span class="sd">        #                 nx = unique_x_coords[0]</span>
 </span><span data-line="497"><span class="sd">        #                 c.setLineWidth(1)</span>
 </span><span data-line="498"><span class="sd">        #                 c.line(nx - 2.7, beam_y, nx + 2, beam_y + 5)</span>
-</span><span data-line="499"><span class="sd">&quot;&quot;&quot;</span>
+</span><span data-line="499"><span class="sd">"""</span>
 </span><span data-line="500">
 </span><span data-line="501">
 </span><span data-line="502"><span class="c1"># --------------------------------------------------------------------------uncomment during testing</span>
 </span><span data-line="503"><span class="c1"># from datetime import datetime</span>
-</span><span data-line="504"><span class="c1"># print(&quot;\n# ------------------------------------------------------------------------------------&quot;)</span>
+</span><span data-line="504"><span class="c1"># print("\n# ------------------------------------------------------------------------------------")</span>
 </span><span data-line="505"><span class="c1"># datetimestamp = datetime.now()</span>
-</span><span data-line="506"><span class="c1"># print(f&#39;\ndate/time: {datetimestamp}&#39;)</span>
+</span><span data-line="506"><span class="c1"># print(f'\ndate/time: {datetimestamp}')</span>
 </span><span data-line="507"><span class="c1"># --------------------------------------------------------------------------------------------------</span>
 </span></pre></div>
         </article><button class="back-to-top" type="button">

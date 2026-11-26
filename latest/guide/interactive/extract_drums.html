@@ -355,9 +355,9 @@ data-aria-dark="Switch to auto color mode">
 </span><span data-line="3"><span class="kn">import</span><span class="w"> </span><span class="nn">drumscript</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">ds</span>
 </span><span data-line="4">
 </span><span data-line="5"><span class="c1"># Load audio</span>
-</span><span data-line="6"><span class="n">audio_file_path</span> <span class="o">=</span> <span class="s2">&quot;audio/test_track_1.wav&quot;</span>
+</span><span data-line="6"><span class="n">audio_file_path</span> <span class="o">=</span> <span class="s2">"audio/test_track_1.wav"</span>
 </span><span data-line="7"><span class="n">audio_file</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">load_audio</span><span class="p">(</span><span class="n">audio_file_path</span><span class="p">)</span>
-</span><span data-line="8"><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Audio loaded!&quot;</span><span class="p">)</span>
+</span><span data-line="8"><span class="nb">print</span><span class="p">(</span><span class="s2">"Audio loaded!"</span><span class="p">)</span>
 </span><span data-line="9"><span class="n">display</span><span class="p">(</span><span class="n">Audio</span><span class="p">(</span><span class="n">audio_file_path</span><span class="p">))</span>
 </span></pre></div>
 </div>
@@ -368,7 +368,7 @@ data-aria-dark="Switch to auto color mode">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="c1"># Extract stems</span>
 </span><span data-line="2"><span class="n">output_files</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">extract_stems</span><span class="p">(</span>
 </span><span data-line="3">    <span class="n">audio_path</span><span class="o">=</span><span class="n">audio_file_path</span><span class="p">,</span>  <span class="c1"># Pass the file path, not the loaded audio</span>
-</span><span data-line="4">    <span class="n">output_dir</span><span class="o">=</span><span class="s2">&quot;stems/&quot;</span><span class="p">,</span>
+</span><span data-line="4">    <span class="n">output_dir</span><span class="o">=</span><span class="s2">"stems/"</span><span class="p">,</span>
 </span><span data-line="5"><span class="p">)</span>
 </span></pre></div>
 </div>
@@ -376,7 +376,7 @@ data-aria-dark="Switch to auto color mode">
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Isolated drum stem saved to: </span><span class="si">{</span><span class="n">output_files</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Isolated drum stem saved to: </span><span class="si">{</span><span class="n">output_files</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 </span></pre></div>
 </div>
 </div>
@@ -384,8 +384,8 @@ data-aria-dark="Switch to auto color mode">
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="c1"># 3. Create the in-browser playable widget for the extracted drum stem</span>
-</span><span data-line="2"><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Extracted Drum Stem:&quot;</span><span class="p">)</span>
-</span><span data-line="3"><span class="c1"># display(Audio(output_files[&#39;drums&#39;]))   # NOTE: won&#39;t work — extract_stems returns a path string, not a dict</span>
+</span><span data-line="2"><span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Extracted Drum Stem:"</span><span class="p">)</span>
+</span><span data-line="3"><span class="c1"># display(Audio(output_files['drums']))   # NOTE: won't work — extract_stems returns a path string, not a dict</span>
 </span><span data-line="4"><span class="n">display</span><span class="p">(</span><span class="n">Audio</span><span class="p">(</span><span class="n">output_files</span><span class="p">))</span>
 </span></pre></div>
 </div>

@@ -370,15 +370,15 @@ multiple analysis functions on the exact same audio file.</p>
 <p><strong>Examples:</strong></p>
 <p>Detect tempo directly from a file:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="kn">import</span><span class="w"> </span><span class="nn">drumscript</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">ds</span>
-</span><span data-line="2"><span class="n">bpm</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">detect_tempo</span><span class="p">(</span><span class="s2">&quot;drum_loop.wav&quot;</span><span class="p">)</span>
-</span><span data-line="3"><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Tempo: </span><span class="si">{</span><span class="n">bpm</span><span class="si">}</span><span class="s2"> BPM&quot;</span><span class="p">)</span>
+</span><span data-line="2"><span class="n">bpm</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">detect_tempo</span><span class="p">(</span><span class="s2">"drum_loop.wav"</span><span class="p">)</span>
+</span><span data-line="3"><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Tempo: </span><span class="si">{</span><span class="n">bpm</span><span class="si">}</span><span class="s2"> BPM"</span><span class="p">)</span>
 </span></pre></div>
 </div>
 <p>Detect tempo from a pre-loaded array:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="n">y</span><span class="p">,</span> <span class="n">sr</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">load_audio</span><span class="p">(</span><span class="s2">&quot;drum_loop.wav&quot;</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="n">y</span><span class="p">,</span> <span class="n">sr</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">load_audio</span><span class="p">(</span><span class="s2">"drum_loop.wav"</span><span class="p">)</span>
 </span><span data-line="2"><span class="c1"># stats = ds.detect_tempo(y, full=True)</span>
 </span><span data-line="3"><span class="n">stats</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">detect_tempo</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-</span><span data-line="4"><span class="nb">print</span><span class="p">(</span><span class="n">stats</span><span class="p">[</span><span class="s1">&#39;bpm&#39;</span><span class="p">])</span>
+</span><span data-line="4"><span class="nb">print</span><span class="p">(</span><span class="n">stats</span><span class="p">[</span><span class="s1">'bpm'</span><span class="p">])</span>
 </span></pre></div>
 </div>
 </dd></dl>

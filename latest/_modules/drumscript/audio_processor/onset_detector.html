@@ -304,9 +304,9 @@ data-aria-dark="Switch to auto color mode">
   <article class="yue" role="main">
           <h1>Source code for drumscript.audio_processor.onset_detector</h1><div class="highlight"><pre>
 <span></span><span data-line="1"><span class="c1"># DrumScript/audio_processor/onset_detector.py</span>
-</span><span data-line="2"><span class="sd">"""</span>
+</span><span data-line="2"><span class="sd">&quot;&quot;&quot;</span>
 </span><span data-line="3"><span class="sd">This module will detect the onset (start) times of drum hits in the audio.</span>
-</span><span data-line="4"><span class="sd">"""</span>
+</span><span data-line="4"><span class="sd">&quot;&quot;&quot;</span>
 </span><span data-line="5">
 </span><span data-line="6"><span class="kn">import</span><span class="w"> </span><span class="nn">argparse</span>
 </span><span data-line="7"><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
@@ -324,7 +324,7 @@ data-aria-dark="Switch to auto color mode">
 </span><span data-line="17">
 </span><span data-line="18">    <span class="c1"># Detects the onset (start) times of percussive events in an audio signal.</span>
 </span><span data-line="19">
-</span><span data-line="20">    <span class="c1"># This function uses librosa's built-in onset detection algorithms, which</span>
+</span><span data-line="20">    <span class="c1"># This function uses librosa&#39;s built-in onset detection algorithms, which</span>
 </span><span data-line="21">    <span class="c1"># typically rely on spectral flux or other energy-based methods to identify</span>
 </span><span data-line="22">    <span class="c1"># sudden changes in the audio signal characteristic of percussive hits.</span>
 </span><span data-line="23">
@@ -348,22 +348,22 @@ data-aria-dark="Switch to auto color mode">
 </span><span data-line="41">    <span class="c1"># wait_frames = int(lockout_time_secs * (SAMPLE_RATE / HOP_LENGTH))</span>
 </span><span data-line="42">    <span class="n">wait_frames</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">lockout_time_secs</span> <span class="o">*</span> <span class="p">(</span><span class="n">sr</span> <span class="o">/</span> <span class="n">HOP_LENGTH</span><span class="p">))</span>
 </span><span data-line="43">
-</span><span data-line="44">    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"(HOP_LENGTH: </span><span class="si">{</span><span class="n">HOP_LENGTH</span><span class="si">}</span><span class="s2">)"</span><span class="p">)</span>
-</span><span data-line="45">    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"(Wait Frames Applied: </span><span class="si">{</span><span class="n">wait_frames</span><span class="si">}</span><span class="s2">)"</span><span class="p">)</span>
+</span><span data-line="44">    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;(HOP_LENGTH: </span><span class="si">{</span><span class="n">HOP_LENGTH</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
+</span><span data-line="45">    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;(Wait Frames Applied: </span><span class="si">{</span><span class="n">wait_frames</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
 </span><span data-line="46">
-</span><span data-line="47">    <span class="c1"># Pass the 'wait' and 'delta' constraints directly into the simple wrapper</span>
+</span><span data-line="47">    <span class="c1"># Pass the &#39;wait&#39; and &#39;delta&#39; constraints directly into the simple wrapper</span>
 </span><span data-line="48">    <span class="n">onset_frames</span> <span class="o">=</span> <span class="n">librosa</span><span class="o">.</span><span class="n">onset</span><span class="o">.</span><span class="n">onset_detect</span><span class="p">(</span>
 </span><span data-line="49">        <span class="n">y</span><span class="o">=</span><span class="n">y_percussive</span><span class="p">,</span>
 </span><span data-line="50">        <span class="c1"># sr=SAMPLE_RATE,</span>
 </span><span data-line="51">        <span class="n">sr</span><span class="o">=</span><span class="n">sr</span><span class="p">,</span>
 </span><span data-line="52">        <span class="n">hop_length</span><span class="o">=</span><span class="n">HOP_LENGTH</span><span class="p">,</span>
-</span><span data-line="53">        <span class="n">units</span><span class="o">=</span><span class="s2">"frames"</span><span class="p">,</span>
+</span><span data-line="53">        <span class="n">units</span><span class="o">=</span><span class="s2">&quot;frames&quot;</span><span class="p">,</span>
 </span><span data-line="54">        <span class="n">wait</span><span class="o">=</span><span class="n">wait_frames</span><span class="p">,</span>  <span class="c1"># Stops rapid double-triggering on cymbals</span>
 </span><span data-line="55">        <span class="n">delta</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span>  <span class="c1"># Ignores general background noise floor</span>
 </span><span data-line="56">    <span class="p">)</span>
 </span><span data-line="57">
 </span><span data-line="58">    <span class="c1"># Commenting out to test single_beat_refinement :)</span>
-</span><span data-line="59">    <span class="c1"># print(f'(len_onset_frames:{len(onset_frames)})')</span>
+</span><span data-line="59">    <span class="c1"># print(f&#39;(len_onset_frames:{len(onset_frames)})&#39;)</span>
 </span><span data-line="60">
 </span><span data-line="61">    <span class="c1"># Convert onset frames to time in seconds</span>
 </span><span data-line="62">    <span class="c1"># onset_times = librosa.frames_to_time(</span>
@@ -372,7 +372,7 @@ data-aria-dark="Switch to auto color mode">
 </span><span data-line="65">    <span class="c1">#   hop_length=HOP_LENGTH</span>
 </span><span data-line="66">    <span class="c1"># )</span>
 </span><span data-line="67">
-</span><span data-line="68">    <span class="c1"># print(f'(len_onset_times:{len(onset_times)})')</span>
+</span><span data-line="68">    <span class="c1"># print(f&#39;(len_onset_times:{len(onset_times)})&#39;)</span>
 </span><span data-line="69">
 </span><span data-line="70">    <span class="c1"># return onset_times.tolist()</span>
 </span><span data-line="71">
@@ -381,20 +381,20 @@ data-aria-dark="Switch to auto color mode">
 </span><span data-line="74">    <span class="n">onset_times</span> <span class="o">=</span> <span class="n">librosa</span><span class="o">.</span><span class="n">frames_to_time</span><span class="p">(</span><span class="n">onset_frames</span><span class="p">,</span> <span class="n">sr</span><span class="o">=</span><span class="n">sr</span><span class="p">,</span> <span class="n">hop_length</span><span class="o">=</span><span class="n">HOP_LENGTH</span><span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
 </span><span data-line="75">
 </span><span data-line="76">    <span class="c1"># --- SINGLE-BEAT REFINEMENT ---</span>
-</span><span data-line="77">    <span class="c1"># If the total duration is very short (&lt; 2.0s), it's likely a single hit sample.</span>
-</span><span data-line="78">    <span class="c1"># We apply a stricter "De-bounce" to prevent room reflections from triggering events.</span>
+</span><span data-line="77">    <span class="c1"># If the total duration is very short (&lt; 2.0s), it&#39;s likely a single hit sample.</span>
+</span><span data-line="78">    <span class="c1"># We apply a stricter &quot;De-bounce&quot; to prevent room reflections from triggering events.</span>
 </span><span data-line="79">    <span class="n">duration</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">audio_data</span><span class="p">)</span> <span class="o">/</span> <span class="n">sr</span>
 </span><span data-line="80">    <span class="c1"># if duration &lt; 1.0 and len(onset_times) &gt; 1:</span>
 </span><span data-line="81">    <span class="k">if</span> <span class="n">duration</span> <span class="o">&lt;</span> <span class="mf">2.0</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">onset_times</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
 </span><span data-line="82">        <span class="c1"># We only keep the FIRST onset if others follow too closely (within 150ms)</span>
-</span><span data-line="83">        <span class="c1"># This fixes the 'single hit showing multiple events' issue in orchestration folder.</span>
+</span><span data-line="83">        <span class="c1"># This fixes the &#39;single hit showing multiple events&#39; issue in orchestration folder.</span>
 </span><span data-line="84">        <span class="n">refined_onsets</span> <span class="o">=</span> <span class="p">[</span><span class="n">onset_times</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
 </span><span data-line="85">        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">onset_times</span><span class="p">)):</span>
 </span><span data-line="86">            <span class="k">if</span> <span class="n">onset_times</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="n">refined_onsets</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mf">0.150</span><span class="p">:</span>  <span class="c1"># 150ms threshold</span>
 </span><span data-line="87">                <span class="n">refined_onsets</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">onset_times</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
 </span><span data-line="88">        <span class="n">onset_times</span> <span class="o">=</span> <span class="n">refined_onsets</span>
 </span><span data-line="89">
-</span><span data-line="90">    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"(len_onset_times:</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">onset_times</span><span class="p">)</span><span class="si">}</span><span class="s2">)"</span><span class="p">)</span>
+</span><span data-line="90">    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;(len_onset_times:</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">onset_times</span><span class="p">)</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
 </span><span data-line="91">    <span class="k">return</span> <span class="n">onset_times</span></div>
 
 </span><span data-line="92">
@@ -402,7 +402,7 @@ data-aria-dark="Switch to auto color mode">
 </span><span data-line="94"><span class="c1"># ------- AUTOMATIC TEMPO DETECTION------------------------------------</span>
 </span><span data-line="95"><span class="c1"># REPLACED THE FUNCTION THAT WAS HARDCODED TO DETECT TEMPO FROM ONSETS WITH IMPORTED FCT FROM THE TEMPO_DETECTOR SCRIPT</span>
 </span><span data-line="96">
-</span><span data-line="97"><span class="sd">"""</span>
+</span><span data-line="97"><span class="sd">&quot;&quot;&quot;</span>
 </span><span data-line="98"><span class="sd">def calculate_tempo_from_onsets(onset_times: np.ndarray, sr: int) -&gt; float:</span>
 </span><span data-line="99"><span class="sd">    #</span>
 </span><span data-line="100"><span class="sd">    #Estimates the tempo (BPM) from a list of onset timestamps.</span>
@@ -417,7 +417,7 @@ data-aria-dark="Switch to auto color mode">
 </span><span data-line="109"><span class="sd">    if len(onset_times) &lt; 2:</span>
 </span><span data-line="110"><span class="sd">        return 120.0 # Return a default tempo if not enough onsets are found</span>
 </span><span data-line="111">
-</span><span data-line="112"><span class="sd">    # FIX: librosa.beat.tempo does NOT accept 'onset_events' without audio/envelope.</span>
+</span><span data-line="112"><span class="sd">    # FIX: librosa.beat.tempo does NOT accept &#39;onset_events&#39; without audio/envelope.</span>
 </span><span data-line="113"><span class="sd">    # We calculate tempo using Inter-Onset Intervals (IOI).</span>
 </span><span data-line="114">
 </span><span data-line="115"><span class="sd">    # 1. Calculate the time difference between consecutive hits</span>
@@ -436,47 +436,47 @@ data-aria-dark="Switch to auto color mode">
 </span><span data-line="128">
 </span><span data-line="129"><span class="sd">    return float(tempo)</span>
 </span><span data-line="130">
-</span><span data-line="131"><span class="sd">"""</span>
+</span><span data-line="131"><span class="sd">&quot;&quot;&quot;</span>
 </span><span data-line="132">
 </span><span data-line="133">
-</span><span data-line="134"><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">"__main__"</span><span class="p">:</span>
+</span><span data-line="134"><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
 </span><span data-line="135">    <span class="kn">from</span><span class="w"> </span><span class="nn">drumscript.audio_processor.audio_loader</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_audio</span><span class="p">,</span> <span class="n">normalise_audio</span>
 </span><span data-line="136">    <span class="kn">from</span><span class="w"> </span><span class="nn">drumscript.audio_processor.tempo_detector</span><span class="w"> </span><span class="kn">import</span> <span class="n">estimate_tempo</span>
 </span><span data-line="137">
 </span><span data-line="138">    <span class="c1"># --------------------------------------------------------------------------uncomment during testing</span>
 </span><span data-line="139">    <span class="c1"># from datetime import datetime</span>
-</span><span data-line="140">    <span class="c1"># print("\n# ------------------------------------------------------------------------------------")</span>
+</span><span data-line="140">    <span class="c1"># print(&quot;\n# ------------------------------------------------------------------------------------&quot;)</span>
 </span><span data-line="141">    <span class="c1"># datetimestamp = datetime.now()</span>
-</span><span data-line="142">    <span class="c1"># print(f'\ndate/time: {datetimestamp}')</span>
+</span><span data-line="142">    <span class="c1"># print(f&#39;\ndate/time: {datetimestamp}&#39;)</span>
 </span><span data-line="143">    <span class="c1"># --------------------------------------------------------------------------------------------------</span>
 </span><span data-line="144">
-</span><span data-line="145">    <span class="nb">print</span><span class="p">(</span><span class="s2">"Running onset_detector.py example with provided filepath..."</span><span class="p">)</span>  <span class="c1"># FUTURE: Find way to encode this so it prints the file path provided in CLI</span>
+</span><span data-line="145">    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Running onset_detector.py example with provided filepath...&quot;</span><span class="p">)</span>  <span class="c1"># FUTURE: Find way to encode this so it prints the file path provided in CLI</span>
 </span><span data-line="146">    <span class="k">try</span><span class="p">:</span>
 </span><span data-line="147">        <span class="c1"># Import necessary modules from package</span>
-</span><span data-line="148">        <span class="c1"># Note: You might need 'from DrumScript.audio_processor.audio_loader import ...'</span>
-</span><span data-line="149">        <span class="c1"># if running this script directly and 'audio_processor' is not in the Python path.</span>
-</span><span data-line="150">        <span class="c1"># However, for 'python -m' style execution, 'from audio_processor.audio_loader import ...' is usually correct.</span>
+</span><span data-line="148">        <span class="c1"># Note: You might need &#39;from DrumScript.audio_processor.audio_loader import ...&#39;</span>
+</span><span data-line="149">        <span class="c1"># if running this script directly and &#39;audio_processor&#39; is not in the Python path.</span>
+</span><span data-line="150">        <span class="c1"># However, for &#39;python -m&#39; style execution, &#39;from audio_processor.audio_loader import ...&#39; is usually correct.</span>
 </span><span data-line="151">
 </span><span data-line="152">        <span class="c1"># Required for CLI argparsing</span>
-</span><span data-line="153">        <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">"Detect onsets in drum audio."</span><span class="p">)</span>
-</span><span data-line="154">        <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">"audio_path"</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">"Path to the input audio file"</span><span class="p">)</span>
+</span><span data-line="153">        <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">&quot;Detect onsets in drum audio.&quot;</span><span class="p">)</span>
+</span><span data-line="154">        <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;audio_path&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Path to the input audio file&quot;</span><span class="p">)</span>
 </span><span data-line="155">        <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
 </span><span data-line="156">
 </span><span data-line="157">        <span class="c1"># sr = 44100 # Target sample rate for processing</span>
 </span><span data-line="158">        <span class="c1"># sr = 44100*1.5 # Target sample rate for processing</span>
 </span><span data-line="159">        <span class="n">sr</span> <span class="o">=</span> <span class="n">SAMPLE_RATE</span>
-</span><span data-line="160">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"sample_rate=sr=</span><span class="si">{</span><span class="n">sr</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>  <span class="c1"># Print current sample rate applied</span>
+</span><span data-line="160">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;sample_rate=sr=</span><span class="si">{</span><span class="n">sr</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>  <span class="c1"># Print current sample rate applied</span>
 </span><span data-line="161">
 </span><span data-line="162">        <span class="c1"># --- Get path to audio (cli or import from sister module)</span>
 </span><span data-line="163">        <span class="n">current_script_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="vm">__file__</span><span class="p">))</span>
-</span><span data-line="164">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"current_script_dir: </span><span class="si">{</span><span class="n">current_script_dir</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</span><span data-line="164">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;current_script_dir: </span><span class="si">{</span><span class="n">current_script_dir</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </span><span data-line="165">        <span class="c1"># Go up one level from audio_processor/onset_detector.py to the outer DRUMSCRIPT/ folder</span>
-</span><span data-line="166">        <span class="n">project_root</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">current_script_dir</span><span class="p">,</span> <span class="s2">".."</span><span class="p">,</span> <span class="s2">".."</span><span class="p">))</span>
-</span><span data-line="167">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"project_root: </span><span class="si">{</span><span class="n">project_root</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</span><span data-line="166">        <span class="n">project_root</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">current_script_dir</span><span class="p">,</span> <span class="s2">&quot;..&quot;</span><span class="p">,</span> <span class="s2">&quot;..&quot;</span><span class="p">))</span>
+</span><span data-line="167">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;project_root: </span><span class="si">{</span><span class="n">project_root</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </span><span data-line="168">        <span class="n">audio_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">audio_path</span><span class="p">)</span>
 </span><span data-line="169">
-</span><span data-line="170">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"audio_path: </span><span class="si">{</span><span class="n">audio_path</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
-</span><span data-line="171">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Attempting to load: </span><span class="si">{</span><span class="n">audio_path</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</span><span data-line="170">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;audio_path: </span><span class="si">{</span><span class="n">audio_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span data-line="171">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Attempting to load: </span><span class="si">{</span><span class="n">audio_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </span><span data-line="172">
 </span><span data-line="173">        <span class="c1"># Load and normalise audio</span>
 </span><span data-line="174">        <span class="c1"># audio_data, sample_rate = load_audio(audio_path, sr=sr)</span>
@@ -484,57 +484,57 @@ data-aria-dark="Switch to auto color mode">
 </span><span data-line="176">        <span class="n">normalised_audio</span> <span class="o">=</span> <span class="n">normalise_audio</span><span class="p">(</span><span class="n">audio_data</span><span class="p">)</span>
 </span><span data-line="177">
 </span><span data-line="178">        <span class="c1"># Detect onsets</span>
-</span><span data-line="179">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Detecting onsets in : </span><span class="si">{</span><span class="n">audio_path</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</span><span data-line="179">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Detecting onsets in : </span><span class="si">{</span><span class="n">audio_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </span><span data-line="180">        <span class="n">onsets</span> <span class="o">=</span> <span class="n">detect_onsets</span><span class="p">(</span><span class="n">normalised_audio</span><span class="p">,</span> <span class="n">SAMPLE_RATE</span><span class="p">)</span>
-</span><span data-line="181">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Detected </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">onsets</span><span class="p">)</span><span class="si">}</span><span class="s2"> onsets."</span><span class="p">)</span>
+</span><span data-line="181">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Detected </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">onsets</span><span class="p">)</span><span class="si">}</span><span class="s2"> onsets.&quot;</span><span class="p">)</span>
 </span><span data-line="182">
 </span><span data-line="183">        <span class="k">if</span> <span class="n">onsets</span><span class="p">:</span>
 </span><span data-line="184">            <span class="c1"># Print the first few detected onsets for verification</span>
-</span><span data-line="185">            <span class="c1"># print("\nFirst 10 detected onsets (seconds):")</span>
+</span><span data-line="185">            <span class="c1"># print(&quot;\nFirst 10 detected onsets (seconds):&quot;)</span>
 </span><span data-line="186">            <span class="c1"># for i, onset_time in enumerate(onsets[:10]):</span>
 </span><span data-line="187">            <span class="c1"># if len(onsets) &gt; 10:</span>
-</span><span data-line="188">            <span class="c1">#   print(f"  ...and {len(onsets) - 10} more onsets.")</span>
+</span><span data-line="188">            <span class="c1">#   print(f&quot;  ...and {len(onsets) - 10} more onsets.&quot;)</span>
 </span><span data-line="189">
 </span><span data-line="190">            <span class="c1"># Print * (ALL) detected onsets for now</span>
-</span><span data-line="191">            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="se">\n</span><span class="s2"> All </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">onsets</span><span class="p">)</span><span class="si">}</span><span class="s2"> detected onsets (seconds):"</span><span class="p">)</span>
+</span><span data-line="191">            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2"> All </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">onsets</span><span class="p">)</span><span class="si">}</span><span class="s2"> detected onsets (seconds):&quot;</span><span class="p">)</span>
 </span><span data-line="192">            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">onset_time</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">onsets</span><span class="p">):</span>
-</span><span data-line="193">                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"  Onset </span><span class="si">{</span><span class="n">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">onset_time</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">s"</span><span class="p">)</span>
+</span><span data-line="193">                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Onset </span><span class="si">{</span><span class="n">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">onset_time</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">s&quot;</span><span class="p">)</span>
 </span><span data-line="194">            <span class="c1"># for i, onset_time in enumerate(onsets):</span>
-</span><span data-line="195">            <span class="c1"># print(f"  Onset {i+1}: {onsets:.4f}s")</span>
+</span><span data-line="195">            <span class="c1"># print(f&quot;  Onset {i+1}: {onsets:.4f}s&quot;)</span>
 </span><span data-line="196">        <span class="k">else</span><span class="p">:</span>
-</span><span data-line="197">            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"No onsets detected in audio_path: </span><span class="si">{</span><span class="n">audio_path</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</span><span data-line="197">            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;No onsets detected in audio_path: </span><span class="si">{</span><span class="n">audio_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </span><span data-line="198">        <span class="c1"># global_tempo = estimate_tempo(audio_data, SAMPLE_RATE, HOP_LENGTH)</span>
 </span><span data-line="199">        <span class="c1"># tempo = estimate_tempo(audio_data, SAMPLE_RATE, HOP_LENGTH)</span>
 </span><span data-line="200">        <span class="n">tempo</span> <span class="o">=</span> <span class="n">estimate_tempo</span><span class="p">(</span><span class="n">audio_data</span><span class="p">,</span> <span class="n">SAMPLE_RATE</span><span class="p">)</span>
 </span><span data-line="201">        <span class="c1"># tempo = estimate_tempo(audio_data, SAMPLE_RATE)/2 # temporary fix</span>
 </span><span data-line="202">        <span class="c1"># tempo = estimate_tempo(audio_data, SAMPLE_RATE)/4 # temporary fix</span>
-</span><span data-line="203">        <span class="c1"># print(f"Loaded audio: Shape={normalised_audio.shape}, Sample Rate={sample_rate}, Duration={len(normalised_audio)/sample_rate:.2f} seconds,</span>
-</span><span data-line="204">        <span class="c1"># Tempo={calculate_tempo_from_onsets(onsets, sr=SAMPLE_RATE):2f}")</span>
+</span><span data-line="203">        <span class="c1"># print(f&quot;Loaded audio: Shape={normalised_audio.shape}, Sample Rate={sample_rate}, Duration={len(normalised_audio)/sample_rate:.2f} seconds,</span>
+</span><span data-line="204">        <span class="c1"># Tempo={calculate_tempo_from_onsets(onsets, sr=SAMPLE_RATE):2f}&quot;)</span>
 </span><span data-line="205">        <span class="n">duration</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">normalised_audio</span><span class="p">)</span> <span class="o">/</span> <span class="n">sample_rate</span>
 </span><span data-line="206">        <span class="nb">print</span><span class="p">(</span>
-</span><span data-line="207">            <span class="sa">f</span><span class="s2">"Loaded audio: Shape=[</span><span class="si">{</span><span class="n">normalised_audio</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">, Sample Rate=</span><span class="si">{</span><span class="n">sample_rate</span><span class="si">}</span><span class="s2"> (Hz), "</span>
-</span><span data-line="208">            <span class="sa">f</span><span class="s2">"Hop Length=</span><span class="si">{</span><span class="n">HOP_LENGTH</span><span class="si">}</span><span class="s2"> (Hz), Duration=</span><span class="si">{</span><span class="n">duration</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> seconds, Tempo=</span><span class="si">{</span><span class="n">tempo</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> BPM]"</span>
+</span><span data-line="207">            <span class="sa">f</span><span class="s2">&quot;Loaded audio: Shape=[</span><span class="si">{</span><span class="n">normalised_audio</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">, Sample Rate=</span><span class="si">{</span><span class="n">sample_rate</span><span class="si">}</span><span class="s2"> (Hz), &quot;</span>
+</span><span data-line="208">            <span class="sa">f</span><span class="s2">&quot;Hop Length=</span><span class="si">{</span><span class="n">HOP_LENGTH</span><span class="si">}</span><span class="s2"> (Hz), Duration=</span><span class="si">{</span><span class="n">duration</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> seconds, Tempo=</span><span class="si">{</span><span class="n">tempo</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> BPM]&quot;</span>
 </span><span data-line="209">        <span class="p">)</span>
 </span><span data-line="210">    <span class="k">except</span> <span class="ne">FileNotFoundError</span><span class="p">:</span>
-</span><span data-line="211">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="se">\n</span><span class="s2">ERROR: The audio file '</span><span class="si">{</span><span class="n">audio_path</span><span class="si">}</span><span class="s2">' was not found."</span><span class="p">)</span>
-</span><span data-line="212">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Please ensure you have provided the correct path to audio file: </span><span class="si">{</span><span class="n">audio_path</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</span><span data-line="211">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">ERROR: The audio file &#39;</span><span class="si">{</span><span class="n">audio_path</span><span class="si">}</span><span class="s2">&#39; was not found.&quot;</span><span class="p">)</span>
+</span><span data-line="212">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Please ensure you have provided the correct path to audio file: </span><span class="si">{</span><span class="n">audio_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </span><span data-line="213">    <span class="k">except</span> <span class="ne">ImportError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-</span><span data-line="214">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="se">\n</span><span class="s2">ERROR: Required modules/libraries might be missing or imports are incorrect: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
-</span><span data-line="215">        <span class="nb">print</span><span class="p">(</span><span class="s2">"Ensure 'soundfile', 'librosa', 'numpy', and DrumScript modules are correctly installed and structured."</span><span class="p">)</span>
-</span><span data-line="216">        <span class="nb">print</span><span class="p">(</span><span class="s2">"For MP3, 'ffmpeg' must also be installed on system and accessible in PATH."</span><span class="p">)</span>
+</span><span data-line="214">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">ERROR: Required modules/libraries might be missing or imports are incorrect: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span data-line="215">        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Ensure &#39;soundfile&#39;, &#39;librosa&#39;, &#39;numpy&#39;, and DrumScript modules are correctly installed and structured.&quot;</span><span class="p">)</span>
+</span><span data-line="216">        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;For MP3, &#39;ffmpeg&#39; must also be installed on system and accessible in PATH.&quot;</span><span class="p">)</span>
 </span><span data-line="217">    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-</span><span data-line="218">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="se">\n</span><span class="s2">An unexpected error occurred during the example execution: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</span><span data-line="218">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">An unexpected error occurred during the example execution: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </span><span data-line="219">        <span class="kn">import</span><span class="w"> </span><span class="nn">traceback</span>
 </span><span data-line="220">
 </span><span data-line="221">        <span class="n">traceback</span><span class="o">.</span><span class="n">print_exc</span><span class="p">()</span>  <span class="c1"># Print full traceback for debugging</span>
 </span><span data-line="222">
-</span><span data-line="223">    <span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">onset_detector.py example finished."</span><span class="p">)</span>
+</span><span data-line="223">    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">onset_detector.py example finished.&quot;</span><span class="p">)</span>
 </span><span data-line="224">
 </span><span data-line="225">    <span class="c1"># --------------------------------------------------------------------------uncomment during testing</span>
 </span><span data-line="226">    <span class="c1"># from datetime import datetime</span>
-</span><span data-line="227">    <span class="c1"># print("\n# ------------------------------------------------------------------------------------")</span>
+</span><span data-line="227">    <span class="c1"># print(&quot;\n# ------------------------------------------------------------------------------------&quot;)</span>
 </span><span data-line="228">    <span class="c1"># datetimestamp = datetime.now()</span>
-</span><span data-line="229">    <span class="c1"># print(f'\ndate/time: {datetimestamp}')</span>
+</span><span data-line="229">    <span class="c1"># print(f&#39;\ndate/time: {datetimestamp}&#39;)</span>
 </span><span data-line="230">    <span class="c1"># --------------------------------------------------------------------------------------------------</span>
 </span></pre></div>
         </article><button class="back-to-top" type="button">

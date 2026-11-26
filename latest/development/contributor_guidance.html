@@ -424,7 +424,7 @@ We have the skeleton (stem splitting, tempo detection, onset detection). We need
 <h2>How to Get Started<a class="headerlink" href="#how-to-get-started" title="Link to this heading">#</a></h2>
 <p><em><a class="reference internal" href="#contributing-to-drumscript">back to top</a></em></p>
 <section id="prerequisites">
-<span id="1-prerequisites"></span><h3>1. Prerequisites<a class="headerlink" href="#prerequisites" title="Link to this heading">#</a></h3>
+<h3>1. Prerequisites<a class="headerlink" href="#prerequisites" title="Link to this heading">#</a></h3>
 <p>Before you begin, ensure you have the following installed:</p>
 <ul class="simple">
 <li><p><strong>Git:</strong> For version control.</p></li>
@@ -441,7 +441,7 @@ We have the skeleton (stem splitting, tempo detection, onset detection). We need
 </div></blockquote>
 </section>
 <section id="clone-the-repository">
-<span id="2-clone-the-repository"></span><h3>2. Clone the Repository<a class="headerlink" href="#clone-the-repository" title="Link to this heading">#</a></h3>
+<h3>2. Clone the Repository<a class="headerlink" href="#clone-the-repository" title="Link to this heading">#</a></h3>
 <p>Start by cloning the <code class="docutils literal notranslate"><span class="pre">DrumScript</span></code> repository to your local machine:</p>
 <div class="highlight-zsh notranslate"><div class="highlight"><pre><span></span><span data-line="1">git<span class="w"> </span>clone<span class="w"> </span>https://github.com/DrumScript/DrumScript.git
 </span><span data-line="2"><span class="nb">cd</span><span class="w"> </span>DrumScript
@@ -449,7 +449,7 @@ We have the skeleton (stem splitting, tempo detection, onset detection). We need
 </div>
 </section>
 <section id="set-up-your-development-environment">
-<span id="3-set-up-your-development-environment"></span><h3>3. Set Up Your Development Environment<a class="headerlink" href="#set-up-your-development-environment" title="Link to this heading">#</a></h3>
+<h3>3. Set Up Your Development Environment<a class="headerlink" href="#set-up-your-development-environment" title="Link to this heading">#</a></h3>
 <p>We use <code class="docutils literal notranslate"><span class="pre">uv</span></code> to manage our virtual environment and dependencies. We recommend installing the package in <strong>editable mode</strong> so changes you make are immediately reflected when you run tests.</p>
 <div class="highlight-zsh notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="c1"># 1. Create a virtual environment</span>
 </span><span data-line="2">uv<span class="w"> </span>venv
@@ -476,12 +476,12 @@ We have the skeleton (stem splitting, tempo detection, onset detection). We need
 <blockquote>
 <div><p>For simplicity <strong>all</strong> of the dependencies you will need for contributing to <code class="docutils literal notranslate"><span class="pre">DrumScript</span></code> have been grouped into one clean dependency group, which we have called <code class="docutils literal notranslate"><span class="pre">[dev]</span></code>. You might not need everything, ie <code class="docutils literal notranslate"><span class="pre">sphinx</span></code> (which is for the documentation website), or <code class="docutils literal notranslate"><span class="pre">ipykernel</span></code> (for running Jupyter notebooks), but nevertheless it simplifies the development process by having all the optionals in one place.</p>
 </div></blockquote>
-<div class="highlight-zsh notranslate"><div class="highlight"><pre><span></span><span data-line="1">uv<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span><span class="s2">".[dev]"</span>
+<div class="highlight-zsh notranslate"><div class="highlight"><pre><span></span><span data-line="1">uv<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;.[dev]&quot;</span>
 </span></pre></div>
 </div>
 </section>
 <section id="verify-setup">
-<span id="4-verify-setup"></span><h3>4. Verify Setup<a class="headerlink" href="#verify-setup" title="Link to this heading">#</a></h3>
+<h3>4. Verify Setup<a class="headerlink" href="#verify-setup" title="Link to this heading">#</a></h3>
 <p>Run the local interface test to ensure your environment handles imports correctly:</p>
 <div class="highlight-zsh notranslate"><div class="highlight"><pre><span></span><span data-line="1">uv<span class="w"> </span>run<span class="w"> </span>python<span class="w"> </span>local_tests/drumscript_lite/test_local_interface.py
 </span></pre></div>
@@ -544,7 +544,7 @@ Push your local branch to the remote</p>
 </ol>
 <div class="highlight-zsh notranslate"><div class="highlight"><pre><span></span><span data-line="1">uv<span class="w"> </span>venv
 </span><span data-line="2"><span class="nb">source</span><span class="w"> </span>.venv/bin/activate<span class="w"> </span><span class="c1"># activate venv</span>
-</span><span data-line="3">uv<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>.<span class="w"> </span><span class="c1"># install venv in 'editable' mode</span>
+</span><span data-line="3">uv<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>.<span class="w"> </span><span class="c1"># install venv in &#39;editable&#39; mode</span>
 </span></pre></div>
 </div>
 <blockquote>
@@ -590,7 +590,7 @@ Push your local branch to the remote</p>
 </span><span data-line="8"> ```
 </span><span data-line="9"> 
 </span><span data-line="10"> ```zsh
-</span><span data-line="11"> git commit -m "&lt;COMMIT-MESSAGE&gt;"
+</span><span data-line="11"> git commit -m &quot;&lt;COMMIT-MESSAGE&gt;&quot;
 </span><span data-line="12"> ```
 </span></pre></div>
 </div>
@@ -608,10 +608,10 @@ Push your local branch to the remote</p>
 </section>
 <hr class="docutils" />
 <section id="version-management-release-strategy">
-<span id="version-management--release-strategy"></span><h2>Version Management &amp; Release Strategy<a class="headerlink" href="#version-management-release-strategy" title="Link to this heading">#</a></h2>
+<h2>Version Management &amp; Release Strategy<a class="headerlink" href="#version-management-release-strategy" title="Link to this heading">#</a></h2>
 <p>We strive to keep <code class="docutils literal notranslate"><span class="pre">DrumScript</span></code> stable for users. To achieve this, we follow <strong>Semantic Versioning (SemVer)</strong> and a grouped release strategy.</p>
 <section id="how-we-number-releases-x-y-z">
-<span id="how-we-number-releases-xyz"></span><h3>How we number releases (X.Y.Z)<a class="headerlink" href="#how-we-number-releases-x-y-z" title="Link to this heading">#</a></h3>
+<h3>How we number releases (X.Y.Z)<a class="headerlink" href="#how-we-number-releases-x-y-z" title="Link to this heading">#</a></h3>
 <ul class="simple">
 <li><p><strong>Major (X.0.0):</strong> Breaking changes. (e.g., Changing the function name from <code class="docutils literal notranslate"><span class="pre">stem_split</span></code> to <code class="docutils literal notranslate"><span class="pre">extract_stems</span></code>).</p></li>
 <li><p><strong>Minor (0.Y.0):</strong> New features that don’t break existing code. (e.g., Adding a new detection algorithm for Crash Cymbals).</p></li>
@@ -739,10 +739,10 @@ Use these simple steps if you want to manually tag your code from your terminal 
 <li><p><strong>Provide Context:</strong> Tell us your OS (Mac/Windows/Ubuntu/Linux) and Python version.  This information can be found by running the following code snippet:</p></li>
 </ul>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="kn">import</span><span class="w"> </span><span class="nn">platform</span><span class="p">;</span> <span class="nb">print</span><span class="p">(</span><span class="n">platform</span><span class="o">.</span><span class="n">platform</span><span class="p">())</span>
-</span><span data-line="2"><span class="kn">import</span><span class="w"> </span><span class="nn">sys</span><span class="p">;</span> <span class="nb">print</span><span class="p">(</span><span class="s2">"Python"</span><span class="p">,</span> <span class="n">sys</span><span class="o">.</span><span class="n">version</span><span class="p">)</span>
-</span><span data-line="3"><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="p">;</span> <span class="nb">print</span><span class="p">(</span><span class="s2">"NumPy"</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">__version__</span><span class="p">)</span>
-</span><span data-line="4"><span class="kn">import</span><span class="w"> </span><span class="nn">scipy</span><span class="p">;</span> <span class="nb">print</span><span class="p">(</span><span class="s2">"SciPy"</span><span class="p">,</span> <span class="n">scipy</span><span class="o">.</span><span class="n">__version__</span><span class="p">)</span>
-</span><span data-line="5"><span class="kn">import</span><span class="w"> </span><span class="nn">librosa</span><span class="p">;</span> <span class="nb">print</span><span class="p">(</span><span class="s2">"librosa"</span><span class="p">,</span> <span class="n">librosa</span><span class="o">.</span><span class="n">__version__</span><span class="p">)</span>
+</span><span data-line="2"><span class="kn">import</span><span class="w"> </span><span class="nn">sys</span><span class="p">;</span> <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Python&quot;</span><span class="p">,</span> <span class="n">sys</span><span class="o">.</span><span class="n">version</span><span class="p">)</span>
+</span><span data-line="3"><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="p">;</span> <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;NumPy&quot;</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">__version__</span><span class="p">)</span>
+</span><span data-line="4"><span class="kn">import</span><span class="w"> </span><span class="nn">scipy</span><span class="p">;</span> <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;SciPy&quot;</span><span class="p">,</span> <span class="n">scipy</span><span class="o">.</span><span class="n">__version__</span><span class="p">)</span>
+</span><span data-line="5"><span class="kn">import</span><span class="w"> </span><span class="nn">librosa</span><span class="p">;</span> <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;librosa&quot;</span><span class="p">,</span> <span class="n">librosa</span><span class="o">.</span><span class="n">__version__</span><span class="p">)</span>
 </span></pre></div>
 </div>
 <p>It is recommended to check that your issue complies with the following rules before submitting:</p>
@@ -769,7 +769,7 @@ Please use the links below to submit your input:</p>
 </section>
 <hr class="docutils" />
 <section id="questions-support">
-<span id="questions--support"></span><h2>Questions &amp; Support<a class="headerlink" href="#questions-support" title="Link to this heading">#</a></h2>
+<h2>Questions &amp; Support<a class="headerlink" href="#questions-support" title="Link to this heading">#</a></h2>
 <p><em><a class="reference internal" href="#contributing-to-drumscript">back to top</a></em></p>
 <p>If you have questions, feel free to reach out at <strong><a class="reference external" href="mailto:hello&#46;drumscript&#37;&#52;&#48;gmail&#46;com">hello<span>&#46;</span>drumscript<span>&#64;</span>gmail<span>&#46;</span>com</a></strong>.</p>
 <p>Thank you for helping us build <code class="docutils literal notranslate"><span class="pre">DrumScript</span></code>! 🥁🚀 :D</p>

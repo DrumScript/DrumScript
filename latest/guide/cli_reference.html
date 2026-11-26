@@ -382,7 +382,7 @@ data-aria-dark="Switch to auto color mode">
 <li><p><strong><code class="docutils literal notranslate"><span class="pre">--midi-only</span></code></strong>: Exports only a MIDI file from the input audio, without generating sheet music (PDF) or transcription data (JSON). By default, the MIDI file is saved to <code class="docutils literal notranslate"><span class="pre">outputs/&lt;audio_stem&gt;.mid</span></code>. Combine with <code class="docutils literal notranslate"><span class="pre">--full-song</span></code> to isolate the drum stem first, or <code class="docutils literal notranslate"><span class="pre">--rudiment</span></code> to use rudiment classification. The transcription itself is unchanged; only the PDF and JSON writes are skipped.</p></li>
 </ul>
 <p><strong>Example:</strong></p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span data-line="1">drumscript<span class="w"> </span><span class="s2">"drum_loop.wav"</span><span class="w"> </span>--midi-only
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span data-line="1">drumscript<span class="w"> </span><span class="s2">&quot;drum_loop.wav&quot;</span><span class="w"> </span>--midi-only
 </span></pre></div>
 </div>
 <p>This creates <code class="docutils literal notranslate"><span class="pre">outputs/drum_loop.mid</span></code>.</p>
@@ -411,7 +411,7 @@ data-aria-dark="Switch to auto color mode">
 </section>
 <hr class="docutils" />
 <section id="development-module-level-commands">
-<span id="development--module-level-commands"></span><h2><strong>Development &amp; Module-Level Commands</strong><a class="headerlink" href="#development-module-level-commands" title="Link to this heading">#</a></h2>
+<h2><strong>Development &amp; Module-Level Commands</strong><a class="headerlink" href="#development-module-level-commands" title="Link to this heading">#</a></h2>
 <p>Developers can run specific modules directly to test isolated components of the signal processing chain.</p>
 <section id="audio-loader">
 <h3><strong>Audio Loader</strong><a class="headerlink" href="#audio-loader" title="Link to this heading">#</a></h3>
@@ -450,28 +450,28 @@ data-aria-dark="Switch to auto color mode">
 <section id="examples">
 <h2><strong>Examples</strong><a class="headerlink" href="#examples" title="Link to this heading">#</a></h2>
 <p><strong>1. Transcribe a drum-only recording:</strong></p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span data-line="1">drumscript<span class="w"> </span><span class="s2">"drum_loop.wav"</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span data-line="1">drumscript<span class="w"> </span><span class="s2">&quot;drum_loop.wav&quot;</span>
 </span></pre></div>
 </div>
 <p>Writes <code class="docutils literal notranslate"><span class="pre">&lt;name&gt;_transcription.pdf</span></code>, <code class="docutils literal notranslate"><span class="pre">.json</span></code> and <code class="docutils literal notranslate"><span class="pre">.mid</span></code> to <code class="docutils literal notranslate"><span class="pre">outputs/</span></code>.</p>
 <p><strong>2. Transcribe a full song into sheet music (isolating drums first):</strong></p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span data-line="1">drumscript<span class="w"> </span><span class="s2">"audio_path.mp3"</span><span class="w"> </span>--full-song
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span data-line="1">drumscript<span class="w"> </span><span class="s2">&quot;audio_path.mp3&quot;</span><span class="w"> </span>--full-song
 </span></pre></div>
 </div>
 <p><strong>3. Generate a drumless backing track in MP3 format:</strong></p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span data-line="1">drumscript<span class="w"> </span><span class="s2">"audio_path.wav"</span><span class="w"> </span>--drumless<span class="w"> </span>--format<span class="w"> </span>mp3
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span data-line="1">drumscript<span class="w"> </span><span class="s2">&quot;audio_path.wav&quot;</span><span class="w"> </span>--drumless<span class="w"> </span>--format<span class="w"> </span>mp3
 </span></pre></div>
 </div>
 <p><strong>4. Transcribe a drum solo with a custom time signature:</strong></p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span data-line="1">drumscript<span class="w"> </span><span class="s2">"audio_path.wav"</span><span class="w"> </span>--ts<span class="w"> </span><span class="s2">"7/8"</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span data-line="1">drumscript<span class="w"> </span><span class="s2">&quot;audio_path.wav&quot;</span><span class="w"> </span>--ts<span class="w"> </span><span class="s2">&quot;7/8&quot;</span>
 </span></pre></div>
 </div>
 <p><strong>5. Classify a single rudiment or practice-pad sample:</strong></p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span data-line="1">drumscript<span class="w"> </span><span class="s2">"paradiddle.wav"</span><span class="w"> </span>--rudiment
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span data-line="1">drumscript<span class="w"> </span><span class="s2">&quot;paradiddle.wav&quot;</span><span class="w"> </span>--rudiment
 </span></pre></div>
 </div>
 <p><strong>6. Export all four stems:</strong></p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span data-line="1">drumscript<span class="w"> </span><span class="s2">"audio_path.mp3"</span><span class="w"> </span>--all-stems<span class="w"> </span>--format<span class="w"> </span>mp3
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span data-line="1">drumscript<span class="w"> </span><span class="s2">&quot;audio_path.mp3&quot;</span><span class="w"> </span>--all-stems<span class="w"> </span>--format<span class="w"> </span>mp3
 </span></pre></div>
 </div>
 </section>

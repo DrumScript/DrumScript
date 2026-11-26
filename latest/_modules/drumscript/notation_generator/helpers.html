@@ -305,9 +305,9 @@ data-aria-dark="Switch to auto color mode">
           <h1>Source code for drumscript.notation_generator.helpers</h1><div class="highlight"><pre>
 <span></span><span data-line="1"><span class="c1"># DrumScript/notation_generator/helpers.py</span>
 </span><span data-line="2">
-</span><span data-line="3"><span class="sd">"""</span>
+</span><span data-line="3"><span class="sd">&quot;&quot;&quot;</span>
 </span><span data-line="4"><span class="sd">Helper functions for musical calculations.</span>
-</span><span data-line="5"><span class="sd">"""</span>
+</span><span data-line="5"><span class="sd">&quot;&quot;&quot;</span>
 </span><span data-line="6">
 </span><span data-line="7"><span class="kn">import</span><span class="w"> </span><span class="nn">math</span>
 </span><span data-line="8"><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span>
@@ -318,7 +318,7 @@ data-aria-dark="Switch to auto color mode">
 <div class="viewcode-block" id="round_to_nearest_subdivision">
 <a class="viewcode-back" href="../../../generated/drumscript.notation_generator.helpers.round_to_nearest_subdivision.html#drumscript.notation_generator.helpers.round_to_nearest_subdivision">[docs]</a>
 </span><span data-line="13"><span class="k">def</span><span class="w"> </span><span class="nf">round_to_nearest_subdivision</span><span class="p">(</span><span class="n">time_in_beats</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">subdivision</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-</span><span data-line="14"><span class="w">    </span><span class="sd">"""</span>
+</span><span data-line="14"><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span data-line="15"><span class="sd">    Rounds a time value (in beats) to the nearest specified rhythmic subdivision.</span>
 </span><span data-line="16">
 </span><span data-line="17"><span class="sd">    :param time_in_beats: Time in beats.</span>
@@ -327,9 +327,9 @@ data-aria-dark="Switch to auto color mode">
 </span><span data-line="20"><span class="sd">    :type subdivision: int</span>
 </span><span data-line="21"><span class="sd">    :return: Quantized time in beats.</span>
 </span><span data-line="22"><span class="sd">    :rtype: float</span>
-</span><span data-line="23"><span class="sd">    """</span>
+</span><span data-line="23"><span class="sd">    &quot;&quot;&quot;</span>
 </span><span data-line="24">    <span class="k">if</span> <span class="n">subdivision</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-</span><span data-line="25">        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"Subdivision cannot be zero."</span><span class="p">)</span>
+</span><span data-line="25">        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Subdivision cannot be zero.&quot;</span><span class="p">)</span>
 </span><span data-line="26">
 </span><span data-line="27">    <span class="n">unit_duration_in_beats</span> <span class="o">=</span> <span class="mf">4.0</span> <span class="o">/</span> <span class="n">subdivision</span>
 </span><span data-line="28">
@@ -341,66 +341,66 @@ data-aria-dark="Switch to auto color mode">
 <div class="viewcode-block" id="get_note_duration_name">
 <a class="viewcode-back" href="../../../generated/drumscript.notation_generator.helpers.get_note_duration_name.html#drumscript.notation_generator.helpers.get_note_duration_name">[docs]</a>
 </span><span data-line="33"><span class="k">def</span><span class="w"> </span><span class="nf">get_note_duration_name</span><span class="p">(</span><span class="n">duration_beats</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">tempo_bpm</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-</span><span data-line="34"><span class="w">    </span><span class="sd">"""</span>
-</span><span data-line="35"><span class="sd">    Converts a duration in beats to a standard musical note name (e.g., 'quarter', 'eighth').</span>
+</span><span data-line="34"><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span data-line="35"><span class="sd">    Converts a duration in beats to a standard musical note name (e.g., &#39;quarter&#39;, &#39;eighth&#39;).</span>
 </span><span data-line="36"><span class="sd">    This function can be further refined for more complex duration mappings (e.g., dotted notes).</span>
 </span><span data-line="37">
 </span><span data-line="38"><span class="sd">    :param duration_beats: Duration in beats.</span>
 </span><span data-line="39"><span class="sd">    :type duration_beats: float</span>
 </span><span data-line="40"><span class="sd">    :param tempo_bpm: Tempo in BPM.</span>
 </span><span data-line="41"><span class="sd">    :type tempo_bpm: int</span>
-</span><span data-line="42"><span class="sd">    :return: Name of the note duration (e.g., 'quarter').</span>
+</span><span data-line="42"><span class="sd">    :return: Name of the note duration (e.g., &#39;quarter&#39;).</span>
 </span><span data-line="43"><span class="sd">    :rtype: str</span>
-</span><span data-line="44"><span class="sd">    """</span>
+</span><span data-line="44"><span class="sd">    &quot;&quot;&quot;</span>
 </span><span data-line="45">    <span class="c1"># This is a simplified mapping. For real applications, you might need a more robust system</span>
 </span><span data-line="46">    <span class="c1"># that considers tempo and exact beat fractions.</span>
 </span><span data-line="47">    <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">duration_beats</span> <span class="o">-</span> <span class="n">constants</span><span class="o">.</span><span class="n">DURATION_WHOLE</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">0.001</span><span class="p">:</span>
-</span><span data-line="48">        <span class="k">return</span> <span class="s2">"whole"</span>
+</span><span data-line="48">        <span class="k">return</span> <span class="s2">&quot;whole&quot;</span>
 </span><span data-line="49">    <span class="k">elif</span> <span class="nb">abs</span><span class="p">(</span><span class="n">duration_beats</span> <span class="o">-</span> <span class="n">constants</span><span class="o">.</span><span class="n">DURATION_HALF</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">0.001</span><span class="p">:</span>
-</span><span data-line="50">        <span class="k">return</span> <span class="s2">"half"</span>
+</span><span data-line="50">        <span class="k">return</span> <span class="s2">&quot;half&quot;</span>
 </span><span data-line="51">    <span class="k">elif</span> <span class="nb">abs</span><span class="p">(</span><span class="n">duration_beats</span> <span class="o">-</span> <span class="n">constants</span><span class="o">.</span><span class="n">DURATION_QUARTER</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">0.001</span><span class="p">:</span>
-</span><span data-line="52">        <span class="k">return</span> <span class="s2">"quarter"</span>
+</span><span data-line="52">        <span class="k">return</span> <span class="s2">&quot;quarter&quot;</span>
 </span><span data-line="53">    <span class="k">elif</span> <span class="nb">abs</span><span class="p">(</span><span class="n">duration_beats</span> <span class="o">-</span> <span class="n">constants</span><span class="o">.</span><span class="n">DURATION_EIGHTH</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">0.001</span><span class="p">:</span>
-</span><span data-line="54">        <span class="k">return</span> <span class="s2">"eighth"</span>
+</span><span data-line="54">        <span class="k">return</span> <span class="s2">&quot;eighth&quot;</span>
 </span><span data-line="55">    <span class="k">elif</span> <span class="nb">abs</span><span class="p">(</span><span class="n">duration_beats</span> <span class="o">-</span> <span class="n">constants</span><span class="o">.</span><span class="n">DURATION_SIXTEENTH</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">0.001</span><span class="p">:</span>
-</span><span data-line="56">        <span class="k">return</span> <span class="s2">"16th"</span>
+</span><span data-line="56">        <span class="k">return</span> <span class="s2">&quot;16th&quot;</span>
 </span><span data-line="57">    <span class="k">elif</span> <span class="nb">abs</span><span class="p">(</span><span class="n">duration_beats</span> <span class="o">-</span> <span class="n">constants</span><span class="o">.</span><span class="n">DURATION_THIRTY_SECOND</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">0.001</span><span class="p">:</span>
-</span><span data-line="58">        <span class="k">return</span> <span class="s2">"32nd"</span>
+</span><span data-line="58">        <span class="k">return</span> <span class="s2">&quot;32nd&quot;</span>
 </span><span data-line="59">    <span class="k">else</span><span class="p">:</span>
 </span><span data-line="60">        <span class="c1"># Fallback for unexpected durations, or calculate based on smallest unit</span>
-</span><span data-line="61">        <span class="c1"># For simplicity, returning a generic 'note' or 'n/th' for now</span>
-</span><span data-line="62">        <span class="k">return</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">duration_beats</span><span class="si">}</span><span class="s2"> beats"</span></div>
+</span><span data-line="61">        <span class="c1"># For simplicity, returning a generic &#39;note&#39; or &#39;n/th&#39; for now</span>
+</span><span data-line="62">        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">duration_beats</span><span class="si">}</span><span class="s2"> beats&quot;</span></div>
 
 </span><span data-line="63">
 </span><span data-line="64">
 <div class="viewcode-block" id="format_drum_event">
 <a class="viewcode-back" href="../../../generated/drumscript.notation_generator.helpers.format_drum_event.html#drumscript.notation_generator.helpers.format_drum_event">[docs]</a>
 </span><span data-line="65"><span class="k">def</span><span class="w"> </span><span class="nf">format_drum_event</span><span class="p">(</span><span class="n">drum_type</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">onset_time_seconds</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
-</span><span data-line="66"><span class="w">    </span><span class="sd">"""</span>
+</span><span data-line="66"><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span data-line="67"><span class="sd">    Formats a classified drum event into a dictionary containing notation-specific information</span>
 </span><span data-line="68"><span class="sd">    using the DRUM_NOTATION_MAP imported from constants.py</span>
 </span><span data-line="69">
-</span><span data-line="70"><span class="sd">    :param drum_type: Type of drum (e.g., 'kick').</span>
+</span><span data-line="70"><span class="sd">    :param drum_type: Type of drum (e.g., &#39;kick&#39;).</span>
 </span><span data-line="71"><span class="sd">    :type drum_type: str</span>
 </span><span data-line="72"><span class="sd">    :param onset_time_seconds: Time of onset.</span>
 </span><span data-line="73"><span class="sd">    :type onset_time_seconds: float</span>
 </span><span data-line="74"><span class="sd">    :return: Formatted event dictionary.</span>
 </span><span data-line="75"><span class="sd">    :rtype: dict[str, Any]</span>
-</span><span data-line="76"><span class="sd">    """</span>
+</span><span data-line="76"><span class="sd">    &quot;&quot;&quot;</span>
 </span><span data-line="77">    <span class="n">drum_info</span> <span class="o">=</span> <span class="n">constants</span><span class="o">.</span><span class="n">DRUM_NOTATION_MAP</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">drum_type</span><span class="p">)</span>
 </span><span data-line="78">
 </span><span data-line="79">    <span class="k">if</span> <span class="ow">not</span> <span class="n">drum_info</span><span class="p">:</span>
-</span><span data-line="80">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Warning: No notation mapping found for drum type: </span><span class="si">{</span><span class="n">drum_type</span><span class="si">}</span><span class="s2">. Using default kick properties."</span><span class="p">)</span>
-</span><span data-line="81">        <span class="c1"># Fallback to a default, e.g., 'kick'</span>
-</span><span data-line="82">        <span class="n">drum_info</span> <span class="o">=</span> <span class="n">constants</span><span class="o">.</span><span class="n">DRUM_NOTATION_MAP</span><span class="p">[</span><span class="s2">"kick"</span><span class="p">]</span>
+</span><span data-line="80">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Warning: No notation mapping found for drum type: </span><span class="si">{</span><span class="n">drum_type</span><span class="si">}</span><span class="s2">. Using default kick properties.&quot;</span><span class="p">)</span>
+</span><span data-line="81">        <span class="c1"># Fallback to a default, e.g., &#39;kick&#39;</span>
+</span><span data-line="82">        <span class="n">drum_info</span> <span class="o">=</span> <span class="n">constants</span><span class="o">.</span><span class="n">DRUM_NOTATION_MAP</span><span class="p">[</span><span class="s2">&quot;kick&quot;</span><span class="p">]</span>
 </span><span data-line="83">
 </span><span data-line="84">    <span class="n">formatted_event</span> <span class="o">=</span> <span class="p">{</span>
-</span><span data-line="85">        <span class="s2">"drum_type"</span><span class="p">:</span> <span class="n">drum_type</span><span class="p">,</span>
-</span><span data-line="86">        <span class="s2">"onset_time_seconds"</span><span class="p">:</span> <span class="n">onset_time_seconds</span><span class="p">,</span>
-</span><span data-line="87">        <span class="s2">"midi_pitch"</span><span class="p">:</span> <span class="n">drum_info</span><span class="p">[</span><span class="s2">"midi_program"</span><span class="p">],</span>
-</span><span data-line="88">        <span class="s2">"note_head_type"</span><span class="p">:</span> <span class="n">drum_info</span><span class="p">[</span><span class="s2">"note_head"</span><span class="p">],</span>
-</span><span data-line="89">        <span class="s2">"staff_position"</span><span class="p">:</span> <span class="n">drum_info</span><span class="p">[</span><span class="s2">"staff_position"</span><span class="p">],</span>
-</span><span data-line="90">        <span class="s2">"display_name"</span><span class="p">:</span> <span class="n">drum_info</span><span class="p">[</span><span class="s2">"display_name"</span><span class="p">],</span>
+</span><span data-line="85">        <span class="s2">&quot;drum_type&quot;</span><span class="p">:</span> <span class="n">drum_type</span><span class="p">,</span>
+</span><span data-line="86">        <span class="s2">&quot;onset_time_seconds&quot;</span><span class="p">:</span> <span class="n">onset_time_seconds</span><span class="p">,</span>
+</span><span data-line="87">        <span class="s2">&quot;midi_pitch&quot;</span><span class="p">:</span> <span class="n">drum_info</span><span class="p">[</span><span class="s2">&quot;midi_program&quot;</span><span class="p">],</span>
+</span><span data-line="88">        <span class="s2">&quot;note_head_type&quot;</span><span class="p">:</span> <span class="n">drum_info</span><span class="p">[</span><span class="s2">&quot;note_head&quot;</span><span class="p">],</span>
+</span><span data-line="89">        <span class="s2">&quot;staff_position&quot;</span><span class="p">:</span> <span class="n">drum_info</span><span class="p">[</span><span class="s2">&quot;staff_position&quot;</span><span class="p">],</span>
+</span><span data-line="90">        <span class="s2">&quot;display_name&quot;</span><span class="p">:</span> <span class="n">drum_info</span><span class="p">[</span><span class="s2">&quot;display_name&quot;</span><span class="p">],</span>
 </span><span data-line="91">    <span class="p">}</span>
 </span><span data-line="92">    <span class="k">return</span> <span class="n">formatted_event</span></div>
 
@@ -409,7 +409,7 @@ data-aria-dark="Switch to auto color mode">
 <div class="viewcode-block" id="calculate_cents_difference">
 <a class="viewcode-back" href="../../../generated/drumscript.notation_generator.helpers.calculate_cents_difference.html#drumscript.notation_generator.helpers.calculate_cents_difference">[docs]</a>
 </span><span data-line="95"><span class="k">def</span><span class="w"> </span><span class="nf">calculate_cents_difference</span><span class="p">(</span><span class="n">freq1</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">freq2</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-</span><span data-line="96"><span class="w">    </span><span class="sd">"""</span>
+</span><span data-line="96"><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span data-line="97"><span class="sd">    Calculates the difference between two frequencies in cents.</span>
 </span><span data-line="98"><span class="sd">    Useful for tuning or pitch analysis.</span>
 </span><span data-line="99">
@@ -419,19 +419,19 @@ data-aria-dark="Switch to auto color mode">
 </span><span data-line="103"><span class="sd">    :type freq2: float</span>
 </span><span data-line="104"><span class="sd">    :return: Difference in cents. Positive if freq2 is higher, negative if lower.</span>
 </span><span data-line="105"><span class="sd">    :rtype: float</span>
-</span><span data-line="106"><span class="sd">    """</span>
+</span><span data-line="106"><span class="sd">    &quot;&quot;&quot;</span>
 </span><span data-line="107">
 </span><span data-line="108">    <span class="k">if</span> <span class="n">freq1</span> <span class="o">&lt;=</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">freq2</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
-</span><span data-line="109">        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"Frequencies must be positive."</span><span class="p">)</span>
+</span><span data-line="109">        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Frequencies must be positive.&quot;</span><span class="p">)</span>
 </span><span data-line="110">    <span class="k">return</span> <span class="mi">1200</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">log2</span><span class="p">(</span><span class="n">freq2</span> <span class="o">/</span> <span class="n">freq1</span><span class="p">)</span></div>
 
 </span><span data-line="111">
 </span><span data-line="112">
 </span><span data-line="113"><span class="c1"># --------------------------------------------------------------------------uncomment during testing</span>
 </span><span data-line="114"><span class="c1"># from datetime import datetime</span>
-</span><span data-line="115"><span class="c1"># print("\n# ------------------------------------------------------------------------------------")</span>
+</span><span data-line="115"><span class="c1"># print(&quot;\n# ------------------------------------------------------------------------------------&quot;)</span>
 </span><span data-line="116"><span class="c1"># datetimestamp = datetime.now()</span>
-</span><span data-line="117"><span class="c1"># print(f'\ndate/time: {datetimestamp}')</span>
+</span><span data-line="117"><span class="c1"># print(f&#39;\ndate/time: {datetimestamp}&#39;)</span>
 </span><span data-line="118"><span class="c1"># --------------------------------------------------------------------------------------------------</span>
 </span></pre></div>
         </article><button class="back-to-top" type="button">

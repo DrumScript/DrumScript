@@ -357,9 +357,9 @@ data-aria-dark="Switch to auto color mode">
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="c1"># 1. Load audio</span>
-</span><span data-line="2"><span class="n">audio_file_path</span> <span class="o">=</span> <span class="s2">"audio/test_track_1.wav"</span>
+</span><span data-line="2"><span class="n">audio_file_path</span> <span class="o">=</span> <span class="s2">&quot;audio/test_track_1.wav&quot;</span>
 </span><span data-line="3"><span class="n">audio_file</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">load_audio</span><span class="p">(</span><span class="n">audio_file_path</span><span class="p">)</span>
-</span><span data-line="4"><span class="nb">print</span><span class="p">(</span><span class="s2">"Audio loaded!"</span><span class="p">)</span>
+</span><span data-line="4"><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Audio loaded!&quot;</span><span class="p">)</span>
 </span><span data-line="5"><span class="n">display</span><span class="p">(</span><span class="n">Audio</span><span class="p">(</span><span class="n">audio_file_path</span><span class="p">))</span>
 </span></pre></div>
 </div>
@@ -369,7 +369,7 @@ data-aria-dark="Switch to auto color mode">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="c1"># 2. Create a drumless backing track</span>
 </span><span data-line="2"><span class="c1"># This isolates all stems except the drums and mixes them together.</span>
-</span><span data-line="3"><span class="n">backing_track</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">extract_stems</span><span class="p">(</span><span class="n">audio_path</span><span class="o">=</span><span class="n">audio_file_path</span><span class="p">,</span> <span class="n">output_dir</span><span class="o">=</span><span class="s2">"backing_track/"</span><span class="p">,</span> <span class="n">output_format</span><span class="o">=</span><span class="s2">"wav"</span><span class="p">,</span> <span class="n">drumless</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span><span data-line="3"><span class="n">backing_track</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">extract_stems</span><span class="p">(</span><span class="n">audio_path</span><span class="o">=</span><span class="n">audio_file_path</span><span class="p">,</span> <span class="n">output_dir</span><span class="o">=</span><span class="s2">&quot;backing_track/&quot;</span><span class="p">,</span> <span class="n">output_format</span><span class="o">=</span><span class="s2">&quot;wav&quot;</span><span class="p">,</span> <span class="n">drumless</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </span></pre></div>
 </div>
 </div>
@@ -381,15 +381,15 @@ data-aria-dark="Switch to auto color mode">
 </span><span data-line="3"><span class="c1"># even with drumless=True. Manually find the backing track.</span>
 </span><span data-line="4"><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
 </span><span data-line="5">
-</span><span data-line="6"><span class="n">backing_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">"backing_track"</span><span class="p">,</span> <span class="s2">"test_track_1"</span><span class="p">)</span>
-</span><span data-line="7"><span class="n">backing_files</span> <span class="o">=</span> <span class="p">[</span><span class="n">f</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">backing_dir</span><span class="p">)</span> <span class="k">if</span> <span class="s2">"no_drums"</span> <span class="ow">in</span> <span class="n">f</span><span class="p">]</span>
+</span><span data-line="6"><span class="n">backing_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">&quot;backing_track&quot;</span><span class="p">,</span> <span class="s2">&quot;test_track_1&quot;</span><span class="p">)</span>
+</span><span data-line="7"><span class="n">backing_files</span> <span class="o">=</span> <span class="p">[</span><span class="n">f</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">backing_dir</span><span class="p">)</span> <span class="k">if</span> <span class="s2">&quot;no_drums&quot;</span> <span class="ow">in</span> <span class="n">f</span><span class="p">]</span>
 </span><span data-line="8">
 </span><span data-line="9"><span class="k">if</span> <span class="n">backing_files</span><span class="p">:</span>
 </span><span data-line="10">    <span class="n">backing_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">backing_dir</span><span class="p">,</span> <span class="n">backing_files</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-</span><span data-line="11">    <span class="nb">print</span><span class="p">(</span><span class="s2">"Created backing track:"</span><span class="p">,</span> <span class="n">backing_path</span><span class="p">)</span>
+</span><span data-line="11">    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Created backing track:&quot;</span><span class="p">,</span> <span class="n">backing_path</span><span class="p">)</span>
 </span><span data-line="12">    <span class="n">display</span><span class="p">(</span><span class="n">Audio</span><span class="p">(</span><span class="n">backing_path</span><span class="p">))</span>
 </span><span data-line="13"><span class="k">else</span><span class="p">:</span>
-</span><span data-line="14">    <span class="nb">print</span><span class="p">(</span><span class="s2">"No backing track found — check the output directory."</span><span class="p">)</span>
+</span><span data-line="14">    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;No backing track found — check the output directory.&quot;</span><span class="p">)</span>
 </span></pre></div>
 </div>
 </div>

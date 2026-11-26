@@ -348,7 +348,7 @@ data-aria-dark="Switch to auto color mode">
 <!--date_updated:weds-25-aug-2026-->
 <hr class="docutils" />
 <section id="how-does-the-stem-splitter-module-audio-processor-stem-splitter-py-work">
-<span id="how-does-the-stem-splitter-module-audio_processorstem_splitterpy-work"></span><h2>How does the stem-splitter module (<code class="docutils literal notranslate"><span class="pre">audio_processor/stem_splitter.py</span></code>) work?<a class="headerlink" href="#how-does-the-stem-splitter-module-audio-processor-stem-splitter-py-work" title="Link to this heading">#</a></h2>
+<h2>How does the stem-splitter module (<code class="docutils literal notranslate"><span class="pre">audio_processor/stem_splitter.py</span></code>) work?<a class="headerlink" href="#how-does-the-stem-splitter-module-audio-processor-stem-splitter-py-work" title="Link to this heading">#</a></h2>
 <p>In simple terms, the <strong>stem-splitter</strong> takes a full polyphonic song and pulls it apart into its individual instrumental layers - drums, bass, vocals, and “other” - using the <strong>Demucs</strong> source separation model. From there, those isolated layers can be saved individually, recombined into custom mixes (e.g. a drumless backing track), or fed into the rest of the DrumScript transcription pipeline.</p>
 <p>Here’s a more detailed breakdown of what it does and why it’s designed this way.</p>
 <section id="what-the-module-does">

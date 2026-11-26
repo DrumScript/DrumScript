@@ -348,7 +348,7 @@ data-aria-dark="Switch to auto color mode">
   </div>
 </div><article class="yue" role="main">
           <section id="drumscript-v0-3-0">
-<span id="drumscript-v030"></span><h1>DrumScript v0.3.0<a class="headerlink" href="#drumscript-v0-3-0" title="Link to this heading">#</a></h1>
+<h1>DrumScript v0.3.0<a class="headerlink" href="#drumscript-v0-3-0" title="Link to this heading">#</a></h1>
 <!--date_added:tues-03-nov-2026-->
 <!--date_updated:sat-07-nov-2026-->
 <p><em>Release Date: Nov-26</em></p>
@@ -366,13 +366,13 @@ untouched.</p>
 <h2>Highlights<a class="headerlink" href="#highlights" title="Link to this heading">#</a></h2>
 <p><strong>MIDI-only export.</strong> If all you need is a MIDI file for your DAW, you can now
 skip the sheet music and the transcription JSON:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span data-line="1">drumscript<span class="w"> </span><span class="s2">"drum_loop.wav"</span><span class="w"> </span>--midi-only
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span data-line="1">drumscript<span class="w"> </span><span class="s2">&quot;drum_loop.wav&quot;</span><span class="w"> </span>--midi-only
 </span></pre></div>
 </div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="kn">import</span><span class="w"> </span><span class="nn">drumscript</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">ds</span>
 </span><span data-line="2">
-</span><span data-line="3"><span class="n">result</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">transcribe</span><span class="p">(</span><span class="s2">"drum_loop.wav"</span><span class="p">,</span> <span class="n">midi_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-</span><span data-line="4"><span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s2">"midi_path"</span><span class="p">])</span>
+</span><span data-line="3"><span class="n">result</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">transcribe</span><span class="p">(</span><span class="s2">&quot;drum_loop.wav&quot;</span><span class="p">,</span> <span class="n">midi_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span><span data-line="4"><span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s2">&quot;midi_path&quot;</span><span class="p">])</span>
 </span></pre></div>
 </div>
 <p>The transcription itself is unchanged. Onsets are still detected and hits still
@@ -407,7 +407,7 @@ recall and F-measure.</p></li>
 </ul>
 </section>
 <section id="fixes-improvements">
-<span id="fixes--improvements"></span><h2>Fixes &amp; Improvements<a class="headerlink" href="#fixes-improvements" title="Link to this heading">#</a></h2>
+<h2>Fixes &amp; Improvements<a class="headerlink" href="#fixes-improvements" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>When Demucs
 was unavailable or failed, <code class="docutils literal notranslate"><span class="pre">drumscript</span> <span class="pre">song.flac</span> <span class="pre">--full-song</span></code> tidied up by
@@ -458,7 +458,7 @@ directory deletion fixed in this release.</p></li>
 <!-->> **Patch release.** Fixes a broken install experience on Python 3.13.
 </section>
 <section id="id1">
-<span id="highlights-1"></span><h2>Highlights<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
+<h2>Highlights<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
 <p>Python 3.13 installations of DrumScript v0.2.0 failed with an obscure
 <code class="docutils literal notranslate"><span class="pre">Compiler</span> <span class="pre">cc</span> <span class="pre">cannot</span> <span class="pre">compile</span> <span class="pre">programs</span></code> error, because pip fell back to
 building numpy 1.x from source (numpy 1.x has no Python 3.13 wheels on PyPI).</p>
@@ -475,7 +475,7 @@ tracked in #303.</p>
 </ul>
 </section>
 <section id="id2">
-<span id="repository-notice-git-history-was-rewritten-on-8-october-2026-1"></span><h2>Repository notice: git history was rewritten on 8 October 2026<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
+<h2>Repository notice: git history was rewritten on 8 October 2026<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
 <p>This is the first release published since the repository history was rewritten.</p>
 <p>If you <strong>cloned or forked before 8 October 2026</strong>, you need to re-clone. A normal
 <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">pull</span></code> will no longer work. Full detail, including how to preserve local work,
@@ -485,7 +485,7 @@ changes for you.</strong> The PyPI package, all previous releases and the docs s
 untouched.</p>
 </section>
 <section id="id3">
-<span id="upgrading-1"></span><h2>Upgrading<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
+<h2>Upgrading<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span data-line="1">pip<span class="w"> </span>install<span class="w"> </span>--upgrade<span class="w"> </span>drumscript
 </span></pre></div>
 </div>

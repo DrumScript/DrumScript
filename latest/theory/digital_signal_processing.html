@@ -341,7 +341,7 @@ data-aria-dark="Switch to auto color mode">
 <!--date_updated:weds-25-aug-2026-->
 <p><code class="docutils literal notranslate"><span class="pre">DrumScript</span></code> relies on three major pillars of <strong>Music Information Retrieval (MIR)</strong>: Source Separation, Onset Detection, and Tempo Estimation.</p>
 <section id="source-separation-demucs">
-<span id="1-source-separation-demucs"></span><h2>1. Source Separation (<code class="docutils literal notranslate"><span class="pre">Demucs</span></code>)<a class="headerlink" href="#source-separation-demucs" title="Link to this heading">#</a></h2>
+<h2>1. Source Separation (<code class="docutils literal notranslate"><span class="pre">Demucs</span></code>)<a class="headerlink" href="#source-separation-demucs" title="Link to this heading">#</a></h2>
 <p>Before transcription begins, we often need to isolate the drums from the rest of the band (guitars, vocals, etc.).</p>
 <p>We utilise the <strong>Demucs</strong> model, a state-of-the-art Hybrid Transformer architecture. Unlike older spectral masking techniques, Demucs operates in the waveform domain to cleanly separate instruments with minimal “bleeding.”</p>
 <ul class="simple">
@@ -350,7 +350,7 @@ data-aria-dark="Switch to auto color mode">
 </ul>
 </section>
 <section id="onset-detection">
-<span id="2-onset-detection"></span><h2>2. Onset Detection<a class="headerlink" href="#onset-detection" title="Link to this heading">#</a></h2>
+<h2>2. Onset Detection<a class="headerlink" href="#onset-detection" title="Link to this heading">#</a></h2>
 <p>To transcribe a drum, we first need to know <em>when</em> it was hit. This is called <strong>Onset Detection</strong>.</p>
 <p>We analyze the <strong>Spectral Flux</strong>-essentially measuring how quickly the energy in the audio signal changes. A sudden spike in high-frequency energy usually indicates a percussive strike (a transient).</p>
 <ul class="simple">
@@ -359,7 +359,7 @@ data-aria-dark="Switch to auto color mode">
 </ul>
 </section>
 <section id="classification">
-<span id="3-classification"></span><h2>3. Classification<a class="headerlink" href="#classification" title="Link to this heading">#</a></h2>
+<h2>3. Classification<a class="headerlink" href="#classification" title="Link to this heading">#</a></h2>
 <p>Once a hit is detected, we classify it (Kick vs. Snare). DrumScript uses a <strong>Rule-Based Engine</strong> based on frequency centroids:</p>
 <ul class="simple">
 <li><p><strong>Kick:</strong> Low frequency energy (&lt; 100Hz).</p></li>

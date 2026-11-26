@@ -305,9 +305,9 @@ data-aria-dark="Switch to auto color mode">
           <h1>Source code for drumscript.audio_processor.feature_extractor</h1><div class="highlight"><pre>
 <span></span><span data-line="1"><span class="c1"># DrumScript/audio_processor/feature_extractor.py</span>
 </span><span data-line="2">
-</span><span data-line="3"><span class="sd">"""</span>
+</span><span data-line="3"><span class="sd">&quot;&quot;&quot;</span>
 </span><span data-line="4"><span class="sd">This module will extract relevant features from audio segments for drum classification.</span>
-</span><span data-line="5"><span class="sd">"""</span>
+</span><span data-line="5"><span class="sd">&quot;&quot;&quot;</span>
 </span><span data-line="6">
 </span><span data-line="7"><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span>
 </span><span data-line="8">
@@ -317,7 +317,7 @@ data-aria-dark="Switch to auto color mode">
 </span><span data-line="12"><span class="kn">from</span><span class="w"> </span><span class="nn">drumscript.notation_generator.constants</span><span class="w"> </span><span class="kn">import</span> <span class="n">HOP_LENGTH</span><span class="p">,</span> <span class="n">N_FFT</span><span class="p">,</span> <span class="n">ONSET_SLICE_DURATION_MS</span><span class="p">,</span> <span class="n">SAMPLE_RATE</span><span class="p">,</span> <span class="n">SEGMENT_LENGTH_SECONDS</span>
 </span><span data-line="13">
 </span><span data-line="14"><span class="c1"># Calculate the expected number of frames (timesteps) per segment</span>
-</span><span data-line="15"><span class="c1"># This calculation needs to be robust to ensure consistency with librosa's output.</span>
+</span><span data-line="15"><span class="c1"># This calculation needs to be robust to ensure consistency with librosa&#39;s output.</span>
 </span><span data-line="16"><span class="c1"># librosa.stft typically returns 1 + (len(y) - n_fft) // hop_length frames.</span>
 </span><span data-line="17"><span class="c1"># So, we first determine the expected audio length that corresponds to SEGMENT_LENGTH_SECONDS</span>
 </span><span data-line="18"><span class="n">EXPECTED_AUDIO_LEN_SAMPLES</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">SEGMENT_LENGTH_SECONDS</span> <span class="o">*</span> <span class="n">SAMPLE_RATE</span><span class="p">)</span>
@@ -325,7 +325,7 @@ data-aria-dark="Switch to auto color mode">
 </span><span data-line="20"><span class="k">if</span> <span class="n">EXPECTED_N_FRAMES</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
 </span><span data-line="21">    <span class="n">EXPECTED_N_FRAMES</span> <span class="o">=</span> <span class="mi">1</span>  <span class="c1"># Ensure at least one frame, even for very short segments</span>
 </span><span data-line="22">
-</span><span data-line="23"><span class="c1"># previous Define TOTAL_FEATURES_PER_FRAME globally so it's accessible in __main__ block</span>
+</span><span data-line="23"><span class="c1"># previous Define TOTAL_FEATURES_PER_FRAME globally so it&#39;s accessible in __main__ block</span>
 </span><span data-line="24"><span class="c1"># previous Number of MFCCs + Spectral Centroid + Spectral Rolloff + ZCR + RMS = 20 + 1 + 1 + 1 + 1 = 24</span>
 </span><span data-line="25"><span class="c1"># previous TOTAL_FEATURES_PER_FRAME = 20 + 1 + 1 + 1 + 1</span>
 </span><span data-line="26">
@@ -342,9 +342,9 @@ data-aria-dark="Switch to auto color mode">
 <div class="viewcode-block" id="extract_features">
 <a class="viewcode-back" href="../../../generated/drumscript.audio_processor.feature_extractor.extract_features.html#drumscript.audio_processor.feature_extractor.extract_features">[docs]</a>
 </span><span data-line="37"><span class="k">def</span><span class="w"> </span><span class="nf">extract_features</span><span class="p">(</span><span class="n">audio_path</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">sr</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
-</span><span data-line="38"><span class="w">    </span><span class="sd">"""</span>
+</span><span data-line="38"><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span data-line="39"><span class="sd">    Extracts a dictionary of features from a single audio segment.</span>
-</span><span data-line="40"><span class="sd">    Features are returned as mean values over the segment's duration.</span>
+</span><span data-line="40"><span class="sd">    Features are returned as mean values over the segment&#39;s duration.</span>
 </span><span data-line="41">
 </span><span data-line="42"><span class="sd">    :param audio_path: The audio data array.</span>
 </span><span data-line="43"><span class="sd">    :type audio_path: np.ndarray</span>
@@ -352,7 +352,7 @@ data-aria-dark="Switch to auto color mode">
 </span><span data-line="45"><span class="sd">    :type sr: int</span>
 </span><span data-line="46"><span class="sd">    :return: Dictionary of features (spectral_centroid, rms, mfccs, etc.).</span>
 </span><span data-line="47"><span class="sd">    :rtype: Dict[str, Any]</span>
-</span><span data-line="48"><span class="sd">    """</span>
+</span><span data-line="48"><span class="sd">    &quot;&quot;&quot;</span>
 </span><span data-line="49">    <span class="k">if</span> <span class="n">audio_path</span><span class="o">.</span><span class="n">size</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
 </span><span data-line="50">        <span class="k">return</span> <span class="kc">None</span>
 </span><span data-line="51">
@@ -396,19 +396,19 @@ data-aria-dark="Switch to auto color mode">
 </span><span data-line="89">        <span class="n">energy_high</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">S</span><span class="p">[</span><span class="n">high_band_mask</span><span class="p">,</span> <span class="p">:],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
 </span><span data-line="90">
 </span><span data-line="91">        <span class="k">return</span> <span class="p">{</span>
-</span><span data-line="92">            <span class="s2">"spectral_centroid"</span><span class="p">:</span> <span class="n">spectral_centroid</span><span class="p">,</span>
-</span><span data-line="93">            <span class="s2">"spectral_rolloff"</span><span class="p">:</span> <span class="n">spectral_rolloff</span><span class="p">,</span>
-</span><span data-line="94">            <span class="s2">"rms"</span><span class="p">:</span> <span class="n">rms</span><span class="p">,</span>
-</span><span data-line="95">            <span class="s2">"zero_crossing_rate"</span><span class="p">:</span> <span class="n">zcr</span><span class="p">,</span>
-</span><span data-line="96">            <span class="s2">"mfccs"</span><span class="p">:</span> <span class="n">mfccs</span><span class="o">.</span><span class="n">tolist</span><span class="p">(),</span>
-</span><span data-line="97">            <span class="s2">"sustain_level"</span><span class="p">:</span> <span class="n">sustain_level</span><span class="p">,</span>
-</span><span data-line="98">            <span class="s2">"energy_low"</span><span class="p">:</span> <span class="n">energy_low</span><span class="p">,</span>  <span class="c1"># Kick/Floor Tom indicator</span>
-</span><span data-line="99">            <span class="s2">"energy_mid"</span><span class="p">:</span> <span class="n">energy_mid</span><span class="p">,</span>  <span class="c1"># Snare/Rack Tom indicator</span>
-</span><span data-line="100">            <span class="s2">"energy_high"</span><span class="p">:</span> <span class="n">energy_high</span><span class="p">,</span>  <span class="c1"># Hi-Hat/Cymbal indicator</span>
+</span><span data-line="92">            <span class="s2">&quot;spectral_centroid&quot;</span><span class="p">:</span> <span class="n">spectral_centroid</span><span class="p">,</span>
+</span><span data-line="93">            <span class="s2">&quot;spectral_rolloff&quot;</span><span class="p">:</span> <span class="n">spectral_rolloff</span><span class="p">,</span>
+</span><span data-line="94">            <span class="s2">&quot;rms&quot;</span><span class="p">:</span> <span class="n">rms</span><span class="p">,</span>
+</span><span data-line="95">            <span class="s2">&quot;zero_crossing_rate&quot;</span><span class="p">:</span> <span class="n">zcr</span><span class="p">,</span>
+</span><span data-line="96">            <span class="s2">&quot;mfccs&quot;</span><span class="p">:</span> <span class="n">mfccs</span><span class="o">.</span><span class="n">tolist</span><span class="p">(),</span>
+</span><span data-line="97">            <span class="s2">&quot;sustain_level&quot;</span><span class="p">:</span> <span class="n">sustain_level</span><span class="p">,</span>
+</span><span data-line="98">            <span class="s2">&quot;energy_low&quot;</span><span class="p">:</span> <span class="n">energy_low</span><span class="p">,</span>  <span class="c1"># Kick/Floor Tom indicator</span>
+</span><span data-line="99">            <span class="s2">&quot;energy_mid&quot;</span><span class="p">:</span> <span class="n">energy_mid</span><span class="p">,</span>  <span class="c1"># Snare/Rack Tom indicator</span>
+</span><span data-line="100">            <span class="s2">&quot;energy_high&quot;</span><span class="p">:</span> <span class="n">energy_high</span><span class="p">,</span>  <span class="c1"># Hi-Hat/Cymbal indicator</span>
 </span><span data-line="101">        <span class="p">}</span>
 </span><span data-line="102">
 </span><span data-line="103">    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-</span><span data-line="104">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Warning: Error extracting features from a segment: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</span><span data-line="104">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Warning: Error extracting features from a segment: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </span><span data-line="105">        <span class="k">return</span> <span class="kc">None</span></div>
 
 </span><span data-line="106">
@@ -416,7 +416,7 @@ data-aria-dark="Switch to auto color mode">
 <div class="viewcode-block" id="extract_features_for_onsets">
 <a class="viewcode-back" href="../../../generated/drumscript.audio_processor.feature_extractor.extract_features_for_onsets.html#drumscript.audio_processor.feature_extractor.extract_features_for_onsets">[docs]</a>
 </span><span data-line="108"><span class="k">def</span><span class="w"> </span><span class="nf">extract_features_for_onsets</span><span class="p">(</span><span class="n">audio_path</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">sr</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">onset_times</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">float</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]:</span>
-</span><span data-line="109"><span class="w">    </span><span class="sd">"""</span>
+</span><span data-line="109"><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span data-line="110"><span class="sd">    Slices an audio array around each onset time and extracts features for each slice.</span>
 </span><span data-line="111">
 </span><span data-line="112"><span class="sd">    :param audio_path: Full audio array.</span>
@@ -429,7 +429,7 @@ data-aria-dark="Switch to auto color mode">
 </span><span data-line="119"><span class="sd">    :rtype: List[Dict[str, Any]]</span>
 </span><span data-line="120">
 </span><span data-line="121">
-</span><span data-line="122"><span class="sd">    """</span>
+</span><span data-line="122"><span class="sd">    &quot;&quot;&quot;</span>
 </span><span data-line="123">    <span class="n">all_features</span> <span class="o">=</span> <span class="p">[]</span>
 </span><span data-line="124">    <span class="n">sr</span> <span class="o">=</span> <span class="n">SAMPLE_RATE</span>
 </span><span data-line="125">    <span class="c1"># Calculate *half* the slice duration in samples</span>
@@ -455,7 +455,7 @@ data-aria-dark="Switch to auto color mode">
 </span><span data-line="145">
 </span><span data-line="146">        <span class="k">if</span> <span class="n">features</span><span class="p">:</span>
 </span><span data-line="147">            <span class="c1"># Add the onset time to the dictionary of features</span>
-</span><span data-line="148">            <span class="n">features</span><span class="p">[</span><span class="s2">"onset_time"</span><span class="p">]</span> <span class="o">=</span> <span class="n">time_sec</span>
+</span><span data-line="148">            <span class="n">features</span><span class="p">[</span><span class="s2">&quot;onset_time&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">time_sec</span>
 </span><span data-line="149">            <span class="n">all_features</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">features</span><span class="p">)</span>
 </span><span data-line="150">
 </span><span data-line="151">    <span class="k">return</span> <span class="n">all_features</span></div>
@@ -464,9 +464,9 @@ data-aria-dark="Switch to auto color mode">
 </span><span data-line="153">
 </span><span data-line="154"><span class="c1"># --------------------------------------------------------------------------uncomment during testing</span>
 </span><span data-line="155"><span class="c1"># from datetime import datetime</span>
-</span><span data-line="156"><span class="c1"># print("\n# ------------------------------------------------------------------------------------")</span>
+</span><span data-line="156"><span class="c1"># print(&quot;\n# ------------------------------------------------------------------------------------&quot;)</span>
 </span><span data-line="157"><span class="c1"># datetimestamp = datetime.now()</span>
-</span><span data-line="158"><span class="c1"># print(f'\ndate/time: {datetimestamp}')</span>
+</span><span data-line="158"><span class="c1"># print(f&#39;\ndate/time: {datetimestamp}&#39;)</span>
 </span><span data-line="159"><span class="c1"># --------------------------------------------------------------------------------------------------</span>
 </span></pre></div>
         </article><button class="back-to-top" type="button">

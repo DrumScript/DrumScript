@@ -358,10 +358,10 @@ data-aria-dark="Switch to auto color mode">
 <h2>Quick Start<a class="headerlink" href="#quick-start" title="Link to this heading">#</a></h2>
 <!--`DrumScript` accepts the default format of `.wav` if the `--mp3` flag is not specified.-->
 <section id="audio-loading">
-<span id="1-audio-loading"></span><h3>1. <strong>Audio Loading</strong><a class="headerlink" href="#audio-loading" title="Link to this heading">#</a></h3>
+<h3>1. <strong>Audio Loading</strong><a class="headerlink" href="#audio-loading" title="Link to this heading">#</a></h3>
 <p>Load and normalise audio files for analysis. The <code class="docutils literal notranslate"><span class="pre">load_audio</span></code> handles mono conversion and peak normalisation automatically.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="kn">import</span><span class="w"> </span><span class="nn">drumscript</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">ds</span>
-</span><span data-line="2"><span class="n">y</span><span class="p">,</span> <span class="n">sr</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">load_audio</span><span class="p">(</span><span class="s2">"audio_path.wav"</span><span class="p">)</span>   <span class="c1"># y = audio samples, sr = sample rate</span>
+</span><span data-line="2"><span class="n">y</span><span class="p">,</span> <span class="n">sr</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">load_audio</span><span class="p">(</span><span class="s2">&quot;audio_path.wav&quot;</span><span class="p">)</span>   <span class="c1"># y = audio samples, sr = sample rate</span>
 </span></pre></div>
 </div>
 <!--#### **Audio Loading**
@@ -376,10 +376,10 @@ y, sr = ds.load_audio("audio_path.wav")
 ```-->
 </section>
 <section id="extract-drums-from-any-song">
-<span id="2-extract-drums-from-any-song"></span><h3>2. <strong>Extract Drums From Any Song</strong><a class="headerlink" href="#extract-drums-from-any-song" title="Link to this heading">#</a></h3>
+<h3>2. <strong>Extract Drums From Any Song</strong><a class="headerlink" href="#extract-drums-from-any-song" title="Link to this heading">#</a></h3>
 <p>Want to isolate the drums in your favourite song?</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="kn">import</span><span class="w"> </span><span class="nn">drumscript</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">ds</span>
-</span><span data-line="2"><span class="n">extract_drums</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">extract_drum_stem</span><span class="p">(</span><span class="s2">"audio_path.wav"</span><span class="p">,</span> <span class="n">output_dir</span><span class="o">=</span><span class="s2">"path_to_output_dir/"</span><span class="p">)</span> <span class="c1"># 2. Extract drums from a song and save to local path that you can specify</span>
+</span><span data-line="2"><span class="n">extract_drums</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">extract_drum_stem</span><span class="p">(</span><span class="s2">&quot;audio_path.wav&quot;</span><span class="p">,</span> <span class="n">output_dir</span><span class="o">=</span><span class="s2">&quot;path_to_output_dir/&quot;</span><span class="p">)</span> <span class="c1"># 2. Extract drums from a song and save to local path that you can specify</span>
 </span></pre></div>
 </div>
 <blockquote>
@@ -387,16 +387,16 @@ y, sr = ds.load_audio("audio_path.wav")
 </div></blockquote>
 </section>
 <section id="create-drumless-backing-track-drumless">
-<span id="3-create-drumless-backing-track---drumless"></span><h3>3. <strong>Create Drumless Backing Track (<code class="docutils literal notranslate"><span class="pre">--drumless</span></code>)</strong><a class="headerlink" href="#create-drumless-backing-track-drumless" title="Link to this heading">#</a></h3>
+<h3>3. <strong>Create Drumless Backing Track (<code class="docutils literal notranslate"><span class="pre">--drumless</span></code>)</strong><a class="headerlink" href="#create-drumless-backing-track-drumless" title="Link to this heading">#</a></h3>
 <p>Want to jam along? Remove the drums from your favourite song:</p>
-<div class="highlight-zsh notranslate"><div class="highlight"><pre><span></span><span data-line="1">drumscript<span class="w"> </span><span class="s2">"audio_path.wav"</span><span class="w"> </span>--drumless
+<div class="highlight-zsh notranslate"><div class="highlight"><pre><span></span><span data-line="1">drumscript<span class="w"> </span><span class="s2">&quot;audio_path.wav&quot;</span><span class="w"> </span>--drumless
 </span><span data-line="2"><span class="c1"># or, without installing the console script:</span>
-</span><span data-line="3">python<span class="w"> </span>-m<span class="w"> </span>drumscript.main<span class="w"> </span><span class="s2">"audio_path.wav"</span><span class="w"> </span>--drumless
+</span><span data-line="3">python<span class="w"> </span>-m<span class="w"> </span>drumscript.main<span class="w"> </span><span class="s2">&quot;audio_path.wav&quot;</span><span class="w"> </span>--drumless
 </span></pre></div>
 </div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="kn">import</span><span class="w"> </span><span class="nn">drumscript</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">ds</span>
-</span><span data-line="2"><span class="n">backing_track</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">extract_stems</span><span class="p">(</span><span class="s2">"audio_path.wav"</span><span class="p">,</span> <span class="n">drumless</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-</span><span data-line="3"><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Files written to: </span><span class="si">{</span><span class="n">backing_track</span><span class="p">[</span><span class="s1">'output_directory'</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</span><span data-line="2"><span class="n">backing_track</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">extract_stems</span><span class="p">(</span><span class="s2">&quot;audio_path.wav&quot;</span><span class="p">,</span> <span class="n">drumless</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span><span data-line="3"><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Files written to: </span><span class="si">{</span><span class="n">backing_track</span><span class="p">[</span><span class="s1">&#39;output_directory&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </span></pre></div>
 </div>
 <blockquote>
@@ -405,9 +405,9 @@ y, sr = ds.load_audio("audio_path.wav")
 </div></blockquote>
 </section>
 <section id="extracting-stems-all-stems">
-<span id="4-extracting-stems---all-stems"></span><h3>4. Extracting Stems (<code class="docutils literal notranslate"><span class="pre">--all-stems</span></code>)<a class="headerlink" href="#extracting-stems-all-stems" title="Link to this heading">#</a></h3>
+<h3>4. Extracting Stems (<code class="docutils literal notranslate"><span class="pre">--all-stems</span></code>)<a class="headerlink" href="#extracting-stems-all-stems" title="Link to this heading">#</a></h3>
 <p>Split a song into its constituent parts (<code class="docutils literal notranslate"><span class="pre">Drums</span></code>, <code class="docutils literal notranslate"><span class="pre">Bass</span></code>, <code class="docutils literal notranslate"><span class="pre">Vocals</span></code>, <code class="docutils literal notranslate"><span class="pre">Other</span></code>):</p>
-<div class="highlight-zsh notranslate"><div class="highlight"><pre><span></span><span data-line="1">python<span class="w"> </span>-m<span class="w"> </span>drumscript.main<span class="w"> </span><span class="s2">"audio_path.mp3"</span><span class="w"> </span>--all-stems<span class="w"> </span>--format<span class="w"> </span>mp3
+<div class="highlight-zsh notranslate"><div class="highlight"><pre><span></span><span data-line="1">python<span class="w"> </span>-m<span class="w"> </span>drumscript.main<span class="w"> </span><span class="s2">&quot;audio_path.mp3&quot;</span><span class="w"> </span>--all-stems<span class="w"> </span>--format<span class="w"> </span>mp3
 </span></pre></div>
 </div>
 <blockquote>
@@ -415,13 +415,13 @@ y, sr = ds.load_audio("audio_path.wav")
 </div></blockquote>
 </section>
 <section id="custom-time-signatures-ts">
-<span id="5-custom-time-signatures---ts"></span><h3>5. Custom Time Signatures (<code class="docutils literal notranslate"><span class="pre">--ts</span></code>)<a class="headerlink" href="#custom-time-signatures-ts" title="Link to this heading">#</a></h3>
+<h3>5. Custom Time Signatures (<code class="docutils literal notranslate"><span class="pre">--ts</span></code>)<a class="headerlink" href="#custom-time-signatures-ts" title="Link to this heading">#</a></h3>
 <p>By default, <code class="docutils literal notranslate"><span class="pre">DrumScript</span></code> assumes <code class="docutils literal notranslate"><span class="pre">4/4</span></code> time. You can override this for waltzes or complex meters:</p>
 <div class="highlight-zsh notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="c1"># Transcribe a waltz</span>
-</span><span data-line="2">drumscript<span class="w"> </span><span class="s2">"audio_path.wav"</span><span class="w"> </span>--ts<span class="w"> </span><span class="m">3</span>/4
+</span><span data-line="2">drumscript<span class="w"> </span><span class="s2">&quot;audio_path.wav&quot;</span><span class="w"> </span>--ts<span class="w"> </span><span class="m">3</span>/4
 </span><span data-line="3">
 </span><span data-line="4"><span class="c1"># Transcribe 6/8 time</span>
-</span><span data-line="5">drumscript<span class="w"> </span><span class="s2">"audio_path.wav"</span><span class="w"> </span>--ts<span class="w"> </span><span class="m">6</span>/8
+</span><span data-line="5">drumscript<span class="w"> </span><span class="s2">&quot;audio_path.wav&quot;</span><span class="w"> </span>--ts<span class="w"> </span><span class="m">6</span>/8
 </span></pre></div>
 </div>
 <blockquote>
@@ -430,7 +430,7 @@ y, sr = ds.load_audio("audio_path.wav")
 <!--You can also use DrumScript directly from your terminal:-->
 </section>
 <section id="full-audio-to-pdf-transcription-full-song">
-<span id="6-full-audio-to-pdf-transcription---full-song"></span><h3>6. Full Audio to PDF Transcription (<code class="docutils literal notranslate"><span class="pre">--full-song</span></code>)<a class="headerlink" href="#full-audio-to-pdf-transcription-full-song" title="Link to this heading">#</a></h3>
+<h3>6. Full Audio to PDF Transcription (<code class="docutils literal notranslate"><span class="pre">--full-song</span></code>)<a class="headerlink" href="#full-audio-to-pdf-transcription-full-song" title="Link to this heading">#</a></h3>
 <p><strong>CLI:</strong></p>
 <div class="highlight-zsh notranslate"><div class="highlight"><pre><span></span><span data-line="1">python<span class="w"> </span>-m<span class="w"> </span>drumscript.main<span class="w"> </span>audio_path.mp3<span class="w"> </span>--full-song
 </span></pre></div>
@@ -439,21 +439,21 @@ y, sr = ds.load_audio("audio_path.wav")
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="kn">import</span><span class="w"> </span><span class="nn">drumscript</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">ds</span>
 </span><span data-line="2">
 </span><span data-line="3"><span class="c1"># Transcribe an isolated drum stem → PDF + JSON + MIDI</span>
-</span><span data-line="4"><span class="n">result</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">transcribe</span><span class="p">(</span><span class="s2">"drum_audio.wav"</span><span class="p">)</span>
-</span><span data-line="5"><span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s2">"pdf_path"</span><span class="p">])</span>   <span class="c1"># PDF sheet music</span>
-</span><span data-line="6"><span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s2">"json_path"</span><span class="p">])</span>  <span class="c1"># raw transcription data (JSON)</span>
-</span><span data-line="7"><span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s2">"midi_path"</span><span class="p">])</span>  <span class="c1"># MIDI file for DAW import</span>
+</span><span data-line="4"><span class="n">result</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">transcribe</span><span class="p">(</span><span class="s2">&quot;drum_audio.wav&quot;</span><span class="p">)</span>
+</span><span data-line="5"><span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s2">&quot;pdf_path&quot;</span><span class="p">])</span>   <span class="c1"># PDF sheet music</span>
+</span><span data-line="6"><span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s2">&quot;json_path&quot;</span><span class="p">])</span>  <span class="c1"># raw transcription data (JSON)</span>
+</span><span data-line="7"><span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s2">&quot;midi_path&quot;</span><span class="p">])</span>  <span class="c1"># MIDI file for DAW import</span>
 </span><span data-line="8">
 </span><span data-line="9"><span class="c1"># Transcribe a full song (separates drums automatically)</span>
-</span><span data-line="10"><span class="n">result</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">transcribe</span><span class="p">(</span><span class="s2">"full_song.mp3"</span><span class="p">,</span> <span class="n">full_song</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-</span><span data-line="11"><span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s2">"pdf_path"</span><span class="p">])</span>
+</span><span data-line="10"><span class="n">result</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">transcribe</span><span class="p">(</span><span class="s2">&quot;full_song.mp3&quot;</span><span class="p">,</span> <span class="n">full_song</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span><span data-line="11"><span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s2">&quot;pdf_path&quot;</span><span class="p">])</span>
 </span><span data-line="12">
 </span><span data-line="13"><span class="c1"># Get all intermediate results (tempo, onsets, events, etc.)</span>
-</span><span data-line="14"><span class="n">result</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">transcribe</span><span class="p">(</span><span class="s2">"drum_audio.wav"</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-</span><span data-line="15"><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Tempo: </span><span class="si">{</span><span class="n">result</span><span class="p">[</span><span class="s1">'tempo'</span><span class="p">]</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> BPM"</span><span class="p">)</span>
-</span><span data-line="16"><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Events: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s1">'events'</span><span class="p">])</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
-</span><span data-line="17"><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"PDF: </span><span class="si">{</span><span class="n">result</span><span class="p">[</span><span class="s1">'pdf_path'</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
-</span><span data-line="18"><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"MIDI: </span><span class="si">{</span><span class="n">result</span><span class="p">[</span><span class="s1">'midi_path'</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</span><span data-line="14"><span class="n">result</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">transcribe</span><span class="p">(</span><span class="s2">&quot;drum_audio.wav&quot;</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span><span data-line="15"><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Tempo: </span><span class="si">{</span><span class="n">result</span><span class="p">[</span><span class="s1">&#39;tempo&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> BPM&quot;</span><span class="p">)</span>
+</span><span data-line="16"><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Events: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s1">&#39;events&#39;</span><span class="p">])</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span data-line="17"><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;PDF: </span><span class="si">{</span><span class="n">result</span><span class="p">[</span><span class="s1">&#39;pdf_path&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span data-line="18"><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;MIDI: </span><span class="si">{</span><span class="n">result</span><span class="p">[</span><span class="s1">&#39;midi_path&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </span></pre></div>
 </div>
 <blockquote>
@@ -461,36 +461,36 @@ y, sr = ds.load_audio("audio_path.wav")
 </div></blockquote>
 </section>
 <section id="midi-only-midi-only">
-<span id="7-midi-only---midi-only"></span><h3>7. MIDI Only (<code class="docutils literal notranslate"><span class="pre">--midi-only</span></code>)<a class="headerlink" href="#midi-only-midi-only" title="Link to this heading">#</a></h3>
+<h3>7. MIDI Only (<code class="docutils literal notranslate"><span class="pre">--midi-only</span></code>)<a class="headerlink" href="#midi-only-midi-only" title="Link to this heading">#</a></h3>
 <p>If all you need is a MIDI file to drop into a DAW, <code class="docutils literal notranslate"><span class="pre">--midi-only</span></code> skips the sheet music
 and the transcription JSON. The audio is still analysed exactly as normal, because a
 MIDI file of drum notes cannot be produced without detecting the onsets and classifying
 the hits. Only the other two writes are suppressed.</p>
 <p><strong>CLI:</strong></p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span data-line="1">drumscript<span class="w"> </span><span class="s2">"drum_loop.wav"</span><span class="w"> </span>--midi-only
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span data-line="1">drumscript<span class="w"> </span><span class="s2">&quot;drum_loop.wav&quot;</span><span class="w"> </span>--midi-only
 </span></pre></div>
 </div>
 <p>This creates <code class="docutils literal notranslate"><span class="pre">outputs/drum_loop_transcription.mid</span></code>.</p>
 <p><strong>Python API:</strong></p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="kn">import</span><span class="w"> </span><span class="nn">drumscript</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">ds</span>
 </span><span data-line="2">
-</span><span data-line="3"><span class="n">result</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">transcribe</span><span class="p">(</span><span class="s2">"drum_loop.wav"</span><span class="p">,</span> <span class="n">midi_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-</span><span data-line="4"><span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s2">"midi_path"</span><span class="p">])</span>
+</span><span data-line="3"><span class="n">result</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">transcribe</span><span class="p">(</span><span class="s2">&quot;drum_loop.wav&quot;</span><span class="p">,</span> <span class="n">midi_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span><span data-line="4"><span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s2">&quot;midi_path&quot;</span><span class="p">])</span>
 </span></pre></div>
 </div>
 <p>Combine it with the other options as usual. For a full song, add <code class="docutils literal notranslate"><span class="pre">full_song=True</span></code> to
 isolate the drum stem first; for isolated hits, add <code class="docutils literal notranslate"><span class="pre">is_rudiment=True</span></code>.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="n">result</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">transcribe</span><span class="p">(</span><span class="s2">"full_song.wav"</span><span class="p">,</span> <span class="n">midi_only</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">full_song</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="n">result</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">transcribe</span><span class="p">(</span><span class="s2">&quot;full_song.wav&quot;</span><span class="p">,</span> <span class="n">midi_only</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">full_song</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </span></pre></div>
 </div>
 <p>You can control where the file lands with <code class="docutils literal notranslate"><span class="pre">output_dir</span></code> and <code class="docutils literal notranslate"><span class="pre">output_filename</span></code>:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="n">result</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">transcribe</span><span class="p">(</span>
-</span><span data-line="2">    <span class="s2">"drum_loop.wav"</span><span class="p">,</span>
+</span><span data-line="2">    <span class="s2">&quot;drum_loop.wav&quot;</span><span class="p">,</span>
 </span><span data-line="3">    <span class="n">midi_only</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-</span><span data-line="4">    <span class="n">output_dir</span><span class="o">=</span><span class="s2">"my_exports"</span><span class="p">,</span>
-</span><span data-line="5">    <span class="n">output_filename</span><span class="o">=</span><span class="s2">"my_drums"</span><span class="p">,</span>
+</span><span data-line="4">    <span class="n">output_dir</span><span class="o">=</span><span class="s2">&quot;my_exports&quot;</span><span class="p">,</span>
+</span><span data-line="5">    <span class="n">output_filename</span><span class="o">=</span><span class="s2">&quot;my_drums&quot;</span><span class="p">,</span>
 </span><span data-line="6"><span class="p">)</span>
-</span><span data-line="7"><span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s2">"midi_path"</span><span class="p">])</span>  <span class="c1"># my_exports/my_drums.mid</span>
+</span><span data-line="7"><span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s2">&quot;midi_path&quot;</span><span class="p">])</span>  <span class="c1"># my_exports/my_drums.mid</span>
 </span></pre></div>
 </div>
 <blockquote>
@@ -506,18 +506,18 @@ written. Read the key you asked for rather than assuming all three are present.<
 <p>To run the full transcription pipeline on an audio file, use <code class="docutils literal notranslate"><span class="pre">transcribe()</span></code>. This will load the audio, separate the drums (if needed), classify hits, and generate PDF, JSON and MIDI output.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="kn">import</span><span class="w"> </span><span class="nn">drumscript</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">ds</span>
 </span><span data-line="2">
-</span><span data-line="3"><span class="n">result</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">transcribe</span><span class="p">(</span><span class="s2">"audio_path.wav"</span><span class="p">)</span>
-</span><span data-line="4"><span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s2">"pdf_path"</span><span class="p">])</span>
+</span><span data-line="3"><span class="n">result</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">transcribe</span><span class="p">(</span><span class="s2">&quot;audio_path.wav&quot;</span><span class="p">)</span>
+</span><span data-line="4"><span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s2">&quot;pdf_path&quot;</span><span class="p">])</span>
 </span></pre></div>
 </div>
 <p>The CLI equivalent - <code class="docutils literal notranslate"><span class="pre">main()</span></code> is the orchestration function behind it, and takes the input path as its first argument:</p>
-<div class="highlight-zsh notranslate"><div class="highlight"><pre><span></span><span data-line="1">drumscript<span class="w"> </span><span class="s2">"audio_path.wav"</span>
+<div class="highlight-zsh notranslate"><div class="highlight"><pre><span></span><span data-line="1">drumscript<span class="w"> </span><span class="s2">&quot;audio_path.wav&quot;</span>
 </span></pre></div>
 </div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="kn">from</span><span class="w"> </span><span class="nn">drumscript.main</span><span class="w"> </span><span class="kn">import</span> <span class="n">main</span>
 </span><span data-line="2">
-</span><span data-line="3"><span class="n">main</span><span class="p">(</span><span class="s2">"audio_path.wav"</span><span class="p">)</span>               <span class="c1"># drum-only input</span>
-</span><span data-line="4"><span class="n">main</span><span class="p">(</span><span class="s2">"audio_path.mp3"</span><span class="p">,</span> <span class="n">full_song</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>   <span class="c1"># full song: separate drums first</span>
+</span><span data-line="3"><span class="n">main</span><span class="p">(</span><span class="s2">&quot;audio_path.wav&quot;</span><span class="p">)</span>               <span class="c1"># drum-only input</span>
+</span><span data-line="4"><span class="n">main</span><span class="p">(</span><span class="s2">&quot;audio_path.mp3&quot;</span><span class="p">,</span> <span class="n">full_song</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>   <span class="c1"># full song: separate drums first</span>
 </span></pre></div>
 </div>
 <!-- SUPERSEDED (v0.2.0): documented `main()` with no arguments and
@@ -539,25 +539,25 @@ main()
 </span><span data-line="2">
 </span><span data-line="3"><span class="c1"># Returns the path to the isolated drum track</span>
 </span><span data-line="4"><span class="n">drum_track_path</span> <span class="o">=</span> <span class="n">extract_drum_stem</span><span class="p">(</span>
-</span><span data-line="5">    <span class="n">audio_path</span><span class="o">=</span><span class="s2">"audio_path.mp3"</span><span class="p">,</span>
-</span><span data-line="6">    <span class="n">output_dir</span><span class="o">=</span><span class="s2">"output/"</span><span class="p">,</span>
+</span><span data-line="5">    <span class="n">audio_path</span><span class="o">=</span><span class="s2">&quot;audio_path.mp3&quot;</span><span class="p">,</span>
+</span><span data-line="6">    <span class="n">output_dir</span><span class="o">=</span><span class="s2">&quot;output/&quot;</span><span class="p">,</span>
 </span><span data-line="7"><span class="p">)</span>
 </span><span data-line="8">
-</span><span data-line="9"><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Drum stem saved at: </span><span class="si">{</span><span class="n">drum_track_path</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</span><span data-line="9"><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Drum stem saved at: </span><span class="si">{</span><span class="n">drum_track_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </span></pre></div>
 </div>
 <p>For full separation with backing-track and per-stem options:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="kn">from</span><span class="w"> </span><span class="nn">drumscript.audio_processor.stem_splitter</span><span class="w"> </span><span class="kn">import</span> <span class="n">separate_audio</span>
 </span><span data-line="2">
 </span><span data-line="3"><span class="n">results</span> <span class="o">=</span> <span class="n">separate_audio</span><span class="p">(</span>
-</span><span data-line="4">    <span class="n">audio_path</span><span class="o">=</span><span class="s2">"audio_path.mp3"</span><span class="p">,</span>
-</span><span data-line="5">    <span class="n">output_format</span><span class="o">=</span><span class="s2">"wav"</span><span class="p">,</span>
+</span><span data-line="4">    <span class="n">audio_path</span><span class="o">=</span><span class="s2">&quot;audio_path.mp3&quot;</span><span class="p">,</span>
+</span><span data-line="5">    <span class="n">output_format</span><span class="o">=</span><span class="s2">&quot;wav&quot;</span><span class="p">,</span>
 </span><span data-line="6">    <span class="n">drumless</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
 </span><span data-line="7">    <span class="n">all_stems</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-</span><span data-line="8">    <span class="n">output_dir</span><span class="o">=</span><span class="s2">"output/"</span><span class="p">,</span>
+</span><span data-line="8">    <span class="n">output_dir</span><span class="o">=</span><span class="s2">&quot;output/&quot;</span><span class="p">,</span>
 </span><span data-line="9"><span class="p">)</span>
 </span><span data-line="10">
-</span><span data-line="11"><span class="nb">print</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>   <span class="c1"># dict of every file written, including "mix"</span>
+</span><span data-line="11"><span class="nb">print</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>   <span class="c1"># dict of every file written, including &quot;mix&quot;</span>
 </span></pre></div>
 </div>
 <!-- SUPERSEDED (v0.2.0): documented a `StemSplitter` class with a
@@ -585,7 +585,7 @@ print(f"Drum stem saved at: {drum_track_path}")
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="kn">import</span><span class="w"> </span><span class="nn">drumscript</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">ds</span>
 </span><span data-line="2"><span class="kn">from</span><span class="w"> </span><span class="nn">drumscript.audio_processor.audio_loader</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_audio</span>
 </span><span data-line="3"><span class="c1"># Load audio (returns audio time series and sample rate)</span>
-</span><span data-line="4"><span class="n">y</span><span class="p">,</span> <span class="n">sr</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">load_audio</span><span class="p">(</span><span class="s2">"audio_path.wav"</span><span class="p">)</span> 
+</span><span data-line="4"><span class="n">y</span><span class="p">,</span> <span class="n">sr</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">load_audio</span><span class="p">(</span><span class="s2">&quot;audio_path.wav&quot;</span><span class="p">)</span> 
 </span></pre></div>
 </div>
 </section>
@@ -594,19 +594,19 @@ print(f"Drum stem saved at: {drum_track_path}")
 <p>Create a drumless track to play along to. Works on any polyphonic audio.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="kn">import</span><span class="w"> </span><span class="nn">drumscript</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">ds</span>
 </span><span data-line="2">
-</span><span data-line="3"><span class="n">result</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">extract_stems</span><span class="p">(</span><span class="s2">"full_song.wav"</span><span class="p">,</span> <span class="n">drumless</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-</span><span data-line="4"><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Written to: </span><span class="si">{</span><span class="n">result</span><span class="p">[</span><span class="s1">'output_directory'</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</span><span data-line="3"><span class="n">result</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">extract_stems</span><span class="p">(</span><span class="s2">&quot;full_song.wav&quot;</span><span class="p">,</span> <span class="n">drumless</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span><span data-line="4"><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Written to: </span><span class="si">{</span><span class="n">result</span><span class="p">[</span><span class="s1">&#39;output_directory&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </span></pre></div>
 </div>
 <p>The backing track is saved as <code class="docutils literal notranslate"><span class="pre">&lt;input&gt;_no_drums.wav</span></code> inside that directory, alongside the isolated drums as <code class="docutils literal notranslate"><span class="pre">&lt;input&gt;_only_drums.wav</span></code>.</p>
 <p><strong>CLI equivalent:</strong></p>
-<div class="highlight-zsh notranslate"><div class="highlight"><pre><span></span><span data-line="1">drumscript<span class="w"> </span><span class="s2">"full_song.wav"</span><span class="w"> </span>--drumless
-</span><span data-line="2">drumscript<span class="w"> </span><span class="s2">"full_song.mp3"</span><span class="w"> </span>--drumless<span class="w"> </span>--format<span class="w"> </span>mp3<span class="w">   </span><span class="c1"># MP3 output needs ffmpeg</span>
+<div class="highlight-zsh notranslate"><div class="highlight"><pre><span></span><span data-line="1">drumscript<span class="w"> </span><span class="s2">&quot;full_song.wav&quot;</span><span class="w"> </span>--drumless
+</span><span data-line="2">drumscript<span class="w"> </span><span class="s2">&quot;full_song.mp3&quot;</span><span class="w"> </span>--drumless<span class="w"> </span>--format<span class="w"> </span>mp3<span class="w">   </span><span class="c1"># MP3 output needs ffmpeg</span>
 </span></pre></div>
 </div>
 <p>You can mute any stem, not just drums:</p>
-<div class="highlight-zsh notranslate"><div class="highlight"><pre><span></span><span data-line="1">drumscript<span class="w"> </span><span class="s2">"full_song.wav"</span><span class="w"> </span>--mute<span class="w"> </span>bass
-</span><span data-line="2">drumscript<span class="w"> </span><span class="s2">"full_song.wav"</span><span class="w"> </span>--mute<span class="w"> </span>bass<span class="w"> </span>--mute<span class="w"> </span>vocals
+<div class="highlight-zsh notranslate"><div class="highlight"><pre><span></span><span data-line="1">drumscript<span class="w"> </span><span class="s2">&quot;full_song.wav&quot;</span><span class="w"> </span>--mute<span class="w"> </span>bass
+</span><span data-line="2">drumscript<span class="w"> </span><span class="s2">&quot;full_song.wav&quot;</span><span class="w"> </span>--mute<span class="w"> </span>bass<span class="w"> </span>--mute<span class="w"> </span>vocals
 </span></pre></div>
 </div>
 </section>
@@ -615,12 +615,12 @@ print(f"Drum stem saved at: {drum_track_path}")
 <p>Pull just the drum track out of a full mix - useful for studying a groove, or for feeding into transcription separately.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="kn">import</span><span class="w"> </span><span class="nn">drumscript</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">ds</span>
 </span><span data-line="2">
-</span><span data-line="3"><span class="n">drum_path</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">extract_stems</span><span class="p">(</span><span class="s2">"full_song.wav"</span><span class="p">)</span>
-</span><span data-line="4"><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Drum stem: </span><span class="si">{</span><span class="n">drum_path</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</span><span data-line="3"><span class="n">drum_path</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">extract_stems</span><span class="p">(</span><span class="s2">&quot;full_song.wav&quot;</span><span class="p">)</span>
+</span><span data-line="4"><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Drum stem: </span><span class="si">{</span><span class="n">drum_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </span></pre></div>
 </div>
 <p><strong>CLI equivalent:</strong></p>
-<div class="highlight-zsh notranslate"><div class="highlight"><pre><span></span><span data-line="1">drumscript<span class="w"> </span><span class="s2">"full_song.mp3"</span><span class="w"> </span>--full-song
+<div class="highlight-zsh notranslate"><div class="highlight"><pre><span></span><span data-line="1">drumscript<span class="w"> </span><span class="s2">&quot;full_song.mp3&quot;</span><span class="w"> </span>--full-song
 </span></pre></div>
 </div>
 <blockquote>

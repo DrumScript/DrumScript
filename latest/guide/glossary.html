@@ -356,7 +356,7 @@ data-aria-dark="Switch to auto color mode">
 <!--date_created:thurs-03-july-2025-->
 <!--date_updated:weds-25-aug-2026-->
 <section id="python-libraries-classes">
-<span id="python-libraries--classes"></span><h2><strong>Python Libraries &amp; Classes</strong><a class="headerlink" href="#python-libraries-classes" title="Link to this heading">#</a></h2>
+<h2><strong>Python Libraries &amp; Classes</strong><a class="headerlink" href="#python-libraries-classes" title="Link to this heading">#</a></h2>
 <section id="librosa">
 <h3><a class="reference internal" href="#librosa"><code class="docutils literal notranslate"><span class="pre">Librosa</span></code></a><a class="headerlink" href="#librosa" title="Link to this heading">#</a></h3>
 <blockquote>
@@ -378,7 +378,7 @@ data-aria-dark="Switch to auto color mode">
 <p>In <code class="docutils literal notranslate"><span class="pre">DrumScript</span></code>, <code class="docutils literal notranslate"><span class="pre">librosa</span></code> is crucial because it’s the underlying library that <code class="docutils literal notranslate"><span class="pre">audio_loader.py</span></code>, <code class="docutils literal notranslate"><span class="pre">feature_extractor.py</span></code>, and <code class="docutils literal notranslate"><span class="pre">onset_detector.py</span></code> use to actually perform the <strong>low-level audio processing</strong> and extract the characteristics of your <strong>drum sound</strong> and <strong>audio recordings</strong>. <code class="docutils literal notranslate"><span class="pre">Librosa</span></code>’s beat and tempo detection functions are specifically used in the <code class="docutils literal notranslate"><span class="pre">tempo_detector.py</span></code> and <code class="docutils literal notranslate"><span class="pre">tempogram.py</span></code> scripts.</p>
 </section>
 <section id="stem-splitter">
-<span id="stem_splitter"></span><h3><code class="docutils literal notranslate"><span class="pre">stem_splitter</span></code><a class="headerlink" href="#stem-splitter" title="Link to this heading">#</a></h3>
+<h3><code class="docutils literal notranslate"><span class="pre">stem_splitter</span></code><a class="headerlink" href="#stem-splitter" title="Link to this heading">#</a></h3>
 <blockquote>
 <div><p><strong>Module</strong></p>
 </div></blockquote>
@@ -395,7 +395,7 @@ data-aria-dark="Switch to auto color mode">
 <div><ul>
 <li><p><strong>Example:</strong></p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="kn">from</span><span class="w"> </span><span class="nn">drumscript.audio_processor.stem_splitter</span><span class="w"> </span><span class="kn">import</span> <span class="n">extract_drum_stem</span>
-</span><span data-line="2"><span class="n">drum_path</span> <span class="o">=</span> <span class="n">extract_drum_stem</span><span class="p">(</span><span class="s2">"song.mp3"</span><span class="p">,</span> <span class="n">output_dir</span><span class="o">=</span><span class="s2">"./stems"</span><span class="p">)</span>
+</span><span data-line="2"><span class="n">drum_path</span> <span class="o">=</span> <span class="n">extract_drum_stem</span><span class="p">(</span><span class="s2">&quot;song.mp3&quot;</span><span class="p">,</span> <span class="n">output_dir</span><span class="o">=</span><span class="s2">&quot;./stems&quot;</span><span class="p">)</span>
 </span></pre></div>
 </div>
 </li>
@@ -479,7 +479,7 @@ In `DrumScript`, `MuseScore` is crucial because `music21` can be configured to u
 </div></blockquote>
 </section>
 <section id="hop-length">
-<span id="hop_length"></span><h2><code class="docutils literal notranslate"><span class="pre">hop_length</span></code><a class="headerlink" href="#hop-length" title="Link to this heading">#</a></h2>
+<h2><code class="docutils literal notranslate"><span class="pre">hop_length</span></code><a class="headerlink" href="#hop-length" title="Link to this heading">#</a></h2>
 <blockquote>
 <div><p><em><strong>Variable</strong></em></p>
 </div></blockquote>
@@ -501,7 +501,7 @@ In `DrumScript`, `MuseScore` is crucial because `music21` can be configured to u
 </div></blockquote>
 </section>
 <section id="n-fft">
-<span id="n_fft"></span><h2><code class="docutils literal notranslate"><span class="pre">n_fft</span></code><a class="headerlink" href="#n-fft" title="Link to this heading">#</a></h2>
+<h2><code class="docutils literal notranslate"><span class="pre">n_fft</span></code><a class="headerlink" href="#n-fft" title="Link to this heading">#</a></h2>
 <blockquote>
 <div><p><em><strong>Variable</strong></em></p>
 </div></blockquote>
@@ -516,7 +516,7 @@ In `DrumScript`, `MuseScore` is crucial because `music21` can be configured to u
 </div></blockquote>
 </section>
 <section id="sample-rate-sr">
-<span id="sample_rate-sr"></span><h2><code class="docutils literal notranslate"><span class="pre">sample_rate</span></code> (<code class="docutils literal notranslate"><span class="pre">sr</span></code>)<a class="headerlink" href="#sample-rate-sr" title="Link to this heading">#</a></h2>
+<h2><code class="docutils literal notranslate"><span class="pre">sample_rate</span></code> (<code class="docutils literal notranslate"><span class="pre">sr</span></code>)<a class="headerlink" href="#sample-rate-sr" title="Link to this heading">#</a></h2>
 <blockquote>
 <div><p><em><strong>Variable</strong></em></p>
 </div></blockquote>
@@ -537,7 +537,7 @@ In `DrumScript`, `MuseScore` is crucial because `music21` can be configured to u
 </div>
 </section>
 <section id="spectral-centroid-brightness-or-center-of-gravity-sc">
-<span id="spectral-centroid--brightness-or-center-of-gravity-sc"></span><h2>Spectral Centroid = <em>Brightness</em> or <em>Center of Gravity</em> (<code class="docutils literal notranslate"><span class="pre">sc</span></code>)<a class="headerlink" href="#spectral-centroid-brightness-or-center-of-gravity-sc" title="Link to this heading">#</a></h2>
+<h2>Spectral Centroid = <em>Brightness</em> or <em>Center of Gravity</em> (<code class="docutils literal notranslate"><span class="pre">sc</span></code>)<a class="headerlink" href="#spectral-centroid-brightness-or-center-of-gravity-sc" title="Link to this heading">#</a></h2>
 <p>Imagine the full range of sound (Frequency Spectrum) is a long seesaw or balance beam.</p>
 <ul class="simple">
 <li><p><strong>Left side:</strong> Low bass frequencies (the <em>Thud</em>).</p></li>

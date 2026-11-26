@@ -368,7 +368,7 @@ data-aria-dark="Switch to auto color mode">
 </section>
 <hr class="docutils" />
 <section id="transcribing-an-isolated-drum-stem-default">
-<span id="1-transcribing-an-isolated-drum-stem-default"></span><h2>1. Transcribing an isolated drum stem (default)<a class="headerlink" href="#transcribing-an-isolated-drum-stem-default" title="Link to this heading">#</a></h2>
+<h2>1. Transcribing an isolated drum stem (default)<a class="headerlink" href="#transcribing-an-isolated-drum-stem-default" title="Link to this heading">#</a></h2>
 <p>Use this path when your input is already drum-only — for example, a stem exported from a DAW, or a drum recording captured in isolation.</p>
 <p>No special flags are needed: just call <code class="docutils literal notranslate"><span class="pre">ds.transcribe(path)</span></code>.</p>
 <div class="cell docutils container">
@@ -378,47 +378,47 @@ data-aria-dark="Switch to auto color mode">
 </span><span data-line="3"><span class="kn">import</span><span class="w"> </span><span class="nn">drumscript</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">ds</span>
 </span><span data-line="4">
 </span><span data-line="5"><span class="c1"># Load drum-only audio</span>
-</span><span data-line="6"><span class="n">drum_only_path</span> <span class="o">=</span> <span class="s2">"audio/test.wav"</span>
+</span><span data-line="6"><span class="n">drum_only_path</span> <span class="o">=</span> <span class="s2">&quot;audio/test.wav&quot;</span>
 </span><span data-line="7"><span class="n">drum_only_audio</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">load_audio</span><span class="p">(</span><span class="n">drum_only_path</span><span class="p">)</span>
-</span><span data-line="8"><span class="nb">print</span><span class="p">(</span><span class="s2">"Drum-only audio loaded!"</span><span class="p">)</span>
+</span><span data-line="8"><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Drum-only audio loaded!&quot;</span><span class="p">)</span>
 </span><span data-line="9"><span class="n">display</span><span class="p">(</span><span class="n">Audio</span><span class="p">(</span><span class="n">drum_only_path</span><span class="p">))</span>
 </span></pre></div>
 </div>
 </div>
 </div>
 <section id="ds-transcribe-automatically-outputs-pdf-xml-and-json-as-standard">
-<span id="-dstranscribe-automatically-outputs-pdf-xml-and-json-as-standard"></span><h3>&gt; <code class="docutils literal notranslate"><span class="pre">ds.transcribe()</span></code> automatically outputs <code class="docutils literal notranslate"><span class="pre">.pdf</span></code>, <code class="docutils literal notranslate"><span class="pre">.xml</span></code> and <code class="docutils literal notranslate"><span class="pre">.json</span></code> as standard<a class="headerlink" href="#ds-transcribe-automatically-outputs-pdf-xml-and-json-as-standard" title="Link to this heading">#</a></h3>
+<h3>&gt; <code class="docutils literal notranslate"><span class="pre">ds.transcribe()</span></code> automatically outputs <code class="docutils literal notranslate"><span class="pre">.pdf</span></code>, <code class="docutils literal notranslate"><span class="pre">.xml</span></code> and <code class="docutils literal notranslate"><span class="pre">.json</span></code> as standard<a class="headerlink" href="#ds-transcribe-automatically-outputs-pdf-xml-and-json-as-standard" title="Link to this heading">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="c1"># Drum-only transcription — no `full_song` flag needed.</span>
 </span><span data-line="2"><span class="c1"># Outputs are saved to the specified output_dir.</span>
 </span><span data-line="3"><span class="n">output_files</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">transcribe</span><span class="p">(</span>
 </span><span data-line="4">    <span class="n">audio_path</span><span class="o">=</span><span class="n">drum_only_path</span><span class="p">,</span>
-</span><span data-line="5">    <span class="n">output_dir</span><span class="o">=</span><span class="s2">"transcription"</span><span class="p">,</span>
+</span><span data-line="5">    <span class="n">output_dir</span><span class="o">=</span><span class="s2">&quot;transcription&quot;</span><span class="p">,</span>
 </span><span data-line="6"><span class="p">)</span>
 </span><span data-line="7">
 </span><span data-line="8"><span class="c1"># transcribe() returns a dict with the paths to all three outputs (v0.2.0+)</span>
-</span><span data-line="9"><span class="nb">print</span><span class="p">(</span><span class="s2">"Drum-only transcription complete!"</span><span class="p">)</span>
-</span><span data-line="10"><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"  PDF sheet music:  </span><span class="si">{</span><span class="n">output_files</span><span class="p">[</span><span class="s1">'pdf_path'</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
-</span><span data-line="11"><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"  MIDI (for DAWs):  </span><span class="si">{</span><span class="n">output_files</span><span class="p">[</span><span class="s1">'midi_path'</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
-</span><span data-line="12"><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"  JSON (raw data):  </span><span class="si">{</span><span class="n">output_files</span><span class="p">[</span><span class="s1">'json_path'</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</span><span data-line="9"><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Drum-only transcription complete!&quot;</span><span class="p">)</span>
+</span><span data-line="10"><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  PDF sheet music:  </span><span class="si">{</span><span class="n">output_files</span><span class="p">[</span><span class="s1">&#39;pdf_path&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span data-line="11"><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  MIDI (for DAWs):  </span><span class="si">{</span><span class="n">output_files</span><span class="p">[</span><span class="s1">&#39;midi_path&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span data-line="12"><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  JSON (raw data):  </span><span class="si">{</span><span class="n">output_files</span><span class="p">[</span><span class="s1">&#39;json_path&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </span></pre></div>
 </div>
 </div>
 </div>
 </section>
 <section id="or-just-choose-one-output-ie-pdf">
-<span id="-or-just-choose-one-output-ie-pdf"></span><h3><em>… or just choose one output (ie pdf):</em><a class="headerlink" href="#or-just-choose-one-output-ie-pdf" title="Link to this heading">#</a></h3>
+<h3><em>… or just choose one output (ie pdf):</em><a class="headerlink" href="#or-just-choose-one-output-ie-pdf" title="Link to this heading">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="c1"># Drum-only transcription — no `full_song` flag needed.</span>
 </span><span data-line="2"><span class="c1"># Outputs are saved to the specified output_dir.</span>
 </span><span data-line="3"><span class="n">output_files</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">transcribe</span><span class="p">(</span>
 </span><span data-line="4">    <span class="n">audio_path</span><span class="o">=</span><span class="n">drum_only_path</span><span class="p">,</span>
-</span><span data-line="5">    <span class="n">output_dir</span><span class="o">=</span><span class="s2">"transcription"</span><span class="p">,</span>
+</span><span data-line="5">    <span class="n">output_dir</span><span class="o">=</span><span class="s2">&quot;transcription&quot;</span><span class="p">,</span>
 </span><span data-line="6"><span class="p">)</span>
 </span><span data-line="7">
-</span><span data-line="8"><span class="nb">print</span><span class="p">(</span><span class="s2">"Drum-only transcription complete. PDF generated:"</span><span class="p">,</span> <span class="n">output_files</span><span class="p">[</span><span class="s2">"pdf_path"</span><span class="p">])</span>
+</span><span data-line="8"><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Drum-only transcription complete. PDF generated:&quot;</span><span class="p">,</span> <span class="n">output_files</span><span class="p">[</span><span class="s2">&quot;pdf_path&quot;</span><span class="p">])</span>
 </span></pre></div>
 </div>
 </div>
